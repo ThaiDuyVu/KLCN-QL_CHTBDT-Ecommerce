@@ -42,6 +42,10 @@ public class User {
     )
     private String email;
 
+    @Column(name = "display_name")
+    private String displayName;
+
+
     @Column(name = "phone", length = 30)
     private String phone;
 
@@ -101,6 +105,10 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public String getDisplayName(){return displayName;}
+
+    public void setDisplayName(String displayName){this.displayName =displayName;}
 
     public String getStatus() {
         return status;
