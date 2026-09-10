@@ -11,13 +11,12 @@
 --   03. Supplier & Warehouse
 --   04. Shopping Cart & Order
 --   05. Return & Warranty
---   05. Promotion & Review
---   06. Chatbot & Conversation
---   07. RAG Knowledge Base
+--   06. Promotion & Review
+--   07. Chatbot & Conversation
+--   08. RAG Knowledge Base
 --
 -- Total:
---   43 tables from ERD
---   + 1 supporting table: order_item_serials
+--   44 tables from ERD
 --   = 44 tables
 --
 -- Notes:
@@ -59,6 +58,7 @@ CREATE TABLE users (
                        status VARCHAR(30) NOT NULL,
 
                        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
                        CONSTRAINT uq_users_username
                            UNIQUE (username),
@@ -217,6 +217,7 @@ CREATE TABLE categories (
                             parent_id UUID,
                             category_name VARCHAR(255) NOT NULL,
                             description TEXT,
+                            status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE',
 
                             CONSTRAINT fk_categories_parent
                                 FOREIGN KEY (parent_id)
@@ -234,6 +235,7 @@ CREATE TABLE brands (
 
                         brand_name VARCHAR(255) NOT NULL,
                         description TEXT,
+                        status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE',
 
                         CONSTRAINT uq_brands_brand_name
                             UNIQUE (brand_name)
@@ -253,6 +255,9 @@ CREATE TABLE products (
                           product_name VARCHAR(255) NOT NULL,
                           description TEXT,
                           status VARCHAR(30) NOT NULL,
+
+                          created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                          updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
                           CONSTRAINT fk_products_category
                               FOREIGN KEY (category_id)
@@ -282,6 +287,7 @@ CREATE TABLE product_variants (
                                   color VARCHAR(100),
                                   storage VARCHAR(100),
                                   ram VARCHAR(100),
+                                  status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE',
 
                                   CONSTRAINT uq_product_variants_sku
                                       UNIQUE (sku),
@@ -354,6 +360,7 @@ CREATE TABLE suppliers (
                            phone VARCHAR(30),
                            email VARCHAR(255),
                            address VARCHAR(500),
+                           status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE',
 
                            CONSTRAINT uq_suppliers_supplier_code
                                UNIQUE (supplier_code)
@@ -368,7 +375,8 @@ CREATE TABLE warehouses (
                             warehouse_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
                             warehouse_name VARCHAR(255) NOT NULL,
-                            address VARCHAR(500)
+                            address VARCHAR(500),
+                            status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE'
 );
 
 
@@ -379,6 +387,8 @@ CREATE TABLE warehouses (
 CREATE TABLE goods_receipts (
                                 receipt_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
+                                receipt_code VARCHAR(50) NOT NULL,
+
                                 supplier_id UUID NOT NULL,
                                 warehouse_id UUID NOT NULL,
                                 employee_id UUID NOT NULL,
@@ -386,6 +396,9 @@ CREATE TABLE goods_receipts (
                                 receipt_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 total_amount NUMERIC(15,2) NOT NULL DEFAULT 0,
                                 status VARCHAR(30) NOT NULL,
+
+                                CONSTRAINT uq_goods_receipts_receipt_code
+                                    UNIQUE (receipt_code),
 
                                 CONSTRAINT ck_goods_receipts_total_amount
                                     CHECK (total_amount >= 0),
@@ -450,6 +463,7 @@ CREATE TABLE inventory (
 
                            quantity INTEGER NOT NULL DEFAULT 0,
                            reserved_quantity INTEGER NOT NULL DEFAULT 0,
+                           updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
                            CONSTRAINT uq_inventory_warehouse_variant
                                UNIQUE (warehouse_id, variant_id),
@@ -593,15 +607,36 @@ CREATE TABLE orders (
 
                         order_code VARCHAR(100) NOT NULL,
                         order_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                        total_amount NUMERIC(15,2) NOT NULL DEFAULT 0,
-                        status VARCHAR(30) NOT NULL,
+
+                        recipient_name VARCHAR(255) NOT NULL,
+                        recipient_phone VARCHAR(30) NOT NULL,
                         shipping_address TEXT NOT NULL,
+
+                        subtotal NUMERIC(15,2) NOT NULL DEFAULT 0,
+                        discount_amount NUMERIC(15,2) NOT NULL DEFAULT 0,
+                        shipping_fee NUMERIC(15,2) NOT NULL DEFAULT 0,
+                        total_amount NUMERIC(15,2) NOT NULL DEFAULT 0,
+
+                        status VARCHAR(30) NOT NULL,
+                        note TEXT,
 
                         CONSTRAINT uq_orders_order_code
                             UNIQUE (order_code),
 
+                        CONSTRAINT ck_orders_subtotal
+                            CHECK (subtotal >= 0),
+
+                        CONSTRAINT ck_orders_discount_amount
+                            CHECK (discount_amount >= 0),
+
+                        CONSTRAINT ck_orders_shipping_fee
+                            CHECK (shipping_fee >= 0),
+
                         CONSTRAINT ck_orders_total_amount
                             CHECK (total_amount >= 0),
+
+                        CONSTRAINT ck_orders_discount_not_exceed_subtotal
+                            CHECK (discount_amount <= subtotal),
 
                         CONSTRAINT fk_orders_customer
                             FOREIGN KEY (customer_id)
@@ -619,6 +654,7 @@ CREATE TABLE order_items (
 
                              order_id UUID NOT NULL,
                              variant_id UUID NOT NULL,
+                             serial_id UUID,
 
                              quantity INTEGER NOT NULL,
 
@@ -627,8 +663,14 @@ CREATE TABLE order_items (
                              discount_amount NUMERIC(15,2) NOT NULL DEFAULT 0,
                              final_unit_price NUMERIC(15,2) NOT NULL,
 
+                             CONSTRAINT uq_order_items_serial_id
+                                 UNIQUE (serial_id),
+
                              CONSTRAINT ck_order_items_quantity
                                  CHECK (quantity > 0),
+
+                             CONSTRAINT ck_order_items_serial_quantity
+                                 CHECK (serial_id IS NULL OR quantity = 1),
 
                              CONSTRAINT ck_order_items_cost_price
                                  CHECK (cost_price >= 0),
@@ -650,39 +692,12 @@ CREATE TABLE order_items (
                              CONSTRAINT fk_order_items_variant
                                  FOREIGN KEY (variant_id)
                                      REFERENCES product_variants (variant_id)
+                                     ON DELETE RESTRICT,
+
+                             CONSTRAINT fk_order_items_serial
+                                 FOREIGN KEY (serial_id)
+                                     REFERENCES serial_numbers (serial_id)
                                      ON DELETE RESTRICT
-);
-
-
--- ---------------------------------------------------------
--- 24A. ORDER ITEM SERIALS
---
--- Supporting table added to correctly support:
---   OrderItem.quantity > 1
---   each serialized device having its own SerialNumber
--- ---------------------------------------------------------
-
-CREATE TABLE order_item_serials (
-                                    order_item_serial_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-
-                                    order_item_id UUID NOT NULL,
-                                    serial_id UUID NOT NULL,
-
-                                    CONSTRAINT uq_order_item_serials_pair
-                                        UNIQUE (order_item_id, serial_id),
-
-                                    CONSTRAINT uq_order_item_serials_serial_id
-                                        UNIQUE (serial_id),
-
-                                    CONSTRAINT fk_order_item_serials_order_item
-                                        FOREIGN KEY (order_item_id)
-                                            REFERENCES order_items (order_item_id)
-                                            ON DELETE RESTRICT,
-
-                                    CONSTRAINT fk_order_item_serials_serial
-                                        FOREIGN KEY (serial_id)
-                                            REFERENCES serial_numbers (serial_id)
-                                            ON DELETE RESTRICT
 );
 
 
@@ -696,9 +711,13 @@ CREATE TABLE payments (
                           order_id UUID NOT NULL,
 
                           payment_method VARCHAR(50) NOT NULL,
+                          transaction_code VARCHAR(255),
                           amount NUMERIC(15,2) NOT NULL,
                           payment_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
                           status VARCHAR(30) NOT NULL,
+
+                          CONSTRAINT uq_payments_transaction_code
+                              UNIQUE (transaction_code),
 
                           CONSTRAINT ck_payments_amount
                               CHECK (amount >= 0),
@@ -854,13 +873,29 @@ CREATE TABLE shipments (
 CREATE TABLE return_requests (
                                  return_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
+                                 return_code VARCHAR(50) NOT NULL,
+
                                  order_id UUID NOT NULL,
                                  customer_id UUID NOT NULL,
                                  employee_id UUID,
 
                                  reason TEXT NOT NULL,
                                  request_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                 processed_at TIMESTAMPTZ,
+                                 refund_amount NUMERIC(15,2) NOT NULL DEFAULT 0,
                                  status VARCHAR(30) NOT NULL,
+
+                                 CONSTRAINT uq_return_requests_return_code
+                                     UNIQUE (return_code),
+
+                                 CONSTRAINT ck_return_requests_refund_amount
+                                     CHECK (refund_amount >= 0),
+
+                                 CONSTRAINT ck_return_requests_processed_date
+                                     CHECK (
+                                         processed_at IS NULL
+                                             OR processed_at >= request_date
+                                         ),
 
                                  CONSTRAINT fk_return_requests_order
                                      FOREIGN KEY (order_id)
@@ -882,7 +917,7 @@ CREATE TABLE return_requests (
 -- ---------------------------------------------------------
 -- 31. RETURN ITEMS
 --
--- order_item_serial_id is NULL for non-serialized products.
+-- serial_id is NULL for non-serialized products.
 -- For serialized products it points to the exact sold device.
 -- ---------------------------------------------------------
 
@@ -891,13 +926,16 @@ CREATE TABLE return_items (
 
                               return_id UUID NOT NULL,
                               order_item_id UUID NOT NULL,
-                              order_item_serial_id UUID,
+                              serial_id UUID,
 
                               quantity INTEGER NOT NULL,
                               reason VARCHAR(500),
 
                               CONSTRAINT ck_return_items_quantity
                                   CHECK (quantity > 0),
+
+                              CONSTRAINT ck_return_items_serial_quantity
+                                  CHECK (serial_id IS NULL OR quantity = 1),
 
                               CONSTRAINT fk_return_items_return
                                   FOREIGN KEY (return_id)
@@ -909,9 +947,9 @@ CREATE TABLE return_items (
                                       REFERENCES order_items (order_item_id)
                                       ON DELETE RESTRICT,
 
-                              CONSTRAINT fk_return_items_order_item_serial
-                                  FOREIGN KEY (order_item_serial_id)
-                                      REFERENCES order_item_serials (order_item_serial_id)
+                              CONSTRAINT fk_return_items_serial
+                                  FOREIGN KEY (serial_id)
+                                      REFERENCES serial_numbers (serial_id)
                                       ON DELETE RESTRICT
 );
 
@@ -961,16 +999,22 @@ CREATE TABLE warranties (
 CREATE TABLE warranty_tickets (
                                   ticket_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
+                                  ticket_code VARCHAR(50) NOT NULL,
+
                                   warranty_id UUID NOT NULL,
                                   serial_id UUID NOT NULL,
                                   customer_id UUID NOT NULL,
                                   employee_id UUID,
 
                                   issue_description TEXT NOT NULL,
+                                  resolution_note TEXT,
 
                                   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                   resolved_at TIMESTAMPTZ,
                                   status VARCHAR(30) NOT NULL,
+
+                                  CONSTRAINT uq_warranty_tickets_ticket_code
+                                      UNIQUE (ticket_code),
 
                                   CONSTRAINT ck_warranty_tickets_resolved_date
                                       CHECK (
@@ -1001,7 +1045,7 @@ CREATE TABLE warranty_tickets (
 
 
 -- =========================================================
--- 05. PROMOTION & REVIEW
+-- 06. PROMOTION & REVIEW
 -- =========================================================
 
 
@@ -1072,6 +1116,10 @@ CREATE TABLE reviews (
 
                          created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
                          replied_at TIMESTAMPTZ,
+                         status VARCHAR(30) NOT NULL DEFAULT 'VISIBLE',
+
+                         CONSTRAINT uq_reviews_customer_order_item
+                             UNIQUE (customer_id, order_item_id),
 
                          CONSTRAINT ck_reviews_rating
                              CHECK (rating BETWEEN 1 AND 5),
@@ -1105,7 +1153,7 @@ CREATE TABLE reviews (
 
 
 -- =========================================================
--- 06. CHATBOT & CONVERSATION
+-- 07. CHATBOT & CONVERSATION
 -- =========================================================
 
 
@@ -1142,7 +1190,7 @@ CREATE TABLE chatbot_scripts (
                                  script_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
                                  script_name VARCHAR(255) NOT NULL,
-                                 trigger VARCHAR(255) NOT NULL,
+                                 trigger_key VARCHAR(255) NOT NULL,
                                  response_template TEXT NOT NULL,
 
                                  priority INTEGER NOT NULL DEFAULT 0,
@@ -1260,7 +1308,7 @@ CREATE TABLE message_feedback (
 
 
 -- =========================================================
--- 07. RAG KNOWLEDGE BASE
+-- 08. RAG KNOWLEDGE BASE
 -- =========================================================
 
 
@@ -1280,6 +1328,7 @@ CREATE TABLE knowledge_documents (
                                      employee_id UUID NOT NULL,
 
                                      created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
                                      CONSTRAINT fk_knowledge_documents_employee
                                          FOREIGN KEY (employee_id)
@@ -1378,8 +1427,20 @@ CREATE INDEX idx_products_category_id
 CREATE INDEX idx_products_brand_id
     ON products (brand_id);
 
+CREATE INDEX idx_categories_status
+    ON categories (status);
+
+CREATE INDEX idx_brands_status
+    ON brands (status);
+
+CREATE INDEX idx_products_status
+    ON products (status);
+
 CREATE INDEX idx_product_variants_product_id
     ON product_variants (product_id);
+
+CREATE INDEX idx_product_variants_status
+    ON product_variants (status);
 
 CREATE INDEX idx_product_images_product_id
     ON product_images (product_id);
@@ -1398,6 +1459,12 @@ CREATE UNIQUE INDEX uq_product_images_primary
 -- SUPPLIER & WAREHOUSE
 -- ---------------------------------------------------------
 
+CREATE INDEX idx_suppliers_status
+    ON suppliers (status);
+
+CREATE INDEX idx_warehouses_status
+    ON warehouses (status);
+
 CREATE INDEX idx_goods_receipts_supplier_id
     ON goods_receipts (supplier_id);
 
@@ -1409,6 +1476,9 @@ CREATE INDEX idx_goods_receipts_employee_id
 
 CREATE INDEX idx_goods_receipts_status
     ON goods_receipts (status);
+
+CREATE INDEX idx_goods_receipts_receipt_date
+    ON goods_receipts (receipt_date);
 
 CREATE INDEX idx_goods_receipt_items_receipt_id
     ON goods_receipt_items (receipt_id);
@@ -1460,12 +1530,6 @@ CREATE INDEX idx_order_items_order_id
 CREATE INDEX idx_order_items_variant_id
     ON order_items (variant_id);
 
-CREATE INDEX idx_order_item_serials_order_item_id
-    ON order_item_serials (order_item_id);
-
-CREATE INDEX idx_order_item_serials_serial_id
-    ON order_item_serials (serial_id);
-
 CREATE INDEX idx_payments_order_id
     ON payments (order_id);
 
@@ -1507,8 +1571,8 @@ CREATE INDEX idx_return_items_return_id
 CREATE INDEX idx_return_items_order_item_id
     ON return_items (order_item_id);
 
-CREATE INDEX idx_return_items_order_item_serial_id
-    ON return_items (order_item_serial_id);
+CREATE INDEX idx_return_items_serial_id
+    ON return_items (serial_id);
 
 CREATE INDEX idx_warranties_order_item_id
     ON warranties (order_item_id);
@@ -1559,6 +1623,9 @@ CREATE INDEX idx_reviews_order_item_id
 
 CREATE INDEX idx_reviews_employee_id
     ON reviews (employee_id);
+
+CREATE INDEX idx_reviews_status
+    ON reviews (status);
 
 
 -- ---------------------------------------------------------

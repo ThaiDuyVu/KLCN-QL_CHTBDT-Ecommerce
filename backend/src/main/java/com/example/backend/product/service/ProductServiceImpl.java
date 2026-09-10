@@ -5,7 +5,7 @@ import com.example.backend.product.ProductRepository;
 import com.example.backend.product.dto.ProductRequest;
 import com.example.backend.product.dto.ProductResponse;
 import com.example.backend.category.entity.Category;
-import com.example.backend.category.CategoryRepository; // Cần gọi thủ kho Category để móc nối dữ liệu
+import com.example.backend.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
