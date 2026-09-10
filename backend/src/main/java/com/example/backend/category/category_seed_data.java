@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class CategorySeedData implements CommandLineRunner {
+public class category_seed_data implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     @Override
     public void run(String... args) throws Exception {

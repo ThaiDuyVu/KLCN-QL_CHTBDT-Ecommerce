@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 @Order(2)
 @RequiredArgsConstructor
-public class ProductSeedData implements CommandLineRunner {
+public class product_seed_data implements CommandLineRunner {
     
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
