@@ -20,20 +20,19 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "category_id", nullable = false, updatable = false)
     private UUID categoryId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
-
     @Column(
             name = "category_name",
             nullable = false,
             length = 255
     )
     private String categoryName;
-
     @Column(name = "description")
     private String description;
+    @Column(name = "status", nullable = false, length = 30)
+    private String status = "ACTIVE";
 
     public Category() {
     }
@@ -68,6 +67,14 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 
