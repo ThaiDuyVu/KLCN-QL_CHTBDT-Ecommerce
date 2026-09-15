@@ -6,6 +6,7 @@ public record CategoryResponse(
     UUID categoryId,
     String categoryName,
     String description,
-    UUID parentId
+    UUID parentId,
+    String status
 )
 {}

@@ -6,5 +6,7 @@ public record ProductResponse(
     UUID productId,
     String productName,
     String description,
-    UUID categoryId
+    UUID categoryId,
+    UUID brandId,
+    String status
 ) {}

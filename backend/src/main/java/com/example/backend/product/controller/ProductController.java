@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -20,5 +21,23 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductResponse>> getAll() {
         return ResponseEntity.ok(productService.getAllProducts());
+    }
+    //chi tiết sản phẩm theo ID
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductResponse> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(productService.getProductById(id));
+    }
+
+    //sửa
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponse> update(@PathVariable UUID id, @RequestBody ProductRequest request) {
+        return ResponseEntity.ok(productService.updateProduct(id, request));
+    }
+
+    //xóa
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.ok("sXóa sản phẩm thành công!");
     }
 }
