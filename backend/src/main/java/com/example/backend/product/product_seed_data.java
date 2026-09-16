@@ -5,18 +5,24 @@ import com.example.backend.category.entity.Category;
 import com.example.backend.category.CategoryRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
 @Component
 @Order(2)
-@RequiredArgsConstructor
 public class product_seed_data implements CommandLineRunner {
     
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+
+    public product_seed_data(
+            ProductRepository productRepository,
+            CategoryRepository categoryRepository
+    ) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
     public void run(String... args) throws Exception {
