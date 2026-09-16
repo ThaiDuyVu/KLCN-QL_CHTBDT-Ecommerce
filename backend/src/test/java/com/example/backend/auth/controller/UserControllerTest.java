@@ -4,11 +4,15 @@ import com.example.backend.auth.dto.UpdateUserRequest;
 import com.example.backend.auth.dto.UserPageResponse;
 import com.example.backend.auth.dto.UserResponse;
 import com.example.backend.auth.exception.UserNotFoundException;
+import com.example.backend.auth.service.CustomUserDetailsService;
+import com.example.backend.auth.service.JwtService;
 import com.example.backend.auth.service.UserService;
+import com.example.backend.common.security.AuthCookieProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,10 +25,12 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
+@WithMockUser
 class UserControllerTest {
 
     @Autowired
@@ -32,6 +38,15 @@ class UserControllerTest {
 
     @MockitoBean
     private UserService userService;
+
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private CustomUserDetailsService customUserDetailsService;
+
+    @MockitoBean
+    private AuthCookieProperties authCookieProperties;
 
     @Test
     void getUserById_shouldReturn200_whenUserExists() throws Exception {
@@ -140,6 +155,7 @@ class UserControllerTest {
 
         mockMvc.perform(
                         put("/api/users/{userId}", userId)
+                                .with(csrf())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{"
                                         + "\"displayName\":\"New Name\","
@@ -172,6 +188,7 @@ class UserControllerTest {
 
         mockMvc.perform(
                         put("/api/users/{userId}", userId)
+                                .with(csrf())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{"
                                         + "\"displayName\":\"New Name\","
