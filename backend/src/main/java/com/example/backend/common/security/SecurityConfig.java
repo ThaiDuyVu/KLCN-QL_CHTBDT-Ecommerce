@@ -1,14 +1,23 @@
 package com.example.backend.common.security;
 
 import com.example.backend.auth.service.CustomUserDetailsService;
+import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.aop.Pointcut;
+import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authorization.AuthorizationManager;
+import org.springframework.security.authorization.AuthorityAuthorizationManager;
+import org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -29,7 +38,30 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
+
+    @Bean
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    static AuthorizationManagerBeforeMethodInterceptor requireAnyAuthorityInterceptor() {
+        Pointcut pointcut = AnnotationMatchingPointcut.forMethodAnnotation(
+                RequireAnyAuthority.class
+        );
+        AuthorizationManager<MethodInvocation> authorizationManager =
+                (authentication, invocation) -> {
+                    RequireAnyAuthority requirement = invocation.getMethod()
+                            .getAnnotation(RequireAnyAuthority.class);
+
+                    return AuthorityAuthorizationManager
+                            .<MethodInvocation>hasAnyAuthority(requirement.value())
+                            .authorize(authentication, invocation);
+                };
+
+        return new AuthorizationManagerBeforeMethodInterceptor(
+                pointcut,
+                authorizationManager
+        );
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(
