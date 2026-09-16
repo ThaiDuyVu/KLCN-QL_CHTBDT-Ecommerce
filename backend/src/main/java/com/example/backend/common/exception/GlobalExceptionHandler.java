@@ -1,6 +1,14 @@
 package com.example.backend.common.exception;
 
 import com.example.backend.auth.exception.*;
+import com.example.backend.goodsreceipt.exception.GoodsReceiptNotFoundException;
+import com.example.backend.goodsreceipt.exception.GoodsReceiptReferenceNotFoundException;
+import com.example.backend.goodsreceipt.exception.GoodsReceiptTotalAmountExceededException;
+import com.example.backend.goodsreceipt.exception.InvalidGoodsReceiptStatusTransitionException;
+import com.example.backend.goodsreceipt.exception.ReceiptCodeAlreadyExistsException;
+import com.example.backend.supplier.exception.SupplierCodeAlreadyExistsException;
+import com.example.backend.supplier.exception.SupplierNotFoundException;
+import com.example.backend.warehouse.exception.WarehouseNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,6 +16,72 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler({
+            GoodsReceiptNotFoundException.class,
+            GoodsReceiptReferenceNotFoundException.class
+    })
+    public ResponseEntity<String> handleGoodsReceiptNotFound(
+            RuntimeException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(ReceiptCodeAlreadyExistsException.class)
+    public ResponseEntity<String> handleReceiptCodeAlreadyExists(
+            ReceiptCodeAlreadyExistsException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(GoodsReceiptTotalAmountExceededException.class)
+    public ResponseEntity<String> handleGoodsReceiptTotalAmountExceeded(
+            GoodsReceiptTotalAmountExceededException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidGoodsReceiptStatusTransitionException.class)
+    public ResponseEntity<String> handleInvalidGoodsReceiptStatusTransition(
+            InvalidGoodsReceiptStatusTransitionException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(WarehouseNotFoundException.class)
+    public ResponseEntity<String> handleWarehouseNotFound(
+            WarehouseNotFoundException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(SupplierNotFoundException.class)
+    public ResponseEntity<String> handleSupplierNotFound(
+            SupplierNotFoundException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(SupplierCodeAlreadyExistsException.class)
+    public ResponseEntity<String> handleSupplierCodeAlreadyExists(
+            SupplierCodeAlreadyExistsException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(exception.getMessage());
+    }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFound(
@@ -58,6 +132,42 @@ public class GlobalExceptionHandler {
     ) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidJwtTokenException.class)
+    public ResponseEntity<String> handleInvalidJwtToken(
+            InvalidJwtTokenException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<String> handleInvalidCredentials(
+            InvalidCredentialsException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public ResponseEntity<String> handleInvalidRefreshToken(
+            InvalidRefreshTokenException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(RefreshTokenReuseDetectedException.class)
+    public ResponseEntity<String> handleRefreshTokenReuseDetected(
+            RefreshTokenReuseDetectedException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
                 .body(exception.getMessage());
     }
 }
