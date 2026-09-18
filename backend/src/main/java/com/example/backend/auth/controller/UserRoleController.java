@@ -1,5 +1,6 @@
 package com.example.backend.auth.controller;
 
+import com.example.backend.common.security.RequireAnyAuthority;
 import com.example.backend.auth.dto.UserRoleResponse;
 import com.example.backend.auth.service.UserRoleService;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class UserRoleController {
         );
     }
     @PutMapping("/{userId}/role")
+    @RequireAnyAuthority("ADMIN")
     public ResponseEntity<Void> updateUserRole(
             @PathVariable UUID userId,
             @RequestBody UpdateUserRoleRequest request

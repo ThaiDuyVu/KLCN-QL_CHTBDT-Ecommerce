@@ -1,5 +1,7 @@
 package com.example.backend.product.entity;
 
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import com.example.backend.category.entity.Category;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,8 +11,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.UUID;
 
 @Entity
@@ -42,7 +48,7 @@ public class Product {
     )
     private String productName;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(
@@ -50,7 +56,26 @@ public class Product {
             nullable = false,
             length = 30
     )
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status = ProductStatus.ACTIVE;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private OffsetDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private OffsetDateTime updatedAt;
+
+    @PrePersist
+    private void onCreate() {
+        OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
+        createdAt = now;
+        updatedAt = now;
+    }
+
+    @PreUpdate
+    private void onUpdate() {
+        updatedAt = OffsetDateTime.now(ZoneOffset.UTC);
+    }
 
     public Product() {
     }
@@ -95,12 +120,20 @@ public class Product {
         this.description = description;
     }
 
-    public String getStatus() {
+    public ProductStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ProductStatus status) {
         this.status = status;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
 

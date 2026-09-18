@@ -1,5 +1,7 @@
 package com.example.backend.product.entity;
 
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -61,6 +63,10 @@ public class ProductVariant {
 
     @Column(name = "ram", length = 100)
     private String ram;
+
+    @Column(name = "status", nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
+    private ProductVariantStatus status = ProductVariantStatus.ACTIVE;
 
     public ProductVariant() {
     }
@@ -127,6 +133,14 @@ public class ProductVariant {
 
     public void setRam(String ram) {
         this.ram = ram;
+    }
+
+    public ProductVariantStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProductVariantStatus status) {
+        this.status = status;
     }
 
 
