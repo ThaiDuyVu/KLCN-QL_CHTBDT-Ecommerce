@@ -31,6 +31,15 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class RoleServiceImplTest {
+    @org.junit.jupiter.api.BeforeEach
+    void authorizeAdmin() {
+        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(
+                new org.springframework.security.authentication.UsernamePasswordAuthenticationToken("admin", "unused",
+                        List.of(new org.springframework.security.core.authority.SimpleGrantedAuthority("ADMIN"))));
+    }
+    @org.junit.jupiter.api.AfterEach
+    void clearAuthentication() { org.springframework.security.core.context.SecurityContextHolder.clearContext(); }
+
 
     @Mock
     private RoleRepository roleRepository;
@@ -102,6 +111,7 @@ class RoleServiceImplTest {
         RolePermission rolePermission =
                 new RolePermission(role, permission);
 
+        when(roleRepository.existsById(roleId)).thenReturn(true);
         when(rolePermissionRepository.findByRole_RoleId(roleId))
                 .thenReturn(List.of(rolePermission));
 
@@ -129,6 +139,7 @@ class RoleServiceImplTest {
 
         UUID roleId = UUID.randomUUID();
 
+        when(roleRepository.existsById(roleId)).thenReturn(true);
         when(rolePermissionRepository.findByRole_RoleId(roleId))
                 .thenReturn(List.of());
 
@@ -163,7 +174,7 @@ class RoleServiceImplTest {
                 List.of(permissionId1, permissionId2)
         );
 
-        when(roleRepository.findById(roleId))
+        when(roleRepository.findByIdForUpdate(roleId))
                 .thenReturn(Optional.of(role));
 
         when(permissionRepository.findAllById(
@@ -179,7 +190,7 @@ class RoleServiceImplTest {
                 .deleteAll(List.of());
 
         verify(rolePermissionRepository)
-                .saveAll(any());
+                .saveAllAndFlush(any());
     }
 
     @Test
@@ -196,7 +207,7 @@ class RoleServiceImplTest {
 
         request.setPermissionIds(List.of());
 
-        when(roleRepository.findById(roleId))
+        when(roleRepository.findByIdForUpdate(roleId))
                 .thenReturn(Optional.of(role));
 
         when(rolePermissionRepository.findByRole_RoleId(roleId))
@@ -208,7 +219,7 @@ class RoleServiceImplTest {
                 .deleteAll(List.of());
 
         verify(rolePermissionRepository)
-                .saveAll(List.of());
+                .saveAllAndFlush(List.of());
     }
 
     @Test
@@ -232,7 +243,7 @@ class RoleServiceImplTest {
                 List.of(permissionId, permissionId)
         );
 
-        when(roleRepository.findById(roleId))
+        when(roleRepository.findByIdForUpdate(roleId))
                 .thenReturn(Optional.of(role));
 
         when(permissionRepository.findAllById(
@@ -248,7 +259,7 @@ class RoleServiceImplTest {
                 .findAllById(Set.of(permissionId));
 
         verify(rolePermissionRepository)
-                .saveAll(any());
+                .saveAllAndFlush(any());
     }
     @Test
     void updateRolePermissions_shouldThrowRoleNotFound_whenRoleDoesNotExist() {
@@ -260,7 +271,7 @@ class RoleServiceImplTest {
 
         request.setPermissionIds(List.of());
 
-        when(roleRepository.findById(roleId))
+        when(roleRepository.findByIdForUpdate(roleId))
                 .thenReturn(Optional.empty());
 
         assertThrows(
@@ -272,7 +283,7 @@ class RoleServiceImplTest {
                 .deleteAll(any());
 
         verify(rolePermissionRepository, never())
-                .saveAll(any());
+                .saveAllAndFlush(any());
     }
     @Test
     void updateRolePermissions_shouldThrowPermissionNotFound_whenPermissionDoesNotExist() {
@@ -289,7 +300,7 @@ class RoleServiceImplTest {
 
         request.setPermissionIds(List.of(permissionId));
 
-        when(roleRepository.findById(roleId))
+        when(roleRepository.findByIdForUpdate(roleId))
                 .thenReturn(Optional.of(role));
 
         when(permissionRepository.findAllById(
@@ -305,7 +316,7 @@ class RoleServiceImplTest {
                 .deleteAll(any());
 
         verify(rolePermissionRepository, never())
-                .saveAll(any());
+                .saveAllAndFlush(any());
     }
     @Test
     void updateRolePermissions_shouldThrowProtectedPermission_whenRoleIsAdmin() {
@@ -322,7 +333,7 @@ class RoleServiceImplTest {
 
         request.setPermissionIds(List.of(permissionId));
 
-        when(roleRepository.findById(roleId))
+        when(roleRepository.findByIdForUpdate(roleId))
                 .thenReturn(Optional.of(role));
 
         assertThrows(
@@ -337,7 +348,7 @@ class RoleServiceImplTest {
                 .deleteAll(any());
 
         verify(rolePermissionRepository, never())
-                .saveAll(any());
+                .saveAllAndFlush(any());
     }
     @Test
     void updateRolePermissions_shouldRejectUserRolePermission() {
@@ -358,7 +369,7 @@ class RoleServiceImplTest {
 
         request.setPermissionIds(List.of(permissionId));
 
-        when(roleRepository.findById(roleId))
+        when(roleRepository.findByIdForUpdate(roleId))
                 .thenReturn(Optional.of(role));
 
         when(permissionRepository.findAllById(
@@ -374,7 +385,7 @@ class RoleServiceImplTest {
                 .deleteAll(any());
 
         verify(rolePermissionRepository, never())
-                .saveAll(any());
+                .saveAllAndFlush(any());
     }
     @Test
     void updateRolePermissions_shouldRejectRolePermissionPermission() {
@@ -395,7 +406,7 @@ class RoleServiceImplTest {
 
         request.setPermissionIds(List.of(permissionId));
 
-        when(roleRepository.findById(roleId))
+        when(roleRepository.findByIdForUpdate(roleId))
                 .thenReturn(Optional.of(role));
 
         when(permissionRepository.findAllById(
@@ -411,6 +422,6 @@ class RoleServiceImplTest {
                 .deleteAll(any());
 
         verify(rolePermissionRepository, never())
-                .saveAll(any());
+                .saveAllAndFlush(any());
     }
 }

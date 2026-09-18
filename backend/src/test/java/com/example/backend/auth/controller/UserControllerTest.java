@@ -4,11 +4,15 @@ import com.example.backend.auth.dto.UpdateUserRequest;
 import com.example.backend.auth.dto.UserPageResponse;
 import com.example.backend.auth.dto.UserResponse;
 import com.example.backend.auth.exception.UserNotFoundException;
+import com.example.backend.auth.service.CustomUserDetailsService;
+import com.example.backend.auth.service.JwtService;
 import com.example.backend.auth.service.UserService;
+import com.example.backend.common.security.AuthCookieProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,10 +25,13 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
+@org.springframework.context.annotation.Import(UserControllerTest.MethodSecurityConfiguration.class)
+@WithMockUser(authorities = "ADMIN")
 class UserControllerTest {
 
     @Autowired
@@ -32,6 +39,15 @@ class UserControllerTest {
 
     @MockitoBean
     private UserService userService;
+
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private CustomUserDetailsService customUserDetailsService;
+
+    @MockitoBean
+    private AuthCookieProperties authCookieProperties;
 
     @Test
     void getUserById_shouldReturn200_whenUserExists() throws Exception {
@@ -102,7 +118,7 @@ class UserControllerTest {
                 1
         );
 
-        when(userService.getUsers(0, 20))
+        when(userService.getUsers(0, 20, null, null, null))
                 .thenReturn(response);
 
         mockMvc.perform(
@@ -140,6 +156,7 @@ class UserControllerTest {
 
         mockMvc.perform(
                         put("/api/users/{userId}", userId)
+                                .with(csrf())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{"
                                         + "\"displayName\":\"New Name\","
@@ -172,6 +189,7 @@ class UserControllerTest {
 
         mockMvc.perform(
                         put("/api/users/{userId}", userId)
+                                .with(csrf())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("{"
                                         + "\"displayName\":\"New Name\","
@@ -180,5 +198,26 @@ class UserControllerTest {
                                         + "}")
                 )
                 .andExpect(status().isNotFound());
+    }
+    @org.springframework.boot.test.context.TestConfiguration(proxyBeanMethods = false)
+    @org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+    static class MethodSecurityConfiguration {}
+    @Test
+    @WithMockUser(authorities = "STAFF")
+    void getUsers_shouldRejectUserWithoutViewPermission() throws Exception {
+        mockMvc.perform(get("/api/users")).andExpect(status().isForbidden());
+    }
+    @Test
+    @WithMockUser(authorities = "USER_VIEW")
+    void updateUser_shouldRejectReadOnlyUser() throws Exception {
+        mockMvc.perform(put("/api/users/{userId}", UUID.randomUUID()).with(csrf())
+                .contentType(MediaType.APPLICATION_JSON).content("{\"email\":\"valid@example.com\"}"))
+                .andExpect(status().isForbidden());
+    }
+    @Test
+    void updateStatus_shouldRejectUnknownStatus() throws Exception {
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch("/api/users/{userId}/status", UUID.randomUUID()).with(csrf())
+                .contentType(MediaType.APPLICATION_JSON).content("{\"status\":\"OTHER\"}"))
+                .andExpect(status().isBadRequest());
     }
 }

@@ -10,6 +10,7 @@ import java.util.UUID;
 public interface RoleService {
 
     List<RoleResponse> getRoles();
+    List<PermissionResponse> getPermissions();
     List<PermissionResponse> getPermissionsByRole(UUID roleId);
     void updateRolePermissions(
             UUID roleId,

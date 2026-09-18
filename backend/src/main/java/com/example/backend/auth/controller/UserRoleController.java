@@ -1,5 +1,7 @@
 package com.example.backend.auth.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import jakarta.validation.Valid;
 import com.example.backend.auth.dto.UserRoleResponse;
 import com.example.backend.auth.service.UserRoleService;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ public class UserRoleController {
     }
 
     @GetMapping("/{userId}/role")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER_ROLE_VIEW')")
     public ResponseEntity<UserRoleResponse> getUserRole(
             @PathVariable UUID userId
     ) {
@@ -26,9 +29,10 @@ public class UserRoleController {
         );
     }
     @PutMapping("/{userId}/role")
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER_ROLE_ASSIGN')")
     public ResponseEntity<Void> updateUserRole(
             @PathVariable UUID userId,
-            @RequestBody UpdateUserRoleRequest request
+            @Valid @RequestBody UpdateUserRoleRequest request
     ) {
         userRoleService.updateUserRole(userId, request);
 

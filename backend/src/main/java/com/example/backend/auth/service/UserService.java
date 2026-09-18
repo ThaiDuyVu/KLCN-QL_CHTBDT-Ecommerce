@@ -10,5 +10,7 @@ public interface UserService {
 
     UserResponse getUserById(UUID userId);
     UserPageResponse getUsers(int page, int size);
+    UserPageResponse getUsers(int page, int size, String keyword, com.example.backend.auth.entity.UserStatus status, UUID roleId);
+    UserResponse updateUserStatus(UUID userId, com.example.backend.auth.dto.UpdateUserStatusRequest request);
     UserResponse updateUser(UUID userId, UpdateUserRequest request);
 }

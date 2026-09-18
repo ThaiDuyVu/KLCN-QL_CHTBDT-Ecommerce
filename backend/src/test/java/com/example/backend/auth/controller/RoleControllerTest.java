@@ -2,10 +2,14 @@ package com.example.backend.auth.controller;
 
 import com.example.backend.auth.dto.PermissionResponse;
 import com.example.backend.auth.dto.RoleResponse;
+import com.example.backend.auth.service.CustomUserDetailsService;
+import com.example.backend.auth.service.JwtService;
 import com.example.backend.auth.service.RoleService;
+import com.example.backend.common.security.AuthCookieProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import com.example.backend.auth.dto.UpdateRolePermissionsRequest;
@@ -17,6 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(RoleController.class)
+@org.springframework.context.annotation.Import(RoleControllerTest.MethodSecurityConfiguration.class)
+@WithMockUser(authorities = "ADMIN")
 class RoleControllerTest {
 
     @Autowired
@@ -34,6 +41,15 @@ class RoleControllerTest {
 
     @MockitoBean
     private RoleService roleService;
+
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private CustomUserDetailsService customUserDetailsService;
+
+    @MockitoBean
+    private AuthCookieProperties authCookieProperties;
 
     @Test
     void getRoles_shouldReturn200_whenRolesExist() throws Exception {
@@ -134,6 +150,7 @@ class RoleControllerTest {
 
         mockMvc.perform(
                         put("/api/roles/{roleId}/permissions", roleId)
+                                .with(csrf())
                                 .contentType("application/json")
                                 .content(requestJson)
                 )
@@ -171,6 +188,7 @@ class RoleControllerTest {
 
         mockMvc.perform(
                         put("/api/roles/{roleId}/permissions", roleId)
+                                .with(csrf())
                                 .contentType("application/json")
                                 .content(requestJson)
                 )
@@ -201,6 +219,7 @@ class RoleControllerTest {
 
         mockMvc.perform(
                         put("/api/roles/{roleId}/permissions", roleId)
+                                .with(csrf())
                                 .contentType("application/json")
                                 .content(requestJson)
                 )
@@ -231,9 +250,20 @@ class RoleControllerTest {
 
         mockMvc.perform(
                         put("/api/roles/{roleId}/permissions", roleId)
+                                .with(csrf())
                                 .contentType("application/json")
                                 .content(requestJson)
                 )
+                .andExpect(status().isForbidden());
+    }
+    @org.springframework.boot.test.context.TestConfiguration(proxyBeanMethods = false)
+    @org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+    static class MethodSecurityConfiguration {}
+    @Test
+    @WithMockUser(authorities = "USER_VIEW")
+    void updatePermissions_shouldRejectUserWithoutAssignmentPermission() throws Exception {
+        mockMvc.perform(put("/api/roles/{id}/permissions", UUID.randomUUID()).with(csrf())
+                .contentType("application/json").content("{\"permissionIds\":[]}"))
                 .andExpect(status().isForbidden());
     }
 }

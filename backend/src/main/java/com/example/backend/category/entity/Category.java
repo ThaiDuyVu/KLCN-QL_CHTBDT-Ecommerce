@@ -1,5 +1,7 @@
 package com.example.backend.category.entity;
 
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,20 +22,20 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "category_id", nullable = false, updatable = false)
     private UUID categoryId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
-
     @Column(
             name = "category_name",
             nullable = false,
             length = 255
     )
     private String categoryName;
-
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+    @Column(name = "status", nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
+    private CategoryStatus status = CategoryStatus.ACTIVE;
 
     public Category() {
     }
@@ -68,6 +70,14 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public CategoryStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CategoryStatus status) {
+        this.status = status;
     }
 
 

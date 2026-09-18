@@ -4,6 +4,9 @@ import java.util.UUID;
 
 public class PermissionResponse {
 
+    private boolean protectedPermission;
+    public boolean isProtectedPermission() { return protectedPermission; }
+    public void setProtectedPermission(boolean value) { this.protectedPermission = value; }
     private UUID permissionId;
     private String permissionName;
     private String description;
