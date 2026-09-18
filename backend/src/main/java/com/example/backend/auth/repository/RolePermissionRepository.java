@@ -11,6 +11,7 @@ import java.util.UUID;
 public interface RolePermissionRepository
         extends JpaRepository<RolePermission, RolePermissionId> {
 
+    @org.springframework.data.jpa.repository.EntityGraph(attributePaths = "permission")
     List<RolePermission> findByRole_RoleId(UUID roleId);
 
     Optional<RolePermission> findByRole_RoleIdAndPermission_PermissionId(

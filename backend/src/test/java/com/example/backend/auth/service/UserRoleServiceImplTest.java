@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,6 +29,15 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserRoleServiceImplTest {
+    @org.junit.jupiter.api.BeforeEach
+    void authorizeAdmin() {
+        org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(
+                new org.springframework.security.authentication.UsernamePasswordAuthenticationToken("admin", "unused",
+                        List.of(new org.springframework.security.core.authority.SimpleGrantedAuthority("ADMIN"))));
+    }
+    @org.junit.jupiter.api.AfterEach
+    void clearAuthentication() { org.springframework.security.core.context.SecurityContextHolder.clearContext(); }
+
 
     @Mock
     private UserRepository userRepository;
@@ -130,7 +140,7 @@ class UserRoleServiceImplTest {
         UpdateUserRoleRequest request = new UpdateUserRoleRequest();
         request.setRoleId(roleId);
 
-        when(userRepository.findById(userId))
+        when(userRepository.findByIdForUpdate(userId))
                 .thenReturn(Optional.of(user));
 
         when(roleRepository.findById(roleId))
@@ -141,7 +151,7 @@ class UserRoleServiceImplTest {
 
         userRoleService.updateUserRole(userId, request);
 
-        verify(userRoleRepository).save(
+        verify(userRoleRepository).saveAndFlush(
                 org.mockito.ArgumentMatchers.argThat(userRole ->
                         userRole.getUser().equals(user)
                                 && userRole.getRole().equals(role)
@@ -171,7 +181,7 @@ class UserRoleServiceImplTest {
         UpdateUserRoleRequest request = new UpdateUserRoleRequest();
         request.setRoleId(newRoleId);
 
-        when(userRepository.findById(userId))
+        when(userRepository.findByIdForUpdate(userId))
                 .thenReturn(Optional.of(user));
 
         when(roleRepository.findById(newRoleId))
@@ -182,11 +192,13 @@ class UserRoleServiceImplTest {
 
         userRoleService.updateUserRole(userId, request);
 
-        assertEquals(newRole, userRole.getRole());
+        assertEquals(oldRole, userRole.getRole());
         assertEquals(userId, userRole.getId().getUserId());
-        assertEquals(newRoleId, userRole.getId().getRoleId());
+        assertEquals(oldRoleId, userRole.getId().getRoleId());
 
-        verify(userRoleRepository).save(userRole);
+        verify(userRoleRepository).delete(userRole);
+        verify(userRoleRepository).flush();
+        verify(userRoleRepository).saveAndFlush(org.mockito.ArgumentMatchers.argThat(link -> link.getRole().equals(newRole)));
     }
     @Test
     void updateUserRole_shouldThrowRoleNotFound_whenRoleDoesNotExist() {
@@ -200,7 +212,7 @@ class UserRoleServiceImplTest {
         UpdateUserRoleRequest request = new UpdateUserRoleRequest();
         request.setRoleId(roleId);
 
-        when(userRepository.findById(userId))
+        when(userRepository.findByIdForUpdate(userId))
                 .thenReturn(Optional.of(user));
 
         when(roleRepository.findById(roleId))

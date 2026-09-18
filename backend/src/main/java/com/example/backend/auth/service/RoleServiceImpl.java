@@ -25,6 +25,16 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class RoleServiceImpl implements RoleService {
 
+    private static final Set<String> PROTECTED_PERMISSIONS = Set.of("USER_ROLE_VIEW", "USER_ROLE_ASSIGN", "USER_ROLE_REMOVE", "ROLE_PERMISSION_VIEW", "ROLE_PERMISSION_ASSIGN", "ROLE_PERMISSION_REMOVE");
+    private PermissionResponse permissionResponse(Permission p) {
+        var response = new PermissionResponse(p.getPermissionId(), p.getPermissionName(), p.getDescription());
+        response.setProtectedPermission(PROTECTED_PERMISSIONS.contains(p.getPermissionName()));
+        return response;
+    }
+    @Override
+    public List<PermissionResponse> getPermissions() {
+        return permissionRepository.findAll(org.springframework.data.domain.Sort.by("permissionName")).stream().map(this::permissionResponse).toList();
+    }
     private final RoleRepository roleRepository;
     private final RolePermissionRepository rolePermissionRepository;
     private final PermissionRepository permissionRepository;
@@ -58,18 +68,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<PermissionResponse> getPermissionsByRole(UUID roleId) {
 
-        return rolePermissionRepository.findByRole_RoleId(roleId)
-                .stream()
-                .map(rolePermission -> {
-                    var permission = rolePermission.getPermission();
-
-                    return new PermissionResponse(
-                            permission.getPermissionId(),
-                            permission.getPermissionName(),
-                            permission.getDescription()
-                    );
-                })
-                .toList();
+        if (!roleRepository.existsById(roleId)) throw new RoleNotFoundException("Không tìm thấy role: " + roleId);
+        return rolePermissionRepository.findByRole_RoleId(roleId).stream()
+                .map(link -> permissionResponse(link.getPermission())).toList();
     }
 
     @Override
@@ -79,7 +80,7 @@ public class RoleServiceImpl implements RoleService {
             UpdateRolePermissionsRequest request
     ) {
 
-        Role role = roleRepository.findById(roleId)
+        Role role = roleRepository.findByIdForUpdate(roleId)
                 .orElseThrow(() ->
                         new RoleNotFoundException(
                                 "Không tìm thấy role với ID: " + roleId
@@ -121,18 +122,9 @@ public class RoleServiceImpl implements RoleService {
             );
         }
 
-        Set<String> protectedPermissions = Set.of(
-                "USER_ROLE_VIEW",
-                "USER_ROLE_ASSIGN",
-                "USER_ROLE_REMOVE",
-                "ROLE_PERMISSION_VIEW",
-                "ROLE_PERMISSION_ASSIGN",
-                "ROLE_PERMISSION_REMOVE"
-        );
-
         boolean containsProtectedPermission = permissions.stream()
                 .anyMatch(permission ->
-                        protectedPermissions.contains(
+                        PROTECTED_PERMISSIONS.contains(
                                 permission.getPermissionName()
                         )
                 );
@@ -144,18 +136,12 @@ public class RoleServiceImpl implements RoleService {
             );
         }
 
-        rolePermissionRepository
-                .deleteAll(
-                        rolePermissionRepository
-                                .findByRole_RoleId(roleId)
-                );
-
-        List<RolePermission> rolePermissions = permissions.stream()
-                .map(permission ->
-                        new RolePermission(role, permission)
-                )
-                .toList();
-
-        rolePermissionRepository.saveAll(rolePermissions);
+        List<RolePermission> existing = rolePermissionRepository.findByRole_RoleId(roleId);
+        Set<UUID> current = existing.stream().map(link -> link.getPermission().getPermissionId()).collect(Collectors.toSet());
+        if (uniquePermissionIds.stream().anyMatch(id -> !current.contains(id))) ManagementAuthorization.require("ROLE_PERMISSION_ASSIGN");
+        if (current.stream().anyMatch(id -> !uniquePermissionIds.contains(id))) ManagementAuthorization.require("ROLE_PERMISSION_REMOVE");
+        rolePermissionRepository.deleteAll(existing.stream().filter(link -> !uniquePermissionIds.contains(link.getPermission().getPermissionId())).toList());
+        rolePermissionRepository.flush();
+        rolePermissionRepository.saveAllAndFlush(permissions.stream().filter(p -> !current.contains(p.getPermissionId())).map(p -> new RolePermission(role, p)).toList());
     }
 }

@@ -51,9 +51,16 @@ export function AuthProvider({ children }) {
     setIsLoading(false);
   }, []);
 
+  const refreshSession = useCallback(async () => {
+    const version = ++operation.current;
+    const session = await authApi.restoreSession();
+    if (version === operation.current) { setUser(session); setSessionError(null); }
+    return session;
+  }, []);
+
   const value = useMemo(() => ({
-    user, isAuthenticated: Boolean(user), isLoading, sessionError, signIn, signOut, isSigningOut, invalidateSession,
-  }), [user, isLoading, sessionError, signIn, signOut, isSigningOut, invalidateSession]);
+    user, isAuthenticated: Boolean(user), isLoading, sessionError, signIn, signOut, isSigningOut, invalidateSession, refreshSession,
+  }), [user, isLoading, sessionError, signIn, signOut, isSigningOut, invalidateSession, refreshSession]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -1,11 +1,20 @@
 package com.example.backend.auth.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class UpdateUserRequest {
 
+    @Size(max = 255, message = "Tên hiển thị tối đa 255 ký tự")
     private String displayName;
 
+    @NotBlank(message = "Email là bắt buộc")
+    @Email(message = "Email không hợp lệ")
+    @Size(max = 255, message = "Email tối đa 255 ký tự")
     private String email;
 
+    @Size(max = 30, message = "Số điện thoại tối đa 30 ký tự")
     private String phone;
 
     public UpdateUserRequest() {
@@ -16,7 +25,7 @@ public class UpdateUserRequest {
     }
 
     public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+        this.displayName = displayName == null ? null : displayName.trim();
     }
 
     public String getEmail() {
@@ -24,7 +33,7 @@ public class UpdateUserRequest {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email == null ? null : email.trim();
     }
 
     public String getPhone() {
@@ -32,6 +41,6 @@ public class UpdateUserRequest {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phone = phone == null ? null : phone.trim();
     }
 }

@@ -31,7 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserRoleController.class)
-@WithMockUser
+@org.springframework.context.annotation.Import(UserRoleControllerTest.MethodSecurityConfiguration.class)
+@WithMockUser(authorities = "ADMIN")
 class UserRoleControllerTest {
 
     @Autowired
@@ -204,5 +205,15 @@ class UserRoleControllerTest {
                                     """.formatted(roleId))
                 )
                 .andExpect(status().isNotFound());
+    }
+    @org.springframework.boot.test.context.TestConfiguration(proxyBeanMethods = false)
+    @org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+    static class MethodSecurityConfiguration {}
+    @Test
+    @WithMockUser(authorities = "USER_VIEW")
+    void updateRole_shouldRejectUserWithoutAssignmentPermission() throws Exception {
+        mockMvc.perform(put("/api/users/{id}/role", UUID.randomUUID()).with(csrf())
+                .contentType(MediaType.APPLICATION_JSON).content("{\"roleId\":\"" + UUID.randomUUID() + "\"}"))
+                .andExpect(status().isForbidden());
     }
 }
