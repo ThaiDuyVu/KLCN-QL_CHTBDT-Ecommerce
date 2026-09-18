@@ -1,5 +1,7 @@
 package com.example.backend.product.entity;
 
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,8 +28,12 @@ public class Brand {
     )
     private String brandName;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "status", nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
+    private BrandStatus status = BrandStatus.ACTIVE;
 
     public Brand() {
     }
@@ -54,6 +60,14 @@ public class Brand {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public BrandStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BrandStatus status) {
+        this.status = status;
     }
 
 

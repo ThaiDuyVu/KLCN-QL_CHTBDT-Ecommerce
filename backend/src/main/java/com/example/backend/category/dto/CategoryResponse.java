@@ -1,5 +1,6 @@
 package com.example.backend.category.dto;
 
+import com.example.backend.category.entity.CategoryStatus;
 import java.util.UUID;
 
 public record CategoryResponse(
@@ -7,6 +8,6 @@ public record CategoryResponse(
     String categoryName,
     String description,
     UUID parentId,
-    String status
+    CategoryStatus status
 )
 {}
