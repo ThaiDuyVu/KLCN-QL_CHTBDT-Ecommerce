@@ -2,11 +2,14 @@ import { Link, NavLink, Outlet } from 'react-router';
 import { MANAGEMENT_ROLES, projectConfig, ROLES } from '../../config/projectConfig';
 import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
+import { useCart } from '../../hooks/useCart';
 
 const navigation = [
   { to: '/', label: 'Trang chủ', end: true },
   { to: '/products', label: 'Sản phẩm' },
   { to: '/categories', label: 'Danh mục' },
+  { to: '/cart', label: 'Giỏ hàng', roles: [ROLES.CUSTOMER] },
+  { to: '/my-orders', label: 'Đơn của tôi', roles: [ROLES.CUSTOMER] },
   { to: '/orders', label: 'Đơn hàng', roles: MANAGEMENT_ROLES },
   { to: '/customers', label: 'Khách hàng', roles: MANAGEMENT_ROLES },
   { to: '/inventory', label: 'Kho hàng', roles: MANAGEMENT_ROLES },
@@ -15,6 +18,7 @@ const navigation = [
 
 export default function AppLayout() {
   const { user, signOut, isSigningOut, isLoading } = useAuth();
+  const { itemCount, isLoading: isCartLoading, error: cartError } = useCart(true);
   const [logoutError, setLogoutError] = useState('');
   async function handleLogout() {
     setLogoutError('');
@@ -44,6 +48,11 @@ export default function AppLayout() {
           <span className="badge">Bản dựng skeleton</span>
           <div className="account-actions">
             {user ? <>
+              {user.roleName === ROLES.CUSTOMER && <Link className="topbar-cart" to="/cart"
+                aria-label={`Giỏ hàng, ${itemCount} sản phẩm`} title={cartError ? 'Chưa đồng bộ được giỏ hàng' : undefined}>
+                <span aria-hidden="true">Giỏ hàng</span>
+                <span className="topbar-cart-count" aria-hidden="true">{isCartLoading && !itemCount ? '…' : itemCount}</span>
+              </Link>}
               <Link to="/account">{user.displayName || user.username} · {user.roleName}</Link>
               <button className="button button-quiet" onClick={handleLogout} disabled={isSigningOut}>
                 {isSigningOut ? 'Đang đăng xuất…' : 'Đăng xuất'}

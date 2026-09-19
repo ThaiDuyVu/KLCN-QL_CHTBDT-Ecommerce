@@ -10,6 +10,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface InventoryRepository extends JpaRepository<Inventory, UUID> {
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @Query("select i from Inventory i where i.variant.variantId = :variantId order by i.inventoryId")
+    java.util.List<Inventory> lockByVariantId(@Param("variantId") UUID variantId);
+
 
     Optional<Inventory> findByWarehouse_WarehouseIdAndVariant_VariantId(
             UUID warehouseId,

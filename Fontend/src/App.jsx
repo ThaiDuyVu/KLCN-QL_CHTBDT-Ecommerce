@@ -7,6 +7,9 @@ import ProductsPage from './features/products/pages/ProductsPage';
 import ProductDetailPage from './features/products/pages/ProductDetailPage';
 import CategoriesPage from './features/categories/pages/CategoriesPage';
 import OrdersPage from './features/orders/pages/OrdersPage';
+import OrderDetailPage from './features/orders/pages/OrderDetailPage';
+import CartPage from './features/cart/pages/CartPage';
+import CheckoutPage from './features/cart/pages/CheckoutPage';
 import CustomersPage from './features/customers/pages/CustomersPage';
 import InventoryPage from './features/inventory/pages/InventoryPage';
 import UserManagementPage from './features/user-management/pages/UserManagementPage';
@@ -28,8 +31,15 @@ export default function App() {
           <Route path="products" element={<ProductsPage />} />
           <Route path="products/:productId" element={<ProductDetailPage />} />
           <Route path="account" element={<AccountPage />} />
+          <Route element={<RequireRole roles={[ROLES.CUSTOMER]} />}>
+            <Route path="cart" element={<CartPage />} />
+            <Route path="checkout" element={<CheckoutPage />} />
+            <Route path="my-orders" element={<OrdersPage customer />} />
+            <Route path="my-orders/:orderId" element={<OrderDetailPage customer />} />
+          </Route>
           <Route element={<RequireRole roles={MANAGEMENT_ROLES} />}>
             <Route path="orders" element={<OrdersPage />} />
+            <Route path="orders/:orderId" element={<OrderDetailPage />} />
             <Route path="customers" element={<CustomersPage />} />
             <Route path="inventory" element={<InventoryPage />} />
           </Route>

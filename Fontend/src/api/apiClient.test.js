@@ -37,8 +37,18 @@ describe('Shared API transport', () => {
   });
 
   it('returns null for a no-content response', async () => {
+    document.cookie = 'XSRF-TOKEN=demo-csrf; path=/';
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(null, { status: 204 })));
     await expect(createApiClient(config)('/products', { method: 'DELETE' })).resolves.toBeNull();
+  });
+
+  it('preserves a legacy plain-text error even when its content type says JSON', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('Không đủ stock cho variant demo', {
+      status: 409, headers: { 'Content-Type': 'application/json' },
+    })));
+    await expect(createApiClient(config)('/orders/checkout')).rejects.toMatchObject({
+      name: 'ApiError', status: 409, message: 'Không đủ stock cho variant demo',
+    });
   });
 
   it('retains HTTP status and structured error data', async () => {

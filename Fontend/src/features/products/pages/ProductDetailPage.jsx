@@ -9,6 +9,8 @@ import ProductSkeleton from '../components/ProductSkeleton';
 import ProductState from '../components/ProductState';
 import ProductImage from '../components/ProductImage';
 import '../products.css';
+import AddToCart from '../../cart/components/AddToCart';
+import '../../orders/commerce.css';
 
 const money = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', minimumFractionDigits: 0, maximumFractionDigits: 2 });
 function formatPrice(value) { return value == null ? '—' : money.format(value); }
@@ -75,11 +77,12 @@ function ProductDetail({ productId, backTo }) {
             {data.variants?.length ? <div className="product-table-scroll" role="region" aria-label="Các phiên bản sản phẩm" tabIndex={0}>
               <table className="product-table"><thead><tr>
                 <th scope="col">SKU</th><th scope="col">Màu</th><th scope="col">Dung lượng</th><th scope="col">RAM</th><th scope="col">Giá bán</th>
-                {canSeeCost && <th scope="col">Giá vốn</th>}<th scope="col">Trạng thái</th>
+                {canSeeCost && <th scope="col">Giá vốn</th>}<th scope="col">Trạng thái</th>{user?.roleName === ROLES.CUSTOMER && <th scope="col">Mua hàng</th>}
               </tr></thead><tbody>{data.variants.map((variant) => <tr key={variant.variantId}>
                 <th scope="row">{variant.sku}</th><td>{variant.color || '—'}</td><td>{variant.storage || '—'}</td><td>{variant.ram || '—'}</td>
                 <td>{formatPrice(variant.price)}</td>{canSeeCost && <td>{formatPrice(variant.costPrice)}</td>}
                 <td>{variant.status === 'ACTIVE' ? 'Đang hoạt động' : 'Ngừng hoạt động'}</td>
+                {user?.roleName === ROLES.CUSTOMER && <td>{variant.status === 'ACTIVE' && data.product.status === 'ACTIVE' ? <AddToCart variantId={variant.variantId} /> : 'Ngừng bán'}</td>}
               </tr>)}</tbody></table>
             </div> : <p className="muted">Chưa có phiên bản sản phẩm.</p>}
           </section>

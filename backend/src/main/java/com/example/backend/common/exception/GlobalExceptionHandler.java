@@ -36,6 +36,11 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(com.example.backend.order.exception.CommerceException.class)
+    public ResponseEntity<ApiErrorResponse> handleCommerce(com.example.backend.order.exception.CommerceException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
+    }
+
 
     @ExceptionHandler(SpecificationNotFoundException.class)
     public ResponseEntity<String> handleSpecificationNotFound(SpecificationNotFoundException exception) {
@@ -103,13 +108,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidation(MethodArgumentNotValidException exception) {
+    public ResponseEntity<ApiErrorResponse> handleValidation(MethodArgumentNotValidException exception) {
         String message = exception.getBindingResult().getAllErrors().stream()
                 .map(error -> error.getDefaultMessage())
                 .distinct()
                 .sorted()
                 .collect(Collectors.joining("; "));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiErrorResponse(message));
     }
 
     @ExceptionHandler(InvalidProductPaginationException.class)
