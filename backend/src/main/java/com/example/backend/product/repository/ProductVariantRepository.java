@@ -12,6 +12,8 @@ import java.util.UUID;
 import java.util.Optional;
 
 public interface ProductVariantRepository extends JpaRepository<ProductVariant, UUID> {
+    @EntityGraph(attributePaths = "product")
+    List<ProductVariant> findByVariantIdIn(java.util.Collection<UUID> ids);
     boolean existsBySku(String sku);
 
     @EntityGraph(attributePaths = "product")

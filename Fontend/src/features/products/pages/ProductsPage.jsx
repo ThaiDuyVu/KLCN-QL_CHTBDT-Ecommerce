@@ -5,11 +5,15 @@ import { productApi } from '../api/productApi';
 import useProductRequest from '../hooks/useProductRequest';
 import ProductSkeleton from '../components/ProductSkeleton';
 import ProductState from '../components/ProductState';
+import ProductCardCartAction from '../components/ProductCardCartAction';
+import { useAuth } from '../../../hooks/useAuth';
+import { ROLES } from '../../../config/projectConfig';
 import '../products.css';
 
 const PAGE_SIZE = 12;
 
 export default function ProductsPage() {
+  const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const rawPage = Number(searchParams.get('page') || 1);
@@ -65,8 +69,12 @@ export default function ProductsPage() {
                   <div><dt>Thương hiệu</dt><dd>{product.brandName || '—'}</dd></div>
                 </dl>
                 <p className="muted product-summary">{product.description || 'Chưa có mô tả.'}</p>
-                <Link className="button button-quiet product-detail-link" to={`/products/${product.productId}`}
-                  state={{ listSearch: location.search }} aria-label={`Xem chi tiết ${product.productName}`}>Xem chi tiết</Link>
+                <div className="product-card-actions">
+                  <Link className="button button-quiet" to={`/products/${product.productId}`}
+                    state={{ listSearch: location.search }} aria-label={`Xem chi tiết ${product.productName}`}>Xem chi tiết</Link>
+                  {user?.roleName === ROLES.CUSTOMER && product.status === 'ACTIVE' &&
+                    <ProductCardCartAction productId={product.productId} productName={product.productName} />}
+                </div>
               </article>
             ))}
           </div>
