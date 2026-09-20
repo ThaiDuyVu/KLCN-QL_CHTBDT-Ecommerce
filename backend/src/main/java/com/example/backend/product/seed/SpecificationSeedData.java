@@ -1,6 +1,6 @@
 package com.example.backend.product.seed;
 
-import com.example.backend.product.ProductRepository;
+import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.dto.SpecificationRequest;
 import com.example.backend.product.entity.Product;
 import com.example.backend.product.repository.SpecificationRepository;

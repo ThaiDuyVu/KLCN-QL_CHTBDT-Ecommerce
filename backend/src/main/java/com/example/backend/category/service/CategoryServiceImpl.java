@@ -5,9 +5,10 @@ import com.example.backend.category.dto.CategoryRequest;
 import com.example.backend.category.dto.CategoryResponse;
 import com.example.backend.category.entity.Category;
 import com.example.backend.category.exception.CategoryInUseException;
+import com.example.backend.common.exception.BadRequestException;
 import com.example.backend.category.exception.CategoryNotFoundException;
 import com.example.backend.category.exception.InvalidCategoryParentException;
-import com.example.backend.product.ProductRepository;
+import com.example.backend.product.repository.ProductRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<CategoryResponse> getRootCategories() {
+        return categoryRepository.findByParentIsNull().stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    @Override
+    public List<CategoryResponse> getCategoryChildren(UUID parentId) {
+        return categoryRepository.findByParent_CategoryId(parentId).stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    @Override
     public CategoryResponse getCategoryById(UUID id) {
         return mapToResponse(findCategoryById(id));
     }
@@ -51,9 +66,50 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public CategoryResponse updateCategory(UUID id, CategoryRequest request) {
-        Category category = findCategoryById(id);
-        applyRequest(category, request);
-        return mapToResponse(saveCategory(category));
+        Category existingCategory = categoryRepository.findById(id)
+            .orElseThrow(() -> new BadRequestException("Không tìm thấy danh mục để sửa!"));
+
+        existingCategory.setCategoryName(request.categoryName());
+        existingCategory.setDescription(request.description());
+
+        if (request.status() != null) {
+            existingCategory.setStatus(request.status());
+        }
+        if (request.parentId() != null) {
+                Category parent = categoryRepository.findById(request.parentId())
+                    .orElseThrow(() -> new BadRequestException("Không tìm thấy danh mục cha!"));
+            // THuật toán chống vòng lặp like A -> B -> A in Service
+                validateParentCycle(existingCategory, parent);
+            existingCategory.setParent(parent);
+        } else {
+            existingCategory.setParent(null); // Nếu khách muốn gỡ danh mục cha
+        }
+
+        Category updated = categoryRepository.save(existingCategory);
+        return mapToResponse(updated);
+    }
+
+    // Kiểm tra vòng lặp khi thay đổi parent: nếu parent mới là con của currentCategory thì lỗi
+    private void validateParentCycle(Category currentCategory, Category newParent) {
+        if (newParent == null) return; // nếu chuyển thành root (update thành danh mục gốc) => an toàn
+
+        // Nếu parent mới chính là bản thân nó
+        if (currentCategory.getCategoryId().equals(newParent.getCategoryId())) {
+            throw new BadRequestException("Không thể chọn danh mục hiện tại làm danh mục cha.");
+        }
+
+        // Truy ngược lên các cấp parent để check vòng lặp. Sử dụng repository để đảm bảo fetch khi LAZY.
+        Category checkNode = newParent;
+        while (checkNode.getParent() != null) {
+            UUID parentId = checkNode.getParent().getCategoryId();
+            if (parentId.equals(currentCategory.getCategoryId())) {
+                throw new BadRequestException("Phát hiện vòng lặp: Không thể chọn danh mục con làm danh mục cha.");
+            }
+            // Tiến cấp tiếp parent trên DB để đảm bảo trường parent được khởi tạo (phòng LAZY)
+            final Category next = categoryRepository.findById(parentId).orElse(null);
+            if (next == null) break;
+            checkNode = next;
+        }
     }
 
     @Override
@@ -68,7 +124,6 @@ public class CategoryServiceImpl implements CategoryService {
         }
         try {
             categoryRepository.delete(category);
-            // Catch FK RESTRICT failures here, including references created after the checks.
             categoryRepository.flush();
         } catch (DataIntegrityViolationException exception) {
             throw new CategoryInUseException(
@@ -102,7 +157,6 @@ public class CategoryServiceImpl implements CategoryService {
         validateParent(category, parent);
         category.setCategoryName(request.categoryName().trim());
         category.setDescription(request.description());
-        // A null parentId on PUT removes the parent; status remains optional.
         category.setParent(parent);
         if (request.status() != null) {
             category.setStatus(request.status());

@@ -1,6 +1,7 @@
 package com.example.backend.product;
 
 import com.example.backend.product.entity.Product;
+import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.category.entity.Category;
 import com.example.backend.category.CategoryRepository;
 import org.springframework.boot.CommandLineRunner;

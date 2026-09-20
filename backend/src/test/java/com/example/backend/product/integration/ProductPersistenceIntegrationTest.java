@@ -1,18 +1,18 @@
 package com.example.backend.product.integration;
 
-import com.example.backend.product.entity.ProductVariantStatus;
-import com.example.backend.product.entity.BrandStatus;
-import com.example.backend.product.entity.ProductStatus;
-import com.example.backend.product.BrandRepository;
-import com.example.backend.product.ProductRepository;
 import com.example.backend.product.dto.ProductRequest;
 import com.example.backend.product.entity.Brand;
+import com.example.backend.product.entity.BrandStatus;
 import com.example.backend.product.entity.Product;
 import com.example.backend.product.entity.ProductImage;
+import com.example.backend.product.entity.ProductStatus;
 import com.example.backend.product.entity.ProductVariant;
+import com.example.backend.product.entity.ProductVariantStatus;
 import com.example.backend.product.entity.Specification;
 import com.example.backend.product.exception.ProductInUseException;
 import com.example.backend.product.exception.ProductReferenceNotFoundException;
+import com.example.backend.product.repository.BrandRepository;
+import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.service.ProductService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
