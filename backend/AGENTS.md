@@ -202,6 +202,16 @@ Do not rename or redesign existing APIs solely for stylistic reasons.
 
 Do not expose Spring Data `Page<T>` directly if dedicated pagination DTOs are already used.
 
+List endpoints for resources that may contain large datasets (including products and brands)
+must use database-level pagination rather than unbounded get-all queries.
+Do not paginate every GET or list endpoint automatically. Small child collections scoped
+to one product (images, specifications, variants) should return a plain list without pagination.
+Choose pagination based on expected dataset size and the user flow.
+For endpoints that need pagination, follow the existing contract: zero-based `page` (default 0),
+`size` (default 20, range 1–100), a deterministic sort with a unique tie-breaker,
+and a dedicated DTO containing `content`, `page`, `size`, `totalElements`, and `totalPages`.
+Reject invalid pagination parameters with HTTP 400, including offsets beyond JPA's int limit.
+
 ---
 
 ## 10. Database Schema — LOCKED

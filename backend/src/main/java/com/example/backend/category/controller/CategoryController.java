@@ -1,12 +1,15 @@
 package com.example.backend.category.controller;
 
+import com.example.backend.common.security.RequireAnyAuthority;
 import com.example.backend.category.dto.CategoryRequest;
 import com.example.backend.category.dto.CategoryResponse;
 import com.example.backend.category.service.CategoryService;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/categories")
@@ -19,8 +22,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponse> create(@RequestBody CategoryRequest request) {
+    @RequireAnyAuthority({"ADMIN", "MANAGER"})
+    public ResponseEntity<CategoryResponse> create(@Valid @RequestBody CategoryRequest request) {
         return ResponseEntity.ok(categoryService.createCategory(request));
+    }
+    @GetMapping
+    public ResponseEntity<List<CategoryResponse>> getAll() {
+        return ResponseEntity.ok(categoryService.getAllCategories());
     }
     //api xem chi tiet danh mục theo ID
     @GetMapping("/{id}")
@@ -30,12 +38,14 @@ public class CategoryController {
 
     //api cap nhat danh mục
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryResponse> update(@PathVariable UUID id, @RequestBody CategoryRequest request) {
+    @RequireAnyAuthority({"ADMIN", "MANAGER"})
+    public ResponseEntity<CategoryResponse> update(@PathVariable UUID id, @Valid @RequestBody CategoryRequest request) {
         return ResponseEntity.ok(categoryService.updateCategory(id, request));
     }
 
     //api xóa danh mục
     @DeleteMapping("/{id}")
+    @RequireAnyAuthority({"ADMIN", "MANAGER"})
     public ResponseEntity<String> delete(@PathVariable UUID id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.ok("Xóa danh mục thành công!");
