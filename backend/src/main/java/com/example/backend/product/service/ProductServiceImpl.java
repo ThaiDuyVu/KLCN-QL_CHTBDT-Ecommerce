@@ -1,10 +1,10 @@
 package com.example.backend.product.service;
 
 import com.example.backend.product.entity.Product;
+import com.example.backend.product.repository.BrandRepository;
+import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.entity.Brand;
 import com.example.backend.category.entity.Category;
-import com.example.backend.product.ProductRepository;
-import com.example.backend.product.BrandRepository;
 import com.example.backend.category.CategoryRepository;
 import com.example.backend.product.dto.ProductRequest;
 import com.example.backend.product.dto.ProductResponse;
