@@ -10,11 +10,11 @@ import java.util.UUID;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
-    List<Category> findByParentIsNull();// truy van lay danh muc goc khong parent 
+    List<Category> findByParentIsNull(); // truy van lay danh muc goc khong parent
 
-    List<Category> findByParent_CategoryId(UUID parentId);// truy van lay danh muc con theo id của parent
+    List<Category> findByParent_CategoryId(UUID parentId); // truy van lay danh muc con theo id của parent
 
-    boolean existsByParent_CategoryId(UUID parentId); // kiem tra rang buoc xem danh muc theo id cua parent de biet no co dang lam cha cua danh muc khac hay khong    
+    boolean existsByParent_CategoryId(UUID parentId); // kiem tra rang buoc xem danh muc theo id cua parent de biet no co dang lam cha cua danh muc khac hay khong
 
     Optional<Category> findFirstByCategoryNameAndParentIsNullOrderByCategoryIdAsc(String categoryName);
 

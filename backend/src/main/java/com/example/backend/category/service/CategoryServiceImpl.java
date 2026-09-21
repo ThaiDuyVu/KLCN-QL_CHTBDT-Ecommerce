@@ -18,11 +18,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
 public class CategoryServiceImpl implements CategoryService {
-
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
 
@@ -41,7 +41,21 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryResponse> getAllCategories() {
-        return categoryRepository.findAll().stream().map(this::mapToResponse).toList();
+        return categoryRepository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryResponse> getRootCategories() {
+        return categoryRepository.findByParentIsNull().stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryResponse> getCategoryChildren(UUID parentId) {
+        return categoryRepository.findByParent_CategoryId(parentId).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -155,7 +169,7 @@ public class CategoryServiceImpl implements CategoryService {
     private void applyRequest(Category category, CategoryRequest request) {
         Category parent = request.parentId() == null ? null : findCategoryById(request.parentId());
         validateParent(category, parent);
-        category.setCategoryName(request.categoryName().trim());
+        category.setCategoryName(request.categoryName() == null ? null : request.categoryName().trim());
         category.setDescription(request.description());
         category.setParent(parent);
         if (request.status() != null) {
