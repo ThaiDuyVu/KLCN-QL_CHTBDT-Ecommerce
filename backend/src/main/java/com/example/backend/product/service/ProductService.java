@@ -10,7 +10,10 @@ public interface ProductService {
     ProductResponse createProduct(ProductRequest request);
     ProductPageResponse getProducts(int page, int size);
     ProductPageResponse getProducts(int page, int size, String keyword, UUID categoryId, UUID brandId, ProductStatus status);
+    ProductPageResponse getProducts(int page, int size, String keyword, UUID categoryId, UUID brandId,
+                                    ProductStatus status, UUID warehouseId);
     ProductResponse getProductById(UUID id);
+    ProductResponse getProductById(UUID id, UUID warehouseId);
     ProductResponse updateProduct(UUID id, ProductRequest request);
     void deleteProduct(UUID id);
 }

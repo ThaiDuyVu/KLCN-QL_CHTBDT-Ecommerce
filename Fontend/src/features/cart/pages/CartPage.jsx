@@ -26,20 +26,22 @@ export default function CartPage() {
     {actionError && <p role="alert" className="auth-alert">{actionError}</p>}{notice && <p role="status">{notice}</p>}
     <CommerceState loading={isLoading} error={error} retry={retry} />
     {!isLoading && !error && (data?.items?.length ? <section className="panel commerce-section">
+      <p><strong>Chi nhánh xử lý:</strong> {data.warehouseName || 'Chưa chọn chi nhánh'}</p>
       {data.items.map((item) => <article className="commerce-cart-item" key={item.cartItemId}>
         <div><strong>{item.productName}</strong><p>{item.sku}</p><p>{money(item.unitPrice)} / sản phẩm · {money(item.lineTotal)}</p></div>
+        <p className="muted">Khả dụng tại chi nhánh: {item.availableQuantity ?? '—'}</p>
         <QuantityEditor key={`${item.cartItemId}:${item.quantity}`} item={item} disabled={busy} save={(quantity) => change(() => cartApi.quantity(item.cartItemId, quantity))} />
         <button className="button button-quiet" disabled={busy} onClick={() => { if (window.confirm(`Xóa ${item.sku} khỏi giỏ?`)) change(() => cartApi.remove(item.cartItemId)); }}>Xóa</button>
       </article>)}
       <p><strong>Tạm tính: {money(data.subtotal)}</strong></p>
-      {busy ? <p role="status">Đang cập nhật…</p> : <Link className="button" to="/checkout">Tiến hành checkout</Link>}
+      {busy ? <p role="status">Đang cập nhật…</p> : data.warehouseId ? <Link className="button" to="/checkout">Tiến hành checkout</Link> : <p className="auth-alert">Hãy chọn chi nhánh trước khi checkout.</p>}
     </section> : <section className="panel commerce-section"><p>Giỏ hàng trống.</p><Link to="/products">Chọn sản phẩm</Link></section>)}
   </>;
 }
 function QuantityEditor({ item, disabled, save }) {
   const [value, setValue] = useState(item.quantity);
   return <form className="commerce-inline" onSubmit={(e) => { e.preventDefault(); save(Number(value)); }}>
-    <label>Số lượng {item.sku}<input type="number" min="1" max="2147483647" step="1" required value={value} disabled={disabled} onChange={(e) => setValue(e.target.value)} /></label>
+    <label>Số lượng {item.sku}<input type="number" min="1" max={item.availableQuantity ?? 2147483647} step="1" required value={value} disabled={disabled} onChange={(e) => setValue(e.target.value)} /></label>
     <button className="button button-quiet" disabled={disabled || Number(value) === item.quantity}>Cập nhật</button>
   </form>;
 }

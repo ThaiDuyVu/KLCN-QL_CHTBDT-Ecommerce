@@ -28,8 +28,14 @@ function Detail({ customer, orderId }) {
     <CommerceState loading={isLoading} error={error} retry={retry} />
     {!isLoading && !error && data && <section className="panel commerce-section">
       <h2>{data.orderCode}</h2><p>{date(data.orderDate)} · <strong>{statusLabels[data.status]}</strong></p>
+      <p><strong>Chi nhánh xử lý:</strong> {data.warehouseName || 'Chưa xác định'}</p>
       <p>Người nhận: {data.recipientName} · {data.recipientPhone}</p><p>Địa chỉ: {data.shippingAddress}</p>{data.note && <p>Ghi chú: {data.note}</p>}
-      <h3>Sản phẩm</h3>{data.items?.map((item) => <p key={item.orderItemId}>{item.productName} · {item.sku} × {item.quantity} · {money(item.finalUnitPrice)} / sản phẩm · {money(item.finalUnitPrice * item.quantity)}</p>)}
+      <h3>Sản phẩm</h3>{data.items?.map((item) => <article className="commerce-order-item" key={item.orderItemId}>
+        <p>{item.productName} · {item.sku} × {item.quantity} · {money(item.finalUnitPrice)} / sản phẩm · {money(item.finalUnitPrice * item.quantity)}</p>
+        {item.trackingType && item.trackingType !== 'NONE' && (item.serialNumber ? <p className="muted">
+          Serial: <strong>{item.serialNumber}</strong>{item.imeiNumbers?.length ? ` · IMEI: ${item.imeiNumbers.join(', ')}` : ''}
+        </p> : <p className="muted">Thiết bị cụ thể sẽ được cấp khi đơn chuyển sang Đang xử lý.</p>)}
+      </article>)}
       <p>Tạm tính: {money(data.subtotal)}</p><p>Giảm giá: {money(data.discountAmount)} · Phí giao hàng: {money(data.shippingFee)}</p><strong>Tổng tiền: {money(data.totalAmount)}</strong>
       <p>Thanh toán: {data.payment?.paymentMethod} · {data.payment?.status === 'PAID' ? 'Đã thanh toán' : 'Chờ thanh toán'}</p>
       <div className="commerce-inline">{data.allowedStatuses?.map((status) => <button key={status} className="button" disabled={busy} onClick={() => update(status)}>{busy ? 'Đang cập nhật…' : actionLabels[status]}</button>)}</div>

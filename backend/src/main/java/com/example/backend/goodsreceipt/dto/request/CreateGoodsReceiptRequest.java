@@ -2,6 +2,7 @@ package com.example.backend.goodsreceipt.dto.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.UUID;
 
 public class CreateGoodsReceiptRequest {
 
-    @NotNull(message = "Receipt code is required")
+    @NotBlank(message = "Receipt code is required")
     @Size(max = 50, message = "Receipt code must not exceed 50 characters")
     private String receiptCode;
 
@@ -20,7 +21,6 @@ public class CreateGoodsReceiptRequest {
     @NotNull(message = "Warehouse ID is required")
     private UUID warehouseId;
 
-    @NotNull(message = "Employee ID is required")
     private UUID employeeId;
 
     private List<@Valid CreateGoodsReceiptItemRequest> items = new ArrayList<>();
@@ -29,7 +29,7 @@ public class CreateGoodsReceiptRequest {
     }
 
     public String getReceiptCode() { return receiptCode; }
-    public void setReceiptCode(String receiptCode) { this.receiptCode = receiptCode; }
+    public void setReceiptCode(String receiptCode) { this.receiptCode = receiptCode == null ? null : receiptCode.trim(); }
     public UUID getSupplierId() { return supplierId; }
     public void setSupplierId(UUID supplierId) { this.supplierId = supplierId; }
     public UUID getWarehouseId() { return warehouseId; }

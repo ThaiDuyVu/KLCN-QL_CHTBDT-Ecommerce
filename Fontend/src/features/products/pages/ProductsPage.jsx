@@ -8,12 +8,14 @@ import ProductState from '../components/ProductState';
 import ProductCardCartAction from '../components/ProductCardCartAction';
 import { useAuth } from '../../../hooks/useAuth';
 import { ROLES } from '../../../config/projectConfig';
+import { useWarehouse } from '../../../hooks/useWarehouse';
 import '../products.css';
 
 const PAGE_SIZE = 12;
 
 export default function ProductsPage() {
   const { user } = useAuth();
+  const { selectedWarehouse, selectedWarehouseId, error: warehouseError } = useWarehouse();
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const rawPage = Number(searchParams.get('page') || 1);
@@ -21,8 +23,8 @@ export default function ProductsPage() {
   const keyword = (searchParams.get('keyword') || '').trim();
   const rawStatus = searchParams.get('status') || '';
   const status = ['ACTIVE', 'INACTIVE'].includes(rawStatus) ? rawStatus : '';
-  const load = useCallback((signal) => productApi.list({ page, size: PAGE_SIZE, keyword, status }, signal), [page, keyword, status]);
-  const { data, error, isLoading, retry } = useProductRequest(JSON.stringify([page, keyword, status]), load);
+  const load = useCallback((signal) => productApi.list({ page, size: PAGE_SIZE, keyword, status, warehouseId: selectedWarehouseId }, signal), [page, keyword, selectedWarehouseId, status]);
+  const { data, error, isLoading, retry } = useProductRequest(JSON.stringify([page, keyword, status, selectedWarehouseId]), load);
   useEffect(() => { window.scrollTo(0, 0); }, [page, keyword, status]);
 
   function search(event) {
@@ -44,6 +46,9 @@ export default function ProductsPage() {
   return (
     <>
       <PageHeader title="Sản phẩm" description="Xem danh sách thiết bị và thông tin chi tiết." />
+      {user?.roleName === ROLES.CUSTOMER && <p className={warehouseError ? 'auth-alert' : 'panel product-warehouse-notice'}>
+        {warehouseError || (selectedWarehouse ? `Tồn kho đang hiển thị tại chi nhánh: ${selectedWarehouse.warehouseName}.` : 'Hãy chọn chi nhánh ở thanh trên trước khi mua hàng.')}
+      </p>}
       <form className="panel product-filters" onSubmit={search} key={`${keyword}:${status}`} role="search" aria-label="Tìm sản phẩm">
         <label>Tên hoặc mô tả<input type="search" name="keyword" defaultValue={keyword} placeholder="Tìm sản phẩm…" /></label>
         <label>Trạng thái<select name="status" defaultValue={status}>
@@ -69,11 +74,15 @@ export default function ProductsPage() {
                   <div><dt>Thương hiệu</dt><dd>{product.brandName || '—'}</dd></div>
                 </dl>
                 <p className="muted product-summary">{product.description || 'Chưa có mô tả.'}</p>
+                {selectedWarehouseId && <p className="product-availability">
+                  {Number(product.availableQuantity || 0) > 0 ? `Còn ${product.availableQuantity} sản phẩm tại chi nhánh` : 'Hết hàng tại chi nhánh'}
+                </p>}
                 <div className="product-card-actions">
                   <Link className="button button-quiet" to={`/products/${product.productId}`}
                     state={{ listSearch: location.search }} aria-label={`Xem chi tiết ${product.productName}`}>Xem chi tiết</Link>
                   {user?.roleName === ROLES.CUSTOMER && product.status === 'ACTIVE' &&
-                    <ProductCardCartAction productId={product.productId} productName={product.productName} />}
+                    <ProductCardCartAction key={`${product.productId}:${selectedWarehouseId}`} productId={product.productId} productName={product.productName}
+                      disabled={!selectedWarehouseId || Number(product.availableQuantity || 0) < 1} />}
                 </div>
               </article>
             ))}

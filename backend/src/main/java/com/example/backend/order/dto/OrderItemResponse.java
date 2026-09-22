@@ -15,6 +15,10 @@ public class OrderItemResponse {
     private BigDecimal finalUnitPrice;
     private String sku;
     private String productName;
+    private UUID serialId;
+    private String serialNumber;
+    private List<String> imeiNumbers;
+    private com.example.backend.product.entity.ProductTrackingType trackingType;
     public OrderItemResponse() {}
     public UUID getOrderItemId() { return orderItemId; }
     public void setOrderItemId(UUID value) { this.orderItemId = value; }
@@ -32,4 +36,12 @@ public class OrderItemResponse {
     public void setSku(String value) { this.sku = value; }
     public String getProductName() { return productName; }
     public void setProductName(String value) { this.productName = value; }
+    public UUID getSerialId() { return serialId; }
+    public void setSerialId(UUID value) { this.serialId = value; }
+    public String getSerialNumber() { return serialNumber; }
+    public void setSerialNumber(String value) { this.serialNumber = value; }
+    public List<String> getImeiNumbers() { return imeiNumbers; }
+    public void setImeiNumbers(List<String> value) { this.imeiNumbers = value; }
+    public com.example.backend.product.entity.ProductTrackingType getTrackingType() { return trackingType; }
+    public void setTrackingType(com.example.backend.product.entity.ProductTrackingType value) { this.trackingType = value; }
 }

@@ -14,6 +14,8 @@ public class Order {
     private UUID orderId;
     @Column(name = "customer_id")
     private UUID customerId;
+    @Column(name = "warehouse_id")
+    private UUID warehouseId;
     @Column(name = "order_code")
     private String orderCode;
     @Column(name = "order_date")
@@ -41,6 +43,8 @@ public class Order {
     public void setOrderId(UUID value) { this.orderId = value; }
     public UUID getCustomerId() { return customerId; }
     public void setCustomerId(UUID value) { this.customerId = value; }
+    public UUID getWarehouseId() { return warehouseId; }
+    public void setWarehouseId(UUID value) { this.warehouseId = value; }
     public String getOrderCode() { return orderCode; }
     public void setOrderCode(String value) { this.orderCode = value; }
     public OffsetDateTime getOrderDate() { return orderDate; }

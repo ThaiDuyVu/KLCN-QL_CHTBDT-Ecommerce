@@ -14,6 +14,8 @@ public class Cart {
     private UUID cartId;
     @Column(name = "customer_id")
     private UUID customerId;
+    @Column(name = "warehouse_id")
+    private UUID warehouseId;
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
     @Column(name = "updated_at")
@@ -25,6 +27,8 @@ public class Cart {
     public void setCartId(UUID value) { this.cartId = value; }
     public UUID getCustomerId() { return customerId; }
     public void setCustomerId(UUID value) { this.customerId = value; }
+    public UUID getWarehouseId() { return warehouseId; }
+    public void setWarehouseId(UUID value) { this.warehouseId = value; }
     public OffsetDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(OffsetDateTime value) { this.createdAt = value; }
     public OffsetDateTime getUpdatedAt() { return updatedAt; }

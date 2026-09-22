@@ -14,13 +14,15 @@ async function request(path, signal) {
 }
 
 export const productApi = {
-  list({ page = 0, size = 12, keyword = '', status = '' }, signal) {
+  list({ page = 0, size = 12, keyword = '', status = '', warehouseId = '' }, signal) {
     const query = new URLSearchParams({ page: String(page), size: String(size) });
     if (keyword) query.set('keyword', keyword);
     if (status) query.set('status', status);
+    if (warehouseId) query.set('warehouseId', warehouseId);
     return request(`/v1/products?${query}`, signal);
   },
-  detail(productId, signal) {
-    return request(`/v1/products/${encodeURIComponent(productId)}/detail`, signal);
+  detail(productId, warehouseId, signal) {
+    const query = warehouseId ? `?warehouseId=${encodeURIComponent(warehouseId)}` : '';
+    return request(`/v1/products/${encodeURIComponent(productId)}/detail${query}`, signal);
   },
 };

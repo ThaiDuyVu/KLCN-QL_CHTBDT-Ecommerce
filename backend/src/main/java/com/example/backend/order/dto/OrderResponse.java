@@ -9,6 +9,8 @@ import jakarta.validation.constraints.*;
 public class OrderResponse {
     private UUID orderId;
     private UUID customerId;
+    private UUID warehouseId;
+    private String warehouseName;
     private String orderCode;
     private OffsetDateTime orderDate;
     private String recipientName;
@@ -28,6 +30,10 @@ public class OrderResponse {
     public void setOrderId(UUID value) { this.orderId = value; }
     public UUID getCustomerId() { return customerId; }
     public void setCustomerId(UUID value) { this.customerId = value; }
+    public UUID getWarehouseId() { return warehouseId; }
+    public void setWarehouseId(UUID value) { this.warehouseId = value; }
+    public String getWarehouseName() { return warehouseName; }
+    public void setWarehouseName(String value) { this.warehouseName = value; }
     public String getOrderCode() { return orderCode; }
     public void setOrderCode(String value) { this.orderCode = value; }
     public OffsetDateTime getOrderDate() { return orderDate; }
