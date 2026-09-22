@@ -64,6 +64,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(com.example.backend.order.exception.CommerceException.class)
     public ResponseEntity<ApiErrorResponse> handleCommerce(com.example.backend.order.exception.CommerceException exception) {
         return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
+    }
+
     @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
     public ResponseEntity<String> handleAccessDenied(org.springframework.security.access.AccessDeniedException exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Bạn không có quyền thực hiện thao tác này");

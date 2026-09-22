@@ -35,9 +35,9 @@ export default function App() {
       <Route path="login" element={<LoginPage />} />
       <Route element={<AppLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="categories" element={<CategoriesPage />} />
         <Route path="forbidden" element={<ForbiddenPage />} />
         <Route element={<RequireAuth />}>
+          <Route path="categories" element={<CategoriesPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="products/:productId" element={<ProductDetailPage />} />
           <Route path="account" element={<AccountPage />} />
