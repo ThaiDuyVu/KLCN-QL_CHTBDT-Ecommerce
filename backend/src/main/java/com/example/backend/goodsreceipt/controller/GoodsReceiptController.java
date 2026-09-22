@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +61,14 @@ public class GoodsReceiptController {
                 .body(goodsReceiptService.createGoodsReceipt(request));
     }
 
+    @PutMapping("/{receiptId}")
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    public ResponseEntity<GoodsReceiptResponse> updateGoodsReceipt(
+            @PathVariable UUID receiptId,
+            @Valid @RequestBody CreateGoodsReceiptRequest request) {
+        return ResponseEntity.ok(goodsReceiptService.updateGoodsReceipt(receiptId, request));
+    }
+
     @PatchMapping("/{receiptId}/status")
     @RequireAnyAuthority({"ADMIN", "MANAGER"})
     public ResponseEntity<GoodsReceiptResponse> updateGoodsReceiptStatus(
@@ -70,4 +79,5 @@ public class GoodsReceiptController {
                 goodsReceiptService.updateGoodsReceiptStatus(receiptId, request.getStatus())
         );
     }
+
 }

@@ -43,17 +43,19 @@ public class ProductController {
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) UUID categoryId,
             @RequestParam(required = false) UUID brandId,
-            @RequestParam(required = false) ProductStatus status
+            @RequestParam(required = false) ProductStatus status,
+            @RequestParam(required = false) UUID warehouseId
     ) {
-        if (keyword == null && categoryId == null && brandId == null && status == null) {
+        if (keyword == null && categoryId == null && brandId == null && status == null && warehouseId == null) {
             return ResponseEntity.ok(productService.getProducts(page, size));
         }
-        return ResponseEntity.ok(productService.getProducts(page, size, keyword, categoryId, brandId, status));
+        return ResponseEntity.ok(productService.getProducts(page, size, keyword, categoryId, brandId, status, warehouseId));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getById(@PathVariable UUID id) {
-        return ResponseEntity.ok(productService.getProductById(id));
+    public ResponseEntity<ProductResponse> getById(@PathVariable UUID id,
+                                                   @RequestParam(required = false) UUID warehouseId) {
+        return ResponseEntity.ok(productService.getProductById(id, warehouseId));
     }
 
     @PutMapping("/{id}")

@@ -9,10 +9,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Table(name = "goods_receipt_items")
@@ -37,6 +42,10 @@ public class GoodsReceiptItem {
     @Column(name = "unit_cost", nullable = false, precision = 15, scale = 2)
     private BigDecimal unitCost;
 
+    @OneToMany(mappedBy = "receiptItem", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 100)
+    private List<GoodsReceiptItemDevice> devices = new ArrayList<>();
+
     public GoodsReceiptItem() {
     }
 
@@ -50,4 +59,6 @@ public class GoodsReceiptItem {
     public void setQuantity(Integer quantity) { this.quantity = quantity; }
     public BigDecimal getUnitCost() { return unitCost; }
     public void setUnitCost(BigDecimal unitCost) { this.unitCost = unitCost; }
+    public List<GoodsReceiptItemDevice> getDevices() { return devices; }
+    public void addDevice(GoodsReceiptItemDevice device) { devices.add(device); device.setReceiptItem(this); }
 }

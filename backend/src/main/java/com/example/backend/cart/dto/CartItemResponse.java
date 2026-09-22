@@ -14,6 +14,7 @@ public class CartItemResponse {
     private Integer quantity;
     private BigDecimal unitPrice;
     private BigDecimal lineTotal;
+    private Integer availableQuantity;
     public CartItemResponse() {}
     public UUID getCartItemId() { return cartItemId; }
     public void setCartItemId(UUID value) { this.cartItemId = value; }
@@ -29,4 +30,6 @@ public class CartItemResponse {
     public void setUnitPrice(BigDecimal value) { this.unitPrice = value; }
     public BigDecimal getLineTotal() { return lineTotal; }
     public void setLineTotal(BigDecimal value) { this.lineTotal = value; }
+    public Integer getAvailableQuantity() { return availableQuantity; }
+    public void setAvailableQuantity(Integer value) { this.availableQuantity = value; }
 }

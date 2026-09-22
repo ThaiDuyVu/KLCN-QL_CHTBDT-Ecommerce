@@ -1,0 +1,23 @@
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router';
+import PageHeader from '../../../components/ui/PageHeader';
+import { warrantyApi } from '../api/warrantyApi';
+import { formatDate, warrantyStatus } from '../warrantyFormat';
+import '../warranty.css';
+
+export default function MyWarrantiesPage() {
+  const [params, setParams] = useSearchParams(); const page = Math.max(0, Number(params.get('page') || 0));
+  const [data, setData] = useState(null); const [error, setError] = useState(''); const [loading, setLoading] = useState(true);
+  const [lookupError, setLookupError] = useState(''); const [looking, setLooking] = useState(false); const navigate = useNavigate();
+  useEffect(() => { const c = new AbortController(); warrantyApi.myWarranties(page, c.signal)
+    .then(setData).catch(e => { if (e.name !== 'AbortError') setError(e.message); }).finally(() => setLoading(false)); return () => c.abort(); }, [page]);
+  async function lookup(e) { e.preventDefault(); const code = String(new FormData(e.currentTarget).get('code') || '').trim(); if (!code) return;
+    setLooking(true); setLookupError(''); try { const result = await warrantyApi.myLookup(code); navigate(`/my-warranties/${result.warrantyId}`); }
+    catch (nextError) { setLookupError(nextError.message); } finally { setLooking(false); } }
+  return <><PageHeader title="Bảo hành của tôi" description="Quyền bảo hành được tạo khi thiết bị Serial/IMEI đã giao thành công." />
+    <div className="warranty-links"><Link className="button button-quiet" to="/my-warranty-tickets">Yêu cầu bảo hành của tôi</Link></div>
+    <form className="panel warranty-toolbar" onSubmit={lookup}><label>Tra Serial hoặc IMEI<input name="code" placeholder="Nhập Serial / IMEI" /></label><button className="button" disabled={looking}>{looking ? 'Đang tìm…' : 'Tra cứu'}</button></form>
+    {lookupError && <p className="auth-alert" role="alert">{lookupError}</p>}{loading && <p role="status">Đang tải bảo hành…</p>}{error && <p className="auth-alert" role="alert">{error}</p>}
+    {!loading && !error && (data?.content?.length ? <section className="panel warranty-table-wrap"><table className="product-table"><thead><tr><th>Thiết bị</th><th>Serial / IMEI</th><th>Thời hạn</th><th>Trạng thái</th><th></th></tr></thead><tbody>{data.content.map(row => <tr key={row.warrantyId}><td>{row.productName}<br /><span className="muted">{row.sku}</span></td><td>{row.serialNumber}<br /><span className="muted">{row.imeiNumbers?.join(', ') || 'Không có IMEI'}</span></td><td>{formatDate(row.startDate)} – {formatDate(row.endDate)}</td><td className={`warranty-status ${row.status === 'EXPIRED' ? 'expired' : ''}`}>{warrantyStatus[row.status]}</td><td><Link className="button button-quiet" to={`/my-warranties/${row.warrantyId}`}>Chi tiết</Link></td></tr>)}</tbody></table></section> : <section className="panel empty-state"><p>Chưa có thiết bị được cấp quyền bảo hành.</p></section>)}
+    {data && <nav className="inventory-pagination"><button className="button button-quiet" disabled={page <= 0} onClick={() => setParams({ page: String(page - 1) })}>Trang trước</button><span>Trang {page + 1}/{Math.max(data.totalPages, 1)}</span><button className="button button-quiet" disabled={page + 1 >= data.totalPages} onClick={() => setParams({ page: String(page + 1) })}>Trang sau</button></nav>}</>;
+}

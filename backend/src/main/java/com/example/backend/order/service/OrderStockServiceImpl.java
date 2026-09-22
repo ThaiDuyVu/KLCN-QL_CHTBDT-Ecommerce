@@ -12,22 +12,20 @@ public class OrderStockServiceImpl implements OrderStockService {
     public OrderStockServiceImpl(InventoryRepository inventory) { this.inventory = inventory; }
     // All callers hold an order/customer lock and use the same global variant order.
     @Transactional(propagation = Propagation.MANDATORY)
-    public void apply(Map<UUID, Integer> quantities, Action action) {
+    public void apply(UUID warehouseId, Map<UUID, Integer> quantities, Action action) {
+        if (warehouseId == null) throw new CommerceException(409, "Đơn hàng chưa có chi nhánh fulfillment");
         for (var id : quantities.keySet().stream().sorted().toList()) {
-            var rows = inventory.lockByVariantId(id); long available = 0;
-            for (var row : rows) available += action == Action.RESERVE ? (long) row.getQuantity() - row.getReservedQuantity() : row.getReservedQuantity();
+            var row = inventory.lockByWarehouseAndVariant(warehouseId, id)
+                    .orElseThrow(() -> new CommerceException(409,
+                            "Không có tồn kho cho variant " + id + " tại chi nhánh của đơn hàng"));
+            long available = action == Action.RESERVE
+                    ? (long) row.getQuantity() - row.getReservedQuantity()
+                    : row.getReservedQuantity();
             int remaining = quantities.get(id);
             if (available < remaining) throw new CommerceException(409, action == Action.RESERVE ? "Không đủ stock cho variant " + id : "Reserved stock không đủ cho variant " + id);
-            for (var row : rows) {
-                int capacity = action == Action.RESERVE ? row.getQuantity() - row.getReservedQuantity() : row.getReservedQuantity();
-                int delta = Math.min(remaining, capacity);
-                if (delta > 0) {
-                    row.setReservedQuantity(row.getReservedQuantity() + (action == Action.RESERVE ? delta : -delta));
-                    if (action == Action.DELIVER) row.setQuantity(row.getQuantity() - delta);
-                    row.setUpdatedAt(OffsetDateTime.now()); remaining -= delta;
-                }
-                if (remaining == 0) break;
-            }
+            row.setReservedQuantity(row.getReservedQuantity() + (action == Action.RESERVE ? remaining : -remaining));
+            if (action == Action.DELIVER) row.setQuantity(row.getQuantity() - remaining);
+            row.setUpdatedAt(OffsetDateTime.now());
         }
         inventory.flush();
     }

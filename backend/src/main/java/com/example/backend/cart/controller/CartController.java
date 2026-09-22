@@ -14,6 +14,11 @@ public class CartController {
     public CartController(CartService service) { this.service = service; }
     @GetMapping @RequireAnyAuthority({"CUSTOMER"})
     public CartResponse get(@AuthenticationPrincipal AuthenticatedUserPrincipal user) { return service.get(user.getUserId()); }
+    @PutMapping("/warehouse") @RequireAnyAuthority({"CUSTOMER"})
+    public CartResponse selectWarehouse(@AuthenticationPrincipal AuthenticatedUserPrincipal user,
+                                        @Valid @RequestBody SelectCartWarehouseRequest request) {
+        return service.selectWarehouse(user.getUserId(), request);
+    }
     @PostMapping("/items") @RequireAnyAuthority({"CUSTOMER"})
     public CartResponse add(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @Valid @RequestBody CartItemRequest request) { return service.add(user.getUserId(), request); }
     @PatchMapping("/items/{itemId}") @RequireAnyAuthority({"CUSTOMER"})

@@ -14,10 +14,18 @@ public record ProductResponse(
     String categoryName,
     String brandName,
     OffsetDateTime createdAt,
-    OffsetDateTime updatedAt
+    OffsetDateTime updatedAt,
+    UUID warehouseId,
+    Long availableQuantity
 ) {
+    public ProductResponse(UUID productId, String productName, String description, UUID categoryId, UUID brandId,
+                           ProductStatus status, String categoryName, String brandName,
+                           OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+        this(productId, productName, description, categoryId, brandId, status, categoryName, brandName,
+                createdAt, updatedAt, null, null);
+    }
     public ProductResponse(UUID productId, String productName, String description,
                            UUID categoryId, UUID brandId, ProductStatus status) {
-        this(productId, productName, description, categoryId, brandId, status, null, null, null, null);
+        this(productId, productName, description, categoryId, brandId, status, null, null, null, null, null, null);
     }
 }

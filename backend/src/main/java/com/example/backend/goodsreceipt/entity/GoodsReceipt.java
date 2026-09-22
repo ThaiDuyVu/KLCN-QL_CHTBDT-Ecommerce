@@ -22,6 +22,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Table(name = "goods_receipts")
@@ -57,7 +58,8 @@ public class GoodsReceipt {
     @Enumerated(EnumType.STRING)
     private GoodsReceiptStatus status;
 
-    @OneToMany(mappedBy = "receipt", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "receipt", cascade = CascadeType.ALL, orphanRemoval = true)
+    @BatchSize(size = 50)
     private List<GoodsReceiptItem> items = new ArrayList<>();
 
     public GoodsReceipt() {
@@ -67,6 +69,8 @@ public class GoodsReceipt {
         items.add(item);
         item.setReceipt(this);
     }
+
+    public void clearItems() { items.clear(); }
 
     public UUID getReceiptId() { return receiptId; }
     public void setReceiptId(UUID receiptId) { this.receiptId = receiptId; }

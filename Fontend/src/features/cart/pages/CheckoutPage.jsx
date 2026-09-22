@@ -37,10 +37,11 @@ export default function CheckoutPage() {
           <label>Ghi chú<textarea name="note" rows={2} /></label>
           <label>Phương thức thanh toán<select name="paymentMethod" defaultValue="COD"><option value="COD">COD · Thanh toán khi nhận hàng</option><option value="VNPAY" disabled>VNPAY · Coming soon</option><option value="INSTALLMENT" disabled>Trả góp · Coming soon</option></select></label>
         </fieldset>
-        <button className="button" disabled={busy}>{busy ? 'Đang tạo đơn…' : 'Đặt hàng COD'}</button>
+        <button className="button" disabled={busy || !data.warehouseId}>{busy ? 'Đang tạo đơn…' : 'Đặt hàng COD'}</button>
         <p className="muted">Nếu request bị gián đoạn, kiểm tra <Link to="/my-orders">đơn của tôi</Link> trước khi đặt lại.</p>
       </form>
       <section className="panel commerce-section"><h2>Đơn hàng</h2>{data.items.map((item) => <p key={item.cartItemId}>{item.productName} · {item.sku} × {item.quantity}: {money(item.lineTotal)}</p>)}
+        <p><strong>Chi nhánh xử lý:</strong> {data.warehouseName || 'Chưa chọn chi nhánh'}</p>
         <p>Giảm giá: {money(0)} · Phí giao hàng: {money(0)}</p><strong>Tổng dự kiến: {money(data.subtotal)}</strong><p>Backend xác nhận giá và stock khi đặt hàng.</p>
       </section>
     </div> : <section className="panel commerce-section"><p>Giỏ hàng trống, không thể checkout.</p><Link to="/products">Chọn sản phẩm</Link><p><Link to="/my-orders">Kiểm tra đơn đã tạo</Link></p></section>)}
