@@ -9,6 +9,8 @@ public interface CategoryService {
     CategoryResponse createCategory(CategoryRequest request); 
     
     List<CategoryResponse> getAllCategories();
+    List<CategoryResponse> getRootCategories();
+    List<CategoryResponse> getCategoryChildren(UUID parentId);
     CategoryResponse getCategoryById(UUID id);
     CategoryResponse updateCategory(UUID id, CategoryRequest request);
     void deleteCategory(UUID id);

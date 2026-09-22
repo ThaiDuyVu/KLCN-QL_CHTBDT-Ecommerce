@@ -1,7 +1,7 @@
 package com.example.backend.product.seed;
 
 import com.example.backend.product.entity.ProductVariantStatus;
-import com.example.backend.product.ProductRepository;
+import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.dto.ProductVariantRequest;
 import com.example.backend.product.entity.Product;
 import com.example.backend.product.entity.ProductVariant;
