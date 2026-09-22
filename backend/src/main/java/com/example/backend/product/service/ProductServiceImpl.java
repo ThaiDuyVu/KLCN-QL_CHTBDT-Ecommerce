@@ -1,35 +1,25 @@
 package com.example.backend.product.service;
 
-import com.example.backend.product.entity.Product;
-import com.example.backend.product.entity.ProductStatus;
-import com.example.backend.product.entity.Brand;
-import com.example.backend.product.dto.ProductRequest;
-import com.example.backend.product.dto.ProductResponse;
-import com.example.backend.product.dto.ProductPageResponse;
-import com.example.backend.product.exception.ProductInUseException;
-import com.example.backend.product.exception.ProductNotFoundException;
-import com.example.backend.product.exception.ProductReferenceNotFoundException;
-import com.example.backend.product.exception.InvalidProductPaginationException;
-import com.example.backend.product.repository.ProductRepository;
-import com.example.backend.product.repository.BrandRepository;
-import com.example.backend.product.repository.ProductSpecifications;
 import com.example.backend.category.CategoryRepository;
 import com.example.backend.category.entity.Category;
+import com.example.backend.product.dto.ProductPageResponse;
 import com.example.backend.product.dto.ProductRequest;
 import com.example.backend.product.dto.ProductResponse;
-import com.example.backend.product.dto.ProductPageResponse;
 import com.example.backend.product.entity.Brand;
 import com.example.backend.product.entity.Product;
+import com.example.backend.product.entity.ProductStatus;
+import com.example.backend.product.exception.InvalidProductPaginationException;
 import com.example.backend.product.exception.ProductInUseException;
 import com.example.backend.product.exception.ProductNotFoundException;
 import com.example.backend.product.exception.ProductReferenceNotFoundException;
-import com.example.backend.product.exception.InvalidProductPaginationException;
+import com.example.backend.product.repository.BrandRepository;
+import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.repository.ProductSpecifications;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,7 +66,6 @@ public class ProductServiceImpl implements ProductService {
         if (size < 1 || size > MAX_PAGE_SIZE) {
             throw new InvalidProductPaginationException("Size phải từ 1 đến " + MAX_PAGE_SIZE);
         }
-        // JPA setFirstResult accepts an int, even though Pageable uses a long offset.
         if ((long) page * size > Integer.MAX_VALUE) {
             throw new InvalidProductPaginationException("Page vượt quá giới hạn offset được hỗ trợ");
         }
@@ -121,7 +110,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = findProductById(id);
         try {
             productRepository.delete(product);
-            // Detect FK RESTRICT failures here rather than at transaction commit.
             productRepository.flush();
         } catch (DataIntegrityViolationException exception) {
             throw new ProductInUseException(
@@ -151,7 +139,6 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(request.description());
         product.setCategory(category);
         product.setBrand(brand);
-        // Preserve the existing default-on-create / keep-on-update behavior.
         if (request.status() != null) {
             product.setStatus(request.status());
         }
@@ -164,7 +151,6 @@ public class ProductServiceImpl implements ProductService {
     private Product saveProduct(Product product) {
         try {
             Product saved = productRepository.save(product);
-            // Flush lifecycle timestamps and detect references removed concurrently before mapping.
             productRepository.flush();
             return saved;
         } catch (DataIntegrityViolationException exception) {

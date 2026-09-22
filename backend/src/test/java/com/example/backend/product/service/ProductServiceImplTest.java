@@ -1,17 +1,17 @@
 package com.example.backend.product.service;
 
-import com.example.backend.product.entity.ProductStatus;
 import com.example.backend.category.CategoryRepository;
 import com.example.backend.category.entity.Category;
-import com.example.backend.product.BrandRepository;
-import com.example.backend.product.ProductRepository;
 import com.example.backend.product.dto.ProductRequest;
 import com.example.backend.product.entity.Brand;
 import com.example.backend.product.entity.Product;
+import com.example.backend.product.entity.ProductStatus;
+import com.example.backend.product.exception.InvalidProductPaginationException;
 import com.example.backend.product.exception.ProductInUseException;
 import com.example.backend.product.exception.ProductNotFoundException;
 import com.example.backend.product.exception.ProductReferenceNotFoundException;
-import com.example.backend.product.exception.InvalidProductPaginationException;
+import com.example.backend.product.repository.BrandRepository;
+import com.example.backend.product.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
