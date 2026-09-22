@@ -1,5 +1,7 @@
 package com.example.backend.category.entity;
 
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,10 +31,11 @@ public class Category {
             length = 255
     )
     private String categoryName;
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
     @Column(name = "status", nullable = false, length = 30)
-    private String status = "ACTIVE";
+    @Enumerated(EnumType.STRING)
+    private CategoryStatus status = CategoryStatus.ACTIVE;
 
     public Category() {
     }
@@ -69,11 +72,11 @@ public class Category {
         this.description = description;
     }
 
-    public String getStatus() {
+    public CategoryStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(CategoryStatus status) {
         this.status = status;
     }
 
