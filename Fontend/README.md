@@ -25,7 +25,7 @@ npm run preview
 - Mỗi domain sở hữu `features/<domain>/{api,components,pages}`. Thư mục trống
   có `.gitkeep`; không khai báo endpoint hay giả lập API nghiệp vụ.
 - Product có trang list và detail kết nối backend. Category, Order, Customer,
-  Inventory và User Management hiện vẫn có trang placeholder.
+  và Inventory hiện vẫn có trang placeholder. User Management đã kết nối API thật.
 - `App.jsx` khai báo routing; `main.jsx` bootstrap router và auth provider.
 - Login đã kết nối backend; `auth/api/authApi.js` sở hữu các API auth.
   `AuthContext` chỉ lưu metadata phiên trong React; không lưu mật khẩu/JWT.
@@ -45,7 +45,7 @@ npm run preview
 | Các path khác | Trang 404 |
 
 Role lấy từ `LoginSessionResponse.roleName`, không do người dùng chọn.
-Các trang domain ngoài Product vẫn là placeholder. Route protection chỉ bảo vệ điều hướng UI;
+Các trang Category, Order, Customer và Inventory vẫn là placeholder. Route protection chỉ bảo vệ điều hướng UI;
 backend là nguồn quyết định xác thực và quyền truy cập API, kể cả khi permission
 được cấu hình lại trong database.
 
@@ -120,3 +120,17 @@ Không chứa secret trong biến `VITE_*` vì các biến này là public.
 
 Deployment dùng BrowserRouter cần cấu hình server fallback về `index.html`
 cho các đường dẫn frontend, không áp dụng fallback cho asset/API.
+
+## User Management
+
+`/user-management` dành cho ADMIN: danh sách user phân trang 20/trang, search
+username/email/displayName, filter role/status, sửa thông tin, confirmation khi
+đổi status hoặc role. Role/permission lấy từ API, không hardcode UUID.
+Tab Roles & Permissions hiển thị toàn bộ permission và cấu hình theo role; ADMIN
+chỉ xem. Permission phân quyền được đánh dấu bởi backend, giữ convention hiện có.
+Feature client nằm trong `features/user-management/api`, dùng `apiClient` chung.
+Khi thay role của chính mình, khôi phục metadata phiên và cập nhật route guard.
+LOCKED/INACTIVE bị backend chặn login, refresh và JWT trên request kế tiếp.
+Chi tiết API và authorization: `backend/docs/user-management.md`.
+
+Kiểm tra feature: `npm run test -- src/features/user-management/UserManagement.test.jsx`.

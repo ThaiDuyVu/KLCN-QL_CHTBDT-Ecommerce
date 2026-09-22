@@ -69,6 +69,8 @@ public class User {
             nullable = false
     )
     private OffsetDateTime updatedAt;
+    public OffsetDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(OffsetDateTime updatedAt) { this.updatedAt = updatedAt; }
     public User() {
     }
 

@@ -36,6 +36,16 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ResponseEntity<String> handleAccessDenied(org.springframework.security.access.AccessDeniedException exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Bạn không có quyền thực hiện thao tác này");
+    }
+
+    @ExceptionHandler(InvalidUserManagementRequestException.class)
+    public ResponseEntity<String> handleInvalidUserManagement(InvalidUserManagementRequestException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
 
     @ExceptionHandler(SpecificationNotFoundException.class)
     public ResponseEntity<String> handleSpecificationNotFound(SpecificationNotFoundException exception) {

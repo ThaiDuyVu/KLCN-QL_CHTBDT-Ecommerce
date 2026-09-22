@@ -20,15 +20,19 @@ public class AuthenticatedUserPrincipal implements UserDetails {
     private final Collection<? extends GrantedAuthority> authorities;
 
     public AuthenticatedUserPrincipal(User user, String roleName) {
+        this(user, roleName, List.of());
+    }
+
+    public AuthenticatedUserPrincipal(User user, String roleName, Collection<String> permissions) {
         this.userId = user.getUserId();
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.displayName = user.getDisplayName();
         this.roleName = roleName;
         this.status = user.getStatus();
-        this.authorities = List.of(
-                new SimpleGrantedAuthority(roleName)
-        );
+        java.util.Set<String> names = new java.util.HashSet<>(permissions);
+        names.add(roleName);
+        this.authorities = names.stream().map(SimpleGrantedAuthority::new).toList();
     }
 
     public UUID getUserId() {
@@ -56,6 +60,11 @@ public class AuthenticatedUserPrincipal implements UserDetails {
     public String getStatus() {
         return status;
     }
+
+    @Override
+    public boolean isEnabled() { return "ACTIVE".equals(status); }
+    @Override
+    public boolean isAccountNonLocked() { return !"LOCKED".equals(status); }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -30,7 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
-@WithMockUser
+@org.springframework.context.annotation.Import(UserControllerTest.MethodSecurityConfiguration.class)
+@WithMockUser(authorities = "ADMIN")
 class UserControllerTest {
 
     @Autowired
@@ -117,7 +118,7 @@ class UserControllerTest {
                 1
         );
 
-        when(userService.getUsers(0, 20))
+        when(userService.getUsers(0, 20, null, null, null))
                 .thenReturn(response);
 
         mockMvc.perform(
@@ -197,5 +198,26 @@ class UserControllerTest {
                                         + "}")
                 )
                 .andExpect(status().isNotFound());
+    }
+    @org.springframework.boot.test.context.TestConfiguration(proxyBeanMethods = false)
+    @org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+    static class MethodSecurityConfiguration {}
+    @Test
+    @WithMockUser(authorities = "STAFF")
+    void getUsers_shouldRejectUserWithoutViewPermission() throws Exception {
+        mockMvc.perform(get("/api/users")).andExpect(status().isForbidden());
+    }
+    @Test
+    @WithMockUser(authorities = "USER_VIEW")
+    void updateUser_shouldRejectReadOnlyUser() throws Exception {
+        mockMvc.perform(put("/api/users/{userId}", UUID.randomUUID()).with(csrf())
+                .contentType(MediaType.APPLICATION_JSON).content("{\"email\":\"valid@example.com\"}"))
+                .andExpect(status().isForbidden());
+    }
+    @Test
+    void updateStatus_shouldRejectUnknownStatus() throws Exception {
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch("/api/users/{userId}/status", UUID.randomUUID()).with(csrf())
+                .contentType(MediaType.APPLICATION_JSON).content("{\"status\":\"OTHER\"}"))
+                .andExpect(status().isBadRequest());
     }
 }

@@ -15,13 +15,16 @@ import java.util.UUID;
 @Transactional(readOnly = true)
 public class CustomUserDetailsService implements UserDetailsService {
 
+    private final com.example.backend.auth.repository.RolePermissionRepository rolePermissionRepository;
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
 
     public CustomUserDetailsService(
             UserRepository userRepository,
-            UserRoleRepository userRoleRepository
+            UserRoleRepository userRoleRepository,
+            com.example.backend.auth.repository.RolePermissionRepository rolePermissionRepository
     ) {
+        this.rolePermissionRepository = rolePermissionRepository;
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
     }
@@ -64,6 +67,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             );
         }
 
-        return new AuthenticatedUserPrincipal(user, roleName);
+        return new AuthenticatedUserPrincipal(user, roleName,
+                rolePermissionRepository.findByRole_RoleId(userRole.getRole().getRoleId()).stream()
+                        .map(link -> link.getPermission().getPermissionName()).toList());
     }
 }
