@@ -1,0 +1,14 @@
+.commerce-section { padding: 1.25rem; margin-block: 1rem; }
+.commerce-inline { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin-block: .75rem; }
+.commerce-inline label { display: flex; gap: .5rem; align-items: center; }
+.commerce-inline input { width: 6rem; }
+.commerce-inline-compact { margin-block: 0; }
+.commerce-cart-item { display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap; border-bottom: 1px solid var(--border, #ddd); padding-block: 1rem; }
+.commerce-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.commerce-form fieldset { border: 0; padding: 0; display: grid; gap: 1rem; }
+.commerce-form label { display: grid; gap: .4rem; }
+.commerce-form input, .commerce-form textarea, .commerce-form select { width: 100%; padding: .6rem; font: inherit; }
+.commerce-scroll { overflow-x: auto; }
+.commerce-order-item { padding: .75rem 0; border-bottom: 1px solid var(--border, #ddd); }
+.commerce-order-item p { margin-bottom: .3rem; }
+@media (max-width: 800px) { .commerce-grid { grid-template-columns: 1fr; } }

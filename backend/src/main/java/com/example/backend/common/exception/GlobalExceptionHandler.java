@@ -27,6 +27,11 @@ import com.example.backend.product.exception.SpecificationNotFoundException;
 import com.example.backend.supplier.exception.SupplierCodeAlreadyExistsException;
 import com.example.backend.supplier.exception.SupplierNotFoundException;
 import com.example.backend.warehouse.exception.WarehouseNotFoundException;
+import com.example.backend.inventory.exception.InventoryNotFoundException;
+import com.example.backend.inventory.exception.InventoryConflictException;
+import com.example.backend.inventory.serial.exception.SerialNotFoundException;
+import com.example.backend.inventory.serial.exception.SerialConflictException;
+import com.example.backend.goodsreceipt.exception.InvalidReceiptDeviceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,6 +41,29 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(com.example.backend.warranty.exception.WarrantyException.class)
+    public ResponseEntity<ApiErrorResponse> handleWarranty(
+            com.example.backend.warranty.exception.WarrantyException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler({InventoryNotFoundException.class, SerialNotFoundException.class})
+    public ResponseEntity<ApiErrorResponse> handleStockNotFound(RuntimeException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiErrorResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler({InventoryConflictException.class, SerialConflictException.class})
+    public ResponseEntity<ApiErrorResponse> handleStockConflict(RuntimeException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiErrorResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidReceiptDeviceException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidReceiptDevice(InvalidReceiptDeviceException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiErrorResponse(exception.getMessage()));
+    }
+    @ExceptionHandler(com.example.backend.order.exception.CommerceException.class)
+    public ResponseEntity<ApiErrorResponse> handleCommerce(com.example.backend.order.exception.CommerceException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
     @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
     public ResponseEntity<String> handleAccessDenied(org.springframework.security.access.AccessDeniedException exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Bạn không có quyền thực hiện thao tác này");
@@ -113,13 +141,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidation(MethodArgumentNotValidException exception) {
+    public ResponseEntity<ApiErrorResponse> handleValidation(MethodArgumentNotValidException exception) {
         String message = exception.getBindingResult().getAllErrors().stream()
                 .map(error -> error.getDefaultMessage())
                 .distinct()
                 .sorted()
                 .collect(Collectors.joining("; "));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiErrorResponse(message));
     }
 
     @ExceptionHandler(InvalidProductPaginationException.class)

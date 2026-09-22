@@ -2,19 +2,31 @@ import { Link, NavLink, Outlet } from 'react-router';
 import { MANAGEMENT_ROLES, projectConfig, ROLES } from '../../config/projectConfig';
 import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
+import { useCart } from '../../hooks/useCart';
+import { useWarehouse } from '../../hooks/useWarehouse';
 
 const navigation = [
   { to: '/', label: 'Trang chủ', end: true },
   { to: '/products', label: 'Sản phẩm' },
   { to: '/categories', label: 'Danh mục' },
+  { to: '/cart', label: 'Giỏ hàng', roles: [ROLES.CUSTOMER] },
+  { to: '/my-orders', label: 'Đơn của tôi', roles: [ROLES.CUSTOMER] },
+  { to: '/my-warranties', label: 'Bảo hành của tôi', roles: [ROLES.CUSTOMER] },
   { to: '/orders', label: 'Đơn hàng', roles: MANAGEMENT_ROLES },
   { to: '/customers', label: 'Khách hàng', roles: MANAGEMENT_ROLES },
   { to: '/inventory', label: 'Kho hàng', roles: MANAGEMENT_ROLES },
+  { to: '/goods-receipts', label: 'Nhập hàng', roles: MANAGEMENT_ROLES },
+  { to: '/serials', label: 'Serial / IMEI', roles: MANAGEMENT_ROLES },
+  { to: '/warranties', label: 'Bảo hành', roles: MANAGEMENT_ROLES },
+  { to: '/warranty-tickets', label: 'Warranty Ticket', roles: MANAGEMENT_ROLES },
   { to: '/user-management', label: 'Người dùng', roles: [ROLES.ADMIN] },
 ];
 
 export default function AppLayout() {
   const { user, signOut, isSigningOut, isLoading } = useAuth();
+  const { itemCount, isLoading: isCartLoading, error: cartError } = useCart(true);
+  const { warehouses, selectedWarehouseId, selectWarehouse, isLoading: isWarehouseLoading,
+    isChanging: isWarehouseChanging, error: warehouseError } = useWarehouse();
   const [logoutError, setLogoutError] = useState('');
   async function handleLogout() {
     setLogoutError('');
@@ -44,6 +56,22 @@ export default function AppLayout() {
           <span className="badge">Bản dựng skeleton</span>
           <div className="account-actions">
             {user ? <>
+              {user.roleName === ROLES.CUSTOMER && <label className="topbar-warehouse">
+                <span>Chi nhánh</span>
+                <select value={selectedWarehouseId} disabled={isWarehouseLoading || isWarehouseChanging}
+                  title={warehouseError || undefined}
+                  onChange={(event) => selectWarehouse(event.target.value)}>
+                  <option value="" disabled>Chọn chi nhánh</option>
+                  {warehouses.map((warehouse) => <option key={warehouse.warehouseId} value={warehouse.warehouseId}>
+                    {warehouse.warehouseName}
+                  </option>)}
+                </select>
+              </label>}
+              {user.roleName === ROLES.CUSTOMER && <Link className="topbar-cart" to="/cart"
+                aria-label={`Giỏ hàng, ${itemCount} sản phẩm`} title={cartError ? 'Chưa đồng bộ được giỏ hàng' : undefined}>
+                <span aria-hidden="true">Giỏ hàng</span>
+                <span className="topbar-cart-count" aria-hidden="true">{isCartLoading && !itemCount ? '…' : itemCount}</span>
+              </Link>}
               <Link to="/account">{user.displayName || user.username} · {user.roleName}</Link>
               <button className="button button-quiet" onClick={handleLogout} disabled={isSigningOut}>
                 {isSigningOut ? 'Đang đăng xuất…' : 'Đăng xuất'}

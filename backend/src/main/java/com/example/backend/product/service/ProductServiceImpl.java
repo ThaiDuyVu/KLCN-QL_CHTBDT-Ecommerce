@@ -15,6 +15,7 @@ import com.example.backend.product.exception.ProductReferenceNotFoundException;
 import com.example.backend.product.repository.BrandRepository;
 import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.repository.ProductSpecifications;
+import com.example.backend.inventory.repository.InventoryRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -34,15 +37,18 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
+    private final InventoryRepository inventoryRepository;
 
     public ProductServiceImpl(
             ProductRepository productRepository,
             CategoryRepository categoryRepository,
-            BrandRepository brandRepository
+            BrandRepository brandRepository,
+            InventoryRepository inventoryRepository
     ) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.brandRepository = brandRepository;
+        this.inventoryRepository = inventoryRepository;
     }
 
     @Override
@@ -60,6 +66,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductPageResponse getProducts(int page, int size, String keyword, UUID categoryId, UUID brandId, ProductStatus status) {
+        return getProducts(page, size, keyword, categoryId, brandId, status, null);
+    }
+
+    @Override
+    public ProductPageResponse getProducts(int page, int size, String keyword, UUID categoryId, UUID brandId,
+                                           ProductStatus status, UUID warehouseId) {
         if (page < 0) {
             throw new InvalidProductPaginationException("Page không được nhỏ hơn 0");
         }
@@ -82,8 +94,11 @@ public class ProductServiceImpl implements ProductService {
                         normalizedKeyword, categoryId, brandId, status
                 ), pageable);
 
+        Map<UUID, Long> availability = productAvailability(warehouseId, productPage.getContent());
         return new ProductPageResponse(
-                productPage.getContent().stream().map(this::mapToResponse).toList(),
+                productPage.getContent().stream().map(product -> mapToResponse(
+                        product, warehouseId, warehouseId == null ? null : availability.getOrDefault(product.getProductId(), 0L)
+                )).toList(),
                 productPage.getNumber(),
                 productPage.getSize(),
                 productPage.getTotalElements(),
@@ -93,7 +108,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse getProductById(UUID id) {
-        return mapToResponse(findProductById(id));
+        return getProductById(id, null);
+    }
+
+    @Override
+    public ProductResponse getProductById(UUID id, UUID warehouseId) {
+        Product product = findProductById(id);
+        Map<UUID, Long> availability = productAvailability(warehouseId, java.util.List.of(product));
+        return mapToResponse(product, warehouseId,
+                warehouseId == null ? null : availability.getOrDefault(product.getProductId(), 0L));
     }
 
     @Override
@@ -168,6 +191,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private ProductResponse mapToResponse(Product product) {
+        return mapToResponse(product, null, null);
+    }
+
+    private ProductResponse mapToResponse(Product product, UUID warehouseId, Long availableQuantity) {
         return new ProductResponse(
                 product.getProductId(),
                 product.getProductName(),
@@ -178,7 +205,19 @@ public class ProductServiceImpl implements ProductService {
                 product.getCategory().getCategoryName(),
                 product.getBrand().getBrandName(),
                 product.getCreatedAt(),
-                product.getUpdatedAt()
+                product.getUpdatedAt(),
+                warehouseId,
+                availableQuantity
         );
+    }
+
+    private Map<UUID, Long> productAvailability(UUID warehouseId, java.util.List<Product> products) {
+        if (warehouseId == null || products.isEmpty()) return Map.of();
+        return inventoryRepository.findProductAvailability(warehouseId,
+                        products.stream().map(Product::getProductId).toList())
+                .stream().collect(Collectors.toMap(
+                        InventoryRepository.ProductAvailability::getProductId,
+                        InventoryRepository.ProductAvailability::getAvailableQuantity
+                ));
     }
 }

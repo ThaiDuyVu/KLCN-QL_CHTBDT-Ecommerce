@@ -18,12 +18,15 @@ import com.example.backend.product.exception.ProductNotFoundException;
 import com.example.backend.product.repository.ProductImageRepository;
 import com.example.backend.product.repository.ProductVariantRepository;
 import com.example.backend.product.repository.SpecificationRepository;
+import com.example.backend.inventory.repository.InventoryRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -33,26 +36,43 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     private final ProductVariantRepository variantRepository;
     private final ProductImageRepository imageRepository;
     private final SpecificationRepository specificationRepository;
+    private final InventoryRepository inventoryRepository;
 
     public ProductDetailServiceImpl(ProductRepository productRepository, ProductVariantRepository variantRepository,
-                                    ProductImageRepository imageRepository, SpecificationRepository specificationRepository) {
+                                    ProductImageRepository imageRepository, SpecificationRepository specificationRepository,
+                                    InventoryRepository inventoryRepository) {
         this.productRepository = productRepository;
         this.variantRepository = variantRepository;
         this.imageRepository = imageRepository;
         this.specificationRepository = specificationRepository;
+        this.inventoryRepository = inventoryRepository;
     }
 
     @Override
     public ProductDetailResponse getProductDetail(UUID productId) {
+        return getProductDetail(productId, null);
+    }
+
+    @Override
+    public ProductDetailResponse getProductDetail(UUID productId, UUID warehouseId) {
         Product product = productRepository.findDetailById(productId).orElseThrow(() -> new ProductNotFoundException(
                 "Không tìm thấy sản phẩm với ID: " + productId
         ));
         Category category = product.getCategory();
         Brand brand = product.getBrand();
 
-        List<ProductVariantResponse> variants = variantRepository.findByProduct_ProductId(productId, Sort.by(
+        List<ProductVariant> variantRows = variantRepository.findByProduct_ProductId(productId, Sort.by(
                 Sort.Order.asc("sku"), Sort.Order.asc("variantId")
-        )).stream().map(this::mapVariant).toList();
+        ));
+        Map<UUID, Long> availability = warehouseId == null || variantRows.isEmpty() ? Map.of()
+                : inventoryRepository.findVariantAvailability(warehouseId,
+                        variantRows.stream().map(ProductVariant::getVariantId).toList()).stream()
+                .collect(Collectors.toMap(InventoryRepository.VariantAvailability::getVariantId,
+                        InventoryRepository.VariantAvailability::getAvailableQuantity));
+        List<ProductVariantResponse> variants = variantRows.stream()
+                .map(variant -> mapVariant(variant, warehouseId,
+                        warehouseId == null ? null : availability.getOrDefault(variant.getVariantId(), 0L)))
+                .toList();
         List<ProductImageResponse> images = imageRepository.findByProduct_ProductId(productId, Sort.by(
                 Sort.Order.desc("primary"), Sort.Order.asc("imageId")
         )).stream().map(this::mapImage).toList();
@@ -75,11 +95,12 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         );
     }
 
-    private ProductVariantResponse mapVariant(ProductVariant variant) {
+    private ProductVariantResponse mapVariant(ProductVariant variant, UUID warehouseId, Long availableQuantity) {
         return new ProductVariantResponse(
                 variant.getVariantId(), variant.getProduct().getProductId(), variant.getProduct().getProductName(),
                 variant.getSku(), variant.getPrice(), variant.getCostPrice(), variant.getColor(),
-                variant.getStorage(), variant.getRam(), variant.getStatus()
+                variant.getStorage(), variant.getRam(), variant.getStatus(), variant.getTrackingType(),
+                variant.getWarrantyMonths(), warehouseId, availableQuantity
         );
     }
 

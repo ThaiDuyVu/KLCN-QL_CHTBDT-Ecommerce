@@ -62,7 +62,10 @@ export function createApiClient(config = projectConfig) {
         try {
           data = JSON.parse(text);
         } catch {
-          throw new ApiError('API trả về JSON không hợp lệ.', { status: response.status });
+          // Several legacy handlers return plain text while content negotiation keeps
+          // application/json. Preserve that server message for failed requests.
+          if (response.ok) throw new ApiError('API trả về JSON không hợp lệ.', { status: response.status });
+          data = text;
         }
       }
       if (!response.ok) {

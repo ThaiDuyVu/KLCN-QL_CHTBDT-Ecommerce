@@ -9,6 +9,9 @@ import ProductSkeleton from '../components/ProductSkeleton';
 import ProductState from '../components/ProductState';
 import ProductImage from '../components/ProductImage';
 import '../products.css';
+import AddToCart from '../../cart/components/AddToCart';
+import '../../orders/commerce.css';
+import { useWarehouse } from '../../../hooks/useWarehouse';
 
 const money = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', minimumFractionDigits: 0, maximumFractionDigits: 2 });
 function formatPrice(value) { return value == null ? '—' : money.format(value); }
@@ -30,9 +33,10 @@ export default function ProductDetailPage() {
 
 function ProductDetail({ productId, backTo }) {
   const { user } = useAuth();
+  const { selectedWarehouse, selectedWarehouseId } = useWarehouse();
   const [selectedImageId, setSelectedImageId] = useState(null);
-  const load = useCallback((signal) => productApi.detail(productId, signal), [productId]);
-  const { data, error, isLoading, retry } = useProductRequest(productId, load);
+  const load = useCallback((signal) => productApi.detail(productId, selectedWarehouseId, signal), [productId, selectedWarehouseId]);
+  const { data, error, isLoading, retry } = useProductRequest(`${productId}:${selectedWarehouseId}`, load);
   useEffect(() => { window.scrollTo(0, 0); }, [productId]);
   const canSeeCost = [ROLES.ADMIN, ROLES.MANAGER].includes(user?.roleName);
   const images = data?.images || [];
@@ -48,6 +52,9 @@ function ProductDetail({ productId, backTo }) {
       ) : data?.product ? (
         <>
           <PageHeader title={data.product.productName} />
+          {user?.roleName === ROLES.CUSTOMER && <p className="panel product-warehouse-notice">
+            {selectedWarehouse ? `Tồn kho tại chi nhánh: ${selectedWarehouse.warehouseName}.` : 'Hãy chọn chi nhánh ở thanh trên để xem tồn kho và mua hàng.'}
+          </p>}
           <div className="product-detail-grid">
             <section className="panel product-section" aria-label="Ảnh sản phẩm">
               <ProductImage src={image?.imageUrl} alt={data.product.productName} />
@@ -74,12 +81,15 @@ function ProductDetail({ productId, backTo }) {
             <h2>Phiên bản và giá bán</h2>
             {data.variants?.length ? <div className="product-table-scroll" role="region" aria-label="Các phiên bản sản phẩm" tabIndex={0}>
               <table className="product-table"><thead><tr>
-                <th scope="col">SKU</th><th scope="col">Màu</th><th scope="col">Dung lượng</th><th scope="col">RAM</th><th scope="col">Giá bán</th>
-                {canSeeCost && <th scope="col">Giá vốn</th>}<th scope="col">Trạng thái</th>
+                <th scope="col">SKU</th><th scope="col">Màu</th><th scope="col">Dung lượng</th><th scope="col">RAM</th><th scope="col">Bảo hành</th><th scope="col">Giá bán</th>
+                {canSeeCost && <th scope="col">Giá vốn</th>}<th scope="col">Trạng thái</th>{selectedWarehouseId && <th scope="col">Khả dụng</th>}{user?.roleName === ROLES.CUSTOMER && <th scope="col">Mua hàng</th>}
               </tr></thead><tbody>{data.variants.map((variant) => <tr key={variant.variantId}>
-                <th scope="row">{variant.sku}</th><td>{variant.color || '—'}</td><td>{variant.storage || '—'}</td><td>{variant.ram || '—'}</td>
+                <th scope="row">{variant.sku}</th><td>{variant.color || '—'}</td><td>{variant.storage || '—'}</td><td>{variant.ram || '—'}</td><td>{variant.warrantyMonths > 0 ? `${variant.warrantyMonths} tháng` : 'Không bảo hành'}</td>
                 <td>{formatPrice(variant.price)}</td>{canSeeCost && <td>{formatPrice(variant.costPrice)}</td>}
                 <td>{variant.status === 'ACTIVE' ? 'Đang hoạt động' : 'Ngừng hoạt động'}</td>
+                {selectedWarehouseId && <td>{Number(variant.availableQuantity || 0) > 0 ? variant.availableQuantity : 'Hết hàng'}</td>}
+                {user?.roleName === ROLES.CUSTOMER && <td>{variant.status === 'ACTIVE' && data.product.status === 'ACTIVE' ?
+                  <AddToCart variantId={variant.variantId} availableQuantity={variant.availableQuantity} /> : 'Ngừng bán'}</td>}
               </tr>)}</tbody></table>
             </div> : <p className="muted">Chưa có phiên bản sản phẩm.</p>}
           </section>

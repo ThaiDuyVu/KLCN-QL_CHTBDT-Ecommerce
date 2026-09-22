@@ -22,6 +22,11 @@ h2 { line-height: 1.4; letter-spacing: -.035em; }
 .workspace { display: flex; flex-direction: column; min-width: 0; }
 .topbar { min-height: 88px; padding: 20px 42px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #dfe5dc; background: #fcfcfa; }
 .account-actions { display: flex; align-items: center; gap: 18px; font-size: .8rem; flex-wrap: wrap; }
+.topbar-warehouse { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.topbar-warehouse select { max-width: 220px; padding: 8px 10px; border: 1px solid #ced9ce; border-radius: 8px; background: #fff; color: #223832; }
+.topbar-cart { display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid #ced9ce; border-radius: 8px; font-weight: 700; }
+.topbar-cart:hover { background: #edf2e9; }
+.topbar-cart-count { min-width: 24px; height: 24px; padding: 0 7px; display: inline-grid; place-items: center; border-radius: 999px; background: #153e35; color: #fff; font-size: .72rem; }
 .main-content { padding: 44px 42px 64px; flex: 1; width: 100%; max-width: 1360px; margin: 0 auto; }
 .page-header { margin-bottom: 30px; }
 .eyebrow { text-transform: uppercase; font-size: .67rem; letter-spacing: .13em; font-weight: 700; color: #577468; margin-bottom: 16px; }

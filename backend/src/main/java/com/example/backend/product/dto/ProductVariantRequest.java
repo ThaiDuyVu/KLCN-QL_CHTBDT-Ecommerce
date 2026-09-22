@@ -1,10 +1,12 @@
 package com.example.backend.product.dto;
 
 import com.example.backend.product.entity.ProductVariantStatus;
+import com.example.backend.product.entity.ProductTrackingType;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
@@ -39,6 +41,11 @@ public class ProductVariantRequest {
     private String ram;
 
     private ProductVariantStatus status;
+
+    private ProductTrackingType trackingType;
+
+    @Min(value = 0, message = "Thời hạn bảo hành phải lớn hơn hoặc bằng 0 tháng")
+    private Integer warrantyMonths;
 
     public ProductVariantRequest() {
     }
@@ -106,4 +113,9 @@ public class ProductVariantRequest {
     public void setStatus(ProductVariantStatus status) {
         this.status = status;
     }
+
+    public ProductTrackingType getTrackingType() { return trackingType; }
+    public void setTrackingType(ProductTrackingType trackingType) { this.trackingType = trackingType; }
+    public Integer getWarrantyMonths() { return warrantyMonths; }
+    public void setWarrantyMonths(Integer warrantyMonths) { this.warrantyMonths = warrantyMonths; }
 }
