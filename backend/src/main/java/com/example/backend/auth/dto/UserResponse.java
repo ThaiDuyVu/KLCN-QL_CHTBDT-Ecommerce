@@ -5,6 +5,12 @@ import java.util.UUID;
 
 public class UserResponse {
 
+    private UUID roleId;
+    private String roleName;
+    public UUID getRoleId() { return roleId; }
+    public String getRoleName() { return roleName; }
+    public void setRole(UUID roleId, String roleName) { this.roleId = roleId; this.roleName = roleName; }
+
     private UUID userId;
     private String username;
     private String email;

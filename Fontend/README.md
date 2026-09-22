@@ -24,8 +24,7 @@ npm run preview
 - Layout responsive, sidebar/header, home và các trang hệ thống.
 - Mỗi domain sở hữu `features/<domain>/{api,components,pages}`. Thư mục trống
   có `.gitkeep`; không khai báo endpoint hay giả lập API nghiệp vụ.
-- Product có trang list và detail kết nối backend. Cart/Checkout/Order đã kết nối API thật. Category, Customer,
-  Inventory và User Management hiện vẫn có trang placeholder.
+
 - `App.jsx` khai báo routing; `main.jsx` bootstrap router và auth provider.
 - Login đã kết nối backend; `auth/api/authApi.js` sở hữu các API auth.
   `AuthContext` chỉ lưu metadata phiên trong React; không lưu mật khẩu/JWT.
@@ -45,7 +44,6 @@ npm run preview
 | Các path khác | Trang 404 |
 
 Role lấy từ `LoginSessionResponse.roleName`, không do người dùng chọn.
-Cart/Checkout/Order đã kết nối API thật; Category, Customer, Inventory và User Management còn placeholder. Route protection chỉ bảo vệ điều hướng UI;
 backend là nguồn quyết định xác thực và quyền truy cập API, kể cả khi permission
 được cấu hình lại trong database.
 
@@ -121,19 +119,3 @@ Không chứa secret trong biến `VITE_*` vì các biến này là public.
 Deployment dùng BrowserRouter cần cấu hình server fallback về `index.html`
 cho các đường dẫn frontend, không áp dụng fallback cho asset/API.
 
-## Cart, Checkout và Order
-
-CUSTOMER: thêm variant từ Product Detail, mở `/cart`, checkout COD tại
-`/checkout`, xem danh sách/chi tiết/hủy PENDING tại `/my-orders`.
-STAFF/MANAGER/ADMIN: `/orders` và `/orders/:orderId` có action theo state machine
-được backend trả về; không cho nhập status tùy ý.
-
-Client riêng trong features/cart/api và features/orders/api dùng apiClient chung.
-Có loading/error/empty/submitting state và confirmation khi xóa item/hủy/chuyển
-status. VNPAY và Trả góp disabled Coming soon. Giá trên cart là dự kiến; backend
-đọc lại giá và reserve stock khi checkout. Cần inventory có stock khả dụng;
-Catalog seed không tự thêm tồn kho. Khi kiểm thử toàn bộ seed ở profile `dev`, bật
-thêm `--app.seed.inventory.enabled=true` để tạo kho và tồn mẫu cho các SKU `DEV-*`.
-
-Chi tiết contract/permission còn thiếu và giới hạn allocation theo kho:
-`backend/docs/cart-checkout-order.md`.

@@ -1,0 +1,25 @@
+.management-tabs, .management-actions, .management-pagination, .management-role-form, .management-section-header { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.management-tabs { margin-bottom:24px; }
+.management-state, .management-editor { padding:24px; margin:20px 0; }
+.management-section-header { justify-content:space-between; margin-bottom:16px; }
+.management-section-header h2 { margin:0; font-size:1.2rem; overflow-wrap:anywhere; }
+.management-filters { padding:20px; display:flex; align-items:end; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
+.management-filters label, .management-form label, .management-role-form label, .management-role-choice { display:grid; gap:6px; font-size:.85rem; }
+.management-filters label:first-child { flex:1; min-width:200px; }
+.management-filters input, .management-filters select, .management-editor input:not([type=checkbox]), .management-editor select { font:inherit; color:inherit; padding:10px 12px; border:1px solid #cbd7ca; border-radius:7px; background:white; min-height:44px; width:100%; }
+.management-form fieldset { padding:0; border:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin:16px 0; }
+.management-role-form { margin-top:24px; padding-top:20px; border-top:1px solid #dfe5dc; align-items:end; }
+.management-table-scroll { overflow-x:auto; }
+.management-table { border-collapse:collapse; width:100%; font-size:.85rem; }
+.management-table th, .management-table td { padding:12px; text-align:left; border-bottom:1px solid #dfe5dc; overflow-wrap:anywhere; max-width:240px; min-width:120px; }
+.management-table thead { background:#edf2e9; }
+.management-table .button { padding:7px 10px; white-space:nowrap; }
+.management-table td:last-child { min-width:250px; }
+.management-pagination { justify-content:center; margin-top:24px; }
+.management-role-choice { max-width:320px; margin-bottom:12px; }
+.management-permissions { margin:20px 0; border:1px solid #dfe5dc; padding:16px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.management-permissions label { display:flex; align-items:start; gap:10px; overflow-wrap:anywhere; }
+.management-permissions input { width:18px; height:18px; margin-top:5px; flex-shrink:0; }
+.management-permissions small { display:block; color:#64756d; }
+.management-editor button:disabled, .management-pagination button:disabled, .management-actions button:disabled { opacity:.55; cursor:default; }
+@media(max-width:800px) { .management-form fieldset, .management-permissions { grid-template-columns:1fr; } .management-filters label { flex:1; min-width:180px; } }

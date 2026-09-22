@@ -31,6 +31,10 @@ class AuthServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
+    @Mock private CustomUserDetailsService customUserDetailsService;
+    @Mock private JwtService jwtService;
+    @Mock private RefreshTokenService refreshTokenService;
+
     @InjectMocks
     private AuthServiceImpl authService;
 
@@ -95,6 +99,34 @@ class AuthServiceTest {
 
         verify(userRepository).findByUsername("testuser");
         verify(passwordEncoder).matches("wrongPassword", user.getPassword());
+    }
+    @Test
+    void login_shouldRejectLockedUserBeforeIssuingTokens() {
+        user.setStatus("LOCKED");
+        when(userRepository.findByUsername("testuser")).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches("correctPassword", user.getPassword())).thenReturn(true);
+        when(customUserDetailsService.loadUserByUserId(user.getUserId())).thenReturn(new AuthenticatedUserPrincipal(user, "STAFF"));
+        var request = new com.example.backend.auth.dto.LoginRequest();
+        request.setUsername("testuser"); request.setPassword("correctPassword");
+        assertThrows(InvalidCredentialsException.class, () -> authService.login(request));
+        org.mockito.Mockito.verifyNoInteractions(jwtService, refreshTokenService);
+    }
+    @Test
+    void refresh_shouldRejectLockedUserBeforeRotatingTokens() {
+        user.setStatus("LOCKED");
+        when(jwtService.extractUserId("token", "refresh")).thenReturn(user.getUserId());
+        when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
+        when(customUserDetailsService.loadUserByUserId(user.getUserId())).thenReturn(new AuthenticatedUserPrincipal(user, "STAFF"));
+        assertThrows(InvalidCredentialsException.class, () -> authService.refresh("token"));
+        org.mockito.Mockito.verifyNoInteractions(refreshTokenService);
+    }
+    @Test
+    void principal_shouldExposeRoleAndPermissionsAndLockedState() {
+        user.setStatus("LOCKED");
+        var principal = new AuthenticatedUserPrincipal(user, "MANAGER", java.util.List.of("USER_VIEW", "USER_UPDATE"));
+        assertEquals(java.util.Set.of("MANAGER", "USER_VIEW", "USER_UPDATE"), principal.getAuthorities().stream().map(org.springframework.security.core.GrantedAuthority::getAuthority).collect(java.util.stream.Collectors.toSet()));
+        org.junit.jupiter.api.Assertions.assertFalse(principal.isAccountNonLocked());
+        org.junit.jupiter.api.Assertions.assertFalse(principal.isEnabled());
     }
 }
 

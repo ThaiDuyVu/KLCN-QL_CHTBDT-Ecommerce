@@ -1,11 +1,13 @@
 package com.example.backend.auth.dto;
 
 import java.util.List;
+import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class UpdateRolePermissionsRequest {
 
-    private List<UUID> permissionIds;
+    @NotNull(message = "permissionIds là bắt buộc; dùng [] để gỡ toàn bộ quyền")
+    private List<@NotNull UUID> permissionIds;
 
     public UpdateRolePermissionsRequest() {
     }

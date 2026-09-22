@@ -32,7 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(RoleController.class)
-@WithMockUser
+@org.springframework.context.annotation.Import(RoleControllerTest.MethodSecurityConfiguration.class)
+@WithMockUser(authorities = "ADMIN")
 class RoleControllerTest {
 
     @Autowired
@@ -253,6 +254,16 @@ class RoleControllerTest {
                                 .contentType("application/json")
                                 .content(requestJson)
                 )
+                .andExpect(status().isForbidden());
+    }
+    @org.springframework.boot.test.context.TestConfiguration(proxyBeanMethods = false)
+    @org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+    static class MethodSecurityConfiguration {}
+    @Test
+    @WithMockUser(authorities = "USER_VIEW")
+    void updatePermissions_shouldRejectUserWithoutAssignmentPermission() throws Exception {
+        mockMvc.perform(put("/api/roles/{id}/permissions", UUID.randomUUID()).with(csrf())
+                .contentType("application/json").content("{\"permissionIds\":[]}"))
                 .andExpect(status().isForbidden());
     }
 }

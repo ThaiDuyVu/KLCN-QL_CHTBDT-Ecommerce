@@ -69,7 +69,8 @@ public class UserRoleServiceImpl implements UserRoleService {
             UpdateUserRoleRequest request
     ) {
 
-        User user = userRepository.findById(userId)
+        ManagementAuthorization.require("USER_ROLE_ASSIGN");
+        User user = userRepository.findByIdForUpdate(userId)
                 .orElseThrow(() ->
                         new UserNotFoundException(
                                 "Không tìm thấy người dùng với ID: " + userId
@@ -84,24 +85,22 @@ public class UserRoleServiceImpl implements UserRoleService {
                         )
                 );
 
-        UserRole userRole = userRoleRepository
-                .findByUser_UserId(userId)
-                .orElse(null);
+        if ("ADMIN".equals(role.getRoleName()) && !ManagementAuthorization.has("ADMIN"))
+            throw new com.example.backend.auth.exception.ProtectedPermissionException("Chỉ ADMIN được gán role ADMIN");
+        UserRole userRole = userRoleRepository.findByUser_UserId(userId).orElse(null);
 
         if (userRole == null) {
             UserRole newUserRole = new UserRole(user, role);
-            userRoleRepository.save(newUserRole);
+            userRoleRepository.saveAndFlush(newUserRole);
             return;
         }
 
-        userRole.setRole(role);
-        userRole.setId(
-                new com.example.backend.auth.entity.UserRoleId(
-                        userId,
-                        role.getRoleId()
-                )
-        );
-
-        userRoleRepository.save(userRole);
+        if (userRole.getRole().getRoleId().equals(role.getRoleId())) return;
+        ManagementAuthorization.require("USER_ROLE_REMOVE");
+        if ("ADMIN".equals(userRole.getRole().getRoleName()) && !ManagementAuthorization.has("ADMIN"))
+            throw new com.example.backend.auth.exception.ProtectedPermissionException("Chỉ ADMIN được đổi role của ADMIN");
+        userRoleRepository.delete(userRole);
+        userRoleRepository.flush();
+        userRoleRepository.saveAndFlush(new UserRole(user, role));
     }
 }

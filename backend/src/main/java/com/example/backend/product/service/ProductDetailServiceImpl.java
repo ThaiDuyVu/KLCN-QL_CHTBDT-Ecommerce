@@ -3,7 +3,7 @@ package com.example.backend.product.service;
 import com.example.backend.brand.dto.BrandResponse;
 import com.example.backend.category.dto.CategoryResponse;
 import com.example.backend.category.entity.Category;
-import com.example.backend.product.ProductRepository;
+import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.dto.ProductDetailResponse;
 import com.example.backend.product.dto.ProductImageResponse;
 import com.example.backend.product.dto.ProductResponse;
