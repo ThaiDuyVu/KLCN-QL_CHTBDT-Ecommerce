@@ -24,6 +24,7 @@ public class OrderResponse {
     private com.example.backend.order.entity.OrderStatus status;
     private List<OrderItemResponse> items;
     private PaymentResponse payment;
+    private InstallmentResponse installment;
     private List<com.example.backend.order.entity.OrderStatus> allowedStatuses;
     public OrderResponse() {}
     public UUID getOrderId() { return orderId; }
@@ -60,6 +61,8 @@ public class OrderResponse {
     public void setItems(List<OrderItemResponse> value) { this.items = value; }
     public PaymentResponse getPayment() { return payment; }
     public void setPayment(PaymentResponse value) { this.payment = value; }
+    public InstallmentResponse getInstallment() { return installment; }
+    public void setInstallment(InstallmentResponse value) { this.installment = value; }
     public List<com.example.backend.order.entity.OrderStatus> getAllowedStatuses() { return allowedStatuses; }
     public void setAllowedStatuses(List<com.example.backend.order.entity.OrderStatus> value) { this.allowedStatuses = value; }
 }

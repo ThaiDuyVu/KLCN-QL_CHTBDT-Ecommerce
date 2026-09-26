@@ -58,6 +58,37 @@ public class ProductVariantSeedData implements CommandLineRunner {
                 "Bạc", "512GB", "16GB", "15990000", "13500000", ProductTrackingType.SERIAL, 24);
         created += createIfMissing(DevSeedData.ASUS_VIVOBOOK_15_512, "ASUS Vivobook 15", "ASUS", "Laptop",
                 "Xanh", "512GB", "8GB", "12990000", "10800000", ProductTrackingType.SERIAL, 24);
+
+        created += createIfMissing("DEV-IP16-BLK-128", "iPhone 16", "Apple", "Điện thoại", "Đen", "128GB", "8GB", "21990000", "19000000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-IP16-BLU-256", "iPhone 16", "Apple", "Điện thoại", "Xanh lưu ly", "256GB", "8GB", "24990000", "21800000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-IP16-PNK-512", "iPhone 16", "Apple", "Điện thoại", "Hồng", "512GB", "8GB", "30990000", "27200000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-IP14-BLK-128", "iPhone 14", "Apple", "Điện thoại", "Đen", "128GB", "6GB", "15990000", "13800000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-IP14-BLU-256", "iPhone 14", "Apple", "Điện thoại", "Xanh dương", "256GB", "6GB", "18990000", "16500000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-IP14-RED-256", "iPhone 14", "Apple", "Điện thoại", "Đỏ", "256GB", "6GB", "18990000", "16500000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-A55-NVY-128", "Samsung Galaxy A55", "Samsung", "Điện thoại", "Xanh đen", "128GB", "8GB", "8490000", "7100000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-A55-LIL-256", "Samsung Galaxy A55", "Samsung", "Điện thoại", "Tím", "256GB", "8GB", "9490000", "7950000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-A55-ICE-256", "Samsung Galaxy A55", "Samsung", "Điện thoại", "Xanh băng", "256GB", "12GB", "10490000", "8800000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-ZF6-GRY-256", "Samsung Galaxy Z Flip6", "Samsung", "Điện thoại", "Xám", "256GB", "12GB", "24990000", "21600000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-ZF6-YLW-256", "Samsung Galaxy Z Flip6", "Samsung", "Điện thoại", "Vàng", "256GB", "12GB", "24990000", "21600000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-ZF6-BLU-512", "Samsung Galaxy Z Flip6", "Samsung", "Điện thoại", "Xanh", "512GB", "12GB", "28990000", "25000000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-X14TP-BLK-256", "Xiaomi 14T Pro", "Xiaomi", "Điện thoại", "Đen", "256GB", "12GB", "16990000", "14300000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-X14TP-BLU-512", "Xiaomi 14T Pro", "Xiaomi", "Điện thoại", "Xanh", "512GB", "12GB", "18990000", "16000000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-X14TP-GRY-512", "Xiaomi 14T Pro", "Xiaomi", "Điện thoại", "Xám", "512GB", "16GB", "19990000", "16800000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-S23-BLK-128", "Samsung Galaxy S23", "Samsung", "Điện thoại", "Đen", "128GB", "8GB", "13990000", "11800000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-S23-GRN-256", "Samsung Galaxy S23", "Samsung", "Điện thoại", "Xanh lá", "256GB", "8GB", "15490000", "13000000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-S23-CRM-256", "Samsung Galaxy S23", "Samsung", "Điện thoại", "Kem", "256GB", "8GB", "15490000", "13000000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-X15-BLK-256", "Xiaomi 15", "Xiaomi", "Điện thoại", "Đen", "256GB", "12GB", "18990000", "16000000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-X15-WHT-512", "Xiaomi 15", "Xiaomi", "Điện thoại", "Trắng", "512GB", "12GB", "20990000", "17700000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-X15-GRN-512", "Xiaomi 15", "Xiaomi", "Điện thoại", "Xanh lá", "512GB", "16GB", "21990000", "18500000", ProductTrackingType.IMEI, 12);
+        created += createIfMissing("DEV-MBP14-M3-SG-512", "MacBook Pro 14 M3", "Apple", "Laptop", "Xám không gian", "512GB", "8GB", "39990000", "35000000", ProductTrackingType.SERIAL, 12);
+        created += createIfMissing("DEV-MBP14-M3-SL-512", "MacBook Pro 14 M3", "Apple", "Laptop", "Bạc", "512GB", "16GB", "44990000", "39500000", ProductTrackingType.SERIAL, 12);
+        created += createIfMissing("DEV-MBP14-M3-SG-1TB", "MacBook Pro 14 M3", "Apple", "Laptop", "Xám không gian", "1TB", "16GB", "49990000", "44000000", ProductTrackingType.SERIAL, 12);
+        created += createIfMissing("DEV-XPS13-SL-512", "Dell XPS 13", "Dell", "Laptop", "Bạc", "512GB", "16GB", "32990000", "28200000", ProductTrackingType.SERIAL, 24);
+        created += createIfMissing("DEV-XPS13-GR-1TB", "Dell XPS 13", "Dell", "Laptop", "Xám", "1TB", "16GB", "36990000", "31700000", ProductTrackingType.SERIAL, 24);
+        created += createIfMissing("DEV-XPS13-SL-1TB", "Dell XPS 13", "Dell", "Laptop", "Bạc", "1TB", "32GB", "41990000", "36000000", ProductTrackingType.SERIAL, 24);
+        created += createIfMissing("DEV-ROGG14-GR-512", "ASUS ROG Zephyrus G14", "ASUS", "Laptop", "Xám", "512GB", "16GB", "39990000", "34200000", ProductTrackingType.SERIAL, 24);
+        created += createIfMissing("DEV-ROGG14-WH-1TB", "ASUS ROG Zephyrus G14", "ASUS", "Laptop", "Trắng", "1TB", "32GB", "49990000", "43000000", ProductTrackingType.SERIAL, 24);
+        created += createIfMissing("DEV-ROGG14-GR-1TB", "ASUS ROG Zephyrus G14", "ASUS", "Laptop", "Xám", "1TB", "32GB", "52990000", "45500000", ProductTrackingType.SERIAL, 24);
         log.info("Development product variant seed finished: {} new variants", created);
     }
 

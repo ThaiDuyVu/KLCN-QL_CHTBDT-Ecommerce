@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.List;
+import java.util.Collection;
 
 public interface ProductImageRepository extends JpaRepository<ProductImage, UUID> {
     @EntityGraph(attributePaths = "product")
@@ -17,6 +18,9 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, UUID
     Optional<ProductImage> findByImageIdAndProduct_ProductId(UUID imageId, UUID productId);
 
     Optional<ProductImage> findByProduct_ProductIdAndPrimaryTrue(UUID productId);
+
+    @EntityGraph(attributePaths = "product")
+    List<ProductImage> findByProduct_ProductIdInAndPrimaryTrue(Collection<UUID> productIds);
 
     boolean existsByProduct_ProductIdAndImageUrl(UUID productId, String imageUrl);
 

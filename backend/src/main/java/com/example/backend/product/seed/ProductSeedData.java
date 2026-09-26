@@ -63,6 +63,16 @@ public class ProductSeedData implements CommandLineRunner {
         created += createIfMissing("MacBook Air M2", "Laptop Apple dành cho học tập và văn phòng", laptops, brands.get("Apple"));
         created += createIfMissing("Dell Inspiron 15", "Laptop Dell dành cho học tập và làm việc", laptops, brands.get("Dell"));
         created += createIfMissing("ASUS Vivobook 15", "Laptop ASUS phục vụ học tập và giải trí", laptops, brands.get("ASUS"));
+        created += createIfMissing("iPhone 16", "Điện thoại Apple thế hệ mới với Apple Intelligence", phones, brands.get("Apple"));
+        created += createIfMissing("iPhone 14", "Điện thoại Apple cân bằng hiệu năng và camera", phones, brands.get("Apple"));
+        created += createIfMissing("Samsung Galaxy A55", "Điện thoại Samsung tầm trung với màn hình Super AMOLED", phones, brands.get("Samsung"));
+        created += createIfMissing("Samsung Galaxy Z Flip6", "Điện thoại Samsung màn hình gập nhỏ gọn", phones, brands.get("Samsung"));
+        created += createIfMissing("Xiaomi 14T Pro", "Điện thoại Xiaomi hiệu năng cao và sạc nhanh", phones, brands.get("Xiaomi"));
+        created += createIfMissing("Samsung Galaxy S23", "Điện thoại Samsung cao cấp thiết kế nhỏ gọn", phones, brands.get("Samsung"));
+        created += createIfMissing("Xiaomi 15", "Điện thoại Xiaomi flagship nhỏ gọn", phones, brands.get("Xiaomi"));
+        created += createIfMissing("MacBook Pro 14 M3", "Laptop Apple chuyên nghiệp dùng chip M3", laptops, brands.get("Apple"));
+        created += createIfMissing("Dell XPS 13", "Laptop Dell cao cấp mỏng nhẹ", laptops, brands.get("Dell"));
+        created += createIfMissing("ASUS ROG Zephyrus G14", "Laptop gaming ASUS ROG nhỏ gọn", laptops, brands.get("ASUS"));
         productRepository.flush();
         log.info("Development product seed finished: {} new products", created);
     }

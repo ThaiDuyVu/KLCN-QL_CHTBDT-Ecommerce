@@ -14,9 +14,10 @@ async function request(path, signal) {
 }
 
 export const productApi = {
-  list({ page = 0, size = 12, keyword = '', status = '', warehouseId = '' }, signal) {
+  list({ page = 0, size = 12, keyword = '', categoryId = '', status = '', warehouseId = '' }, signal) {
     const query = new URLSearchParams({ page: String(page), size: String(size) });
     if (keyword) query.set('keyword', keyword);
+    if (categoryId) query.set('categoryId', categoryId);
     if (status) query.set('status', status);
     if (warehouseId) query.set('warehouseId', warehouseId);
     return request(`/v1/products?${query}`, signal);

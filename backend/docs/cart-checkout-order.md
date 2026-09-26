@@ -1,5 +1,7 @@
 # Cart → Checkout COD → Order (phase hiện tại)
 
+> Tài liệu này ghi lại phase COD ban đầu. Checkout hiện đã bổ sung trả góp nội bộ và VNPAY Sandbox; phần VNPAY/configuration/IPN xem [vnpay-sandbox.md](vnpay-sandbox.md). Các đoạn “chỉ COD” hoặc “Coming soon” bên dưới là mô tả phase cũ.
+
 Không thêm/chỉnh migration. Các entity ánh xạ carts, cart_items, orders,
 order_items, payments và inventory hiện có; không dựng lại Auth.
 
