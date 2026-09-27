@@ -8,6 +8,7 @@ import com.example.backend.product.dto.ProductResponse;
 import com.example.backend.product.entity.Brand;
 import com.example.backend.product.entity.Product;
 import com.example.backend.product.entity.ProductStatus;
+import com.example.backend.product.entity.ProductImage;
 import com.example.backend.product.exception.InvalidProductPaginationException;
 import com.example.backend.product.exception.ProductInUseException;
 import com.example.backend.product.exception.ProductNotFoundException;
@@ -15,6 +16,7 @@ import com.example.backend.product.exception.ProductReferenceNotFoundException;
 import com.example.backend.product.repository.BrandRepository;
 import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.repository.ProductSpecifications;
+import com.example.backend.product.repository.ProductImageRepository;
 import com.example.backend.inventory.repository.InventoryRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
+import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -34,21 +37,29 @@ public class ProductServiceImpl implements ProductService {
 
     private static final int MAX_PAGE_SIZE = 100;
 
+    private final com.example.backend.promotion.service.PromotionService promotions;
+    private final com.example.backend.product.repository.ProductVariantRepository variants;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
     private final InventoryRepository inventoryRepository;
+    private final ProductImageRepository productImageRepository;
 
     public ProductServiceImpl(
             ProductRepository productRepository,
             CategoryRepository categoryRepository,
             BrandRepository brandRepository,
-            InventoryRepository inventoryRepository
+            InventoryRepository inventoryRepository,
+            ProductImageRepository productImageRepository,
+            com.example.backend.promotion.service.PromotionService promotions,
+            com.example.backend.product.repository.ProductVariantRepository variants
     ) {
+        this.promotions=promotions; this.variants=variants;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.brandRepository = brandRepository;
         this.inventoryRepository = inventoryRepository;
+        this.productImageRepository = productImageRepository;
     }
 
     @Override
@@ -72,6 +83,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductPageResponse getProducts(int page, int size, String keyword, UUID categoryId, UUID brandId,
                                            ProductStatus status, UUID warehouseId) {
+        return getProducts(page, size, keyword, categoryId, brandId, status, warehouseId, false);
+    }
+
+    @Override
+    public ProductPageResponse getProducts(int page, int size, String keyword, UUID categoryId, UUID brandId,
+                                           ProductStatus status, UUID warehouseId, boolean onSale) {
         if (page < 0) {
             throw new InvalidProductPaginationException("Page không được nhỏ hơn 0");
         }
@@ -87,18 +104,18 @@ public class ProductServiceImpl implements ProductService {
                 Sort.Order.desc("productId")
         ));
         String normalizedKeyword = normalizeFilter(keyword);
-        Page<Product> productPage = normalizedKeyword == null && categoryId == null
-                && brandId == null && status == null
-                ? productRepository.findAll(pageable)
-                : productRepository.findAll(ProductSpecifications.withFilters(
-                        normalizedKeyword, categoryId, brandId, status
-                ), pageable);
+        var filters = ProductSpecifications.withFilters(normalizedKeyword, categoryId, brandId, status);
+        if (onSale) filters = filters.and(ProductSpecifications.onSale(OffsetDateTime.now()));
+        Page<Product> productPage = productRepository.findAll(filters, pageable);
 
+        var pricing = productPricing(productPage.getContent());
         Map<UUID, Long> availability = productAvailability(warehouseId, productPage.getContent());
+        Map<UUID, String> primaryImages = primaryImages(productPage.getContent());
         return new ProductPageResponse(
                 productPage.getContent().stream().map(product -> mapToResponse(
-                        product, warehouseId, warehouseId == null ? null : availability.getOrDefault(product.getProductId(), 0L)
-                )).toList(),
+                        product, warehouseId, warehouseId == null ? null : availability.getOrDefault(product.getProductId(), 0L),
+                        primaryImages.get(product.getProductId())
+                ).withPricing(pricing.get(product.getProductId()))).toList(),
                 productPage.getNumber(),
                 productPage.getSize(),
                 productPage.getTotalElements(),
@@ -115,8 +132,10 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProductById(UUID id, UUID warehouseId) {
         Product product = findProductById(id);
         Map<UUID, Long> availability = productAvailability(warehouseId, java.util.List.of(product));
+        String primaryImage = primaryImages(java.util.List.of(product)).get(product.getProductId());
         return mapToResponse(product, warehouseId,
-                warehouseId == null ? null : availability.getOrDefault(product.getProductId(), 0L));
+                warehouseId == null ? null : availability.getOrDefault(product.getProductId(), 0L), primaryImage)
+                .withPricing(productPricing(java.util.List.of(product)).get(product.getProductId()));
     }
 
     @Override
@@ -191,10 +210,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private ProductResponse mapToResponse(Product product) {
-        return mapToResponse(product, null, null);
+        return mapToResponse(product, null, null,
+                primaryImages(java.util.List.of(product)).get(product.getProductId()))
+                .withPricing(productPricing(java.util.List.of(product)).get(product.getProductId()));
     }
 
-    private ProductResponse mapToResponse(Product product, UUID warehouseId, Long availableQuantity) {
+    private ProductResponse mapToResponse(Product product, UUID warehouseId, Long availableQuantity,
+                                          String primaryImageUrl) {
         return new ProductResponse(
                 product.getProductId(),
                 product.getProductName(),
@@ -207,8 +229,25 @@ public class ProductServiceImpl implements ProductService {
                 product.getCreatedAt(),
                 product.getUpdatedAt(),
                 warehouseId,
-                availableQuantity
+                availableQuantity,
+                primaryImageUrl
         );
+    }
+
+    private Map<UUID, com.example.backend.promotion.service.PromotionPrice> productPricing(java.util.List<Product> rows) {
+        if (rows.isEmpty()) return Map.of();
+        var ids=rows.stream().map(Product::getProductId).toList();
+        var resolved=promotions.resolve(ids,java.time.OffsetDateTime.now());
+        Map<UUID, com.example.backend.promotion.service.PromotionPrice> result=new java.util.HashMap<>();
+        for (var variant:variants.findByProduct_ProductIdInAndStatus(ids,com.example.backend.product.entity.ProductVariantStatus.ACTIVE)) {
+            var productId=variant.getProduct().getProductId();
+            var price=promotions.calculate(variant.getPrice(),resolved.get(productId));
+            result.merge(productId,price,(a,b)-> {
+                int comparison=a.getFinalUnitPrice().compareTo(b.getFinalUnitPrice());
+                return comparison<0 || (comparison==0 && a.getUnitPrice().compareTo(b.getUnitPrice())<=0)?a:b;
+            });
+        }
+        return result;
     }
 
     private Map<UUID, Long> productAvailability(UUID warehouseId, java.util.List<Product> products) {
@@ -218,6 +257,17 @@ public class ProductServiceImpl implements ProductService {
                 .stream().collect(Collectors.toMap(
                         InventoryRepository.ProductAvailability::getProductId,
                         InventoryRepository.ProductAvailability::getAvailableQuantity
+                ));
+    }
+
+    private Map<UUID, String> primaryImages(java.util.List<Product> products) {
+        if (products.isEmpty()) return Map.of();
+        return productImageRepository.findByProduct_ProductIdInAndPrimaryTrue(
+                        products.stream().map(Product::getProductId).toList())
+                .stream().collect(Collectors.toMap(
+                        image -> image.getProduct().getProductId(),
+                        ProductImage::getImageUrl,
+                        (first, ignored) -> first
                 ));
     }
 }

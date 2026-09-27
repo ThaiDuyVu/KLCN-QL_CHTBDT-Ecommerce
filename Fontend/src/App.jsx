@@ -3,13 +3,18 @@ import RequireAuth from './auth/RequireAuth';
 import RequireRole from './auth/RequireRole';
 import AppLayout from './components/layout/AppLayout';
 import { MANAGEMENT_ROLES, ROLES } from './config/projectConfig';
+import ProductCreatePage from './features/products/pages/ProductCreatePage';
 import ProductsPage from './features/products/pages/ProductsPage';
 import ProductDetailPage from './features/products/pages/ProductDetailPage';
 import CategoriesPage from './features/categories/pages/CategoriesPage';
 import OrdersPage from './features/orders/pages/OrdersPage';
 import OrderDetailPage from './features/orders/pages/OrderDetailPage';
+import InstallmentsPage from './features/orders/pages/InstallmentsPage';
+import InstallmentDetailPage from './features/orders/pages/InstallmentDetailPage';
+import InstallmentProvidersPage from './features/orders/pages/InstallmentProvidersPage';
 import CartPage from './features/cart/pages/CartPage';
 import CheckoutPage from './features/cart/pages/CheckoutPage';
+import VnpayResultPage from './features/orders/pages/VnpayResultPage';
 import CustomersPage from './features/customers/pages/CustomersPage';
 import InventoryPage from './features/inventory/pages/InventoryPage';
 import GoodsReceiptsPage from './features/inventory/pages/GoodsReceiptsPage';
@@ -24,6 +29,9 @@ import WarrantyLookupPage from './features/warranty/pages/WarrantyLookupPage';
 import WarrantyTicketsPage from './features/warranty/pages/WarrantyTicketsPage';
 import WarrantyTicketDetailPage from './features/warranty/pages/WarrantyTicketDetailPage';
 import HomePage from './pages/HomePage';
+import PromotionsPage from './features/promotions/pages/PromotionsPage';
+import PromotionDetailPage from './features/promotions/pages/PromotionDetailPage';
+import PromotionFormPage from './features/promotions/pages/PromotionFormPage';
 import LoginPage from './pages/LoginPage';
 import AccountPage from './pages/AccountPage';
 import ForbiddenPage from './pages/ForbiddenPage';
@@ -44,6 +52,7 @@ export default function App() {
           <Route element={<RequireRole roles={[ROLES.CUSTOMER]} />}>
             <Route path="cart" element={<CartPage />} />
             <Route path="checkout" element={<CheckoutPage />} />
+            <Route path="payments/vnpay/result" element={<VnpayResultPage />} />
             <Route path="my-orders" element={<OrdersPage customer />} />
             <Route path="my-orders/:orderId" element={<OrderDetailPage customer />} />
             <Route path="my-warranties" element={<MyWarrantiesPage />} />
@@ -66,6 +75,16 @@ export default function App() {
             <Route path="warranties/:warrantyId" element={<WarrantyDetailPage />} />
             <Route path="warranty-tickets" element={<WarrantyTicketsPage />} />
             <Route path="warranty-tickets/:ticketId" element={<WarrantyTicketDetailPage />} />
+          </Route>
+          <Route element={<RequireRole roles={[ROLES.ADMIN, ROLES.MANAGER]} />}>
+            <Route path="products/new" element={<ProductCreatePage />} />
+            <Route path="promotions" element={<PromotionsPage />} />
+            <Route path="promotions/new" element={<PromotionFormPage />} />
+            <Route path="promotions/:promotionId" element={<PromotionDetailPage />} />
+            <Route path="promotions/:promotionId/edit" element={<PromotionFormPage />} />
+            <Route path="installments" element={<InstallmentsPage />} />
+            <Route path="installments/providers" element={<InstallmentProvidersPage />} />
+            <Route path="installments/:installmentId" element={<InstallmentDetailPage />} />
           </Route>
           <Route element={<RequireRole roles={[ROLES.ADMIN]} />}>
             <Route path="user-management" element={<UserManagementPage />} />

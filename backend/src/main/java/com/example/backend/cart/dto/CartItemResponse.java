@@ -7,6 +7,17 @@ import java.util.List;
 import jakarta.validation.constraints.*;
 
 public class CartItemResponse {
+    private BigDecimal effectivePrice;
+    public BigDecimal getEffectivePrice() { return effectivePrice; }
+    public void setEffectivePrice(BigDecimal value) { effectivePrice=value; }
+    private BigDecimal discountAmount;
+    public BigDecimal getDiscountAmount() { return discountAmount; }
+    public void setDiscountAmount(BigDecimal value) { discountAmount=value; }
+    private com.example.backend.promotion.dto.PromotionSummaryResponse promotion;
+    public com.example.backend.promotion.dto.PromotionSummaryResponse getPromotion() { return promotion; }
+    public void setPromotion(com.example.backend.promotion.dto.PromotionSummaryResponse value) { promotion=value; }
+    public BigDecimal getOriginalPrice() { return unitPrice; }
+
     private UUID cartItemId;
     private UUID variantId;
     private String productName;

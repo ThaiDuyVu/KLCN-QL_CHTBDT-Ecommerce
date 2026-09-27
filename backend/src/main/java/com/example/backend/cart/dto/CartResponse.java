@@ -7,6 +7,13 @@ import java.util.List;
 import jakarta.validation.constraints.*;
 
 public class CartResponse {
+    private BigDecimal originalSubtotal;
+    public BigDecimal getOriginalSubtotal() { return originalSubtotal; }
+    public void setOriginalSubtotal(BigDecimal value) { originalSubtotal=value; }
+    private BigDecimal discountAmount;
+    public BigDecimal getDiscountAmount() { return discountAmount; }
+    public void setDiscountAmount(BigDecimal value) { discountAmount=value; }
+
     private UUID cartId;
     private UUID warehouseId;
     private String warehouseName;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import PageHeader from '../../../components/ui/PageHeader';
+import StatusBadge from '../../../components/ui/StatusBadge';
 import { inventoryApi } from '../api/inventoryApi';
 import '../inventory.css';
 
@@ -108,7 +109,7 @@ export default function GoodsReceiptDetailPage() {
       {error && <p className="auth-alert" role="alert">{error}</p>}
       <section className="panel receipt-detail">
         <dl>
-          <div><dt>Trạng thái</dt><dd>{data.status}</dd></div>
+          <div><dt>Trạng thái</dt><dd><StatusBadge status={data.status}>{data.status === 'DRAFT' ? 'Bản nháp' : data.status === 'CONFIRMED' ? 'Đã xác nhận' : 'Đã hủy'}</StatusBadge></dd></div>
           <div><dt>Ngày tạo</dt><dd>{new Date(data.receiptDate).toLocaleString('vi-VN')}</dd></div>
           <div><dt>Tổng tiền</dt><dd>{Number(data.totalAmount).toLocaleString('vi-VN')} đ</dd></div>
         </dl>

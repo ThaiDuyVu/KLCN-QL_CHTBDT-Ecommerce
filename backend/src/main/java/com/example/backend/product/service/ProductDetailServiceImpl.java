@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class ProductDetailServiceImpl implements ProductDetailService {
 
+    private final com.example.backend.promotion.service.PromotionService promotions;
     private final ProductRepository productRepository;
     private final ProductVariantRepository variantRepository;
     private final ProductImageRepository imageRepository;
@@ -40,7 +41,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
     public ProductDetailServiceImpl(ProductRepository productRepository, ProductVariantRepository variantRepository,
                                     ProductImageRepository imageRepository, SpecificationRepository specificationRepository,
-                                    InventoryRepository inventoryRepository) {
+                                    InventoryRepository inventoryRepository, com.example.backend.promotion.service.PromotionService promotions) {
+        this.promotions=promotions;
         this.productRepository = productRepository;
         this.variantRepository = variantRepository;
         this.imageRepository = imageRepository;
@@ -58,6 +60,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         Product product = productRepository.findDetailById(productId).orElseThrow(() -> new ProductNotFoundException(
                 "Không tìm thấy sản phẩm với ID: " + productId
         ));
+        var promotion=promotions.resolve(List.of(productId), java.time.OffsetDateTime.now()).get(productId);
         Category category = product.getCategory();
         Brand brand = product.getBrand();
 
@@ -71,7 +74,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
                         InventoryRepository.VariantAvailability::getAvailableQuantity));
         List<ProductVariantResponse> variants = variantRows.stream()
                 .map(variant -> mapVariant(variant, warehouseId,
-                        warehouseId == null ? null : availability.getOrDefault(variant.getVariantId(), 0L)))
+                        warehouseId == null ? null : availability.getOrDefault(variant.getVariantId(), 0L))
+                .withPricing(promotions.calculate(variant.getPrice(),promotion)))
                 .toList();
         List<ProductImageResponse> images = imageRepository.findByProduct_ProductId(productId, Sort.by(
                 Sort.Order.desc("primary"), Sort.Order.asc("imageId")
@@ -80,12 +84,15 @@ public class ProductDetailServiceImpl implements ProductDetailService {
                 Sort.Order.asc("specKey"), Sort.Order.asc("specificationId")
         )).stream().map(this::mapSpecification).toList();
 
+        var minimumPrice=variants.stream().filter(v->v.getStatus()==com.example.backend.product.entity.ProductVariantStatus.ACTIVE)
+                .min(java.util.Comparator.comparing(ProductVariantResponse::getEffectivePrice).thenComparing(ProductVariantResponse::getPrice))
+                .map(v->promotions.calculate(v.getPrice(),promotion)).orElse(null);
         return new ProductDetailResponse(
                 new ProductResponse(
                         product.getProductId(), product.getProductName(), product.getDescription(),
                         category.getCategoryId(), brand.getBrandId(), product.getStatus(),
                         category.getCategoryName(), brand.getBrandName(), product.getCreatedAt(), product.getUpdatedAt()
-                ),
+                ).withPricing(minimumPrice),
                 new CategoryResponse(
                         category.getCategoryId(), category.getCategoryName(), category.getDescription(),
                         category.getParent() == null ? null : category.getParent().getCategoryId(), category.getStatus()

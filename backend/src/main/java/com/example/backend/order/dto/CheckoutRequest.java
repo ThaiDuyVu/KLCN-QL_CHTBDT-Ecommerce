@@ -16,6 +16,12 @@ public class CheckoutRequest {
     private String note;
     @NotNull(message = "paymentMethod là bắt buộc")
     private com.example.backend.order.entity.PaymentMethod paymentMethod;
+    private UUID providerId;
+    @Min(value = 1, message = "termMonths phải lớn hơn 0")
+    private Integer termMonths;
+    @DecimalMin(value = "0.00", message = "downPayment không được âm")
+    @Digits(integer = 13, fraction = 2, message = "downPayment vượt giới hạn tiền tệ")
+    private BigDecimal downPayment;
     public CheckoutRequest() {}
     public String getRecipientName() { return recipientName; }
     public void setRecipientName(String value) { this.recipientName = value == null ? null : value.trim(); }
@@ -27,4 +33,10 @@ public class CheckoutRequest {
     public void setNote(String value) { this.note = value == null ? null : value.trim(); }
     public com.example.backend.order.entity.PaymentMethod getPaymentMethod() { return paymentMethod; }
     public void setPaymentMethod(com.example.backend.order.entity.PaymentMethod value) { this.paymentMethod = value; }
+    public UUID getProviderId() { return providerId; }
+    public void setProviderId(UUID value) { this.providerId = value; }
+    public Integer getTermMonths() { return termMonths; }
+    public void setTermMonths(Integer value) { this.termMonths = value; }
+    public BigDecimal getDownPayment() { return downPayment; }
+    public void setDownPayment(BigDecimal value) { this.downPayment = value; }
 }

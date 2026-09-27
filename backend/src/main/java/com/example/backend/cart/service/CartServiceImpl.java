@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class CartServiceImpl implements CartService {
+    private final com.example.backend.promotion.service.PromotionService promotions;
     private final CustomerCartRepository customers;
     private final CartRepository carts;
     private final CartItemRepository items;
@@ -26,7 +27,8 @@ public class CartServiceImpl implements CartService {
     private final WarehouseRepository warehouses;
     public CartServiceImpl(CustomerCartRepository customers, CartRepository carts, CartItemRepository items,
                            ProductVariantRepository variants, InventoryRepository inventory,
-                           WarehouseRepository warehouses) {
+                           WarehouseRepository warehouses, com.example.backend.promotion.service.PromotionService promotions) {
+        this.promotions=promotions;
         this.customers = customers; this.carts = carts; this.items = items; this.variants = variants;
         this.inventory = inventory; this.warehouses = warehouses;
     }
@@ -121,16 +123,24 @@ public class CartServiceImpl implements CartService {
                 : inventory.findVariantAvailability(cart.getWarehouseId(), links.stream().map(CartItem::getVariantId).toList())
                 .stream().collect(Collectors.toMap(InventoryRepository.VariantAvailability::getVariantId,
                         InventoryRepository.VariantAvailability::getAvailableQuantity));
+        var resolved=promotions.resolve(products.values().stream().map(v->v.getProduct().getProductId()).distinct().toList(),OffsetDateTime.now());
         List<CartItemResponse> result = new ArrayList<>(); BigDecimal subtotal = BigDecimal.ZERO;
+        BigDecimal originalSubtotal=BigDecimal.ZERO, discountAmount=BigDecimal.ZERO;
         for (var link : links) {
             var variant = products.get(link.getVariantId()); var item = new CartItemResponse();
             item.setCartItemId(link.getCartItemId()); item.setVariantId(link.getVariantId()); item.setQuantity(link.getQuantity());
             item.setSku(variant.getSku()); item.setProductName(variant.getProduct().getProductName());
-            item.setUnitPrice(variant.getPrice()); item.setLineTotal(variant.getPrice().multiply(BigDecimal.valueOf(link.getQuantity())));
+            var price=promotions.calculate(variant.getPrice(),resolved.get(variant.getProduct().getProductId()));
+            var quantity=BigDecimal.valueOf(link.getQuantity());
+            item.setUnitPrice(price.getUnitPrice()); item.setEffectivePrice(price.getFinalUnitPrice());
+            item.setDiscountAmount(price.getDiscountAmount()); item.setPromotion(price.getPromotion());
+            item.setLineTotal(price.getFinalUnitPrice().multiply(quantity));
+            originalSubtotal=originalSubtotal.add(price.getUnitPrice().multiply(quantity));
+            discountAmount=discountAmount.add(price.getDiscountAmount().multiply(quantity));
             if (cart.getWarehouseId() != null) item.setAvailableQuantity(
                     Math.toIntExact(availability.getOrDefault(link.getVariantId(), 0L)));
             subtotal = subtotal.add(item.getLineTotal()); result.add(item);
         }
-        response.setItems(result); response.setSubtotal(subtotal); return response;
+        response.setItems(result); response.setSubtotal(subtotal); response.setOriginalSubtotal(originalSubtotal); response.setDiscountAmount(discountAmount); return response;
     }
 }

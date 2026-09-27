@@ -1,4 +1,5 @@
 import { apiClient } from '../../../api/apiClient';
+import { commerceRequest } from '../../orders/api/orderApi';
 import { authApi } from '../../../auth/api/authApi';
 
 async function request(path, signal) {
@@ -14,11 +15,24 @@ async function request(path, signal) {
 }
 
 export const productApi = {
-  list({ page = 0, size = 12, keyword = '', status = '', warehouseId = '' }, signal) {
+  createWithImages(product, images, primaryImageIndex, specifications = []) {
+    const body = new FormData();
+    body.append('product', new Blob([JSON.stringify(product)], { type: 'application/json' }));
+    images.forEach((file) => body.append('images', file));
+    body.append('primaryImageIndex', String(primaryImageIndex));
+    if (specifications.length) body.append('specifications', new Blob([JSON.stringify({ specifications })], { type: 'application/json' }));
+    return commerceRequest('/v1/products/with-images', { method: 'POST', body, signal: AbortSignal.timeout(60000) });
+  },
+  brands(page, signal) {
+    return commerceRequest(`/v1/brands?page=${page}&size=20`, { signal });
+  },
+  list({ page = 0, size = 12, keyword = '', categoryId = '', status = '', warehouseId = '', onSale = false }, signal) {
     const query = new URLSearchParams({ page: String(page), size: String(size) });
     if (keyword) query.set('keyword', keyword);
+    if (categoryId) query.set('categoryId', categoryId);
     if (status) query.set('status', status);
     if (warehouseId) query.set('warehouseId', warehouseId);
+    if (onSale) query.set('onSale', 'true');
     return request(`/v1/products?${query}`, signal);
   },
   detail(productId, warehouseId, signal) {

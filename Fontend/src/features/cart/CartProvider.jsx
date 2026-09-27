@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ROLES } from '../../config/projectConfig';
 import { useAuth } from '../../hooks/useAuth';
 import { cartApi } from './api/cartApi';
+import CartAddedToast from './components/CartAddedToast';
 import { CartContext } from './cartContext';
 
 function countItems(cart) {
@@ -11,12 +12,19 @@ function countItems(cart) {
 export default function CartProvider({ children }) {
   const { user, invalidateSession } = useAuth();
   const [cart, setCart] = useState(null);
+  const [notification, setNotification] = useState(null);
   const [cartOwner, setCartOwner] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const operation = useRef(0);
   const isCustomer = user?.roleName === ROLES.CUSTOMER;
   const ownerKey = user?.userId || user?.id || user?.username || null;
+
+  const dismissNotification = useCallback(() => setNotification(null), []);
+  const notifyAdded = useCallback((nextCart, variantId, quantity) => {
+    const item = nextCart?.items?.find((entry) => entry.variantId === variantId);
+    setNotification({ id: crypto.randomUUID(), ownerKey, productName: item?.productName || 'Sản phẩm', sku: item?.sku, quantity });
+  }, [ownerKey]);
 
   const applyCart = useCallback((nextCart) => {
     operation.current += 1;
@@ -88,9 +96,11 @@ export default function CartProvider({ children }) {
     isLoading: isCustomer && (isLoading || cartOwner !== ownerKey),
     error: cartOwner === ownerKey ? error : null,
     applyCart,
+    notifyAdded,
     clearCart,
     refreshCart,
-  }), [applyCart, cart, cartOwner, clearCart, error, isCustomer, isLoading, ownerKey, refreshCart]);
+  }), [applyCart, notifyAdded, cart, cartOwner, clearCart, error, isCustomer, isLoading, ownerKey, refreshCart]);
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={value}>{children}{isCustomer && notification?.ownerKey === ownerKey &&
+    <CartAddedToast key={notification.id} notification={notification} onClose={dismissNotification} />}</CartContext.Provider>;
 }
