@@ -219,3 +219,22 @@
 .storefront-shell .product-branch-note { display: inline-flex; padding: 8px 12px; margin-bottom: 18px; border-radius: 3px; background: #eff8fc; color: #28627c; font-size: .76rem; }
 .product-category-filter { display: flex; align-items: center; gap: 10px; font-size: .76rem; color: #537085; margin-bottom: 12px; }
 .product-category-filter button { border: 0; background: transparent; color: #256080; font: inherit; text-decoration: underline; }
+
+.product-filters label.product-sale-filter { display:flex; flex:0 0 auto; align-items:center; align-self:center; gap:8px; margin-top:18px; white-space:nowrap; font-size:.76rem; }
+.product-filters .product-sale-filter input { width:16px; height:16px; margin:0; accent-color:#256080; }
+@media(max-width:640px) { .product-filters label.product-sale-filter { margin-top:0; } }
+
+.retail-product-card-sale { border-color:#dce7ed; border-radius:10px; overflow:hidden; }
+.retail-product-card-sale:hover { border-color:#a9c4d2; box-shadow:0 8px 24px #223c5010; }
+.retail-sale-sticker { position:absolute; z-index:1; top:12px; left:12px; padding:6px 9px; border-radius:5px; background:var(--shop-accent,#c75b10); color:#fff; font-size:.72rem; font-weight:800; box-shadow:0 3px 8px #c75b1018; pointer-events:none; }
+.retail-product-card-sale .retail-product-visual { padding-top:38px; }
+.retail-product-card-sale .price-display-current { color:var(--shop-accent,#c75b10); font-size:1.12em; }
+.retail-product-card-sale .price-display-badge { background:#fff1df; color:#97501b; }
+.retail-sale-saving { display:flex; flex-wrap:wrap; gap:4px; align-items:baseline; margin:0 0 10px; padding:7px 9px; border-radius:5px; color:var(--shop-blue,#256080); background:var(--shop-tint,#f0f8fb); font-size:.67rem; }
+.retail-sale-saving strong { font-weight:750; }
+.sale-list-banner { display:flex; align-items:center; gap:24px; overflow:hidden; position:relative; padding:24px 28px; margin-bottom:24px; border-radius:12px; border:1px solid #dce7ed; background:linear-gradient(110deg,#edf8fb,#dff1f7); color:#23364a; }
+.sale-list-label { padding:8px 12px; border:1px solid #cddfe8; border-radius:5px; color:var(--shop-accent,#c75b10); letter-spacing:.1em; font-size:.65rem; font-weight:800; white-space:nowrap; }
+.sale-list-banner h2 { margin:0 0 6px; color:#23364a; font-size:1.25rem; letter-spacing:-.025em; }
+.sale-list-banner p { color:#587082; margin:0; font-size:.75rem; line-height:1.6; }
+.sale-list-symbol { margin-left:auto; color:var(--shop-accent,#c75b10); font-size:64px; line-height:1; font-weight:800; transform:rotate(-12deg); }
+@media(max-width:640px) { .sale-list-banner { padding:20px; align-items:flex-start; flex-direction:column; gap:12px; } .sale-list-symbol { position:absolute; right:20px; top:12px; opacity:.2; } .sale-list-banner h2 { font-size:1.1rem; position:relative; } }

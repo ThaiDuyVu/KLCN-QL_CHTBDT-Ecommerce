@@ -8,6 +8,7 @@ import { categoryApi } from '../features/categories/api/categoryApi';
 import { productApi } from '../features/products/api/productApi';
 import useProductRequest from '../features/products/hooks/useProductRequest';
 import ProductImage from '../features/products/components/ProductImage';
+import SaleProductsSection from '../features/products/components/SaleProductsSection';
 import StorefrontProductCard from '../features/products/components/StorefrontProductCard';
 import ShopIcon from '../components/ui/ShopIcon';
 import ComingSoonButton from '../components/ui/ComingSoonButton';
@@ -75,9 +76,10 @@ function StorefrontHome({ customer }) {
       <Link className="home-banner" to="/products"><img src={`${hero}MiniHerobanner4.png`} alt="Khám phá thiết bị gia dụng" loading="lazy" width="1064" height="498" /></Link>
     </section>
 
+    {customer && <SaleProductsSection />}
     <section className="home-section" id="featured-products">
       <div className="home-section-heading home-products-heading"><div><h2>Sản phẩm nổi bật</h2><p>{selectedWarehouse ? `Tồn kho tại ${selectedWarehouse.warehouseName}` : 'Chọn chi nhánh để xem số lượng sẵn có.'}</p></div>
-        <div className="home-product-tabs"><span aria-current="true">Tất cả</span><ComingSoonButton>Bán chạy</ComingSoonButton><ComingSoonButton>Mới nhất</ComingSoonButton><ComingSoonButton>Ưu đãi</ComingSoonButton></div>
+        <div className="home-product-tabs"><span aria-current="true">Tất cả</span><ComingSoonButton>Bán chạy</ComingSoonButton><ComingSoonButton>Mới nhất</ComingSoonButton><Link to="/products?onSale=true">Ưu đãi</Link></div>
       </div>
       {products.isLoading && customer && <div className="home-products-grid" role="status" aria-label="Đang tải sản phẩm">{Array.from({ length: 5 }, (_, index) => <div className="home-product-skeleton skeleton-block" key={index} />)}</div>}
       {products.error && <p role="alert" className="auth-alert">{products.error.message} <button type="button" onClick={products.retry}>Thử lại</button></p>}

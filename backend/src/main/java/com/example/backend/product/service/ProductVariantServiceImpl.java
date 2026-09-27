@@ -32,13 +32,15 @@ import java.util.List;
 public class ProductVariantServiceImpl implements ProductVariantService {
 
     private static final int MAX_PAGE_SIZE = 100;
+    private final com.example.backend.promotion.service.PromotionService promotions;
     private final ProductVariantRepository variantRepository;
     private final ProductRepository productRepository;
     private final InventoryRepository inventoryRepository;
     private final SerialNumberRepository serialNumberRepository;
 
     public ProductVariantServiceImpl(ProductVariantRepository variantRepository, ProductRepository productRepository,
-            InventoryRepository inventoryRepository, SerialNumberRepository serialNumberRepository) {
+            InventoryRepository inventoryRepository, SerialNumberRepository serialNumberRepository, com.example.backend.promotion.service.PromotionService promotions) {
+        this.promotions=promotions;
         this.variantRepository = variantRepository;
         this.productRepository = productRepository;
         this.inventoryRepository = inventoryRepository;
@@ -74,7 +76,7 @@ public class ProductVariantServiceImpl implements ProductVariantService {
                 ? variantRepository.findAll(pageable)
                 : variantRepository.findByProduct_ProductId(productId, pageable);
         return new ProductVariantPageResponse(
-                variants.getContent().stream().map(this::mapToResponse).toList(),
+                mapResponses(variants.getContent()),
                 variants.getNumber(), variants.getSize(), variants.getTotalElements(), variants.getTotalPages()
         );
     }
@@ -89,9 +91,9 @@ public class ProductVariantServiceImpl implements ProductVariantService {
         if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException("Không tìm thấy sản phẩm với ID: " + productId);
         }
-        return variantRepository.findByProduct_ProductId(productId, Sort.by(
+        return mapResponses(variantRepository.findByProduct_ProductId(productId, Sort.by(
                 Sort.Order.asc("sku"), Sort.Order.asc("variantId")
-        )).stream().map(this::mapToResponse).toList();
+        )));
     }
 
     @Override
@@ -183,12 +185,14 @@ public class ProductVariantServiceImpl implements ProductVariantService {
         }
     }
 
-    private ProductVariantResponse mapToResponse(ProductVariant variant) {
-        return new ProductVariantResponse(
+    private ProductVariantResponse mapToResponse(ProductVariant variant) { return mapResponses(List.of(variant)).get(0); }
+    private List<ProductVariantResponse> mapResponses(List<ProductVariant> rows) {
+        var resolved=promotions.resolve(rows.stream().map(v->v.getProduct().getProductId()).distinct().toList(),java.time.OffsetDateTime.now());
+        return rows.stream().map(variant->new ProductVariantResponse(
                 variant.getVariantId(), variant.getProduct().getProductId(), variant.getProduct().getProductName(),
                 variant.getSku(), variant.getPrice(), variant.getCostPrice(), variant.getColor(),
                 variant.getStorage(), variant.getRam(), variant.getStatus(), variant.getTrackingType(),
                 variant.getWarrantyMonths(), null, null
-        );
+        ).withPricing(promotions.calculate(variant.getPrice(),resolved.get(variant.getProduct().getProductId())))).toList();
     }
 }

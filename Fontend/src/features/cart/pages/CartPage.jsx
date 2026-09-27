@@ -1,3 +1,4 @@
+import PriceDisplay from '../../../components/ui/PriceDisplay';
 import { useCallback, useState } from 'react';
 import { Link } from 'react-router';
 import PageHeader from '../../../components/ui/PageHeader';
@@ -9,7 +10,6 @@ import { useAuth } from '../../../hooks/useAuth';
 import { useCart } from '../../../hooks/useCart';
 import ShopBreadcrumb from '../../../components/ui/ShopBreadcrumb';
 import PurchaseSteps from '../../../components/ui/PurchaseSteps';
-import ComingSoonButton from '../../../components/ui/ComingSoonButton';
 import '../../orders/commerce.css';
 
 export default function CartPage() {
@@ -48,7 +48,7 @@ export default function CartPage() {
             <p className="cart-item-sku">SKU: {item.sku}</p>
             <p className="cart-item-stock">Khả dụng tại chi nhánh: {item.availableQuantity ?? '—'}</p>
           </div>
-          <div className="cart-item-price"><span>Đơn giá</span><strong>{money(item.unitPrice)}</strong></div>
+          <div className="cart-item-price"><span>Đơn giá</span><PriceDisplay originalPrice={item.originalPrice ?? item.unitPrice} effectivePrice={item.effectivePrice ?? item.unitPrice} discountAmount={item.discountAmount} promotion={item.promotion} /></div>
           <QuantityEditor key={`${item.cartItemId}:${item.quantity}`} item={item} disabled={busy}
             save={(quantity) => change(() => cartApi.quantity(item.cartItemId, quantity))} />
           <div className="cart-item-total"><span>Thành tiền</span><strong>{money(item.lineTotal)}</strong></div>
@@ -62,8 +62,8 @@ export default function CartPage() {
         <h2 id="cart-summary-title">Tóm tắt đơn hàng</h2>
         <div className="summary-branch"><span>Chi nhánh xử lý</span><strong>{data.warehouseName || 'Chưa chọn chi nhánh'}</strong></div>
         <dl className="summary-lines">
-          <div><dt>Tạm tính</dt><dd>{money(data.subtotal)}</dd></div>
-          <div><dt>Giảm giá</dt><dd>{money(0)}</dd></div>
+          <div><dt>Tạm tính</dt><dd>{money(data.originalSubtotal ?? data.subtotal)}</dd></div>
+          <div><dt>Giảm giá</dt><dd>{money(data.discountAmount)}</dd></div>
           <div><dt>Phí giao hàng</dt><dd>{money(0)}</dd></div>
         </dl>
         <div className="summary-total"><span>Tổng cộng</span><strong>{money(data.subtotal)}</strong></div>
@@ -71,7 +71,6 @@ export default function CartPage() {
           <Link className="button summary-primary-action" to="/checkout">Tiến hành thanh toán</Link> :
           <p className="auth-alert">Hãy chọn chi nhánh trước khi checkout.</p>}
         <p className="summary-assurance">Giá và tồn kho tại chi nhánh được xác nhận lại khi đặt hàng.</p>
-        <div className="shop-coupon"><label htmlFor="cart-coupon">Mã ưu đãi · Sắp có</label><div><input id="cart-coupon" placeholder="Nhập mã ưu đãi" disabled /><ComingSoonButton>Áp dụng</ComingSoonButton></div></div>
       </aside>
     </div> : <section className="panel commerce-empty-state">
       <span aria-hidden="true">□</span><h2>Giỏ hàng trống.</h2><p>Khám phá sản phẩm và chọn phiên bản phù hợp với bạn.</p>

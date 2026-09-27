@@ -1,3 +1,4 @@
+import PriceDisplay from '../../../components/ui/PriceDisplay';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router';
 import { orderApi } from '../api/orderApi';
@@ -63,7 +64,7 @@ function Detail({ customer, orderId }) {
       </dl></section>
       <section className="panel commerce-section"><h3>Sản phẩm</h3>{data.items?.map((item) => <article className="commerce-order-item" key={item.orderItemId}>
         <div className="order-item-heading"><div><strong>{item.productName}</strong><span>{item.sku} · SL {item.quantity}</span></div><strong>{money(item.finalUnitPrice * item.quantity)}</strong></div>
-        <p className="muted">{money(item.finalUnitPrice)} / sản phẩm</p>
+        <p className="muted"><PriceDisplay originalPrice={item.unitPrice} effectivePrice={item.finalUnitPrice} discountAmount={item.discountAmount} /> / sản phẩm</p>
         {item.trackingType && item.trackingType !== 'NONE' && (item.serialNumber ? <p className="muted">
           Serial: <strong>{item.serialNumber}</strong>{item.imeiNumbers?.length ? ` · IMEI: ${item.imeiNumbers.join(', ')}` : ''}
         </p> : <p className="muted">Thiết bị cụ thể sẽ được cấp khi đơn chuyển sang Đang xử lý.</p>)}

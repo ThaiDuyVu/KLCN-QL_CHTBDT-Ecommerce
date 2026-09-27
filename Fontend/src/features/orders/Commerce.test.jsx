@@ -21,15 +21,15 @@ vi.mock('./api/vnpayApi', () => ({vnpayApi:{config:vi.fn(),paymentUrl:vi.fn(),sy
 vi.mock('./components/vnpayFormat', async (importOriginal) => ({...(await importOriginal()),redirectToVnpay:vi.fn()}));
 const cart={cartId:'cart',warehouseId:'warehouse',warehouseName:'Chi nhánh thử',subtotal:2000000,items:[{cartItemId:'item',variantId:'variant',productName:'Thiết bị thử',sku:'SKU',quantity:1,unitPrice:2000000,lineTotal:2000000}]};
 const order={orderId:'order',orderCode:'ORD-TEST',status:'PENDING',recipientName:'Khách thử',recipientPhone:'0901234567',shippingAddress:'TP.HCM',items:[],totalAmount:2000000,payment:{paymentMethod:'COD',status:'PENDING'},allowedStatuses:['CANCELLED']};
-const cartContext={cart,itemCount:1,isLoading:false,error:null,applyCart:vi.fn(),clearCart:vi.fn(),refreshCart:vi.fn()};
+const cartContext={cart,itemCount:1,isLoading:false,error:null,applyCart:vi.fn(),notifyAdded:vi.fn(),clearCart:vi.fn(),refreshCart:vi.fn()};
 const warehouseContext={warehouses:[{warehouseId:'warehouse',warehouseName:'Chi nhánh thử'}],selectedWarehouse:{warehouseId:'warehouse',warehouseName:'Chi nhánh thử'},selectedWarehouseId:'warehouse',selectWarehouse:vi.fn().mockResolvedValue(true),isLoading:false,isChanging:false,error:''};
 function mount(child,path='/'){return render(<MemoryRouter initialEntries={[path]}><AuthContext.Provider value={{user:{userId:'customer',roleName:'CUSTOMER'},invalidateSession:vi.fn()}}><CartContext.Provider value={cartContext}><WarehouseContext.Provider value={warehouseContext}>{child}</WarehouseContext.Provider></CartContext.Provider></AuthContext.Provider></MemoryRouter>);}
-beforeEach(()=>{vi.resetAllMocks();cartContext.applyCart=vi.fn();cartContext.clearCart=vi.fn();warehouseContext.selectWarehouse=vi.fn().mockResolvedValue(true);vi.spyOn(window,'confirm').mockReturnValue(true);cartApi.get.mockResolvedValue(cart);orderApi.detail.mockResolvedValue(order);vnpayApi.config.mockResolvedValue({enabled:true});installmentApi.activeProviders.mockResolvedValue([{providerId:'provider-1',providerName:'Đơn vị nội bộ'}]);});
+beforeEach(()=>{vi.resetAllMocks();cartContext.applyCart=vi.fn();cartContext.notifyAdded=vi.fn();cartContext.clearCart=vi.fn();warehouseContext.selectWarehouse=vi.fn().mockResolvedValue(true);vi.spyOn(window,'confirm').mockReturnValue(true);cartApi.get.mockResolvedValue(cart);orderApi.detail.mockResolvedValue(order);vnpayApi.config.mockResolvedValue({enabled:true});installmentApi.activeProviders.mockResolvedValue([{providerId:'provider-1',providerName:'Đơn vị nội bộ'}]);});
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
 it('adds selected variant and quantity',async()=>{
   cartApi.add.mockResolvedValue(cart);mount(<AddToCart variantId="variant"/>);
   fireEvent.change(screen.getByLabelText('Số lượng'),{target:{value:'2'}});fireEvent.click(screen.getByRole('button',{name:'Thêm vào giỏ'}));
-  await waitFor(()=>expect(cartApi.add).toHaveBeenCalledWith('variant',2));expect(cartContext.applyCart).toHaveBeenCalledWith(cart);expect(await screen.findByText('Xem giỏ hàng')).toBeInTheDocument();
+  await waitFor(()=>expect(cartApi.add).toHaveBeenCalledWith('variant',2));expect(cartContext.applyCart).toHaveBeenCalledWith(cart);expect(cartContext.notifyAdded).toHaveBeenCalledWith(cart,'variant',2);
 });
 it('changes quantities and deletes cart items with confirmation',async()=>{
   cartApi.quantity.mockResolvedValue(cart);cartApi.remove.mockResolvedValue({...cart,items:[]});mount(<CartPage/>);

@@ -77,3 +77,38 @@
   .home-newsletter input { flex: 1; width: 100%; }
 }
 @media (max-width: 380px) { .home-category-grid { grid-template-columns: 1fr; } .home-category-card { min-height: 116px; } .home-newsletter > div:last-child { flex-direction: column; } }
+
+.home-sale-section { padding:24px; border:1px solid #dce7ed; border-radius:16px; background:#f8fbfd; }
+.home-sale-eyebrow { display:inline-flex; align-items:center; gap:6px; color:var(--shop-accent,#c75b10); font-size:.62rem; font-weight:750; letter-spacing:.07em; margin-bottom:8px; }
+.home-sale-eyebrow .shop-icon { width:15px; height:15px; }
+.home-sale-view-all { display:inline-flex; align-items:center; gap:8px; color:var(--shop-blue,#256080); font-size:.74rem; font-weight:700; white-space:nowrap; }
+.home-sale-view-all .shop-icon { width:16px; height:16px; }
+.home-sale-view-all:hover { text-decoration:underline; }
+.home-sale-section .retail-product-card { background:#fff; }
+.home-sale-empty { display:flex; align-items:center; gap:16px; padding:24px; border:1px dashed #e6d8c9; border-radius:4px; background:#fff; }
+.home-sale-empty > .shop-icon { width:32px; height:32px; color:#ba7950; flex-shrink:0; }
+.home-sale-empty strong { font-size:.85rem; color:#23364a; }
+.home-sale-empty p { font-size:.75rem; color:#667786; margin:5px 0 0; line-height:1.6; }
+.home-sale-empty > a { margin-left:auto; flex-shrink:0; font-size:.75rem; font-weight:650; color:#256080; }
+.home-product-tabs > a { font-size:.72rem; color:#256080; }
+.home-product-tabs > a:hover { text-decoration:underline; }
+@media(max-width:640px) { .home-sale-section { padding:16px; } .home-sale-section .home-section-heading { align-items:flex-start; flex-direction:column; gap:12px; } .home-sale-empty { flex-wrap:wrap; padding:18px; } .home-sale-empty > a { margin-left:48px; } }
+
+.sale-campaign { position:relative; overflow:hidden; display:grid; grid-template-columns:1.4fr 1fr; align-items:center; min-height:260px; margin-bottom:28px; padding:32px 40px; border-radius:12px; background:radial-gradient(ellipse at 85% 40%,#d4eef5 0,transparent 60%),#edf8fb; color:#23364a; }
+.sale-campaign-copy { position:relative; z-index:1; }
+.sale-campaign-kicker { display:inline-flex; align-items:center; gap:8px; color:var(--shop-accent,#c75b10); letter-spacing:.16em; font-size:.68rem; font-weight:800; }
+.sale-campaign-kicker .shop-icon { width:16px; height:16px; }
+.sale-campaign h2 { color:#23364a; margin:12px 0; font-size:clamp(1.5rem,3vw,2.5rem); line-height:1.18; letter-spacing:-.04em; }
+.sale-campaign h2 em { color:var(--shop-blue,#256080); font-style:normal; }
+.sale-campaign p { color:#587082; font-size:.8rem; line-height:1.6; margin:0 0 22px; }
+.sale-campaign-copy > a { display:inline-flex; align-items:center; gap:14px; padding:12px 18px; background:var(--shop-accent,#c75b10); color:#fff; border-radius:6px; font-size:.8rem; font-weight:750; }
+.sale-campaign-copy > a:hover { background:#a64b0b; }
+.sale-campaign-copy > a .shop-icon { width:18px; height:18px; }
+.sale-campaign-art { position:relative; height:210px; display:grid; place-items:center; }
+.sale-campaign-orbit { position:absolute; width:230px; height:230px; border:1px solid #8cc1d866; border-radius:50%; box-shadow:0 0 0 24px #8cc1d812,0 0 0 48px #8cc1d80a; }
+.sale-campaign-symbol { font-size:150px; line-height:1; font-weight:850; color:var(--shop-accent,#c75b10); transform:rotate(-12deg); text-shadow:8px 10px 0 #d2e5ec; }
+.sale-campaign-label { position:absolute; bottom:0; right:0; background:#fff; color:var(--shop-blue,#256080); padding:12px 18px; border-radius:8px; box-shadow:0 8px 24px #20384b14; font-size:.6rem; letter-spacing:.08em; transform:rotate(5deg); }
+.sale-campaign-label strong { display:block; font-size:.85rem; margin-top:3px; }
+.home-sale-section .home-sale-view-all { padding:10px 14px; border:1px solid #cddfe8; border-radius:6px; background:#fff; }
+.home-sale-section .home-sale-view-all:hover { background:#e5f2f8; text-decoration:none; }
+@media(max-width:640px) { .sale-campaign { padding:24px; grid-template-columns:1fr; min-height:0; } .sale-campaign-copy { max-width:90%; } .sale-campaign-art { display:none; } .home-sale-section { border-radius:12px; } }

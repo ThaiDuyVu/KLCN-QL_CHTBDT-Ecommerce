@@ -46,14 +46,16 @@ export function createApiClient(config = projectConfig) {
     if (!['GET', 'HEAD', 'OPTIONS'].includes(verb)) {
       requestHeaders.set(config.csrfHeaderName, await ensureCsrfToken());
     }
-    if (body !== undefined) requestHeaders.set('Content-Type', 'application/json');
+    const multipart = body instanceof FormData;
+    if (multipart) requestHeaders.delete('Content-Type');
+    else if (body !== undefined) requestHeaders.set('Content-Type', 'application/json');
 
     try {
       const response = await fetch(`${config.apiBaseUrl}${path}`, {
         method: verb,
         credentials: 'include',
         headers: requestHeaders,
-        body: body === undefined ? undefined : JSON.stringify(body),
+        body: body === undefined ? undefined : multipart ? body : JSON.stringify(body),
         signal: signal ?? AbortSignal.timeout(15000),
       });
       const text = await response.text();

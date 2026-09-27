@@ -1,3 +1,4 @@
+import PriceDisplay from '../../../components/ui/PriceDisplay';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router';
 import PageHeader from '../../../components/ui/PageHeader';
@@ -53,6 +54,7 @@ function ProductDetail({ productId, backTo }) {
     <>
       {user?.roleName === ROLES.CUSTOMER && <ShopBreadcrumb items={[{ label: 'Cửa hàng', to: '/products' }, { label: data?.product?.productName || 'Chi tiết sản phẩm' }]} />}
       <Link className="product-back-link" to={backTo}>← Quay lại danh sách</Link>
+      {location.state?.createdProduct && <p className="panel" role="status">Đã tạo sản phẩm và lưu thông tin thành công.</p>}
       {isLoading ? <><PageHeader title="Chi tiết sản phẩm" /><ProductSkeleton detail /></> : error ? (
         <ProductState error title={error.status === 404 ? 'Không tìm thấy sản phẩm' : error.status === 403 ? 'Không có quyền xem sản phẩm' : 'Chưa tải được sản phẩm'}
           message={error.status === 404 ? 'Sản phẩm có thể đã bị xóa hoặc đường dẫn không còn đúng.' : error.status === 403 ? 'Tài khoản của bạn không có quyền truy cập dữ liệu này.' : error.message}
@@ -90,7 +92,8 @@ function CustomerProductDetail({ data, images, image, setSelectedImageId, select
         <p className="product-detail-brand">{data.brand?.brandName || data.product.brandName || 'Thiết bị công nghệ'}</p>
         <h1>{data.product.productName}</h1>
         <p className="product-detail-category">{data.category?.categoryName || data.product.categoryName || 'Sản phẩm công nghệ'}</p>
-        <p className="product-buy-price">{selectedVariant ? formatPrice(selectedVariant.price) : 'Chưa có giá bán'}</p>
+        <p className="product-buy-price">{selectedVariant ? <PriceDisplay originalPrice={selectedVariant.originalPrice ?? selectedVariant.price} effectivePrice={selectedVariant.effectivePrice ?? selectedVariant.price} discountAmount={selectedVariant.discountAmount} promotion={selectedVariant.promotion} /> : 'Chưa có giá bán'}</p>
+        {selectedVariant?.promotion && <p className="muted">{selectedVariant.promotion.promotionName} · Giá được xác nhận lại khi đặt hàng.</p>}
         <div className={`product-stock-callout${inStock ? '' : ' out-of-stock'}`}>
           <span aria-hidden="true">●</span>
           <div><strong>{selectedWarehouse ? selectedWarehouse.warehouseName : 'Chưa chọn chi nhánh'}</strong>
@@ -108,7 +111,7 @@ function CustomerProductDetail({ data, images, image, setSelectedImageId, select
                 aria-pressed={selected} disabled={selectedWarehouseId && !available}
                 onClick={() => setSelectedVariantId(variant.variantId)}>
                 <strong>{[variant.color, variant.storage, variant.ram].filter(Boolean).join(' · ') || variant.sku}</strong>
-                <span>{formatPrice(variant.price)}</span>
+                <PriceDisplay originalPrice={variant.originalPrice ?? variant.price} effectivePrice={variant.effectivePrice ?? variant.price} discountAmount={variant.discountAmount} promotion={variant.promotion} />
                 {selectedWarehouseId && <small>{available ? `Còn ${variant.availableQuantity}` : 'Hết hàng'}</small>}
               </button>;
             })}

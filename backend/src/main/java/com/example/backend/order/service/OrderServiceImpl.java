@@ -41,11 +41,13 @@ public class OrderServiceImpl implements OrderService {
     private final WarrantyProvisioningService warrantyProvisioning;
     private final InstallmentService installmentService;
     private final VnpayService vnpay;
+    private final com.example.backend.promotion.service.PromotionService promotions;
     public OrderServiceImpl(CustomerCartRepository customers, CartRepository carts, CartItemRepository cartItems, OrderRepository orders,
                             OrderItemRepository items, PaymentRepository payments, ProductVariantRepository variants,
                             OrderStockService stock, SerialAllocationService serialAllocation,
                             SerialNumberRepository serials, WarehouseRepository warehouses,
-                            WarrantyProvisioningService warrantyProvisioning, InstallmentService installmentService, VnpayService vnpay) {
+                            WarrantyProvisioningService warrantyProvisioning, InstallmentService installmentService, VnpayService vnpay, com.example.backend.promotion.service.PromotionService promotions) {
+        this.promotions=promotions;
         this.customers = customers; this.carts = carts; this.cartItems = cartItems; this.orders = orders;
         this.items = items; this.payments = payments; this.variants = variants; this.stock = stock;
         this.serialAllocation = serialAllocation; this.serials = serials; this.warehouses = warehouses;
@@ -75,27 +77,34 @@ public class OrderServiceImpl implements OrderService {
         var links = cartItems.findByCartIdOrderByVariantIdAsc(cart.getCartId());
         if (links.isEmpty()) throw new CommerceException(409, "Cart rỗng, không thể checkout");
         var products = variantMap(links.stream().map(i -> i.getVariantId()).toList());
-        BigDecimal subtotal = BigDecimal.ZERO;
+        var resolved=promotions.resolveForCheckout(products.values().stream().map(v->v.getProduct().getProductId()).distinct().toList(),OffsetDateTime.now());
+        Map<UUID, com.example.backend.promotion.service.PromotionPrice> pricing=new HashMap<>();
+        BigDecimal subtotal = BigDecimal.ZERO, discountAmount = BigDecimal.ZERO;
         Map<UUID, Integer> quantities = new HashMap<>();
         for (var link : links) {
             var variant = products.get(link.getVariantId());
             if (variant == null) throw new CommerceException(409, "Variant không còn tồn tại");
             CartServiceImpl.ensurePurchasable(variant);
-            subtotal = subtotal.add(variant.getPrice().multiply(BigDecimal.valueOf(link.getQuantity())));
+            var price=promotions.calculate(variant.getPrice(),resolved.get(variant.getProduct().getProductId()));
+            pricing.put(variant.getVariantId(),price);
+            subtotal = subtotal.add(price.getUnitPrice().multiply(BigDecimal.valueOf(link.getQuantity())));
+            discountAmount = discountAmount.add(price.getDiscountAmount().multiply(BigDecimal.valueOf(link.getQuantity())));
             quantities.put(link.getVariantId(), link.getQuantity());
         }
         if (subtotal.compareTo(MAX_MONEY) > 0) throw new CommerceException(400, "Tổng tiền vượt giới hạn đơn hàng");
-        if (request.getPaymentMethod() == PaymentMethod.VNPAY) vnpay.validateCheckout(subtotal);
+        BigDecimal shippingFee=BigDecimal.ZERO;
+        BigDecimal totalAmount=subtotal.subtract(discountAmount).add(shippingFee);
+        if (request.getPaymentMethod() == PaymentMethod.VNPAY) vnpay.validateCheckout(totalAmount);
         InstallmentProvider provider = request.getPaymentMethod() == PaymentMethod.INSTALLMENT
-                ? installmentService.requireCheckoutProvider(request, subtotal) : null;
+                ? installmentService.requireCheckoutProvider(request, totalAmount) : null;
         stock.apply(cart.getWarehouseId(), quantities, OrderStockService.Action.RESERVE);
         var order = new Order(); order.setCustomerId(customer.getCustomerId());
         order.setWarehouseId(cart.getWarehouseId());
         order.setOrderCode("ORD-" + UUID.randomUUID().toString().toUpperCase(Locale.ROOT)); order.setOrderDate(OffsetDateTime.now());
         order.setRecipientName(request.getRecipientName()); order.setRecipientPhone(request.getRecipientPhone());
         order.setShippingAddress(request.getShippingAddress()); order.setNote(request.getNote());
-        order.setSubtotal(subtotal); order.setDiscountAmount(BigDecimal.ZERO); order.setShippingFee(BigDecimal.ZERO);
-        order.setTotalAmount(subtotal); order.setStatus(OrderStatus.PENDING); orders.saveAndFlush(order);
+        order.setSubtotal(subtotal); order.setDiscountAmount(discountAmount); order.setShippingFee(shippingFee);
+        order.setTotalAmount(totalAmount); order.setStatus(OrderStatus.PENDING); orders.saveAndFlush(order);
         List<OrderItem> snapshots = new ArrayList<>();
         for (var link : links) {
             var variant = products.get(link.getVariantId());
@@ -104,13 +113,14 @@ public class OrderServiceImpl implements OrderService {
             for (int index = 0; index < rows; index++) {
                 var item = new OrderItem();
                 item.setOrderId(order.getOrderId()); item.setVariantId(variant.getVariantId()); item.setQuantity(itemQuantity);
-                item.setCostPrice(variant.getCostPrice()); item.setUnitPrice(variant.getPrice()); item.setFinalUnitPrice(variant.getPrice());
-                item.setDiscountAmount(BigDecimal.ZERO); snapshots.add(item);
+                var price=pricing.get(variant.getVariantId());
+                item.setCostPrice(variant.getCostPrice()); item.setUnitPrice(price.getUnitPrice()); item.setFinalUnitPrice(price.getFinalUnitPrice());
+                item.setDiscountAmount(price.getDiscountAmount()); snapshots.add(item);
             }
         }
         items.saveAllAndFlush(snapshots);
         var payment = new Payment(); payment.setOrderId(order.getOrderId()); payment.setPaymentMethod(request.getPaymentMethod());
-        payment.setAmount(subtotal); payment.setStatus(PaymentStatus.PENDING); payment.setTransactionCode(null); payment.setPaymentDate(OffsetDateTime.now());
+        payment.setAmount(totalAmount); payment.setStatus(PaymentStatus.PENDING); payment.setTransactionCode(null); payment.setPaymentDate(OffsetDateTime.now());
         payments.saveAndFlush(payment);
         if (provider != null) installmentService.createForPayment(payment, provider, request);
         cartItems.deleteAll(links); cartItems.flush(); cart.setUpdatedAt(OffsetDateTime.now()); carts.save(cart);

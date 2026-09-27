@@ -10,7 +10,7 @@ const money = new Intl.NumberFormat('vi-VN', {
 
 function variantLabel(variant) {
   const options = [variant.sku, variant.color, variant.storage, variant.ram].filter(Boolean).join(' · ');
-  return `${options} · ${money.format(variant.price)}`;
+  return `${options} · ${money.format(variant.effectivePrice ?? variant.price)}`;
 }
 
 export default function ProductCardCartAction({ productId, productName, disabled = false }) {

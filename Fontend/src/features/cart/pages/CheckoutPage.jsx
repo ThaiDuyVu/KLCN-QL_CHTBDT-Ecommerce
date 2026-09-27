@@ -103,8 +103,8 @@ export default function CheckoutPage() {
         </div>
         <div className="summary-branch"><span>Chi nhánh xử lý</span><strong>{data.warehouseName || 'Chưa chọn chi nhánh'}</strong></div>
         <dl className="summary-lines">
-          <div><dt>Tạm tính</dt><dd>{money(data.subtotal)}</dd></div>
-          <div><dt>Giảm giá</dt><dd>{money(0)}</dd></div>
+          <div><dt>Tạm tính</dt><dd>{money(data.originalSubtotal ?? data.subtotal)}</dd></div>
+          <div><dt>Giảm giá</dt><dd>{money(data.discountAmount)}</dd></div>
           <div><dt>Phí giao hàng</dt><dd>{money(0)}</dd></div>
         </dl>
         <div className="summary-total"><span>Tổng thanh toán</span><strong>{money(data.subtotal)}</strong></div>

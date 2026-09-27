@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet, useNavigate } from 'react-router';
+import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router';
 import { MANAGEMENT_ROLES, projectConfig, ROLES } from '../../config/projectConfig';
 import { useAuth } from '../../hooks/useAuth';
 import { useCallback, useState } from 'react';
@@ -14,6 +14,7 @@ const managementNavigation = [
   { to: '/products', label: 'Sản phẩm' },
   { to: '/categories', label: 'Danh mục' },
   { to: '/orders', label: 'Đơn hàng', roles: MANAGEMENT_ROLES },
+  { to: '/promotions', label: 'Khuyến mãi', roles: [ROLES.ADMIN, ROLES.MANAGER] },
   { to: '/installments', label: 'Trả góp', roles: [ROLES.ADMIN, ROLES.MANAGER] },
   { to: '/customers', label: 'Khách hàng', roles: MANAGEMENT_ROLES },
   { to: '/inventory', label: 'Kho hàng', roles: MANAGEMENT_ROLES },
@@ -33,6 +34,8 @@ const storefrontNavigation = [
 
 export default function AppLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const saleView = location.pathname === '/products' && new URLSearchParams(location.search).get('onSale') === 'true';
   const { user, signOut, isSigningOut, isLoading } = useAuth();
   const { itemCount, isLoading: isCartLoading, error: cartError } = useCart(true);
   const { warehouses, selectedWarehouseId, selectWarehouse, isLoading: isWarehouseLoading,
@@ -86,11 +89,11 @@ export default function AppLayout() {
             </form>
             <nav className="storefront-nav" aria-label="Điều hướng cửa hàng">
               {storefrontNavigation.filter((item) => user || !item.to.startsWith('/my-')).map((item) => (
-                <NavLink key={item.to} to={item.to} end={item.end} className={({ isActive }) => isActive ? 'storefront-nav-link active' : 'storefront-nav-link'}>
+                <NavLink key={item.to} to={item.to} end={item.end} className={({ isActive }) => isActive && !(item.to === '/products' && saleView) ? 'storefront-nav-link active' : 'storefront-nav-link'}>
                   {item.label}
                 </NavLink>
               ))}
-              <ComingSoonButton className="storefront-nav-future">Ưu đãi</ComingSoonButton>
+              <Link to="/products?onSale=true" className={`storefront-nav-link${saleView ? ' active' : ''}`} aria-current={saleView ? 'page' : undefined}>Ưu đãi</Link>
               <ComingSoonButton className="storefront-nav-future">Tin tức</ComingSoonButton>
               <ComingSoonButton className="storefront-nav-future">Liên hệ</ComingSoonButton>
             </nav>
@@ -130,7 +133,7 @@ export default function AppLayout() {
         <main id="main-content" className="storefront-content">{categories.error && <p id="storefront-category-error" className="auth-alert" role="alert">Chưa tải được danh mục tìm kiếm. <button type="button" onClick={categories.retry}>Thử lại</button></p>}{warehouseError && <p className="auth-alert" role="alert">{warehouseError}</p>}{outlet}</main>
         <footer className="storefront-footer"><div className="shop-footer-inner">
           <div><Link className="brand" to="/"><span className="brand-mark" aria-hidden="true">Đ</span>{projectConfig.appName}</Link><p>Khám phá thiết bị công nghệ.<br />Mua sắm tại chi nhánh bạn chọn.</p></div>
-          <div><h2>Mua sắm</h2><Link to="/products">Tất cả sản phẩm</Link><Link to={user ? '/cart' : '/login'}>Giỏ hàng</Link><ComingSoonButton>Ưu đãi</ComingSoonButton></div>
+          <div><h2>Mua sắm</h2><Link to="/products">Tất cả sản phẩm</Link><Link to={user ? '/cart' : '/login'}>Giỏ hàng</Link><Link to="/products?onSale=true">Ưu đãi</Link></div>
           <div><h2>Tài khoản</h2><Link to={user ? '/my-orders' : '/login'}>Đơn hàng của tôi</Link><Link to={user ? '/my-warranties' : '/login'}>Bảo hành của tôi</Link><Link to={user ? '/account' : '/login'}>Thông tin tài khoản</Link></div>
           <div><h2>Hỗ trợ</h2><ComingSoonButton>Liên hệ cửa hàng</ComingSoonButton><ComingSoonButton>Hướng dẫn mua hàng</ComingSoonButton><ComingSoonButton>Chính sách giao hàng</ComingSoonButton></div>
         </div><div className="shop-footer-bottom"><span>{projectConfig.appName} · Thiết bị công nghệ</span><span>COD · Trả góp nội bộ</span></div></footer>

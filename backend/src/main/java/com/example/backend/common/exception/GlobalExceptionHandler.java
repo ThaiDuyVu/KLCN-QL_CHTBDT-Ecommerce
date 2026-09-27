@@ -41,6 +41,21 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(com.example.backend.product.exception.ProductUploadException.class)
+    public ResponseEntity<ApiErrorResponse> handleProductUpload(com.example.backend.product.exception.ProductUploadException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler(org.springframework.web.multipart.MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiErrorResponse> handleUploadSize() {
+        return ResponseEntity.status(413).body(new ApiErrorResponse("Ảnh vượt giới hạn upload: mỗi file tối đa 5 MB, tổng request tối đa 55 MB"));
+    }
+
+    @ExceptionHandler(com.example.backend.promotion.exception.PromotionException.class)
+    public ResponseEntity<ApiErrorResponse> handlePromotion(com.example.backend.promotion.exception.PromotionException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
+    }
+
     @ExceptionHandler(com.example.backend.warranty.exception.WarrantyException.class)
     public ResponseEntity<ApiErrorResponse> handleWarranty(
             com.example.backend.warranty.exception.WarrantyException exception) {

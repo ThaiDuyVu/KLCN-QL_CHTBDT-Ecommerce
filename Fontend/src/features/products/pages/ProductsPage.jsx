@@ -20,6 +20,7 @@ const PAGE_SIZE = 12;
 export default function ProductsPage() {
   const { user } = useAuth();
   const isCustomer = user?.roleName === ROLES.CUSTOMER;
+  const canManage = [ROLES.ADMIN, ROLES.MANAGER].includes(user?.roleName);
   const { selectedWarehouse, selectedWarehouseId, error: warehouseError } = useWarehouse();
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
@@ -27,14 +28,15 @@ export default function ProductsPage() {
   const page = Number.isSafeInteger(rawPage) && rawPage > 0 && (rawPage - 1) * PAGE_SIZE <= 2147483647 ? rawPage - 1 : 0;
   const keyword = (searchParams.get('keyword') || '').trim();
   const categoryId = searchParams.get('categoryId') || '';
+  const onSale = isCustomer && searchParams.get('onSale') === 'true';
   const rawStatus = searchParams.get('status') || '';
   const status = ['ACTIVE', 'INACTIVE'].includes(rawStatus) ? rawStatus : '';
   const effectiveStatus = isCustomer ? 'ACTIVE' : status;
-  const load = useCallback((signal) => productApi.list({ page, size: PAGE_SIZE, keyword, categoryId, status: effectiveStatus, warehouseId: selectedWarehouseId }, signal), [page, keyword, categoryId, selectedWarehouseId, effectiveStatus]);
-  const { data, error, isLoading, retry } = useProductRequest(JSON.stringify([page, keyword, categoryId, effectiveStatus, selectedWarehouseId]), load);
+  const load = useCallback((signal) => productApi.list({ page, size: PAGE_SIZE, keyword, categoryId, status: effectiveStatus, warehouseId: selectedWarehouseId, onSale }, signal), [page, keyword, categoryId, selectedWarehouseId, effectiveStatus, onSale]);
+  const { data, error, isLoading, retry } = useProductRequest(JSON.stringify([page, keyword, categoryId, effectiveStatus, selectedWarehouseId, onSale]), load);
   const loadCategories = useCallback((signal) => isCustomer ? categoryApi.list(signal) : Promise.resolve([]), [isCustomer]);
   const categories = useProductRequest(`catalog-categories:${isCustomer}`, loadCategories);
-  useEffect(() => { window.scrollTo(0, 0); }, [page, keyword, categoryId, status]);
+  useEffect(() => { window.scrollTo(0, 0); }, [page, keyword, categoryId, status, onSale]);
 
   function search(event) {
     event.preventDefault();
@@ -42,6 +44,7 @@ export default function ProductsPage() {
     const next = new URLSearchParams();
     const value = form.get('keyword').trim();
     if (value) next.set('keyword', value);
+    if (isCustomer && form.get('onSale')) next.set('onSale', 'true');
     const selectedCategory = isCustomer ? form.get('categoryId') : categoryId;
     if (selectedCategory) next.set('categoryId', selectedCategory);
     if (!isCustomer && form.get('status')) next.set('status', form.get('status'));
@@ -58,20 +61,24 @@ export default function ProductsPage() {
     <>
       {isCustomer && <ShopBreadcrumb items={[{ label: 'Cửa hàng' }]} />}
       <div className={isCustomer ? 'product-storefront-heading' : ''}>
-        <PageHeader title={isCustomer ? 'Khám phá sản phẩm' : 'Sản phẩm'} description={isCustomer ? 'Chọn thiết bị phù hợp và kiểm tra tồn kho ngay tại chi nhánh của bạn.' : 'Xem danh sách thiết bị và thông tin chi tiết.'} />
+        <PageHeader title={isCustomer ? onSale ? 'Sản phẩm đang giảm giá' : 'Khám phá sản phẩm' : 'Sản phẩm'} description={isCustomer ? 'Chọn thiết bị phù hợp và kiểm tra tồn kho ngay tại chi nhánh của bạn.' : 'Xem danh sách thiết bị và thông tin chi tiết.'} />
       </div>
+      {onSale && <div className="sale-list-banner"><span className="sale-list-label">TECH DEALS</span><div><h2>Thiết bị yêu thích, giá thật hấp dẫn.</h2><p>Ưu đãi đang áp dụng · Giá được xác nhận lại khi checkout</p></div><span className="sale-list-symbol" aria-hidden="true">%</span></div>}
+      {canManage && <div className="product-create-toolbar"><Link className="button" to="/products/new">+ Tạo sản phẩm</Link></div>}
+      {location.state?.createdProduct && <p className="panel" role="status">Đã tạo sản phẩm thành công.</p>}
       {isCustomer && <p className={warehouseError ? 'auth-alert' : 'product-branch-note'}>
         <span aria-hidden="true">●</span> {warehouseError || (selectedWarehouse ? `Đang xem tồn kho tại ${selectedWarehouse.warehouseName}` : 'Chọn chi nhánh ở thanh trên để xem tồn kho và mua hàng')}
       </p>}
       {categoryId && <p className="product-category-filter">Đang lọc theo danh mục <button type="button" onClick={() => { const next = new URLSearchParams(searchParams); next.delete('categoryId'); next.delete('page'); setSearchParams(next); }}>Bỏ lọc</button></p>}
-      <form className={`panel product-filters${isCustomer ? ' product-filters-storefront' : ''}`} onSubmit={search} key={`${keyword}:${status}:${categoryId}`} role="search" aria-label="Tìm sản phẩm">
+      <form className={`panel product-filters${isCustomer ? ' product-filters-storefront' : ''}`} onSubmit={search} key={`${keyword}:${status}:${categoryId}:${onSale}`} role="search" aria-label="Tìm sản phẩm">
         <label><span>{isCustomer ? 'Tìm thiết bị' : 'Tên hoặc mô tả'}</span><input type="search" name="keyword" defaultValue={keyword} placeholder="Tìm theo tên hoặc mô tả…" /></label>
         {isCustomer && <label>Danh mục<select name="categoryId" defaultValue={categoryId} disabled={categories.isLoading || Boolean(categories.error)}><option value="">Tất cả danh mục</option>{(categories.data || []).filter((category) => category.status === 'ACTIVE').map((category) => <option value={category.categoryId} key={category.categoryId}>{category.categoryName}</option>)}</select></label>}
+        {isCustomer && <label className="product-sale-filter"><input type="checkbox" name="onSale" value="true" defaultChecked={onSale} />Đang giảm giá</label>}
         {!isCustomer && <label>Trạng thái<select name="status" defaultValue={status}>
           <option value="">Tất cả</option><option value="ACTIVE">Đang hoạt động</option><option value="INACTIVE">Ngừng hoạt động</option>
         </select></label>}
         <button className="button" type="submit">Tìm kiếm</button>
-        {(keyword || categoryId || (!isCustomer && status)) && <button className="button button-quiet" type="button" onClick={() => setSearchParams({})}>Xóa bộ lọc</button>}
+        {(keyword || categoryId || onSale || (!isCustomer && status)) && <button className="button button-quiet" type="button" onClick={() => setSearchParams({})}>Xóa bộ lọc</button>}
       </form>
       {isCustomer && categories.error && <p className="auth-alert" role="alert">Chưa tải được bộ lọc danh mục. <button type="button" onClick={categories.retry}>Thử lại</button></p>}
       {isLoading ? <ProductSkeleton /> : error ? (
@@ -117,7 +124,7 @@ export default function ProductsPage() {
         </>
       ) : (
         <ProductState title={page > 0 ? 'Trang này không còn sản phẩm' : 'Chưa có sản phẩm'}
-          message={keyword || categoryId || status ? 'Không tìm thấy sản phẩm phù hợp. Hãy thử thay đổi bộ lọc.' : 'Danh sách hiện chưa có dữ liệu.'} />
+          message={keyword || categoryId || status || onSale ? 'Không tìm thấy sản phẩm phù hợp. Hãy thử thay đổi bộ lọc.' : 'Danh sách hiện chưa có dữ liệu.'} />
       )}
       {!isLoading && !error && !data?.content?.length && page > 0 && (
         <button className="button button-quiet" onClick={() => changePage(0)}>Về trang đầu</button>

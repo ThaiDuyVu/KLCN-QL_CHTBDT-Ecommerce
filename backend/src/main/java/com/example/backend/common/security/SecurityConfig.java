@@ -99,6 +99,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/auth/csrf",
+                                "/api/product-media/*",
                                 "/api/payments/vnpay/return",
                                 "/api/payments/vnpay/ipn"
                         ).permitAll()

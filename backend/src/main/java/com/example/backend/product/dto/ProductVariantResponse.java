@@ -4,6 +4,8 @@ import com.example.backend.product.entity.ProductVariantStatus;
 import com.example.backend.product.entity.ProductTrackingType;
 import java.math.BigDecimal;
 import java.util.UUID;
+import com.example.backend.promotion.dto.PromotionSummaryResponse;
+import com.example.backend.promotion.service.PromotionPrice;
 
 public class ProductVariantResponse {
 
@@ -21,6 +23,17 @@ public class ProductVariantResponse {
     private final Integer warrantyMonths;
     private final UUID warehouseId;
     private final Long availableQuantity;
+    private BigDecimal effectivePrice;
+    private BigDecimal discountAmount;
+    private PromotionSummaryResponse promotion;
+    public BigDecimal getOriginalPrice() { return price; }
+    public BigDecimal getEffectivePrice() { return effectivePrice == null ? price : effectivePrice; }
+    public BigDecimal getDiscountAmount() { return discountAmount == null ? BigDecimal.ZERO : discountAmount; }
+    public PromotionSummaryResponse getPromotion() { return promotion; }
+    public ProductVariantResponse withPricing(PromotionPrice value) {
+        effectivePrice=value.getFinalUnitPrice(); discountAmount=value.getDiscountAmount(); promotion=value.getPromotion(); return this;
+    }
+
 
     public ProductVariantResponse(
             UUID variantId,
