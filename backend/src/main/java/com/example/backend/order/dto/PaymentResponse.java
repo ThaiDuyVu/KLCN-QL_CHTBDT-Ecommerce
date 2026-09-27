@@ -12,6 +12,8 @@ public class PaymentResponse {
     private com.example.backend.order.entity.PaymentStatus status;
     private BigDecimal amount;
     private String transactionCode;
+    private String paymentUrl;
+    private OffsetDateTime paymentExpiresAt;
     public PaymentResponse() {}
     public UUID getPaymentId() { return paymentId; }
     public void setPaymentId(UUID value) { this.paymentId = value; }
@@ -23,4 +25,8 @@ public class PaymentResponse {
     public void setAmount(BigDecimal value) { this.amount = value; }
     public String getTransactionCode() { return transactionCode; }
     public void setTransactionCode(String value) { this.transactionCode = value; }
+    public String getPaymentUrl() { return paymentUrl; }
+    public void setPaymentUrl(String value) { paymentUrl = value; }
+    public OffsetDateTime getPaymentExpiresAt() { return paymentExpiresAt; }
+    public void setPaymentExpiresAt(OffsetDateTime value) { paymentExpiresAt = value; }
 }

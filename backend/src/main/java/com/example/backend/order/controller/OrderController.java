@@ -10,14 +10,15 @@ import org.springframework.http.*;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.UUID;
+import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
     private final OrderService service;
     public OrderController(OrderService service) { this.service = service; }
     @PostMapping("/checkout") @RequireAnyAuthority({"CUSTOMER"})
-    public ResponseEntity<OrderResponse> checkout(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @Valid @RequestBody CheckoutRequest request) {
-        var response = service.checkout(user.getUserId(), request);
+    public ResponseEntity<OrderResponse> checkout(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @Valid @RequestBody CheckoutRequest request, HttpServletRequest httpRequest) {
+        var response = service.checkout(user.getUserId(), request, httpRequest.getRemoteAddr());
         return ResponseEntity.created(URI.create("/api/orders/mine/" + response.getOrderId())).body(response);
     }
     @GetMapping("/mine") @RequireAnyAuthority({"CUSTOMER"})

@@ -8,6 +8,7 @@ import com.example.backend.product.dto.ProductResponse;
 import com.example.backend.product.entity.Brand;
 import com.example.backend.product.entity.Product;
 import com.example.backend.product.entity.ProductStatus;
+import com.example.backend.product.entity.ProductImage;
 import com.example.backend.product.exception.InvalidProductPaginationException;
 import com.example.backend.product.exception.ProductInUseException;
 import com.example.backend.product.exception.ProductNotFoundException;
@@ -15,6 +16,7 @@ import com.example.backend.product.exception.ProductReferenceNotFoundException;
 import com.example.backend.product.repository.BrandRepository;
 import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.repository.ProductSpecifications;
+import com.example.backend.product.repository.ProductImageRepository;
 import com.example.backend.inventory.repository.InventoryRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -38,17 +40,20 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
     private final InventoryRepository inventoryRepository;
+    private final ProductImageRepository productImageRepository;
 
     public ProductServiceImpl(
             ProductRepository productRepository,
             CategoryRepository categoryRepository,
             BrandRepository brandRepository,
-            InventoryRepository inventoryRepository
+            InventoryRepository inventoryRepository,
+            ProductImageRepository productImageRepository
     ) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.brandRepository = brandRepository;
         this.inventoryRepository = inventoryRepository;
+        this.productImageRepository = productImageRepository;
     }
 
     @Override
@@ -95,9 +100,11 @@ public class ProductServiceImpl implements ProductService {
                 ), pageable);
 
         Map<UUID, Long> availability = productAvailability(warehouseId, productPage.getContent());
+        Map<UUID, String> primaryImages = primaryImages(productPage.getContent());
         return new ProductPageResponse(
                 productPage.getContent().stream().map(product -> mapToResponse(
-                        product, warehouseId, warehouseId == null ? null : availability.getOrDefault(product.getProductId(), 0L)
+                        product, warehouseId, warehouseId == null ? null : availability.getOrDefault(product.getProductId(), 0L),
+                        primaryImages.get(product.getProductId())
                 )).toList(),
                 productPage.getNumber(),
                 productPage.getSize(),
@@ -115,8 +122,9 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProductById(UUID id, UUID warehouseId) {
         Product product = findProductById(id);
         Map<UUID, Long> availability = productAvailability(warehouseId, java.util.List.of(product));
+        String primaryImage = primaryImages(java.util.List.of(product)).get(product.getProductId());
         return mapToResponse(product, warehouseId,
-                warehouseId == null ? null : availability.getOrDefault(product.getProductId(), 0L));
+                warehouseId == null ? null : availability.getOrDefault(product.getProductId(), 0L), primaryImage);
     }
 
     @Override
@@ -191,10 +199,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private ProductResponse mapToResponse(Product product) {
-        return mapToResponse(product, null, null);
+        return mapToResponse(product, null, null,
+                primaryImages(java.util.List.of(product)).get(product.getProductId()));
     }
 
-    private ProductResponse mapToResponse(Product product, UUID warehouseId, Long availableQuantity) {
+    private ProductResponse mapToResponse(Product product, UUID warehouseId, Long availableQuantity,
+                                          String primaryImageUrl) {
         return new ProductResponse(
                 product.getProductId(),
                 product.getProductName(),
@@ -207,7 +217,8 @@ public class ProductServiceImpl implements ProductService {
                 product.getCreatedAt(),
                 product.getUpdatedAt(),
                 warehouseId,
-                availableQuantity
+                availableQuantity,
+                primaryImageUrl
         );
     }
 
@@ -218,6 +229,17 @@ public class ProductServiceImpl implements ProductService {
                 .stream().collect(Collectors.toMap(
                         InventoryRepository.ProductAvailability::getProductId,
                         InventoryRepository.ProductAvailability::getAvailableQuantity
+                ));
+    }
+
+    private Map<UUID, String> primaryImages(java.util.List<Product> products) {
+        if (products.isEmpty()) return Map.of();
+        return productImageRepository.findByProduct_ProductIdInAndPrimaryTrue(
+                        products.stream().map(Product::getProductId).toList())
+                .stream().collect(Collectors.toMap(
+                        image -> image.getProduct().getProductId(),
+                        ProductImage::getImageUrl,
+                        (first, ignored) -> first
                 ));
     }
 }

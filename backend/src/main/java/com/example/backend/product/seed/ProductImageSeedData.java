@@ -42,6 +42,16 @@ public class ProductImageSeedData implements CommandLineRunner {
         created += seedProduct("MacBook Air M2", "Apple", "Laptop", "macbook-air-m2");
         created += seedProduct("Dell Inspiron 15", "Dell", "Laptop", "dell-inspiron-15");
         created += seedProduct("ASUS Vivobook 15", "ASUS", "Laptop", "asus-vivobook-15");
+        created += seedProduct("iPhone 16", "Apple", "Điện thoại", "iphone-16");
+        created += seedProduct("iPhone 14", "Apple", "Điện thoại", "iphone-14");
+        created += seedProduct("Samsung Galaxy A55", "Samsung", "Điện thoại", "samsung-galaxy-a55");
+        created += seedProduct("Samsung Galaxy Z Flip6", "Samsung", "Điện thoại", "samsung-galaxy-z-flip6");
+        created += seedProduct("Xiaomi 14T Pro", "Xiaomi", "Điện thoại", "xiaomi-14t-pro");
+        created += seedProduct("Samsung Galaxy S23", "Samsung", "Điện thoại", "samsung-galaxy-s23");
+        created += seedProduct("Xiaomi 15", "Xiaomi", "Điện thoại", "xiaomi-15");
+        created += seedProduct("MacBook Pro 14 M3", "Apple", "Laptop", "macbook-pro-14-m3");
+        created += seedProduct("Dell XPS 13", "Dell", "Laptop", "dell-xps-13");
+        created += seedProduct("ASUS ROG Zephyrus G14", "ASUS", "Laptop", "asus-rog-zephyrus-g14");
         log.info("Development product image seed finished: {} new image paths", created);
     }
 

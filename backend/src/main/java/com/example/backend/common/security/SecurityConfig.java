@@ -98,7 +98,9 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(
                                 HttpMethod.GET,
-                                "/api/auth/csrf"
+                                "/api/auth/csrf",
+                                "/api/payments/vnpay/return",
+                                "/api/payments/vnpay/ipn"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

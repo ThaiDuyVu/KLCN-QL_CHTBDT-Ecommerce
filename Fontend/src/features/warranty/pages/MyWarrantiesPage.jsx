@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import PageHeader from '../../../components/ui/PageHeader';
+import ShopBreadcrumb from '../../../components/ui/ShopBreadcrumb';
 import { warrantyApi } from '../api/warrantyApi';
 import { formatDate, warrantyStatus } from '../warrantyFormat';
 import '../warranty.css';
@@ -14,10 +15,14 @@ export default function MyWarrantiesPage() {
   async function lookup(e) { e.preventDefault(); const code = String(new FormData(e.currentTarget).get('code') || '').trim(); if (!code) return;
     setLooking(true); setLookupError(''); try { const result = await warrantyApi.myLookup(code); navigate(`/my-warranties/${result.warrantyId}`); }
     catch (nextError) { setLookupError(nextError.message); } finally { setLooking(false); } }
-  return <><PageHeader title="Bảo hành của tôi" description="Quyền bảo hành được tạo khi thiết bị Serial/IMEI đã giao thành công." />
+  return <><ShopBreadcrumb items={[{ label: 'Bảo hành của tôi' }]} /><PageHeader title="Bảo hành của tôi" description="Tra cứu thời hạn và gửi yêu cầu bảo hành cho thiết bị đã được giao thành công." />
     <div className="warranty-links"><Link className="button button-quiet" to="/my-warranty-tickets">Yêu cầu bảo hành của tôi</Link></div>
     <form className="panel warranty-toolbar" onSubmit={lookup}><label>Tra Serial hoặc IMEI<input name="code" placeholder="Nhập Serial / IMEI" /></label><button className="button" disabled={looking}>{looking ? 'Đang tìm…' : 'Tra cứu'}</button></form>
     {lookupError && <p className="auth-alert" role="alert">{lookupError}</p>}{loading && <p role="status">Đang tải bảo hành…</p>}{error && <p className="auth-alert" role="alert">{error}</p>}
-    {!loading && !error && (data?.content?.length ? <section className="panel warranty-table-wrap"><table className="product-table"><thead><tr><th>Thiết bị</th><th>Serial / IMEI</th><th>Thời hạn</th><th>Trạng thái</th><th></th></tr></thead><tbody>{data.content.map(row => <tr key={row.warrantyId}><td>{row.productName}<br /><span className="muted">{row.sku}</span></td><td>{row.serialNumber}<br /><span className="muted">{row.imeiNumbers?.join(', ') || 'Không có IMEI'}</span></td><td>{formatDate(row.startDate)} – {formatDate(row.endDate)}</td><td className={`warranty-status ${row.status === 'EXPIRED' ? 'expired' : ''}`}>{warrantyStatus[row.status]}</td><td><Link className="button button-quiet" to={`/my-warranties/${row.warrantyId}`}>Chi tiết</Link></td></tr>)}</tbody></table></section> : <section className="panel empty-state"><p>Chưa có thiết bị được cấp quyền bảo hành.</p></section>)}
+    {!loading && !error && (data?.content?.length ? <section className="customer-warranty-grid" aria-label="Thiết bị bảo hành">{data.content.map(row => <article className="panel customer-warranty-card" key={row.warrantyId}>
+      <div className="customer-warranty-heading"><div><p className="eyebrow">{row.sku}</p><h2>{row.productName}</h2></div><span className={`warranty-status ${row.status === 'EXPIRED' ? 'expired' : ''}`}>{warrantyStatus[row.status]}</span></div>
+      <dl><div><dt>Serial</dt><dd>{row.serialNumber}</dd></div><div><dt>IMEI</dt><dd>{row.imeiNumbers?.join(', ') || 'Không có IMEI'}</dd></div><div><dt>Bắt đầu bảo hành</dt><dd>{formatDate(row.startDate)}</dd></div><div><dt>Hết hạn</dt><dd>{formatDate(row.endDate)}</dd></div></dl>
+      <Link className="button button-quiet" to={`/my-warranties/${row.warrantyId}`}>Xem bảo hành và yêu cầu →</Link>
+    </article>)}</section> : <section className="panel empty-state"><p>Chưa có thiết bị được cấp quyền bảo hành.</p></section>)}
     {data && <nav className="inventory-pagination"><button className="button button-quiet" disabled={page <= 0} onClick={() => setParams({ page: String(page - 1) })}>Trang trước</button><span>Trang {page + 1}/{Math.max(data.totalPages, 1)}</span><button className="button button-quiet" disabled={page + 1 >= data.totalPages} onClick={() => setParams({ page: String(page + 1) })}>Trang sau</button></nav>}</>;
 }

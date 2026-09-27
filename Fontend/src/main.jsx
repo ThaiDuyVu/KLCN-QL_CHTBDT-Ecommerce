@@ -6,6 +6,7 @@ import CartProvider from './features/cart/CartProvider';
 import WarehouseProvider from './features/warehouses/WarehouseProvider';
 import App from './App';
 import './styles/index.css';
+import './styles/storefront.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

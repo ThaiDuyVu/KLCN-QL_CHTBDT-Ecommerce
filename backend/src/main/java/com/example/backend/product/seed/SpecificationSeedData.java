@@ -49,6 +49,26 @@ public class SpecificationSeedData implements CommandLineRunner {
                 "Intel Core i5", "16 GB", "Full HD 15,6 inch", "Pin tích hợp");
         created += seedProduct("ASUS Vivobook 15", "ASUS", "Laptop",
                 "Intel Core i5", "8 GB", "Full HD 15,6 inch", "Pin tích hợp");
+        created += seedProduct("iPhone 16", "Apple", "Điện thoại",
+                "Apple A18", "8 GB", "OLED 6,1 inch", "Pin tích hợp, sạc USB-C");
+        created += seedProduct("iPhone 14", "Apple", "Điện thoại",
+                "Apple A15 Bionic", "6 GB", "OLED 6,1 inch", "Pin tích hợp, sạc Lightning");
+        created += seedProduct("Samsung Galaxy A55", "Samsung", "Điện thoại",
+                "Exynos 1480", "8-12 GB", "Super AMOLED 6,6 inch", "5.000 mAh");
+        created += seedProduct("Samsung Galaxy Z Flip6", "Samsung", "Điện thoại",
+                "Snapdragon 8 Gen 3", "12 GB", "Dynamic AMOLED 2X 6,7 inch", "4.000 mAh");
+        created += seedProduct("Xiaomi 14T Pro", "Xiaomi", "Điện thoại",
+                "MediaTek Dimensity 9300+", "12-16 GB", "AMOLED 6,67 inch", "5.000 mAh");
+        created += seedProduct("Samsung Galaxy S23", "Samsung", "Điện thoại",
+                "Snapdragon 8 Gen 2", "8 GB", "Dynamic AMOLED 2X 6,1 inch", "3.900 mAh");
+        created += seedProduct("Xiaomi 15", "Xiaomi", "Điện thoại",
+                "Snapdragon 8 Elite", "12-16 GB", "AMOLED 6,36 inch", "5.240 mAh");
+        created += seedProduct("MacBook Pro 14 M3", "Apple", "Laptop",
+                "Apple M3", "8-16 GB", "Liquid Retina XDR 14,2 inch", "Pin tích hợp, sạc MagSafe");
+        created += seedProduct("Dell XPS 13", "Dell", "Laptop",
+                "Intel Core Ultra", "16-32 GB", "13,4 inch", "Pin tích hợp, sạc USB-C");
+        created += seedProduct("ASUS ROG Zephyrus G14", "ASUS", "Laptop",
+                "AMD Ryzen 9", "16-32 GB", "ROG Nebula 14 inch", "Pin tích hợp, sạc USB-C");
         log.info("Development specification seed finished: {} new specifications", created);
     }
 

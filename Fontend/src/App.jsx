@@ -8,8 +8,12 @@ import ProductDetailPage from './features/products/pages/ProductDetailPage';
 import CategoriesPage from './features/categories/pages/CategoriesPage';
 import OrdersPage from './features/orders/pages/OrdersPage';
 import OrderDetailPage from './features/orders/pages/OrderDetailPage';
+import InstallmentsPage from './features/orders/pages/InstallmentsPage';
+import InstallmentDetailPage from './features/orders/pages/InstallmentDetailPage';
+import InstallmentProvidersPage from './features/orders/pages/InstallmentProvidersPage';
 import CartPage from './features/cart/pages/CartPage';
 import CheckoutPage from './features/cart/pages/CheckoutPage';
+import VnpayResultPage from './features/orders/pages/VnpayResultPage';
 import CustomersPage from './features/customers/pages/CustomersPage';
 import InventoryPage from './features/inventory/pages/InventoryPage';
 import GoodsReceiptsPage from './features/inventory/pages/GoodsReceiptsPage';
@@ -44,6 +48,7 @@ export default function App() {
           <Route element={<RequireRole roles={[ROLES.CUSTOMER]} />}>
             <Route path="cart" element={<CartPage />} />
             <Route path="checkout" element={<CheckoutPage />} />
+            <Route path="payments/vnpay/result" element={<VnpayResultPage />} />
             <Route path="my-orders" element={<OrdersPage customer />} />
             <Route path="my-orders/:orderId" element={<OrderDetailPage customer />} />
             <Route path="my-warranties" element={<MyWarrantiesPage />} />
@@ -66,6 +71,11 @@ export default function App() {
             <Route path="warranties/:warrantyId" element={<WarrantyDetailPage />} />
             <Route path="warranty-tickets" element={<WarrantyTicketsPage />} />
             <Route path="warranty-tickets/:ticketId" element={<WarrantyTicketDetailPage />} />
+          </Route>
+          <Route element={<RequireRole roles={[ROLES.ADMIN, ROLES.MANAGER]} />}>
+            <Route path="installments" element={<InstallmentsPage />} />
+            <Route path="installments/providers" element={<InstallmentProvidersPage />} />
+            <Route path="installments/:installmentId" element={<InstallmentDetailPage />} />
           </Route>
           <Route element={<RequireRole roles={[ROLES.ADMIN]} />}>
             <Route path="user-management" element={<UserManagementPage />} />

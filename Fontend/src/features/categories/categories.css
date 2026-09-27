@@ -32,3 +32,18 @@
 .category-page-state { padding: 30px; }
 @media (max-width: 900px) { .category-layout { grid-template-columns: 1fr; } .category-form { grid-template-columns: 1fr; } .category-form-description, .category-form-error, .category-form-actions { grid-column: auto; } }
 @media (max-width: 640px) { .category-toolbar, .category-delete-confirm, .category-section-heading { align-items: stretch; flex-direction: column; } .category-filters { display: grid; } .category-filters input { min-width: 0; } }
+.category-toolbar { padding: 20px; border-color: var(--border); }
+.category-filters label, .category-form label { color: var(--emerald-950); }
+.category-filters input, .category-filters select, .category-form input, .category-form select, .category-form textarea { border-color: var(--border); border-radius: 9px; min-height: 42px; }
+.category-tree, .category-editor { padding: 26px; }
+.category-tree h2, .category-editor h2 { color: var(--emerald-950); }
+.category-tree li { padding: 4px 0; }
+.category-tree a:hover { color: var(--emerald-700); text-decoration: underline; }
+.category-table thead { background: #f3f8f5; }
+.category-table thead th { color: #58736a; }
+.category-table td, .category-table th { border-bottom-color: var(--border); }
+.category-table tbody tr:hover { background: #f8fbf9; }
+.category-status-active { background: #e1f4ea; color: #146047; }
+.category-status-inactive { background: #fff1d9; color: #855918; }
+.category-delete-confirm { border-color: #edc4bc; background: #fff8f6; }
+@media (max-width: 640px) { .category-tree, .category-editor { padding: 18px; } }

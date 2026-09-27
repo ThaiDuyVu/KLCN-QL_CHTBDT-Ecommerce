@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 @Component
 @Order(55)
@@ -118,6 +119,7 @@ public class GoodsReceiptSeedData implements CommandLineRunner {
         Optional<GoodsReceipt> existingReceipt = goodsReceipts.findByReceiptCode(DevSeedData.GOODS_RECEIPT_CODE);
         if (existingReceipt.isPresent()) {
             confirmExistingDraft(existingReceipt.get());
+            seedCatalogExpansion();
             return;
         }
 
@@ -178,20 +180,105 @@ public class GoodsReceiptSeedData implements CommandLineRunner {
                 draft.getReceiptId(), GoodsReceiptStatus.CONFIRMED);
         log.info("Development Goods Receipt seed confirmed: {} with {} variants and {} devices",
                 confirmed.getReceiptCode(), confirmed.getItems().size(), SEEDED_SERIALS.size());
+        seedCatalogExpansion();
+    }
+
+    private void seedCatalogExpansion() {
+        Optional<GoodsReceipt> existingReceipt = goodsReceipts.findByReceiptCode(
+                DevSeedData.CATALOG_EXPANSION_RECEIPT_CODE);
+        if (existingReceipt.isPresent()) {
+            confirmExistingDraft(existingReceipt.get());
+            return;
+        }
+
+        Optional<Employee> employee = employees.findByEmployeeCode(DevSeedData.EMPLOYEE_CODE);
+        Optional<Warehouse> warehouse = warehouses.findFirstByWarehouseNameOrderByWarehouseIdAsc(
+                DevSeedData.WAREHOUSE_NAME);
+        Optional<Supplier> supplier = suppliers.findBySupplierCode(DevSeedData.SUPPLIER_CODE);
+        if (employee.isEmpty() || warehouse.isEmpty() || supplier.isEmpty()) {
+            log.warn("Catalog expansion receipt seed skipped: enable auth, warehouse and supplier dev seeds first");
+            return;
+        }
+
+        List<ProductVariant> expandedVariants = new ArrayList<>();
+        for (String sku : DevSeedData.CATALOG_EXPANSION_VARIANT_SKUS) {
+            ProductVariant variant = variants.findBySku(sku).orElse(null);
+            if (variant == null || variant.getTrackingType() == ProductTrackingType.NONE) {
+                log.warn("Catalog expansion receipt seed skipped: tracked SKU {} is missing or has tracking NONE", sku);
+                return;
+            }
+            expandedVariants.add(variant);
+        }
+
+        List<CreateGoodsReceiptItemRequest> items = new ArrayList<>();
+        List<String> deterministicSerials = new ArrayList<>();
+        List<String> deterministicImeis = new ArrayList<>();
+        int imeiSequence = 1;
+        for (ProductVariant variant : expandedVariants) {
+            List<ReceiptDeviceRequest> devices = new ArrayList<>();
+            for (int deviceNumber = 1; deviceNumber <= 2; deviceNumber++) {
+                String serial = variant.getSku() + "-SN-" + String.format("%03d", deviceNumber);
+                deterministicSerials.add(serial);
+                List<String> deviceImeis = List.of();
+                if (variant.getTrackingType() == ProductTrackingType.IMEI) {
+                    String imei = validImei(imeiSequence++);
+                    deterministicImeis.add(imei);
+                    deviceImeis = List.of(imei);
+                }
+                devices.add(device(serial, deviceImeis));
+            }
+            items.add(receiptItem(variant, devices));
+        }
+
+        if (deterministicSerials.stream().anyMatch(serialNumbers::existsBySerialNumber)
+                || deterministicImeis.stream().anyMatch(imeis::existsByImeiNumber)) {
+            log.warn("Catalog expansion receipt seed skipped: deterministic Serial/IMEI exists without receipt {}",
+                    DevSeedData.CATALOG_EXPANSION_RECEIPT_CODE);
+            return;
+        }
+
+        CreateGoodsReceiptRequest request = new CreateGoodsReceiptRequest();
+        request.setReceiptCode(DevSeedData.CATALOG_EXPANSION_RECEIPT_CODE);
+        request.setWarehouseId(warehouse.get().getWarehouseId());
+        request.setSupplierId(supplier.get().getSupplierId());
+        request.setEmployeeId(employee.get().getEmployeeId());
+        request.setItems(items);
+
+        GoodsReceiptResponse draft = goodsReceiptService.createGoodsReceipt(request);
+        GoodsReceiptResponse confirmed = goodsReceiptService.updateGoodsReceiptStatus(
+                draft.getReceiptId(), GoodsReceiptStatus.CONFIRMED);
+        log.info("Development catalog expansion receipt confirmed: {} with {} variants, {} serials and {} IMEIs",
+                confirmed.getReceiptCode(), confirmed.getItems().size(),
+                deterministicSerials.size(), deterministicImeis.size());
+    }
+
+    /** Builds a deterministic 15-digit IMEI whose last digit satisfies the Luhn checksum. */
+    private String validImei(int sequence) {
+        String body = "35711102" + String.format("%06d", sequence);
+        int sum = 0;
+        for (int index = 0; index < body.length(); index++) {
+            int digit = body.charAt(index) - '0';
+            if ((index + 1) % 2 == 0) {
+                digit *= 2;
+                digit = digit / 10 + digit % 10;
+            }
+            sum += digit;
+        }
+        return body + ((10 - sum % 10) % 10);
     }
 
     private void confirmExistingDraft(GoodsReceipt receipt) {
         if (receipt.getStatus() == GoodsReceiptStatus.CONFIRMED) {
-            log.info("Development Goods Receipt seed already exists: {}", DevSeedData.GOODS_RECEIPT_CODE);
+            log.info("Development Goods Receipt seed already exists: {}", receipt.getReceiptCode());
             return;
         }
         if (receipt.getStatus() != GoodsReceiptStatus.DRAFT) {
             log.warn("Goods Receipt seed skipped: receipt {} is {}",
-                    DevSeedData.GOODS_RECEIPT_CODE, receipt.getStatus());
+                    receipt.getReceiptCode(), receipt.getStatus());
             return;
         }
         goodsReceiptService.updateGoodsReceiptStatus(receipt.getReceiptId(), GoodsReceiptStatus.CONFIRMED);
-        log.info("Development Goods Receipt seed resumed and confirmed: {}", DevSeedData.GOODS_RECEIPT_CODE);
+        log.info("Development Goods Receipt seed resumed and confirmed: {}", receipt.getReceiptCode());
     }
 
     private ProductVariant findTrackedVariant(String sku, ProductTrackingType expectedType) {
