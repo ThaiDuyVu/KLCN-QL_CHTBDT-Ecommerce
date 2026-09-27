@@ -7,7 +7,7 @@ import com.example.backend.category.entity.Category;
 import com.example.backend.category.exception.CategoryInUseException;
 import com.example.backend.category.exception.CategoryNotFoundException;
 import com.example.backend.category.exception.InvalidCategoryParentException;
-import com.example.backend.product.ProductRepository;
+import com.example.backend.product.repository.ProductRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
 public class CategoryServiceImpl implements CategoryService {
-
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
 
@@ -40,7 +40,21 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryResponse> getAllCategories() {
-        return categoryRepository.findAll().stream().map(this::mapToResponse).toList();
+        return categoryRepository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryResponse> getRootCategories() {
+        return categoryRepository.findByParentIsNull().stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    @Override
+    public List<CategoryResponse> getCategoryChildren(UUID parentId) {
+        return categoryRepository.findByParent_CategoryId(parentId).stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 
     @Override
@@ -68,7 +82,6 @@ public class CategoryServiceImpl implements CategoryService {
         }
         try {
             categoryRepository.delete(category);
-            // Catch FK RESTRICT failures here, including references created after the checks.
             categoryRepository.flush();
         } catch (DataIntegrityViolationException exception) {
             throw new CategoryInUseException(
@@ -100,9 +113,8 @@ public class CategoryServiceImpl implements CategoryService {
     private void applyRequest(Category category, CategoryRequest request) {
         Category parent = request.parentId() == null ? null : findCategoryById(request.parentId());
         validateParent(category, parent);
-        category.setCategoryName(request.categoryName().trim());
-        category.setDescription(request.description());
-        // A null parentId on PUT removes the parent; status remains optional.
+        category.setCategoryName(request.categoryName() == null ? null : request.categoryName().trim());
+        category.setDescription(request.description() == null ? null : request.description().trim());
         category.setParent(parent);
         if (request.status() != null) {
             category.setStatus(request.status());

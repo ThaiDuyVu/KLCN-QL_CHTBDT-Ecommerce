@@ -57,7 +57,7 @@ Chạy từ thư mục backend, sau khi cấu hình database PostgreSQL có pgve
 
 ```sh
 SPRING_PROFILES_ACTIVE=dev ./mvnw spring-boot:run \
-  -Dspring-boot.run.arguments="--app.seed.auth.enabled=true --app.seed.category.enabled=true --app.seed.brand.enabled=true --app.seed.product.enabled=true --app.seed.product-variant.enabled=true --app.seed.product-image.enabled=true --app.seed.specification.enabled=true"
+  -Dspring-boot.run.arguments="--app.seed.auth.enabled=true --app.seed.category.enabled=true --app.seed.brand.enabled=true --app.seed.product.enabled=true --app.seed.product-variant.enabled=true --app.seed.inventory.enabled=true --app.seed.product-image.enabled=true --app.seed.specification.enabled=true"
 ```
 
 Không có seed Supplier/Warehouse/Goods Receipt/Inventory/Serial/Cart/Order. Catalog seed không tạo số lượng tồn giả. Để demo nhập hàng cần tạo Supplier/Warehouse, chọn employeeId từ profile Employee (khác userId), tạo phiếu với variantId rồi xác nhận. Hiện chưa có API chọn Employee/Customer profile cho các luồng này. Đường dẫn ảnh nằm tại frontend `public/images/products/<slug>/main.jpg` và `detail.jpg`; cần bổ sung file ảnh thật.

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.UUID;
 
@@ -21,7 +22,8 @@ public class ProductDetailController {
     }
 
     @GetMapping("/{id}/detail")
-    public ResponseEntity<ProductDetailResponse> getDetail(@PathVariable UUID id) {
-        return ResponseEntity.ok(productDetailService.getProductDetail(id));
+    public ResponseEntity<ProductDetailResponse> getDetail(@PathVariable UUID id,
+                                                           @RequestParam(required = false) UUID warehouseId) {
+        return ResponseEntity.ok(productDetailService.getProductDetail(id, warehouseId));
     }
 }

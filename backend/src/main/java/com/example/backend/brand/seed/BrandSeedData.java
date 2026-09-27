@@ -1,7 +1,7 @@
 package com.example.backend.brand.seed;
 
 import com.example.backend.product.entity.BrandStatus;
-import com.example.backend.product.BrandRepository;
+import com.example.backend.product.repository.BrandRepository;
 import com.example.backend.product.entity.Brand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

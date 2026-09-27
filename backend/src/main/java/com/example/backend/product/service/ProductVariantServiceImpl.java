@@ -1,6 +1,6 @@
 package com.example.backend.product.service;
 
-import com.example.backend.product.ProductRepository;
+import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.dto.ProductVariantPageResponse;
 import com.example.backend.product.dto.ProductVariantRequest;
 import com.example.backend.product.dto.ProductVariantResponse;
@@ -13,6 +13,9 @@ import com.example.backend.product.exception.ProductVariantInUseException;
 import com.example.backend.product.exception.ProductVariantNotFoundException;
 import com.example.backend.product.exception.ProductVariantSkuAlreadyExistsException;
 import com.example.backend.product.repository.ProductVariantRepository;
+import com.example.backend.inventory.repository.InventoryRepository;
+import com.example.backend.inventory.serial.repository.SerialNumberRepository;
+import com.example.backend.inventory.exception.InventoryConflictException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -29,12 +32,19 @@ import java.util.List;
 public class ProductVariantServiceImpl implements ProductVariantService {
 
     private static final int MAX_PAGE_SIZE = 100;
+    private final com.example.backend.promotion.service.PromotionService promotions;
     private final ProductVariantRepository variantRepository;
     private final ProductRepository productRepository;
+    private final InventoryRepository inventoryRepository;
+    private final SerialNumberRepository serialNumberRepository;
 
-    public ProductVariantServiceImpl(ProductVariantRepository variantRepository, ProductRepository productRepository) {
+    public ProductVariantServiceImpl(ProductVariantRepository variantRepository, ProductRepository productRepository,
+            InventoryRepository inventoryRepository, SerialNumberRepository serialNumberRepository, com.example.backend.promotion.service.PromotionService promotions) {
+        this.promotions=promotions;
         this.variantRepository = variantRepository;
         this.productRepository = productRepository;
+        this.inventoryRepository = inventoryRepository;
+        this.serialNumberRepository = serialNumberRepository;
     }
 
     @Override
@@ -66,7 +76,7 @@ public class ProductVariantServiceImpl implements ProductVariantService {
                 ? variantRepository.findAll(pageable)
                 : variantRepository.findByProduct_ProductId(productId, pageable);
         return new ProductVariantPageResponse(
-                variants.getContent().stream().map(this::mapToResponse).toList(),
+                mapResponses(variants.getContent()),
                 variants.getNumber(), variants.getSize(), variants.getTotalElements(), variants.getTotalPages()
         );
     }
@@ -81,9 +91,9 @@ public class ProductVariantServiceImpl implements ProductVariantService {
         if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException("Không tìm thấy sản phẩm với ID: " + productId);
         }
-        return variantRepository.findByProduct_ProductId(productId, Sort.by(
+        return mapResponses(variantRepository.findByProduct_ProductId(productId, Sort.by(
                 Sort.Order.asc("sku"), Sort.Order.asc("variantId")
-        )).stream().map(this::mapToResponse).toList();
+        )));
     }
 
     @Override
@@ -139,6 +149,17 @@ public class ProductVariantServiceImpl implements ProductVariantService {
         if (request.getStatus() != null) {
             variant.setStatus(request.getStatus());
         }
+        if (request.getTrackingType() != null) {
+            if (variant.getVariantId() != null && variant.getTrackingType() != request.getTrackingType()
+                    && (serialNumberRepository.existsByVariant_VariantId(variant.getVariantId())
+                    || inventoryRepository.existsByVariant_VariantIdAndQuantityGreaterThan(variant.getVariantId(), 0))) {
+                throw new InventoryConflictException("Không thể đổi trackingType khi biến thể đã có tồn kho hoặc serial");
+            }
+            variant.setTrackingType(request.getTrackingType());
+        }
+        if (request.getWarrantyMonths() != null) {
+            variant.setWarrantyMonths(request.getWarrantyMonths());
+        }
     }
 
     private ProductVariant saveVariant(ProductVariant variant) {
@@ -164,11 +185,14 @@ public class ProductVariantServiceImpl implements ProductVariantService {
         }
     }
 
-    private ProductVariantResponse mapToResponse(ProductVariant variant) {
-        return new ProductVariantResponse(
+    private ProductVariantResponse mapToResponse(ProductVariant variant) { return mapResponses(List.of(variant)).get(0); }
+    private List<ProductVariantResponse> mapResponses(List<ProductVariant> rows) {
+        var resolved=promotions.resolve(rows.stream().map(v->v.getProduct().getProductId()).distinct().toList(),java.time.OffsetDateTime.now());
+        return rows.stream().map(variant->new ProductVariantResponse(
                 variant.getVariantId(), variant.getProduct().getProductId(), variant.getProduct().getProductName(),
                 variant.getSku(), variant.getPrice(), variant.getCostPrice(), variant.getColor(),
-                variant.getStorage(), variant.getRam(), variant.getStatus()
-        );
+                variant.getStorage(), variant.getRam(), variant.getStatus(), variant.getTrackingType(),
+                variant.getWarrantyMonths(), null, null
+        ).withPricing(promotions.calculate(variant.getPrice(),resolved.get(variant.getProduct().getProductId())))).toList();
     }
 }

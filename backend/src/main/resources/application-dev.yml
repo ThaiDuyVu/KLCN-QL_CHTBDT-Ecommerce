@@ -13,3 +13,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+app:
+  seed:
+    goods-receipt:
+      enabled: ${APP_SEED_GOODS_RECEIPT_ENABLED:${GOODS_RECEIPT_SEED_ENABLED:false}}

@@ -6,4 +6,5 @@ import java.util.UUID;
 
 public interface ProductDetailService {
     ProductDetailResponse getProductDetail(UUID productId);
+    ProductDetailResponse getProductDetail(UUID productId, UUID warehouseId);
 }

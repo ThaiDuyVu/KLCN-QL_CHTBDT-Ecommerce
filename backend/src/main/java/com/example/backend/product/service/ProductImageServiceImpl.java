@@ -1,6 +1,6 @@
 package com.example.backend.product.service;
 
-import com.example.backend.product.ProductRepository;
+import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.dto.ProductImageRequest;
 import com.example.backend.product.dto.ProductImageResponse;
 import com.example.backend.product.entity.Product;

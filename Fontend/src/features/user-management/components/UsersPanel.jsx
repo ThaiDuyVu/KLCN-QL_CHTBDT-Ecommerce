@@ -5,6 +5,7 @@ import { userManagementApi as api } from '../api/userManagementApi';
 import useManagementRequest from '../hooks/useManagementRequest';
 import RequestState from './RequestState';
 import UserEditor from './UserEditor';
+import StatusBadge from '../../../components/ui/StatusBadge';
 
 const labels = { ACTIVE: 'Đang hoạt động', INACTIVE: 'Ngừng hoạt động', LOCKED: 'Đã khóa' };
 const size = 20;
@@ -61,7 +62,7 @@ export default function UsersPanel({ roles }) {
         <table className="management-table"><thead><tr>{['Username', 'Tên hiển thị', 'Email', 'Điện thoại', 'Role', 'Trạng thái', 'Ngày tạo', 'Thao tác'].map((name) => <th scope="col" key={name}>{name}</th>)}</tr></thead>
           <tbody>{data.content.map((target) => <tr key={target.userId}>
             <th scope="row">{target.username}</th><td>{target.displayName || '—'}</td><td>{target.email}</td><td>{target.phone || '—'}</td>
-            <td>{target.roleName || 'Chưa gán'}</td><td>{labels[target.status] || target.status}</td>
+            <td>{target.roleName || 'Chưa gán'}</td><td><StatusBadge status={target.status}>{labels[target.status] || target.status}</StatusBadge></td>
             <td>{target.createdAt ? new Date(target.createdAt).toLocaleString('vi-VN') : '—'}</td>
             <td><div className="management-actions">
               <button className="button button-quiet" disabled={submitting} onClick={() => { setEditor(target); setNotice(''); }}>Sửa / Role</button>

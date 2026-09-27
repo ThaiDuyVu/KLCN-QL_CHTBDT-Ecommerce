@@ -68,6 +68,13 @@ public class ProductVariant {
     @Enumerated(EnumType.STRING)
     private ProductVariantStatus status = ProductVariantStatus.ACTIVE;
 
+    @Column(name = "tracking_type", nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
+    private ProductTrackingType trackingType = ProductTrackingType.NONE;
+
+    @Column(name = "warranty_months", nullable = false)
+    private Integer warrantyMonths = 0;
+
     public ProductVariant() {
     }
 
@@ -142,6 +149,11 @@ public class ProductVariant {
     public void setStatus(ProductVariantStatus status) {
         this.status = status;
     }
+
+    public ProductTrackingType getTrackingType() { return trackingType; }
+    public void setTrackingType(ProductTrackingType trackingType) { this.trackingType = trackingType; }
+    public Integer getWarrantyMonths() { return warrantyMonths; }
+    public void setWarrantyMonths(Integer warrantyMonths) { this.warrantyMonths = warrantyMonths; }
 
 
 }

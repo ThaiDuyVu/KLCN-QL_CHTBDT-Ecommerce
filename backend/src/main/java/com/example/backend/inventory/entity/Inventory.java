@@ -45,7 +45,7 @@ public class Inventory {
     @Column(name = "reserved_quantity", nullable = false)
     private Integer reservedQuantity = 0;
 
-    @Column(name = "updated_at", nullable = false, insertable = false, updatable = false)
+    @Column(name = "updated_at", nullable = false, insertable = false)
     private OffsetDateTime updatedAt;
 
     public Inventory() {

@@ -15,5 +15,7 @@ public interface GoodsReceiptService {
 
     GoodsReceiptResponse createGoodsReceipt(CreateGoodsReceiptRequest request);
 
+    GoodsReceiptResponse updateGoodsReceipt(UUID receiptId, CreateGoodsReceiptRequest request);
+
     GoodsReceiptResponse updateGoodsReceiptStatus(UUID receiptId, GoodsReceiptStatus targetStatus);
 }

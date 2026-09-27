@@ -4,9 +4,12 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.Valid;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateGoodsReceiptItemRequest {
 
@@ -22,6 +25,8 @@ public class CreateGoodsReceiptItemRequest {
     @Digits(integer = 13, fraction = 2, message = "Unit cost must fit NUMERIC(15,2)")
     private BigDecimal unitCost;
 
+    private List<@Valid ReceiptDeviceRequest> devices = new ArrayList<>();
+
     public CreateGoodsReceiptItemRequest() {
     }
 
@@ -31,4 +36,6 @@ public class CreateGoodsReceiptItemRequest {
     public void setQuantity(Integer quantity) { this.quantity = quantity; }
     public BigDecimal getUnitCost() { return unitCost; }
     public void setUnitCost(BigDecimal unitCost) { this.unitCost = unitCost; }
+    public List<ReceiptDeviceRequest> getDevices() { return devices; }
+    public void setDevices(List<ReceiptDeviceRequest> devices) { this.devices = devices; }
 }
