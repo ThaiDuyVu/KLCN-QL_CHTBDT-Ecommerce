@@ -22,6 +22,7 @@ const managementNavigation = [
   { to: '/serials', label: 'Serial / IMEI', roles: MANAGEMENT_ROLES },
   { to: '/warranties', label: 'Bảo hành', roles: MANAGEMENT_ROLES },
   { to: '/warranty-tickets', label: 'Warranty Ticket', roles: MANAGEMENT_ROLES },
+  { to: '/reports', label: 'Thống kê & Báo cáo', roles: [ROLES.ADMIN, ROLES.MANAGER] },
   { to: '/user-management', label: 'Người dùng', roles: [ROLES.ADMIN] },
 ];
 

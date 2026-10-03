@@ -310,8 +310,7 @@ public class WarrantyServiceImpl implements WarrantyService {
     }
 
     private WarrantyStatus effectiveStatus(Warranty warranty) {
-        return warranty.getStatus() == WarrantyStatus.EXPIRED || LocalDate.now().isAfter(warranty.getEndDate())
-                ? WarrantyStatus.EXPIRED : WarrantyStatus.ACTIVE;
+        return warranty.getStatus().effectiveOn(warranty.getEndDate(), LocalDate.now());
     }
 
     private void requireTransition(WarrantyTicketStatus from, WarrantyTicketStatus to) {

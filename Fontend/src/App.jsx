@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 import RequireAuth from './auth/RequireAuth';
 import RequireRole from './auth/RequireRole';
@@ -16,6 +17,7 @@ import CartPage from './features/cart/pages/CartPage';
 import CheckoutPage from './features/cart/pages/CheckoutPage';
 import VnpayResultPage from './features/orders/pages/VnpayResultPage';
 import CustomersPage from './features/customers/pages/CustomersPage';
+import CustomerDetailPage from './features/customers/pages/CustomerDetailPage';
 import InventoryPage from './features/inventory/pages/InventoryPage';
 import GoodsReceiptsPage from './features/inventory/pages/GoodsReceiptsPage';
 import GoodsReceiptFormPage from './features/inventory/pages/GoodsReceiptFormPage';
@@ -36,6 +38,8 @@ import LoginPage from './pages/LoginPage';
 import AccountPage from './pages/AccountPage';
 import ForbiddenPage from './pages/ForbiddenPage';
 import NotFoundPage from './pages/NotFoundPage';
+
+const ReportsPage = lazy(() => import('./features/reports/pages/ReportsPage'));
 
 export default function App() {
   return (
@@ -64,6 +68,7 @@ export default function App() {
             <Route path="orders" element={<OrdersPage />} />
             <Route path="orders/:orderId" element={<OrderDetailPage />} />
             <Route path="customers" element={<CustomersPage />} />
+            <Route path="customers/:customerId" element={<CustomerDetailPage />} />
             <Route path="inventory" element={<InventoryPage />} />
             <Route path="goods-receipts" element={<GoodsReceiptsPage />} />
             <Route path="goods-receipts/new" element={<GoodsReceiptFormPage />} />
@@ -78,6 +83,7 @@ export default function App() {
           </Route>
           <Route element={<RequireRole roles={[ROLES.ADMIN, ROLES.MANAGER]} />}>
             <Route path="products/new" element={<ProductCreatePage />} />
+            <Route path="reports" element={<Suspense fallback={<p role="status">Đang tải báo cáo…</p>}><ReportsPage /></Suspense>} />
             <Route path="promotions" element={<PromotionsPage />} />
             <Route path="promotions/new" element={<PromotionFormPage />} />
             <Route path="promotions/:promotionId" element={<PromotionDetailPage />} />
