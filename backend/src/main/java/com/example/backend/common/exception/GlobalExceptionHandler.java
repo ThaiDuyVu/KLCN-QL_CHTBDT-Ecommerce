@@ -41,6 +41,16 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(com.example.backend.customer.exception.CustomerManagementException.class)
+    public ResponseEntity<ApiErrorResponse> handleCustomerManagement(com.example.backend.customer.exception.CustomerManagementException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler(com.example.backend.report.exception.ReportException.class)
+    public ResponseEntity<ApiErrorResponse> handleReport(com.example.backend.report.exception.ReportException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
+    }
+
     @ExceptionHandler(com.example.backend.product.exception.ProductUploadException.class)
     public ResponseEntity<ApiErrorResponse> handleProductUpload(com.example.backend.product.exception.ProductUploadException exception) {
         return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
