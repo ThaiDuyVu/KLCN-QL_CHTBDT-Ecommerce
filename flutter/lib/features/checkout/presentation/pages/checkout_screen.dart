@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
+import '../../../orders/presentation/providers/order_providers.dart';
+import '../../../../core/network/api_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ecommerce_app/features/cart/data/cart_repository.dart';
 import 'package:ecommerce_app/features/cart/presentation/providers/cart_provider.dart';
 import 'package:ecommerce_app/features/orders/presentation/pages/order_list_screen.dart';
 
@@ -28,9 +28,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       appBar: AppBar(title: const Text('Thanh toán')),
       body: cartAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(
-          child: Text(_extractError(error)),
-        ),
+        error: (error, stack) => Center(child: Text(_extractError(error))),
         data: (cart) {
           if (cart.items.isEmpty) {
             return const Center(child: Text('Giỏ hàng đang trống.'));
@@ -40,61 +38,80 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             padding: const EdgeInsets.all(16),
             child: Form(
               key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextFormField(
-                    controller: _receiverName,
-                    decoration: const InputDecoration(labelText: 'Người nhận'),
-                    validator: (v) => (v == null || v.trim().isEmpty) ? 'Nhập tên người nhận' : null,
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: _phone,
-                    decoration: const InputDecoration(labelText: 'Số điện thoại'),
-                    keyboardType: TextInputType.phone,
-                    validator: (v) => (v == null || v.trim().isEmpty) ? 'Nhập số điện thoại' : null,
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: _address,
-                    decoration: const InputDecoration(labelText: 'Địa chỉ giao hàng'),
-                    maxLines: 2,
-                    validator: (v) => (v == null || v.trim().isEmpty) ? 'Nhập địa chỉ' : null,
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: _note,
-                    decoration: const InputDecoration(labelText: 'Ghi chú (tuỳ chọn)'),
-                    maxLines: 2,
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(10),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextFormField(
+                      controller: _receiverName,
+                      decoration: const InputDecoration(
+                        labelText: 'Người nhận',
+                      ),
+                      validator: (v) => (v == null || v.trim().isEmpty)
+                          ? 'Nhập tên người nhận'
+                          : null,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Tổng tiền'),
-                        Text('${cart.subtotal.toStringAsFixed(0)} đ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                      ],
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _phone,
+                      decoration: const InputDecoration(
+                        labelText: 'Số điện thoại',
+                      ),
+                      keyboardType: TextInputType.phone,
+                      validator: (v) => (v == null || v.trim().isEmpty)
+                          ? 'Nhập số điện thoại'
+                          : null,
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _submitting ? null : _submitOrder,
-                    child: _submitting
-                        ? const SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Text('Đặt hàng'),
-                  ),
-                ],
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _address,
+                      decoration: const InputDecoration(
+                        labelText: 'Địa chỉ giao hàng',
+                      ),
+                      maxLines: 2,
+                      validator: (v) => (v == null || v.trim().isEmpty)
+                          ? 'Nhập địa chỉ'
+                          : null,
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _note,
+                      decoration: const InputDecoration(
+                        labelText: 'Ghi chú (tuỳ chọn)',
+                      ),
+                      maxLines: 2,
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Tổng tiền'),
+                          Text(
+                            '${cart.subtotal.toStringAsFixed(0)} đ',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _submitting ? null : _submitOrder,
+                      child: _submitting
+                          ? const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Text('Đặt hàng'),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -111,57 +128,39 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     try {
       final repo = ref.read(cartRepositoryProvider);
       final payload = {
-        'receiverName': _receiverName.text.trim(),
-        'phone': _phone.text.trim(),
-        'address': _address.text.trim(),
+        'recipientName': _receiverName.text.trim(),
+        'recipientPhone': _phone.text.trim(),
+        'shippingAddress': _address.text.trim(),
         'note': _note.text.trim(),
+        'paymentMethod': 'COD',
       };
 
       final response = await repo.checkout(payload);
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (!mounted) return;
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Đặt hàng thành công')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Đặt hàng thành công')));
 
-        await repo.clearCart();
         ref.invalidate(cartProvider);
+        ref.invalidate(cartListProvider);
+        ref.invalidate(myOrdersProvider);
 
         if (!mounted) return;
-        Navigator.pushAndRemoveUntil(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => const OrderListScreen()),
-          (route) => false,
         );
         return;
       }
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 409) {
-        final message = e.response?.data is Map
-            ? (e.response?.data['message'] ?? 'Sản phẩm đã hết hàng.')
-            : 'Sản phẩm đã hết hàng.';
-
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message.toString()), backgroundColor: Colors.orange),
-          );
-        }
-
-        ref.invalidate(cartProvider);
-      } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(_extractError(e)), backgroundColor: Colors.red),
-          );
-        }
-      }
-    } catch (e) {
+    } catch (error) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(_extractError(e)), backgroundColor: Colors.red),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(apiErrorMessage(error))));
       }
+      ref.invalidate(cartProvider);
     } finally {
       if (mounted) {
         setState(() => _submitting = false);
@@ -169,14 +168,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     }
   }
 
-  String _extractError(Object error) {
-    if (error is DioException) {
-      final data = error.response?.data;
-      if (data is Map) {
-        return (data['message'] ?? data['error'] ?? 'Lỗi không xác định').toString();
-      }
-      return error.message ?? 'Lỗi không xác định';
-    }
-    return error.toString();
+  String _extractError(Object error) => apiErrorMessage(error);
+
+  @override
+  void dispose() {
+    _receiverName.dispose();
+    _phone.dispose();
+    _address.dispose();
+    _note.dispose();
+    super.dispose();
   }
 }

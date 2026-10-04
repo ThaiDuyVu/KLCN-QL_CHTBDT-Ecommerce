@@ -1,3 +1,4 @@
+import '../../../auth/presentation/providers/auth_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/repositories/product_repository.dart';
 import '../../data/models/product_model.dart'; // Đừng quên import Model
@@ -9,15 +10,19 @@ final productRepositoryProvider = Provider<ProductRepository>((ref) {
 });
 
 final productListProvider = FutureProvider<List<Product>>((ref) async {
+  ref.watch(authProvider.select((state) => state.user?['userId']));
   // Lắng nghe chi nhánh đang chọn từ màn hình
   final selected = ref.watch(selectedWarehouseProvider);
-  
-  // Nếu chưa chọn chi nhánh nào, trả về danh sách trống
-  if (selected == null) {
-    return [];
-  }
 
   // Gọi API lấy sản phẩm theo ID chi nhánh
   final repo = ref.read(productRepositoryProvider);
-  return repo.getProducts(selected.id);
+  return readWithSession(ref, () => repo.getProducts(selected?.id));
 });
+final productDetailProvider = FutureProvider.autoDispose
+    .family<Product, String>((ref, id) {
+      final warehouse = ref.watch(selectedWarehouseProvider);
+      return readWithSession(
+        ref,
+        () => ref.read(productRepositoryProvider).getProduct(id, warehouse?.id),
+      );
+    });

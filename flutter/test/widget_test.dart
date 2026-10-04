@@ -1,30 +1,20 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:ecommerce_app/main.dart';
+import 'package:ecommerce_app/features/auth/presentation/pages/login_screen.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Login form requires username and password', (tester) async {
+    await tester.pumpWidget(const ProviderScope(
+      child: MaterialApp(home: LoginScreen()),
+    ));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    expect(find.widgetWithText(TextFormField, 'Tài khoản'), findsOneWidget);
+    expect(find.widgetWithText(TextFormField, 'Mật khẩu'), findsOneWidget);
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Đăng nhập'));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Nhập tài khoản'), findsOneWidget);
+    expect(find.text('Nhập mật khẩu'), findsOneWidget);
   });
 }

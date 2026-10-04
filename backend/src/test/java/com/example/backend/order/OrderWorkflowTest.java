@@ -29,24 +29,26 @@ class OrderWorkflowTest {
         assertThatThrownBy(() -> OrderTransitions.require(OrderStatus.PENDING, OrderStatus.CONFIRMED, true, false)).isInstanceOf(CommerceException.class);
         assertThatThrownBy(() -> OrderTransitions.require(OrderStatus.PENDING, OrderStatus.CANCELLED, true, true)).hasMessageContaining("PAID");
     }
-    @Test void stockReservesAcrossWarehousesReleasesAndDeductsOnDelivery() {
-        UUID id = UUID.randomUUID(); var repository = mock(InventoryRepository.class); var service = new OrderStockServiceImpl(repository);
-        var first = stock(5, 2); var second = stock(4, 0);
-        when(repository.lockByVariantId(id)).thenReturn(List.of(first, second));
-        service.apply(Map.of(id, 6), OrderStockService.Action.RESERVE);
-        assertThat(first.getReservedQuantity()).isEqualTo(5); assertThat(second.getReservedQuantity()).isEqualTo(3);
-        assertThat(first.getQuantity()).isEqualTo(5);
-        service.apply(Map.of(id, 6), OrderStockService.Action.RELEASE);
-        assertThat(first.getReservedQuantity() + second.getReservedQuantity()).isEqualTo(2);
-        service.apply(Map.of(id, 6), OrderStockService.Action.RESERVE);
-        service.apply(Map.of(id, 6), OrderStockService.Action.DELIVER);
-        assertThat(first.getQuantity() + second.getQuantity()).isEqualTo(3);
-        assertThat(first.getReservedQuantity() + second.getReservedQuantity()).isEqualTo(2);
+    @Test void stockReservesInSelectedWarehouseReleasesAndDeductsOnDelivery() {
+        UUID id = UUID.randomUUID(); UUID warehouseId = UUID.randomUUID();
+        var repository = mock(InventoryRepository.class); var service = new OrderStockServiceImpl(repository);
+        var row = stock(9, 2);
+        when(repository.lockByWarehouseAndVariant(warehouseId, id)).thenReturn(Optional.of(row));
+        service.apply(warehouseId, Map.of(id, 6), OrderStockService.Action.RESERVE);
+        assertThat(row.getReservedQuantity()).isEqualTo(8);
+        assertThat(row.getQuantity()).isEqualTo(9);
+        service.apply(warehouseId, Map.of(id, 6), OrderStockService.Action.RELEASE);
+        assertThat(row.getReservedQuantity()).isEqualTo(2);
+        service.apply(warehouseId, Map.of(id, 6), OrderStockService.Action.RESERVE);
+        service.apply(warehouseId, Map.of(id, 6), OrderStockService.Action.DELIVER);
+        assertThat(row.getQuantity()).isEqualTo(3);
+        assertThat(row.getReservedQuantity()).isEqualTo(2);
+        verify(repository, times(4)).lockByWarehouseAndVariant(warehouseId, id);
     }
     @Test void shortageFailsBeforeMutatingInventoryForThatVariant() {
-        UUID id = UUID.randomUUID(); var repository = mock(InventoryRepository.class); var row = stock(5, 4);
-        when(repository.lockByVariantId(id)).thenReturn(List.of(row));
-        assertThatThrownBy(() -> new OrderStockServiceImpl(repository).apply(Map.of(id, 2), OrderStockService.Action.RESERVE)).hasMessageContaining("Không đủ stock");
+        UUID id = UUID.randomUUID(); UUID warehouseId = UUID.randomUUID(); var repository = mock(InventoryRepository.class); var row = stock(5, 4);
+        when(repository.lockByWarehouseAndVariant(warehouseId, id)).thenReturn(Optional.of(row));
+        assertThatThrownBy(() -> new OrderStockServiceImpl(repository).apply(warehouseId, Map.of(id, 2), OrderStockService.Action.RESERVE)).hasMessageContaining("Không đủ stock");
         assertThat(row.getReservedQuantity()).isEqualTo(4); verify(repository, never()).flush();
     }
     @Test void shippingFieldsAreRequiredAndTrimmed() {

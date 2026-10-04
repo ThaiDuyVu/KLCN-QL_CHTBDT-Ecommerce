@@ -102,8 +102,8 @@ class ProductPersistenceIntegrationTest {
     @Test
     void migrationsAndProductCreation_matchLockedSchema() {
         flyway.validate();
-        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("2");
-        assertThat(flyway.info().applied()).hasSize(2);
+        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("6");
+        assertThat(flyway.info().applied()).hasSize(6);
 
         var response = service.createProduct(request(null));
         Product persisted = productRepository.findById(response.productId()).orElseThrow();
