@@ -2,36 +2,44 @@ import 'package:dio/dio.dart';
 import '../../../core/network/api_client.dart';
 
 class CartRepository {
-
+  final Dio client;
+  CartRepository({Dio? client}) : client = client ?? ApiClient.dio;
   Future<Response> fetchCart() async {
-    return await ApiClient.dio.get('/api/cart');
+    return await client.get('/api/cart');
   }
 
   Future<Response> addItem({
-    required String productId,
+    required String variantId,
     required int quantity,
-    required String warehouseId,
   }) async {
-    return await ApiClient.dio.post('/api/cart/items', data: {
-      'productId': productId,
-      'quantity': quantity,
-      'warehouseId': warehouseId,
-    });
+    return await client.post(
+      '/api/cart/items',
+      data: {'variantId': variantId, 'quantity': quantity},
+    );
   }
 
   Future<Response> updateItem(String itemId, int quantity) async {
-    return await ApiClient.dio.put('/api/cart/items/$itemId', data: {'quantity': quantity});
+    return await client.patch(
+      '/api/cart/items/$itemId',
+      data: {'quantity': quantity},
+    );
   }
 
   Future<Response> removeItem(String itemId) async {
-    return await ApiClient.dio.delete('/api/cart/items/$itemId');
+    return await client.delete('/api/cart/items/$itemId');
   }
 
-  Future<Response> clearCart() async {
-    return await ApiClient.dio.delete('/api/cart');
+  Future<Response> selectWarehouse(
+    String warehouseId, {
+    bool clearItems = false,
+  }) {
+    return client.put(
+      '/api/cart/warehouse',
+      data: {'warehouseId': warehouseId, 'clearItems': clearItems},
+    );
   }
 
   Future<Response> checkout(Map<String, dynamic> payload) async {
-    return await ApiClient.dio.post('/api/orders/checkout', data: payload);
+    return await client.post('/api/orders/checkout', data: payload);
   }
 }

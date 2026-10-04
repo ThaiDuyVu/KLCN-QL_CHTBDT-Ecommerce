@@ -46,6 +46,10 @@ class ProductServiceImplTest {
     @Mock private ProductRepository productRepository;
     @Mock private CategoryRepository categoryRepository;
     @Mock private BrandRepository brandRepository;
+    @Mock private com.example.backend.product.repository.ProductImageRepository productImageRepository;
+    @Mock private com.example.backend.inventory.repository.InventoryRepository inventoryRepository;
+    @Mock private com.example.backend.promotion.service.PromotionService promotions;
+    @Mock private com.example.backend.product.repository.ProductVariantRepository variants;
     @InjectMocks private ProductServiceImpl service;
 
     private Category category;
@@ -117,7 +121,7 @@ class ProductServiceImplTest {
     void getProducts_queriesOnlyRequestedPageWithStableSort() {
         PageRequest pageable = PageRequest.of(1, 2, Sort.by(
                 Sort.Order.desc("createdAt"), Sort.Order.desc("productId")));
-        when(productRepository.findAll(pageable)).thenReturn(new PageImpl<>(List.of(product), pageable, 3));
+        when(productRepository.findAll(any(org.springframework.data.jpa.domain.Specification.class), org.mockito.ArgumentMatchers.eq(pageable))).thenReturn(new PageImpl<>(List.of(product), pageable, 3));
 
         var response = service.getProducts(1, 2);
 
@@ -127,13 +131,13 @@ class ProductServiceImplTest {
         assertThat(response.getSize()).isEqualTo(2);
         assertThat(response.getTotalElements()).isEqualTo(3);
         assertThat(response.getTotalPages()).isEqualTo(2);
-        verify(productRepository).findAll(pageable);
+        verify(productRepository).findAll(any(org.springframework.data.jpa.domain.Specification.class), org.mockito.ArgumentMatchers.eq(pageable));
         verify(productRepository, never()).findAll();
     }
 
     @Test
     void getProducts_returnsEmptyPageBeyondLastPage() {
-        when(productRepository.findAll(any(Pageable.class)))
+        when(productRepository.findAll(any(org.springframework.data.jpa.domain.Specification.class), any(Pageable.class)))
                 .thenReturn(new PageImpl<>(List.of(), PageRequest.of(5, 20), 3));
 
         var response = service.getProducts(5, 20);
@@ -154,7 +158,7 @@ class ProductServiceImplTest {
 
     @Test
     void getProducts_acceptsMaximumPageSize() {
-        when(productRepository.findAll(any(Pageable.class)))
+        when(productRepository.findAll(any(org.springframework.data.jpa.domain.Specification.class), any(Pageable.class)))
                 .thenReturn(new PageImpl<>(List.of(), PageRequest.of(0, 100), 0));
 
         assertThat(service.getProducts(0, 100).getSize()).isEqualTo(100);

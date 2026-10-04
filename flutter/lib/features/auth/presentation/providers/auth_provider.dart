@@ -1,5 +1,8 @@
+import '../../../../core/storage/cookie_storage.dart';
+import '../../../../core/network/api_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart';
 
 import '../../data/auth_repository.dart';
 
@@ -11,9 +14,12 @@ class AuthState {
 
   AuthState._(this.status, this.user);
 
-  factory AuthState.initializing() => AuthState._(AuthStateStatus.initializing, null);
-  factory AuthState.authenticated(Map<String, dynamic> user) => AuthState._(AuthStateStatus.authenticated, user);
-  factory AuthState.unauthenticated() => AuthState._(AuthStateStatus.unauthenticated, null);
+  factory AuthState.initializing() =>
+      AuthState._(AuthStateStatus.initializing, null);
+  factory AuthState.authenticated(Map<String, dynamic> user) =>
+      AuthState._(AuthStateStatus.authenticated, user);
+  factory AuthState.unauthenticated() =>
+      AuthState._(AuthStateStatus.unauthenticated, null);
 }
 
 class AuthListenable extends ChangeNotifier {
@@ -48,8 +54,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
     print('👉 1. [Provider] Bắt đầu gọi login');
     try {
       final resp = await _repo.login(username, password);
-      print('👉 2. [Provider] Nhận phản hồi từ Server, statusCode: ${resp.statusCode}');
-      
+      print(
+        '👉 2. [Provider] Nhận phản hồi từ Server, statusCode: ${resp.statusCode}',
+      );
+
       if (resp.statusCode == 200) {
         state = AuthState.authenticated(resp.data);
         authListenable.trigger();
@@ -58,22 +66,29 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } catch (e, stacktrace) {
       print('❌❌❌ [Provider] LỖI BỊ BẮT: $e');
       print(stacktrace);
-      
+
       state = AuthState.unauthenticated();
       authListenable.trigger();
-      
-      throw e; 
+
+      throw e;
     }
-    
+
     state = AuthState.unauthenticated();
     authListenable.trigger();
     return false;
+  }
+
+  void expireSession() {
+    state = AuthState.unauthenticated();
+    authListenable.trigger();
   }
 
   Future<void> logout() async {
     try {
       await _repo.logout();
     } catch (_) {}
+    await CookieStorage.clearCookies();
+    ApiClient.resetCsrf();
     state = AuthState.unauthenticated();
     authListenable.trigger();
   }
@@ -85,3 +100,15 @@ final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   final repo = ref.read(authRepositoryProvider);
   return AuthNotifier(repo);
 });
+
+/// Read requests return to login on 401; mutation/refresh behavior is unchanged.
+Future<T> readWithSession<T>(Ref ref, Future<T> Function() request) async {
+  try {
+    return await request();
+  } on DioException catch (error) {
+    if (error.response?.statusCode == 401) {
+      ref.read(authProvider.notifier).expireSession();
+    }
+    rethrow;
+  }
+}

@@ -1,31 +1,38 @@
 import 'package:ecommerce_app/core/network/api_client.dart';
-import 'package:ecommerce_app/features/products/data/models/product_model.dart';
+import '../models/product_model.dart';
 
 class ProductRepository {
-  final client = ApiClient.dio; 
-
-  Future<List<Product>> getProducts(String warehouseId) async {
-    try {
-      final response = await client.get(
+  Future<List<Product>> getProducts(String? warehouseId) async {
+    final products = <Product>[];
+    var page = 0;
+    int totalPages;
+    do {
+      final response = await ApiClient.dio.get(
         '/api/v1/products',
-        queryParameters: {'warehouseId': warehouseId},
+        queryParameters: {
+          if (warehouseId != null) 'warehouseId': warehouseId,
+          'status': 'ACTIVE',
+          'page': page,
+          'size': 100,
+        },
       );
+      final data = response.data as Map<String, dynamic>;
+      products.addAll(
+        (data['content'] as List).map(
+          (item) => Product.fromJson(Map<String, dynamic>.from(item as Map)),
+        ),
+      );
+      totalPages = (data['totalPages'] as num).toInt();
+      page++;
+    } while (page < totalPages);
+    return products;
+  }
 
-      // Bóc tách lớp vỏ 'content' (hoặc 'data') của Spring Boot
-      List<dynamic> listData = [];
-      if (response.data is Map<String, dynamic>) {
-        final mapData = response.data as Map<String, dynamic>;
-        listData = mapData['content'] ?? mapData['data'] ?? mapData['result'] ?? [];
-      } else if (response.data is List) {
-        listData = response.data;
-      }
-
-      // Ép kiểu JSON vào class Product
-      print('📦 JSON SẢN PHẨM ĐẦU TIÊN: ${listData.isNotEmpty ? listData.first : "Trống"}');
-      return listData.map((json) => Product.fromJson(json as Map<String, dynamic>)).toList();
-      
-    } catch (e) {
-      throw Exception('Lỗi khi lấy danh sách sản phẩm: $e');
-    }
+  Future<Product> getProduct(String id, String? warehouseId) async {
+    final response = await ApiClient.dio.get(
+      '/api/v1/products/$id',
+      queryParameters: {if (warehouseId != null) 'warehouseId': warehouseId},
+    );
+    return Product.fromJson(Map<String, dynamic>.from(response.data as Map));
   }
 }

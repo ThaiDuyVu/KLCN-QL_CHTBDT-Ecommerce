@@ -8,10 +8,10 @@ class CookieStorage {
   static Future<void> init() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
-    
+
     // Lưu cookie vào thư mục /.cookies
     cookieJar = PersistCookieJar(
-      ignoreExpires: true, // Giữ cookie kể cả khi hết hạn để xử lý refresh token
+      ignoreExpires: false, // Không gửi access cookie đã hết hạn
       storage: FileStorage("$appDocPath/.cookies/"),
     );
   }

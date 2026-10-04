@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest(properties={"spring.jpa.hibernate.ddl-auto=validate", "spring.jpa.open-in-view=false", "app.seed.auth.enabled=false"})
+@SpringBootTest(properties={"spring.jpa.hibernate.ddl-auto=validate", "spring.jpa.open-in-view=false", "app.seed.auth.enabled=false", "app.payment.vnpay.enabled=false"})
 @Testcontainers(disabledWithoutDocker=true)
 @AutoConfigureMockMvc
 class OrderCheckoutIntegrationTest {
@@ -38,18 +38,21 @@ class OrderCheckoutIntegrationTest {
     @Autowired OrderService orders;
     @Autowired JdbcTemplate jdbc;
     @Autowired MockMvc mvc;
-    UUID firstUser, secondUser, variant;
+    UUID firstUser, secondUser, variant, warehouse;
     @BeforeEach void setup() {
         // Dedicated ephemeral container only: never touches application data.
         jdbc.execute("TRUNCATE TABLE orders, carts, customers, inventory, products, brands, categories, warehouses CASCADE");
         firstUser = customer(); secondUser = customer(); variant = UUID.randomUUID();
-        UUID category = UUID.randomUUID(), product = UUID.randomUUID(), warehouse = UUID.randomUUID(), brand = UUID.randomUUID();
+        warehouse = UUID.randomUUID();
+        UUID category = UUID.randomUUID(), product = UUID.randomUUID(), brand = UUID.randomUUID();
         jdbc.update("INSERT INTO categories(category_id,category_name) VALUES (?,?)",category,"Danh mục thử");
         jdbc.update("INSERT INTO brands(brand_id,brand_name,status) VALUES (?, ?, 'ACTIVE')",brand,"Hãng thử");
         jdbc.update("INSERT INTO products(product_id,category_id,brand_id,product_name,status) VALUES (?,?,?,?,'ACTIVE')",product,category,brand,"Thiết bị thử");
         jdbc.update("INSERT INTO product_variants(variant_id,product_id,sku,price,cost_price,status) VALUES (?,?,?,2000000,1500000,'ACTIVE')",variant,product,"SKU-"+variant);
         jdbc.update("INSERT INTO warehouses(warehouse_id,warehouse_name) VALUES (?,?)",warehouse,"Kho thử");
         jdbc.update("INSERT INTO inventory(warehouse_id,variant_id,quantity,reserved_quantity) VALUES (?,?,5,0)",warehouse,variant);
+        var selection = new SelectCartWarehouseRequest(); selection.setWarehouseId(warehouse);
+        cart.selectWarehouse(firstUser, selection); cart.selectWarehouse(secondUser, selection);
     }
     UUID customer() {
         UUID userId = UUID.randomUUID();
@@ -123,7 +126,9 @@ class OrderCheckoutIntegrationTest {
         // Java UUID sorting is signed; MAX signed UUID ensures original variant is processed first.
         UUID last=UUID.fromString("7fffffff-ffff-ffff-7fff-ffffffffffff");
         jdbc.update("UPDATE product_variants SET variant_id=? WHERE variant_id=?",last,second);
+        jdbc.update("INSERT INTO inventory(warehouse_id,variant_id,quantity,reserved_quantity) VALUES (?,?,1,0)",warehouse,last);
         add(firstUser,2);var r=new CartItemRequest();r.setVariantId(last);r.setQuantity(1);cart.add(firstUser,r);
+        jdbc.update("UPDATE inventory SET quantity=0 WHERE variant_id=?",last);
         assertThatThrownBy(() -> orders.checkout(firstUser,request())).hasMessageContaining("Không đủ stock");
         assertThat(stock("reserved_quantity")).isZero();assertThat(cart.get(firstUser).getItems()).hasSize(2);
         assertThat(jdbc.queryForObject("SELECT count(*) FROM orders",Integer.class)).isZero();
@@ -145,7 +150,7 @@ class OrderCheckoutIntegrationTest {
         mvc.perform(get("/api/cart").with(user(principal("STAFF")))).andExpect(status().isForbidden());
         mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("STAFF"))).with(csrf()).contentType("application/json").content("{\"status\":\"CONFIRMED\"}")).andExpect(status().isOk());
     }
-    @Test void missingAddressAndUnsupportedPaymentRejectCheckout() throws Exception {
+    @Test void missingAddressAndDisabledVnpayRejectCheckout() throws Exception {
         add(firstUser,1);
         mvc.perform(post("/api/orders/checkout").with(user(principal("CUSTOMER"))).with(csrf()).contentType("application/json")
                 .content("{\"recipientName\":\"Khách thử\",\"recipientPhone\":\"0901234567\",\"paymentMethod\":\"COD\"}"))
@@ -157,6 +162,6 @@ class OrderCheckoutIntegrationTest {
                 .andExpect(status().isConflict()).andExpect(content().contentTypeCompatibleWith("application/json"))
                 .andExpect(jsonPath("$.message").value(org.hamcrest.Matchers.startsWith("Không đủ stock")));
         assertThat(jdbc.queryForObject("SELECT count(*) FROM orders", Integer.class)).isZero();
-        var r=request();r.setPaymentMethod(PaymentMethod.VNPAY);assertThatThrownBy(() -> orders.checkout(firstUser,r)).hasMessageContaining("chỉ hỗ trợ COD");assertThat(stock("reserved_quantity")).isZero();
+        var r=request();r.setPaymentMethod(PaymentMethod.VNPAY);assertThatThrownBy(() -> orders.checkout(firstUser,r)).hasMessageContaining("VNPAY Sandbox chưa được cấu hình hoặc đang tắt");assertThat(stock("reserved_quantity")).isZero();
     }
 }

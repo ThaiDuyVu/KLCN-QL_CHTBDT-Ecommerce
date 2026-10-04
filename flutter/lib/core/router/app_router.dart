@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,7 +12,10 @@ GoRouter createRouter(Ref ref) {
     refreshListenable: ref.read(authProvider.notifier).authListenable,
     routes: [
       GoRoute(path: '/login', builder: (ctx, state) => const LoginScreen()),
-      GoRoute(path: '/register', builder: (ctx, state) => const RegisterScreen()),
+      GoRoute(
+        path: '/register',
+        builder: (ctx, state) => const RegisterScreen(),
+      ),
       GoRoute(path: '/main', builder: (ctx, state) => const MainMainScreen()),
     ],
     redirect: (context, state) {

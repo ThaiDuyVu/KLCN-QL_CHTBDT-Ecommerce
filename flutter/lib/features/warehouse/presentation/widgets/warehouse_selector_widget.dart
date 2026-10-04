@@ -35,30 +35,34 @@ class WarehouseSelectorWidget extends ConsumerWidget {
           isExpanded: true,
           decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 12,
+            ),
           ),
           hint: const Text('Chọn chi nhánh'),
           items: list.map((w) {
-            return DropdownMenuItem<String>(
-              value: w.id,
-              child: Text(w.name),
-            );
+            return DropdownMenuItem<String>(value: w.id, child: Text(w.name));
           }).toList(),
           onChanged: (String? newId) async {
             if (newId == null || newId == selectedWarehouse?.id) return;
 
             final newWarehouse = list.firstWhere((w) => w.id == newId);
-            
+
             // ĐỌC STATE CỦA GIỎ HÀNG THAY VÌ REPOSITORY
             final cartList = ref.read(cartListProvider).valueOrNull;
 
             // Kiểm tra nếu giỏ hàng có đồ (danh sách không rỗng)
-            if (cartList != null && cartList.isNotEmpty && selectedWarehouse != null) {
+            if (cartList != null &&
+                cartList.isNotEmpty &&
+                selectedWarehouse != null) {
               final should = await _confirmWarehouseChange(context);
               if (should != true) return; // Nếu user hủy thì không làm gì cả
-              
+
               // Nếu user đồng ý, gọi API xóa giỏ hàng
-              await ref.read(cartRepositoryProvider).clearCart();
+              await ref
+                  .read(cartRepositoryProvider)
+                  .selectWarehouse(newWarehouse.id, clearItems: true);
               // Refresh lại UI giỏ hàng
               ref.invalidate(cartListProvider);
             }
@@ -75,10 +79,18 @@ class WarehouseSelectorWidget extends ConsumerWidget {
       context: context,
       builder: (dctx) => AlertDialog(
         title: const Text('Thay đổi chi nhánh'),
-        content: const Text('Thay đổi chi nhánh sẽ xóa giỏ hàng hiện tại. Bạn có muốn tiếp tục?'),
+        content: const Text(
+          'Thay đổi chi nhánh sẽ xóa giỏ hàng hiện tại. Bạn có muốn tiếp tục?',
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(dctx, false), child: const Text('Hủy')),
-          TextButton(onPressed: () => Navigator.pop(dctx, true), child: const Text('Tiếp tục')),
+          TextButton(
+            onPressed: () => Navigator.pop(dctx, false),
+            child: const Text('Hủy'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dctx, true),
+            child: const Text('Tiếp tục'),
+          ),
         ],
       ),
     );

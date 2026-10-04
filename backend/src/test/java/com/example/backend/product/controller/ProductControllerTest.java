@@ -141,7 +141,7 @@ class ProductControllerTest {
     @WithMockUser
     void get_returns404ForMissingProduct() throws Exception {
         UUID id = UUID.randomUUID();
-        when(productService.getProductById(id)).thenThrow(new ProductNotFoundException("Không tìm thấy sản phẩm"));
+        when(productService.getProductById(id, null)).thenThrow(new ProductNotFoundException("Không tìm thấy sản phẩm"));
 
         mockMvc.perform(get("/api/v1/products/{id}", id))
                 .andExpect(status().isNotFound())
