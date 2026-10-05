@@ -12,6 +12,8 @@ import com.example.backend.product.exception.ProductNotFoundException;
 import com.example.backend.product.exception.ProductReferenceNotFoundException;
 import com.example.backend.product.repository.BrandRepository;
 import com.example.backend.product.repository.ProductRepository;
+import com.example.backend.product.repository.ProductImageRepository;
+import com.example.backend.inventory.repository.InventoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +36,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -46,6 +49,10 @@ class ProductServiceImplTest {
     @Mock private ProductRepository productRepository;
     @Mock private CategoryRepository categoryRepository;
     @Mock private BrandRepository brandRepository;
+    @Mock private InventoryRepository inventoryRepository;
+    @Mock private com.example.backend.promotion.service.PromotionService promotions;
+    @Mock private com.example.backend.product.repository.ProductVariantRepository variants;
+    @Mock private ProductImageRepository productImageRepository;
     @InjectMocks private ProductServiceImpl service;
 
     private Category category;
@@ -63,6 +70,10 @@ class ProductServiceImplTest {
         product.setProductName("Thiết bị kiểm thử");
         product.setCategory(category);
         product.setBrand(brand);
+        service = new ProductServiceImpl(
+            productRepository, categoryRepository, brandRepository, 
+            inventoryRepository, productImageRepository, promotions, variants
+        );
     }
 
     @ParameterizedTest
