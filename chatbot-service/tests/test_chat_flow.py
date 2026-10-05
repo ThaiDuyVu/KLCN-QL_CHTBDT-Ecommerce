@@ -1,8 +1,28 @@
-from uuid import uuid4
+from uuid import UUID, uuid4
 
+import pytest
 from fastapi.testclient import TestClient
 
+from app.features.chat.router import get_authenticated_customer
+from app.features.customer_context.models import AuthenticatedCustomer
 from app.main import app
+
+
+async def override_get_authenticated_customer() -> AuthenticatedCustomer:
+    return AuthenticatedCustomer(
+        user_id=UUID("12345678-1234-5678-1234-567812345678"),
+        customer_id=UUID("12345678-1234-5678-1234-567812345678"),
+        display_name="Test User",
+    )
+
+
+@pytest.fixture(autouse=True)
+def override_auth_dependency() -> None:
+    app.dependency_overrides[get_authenticated_customer] = (
+        override_get_authenticated_customer
+    )
+    yield
+    app.dependency_overrides.clear()
 
 
 client = TestClient(app)
@@ -43,6 +63,40 @@ def test_send_message_rejects_empty_message() -> None:
     )
 
     assert response.status_code == 422
+
+
+def test_feedback_message_requires_session_ownership() -> None:
+    session_owner_a = UUID("11111111-1111-4111-8111-111111111111")
+    session_owner_b = UUID("22222222-2222-4222-8222-222222222222")
+    session_id = uuid4()
+
+    app.dependency_overrides[get_authenticated_customer] = (
+        lambda: AuthenticatedCustomer(
+            user_id=session_owner_a,
+            customer_id=session_owner_a,
+            display_name="User A",
+        )
+    )
+
+    from app.features.conversation.service import ConversationService
+
+    conversation_service = ConversationService()
+    conversation_service.create_session(customer_id=session_owner_b, session_id=session_id)
+    message = conversation_service.add_message(
+        session_id=session_id,
+        sender_type="USER",
+        message="Test message",
+        customer_id=session_owner_b,
+    )
+
+    response = client.post(
+        f"/api/v1/chat/sessions/{session_id}/messages/{message.id}/feedback",
+        json={"rating": 1},
+    )
+
+    assert response.status_code == 403
+    assert response.json()["detail"] == "Forbidden: session does not belong to this customer"
+
 
 def test_send_message_returns_mock_product_discovery() -> None:
     session_id = uuid4()
