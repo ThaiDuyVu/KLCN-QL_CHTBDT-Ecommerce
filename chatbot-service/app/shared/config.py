@@ -1,6 +1,7 @@
 from functools import lru_cache
 from typing import Literal
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -17,8 +18,13 @@ class Settings(BaseSettings):
     ollama_chat_model: str = "qwen3:4b-instruct"
     ollama_embedding_model: str = "qwen3-embedding:0.6b"
 
-    chat_history_window: int = 10
-    default_top_k: int = 5
+    ollama_timeout_seconds: float = Field(default=60, gt=0)
+    knowledge_database_url: str | None = None
+    knowledge_document_status: str = Field(default="PUBLISHED", min_length=1)
+    chatbot_ai_enabled: bool = False
+
+    chat_history_window: int = Field(default=10, ge=0)
+    default_top_k: int = Field(default=5, ge=1, le=20)
 
     product_advisor_mode: Literal["mock", "real"] = "mock"
     backend_bearer_token: str = ""
