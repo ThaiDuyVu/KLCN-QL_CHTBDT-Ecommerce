@@ -1,6 +1,11 @@
 from app.features.chat.service import MockChatService
 from app.features.knowledge.database import postgres_repository
 from app.features.knowledge.service import PgvectorKnowledgeRetrievalService
+from uuid import UUID
+
+from app.features.product_advisor.backend import BackendProductClient
+from app.features.product_advisor.real_service import RealProductAdvisorService
+from app.features.product_advisor.semantic import OllamaEmbeddingClient, ProductSemanticIndex
 from app.features.product_advisor.protocol import ProductAdvisorService
 from app.features.query_understanding.ollama_service import OllamaQueryUnderstandingService
 from app.features.response_generation.ollama_service import OllamaResponseGenerationService
@@ -21,8 +26,15 @@ class UnavailableProductAdvisor:
 
 
 def build_chat_service(settings: Settings, *, product_advisor: ProductAdvisorService | None = None) -> tuple[MockChatService, OllamaClient | None]:
+    if product_advisor is None and settings.product_advisor_mode == "real":
+        product_advisor = RealProductAdvisorService(
+            backend=BackendProductClient(settings.backend_base_url, settings.backend_bearer_token),
+            warehouse_id=UUID(settings.chatbot_warehouse_id) if settings.chatbot_warehouse_id else None,
+            index=ProductSemanticIndex(settings.product_index_database_url),
+            embedder=OllamaEmbeddingClient(settings.ollama_base_url, settings.ollama_embedding_model),
+        )
     if not settings.chatbot_ai_enabled:
-        return MockChatService(), None
+        return MockChatService(product_advisor=product_advisor), None
     client = OllamaClient(settings)
     knowledge = None
     if settings.knowledge_database_url:

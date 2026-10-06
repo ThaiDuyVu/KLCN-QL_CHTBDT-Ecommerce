@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Literal
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -24,6 +25,11 @@ class Settings(BaseSettings):
 
     chat_history_window: int = Field(default=10, ge=0)
     default_top_k: int = Field(default=5, ge=1, le=20)
+
+    product_advisor_mode: Literal["mock", "real"] = "mock"
+    backend_bearer_token: str = ""
+    chatbot_warehouse_id: str = ""
+    product_index_database_url: str = ""
 
     model_config = SettingsConfigDict(
         env_file=".env",

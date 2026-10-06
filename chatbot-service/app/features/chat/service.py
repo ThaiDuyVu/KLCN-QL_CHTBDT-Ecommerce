@@ -102,11 +102,16 @@ class MockChatService:
         product_cards: list[ProductCard] = []
 
         if (
-            query_plan.intent == Intent.PRODUCT_DISCOVERY
+            query_plan.intent in {Intent.PRODUCT_DISCOVERY, Intent.PRODUCT_DETAIL, Intent.PRODUCT_COMPARE}
             and query_plan.product_search is not None
         ):
+            product_search = query_plan.product_search
+            if query_plan.intent == Intent.PRODUCT_DETAIL:
+                product_search = product_search.model_copy(update={"top_k": 1})
+            elif query_plan.intent == Intent.PRODUCT_COMPARE:
+                product_search = product_search.model_copy(update={"top_k": min(product_search.top_k, 3)})
             product_matches = self.product_advisor.search(
-                query_plan.product_search
+                product_search
             )
 
             product_cards = self.product_advisor.build_cards(

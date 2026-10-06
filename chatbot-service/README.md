@@ -48,3 +48,7 @@ Không dùng `session_id` thay cho `history_id`.
 
 Xem [tài liệu phân tích và học lại](docs/CHATBOT_AI_KNOWLEDGE_HOC_LAI.md) để hiểu
 luồng dữ liệu, quyết định thiết kế, cách debug và các điểm cần phối hợp.
+
+## Product retrieval
+
+Hướng dẫn Product Advisor: [PRODUCT_RETRIEVAL_GUIDE.md](docs/PRODUCT_RETRIEVAL_GUIDE.md).
