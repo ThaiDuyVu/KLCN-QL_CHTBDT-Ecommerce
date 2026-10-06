@@ -372,3 +372,13 @@ Phần phân tích trên mô tả checkpoint AI Knowledge ban đầu. Sau khi h�
 Kiểm thử sau merge: 135 test chatbot pass, 1 test PostgreSQL thật skip vì chưa cấu
 hình database kiểm thử. Hai nhóm backend test OrderWorkflowTest và
 ProductServiceImplTest cũng pass. Chưa xác nhận luồng Ollama/pgvector/backend thật.
+
+## 16. Phòng thử chatbot và tài liệu cập nhật
+
+Đợt 06/10/2026 bổ sung trang `/chatbot-lab` trong frontend và sửa các mismatch
+backend DTO, payment, lỗi kết nối, cookie product request và context search/cards.
+Phân tích hiện trạng ban đầu trong mục 11/15 là kết quả tại checkpoint trước.
+Đợt mới đã chạy test PostgreSQL thật và kiểm chứng pipeline với Ollama local: 150 test chatbot, 46 test frontend pass; kết quả API/browser chi tiết ở hướng dẫn Lab.
+
+- [Giải thích chi tiết hoạt động và hiện trạng](CHATBOT_HOAT_DONG_VA_HIEN_TRANG.md).
+- [Hướng dẫn thao tác Lab, kỳ vọng và kết quả kiểm thử](CHATBOT_LAB_HUONG_DAN_KIEM_THU.md).
