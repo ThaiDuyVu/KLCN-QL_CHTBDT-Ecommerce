@@ -9,6 +9,7 @@ from fastapi import HTTPException
 
 from app.features.conversation.models import ChatMessage, ChatSession, SenderType
 from app.shared.config import get_settings
+from app.shared.contracts.response import ProductCard
 
 
 _default_repository = None
@@ -18,6 +19,7 @@ class InMemoryConversationRepository:
     def __init__(self) -> None:
         self._sessions_by_id: dict[UUID, ChatSession] = {}
         self._messages_by_session: dict[UUID, list[ChatMessage]] = {}
+        self._last_product_cards: dict[UUID, list[ProductCard]] = {}
         self._lock = RLock()
 
     def create_session(
@@ -100,4 +102,15 @@ class InMemoryConversationRepository:
         with self._lock:
             limit = window if window is not None else get_settings().chat_history_window
             history = self._messages_by_session.get(session_id, [])
-            return list(history)[-limit:]
+            return list(history)[-limit:] if limit > 0 else []
+
+    def last_product_cards(self, session_id: UUID, customer_id: UUID) -> list[ProductCard]:
+        with self._lock:
+            self.get_session(session_id, customer_id)
+            return [card.model_copy(deep=True) for card in self._last_product_cards.get(session_id, [])]
+
+    def remember_product_cards(self, session_id: UUID, customer_id: UUID, cards: list[ProductCard]) -> None:
+        with self._lock:
+            self.get_session(session_id, customer_id)
+            if cards:
+                self._last_product_cards[session_id] = [card.model_copy(deep=True) for card in cards]

@@ -2,9 +2,14 @@ from __future__ import annotations
 
 import asyncio
 from collections.abc import Callable
+from decimal import Decimal
 from uuid import UUID
 
+import httpx
+
 from fastapi import HTTPException
+from app.shared.config import get_settings
+from app.features.product_advisor.backend import backend_cookies
 
 from app.features.knowledge.protocol import KnowledgeRetrievalService
 from app.features.knowledge.repository import KnowledgeRepositoryError
@@ -110,10 +115,12 @@ class ChatService:
             recent_messages = self.conversation_service.get_recent_messages(
                 session_id=session_id,
                 customer_id=customer.customer_id,
-                window=10,
+                window=get_settings().chat_history_window + 1,
             )
         else:
             recent_messages = []
+
+        recent_messages = recent_messages[:-1] if recent_messages else []
 
         recent_history = [
             SharedChatMessage(
@@ -146,8 +153,35 @@ class ChatService:
                 product_search = product_search.model_copy(update={"top_k": 1})
             elif query_plan.intent == Intent.PRODUCT_COMPARE:
                 product_search = product_search.model_copy(update={"top_k": min(product_search.top_k, 3)})
-            product_matches = await asyncio.to_thread(self.product_advisor.search, product_search)
-            product_cards = await asyncio.to_thread(self.product_advisor.build_cards, product_matches)
+            cheaper = any(term in request.message.casefold() for term in ("rẻ hơn", "thấp hơn", "cheaper"))
+            below_minimum = False
+            if cheaper and customer is not None:
+                previous = self.conversation_service.repository.last_product_cards(session_id, customer.customer_id)
+                prices = [card.effective_price for card in previous if card.effective_price is not None]
+                if prices:
+                    ceiling = min(prices) - Decimal("1")
+                    below_minimum = ceiling < 0 or (product_search.min_price is not None and ceiling < product_search.min_price)
+                    if not below_minimum:
+                        data = product_search.model_dump()
+                        data["max_price"] = min(ceiling, product_search.max_price) if product_search.max_price is not None else ceiling
+                        product_search = type(product_search).model_validate(data)
+                        query_plan = query_plan.model_copy(update={"product_search": product_search})
+
+            def search_and_build():
+                token = backend_cookies.set(cookies or None)
+                try:
+                    matches = self.product_advisor.search(product_search)
+                    return matches, self.product_advisor.build_cards(matches)
+                finally:
+                    backend_cookies.reset(token)
+
+            try:
+                if not below_minimum:
+                    product_matches, product_cards = await asyncio.to_thread(search_and_build)
+                if customer is not None:
+                    self.conversation_service.repository.remember_product_cards(session_id, customer.customer_id, product_cards)
+            except (httpx.HTTPError, ValueError) as exc:
+                raise HTTPException(status_code=503, detail="Chưa thể lấy dữ liệu sản phẩm. Kiểm tra backend, kho hàng và dịch vụ embedding.") from exc
 
         """chuyển tiếp 'cookies' nhận từ Client sang hệ thống Spring Boot qua BackendClient
         Spring Security sẽ chịu trách nhiệm giải mã cookies, xác thực danh tính 

@@ -2,12 +2,12 @@
 set -euo pipefail
 source "$(dirname "$0")/env.sh"
 cd "$PROJECT_ROOT"
-for name in backend frontend chatbot; do
+for name in backend frontend chatbot ollama; do
   pidfile=".local/pids/$name.pid"
   if [ -f "$pidfile" ]; then
     pid="$(cat "$pidfile")"
     process_cwd="$(lsof -a -p "$pid" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p' || true)"
-    if kill -0 "$pid" 2>/dev/null && [[ "$process_cwd" == "$PROJECT_ROOT/"* ]] && ps -p "$pid" -o command= | grep -Eq 'backend-0.0.1-SNAPSHOT.jar|uvicorn app.main|node_modules/vite/bin/vite.js'; then
+    if kill -0 "$pid" 2>/dev/null && [[ "$process_cwd" == "$PROJECT_ROOT" || "$process_cwd" == "$PROJECT_ROOT/"* ]] && ps -p "$pid" -o command= | grep -Eq 'backend-0.0.1-SNAPSHOT.jar|uvicorn app.main|node_modules/vite/bin/vite.js|/ollama serve'; then
       kill -TERM "$pid"
     fi
   fi
