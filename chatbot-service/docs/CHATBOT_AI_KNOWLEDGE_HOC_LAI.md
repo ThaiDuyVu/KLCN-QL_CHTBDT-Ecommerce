@@ -354,3 +354,21 @@ khi lỗi thật nằm ở status filter hoặc tài liệu chưa được index
 - [Ollama API](https://github.com/ollama/ollama/blob/main/docs/api.md): chat và embed.
 - [Ollama structured outputs](https://ollama.com/blog/structured-outputs): JSON schema.
 - [pgvector](https://github.com/pgvector/pgvector): cosine operator, dimensions và indexing.
+
+## 15. Cập nhật sau hợp nhất ba nhánh dev (06/10/2026)
+
+Phần phân tích trên mô tả checkpoint AI Knowledge ban đầu. Sau khi hợp nhất:
+
+- ProductAdvisor thật của Dương được chọn bởi PRODUCT_ADVISOR_MODE=real trong
+  build_chat_service; hoạt động cùng AI mode hoặc riêng với mock Query/Response.
+- ChatService của Tâm bổ sung xác thực cookie qua backend, customer context,
+  lịch sử hội thoại và feedback. Router lấy cùng service từ app.state cho chat/feedback.
+- ChatService giữ Knowledge RAG, sources và after_response từ nhánh Vũ.
+- Endpoint là async; tác vụ sync Ollama/product/retrieval/generation chạy qua
+  asyncio.to_thread để không chặn event loop.
+- Conversation repository vẫn là in-memory. Chưa được dùng ID message này làm
+  history_id của PostgreSQL audit; cần persistence thật trước khi nối audit DB.
+
+Kiểm thử sau merge: 135 test chatbot pass, 1 test PostgreSQL thật skip vì chưa cấu
+hình database kiểm thử. Hai nhóm backend test OrderWorkflowTest và
+ProductServiceImplTest cũng pass. Chưa xác nhận luồng Ollama/pgvector/backend thật.

@@ -16,8 +16,8 @@ python3.12 -m venv .venv
 Mặc định giữ mock pipeline V3.5. Copy `.env.example` thành `.env` và đặt
 `CHATBOT_AI_ENABLED=true` để dùng Query Understanding và Response Generation thật.
 Cấu hình model, timeout và địa chỉ Ollama qua các biến trong `.env.example`.
-Chế độ AI vẫn sử dụng identity/lịch sử của skeleton; chưa phải chatbot production
-có authentication hoặc persistence. ProductAdvisor thật cần được inject qua
+Endpoint chat xác thực customer qua backend bằng cookie; lịch sử và feedback
+sử dụng ConversationService với repository in-memory, chưa lưu bền vào PostgreSQL. ProductAdvisor thật cần được inject qua
 `build_chat_service(settings, product_advisor=...)`; nếu chưa có thì không trả sản phẩm mẫu.
 
 ## Knowledge RAG
@@ -44,7 +44,8 @@ KNOWLEDGE_TEST_DATABASE_URL='postgresql://user:password@localhost:5432/test_db' 
 
 Test tạo rồi xóa schema riêng. Tầng hội thoại có thể inject `after_response` để
 persist message, lấy `history_id`, sau đó gọi `record_retrievals(history_id, matches)`.
-Không dùng `session_id` thay cho `history_id`.
+Không dùng `session_id` thay cho `history_id`. Message ID trong repository
+in-memory hiện chưa phải history_id đã lưu ở PostgreSQL để ghi retrieval audit.
 
 Xem [tài liệu phân tích và học lại](docs/CHATBOT_AI_KNOWLEDGE_HOC_LAI.md) để hiểu
 luồng dữ liệu, quyết định thiết kế, cách debug và các điểm cần phối hợp.
