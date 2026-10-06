@@ -14,15 +14,13 @@ router = APIRouter(
     tags=["chat"],
 )
 
-chat_service = ChatService()
-
 
 def get_backend_client() -> BackendClient:
     return BackendClient()
 
 
-def get_chat_service() -> ChatService:
-    return chat_service
+def get_chat_service(request: Request) -> ChatService:
+    return request.app.state.chat_service
 
 
 async def get_authenticated_customer(
@@ -42,8 +40,9 @@ async def send_message(
     request: SendMessageRequest,
     http_request: Request,
     customer: AuthenticatedCustomer = Depends(get_authenticated_customer),
+    service: ChatService = Depends(get_chat_service),
 ) -> ChatResponse:
-    return await chat_service.send_message_async(
+    return await service.send_message_async(
         session_id=session_id,
         request=request,
         customer=customer,
