@@ -10,8 +10,12 @@ class MockResponseGenerationService:
                 "tìm và tư vấn thiết bị điện tử."
             )
 
-        if context.query_plan.intent == Intent.PRODUCT_DISCOVERY:
+        if context.query_plan.intent in {
+            Intent.PRODUCT_DISCOVERY, Intent.PRODUCT_DETAIL, Intent.PRODUCT_COMPARE
+        }:
             if context.products:
+                if context.query_plan.intent == Intent.PRODUCT_COMPARE:
+                    return "Mình tìm thấy các sản phẩm để bạn so sánh."
                 return (
                     "Mình tìm thấy một sản phẩm "
                     "phù hợp với nhu cầu của bạn."

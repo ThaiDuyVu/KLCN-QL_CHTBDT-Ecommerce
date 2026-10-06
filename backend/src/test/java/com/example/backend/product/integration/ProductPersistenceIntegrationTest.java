@@ -14,6 +14,7 @@ import com.example.backend.product.exception.ProductReferenceNotFoundException;
 import com.example.backend.product.repository.BrandRepository;
 import com.example.backend.product.repository.ProductRepository;
 import com.example.backend.product.service.ProductService;
+import com.example.backend.product.service.ProductAdvancedSearchService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.SessionFactory;
@@ -74,6 +75,7 @@ class ProductPersistenceIntegrationTest {
             .withPassword("product_test");
 
     @Autowired private ProductService service;
+    @Autowired private ProductAdvancedSearchService advancedSearch;
     @Autowired private ProductRepository productRepository;
     @Autowired private BrandRepository brandRepository;
     @Autowired private JdbcTemplate jdbc;
@@ -102,8 +104,8 @@ class ProductPersistenceIntegrationTest {
     @Test
     void migrationsAndProductCreation_matchLockedSchema() {
         flyway.validate();
-        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("6");
-        assertThat(flyway.info().applied()).hasSize(6);
+        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("7");
+        assertThat(flyway.info().applied()).hasSize(7);
 
         var response = service.createProduct(request(null));
         Product persisted = productRepository.findById(response.productId()).orElseThrow();
@@ -118,6 +120,44 @@ class ProductPersistenceIntegrationTest {
     @Test
     void productEndpoints_requireAuthentication() throws Exception {
         mockMvc.perform(get("/api/v1/products")).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    void advancedSearch_filtersAtVariantAndWarehouseAndRejectsInvalidCapacity() throws Exception {
+        UUID productId = insertProducts(1).getFirst();
+        UUID goodVariant = UUID.randomUUID();
+        UUID malformedVariant = UUID.randomUUID();
+        UUID warehouseId = UUID.randomUUID();
+        jdbc.update("INSERT INTO warehouses (warehouse_id, warehouse_name) VALUES (?, ?)", warehouseId, "Kho test");
+        jdbc.update("INSERT INTO product_variants (variant_id, product_id, sku, price, cost_price, ram, storage) "
+                + "VALUES (?, ?, ?, 12000000, 9000000, '16GB', '1TB')", goodVariant, productId, "GOOD-16");
+        jdbc.update("INSERT INTO product_variants (variant_id, product_id, sku, price, cost_price, ram, storage) "
+                + "VALUES (?, ?, ?, 11000000, 9000000, 'unknown', '1TB')", malformedVariant, productId, "BAD-RAM");
+        jdbc.update("INSERT INTO specifications (product_id, spec_key, spec_value) VALUES (?, 'CPU', 'Intel Core i7')", productId);
+        jdbc.update("INSERT INTO inventory (warehouse_id, variant_id, quantity, reserved_quantity) VALUES (?, ?, 2, 1)",
+                warehouseId, goodVariant);
+
+        var rows = advancedSearch.search("Thiết bị kiểm thử", List.of("Hãng kiểm thử"),
+                new BigDecimal("10000000"), new BigDecimal("13000000"), 16, 512,
+                List.of("i7"), true, warehouseId, 100, 0);
+        assertThat(rows).extracting(row -> row.variantId()).containsExactly(goodVariant);
+        assertThat(advancedSearch.search(null, List.of(), null, null, null, null,
+                List.of("i7' OR true --"), false, null, 100, 0)).isEmpty();
+        UUID promotionId = UUID.randomUUID();
+        jdbc.update("INSERT INTO promotions (promotion_id, promotion_name, discount_type, discount_value, "
+                        + "start_date, end_date, status) VALUES (?, ?, 'FIXED_AMOUNT', 2000000, ?, ?, 'ACTIVE')",
+                promotionId, "Giảm giá test", OffsetDateTime.now().minusDays(1), OffsetDateTime.now().plusDays(1));
+        jdbc.update("INSERT INTO promotion_products (promotion_id, product_id) VALUES (?, ?)", promotionId, productId);
+        assertThat(advancedSearch.search(null, List.of(), new BigDecimal("10000000"),
+                new BigDecimal("10000000"), 16, null, List.of(), false, null, 100, 0))
+                .extracting(row -> row.variantId()).containsExactly(goodVariant);
+
+        mockMvc.perform(get("/api/v1/products/search/advanced").with(user("product-tester"))
+                        .param("inStockOnly", "true").param("warehouseId", warehouseId.toString())
+                        .param("minRamGb", "16"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].variantId").value(goodVariant.toString()));
     }
 
     @Test
