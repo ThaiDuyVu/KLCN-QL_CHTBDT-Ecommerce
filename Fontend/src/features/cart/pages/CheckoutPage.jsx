@@ -13,6 +13,9 @@ import { useAuth } from '../../../hooks/useAuth';
 import { useCart } from '../../../hooks/useCart';
 import ShopBreadcrumb from '../../../components/ui/ShopBreadcrumb';
 import PurchaseSteps from '../../../components/ui/PurchaseSteps';
+import { addressApi } from '../../addresses/api/addressApi';
+import AddressForm from '../../addresses/components/AddressForm';
+import '../../addresses/addresses.css';
 import '../../orders/commerce.css';
 
 export default function CheckoutPage() {
@@ -25,20 +28,39 @@ export default function CheckoutPage() {
   const [submitError, setSubmitError] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('COD');
   const [downPayment, setDownPayment] = useState('0');
+  const [selectedAddressId, setSelectedAddressId] = useState('');
+  const [addingAddress, setAddingAddress] = useState(false);
+  const [addressBusy, setAddressBusy] = useState(false);
+  const [addressFormError, setAddressFormError] = useState('');
+  const loadAddresses = useCallback((signal) => addressApi.list(signal), []);
+  const { data: addresses, error: addressesError, isLoading: addressesLoading, retry: retryAddresses } = useProductRequest('checkout-addresses', loadAddresses);
+  const activeAddressId = addresses?.some((item) => item.addressId === selectedAddressId)
+    ? selectedAddressId : (addresses?.find((item) => item.isDefault) || addresses?.[0])?.addressId || '';
   const loadVnpay = useCallback((signal) => vnpayApi.config(signal), []);
   const { data: vnpayConfig, error: vnpayError, isLoading: vnpayLoading, retry: retryVnpay } = useProductRequest('checkout-vnpay-config', loadVnpay);
   const loadProviders = useCallback((signal) => paymentMethod === 'INSTALLMENT' ? installmentApi.activeProviders(signal) : Promise.resolve([]), [paymentMethod]);
   const { data: providers, error: providerError, isLoading: providersLoading, retry: retryProviders } = useProductRequest(`checkout-installment-providers:${paymentMethod}`, loadProviders);
 
+  async function createAddress(body) {
+    setAddressBusy(true); setAddressFormError('');
+    try {
+      const created = await addressApi.create(body);
+      setSelectedAddressId(created.addressId);
+      setAddingAddress(false);
+      retryAddresses();
+    } catch (cause) { setAddressFormError(cause.message); }
+    finally { setAddressBusy(false); }
+  }
+
   async function checkout(event) {
-    event.preventDefault(); if (busy || (paymentMethod === 'VNPAY' && !vnpayConfig?.enabled) || (paymentMethod === 'INSTALLMENT' && (providersLoading || providerError || !providers?.length))) return;
+    event.preventDefault(); if (busy || !activeAddressId || (paymentMethod === 'VNPAY' && !vnpayConfig?.enabled) || (paymentMethod === 'INSTALLMENT' && (providersLoading || providerError || !providers?.length))) return;
     const form = new FormData(event.currentTarget); setBusy(true); setSubmitError('');
     try {
       const method = form.get('paymentMethod');
       const installment = method === 'INSTALLMENT'
         ? { providerId: form.get('providerId'), termMonths: Number(form.get('termMonths')), downPayment: Number(form.get('downPayment')) }
         : {};
-      const order = await orderApi.checkout({ recipientName: form.get('recipientName').trim(), recipientPhone: form.get('recipientPhone').trim(), shippingAddress: form.get('shippingAddress').trim(), note: form.get('note').trim() || null, paymentMethod: method, ...installment });
+      const order = await orderApi.checkout({ addressId: activeAddressId, note: form.get('note').trim() || null, paymentMethod: method, ...installment });
       clearCart();
       navigate(`/my-orders/${order.orderId}`, { replace: true, state: { checkoutComplete: true, paymentMethod: method } });
       if (method === 'VNPAY') {
@@ -56,17 +78,21 @@ export default function CheckoutPage() {
     <div className="commerce-page-heading"><PageHeader title="Thanh toán" description="Hoàn tất thông tin nhận hàng và chọn phương thức thanh toán." /></div>
     <CommerceState loading={isLoading} error={error} retry={retry} />
     {!isLoading && !error && (data?.items?.length ? <div className="checkout-layout">
+      <div className="checkout-left">
       <form className="checkout-form" onSubmit={checkout}>
         {submitError && <p className="auth-alert" role="alert">{submitError}</p>}
         <fieldset className="panel checkout-section" disabled={busy}>
           <legend className="sr-only">Thông tin giao hàng</legend>
-          <div className="checkout-section-heading"><span>1</span><div><h2>Thông tin giao hàng</h2><p>Thông tin người nhận đơn hàng</p></div></div>
-          <div className="checkout-fields two-columns">
-            <label>Tên người nhận<input name="recipientName" required maxLength={255} autoComplete="name" defaultValue={user?.displayName || ''} /></label>
-            <label>Số điện thoại<input name="recipientPhone" type="tel" required maxLength={30} autoComplete="tel" placeholder="Ví dụ: 0901234567" /></label>
-          </div>
+          <div className="checkout-section-heading"><span>1</span><div><h2>Địa chỉ giao hàng</h2><p>Chọn địa chỉ đã lưu hoặc thêm địa chỉ mới</p></div></div>
+          {addressesLoading && <p role="status">Đang tải địa chỉ…</p>}
+          {addressesError && <p className="auth-alert" role="alert">{addressesError.message} <button type="button" onClick={retryAddresses}>Thử lại</button></p>}
+          {!addressesLoading && !addressesError && !addresses?.length && <p>Bạn chưa có địa chỉ. Hãy thêm địa chỉ trước khi đặt hàng.</p>}
+          <div className="checkout-address-list">{addresses?.map((address) => <label className="checkout-address-choice" key={address.addressId}>
+            <input type="radio" name="selectedAddress" value={address.addressId} checked={activeAddressId === address.addressId} onChange={() => setSelectedAddressId(address.addressId)} />
+            <span><strong>{address.label || 'Địa chỉ'}{address.isDefault ? ' · Mặc định' : ''}</strong>{address.recipientName} · {address.recipientPhone}<small>{address.fullAddress}</small></span>
+          </label>)}</div>
+          <button className="button button-quiet" type="button" onClick={() => setAddingAddress((value) => !value)}>{addingAddress ? 'Đóng biểu mẫu' : '+ Thêm địa chỉ mới'}</button>
           <div className="checkout-fields">
-            <label>Địa chỉ giao hàng<textarea name="shippingAddress" required rows={3} autoComplete="street-address" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành" /></label>
             <label>Ghi chú <span>(không bắt buộc)</span><textarea name="note" rows={2} placeholder="Ghi chú cho người giao hàng" /></label>
           </div>
         </fieldset>
@@ -88,9 +114,11 @@ export default function CheckoutPage() {
           {paymentMethod === 'INSTALLMENT' && <InstallmentFields totalAmount={data.subtotal} downPayment={downPayment} setDownPayment={setDownPayment} providers={providers} error={providerError} isLoading={providersLoading} retry={retryProviders} />}
         </fieldset>
 
-        <button className="button checkout-submit" disabled={busy || !data.warehouseId || (paymentMethod === 'INSTALLMENT' && (providersLoading || providerError || !providers?.length)) || (paymentMethod === 'VNPAY' && !vnpayConfig?.enabled)}>{busy ? 'Đang tạo đơn…' : paymentMethod === 'COD' ? 'Đặt hàng COD' : paymentMethod === 'VNPAY' ? 'Đặt hàng và thanh toán VNPAY' : 'Gửi hồ sơ trả góp'}</button>
+        <button className="button checkout-submit" disabled={busy || !activeAddressId || addressesLoading || addressesError || !data.warehouseId || (paymentMethod === 'INSTALLMENT' && (providersLoading || providerError || !providers?.length)) || (paymentMethod === 'VNPAY' && !vnpayConfig?.enabled)}>{busy ? 'Đang tạo đơn…' : paymentMethod === 'COD' ? 'Đặt hàng COD' : paymentMethod === 'VNPAY' ? 'Đặt hàng và thanh toán VNPAY' : 'Gửi hồ sơ trả góp'}</button>
         <p className="checkout-recovery">Nếu request bị gián đoạn, hãy kiểm tra <Link to="/my-orders">đơn của tôi</Link> trước khi đặt lại.</p>
       </form>
+      {addingAddress && <section className="panel checkout-section"><h2>Thêm địa chỉ mới</h2><AddressForm address={{ recipientName: user?.displayName || '' }} onSubmit={createAddress} onCancel={() => setAddingAddress(false)} submitting={addressBusy} error={addressFormError} /></section>}
+      </div>
 
       <aside className="panel order-summary checkout-summary" aria-labelledby="checkout-summary-title">
         <h2 id="checkout-summary-title">Đơn hàng của bạn</h2>

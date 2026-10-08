@@ -4,6 +4,7 @@ import { MemoryRouter, Route, Routes } from 'react-router';
 import { AuthContext } from '../../auth/AuthContext';
 import { cartApi } from '../cart/api/cartApi';
 import { orderApi } from './api/orderApi';
+import { addressApi } from '../addresses/api/addressApi';
 import { installmentApi } from './api/installmentApi';
 import { vnpayApi } from './api/vnpayApi';
 import { redirectToVnpay } from './components/vnpayFormat';
@@ -16,6 +17,7 @@ import { CartContext } from '../cart/cartContext';
 import { WarehouseContext } from '../warehouses/warehouseContext';
 vi.mock('../cart/api/cartApi', () => ({cartApi:{get:vi.fn(),add:vi.fn(),quantity:vi.fn(),remove:vi.fn()}}));
 vi.mock('./api/orderApi', () => ({orderApi:{checkout:vi.fn(),detail:vi.fn(),cancel:vi.fn(),status:vi.fn()}}));
+vi.mock('../addresses/api/addressApi', () => ({addressApi:{list:vi.fn()}}));
 vi.mock('./api/installmentApi', () => ({installmentApi:{activeProviders:vi.fn()}}));
 vi.mock('./api/vnpayApi', () => ({vnpayApi:{config:vi.fn(),paymentUrl:vi.fn(),synchronize:vi.fn()}}));
 vi.mock('./components/vnpayFormat', async (importOriginal) => ({...(await importOriginal()),redirectToVnpay:vi.fn()}));
@@ -24,7 +26,7 @@ const order={orderId:'order',orderCode:'ORD-TEST',status:'PENDING',recipientName
 const cartContext={cart,itemCount:1,isLoading:false,error:null,applyCart:vi.fn(),notifyAdded:vi.fn(),clearCart:vi.fn(),refreshCart:vi.fn()};
 const warehouseContext={warehouses:[{warehouseId:'warehouse',warehouseName:'Chi nhánh thử'}],selectedWarehouse:{warehouseId:'warehouse',warehouseName:'Chi nhánh thử'},selectedWarehouseId:'warehouse',selectWarehouse:vi.fn().mockResolvedValue(true),isLoading:false,isChanging:false,error:''};
 function mount(child,path='/'){return render(<MemoryRouter initialEntries={[path]}><AuthContext.Provider value={{user:{userId:'customer',roleName:'CUSTOMER'},invalidateSession:vi.fn()}}><CartContext.Provider value={cartContext}><WarehouseContext.Provider value={warehouseContext}>{child}</WarehouseContext.Provider></CartContext.Provider></AuthContext.Provider></MemoryRouter>);}
-beforeEach(()=>{vi.resetAllMocks();cartContext.applyCart=vi.fn();cartContext.notifyAdded=vi.fn();cartContext.clearCart=vi.fn();warehouseContext.selectWarehouse=vi.fn().mockResolvedValue(true);vi.spyOn(window,'confirm').mockReturnValue(true);cartApi.get.mockResolvedValue(cart);orderApi.detail.mockResolvedValue(order);vnpayApi.config.mockResolvedValue({enabled:true});installmentApi.activeProviders.mockResolvedValue([{providerId:'provider-1',providerName:'Đơn vị nội bộ'}]);});
+beforeEach(()=>{vi.resetAllMocks();cartContext.applyCart=vi.fn();cartContext.notifyAdded=vi.fn();cartContext.clearCart=vi.fn();warehouseContext.selectWarehouse=vi.fn().mockResolvedValue(true);vi.spyOn(window,'confirm').mockReturnValue(true);cartApi.get.mockResolvedValue(cart);addressApi.list.mockResolvedValue([{addressId:'address-1',label:'Nhà',recipientName:'Khách thử',recipientPhone:'0901234567',fullAddress:'TP.HCM',isDefault:true}]);orderApi.detail.mockResolvedValue(order);vnpayApi.config.mockResolvedValue({enabled:true});installmentApi.activeProviders.mockResolvedValue([{providerId:'provider-1',providerName:'Đơn vị nội bộ'}]);});
 afterEach(()=>{cleanup();vi.restoreAllMocks();});
 it('adds selected variant and quantity',async()=>{
   cartApi.add.mockResolvedValue(cart);mount(<AddToCart variantId="variant"/>);
@@ -38,13 +40,13 @@ it('changes quantities and deletes cart items with confirmation',async()=>{
   cartApi.get.mockResolvedValue({...cart,items:[]});fireEvent.click(screen.getByRole('button',{name:'Xóa'}));
   await waitFor(()=>expect(cartApi.remove).toHaveBeenCalledWith('item'));expect(await screen.findByText('Giỏ hàng trống.')).toBeInTheDocument();
 });
-it('checkout only sends shipping details and selected COD without prices',async()=>{
+it('checkout sends only the selected address and COD without prices',async()=>{
   orderApi.checkout.mockResolvedValue(order);
   mount(<Routes><Route index element={<CheckoutPage/>}/><Route path="my-orders/:orderId" element={<OrderDetailPage customer/>}/></Routes>);
-  fireEvent.change(await screen.findByLabelText('Tên người nhận'),{target:{value:'  Khách thử  '}});fireEvent.change(screen.getByLabelText('Số điện thoại'),{target:{value:'0901234567'}});fireEvent.change(screen.getByLabelText('Địa chỉ giao hàng'),{target:{value:'TP.HCM'}});
+  await screen.findByText('TP.HCM');
   await waitFor(()=>expect(screen.getByRole('option',{name:'VNPAY · Sandbox'})).toBeEnabled());expect(screen.getByRole('option',{name:'Trả góp nội bộ'})).toBeEnabled();
   fireEvent.click(screen.getByRole('button',{name:'Đặt hàng COD'}));
-  await waitFor(()=>expect(orderApi.checkout).toHaveBeenCalledWith({recipientName:'Khách thử',recipientPhone:'0901234567',shippingAddress:'TP.HCM',note:null,paymentMethod:'COD'}));
+  await waitFor(()=>expect(orderApi.checkout).toHaveBeenCalledWith({addressId:'address-1',note:null,paymentMethod:'COD'}));
   expect(cartContext.clearCart).toHaveBeenCalledTimes(1);
   expect(await screen.findByText('Đặt hàng thành công. Thanh toán COD khi nhận hàng.')).toBeInTheDocument();
 });
@@ -53,15 +55,12 @@ it('checkout installment sends only application fields and shows the remaining a
   mount(<Routes><Route index element={<CheckoutPage/>}/><Route path="my-orders/:orderId" element={<OrderDetailPage customer/>}/></Routes>);
   fireEvent.change(await screen.findByLabelText('Phương thức thanh toán'),{target:{value:'INSTALLMENT'}});
   await screen.findByRole('option',{name:'Đơn vị nội bộ'});
-  fireEvent.change(screen.getByLabelText('Tên người nhận'),{target:{value:'Khách thử'}});
-  fireEvent.change(screen.getByLabelText('Số điện thoại'),{target:{value:'0901234567'}});
-  fireEvent.change(screen.getByLabelText('Địa chỉ giao hàng'),{target:{value:'TP.HCM'}});
   fireEvent.change(screen.getByLabelText('Đơn vị trả góp'),{target:{value:'provider-1'}});
   fireEvent.change(screen.getByLabelText('Kỳ hạn (tháng)'),{target:{value:'12'}});
   fireEvent.change(screen.getByLabelText('Tiền trả trước'),{target:{value:'500000'}});
   expect(screen.getByText(/1\.500\.000/)).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button',{name:'Gửi hồ sơ trả góp'}));
-  await waitFor(()=>expect(orderApi.checkout).toHaveBeenCalledWith({recipientName:'Khách thử',recipientPhone:'0901234567',shippingAddress:'TP.HCM',note:null,paymentMethod:'INSTALLMENT',providerId:'provider-1',termMonths:12,downPayment:500000}));
+  await waitFor(()=>expect(orderApi.checkout).toHaveBeenCalledWith({addressId:'address-1',note:null,paymentMethod:'INSTALLMENT',providerId:'provider-1',termMonths:12,downPayment:500000}));
   expect(await screen.findByText('Đã tạo đơn và gửi hồ sơ trả góp. Đơn sẽ được xác nhận sau khi hồ sơ được duyệt.')).toBeInTheDocument();
 });
 it('pending unpaid orders can cancel',async()=>{
@@ -71,9 +70,9 @@ it('pending unpaid orders can cancel',async()=>{
   await screen.findByText('Không có thao tác trạng thái phù hợp ở bước này.');
 });
 it('shows stock errors and preserves checkout form for correction',async()=>{
-  orderApi.checkout.mockRejectedValue(new Error('Không đủ stock'));mount(<CheckoutPage/>);await screen.findByLabelText('Tên người nhận');
+  orderApi.checkout.mockRejectedValue(new Error('Không đủ stock'));mount(<CheckoutPage/>);await screen.findByText('TP.HCM');
   fireEvent.submit(screen.getByRole('button',{name:'Đặt hàng COD'}).closest('form'));
-  expect(await screen.findByRole('alert')).toHaveTextContent('Không đủ stock');expect(screen.getByLabelText('Địa chỉ giao hàng')).toBeInTheDocument();
+  expect(await screen.findByRole('alert')).toHaveTextContent('Không đủ stock');expect(screen.getByText('TP.HCM')).toBeInTheDocument();
 });
 it('hides customer cancel for paid orders',async()=>{
   orderApi.detail.mockResolvedValue({...order,payment:{paymentMethod:'COD',status:'PAID'},allowedStatuses:[]});
@@ -92,11 +91,8 @@ it('checkout VNPAY sends no amount and redirects using the server payment URL',a
   mount(<Routes><Route index element={<CheckoutPage/>}/><Route path="my-orders/:orderId" element={<OrderDetailPage customer/>}/></Routes>);
   await waitFor(()=>expect(screen.getByRole('option',{name:'VNPAY · Sandbox'})).toBeEnabled());
   fireEvent.change(screen.getByLabelText('Phương thức thanh toán'),{target:{value:'VNPAY'}});
-  fireEvent.change(screen.getByLabelText('Tên người nhận'),{target:{value:'Khách thử'}});
-  fireEvent.change(screen.getByLabelText('Số điện thoại'),{target:{value:'0901234567'}});
-  fireEvent.change(screen.getByLabelText('Địa chỉ giao hàng'),{target:{value:'TP.HCM'}});
   fireEvent.click(screen.getByRole('button',{name:'Đặt hàng và thanh toán VNPAY'}));
-  await waitFor(()=>expect(orderApi.checkout).toHaveBeenCalledWith({recipientName:'Khách thử',recipientPhone:'0901234567',shippingAddress:'TP.HCM',note:null,paymentMethod:'VNPAY'}));
+  await waitFor(()=>expect(orderApi.checkout).toHaveBeenCalledWith({addressId:'address-1',note:null,paymentMethod:'VNPAY'}));
   expect(redirectToVnpay).toHaveBeenCalledWith(url);expect(cartContext.clearCart).toHaveBeenCalledTimes(1);
 });
 it('disables VNPAY when backend sandbox configuration is disabled',async()=>{
