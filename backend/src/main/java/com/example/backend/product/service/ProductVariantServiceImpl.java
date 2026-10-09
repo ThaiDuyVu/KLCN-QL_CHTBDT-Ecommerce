@@ -21,6 +21,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import jakarta.persistence.criteria.Predicate;
+import java.util.Locale;
+import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,6 +83,32 @@ public class ProductVariantServiceImpl implements ProductVariantService {
                 mapResponses(variants.getContent()),
                 variants.getNumber(), variants.getSize(), variants.getTotalElements(), variants.getTotalPages()
         );
+    }
+
+    @Override
+    public ProductVariantPageResponse searchVariants(int page, int size, String keyword, UUID categoryId,
+                                                       UUID brandId, com.example.backend.product.entity.ProductTrackingType trackingType) {
+        if (page < 0 || size < 1 || size > MAX_PAGE_SIZE || (long) page * size > Integer.MAX_VALUE) {
+            throw new InvalidProductVariantPaginationException("page >= 0, size từ 1–100, offset trong giới hạn");
+        }
+        String term = keyword == null || keyword.isBlank() ? null : keyword.trim().toLowerCase(Locale.ROOT)
+                .replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_");
+        Specification<ProductVariant> filters = (root, query, builder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (term != null) {
+                String pattern = "%" + term + "%";
+                predicates.add(builder.or(builder.like(builder.lower(root.get("sku")), pattern, '\\'),
+                        builder.like(builder.lower(root.get("product").get("productName")), pattern, '\\')));
+            }
+            if (categoryId != null) predicates.add(builder.equal(root.get("product").get("category").get("categoryId"), categoryId));
+            if (brandId != null) predicates.add(builder.equal(root.get("product").get("brand").get("brandId"), brandId));
+            if (trackingType != null) predicates.add(builder.equal(root.get("trackingType"), trackingType));
+            return builder.and(predicates.toArray(Predicate[]::new));
+        };
+        Page<ProductVariant> result = variantRepository.findAll(filters,
+                PageRequest.of(page, size, Sort.by(Sort.Order.asc("sku"), Sort.Order.asc("variantId"))));
+        return new ProductVariantPageResponse(mapResponses(result.getContent()), result.getNumber(), result.getSize(),
+                result.getTotalElements(), result.getTotalPages());
     }
 
     @Override
@@ -193,6 +223,8 @@ public class ProductVariantServiceImpl implements ProductVariantService {
                 variant.getSku(), variant.getPrice(), variant.getCostPrice(), variant.getColor(),
                 variant.getStorage(), variant.getRam(), variant.getStatus(), variant.getTrackingType(),
                 variant.getWarrantyMonths(), null, null
-        ).withPricing(promotions.calculate(variant.getPrice(),resolved.get(variant.getProduct().getProductId())))).toList();
+        ).withPricing(promotions.calculate(variant.getPrice(),resolved.get(variant.getProduct().getProductId())))
+                .withCatalog(variant.getProduct().getCategory().getCategoryName(),
+                        variant.getProduct().getBrand().getBrandName())).toList();
     }
 }

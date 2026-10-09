@@ -14,15 +14,13 @@ router = APIRouter(
     tags=["chat"],
 )
 
-chat_service = ChatService()
-
 
 def get_backend_client() -> BackendClient:
     return BackendClient()
 
 
-def get_chat_service() -> ChatService:
-    return chat_service
+def get_chat_service(request: Request) -> ChatService:
+    return request.app.state.chat_service
 
 
 async def get_authenticated_customer(
@@ -42,8 +40,9 @@ async def send_message(
     request: SendMessageRequest,
     http_request: Request,
     customer: AuthenticatedCustomer = Depends(get_authenticated_customer),
+    service: ChatService = Depends(get_chat_service),
 ) -> ChatResponse:
-    return await chat_service.send_message_async(
+    return await service.send_message_async(
         session_id=session_id,
         request=request,
         customer=customer,
@@ -67,3 +66,44 @@ def feedback_message(
         customer_id=customer.customer_id,
         rating=request.rating,
     )
+
+
+@router.get("/sessions/{session_id}/messages")
+def get_messages(
+    session_id: UUID,
+    customer: AuthenticatedCustomer = Depends(get_authenticated_customer),
+    service: ChatService = Depends(get_chat_service),
+):
+    return service.conversation_service.get_recent_messages(session_id, customer.customer_id, window=100)
+
+
+@router.get("/status")
+async def status(customer: AuthenticatedCustomer = Depends(get_authenticated_customer)):
+    """Read-only lab readiness; never returns tokens or database connection strings."""
+    import httpx
+    from app.shared.config import get_settings
+    settings = get_settings()
+    available_models = []
+    ollama_reachable = False
+    try:
+        async with httpx.AsyncClient(timeout=3) as client:
+            response = await client.get(settings.ollama_base_url.rstrip('/') + '/api/tags')
+            response.raise_for_status()
+            available_models = [m['name'] for m in response.json().get('models', [])]
+            ollama_reachable = True
+    except (httpx.HTTPError, ValueError, KeyError, TypeError):
+        pass
+    return {
+        'ai_enabled': settings.chatbot_ai_enabled,
+        'product_mode': settings.product_advisor_mode,
+        'chat_model': settings.ollama_chat_model,
+        'embedding_model': settings.ollama_embedding_model,
+        'ollama_reachable': ollama_reachable,
+        'chat_model_ready': settings.ollama_chat_model in available_models,
+        'embedding_model_ready': settings.ollama_embedding_model in available_models,
+        'knowledge_configured': bool(settings.knowledge_database_url),
+        'knowledge_status': settings.knowledge_document_status,
+        'product_index_configured': bool(settings.product_index_database_url),
+        'warehouse_configured': bool(settings.chatbot_warehouse_id),
+        'conversation_storage': 'in-memory',
+    }

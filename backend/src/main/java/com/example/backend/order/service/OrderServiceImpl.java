@@ -15,6 +15,7 @@ import com.example.backend.inventory.serial.service.SerialAllocationService;
 import com.example.backend.warehouse.entity.WarehouseStatus;
 import com.example.backend.warehouse.repository.WarehouseRepository;
 import com.example.backend.warranty.service.WarrantyProvisioningService;
+import com.example.backend.customer.address.service.CustomerAddressService;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,12 +43,15 @@ public class OrderServiceImpl implements OrderService {
     private final InstallmentService installmentService;
     private final VnpayService vnpay;
     private final com.example.backend.promotion.service.PromotionService promotions;
+    private final CustomerAddressService customerAddresses;
     public OrderServiceImpl(CustomerCartRepository customers, CartRepository carts, CartItemRepository cartItems, OrderRepository orders,
                             OrderItemRepository items, PaymentRepository payments, ProductVariantRepository variants,
                             OrderStockService stock, SerialAllocationService serialAllocation,
                             SerialNumberRepository serials, WarehouseRepository warehouses,
-                            WarrantyProvisioningService warrantyProvisioning, InstallmentService installmentService, VnpayService vnpay, com.example.backend.promotion.service.PromotionService promotions) {
+                            WarrantyProvisioningService warrantyProvisioning, InstallmentService installmentService, VnpayService vnpay, com.example.backend.promotion.service.PromotionService promotions,
+                            CustomerAddressService customerAddresses) {
         this.promotions=promotions;
+        this.customerAddresses = customerAddresses;
         this.customers = customers; this.carts = carts; this.cartItems = cartItems; this.orders = orders;
         this.items = items; this.payments = payments; this.variants = variants; this.stock = stock;
         this.serialAllocation = serialAllocation; this.serials = serials; this.warehouses = warehouses;
@@ -76,6 +80,9 @@ public class OrderServiceImpl implements OrderService {
         }
         var links = cartItems.findByCartIdOrderByVariantIdAsc(cart.getCartId());
         if (links.isEmpty()) throw new CommerceException(409, "Cart rỗng, không thể checkout");
+        if (request.getAddressId() == null) throw new CommerceException(400, "Vui lòng chọn địa chỉ giao hàng đã lưu");
+        var shipping = customerAddresses.owned(customer.getCustomerId(), request.getAddressId());
+        String shippingSnapshot = customerAddresses.fullAddress(shipping);
         var products = variantMap(links.stream().map(i -> i.getVariantId()).toList());
         var resolved=promotions.resolveForCheckout(products.values().stream().map(v->v.getProduct().getProductId()).distinct().toList(),OffsetDateTime.now());
         Map<UUID, com.example.backend.promotion.service.PromotionPrice> pricing=new HashMap<>();
@@ -101,8 +108,8 @@ public class OrderServiceImpl implements OrderService {
         var order = new Order(); order.setCustomerId(customer.getCustomerId());
         order.setWarehouseId(cart.getWarehouseId());
         order.setOrderCode("ORD-" + UUID.randomUUID().toString().toUpperCase(Locale.ROOT)); order.setOrderDate(OffsetDateTime.now());
-        order.setRecipientName(request.getRecipientName()); order.setRecipientPhone(request.getRecipientPhone());
-        order.setShippingAddress(request.getShippingAddress()); order.setNote(request.getNote());
+        order.setRecipientName(shipping.getRecipientName()); order.setRecipientPhone(shipping.getRecipientPhone());
+        order.setShippingAddress(shippingSnapshot); order.setNote(request.getNote());
         order.setSubtotal(subtotal); order.setDiscountAmount(discountAmount); order.setShippingFee(shippingFee);
         order.setTotalAmount(totalAmount); order.setStatus(OrderStatus.PENDING); orders.saveAndFlush(order);
         List<OrderItem> snapshots = new ArrayList<>();

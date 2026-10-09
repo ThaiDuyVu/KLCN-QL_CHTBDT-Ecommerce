@@ -48,3 +48,21 @@ async def test_backend_client_raises_401_for_unauthorized_response() -> None:
 
     with pytest.raises(HTTPException, match="401"):
         await client.get_current_user({"session": "abc"})
+
+
+def test_product_adapter_forwards_cookie_without_shared_bearer():
+    from app.features.product_advisor.backend import BackendProductClient, backend_cookies
+    from app.shared.contracts.query import ProductSearchPlan
+    client = BackendProductClient('http://fake', 'service-token')
+    client._client.close()
+    def handler(request):
+        assert request.headers.get('cookie') == 'access_token=customer-cookie'
+        assert 'Authorization' not in request.headers
+        return httpx.Response(200, json=[])
+    client._client = httpx.Client(base_url='http://fake', headers={'Authorization':'Bearer service-token'}, transport=httpx.MockTransport(handler))
+    token = backend_cookies.set({'access_token':'customer-cookie'})
+    try:
+        assert client.search(ProductSearchPlan(), None, 5, 0) == []
+    finally:
+        backend_cookies.reset(token)
+        client._client.close()
