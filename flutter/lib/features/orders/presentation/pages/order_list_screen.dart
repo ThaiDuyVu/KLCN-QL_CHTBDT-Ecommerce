@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'order_detail_screen.dart';
 import '../providers/order_providers.dart';
+import '../../data/models/order_model.dart';
 
 class OrderListScreen extends ConsumerWidget {
   const OrderListScreen({super.key});
@@ -25,16 +26,20 @@ class OrderListScreen extends ConsumerWidget {
             separatorBuilder: (_, _) => const SizedBox(height: 8),
             itemBuilder: (context, index) {
               final order = orders[index];
+              final statusText = Order.statusLabel(order.status);
 
               return Card(
                 child: ListTile(
-                  title: Text('Đơn #${order.id}'),
+                  title: Text('Đơn ${order.orderCode.isNotEmpty ? order.orderCode : order.id}'),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Trạng thái: ${order.status}'),
-                      if (order.createdAt != null) Text('Ngày: ${order.createdAt}'),
-                      Text('Tổng: ${order.totalAmount} đ'),
+                      const SizedBox(height: 6),
+                      Text('Ngày đặt: ${order.createdAt ?? '---'}'),
+                      Text('Tổng tiền: ${order.totalAmount.toStringAsFixed(0)} đ'),
+                      if ((order.warehouseName ?? '').isNotEmpty) Text('Chi nhánh: ${order.warehouseName}'),
+                      const SizedBox(height: 4),
+                      Text('Trạng thái: $statusText'),
                     ],
                   ),
                   trailing: order.canCancel
