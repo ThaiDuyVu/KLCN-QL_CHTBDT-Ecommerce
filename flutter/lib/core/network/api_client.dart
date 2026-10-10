@@ -8,8 +8,28 @@ import '../storage/cookie_storage.dart';
 class ApiClient {
   static const baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://192.168.1.10:8080',
+    defaultValue: 'http://127.0.0.1:8080',
   );
+
+  static String fixUrl(String? rawUrl) {
+    if (rawUrl == null || rawUrl.isEmpty) return '';
+    final trimmed = rawUrl.trim();
+    if (trimmed.isEmpty) return '';
+
+    // Nếu là đường dẫn tương đối (vd: /uploads/img.png)
+    if (trimmed.startsWith('/')) {
+      return '$baseUrl$trimmed';
+    }
+
+    // Quy đổi tất cả localhost, 10.0.2.2 và mọi IP 192.168.x.x về 127.0.0.1
+    String fixed = trimmed
+        .replaceAll('localhost', '127.0.0.1')
+        .replaceAll('10.0.2.2', '127.0.0.1')
+        .replaceAll(RegExp(r'192\.168\.\d+\.\d+'), '127.0.0.1');
+
+    return fixed;
+  }
+
   Dio get client => dio;
   static late final Dio dio;
   static final CsrfManager csrfManager = CsrfManager();
