@@ -52,7 +52,7 @@ def test_ai_factory_does_not_present_mock_products_as_evidence():
         service.query_understanding = OllamaQueryUnderstandingService(FakeChat('{"intent":"PRODUCT_DISCOVERY","product_search":{}}'))
         result = service.send_message(uuid4(), SendMessageRequest(message="Laptop?"))
         assert result.products == []
-        assert result.message == INSUFFICIENT
+        assert "chưa tìm thấy sản phẩm phù hợp" in result.message
     finally:
         client.close()
 
@@ -157,3 +157,51 @@ def test_merged_endpoint_keeps_authentication_requirement():
             assert response.status_code == 401
     finally:
         app.dependency_overrides.pop(get_backend_client, None)
+
+
+def test_product_search_and_cards_share_request_context_and_customer_cookies():
+    from contextvars import ContextVar
+    from app.features.product_advisor.backend import backend_cookies
+    plan_context = ContextVar('test_search_plan', default=None)
+    class Advisor:
+        def search(self, plan):
+            assert backend_cookies.get() == {'access_token': 'customer-cookie'}
+            plan_context.set(plan)
+            return []
+        def build_cards(self, matches):
+            assert plan_context.get().category == 'Laptop'
+            assert backend_cookies.get() == {'access_token': 'customer-cookie'}
+            return []
+    service = MockChatService(
+        query_understanding=OllamaQueryUnderstandingService(FakeChat('{"intent":"PRODUCT_DISCOVERY","product_search":{"category":"Laptop"}}')),
+        product_advisor=Advisor(),
+    )
+    service.send_message(uuid4(), SendMessageRequest(message='Laptop?'), cookies={'access_token':'customer-cookie'})
+    assert backend_cookies.get() is None
+
+
+def test_cheaper_followup_uses_previous_card_price_not_repeated_budget():
+    from app.features.conversation.repository import InMemoryConversationRepository
+    from app.features.conversation.service import ConversationService
+    from app.features.customer_context.models import AuthenticatedCustomer
+    from app.shared.contracts.response import ProductCard
+    from decimal import Decimal
+    conversation = ConversationService(InMemoryConversationRepository())
+    customer = AuthenticatedCustomer(user_id=uuid4(), customer_id=uuid4(), display_name='Customer')
+    session_id = uuid4()
+    conversation.create_session(customer.customer_id, session_id)
+    previous = ProductCard(product_id=uuid4(), product_name='Laptop trước', effective_price=Decimal('15990000'))
+    conversation.repository.remember_product_cards(session_id, customer.customer_id, [previous])
+    class Advisor:
+        plan = None
+        def search(self, plan):
+            self.plan = plan
+            return []
+        def build_cards(self, matches):
+            return []
+    advisor = Advisor()
+    service = MockChatService(conversation_service=conversation, product_advisor=advisor,
+        query_understanding=OllamaQueryUnderstandingService(FakeChat('{"intent":"PRODUCT_DISCOVERY","product_search":{"category":"Laptop","max_price":20000000}}')))
+    service.send_message(session_id, SendMessageRequest(message='Có loại rẻ hơn không?'), customer=customer)
+    assert advisor.plan.max_price == Decimal('15989999')
+    assert conversation.repository.last_product_cards(session_id, customer.customer_id)[0].effective_price == Decimal('15990000')

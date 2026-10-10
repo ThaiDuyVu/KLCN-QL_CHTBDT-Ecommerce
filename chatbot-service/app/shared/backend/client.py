@@ -20,11 +20,12 @@ class BackendClient:
         self.timeout = timeout
         self._transport = transport
 
-    def _build_client(self) -> httpx.AsyncClient:
+    def _build_client(self, cookies: dict[str, str] | None = None) -> httpx.AsyncClient:
         return httpx.AsyncClient(
             base_url=self.base_url,
             timeout=self.timeout,
             transport=self._transport,
+            cookies=cookies,
         )
 
     async def _request_json(
@@ -35,11 +36,10 @@ class BackendClient:
         params: dict[str, Any] | None = None,
     ) -> Any | None:
         try:
-            async with self._build_client() as client:
+            async with self._build_client(cookies) as client:
                 response = await client.request(
                     method=method.upper(),
                     url=path,
-                    cookies=cookies,
                     params=params,
                 )
         except httpx.TimeoutException as exc:
@@ -48,8 +48,11 @@ class BackendClient:
                 detail="Backend service timed out.",
             ) from exc
 
+        except httpx.RequestError as exc:
+            raise HTTPException(status_code=503, detail="Không thể kết nối backend.") from exc
+
         if response.status_code in {401, 403}:
-            raise HTTPException(status_code=401)
+            raise HTTPException(status_code=response.status_code)
 
         if response.status_code == 404:
             return None
@@ -59,16 +62,16 @@ class BackendClient:
 
         try:
             response.raise_for_status()
-        except httpx.HTTPStatusError:
-            return None
+        except httpx.HTTPStatusError as exc:
+            raise HTTPException(status_code=502, detail="Backend trả về lỗi khi lấy dữ liệu.") from exc
 
         if not response.content:
             return None
 
         try:
             data = response.json()
-        except ValueError:
-            return None
+        except ValueError as exc:
+            raise HTTPException(status_code=502, detail="Backend trả về JSON không hợp lệ.") from exc
 
         return data
 
@@ -113,7 +116,7 @@ class BackendClient:
         if isinstance(payload, list):
             return payload
         if isinstance(payload, dict):
-            for key in ("items", "orders", "data"):
+            for key in ("content", "items", "orders", "data"):
                 value = payload.get(key)
                 if isinstance(value, list):
                     return value
@@ -140,9 +143,19 @@ class BackendClient:
         if isinstance(payload, list):
             return payload
         if isinstance(payload, dict):
-            for key in ("items", "warranties", "data"):
+            for key in ("content", "items", "warranties", "data"):
                 value = payload.get(key)
                 if isinstance(value, list):
                     return value
             return [payload]
         return []
+
+    async def get_warranty_tickets(self, cookies: dict[str, str]) -> list[dict[str, Any]]:
+        payload = await self._request_json("GET", "/api/warranties/mine/tickets", cookies=cookies)
+        if payload is None:
+            return []
+        if isinstance(payload, list):
+            return payload
+        if isinstance(payload, dict) and isinstance(payload.get("content"), list):
+            return payload["content"]
+        raise HTTPException(status_code=502, detail="Danh sách phiếu bảo hành không đúng cấu trúc.")

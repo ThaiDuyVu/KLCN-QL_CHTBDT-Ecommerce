@@ -1,25 +1,23 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'warranty_lookup_screen.dart';
+import '../../data/models/warranty_model.dart';
 import '../providers/warranty_providers.dart';
+import 'warranty_detail_screen.dart';
 
 class WarrantyListScreen extends ConsumerWidget {
   const WarrantyListScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final async = ref.watch(myWarrantyProvider);
+    final async = ref.watch(myWarrantiesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Thiết bị bảo hành')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showCreateForm(context, ref),
-        child: const Icon(Icons.add),
-      ),
+      appBar: AppBar(title: const Text('Bảo hành của tôi')),
       body: async.when(
         data: (items) {
           if (items.isEmpty) {
-            return const Center(child: Text('Bạn chưa có yêu cầu bảo hành nào.'));
+            return const Center(child: Text('Bạn chưa có thiết bị nào được bảo hành.'));
           }
 
           return ListView.separated(
@@ -28,17 +26,26 @@ class WarrantyListScreen extends ConsumerWidget {
             separatorBuilder: (_, _) => const SizedBox(height: 8),
             itemBuilder: (context, index) {
               final item = items[index];
+
               return Card(
                 child: ListTile(
                   title: Text(item.productName),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (item.serialNumber != null) Text('Serial: ${item.serialNumber}'),
-                      if (item.imei != null) Text('IMEI: ${item.imei}'),
-                      Text('Trạng thái: ${item.status}'),
-                      if (item.createdAt != null) Text('Ngày: ${item.createdAt}'),
+                      if (item.sku.isNotEmpty) Text('SKU: ${item.sku}'),
+                      if (item.serialNumber.isNotEmpty) Text('Serial: ${item.serialNumber}'),
+                      if (item.imeiNumbers.isNotEmpty) Text('IMEI: ${item.imeiNumbers.join(', ')}'),
+                      Text('Trạng thái: ${WarrantyStatusValue.label(item.status)}'),
+                      Text('Hiệu lực: ${item.startDate} → ${item.endDate}'),
                     ],
+                  ),
+                  trailing: item.eligible
+                      ? const Icon(Icons.check_circle, color: Colors.green)
+                      : const Icon(Icons.warning_amber_rounded, color: Colors.orange),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => WarrantyDetailScreen(warrantyId: item.id)),
                   ),
                 ),
               );
@@ -53,96 +60,14 @@ class WarrantyListScreen extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-
-  void _showCreateForm(BuildContext context, WidgetRef ref) {
-    final productIdController = TextEditingController();
-    final orderItemIdController = TextEditingController();
-    final issueController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: const Text('Yêu cầu bảo hành'),
-          content: SizedBox(
-            width: 400,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: productIdController,
-                  decoration: const InputDecoration(labelText: 'Product ID'),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: orderItemIdController,
-                  decoration: const InputDecoration(labelText: 'Order Item ID'),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: issueController,
-                  decoration: const InputDecoration(labelText: 'Mô tả lỗi'),
-                  minLines: 2,
-                  maxLines: 4,
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('Hủy'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                final productId = productIdController.text.trim();
-                final orderItemId = orderItemIdController.text.trim();
-                final issue = issueController.text.trim();
-
-                if (productId.isEmpty || orderItemId.isEmpty || issue.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Vui lòng nhập đầy đủ thông tin.')),
-                  );
-                  return;
-                }
-
-                try {
-                  await ref.read(warrantyRepositoryProvider).createWarrantyTicket(
-                    productId: productId,
-                    issue: issue,
-                    orderItemId: orderItemId,
-                  );
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Yêu cầu bảo hành đã được gửi.')),
-                    );
-                  }
-                  ref.invalidate(myWarrantyProvider);
-                  if (dialogContext.mounted) Navigator.pop(dialogContext);
-                } on DioException catch (e) {
-                  final msg = e.response?.data is Map
-                      ? (e.response?.data['message'] ?? 'Không thể tạo bảo hành')
-                      : 'Không thể tạo bảo hành';
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(msg.toString()), backgroundColor: Colors.red),
-                    );
-                  }
-                } catch (e) {
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Không thể tạo bảo hành: $e'), backgroundColor: Colors.red),
-                    );
-                  }
-                }
-              },
-              child: const Text('Gửi yêu cầu'),
-            ),
-          ],
-        );
-      },
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const WarrantyLookupScreen()),
+        ),
+        icon: const Icon(Icons.search),
+        label: const Text('Lookup'),
+      ),
     );
   }
 }

@@ -53,3 +53,13 @@ luồng dữ liệu, quyết định thiết kế, cách debug và các điểm 
 ## Product retrieval
 
 Hướng dẫn Product Advisor: [PRODUCT_RETRIEVAL_GUIDE.md](docs/PRODUCT_RETRIEVAL_GUIDE.md).
+
+## Phòng thử frontend riêng
+
+Mở http://localhost:5173/chatbot-lab sau khi chạy `bash scripts/start.sh` tại root.
+Trang dùng đăng nhập/cookie hiện có, hiển thị kịch bản/kỳ vọng, cards, nguồn,
+response JSON, thời gian và feedback. Route chỉ bật trong dev hoặc khi build với
+`VITE_CHATBOT_LAB_ENABLED=true`; chưa tích hợp widget vào storefront chính thức.
+
+- [Giải thích hoạt động và phân tích hiện trạng](docs/CHATBOT_HOAT_DONG_VA_HIEN_TRANG.md).
+- [Hướng dẫn thao tác và kết quả kỳ vọng](docs/CHATBOT_LAB_HUONG_DAN_KIEM_THU.md).

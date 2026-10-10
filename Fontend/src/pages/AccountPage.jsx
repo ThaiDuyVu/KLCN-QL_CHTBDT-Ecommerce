@@ -1,5 +1,6 @@
 import PageHeader from '../components/ui/PageHeader';
 import { useAuth } from '../hooks/useAuth';
+import AddressBook from '../features/addresses/components/AddressBook';
 
 export default function AccountPage() {
   const { user } = useAuth();
@@ -12,6 +13,7 @@ export default function AccountPage() {
         <dt>Vai trò</dt><dd>{user.roleName}</dd>
         <dt>Trạng thái</dt><dd>Đã đăng nhập</dd>
       </dl>
+      {user.roleName === 'CUSTOMER' && <AddressBook />}
     </section>
   );
 }
