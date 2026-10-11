@@ -16,9 +16,46 @@ String money(double? value) {
 class ProductImage extends StatelessWidget {
   final Product product;
   const ProductImage({super.key, required this.product});
-  @override
-  Widget build(BuildContext context) {
-    final path = product.imageUrl;
+
+  static String fixUrl(String rawUrl) => ApiClient.fixUrl(rawUrl);
+
+  static String? findLocalAsset(String name) {
+    final lower = name.toLowerCase();
+    if (lower.contains('16') || lower.contains('promax') || lower.contains('pro max')) {
+      return 'assets/products/iphone-16/main.jpg';
+    }
+    if (lower.contains('15')) {
+      if (lower.contains('xiaomi')) return 'assets/products/xiaomi-15/main.jpg';
+      if (lower.contains('vivobook')) return 'assets/products/asus-vivobook-15/main.jpg';
+      if (lower.contains('inspiron')) return 'assets/products/dell-inspiron-15/main.jpg';
+      return 'assets/products/iphone-15/main.jpg';
+    }
+    if (lower.contains('14') && !lower.contains('14t') && !lower.contains('pro 14') && !lower.contains('g14')) {
+      return 'assets/products/iphone-14/main.jpg';
+    }
+    if (lower.contains('s24')) return 'assets/products/samsung-galaxy-s24/main.jpg';
+    if (lower.contains('s23')) return 'assets/products/samsung-galaxy-s23/main.jpg';
+    if (lower.contains('a55')) return 'assets/products/samsung-galaxy-a55/main.jpg';
+    if (lower.contains('flip')) return 'assets/products/samsung-galaxy-z-flip6/main.jpg';
+    if (lower.contains('14t')) return 'assets/products/xiaomi-14t-pro/main.jpg';
+    if (lower.contains('redmi') || lower.contains('note 13')) {
+      return 'assets/products/xiaomi-redmi-note-13/main.jpg';
+    }
+    if (lower.contains('air m2')) return 'assets/products/macbook-air-m2/main.jpg';
+    if (lower.contains('pro 14') || lower.contains('m3')) {
+      return 'assets/products/macbook-pro-14-m3/main.jpg';
+    }
+    if (lower.contains('xps')) return 'assets/products/dell-xps-13/main.jpg';
+    if (lower.contains('inspiron')) return 'assets/products/dell-inspiron-15/main.jpg';
+    if (lower.contains('vivobook')) return 'assets/products/asus-vivobook-15/main.jpg';
+    if (lower.contains('zephyrus') || lower.contains('g14') || lower.contains('rog')) {
+      return 'assets/products/asus-rog-zephyrus-g14/main.jpg';
+    }
+    return null;
+  }
+
+  Widget _buildLocalFallback() {
+    final assetPath = findLocalAsset(product.name);
     final placeholder = Center(
       child: Icon(
         Icons.devices_outlined,
@@ -26,21 +63,43 @@ class ProductImage extends StatelessWidget {
         color: shopBlue.withValues(alpha: .3),
       ),
     );
-    if (path == null || path.isEmpty) return placeholder;
+    if (assetPath != null) {
+      return Image.asset(
+        assetPath,
+        fit: BoxFit.cover,
+        errorBuilder: (_, _, _) => placeholder,
+      );
+    }
+    return placeholder;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final rawPath = product.imageUrl;
+    if (rawPath == null || rawPath.trim().isEmpty) {
+      return _buildLocalFallback();
+    }
+
+    final path = rawPath.trim();
+    final fixUrl = ApiClient.fixUrl(path);
+
     final uri = Uri.tryParse(path);
     final localPath = uri?.path ?? path;
     if (localPath.startsWith('/images/products/')) {
       return Image.asset(
         localPath.replaceFirst('/images/', 'assets/'),
-        fit: BoxFit.contain,
-        errorBuilder: (_, _, _) => placeholder,
+        fit: BoxFit.cover,
+        errorBuilder: (_, _, _) => Image.network(
+          fixUrl,
+          fit: BoxFit.cover,
+          errorBuilder: (_, _, _) => _buildLocalFallback(),
+        ),
       );
     }
-    final url = Uri.parse(ApiClient.baseUrl).resolve(path).toString();
     return Image.network(
-      url,
-      fit: BoxFit.contain,
-      errorBuilder: (_, _, _) => placeholder,
+      fixUrl,
+      fit: BoxFit.cover,
+      errorBuilder: (_, _, _) => _buildLocalFallback(),
     );
   }
 }

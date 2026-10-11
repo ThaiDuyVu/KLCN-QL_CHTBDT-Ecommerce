@@ -45,30 +45,49 @@ class WarehouseSelectorWidget extends ConsumerWidget {
             return DropdownMenuItem<String>(value: w.id, child: Text(w.name));
           }).toList(),
           onChanged: (String? newId) async {
-            if (newId == null || newId == selectedWarehouse?.id) return;
+  if (newId == null || newId == selectedWarehouse?.id) return;
 
-            final newWarehouse = list.firstWhere((w) => w.id == newId);
+  final newWarehouse = list.firstWhere((w) => w.id == newId);
 
-            // ĐỌC STATE CỦA GIỎ HÀNG THAY VÌ REPOSITORY
-            final cartList = ref.read(cartListProvider).valueOrNull;
+  final cartList = ref.read(cartListProvider).valueOrNull;
 
-            // Kiểm tra nếu giỏ hàng có đồ (danh sách không rỗng)
-            if (cartList != null &&
-                cartList.isNotEmpty &&
-                selectedWarehouse != null) {
-              final should = await _confirmWarehouseChange(context);
-              if (should != true) return; // Nếu user hủy thì không làm gì cả
+  // Nếu đang có hàng trong giỏ và đang có warehouse cũ thì chặn chuyển kho
+  if (cartList != null &&
+      cartList.isNotEmpty &&
+      selectedWarehouse != null) {
+    final should = await showDialog<bool>(
+      context: context,
+      builder: (dctx) => AlertDialog(
+        title: const Text('Thay đổi chi nhánh'),
+        content: const Text(
+          'Thay đổi chi nhánh sẽ xóa giỏ hàng hiện tại. Bạn có muốn tiếp tục?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dctx, false),
+            child: const Text('Hủy'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dctx, true),
+            child: const Text('Tiếp tục'),
+          ),
+        ],
+      ),
+    );
 
-              // Nếu user đồng ý, gọi API xóa giỏ hàng
-              await ref
-                  .read(cartRepositoryProvider)
-                  .selectWarehouse(newWarehouse.id, clearItems: true);
-              // Refresh lại UI giỏ hàng
-              ref.invalidate(cartListProvider);
-            }
+    if (should != true) return;
 
-            ref.read(selectedWarehouseProvider.notifier).select(newWarehouse);
-          },
+    // Chỉ khi user xác nhận mới gọi API clear cart
+    await ref
+        .read(cartRepositoryProvider)
+        .selectWarehouse(newWarehouse.id, clearItems: true);
+
+    ref.invalidate(cartListProvider);
+    ref.invalidate(cartProvider);
+  }
+
+  ref.read(selectedWarehouseProvider.notifier).select(newWarehouse);
+},
         );
       },
     );
