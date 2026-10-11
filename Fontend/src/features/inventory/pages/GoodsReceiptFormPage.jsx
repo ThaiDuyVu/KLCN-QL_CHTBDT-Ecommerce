@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import PageHeader from '../../../components/ui/PageHeader';
 import { inventoryApi } from '../api/inventoryApi';
+import VariantSearchPicker from '../components/VariantSearchPicker';
 import '../inventory.css';
 
 const blankDevice = () => ({
@@ -13,6 +14,7 @@ const blankDevice = () => ({
 const blankLine = () => ({
   key: crypto.randomUUID(),
   variantId: '',
+  selectedVariant: null,
   quantity: 1,
   unitCost: 0,
   devices: [],
@@ -45,7 +47,7 @@ export default function GoodsReceiptFormPage() {
   const { receiptId } = useParams();
   const navigate = useNavigate();
   const editing = Boolean(receiptId);
-  const [refs, setRefs] = useState({ warehouses: [], suppliers: [], variants: [] });
+  const [refs, setRefs] = useState({ warehouses: [], suppliers: [], categories: [], brands: [] });
   const [form, setForm] = useState({
     receiptCode: '',
     supplierId: '',
@@ -60,30 +62,36 @@ export default function GoodsReceiptFormPage() {
     const controller = new AbortController();
     let active = true;
     const initial = editing
-      ? inventoryApi.receipt(receiptId, controller.signal)
+      ? inventoryApi.receipt(receiptId, controller.signal).then(async (receipt) => ({
+          ...receipt,
+          selectedVariants: await Promise.all(receipt.items.map((item) => inventoryApi.variant(item.variantId, controller.signal))),
+        }))
       : Promise.resolve(null);
 
     Promise.all([
       inventoryApi.warehouses(controller.signal),
       inventoryApi.suppliers(controller.signal),
-      inventoryApi.variants(controller.signal),
+      inventoryApi.categories(controller.signal),
+      inventoryApi.brands(controller.signal),
       initial,
     ])
-      .then(([warehouses, suppliers, variants, receipt]) => {
+      .then(([warehouses, suppliers, categories, brands, receipt]) => {
         if (!active) return;
         setRefs({
           warehouses: warehouses.content || [],
           suppliers: suppliers.content || [],
-          variants: variants.content || [],
+          categories: categories || [],
+          brands: brands.content || [],
         });
         if (receipt) {
           setForm({
             receiptCode: receipt.receiptCode,
             supplierId: receipt.supplierId,
             warehouseId: receipt.warehouseId,
-            lines: receipt.items.map((item) => ({
+            lines: receipt.items.map((item, index) => ({
               key: item.receiptItemId,
               variantId: item.variantId,
+              selectedVariant: receipt.selectedVariants[index],
               quantity: item.quantity,
               unitCost: item.unitCost,
               devices: responseDevices(item.devices),
@@ -103,11 +111,6 @@ export default function GoodsReceiptFormPage() {
       controller.abort();
     };
   }, [editing, receiptId]);
-
-  const variantMap = useMemo(
-    () => Object.fromEntries(refs.variants.map((variant) => [variant.variantId, variant])),
-    [refs.variants],
-  );
 
   function updateLine(key, patch) {
     setForm((current) => ({
@@ -134,6 +137,7 @@ export default function GoodsReceiptFormPage() {
 
   async function submit(event) {
     event.preventDefault();
+    if (form.lines.some((line) => !line.variantId)) { setError('Vui lòng chọn SKU cho từng dòng hàng.'); return; }
     setSubmitting(true);
     setError('');
     const body = {
@@ -141,7 +145,7 @@ export default function GoodsReceiptFormPage() {
       supplierId: form.supplierId,
       warehouseId: form.warehouseId,
       items: form.lines.map((line) => {
-        const trackingType = variantMap[line.variantId]?.trackingType || 'NONE';
+        const trackingType = line.selectedVariant?.trackingType || 'NONE';
         return {
           variantId: line.variantId,
           quantity: Number(line.quantity),
@@ -216,35 +220,17 @@ export default function GoodsReceiptFormPage() {
 
         <h2>Dòng hàng</h2>
         {form.lines.map((line, index) => {
-          const variant = variantMap[line.variantId];
+          const variant = line.selectedVariant;
           const tracking = variant?.trackingType || 'NONE';
           return (
             <fieldset className="receipt-line" key={line.key}>
               <legend>Dòng {index + 1}</legend>
-              <label>
-                Biến thể
-                <select
-                  required
-                  value={line.variantId}
-                  onChange={(event) => {
-                    const variantId = event.target.value;
-                    const nextTracking = variantMap[variantId]?.trackingType || 'NONE';
-                    updateLine(line.key, {
-                      variantId,
-                      devices: nextTracking === 'NONE'
-                        ? []
-                        : resizeDevices([], line.quantity),
-                    });
-                  }}
-                >
-                  <option value="">Chọn SKU</option>
-                  {refs.variants.map((item) => (
-                    <option key={item.variantId} value={item.variantId}>
-                      {item.sku} · {item.productName} · {item.trackingType}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <VariantSearchPicker value={variant} categories={refs.categories} brands={refs.brands}
+                onSelect={(selectedVariant) => updateLine(line.key, {
+                  variantId: selectedVariant.variantId,
+                  selectedVariant,
+                  devices: selectedVariant.trackingType === 'NONE' ? [] : resizeDevices([], line.quantity),
+                })} />
               <label>
                 Số lượng
                 <input

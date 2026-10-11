@@ -11,12 +11,15 @@ final productRepositoryProvider = Provider<ProductRepository>((ref) {
 
 final productListProvider = FutureProvider<List<Product>>((ref) async {
   ref.watch(authProvider.select((state) => state.user?['userId']));
-  // Lắng nghe chi nhánh đang chọn từ màn hình
-  final selected = ref.watch(selectedWarehouseProvider);
 
-  // Gọi API lấy sản phẩm theo ID chi nhánh
+  // Dùng ID thuần túy để truyền chính xác vào API
+  final selectedWarehouseId = ref.watch(selectedWarehouseIdProvider);
+
   final repo = ref.read(productRepositoryProvider);
-  return readWithSession(ref, () => repo.getProducts(selected?.id));
+  return readWithSession(
+    ref,
+    () => repo.getProducts(selectedWarehouseId),
+  );
 });
 final productDetailProvider = FutureProvider.autoDispose
     .family<Product, String>((ref, id) {

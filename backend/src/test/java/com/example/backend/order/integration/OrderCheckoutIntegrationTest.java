@@ -39,9 +39,11 @@ class OrderCheckoutIntegrationTest {
     @Autowired JdbcTemplate jdbc;
     @Autowired MockMvc mvc;
     UUID firstUser, secondUser, variant, warehouse;
+    Map<UUID, UUID> addressIds;
     @BeforeEach void setup() {
         // Dedicated ephemeral container only: never touches application data.
         jdbc.execute("TRUNCATE TABLE orders, carts, customers, inventory, products, brands, categories, warehouses CASCADE");
+        addressIds = new HashMap<>();
         firstUser = customer(); secondUser = customer(); variant = UUID.randomUUID();
         warehouse = UUID.randomUUID();
         UUID category = UUID.randomUUID(), product = UUID.randomUUID(), brand = UUID.randomUUID();
@@ -57,11 +59,18 @@ class OrderCheckoutIntegrationTest {
     UUID customer() {
         UUID userId = UUID.randomUUID();
         jdbc.update("INSERT INTO users(user_id,username,password,email,status) VALUES (?,?,?,?,'ACTIVE')",userId,"test-"+userId,"test-only-hash",userId+"@example.test");
-        jdbc.update("INSERT INTO customers(user_id,full_name) VALUES (?,?)",userId,"Khách hàng thử"); return userId;
+        jdbc.update("INSERT INTO customers(user_id,full_name) VALUES (?,?)",userId,"Khách hàng thử");
+        UUID addressId = UUID.randomUUID();
+        jdbc.update("INSERT INTO customer_addresses(address_id,customer_id,recipient_name,recipient_phone,address_line,is_default) "
+                + "SELECT ?, customer_id, 'Khách hàng thử', '0901234567', 'TP. Hồ Chí Minh', true FROM customers WHERE user_id=?",
+                addressId, userId);
+        addressIds.put(userId, addressId);
+        return userId;
     }
     void add(UUID userId,int quantity) { var request = new CartItemRequest(); request.setVariantId(variant); request.setQuantity(quantity); cart.add(userId,request); }
-    CheckoutRequest request() {
-        var r=new CheckoutRequest(); r.setRecipientName("Khách hàng thử");r.setRecipientPhone("0901234567");r.setShippingAddress("TP. Hồ Chí Minh");r.setPaymentMethod(PaymentMethod.COD);return r;
+    CheckoutRequest request() { return request(firstUser); }
+    CheckoutRequest request(UUID userId) {
+        var r=new CheckoutRequest(); r.setAddressId(addressIds.get(userId));r.setPaymentMethod(PaymentMethod.COD);return r;
     }
     int stock(String column) { return jdbc.queryForObject("SELECT "+column+" FROM inventory WHERE variant_id=?",Integer.class,variant); }
     @Test void cartAddChangeDeleteAndEmptyCheckout() {
@@ -102,7 +111,7 @@ class OrderCheckoutIntegrationTest {
     @Test void concurrentCheckoutDoesNotOversellAndFailedCheckoutPreservesCart() throws Exception {
         add(firstUser,4);add(secondUser,4);var start=new CountDownLatch(1);
         try(var executor=Executors.newFixedThreadPool(2)) {
-            var attempts=List.of(firstUser,secondUser).stream().map(id -> executor.submit(() -> {start.await();try {orders.checkout(id,request());return true;}catch(com.example.backend.order.exception.CommerceException e){return false;}})).toList();
+            var attempts=List.of(firstUser,secondUser).stream().map(id -> executor.submit(() -> {start.await();try {orders.checkout(id,request(id));return true;}catch(com.example.backend.order.exception.CommerceException e){return false;}})).toList();
             start.countDown();int success=0;for(var attempt:attempts)if(attempt.get(20,TimeUnit.SECONDS))success++;
             assertThat(success).isEqualTo(1);
         }
@@ -142,7 +151,7 @@ class OrderCheckoutIntegrationTest {
     @Test void httpCustomerCannotAdministrateAndServerIgnoresClientPrices() throws Exception {
         add(firstUser,1);
         mvc.perform(post("/api/orders/checkout").with(user(principal("CUSTOMER"))).with(csrf()).contentType("application/json")
-                .content("{\"recipientName\":\"Khách thử\",\"recipientPhone\":\"0901234567\",\"shippingAddress\":\"TP. HCM\",\"paymentMethod\":\"COD\",\"totalAmount\":1,\"unitPrice\":1}"))
+                .content("{\"addressId\":\""+addressIds.get(firstUser)+"\",\"paymentMethod\":\"COD\",\"totalAmount\":1,\"unitPrice\":1}"))
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.totalAmount").value(2000000));
         UUID id=jdbc.queryForObject("SELECT order_id FROM orders",UUID.class);
         mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("CUSTOMER"))).with(csrf()).contentType("application/json").content("{\"status\":\"CONFIRMED\"}")).andExpect(status().isForbidden());
@@ -155,10 +164,10 @@ class OrderCheckoutIntegrationTest {
         mvc.perform(post("/api/orders/checkout").with(user(principal("CUSTOMER"))).with(csrf()).contentType("application/json")
                 .content("{\"recipientName\":\"Khách thử\",\"recipientPhone\":\"0901234567\",\"paymentMethod\":\"COD\"}"))
                 .andExpect(status().isBadRequest()).andExpect(content().contentTypeCompatibleWith("application/json"))
-                .andExpect(jsonPath("$.message").value("Địa chỉ giao hàng là bắt buộc"));
+                .andExpect(jsonPath("$.message").value("Vui lòng chọn địa chỉ giao hàng"));
         jdbc.update("UPDATE inventory SET quantity=0 WHERE variant_id=?", variant);
         mvc.perform(post("/api/orders/checkout").with(user(principal("CUSTOMER"))).with(csrf()).contentType("application/json")
-                .content("{\"recipientName\":\"Khách thử\",\"recipientPhone\":\"0901234567\",\"shippingAddress\":\"TP. HCM\",\"paymentMethod\":\"COD\"}"))
+                .content("{\"addressId\":\""+addressIds.get(firstUser)+"\",\"paymentMethod\":\"COD\"}"))
                 .andExpect(status().isConflict()).andExpect(content().contentTypeCompatibleWith("application/json"))
                 .andExpect(jsonPath("$.message").value(org.hamcrest.Matchers.startsWith("Không đủ stock")));
         assertThat(jdbc.queryForObject("SELECT count(*) FROM orders", Integer.class)).isZero();

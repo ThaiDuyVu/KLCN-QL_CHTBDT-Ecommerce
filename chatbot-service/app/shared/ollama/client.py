@@ -73,8 +73,8 @@ class OllamaClient:
         return data
 
     def chat(self, messages: list[dict[str, str]], *, schema: dict[str, Any] | None = None) -> str:
-        payload = dict(model=self.settings.ollama_chat_model, messages=messages, stream=False,
-                       options={"temperature": 0})
+        payload = dict(model=self.settings.ollama_chat_model, messages=messages, stream=False, think=False,
+                       options={"temperature": 0, "num_predict": 512})
         if schema is not None:
             payload["format"] = schema
         data = self._post("/api/chat", payload)

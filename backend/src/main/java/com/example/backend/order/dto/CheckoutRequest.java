@@ -7,11 +7,11 @@ import java.util.List;
 import jakarta.validation.constraints.*;
 
 public class CheckoutRequest {
-    @NotBlank(message = "Tên người nhận là bắt buộc") @Size(max = 255)
+    @NotNull(message = "Vui lòng chọn địa chỉ giao hàng")
+    private UUID addressId;
+    // Legacy fields are accepted for JSON compatibility but never trusted for a new order.
     private String recipientName;
-    @NotBlank(message = "Số điện thoại là bắt buộc") @Size(max = 30)
     private String recipientPhone;
-    @NotBlank(message = "Địa chỉ giao hàng là bắt buộc")
     private String shippingAddress;
     private String note;
     @NotNull(message = "paymentMethod là bắt buộc")
@@ -23,6 +23,8 @@ public class CheckoutRequest {
     @Digits(integer = 13, fraction = 2, message = "downPayment vượt giới hạn tiền tệ")
     private BigDecimal downPayment;
     public CheckoutRequest() {}
+    public UUID getAddressId() { return addressId; }
+    public void setAddressId(UUID value) { this.addressId = value; }
     public String getRecipientName() { return recipientName; }
     public void setRecipientName(String value) { this.recipientName = value == null ? null : value.trim(); }
     public String getRecipientPhone() { return recipientPhone; }

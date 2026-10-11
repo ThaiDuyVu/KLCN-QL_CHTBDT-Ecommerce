@@ -39,12 +39,18 @@ import AccountPage from './pages/AccountPage';
 import ForbiddenPage from './pages/ForbiddenPage';
 import NotFoundPage from './pages/NotFoundPage';
 
+const ChatbotLabPage = lazy(() => import('./features/chatbot/ChatbotLabPage'));
+const chatbotLabEnabled = import.meta.env.DEV || import.meta.env.VITE_CHATBOT_LAB_ENABLED === 'true';
+
 const ReportsPage = lazy(() => import('./features/reports/pages/ReportsPage'));
 
 export default function App() {
   return (
     <Routes>
       <Route path="login" element={<LoginPage />} />
+      {chatbotLabEnabled && <Route element={<RequireAuth />}>
+        <Route path="chatbot-lab" element={<Suspense fallback={<p role="status">Đang tải phòng thử chatbot…</p>}><ChatbotLabPage /></Suspense>} />
+      </Route>}
       <Route element={<AppLayout />}>
         <Route index element={<HomePage />} />
         <Route path="forbidden" element={<ForbiddenPage />} />

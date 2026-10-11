@@ -35,5 +35,8 @@ export const inventoryApi = {
   receiptStatus(id, status) { return request(`/goods-receipts/${encodeURIComponent(id)}/status`, { method: 'PATCH', body: { status } }); },
   warehouses(signal) { return request('/warehouses?page=0&size=100', { signal }); },
   suppliers(signal) { return request('/suppliers?page=0&size=100', { signal }); },
-  variants(signal) { return request('/v1/product-variants?page=0&size=100', { signal }); },
+  variants(filters = {}, signal) { return request(`/v1/product-variants?${queryString({ page: 0, size: 20, ...filters })}`, { signal }); },
+  variant(id, signal) { return request(`/v1/product-variants/${encodeURIComponent(id)}`, { signal }); },
+  categories(signal) { return request('/v1/categories', { signal }); },
+  brands(signal) { return request('/v1/brands?page=0&size=100', { signal }); },
 };

@@ -47,7 +47,7 @@ describe('Application routes and role layouts', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it.each(['/products', '/categories', '/inventory'])('redirects anonymous users from %s to login', (path) => {
+  it.each(['/products', '/categories', '/inventory', '/chatbot-lab'])('redirects anonymous users from %s to login', (path) => {
     renderApp(path); expect(screen.getByRole('heading', { name: 'Chào mừng trở lại' })).toBeInTheDocument();
   });
 

@@ -10,6 +10,10 @@ export default defineConfig(({ mode }) => {
       port: 5173,
       strictPort: true,
       proxy: {
+        '/api/v1/chat': {
+          target: env.CHATBOT_PROXY_TARGET || 'http://127.0.0.1:8090',
+          changeOrigin: true,
+        },
         '/api': {
           target: env.BACKEND_PROXY_TARGET || 'http://localhost:8080',
           changeOrigin: true,

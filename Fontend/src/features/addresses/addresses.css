@@ -1,0 +1,20 @@
+.address-book { margin-top: 1.5rem; }
+.address-book-heading,.address-actions { display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; }
+.address-book-heading { justify-content:space-between; }
+.address-card-list { display:grid; gap:.8rem; margin-top:1rem; }
+.address-card { border:1px solid var(--border, #d8e5df); border-radius:12px; padding:1rem; background:#fff; }
+.address-card p { margin:.3rem 0; }
+.address-default { margin-left:.7rem; padding:.2rem .5rem; border-radius:999px; background:#e2f2eb; color:#115c45; font-size:.8rem; }
+.address-actions { margin-top:.7rem; }
+.address-actions button:not(.button) { border:0; background:none; color:#11694e; cursor:pointer; padding:.2rem; }
+.address-edit-panel { margin-top:1.2rem; border-top:1px solid #d8e5df; padding-top:1rem; }
+.address-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; }
+.address-form-grid label { display:grid; gap:.35rem; }
+.address-form-grid input { width:100%; }
+.checkout-address-list { display:grid; gap:.7rem; margin-bottom:1rem; }
+.checkout-left { min-width:0; display:grid; gap:1rem; }
+.checkout-address-choice { display:flex; gap:.8rem; align-items:flex-start; padding:.8rem; border:1px solid #d8e5df; border-radius:10px; cursor:pointer; }
+.checkout-address-choice:has(input:checked) { border-color:#157759; background:#f2faf6; }
+.checkout-address-choice span { display:grid; gap:.2rem; }
+.checkout-address-choice small { color:#52665d; }
+@media (max-width: 650px) { .address-form-grid { grid-template-columns:1fr; } }

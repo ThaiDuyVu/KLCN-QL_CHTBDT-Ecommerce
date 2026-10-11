@@ -51,6 +51,17 @@
 .receipt-form label { color: var(--emerald-950); }
 .receipt-line { border-color: var(--border); border-radius: 13px; padding: 20px; background: #fcfefd; }
 .receipt-line legend { color: var(--emerald-900); font-size: .85rem; }
+.variant-picker, .variant-selected-card { grid-column: 1 / -1; min-width: 0; }
+.variant-picker { display:grid; gap:.75rem; padding:1rem; border:1px solid var(--border); border-radius:10px; background:#f8fbf9; }
+.variant-picker-filters { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.7rem; }
+.variant-picker-filters label, .variant-picker > label { display:grid; gap:.3rem; }
+.variant-picker-results { max-height:280px; overflow-y:auto; display:grid; gap:.35rem; }
+.variant-picker-result { display:grid; gap:.2rem; width:100%; padding:.7rem; text-align:left; background:#fff; border:1px solid var(--border); border-radius:8px; cursor:pointer; }
+.variant-picker-result:hover, .variant-picker-result:focus-visible { border-color:var(--emerald-700); background:var(--emerald-50); }
+.variant-picker-result small, .variant-selected-card small { color:var(--muted); }
+.variant-picker-pages { display:flex; align-items:center; justify-content:center; gap:.8rem; }
+.variant-selected-card { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.9rem; border:1px solid var(--border); border-radius:10px; background:var(--emerald-50); }
+.variant-selected-card > div { display:grid; gap:.2rem; }
 .receipt-devices { border-top: 1px solid var(--border); padding-top: 18px; }
 .receipt-devices-title { color: var(--emerald-900); }
 .receipt-device-row { border-color: var(--border); border-radius: 10px; background: #f5faf7; }
@@ -65,3 +76,4 @@
 .button-danger:hover { background: #812020; border-color: #812020; }
 @media (max-width: 850px) { .receipt-detail dl, .serial-detail dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 580px) { .inventory-table-wrap { padding: 14px; } .receipt-form, .receipt-detail, .serial-detail { padding: 18px; } .receipt-detail dl, .serial-detail dl { grid-template-columns: 1fr; } .inventory-tabs { overflow-x: auto; flex-wrap: nowrap; } .inventory-tabs a { white-space: nowrap; } }
+@media (max-width: 580px) { .variant-picker-filters { grid-template-columns:1fr; } .variant-selected-card { align-items:flex-start; flex-direction:column; } }

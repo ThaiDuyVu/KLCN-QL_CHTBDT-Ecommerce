@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 import java.util.List;
+import com.example.backend.product.entity.ProductTrackingType;
 
 @RestController
 @RequestMapping("/api/v1/product-variants")
@@ -40,9 +41,16 @@ public class ProductVariantController {
     @GetMapping(params = "!productId")
     public ResponseEntity<ProductVariantPageResponse> getVariants(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) UUID categoryId,
+            @RequestParam(required = false) UUID brandId,
+            @RequestParam(required = false) ProductTrackingType trackingType
     ) {
-        return ResponseEntity.ok(variantService.getVariants(null, page, size));
+        if ((keyword == null || keyword.isBlank()) && categoryId == null && brandId == null && trackingType == null) {
+            return ResponseEntity.ok(variantService.getVariants(null, page, size));
+        }
+        return ResponseEntity.ok(variantService.searchVariants(page, size, keyword, categoryId, brandId, trackingType));
     }
 
     @GetMapping(params = "productId")

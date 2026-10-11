@@ -26,6 +26,15 @@ public class ProductVariantResponse {
     private BigDecimal effectivePrice;
     private BigDecimal discountAmount;
     private PromotionSummaryResponse promotion;
+    private String categoryName;
+    private String brandName;
+    public String getCategoryName() { return categoryName; }
+    public String getBrandName() { return brandName; }
+    public ProductVariantResponse withCatalog(String categoryName, String brandName) {
+        this.categoryName = categoryName;
+        this.brandName = brandName;
+        return this;
+    }
     public BigDecimal getOriginalPrice() { return price; }
     public BigDecimal getEffectivePrice() { return effectivePrice == null ? price : effectivePrice; }
     public BigDecimal getDiscountAmount() { return discountAmount == null ? BigDecimal.ZERO : discountAmount; }
