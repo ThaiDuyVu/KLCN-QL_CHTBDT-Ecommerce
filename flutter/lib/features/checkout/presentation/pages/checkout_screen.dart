@@ -598,7 +598,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       ? Colors.deepOrange.withValues(alpha: 0.04)
                       : Colors.white,
                 ),
-                child: RadioListTile<PaymentMethodOption>(
+                child: Material(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(8),
+                  child: RadioListTile<PaymentMethodOption>(
                   value: method,
                   groupValue: selectedPayment,
                   activeColor: Colors.deepOrange,
@@ -641,6 +644,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           val;
                     }
                   },
+                  ),
                 ),
               );
             }),
