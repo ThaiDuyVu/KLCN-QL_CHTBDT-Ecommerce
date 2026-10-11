@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { chatbotApi } from './chatbotApi';
 import { scenarios } from './scenarios';
 import './chatbot-lab.css';
+import TracePanel from './TracePanel';
 
 const money = (value) => value == null ? 'Chưa có dữ liệu' : new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Number(value));
 function sessionFor(userId) {
@@ -29,6 +30,7 @@ function safeSource(source) {
 export default function ChatbotLabPage() {
   const { user } = useAuth();
   const [sessionId, setSessionId] = useState(() => sessionFor(user.userId));
+  const [traceId, setTraceId] = useState(null);
   const [runtime, setRuntime] = useState(null);
   const [statusError, setStatusError] = useState('');
   const [messages, setMessages] = useState([]);
@@ -65,11 +67,13 @@ export default function ChatbotLabPage() {
     if (!question || busy || restoring) return;
     setBusy(true); setError(''); setDraft(''); setElapsed(null);
     setMessages((items) => [...items, { id: crypto.randomUUID(), role: 'USER', text: question }]);
+    const requestTraceId = runtime?.trace_enabled ? crypto.randomUUID() : null;
+    setTraceId(requestTraceId);
     const started = performance.now();
     const abort = new AbortController(); controller.current = abort;
     const timer = setTimeout(() => abort.abort(), 180000);
     try {
-      const result = await chatbotApi.send(sessionId, question, abort.signal);
+      const result = await chatbotApi.send(sessionId, question, abort.signal, requestTraceId);
       if (abort.signal.aborted) return;
       const duration = Math.round(performance.now() - started);
       setElapsed(duration); setLastResult(result);
@@ -90,7 +94,7 @@ export default function ChatbotLabPage() {
   function newSession() {
     const id = crypto.randomUUID();
     try { sessionStorage.setItem(`chatbot-lab.session.${user.userId}`, id); } catch { /* No storage. */ }
-    setSessionId(id); setMessages([]); setLastResult(null); setError(''); setElapsed(null); setRestoring(true);
+    setTraceId(null); setSessionId(id); setMessages([]); setLastResult(null); setError(''); setElapsed(null); setRestoring(true);
   }
   async function rate(item, rating) {
     setFeedbackBusy(true); setError('');
@@ -165,5 +169,6 @@ export default function ChatbotLabPage() {
         <p className="lab-footnote">Reload khôi phục tối đa 100 message văn bản. Card/nguồn/JSON chỉ giữ trong lần mở trang này. Restart server sẽ mất lịch sử và feedback.</p>
       </aside>
     </div>
+    <TracePanel key={sessionId} sessionId={sessionId} traceId={traceId} onSelect={setTraceId} enabled={runtime?.trace_enabled} busy={busy} />
   </main>;
 }

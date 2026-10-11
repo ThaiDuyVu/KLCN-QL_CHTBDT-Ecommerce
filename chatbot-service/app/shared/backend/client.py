@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from app.shared.tracing import traced, event
+
 from typing import Any
 
 import httpx
@@ -28,6 +30,7 @@ class BackendClient:
             cookies=cookies,
         )
 
+    @traced("backend.customer_http", ("method", "path", "params"))
     async def _request_json(
         self,
         method: str,
@@ -51,6 +54,7 @@ class BackendClient:
         except httpx.RequestError as exc:
             raise HTTPException(status_code=503, detail="Không thể kết nối backend.") from exc
 
+        event("backend.http_status", {"path": path, "status_code": response.status_code})
         if response.status_code in {401, 403}:
             raise HTTPException(status_code=response.status_code)
 
@@ -71,6 +75,7 @@ class BackendClient:
         try:
             data = response.json()
         except ValueError as exc:
+            event("backend.invalid_json", {"path": path, "body": response.text}, status="warning")
             raise HTTPException(status_code=502, detail="Backend trả về JSON không hợp lệ.") from exc
 
         return data

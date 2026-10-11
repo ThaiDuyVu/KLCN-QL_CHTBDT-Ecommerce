@@ -1,3 +1,4 @@
+from app.shared.tracing import traced, event
 import json
 
 from app.shared.contracts.context import GroundedContext
@@ -12,24 +13,32 @@ class OllamaResponseGenerationService:
     def __init__(self, model: ChatModel):
         self.model = model
 
+    @traced("response.generate", ("context",))
     def generate(self, context: GroundedContext) -> str:
         if any(term in context.user_query.casefold() for term in ("đặt ngay", "đặt hàng giúp", "thanh toán giúp", "hủy đơn giúp", "tạo phiếu giúp")):
+            event("response.strategy", {"strategy": "deterministic_guard", "reason": "transaction_not_supported"})
             return "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website."
         if context.query_plan.intent == Intent.GREETING:
+            event("response.strategy", {"strategy": "deterministic_guard", "reason": "greeting"})
             return "Xin chào! Mình có thể hỗ trợ tìm sản phẩm và giải đáp thông tin cửa hàng."
         if context.query_plan.intent == Intent.HELP:
+            event("response.strategy", {"strategy": "deterministic_guard", "reason": "help"})
             return "Bạn có thể hỏi về sản phẩm, chính sách cửa hàng hoặc thông tin đơn hàng của mình."
         if context.query_plan.intent in {Intent.PRODUCT_DISCOVERY, Intent.PRODUCT_DETAIL, Intent.PRODUCT_COMPARE} and not context.products:
+            event("response.strategy", {"strategy": "deterministic_guard", "reason": "no_matching_products"})
             return "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại."
         customer = context.customer_context
         if context.query_plan.intent == Intent.CART_STATUS and customer is not None and customer.cart is not None and not customer.cart.items:
+            event("response.strategy", {"strategy": "deterministic_guard", "reason": "empty_cart"})
             return "Giỏ hàng của bạn hiện đang trống."
         if context.query_plan.intent == Intent.PAYMENT_STATUS and customer is not None and customer.recent_orders and not any(order.payment for order in customer.recent_orders):
+            event("response.strategy", {"strategy": "deterministic_guard", "reason": "missing_payment"})
             return "Mình chưa có dữ liệu thanh toán của đơn hàng này để xác nhận đã thanh toán hay chưa."
         has_customer = customer is not None and (
             customer.cart is not None or customer.recent_orders or customer.warranties or customer.warranty_tickets
         )
         if not (context.products or context.knowledge_chunks or has_customer):
+            event("response.strategy", {"strategy": "deterministic_guard", "reason": "insufficient_evidence"})
             return INSUFFICIENT
         # History helps reference resolution but must never become business evidence.
         messages = [
@@ -45,8 +54,10 @@ class OllamaResponseGenerationService:
                 "Chỉ sinh văn bản; không tạo ProductCard, UUID hay SourceReference.")},
             {"role": "user", "content": json.dumps(context.model_dump(mode="json"), ensure_ascii=False)},
         ]
+        event("response.strategy", {"strategy": "ollama", "messages": messages})
         try:
             text = self.model.chat(messages)
             return text.strip() if text.strip() else INSUFFICIENT
-        except OllamaError:
+        except OllamaError as exc:
+            event("response.fallback", {"reason": type(exc).__name__, "strategy": "unavailable_message"}, status="warning")
             return "Dịch vụ AI đang tạm thời không khả dụng. Bạn vui lòng thử lại sau."

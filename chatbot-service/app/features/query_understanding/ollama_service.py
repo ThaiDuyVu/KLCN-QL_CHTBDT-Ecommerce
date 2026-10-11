@@ -1,3 +1,4 @@
+from app.shared.tracing import traced, event, span
 import json
 
 from pydantic import ValidationError
@@ -17,6 +18,7 @@ class OllamaQueryUnderstandingService:
         self.history_window = history_window
         self.repair_attempts = repair_attempts
 
+    @traced("query.understand", ("context",))
     def understand(self, context: QueryContext) -> QueryPlan:
         schema = QueryPlan.model_json_schema()
         history = context.recent_messages[-self.history_window:] if self.history_window else []
@@ -44,12 +46,19 @@ class OllamaQueryUnderstandingService:
         ]
         for attempt in range(self.repair_attempts + 1):
             try:
-                output = self.model.chat(messages, schema=schema)
-                return QueryPlan.model_validate_json(output)
-            except OllamaError:
+                with span("query.model_attempt", {"attempt": attempt + 1, "messages": messages, "schema": schema}) as done:
+                    output = self.model.chat(messages, schema=schema)
+                    done({"raw_output": output})
+                plan = QueryPlan.model_validate_json(output)
+                event("query.validation", plan)
+                return plan
+            except OllamaError as exc:
+                event("query.model_failure", {"reason": type(exc).__name__}, status="warning")
                 break
-            except ValidationError:
+            except ValidationError as exc:
+                event("query.validation_failed", {"errors": exc.errors(include_input=False, include_context=False, include_url=False), "attempt": attempt + 1}, status="warning")
                 if attempt < self.repair_attempts:
                     # Do not echo invalid/untrusted model output or customer identifiers.
                     messages.append({"role": "user", "content": "Kết quả sai schema. Trả lại duy nhất JSON hợp lệ theo schema gốc."})
+        event("query.fallback", {"intent": "UNKNOWN", "reason": "model_or_schema_failure"}, status="warning")
         return QueryPlan(intent=Intent.UNKNOWN)

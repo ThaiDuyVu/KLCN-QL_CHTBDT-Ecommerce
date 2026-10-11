@@ -1,3 +1,4 @@
+from app.shared.tracing import traced
 from uuid import UUID
 
 from app.features.knowledge.repository import IndexedChunk, KnowledgeRepository
@@ -65,6 +66,7 @@ class PgvectorKnowledgeRetrievalService:
             raise ValueError("Explicit eligible status is required")
         self.repository, self.embeddings, self.status = repository, embeddings, status
 
+    @traced('knowledge.retrieve', ('query', 'top_k'))
     def retrieve(self, query: str, *, top_k: int = 5) -> list[KnowledgeChunkMatch]:
         if not 1 <= top_k <= 20:
             raise ValueError("top_k must be between 1 and 20")

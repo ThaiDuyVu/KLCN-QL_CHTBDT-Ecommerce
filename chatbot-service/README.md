@@ -63,3 +63,7 @@ response JSON, thời gian và feedback. Route chỉ bật trong dev hoặc khi 
 
 - [Giải thích hoạt động và phân tích hiện trạng](docs/CHATBOT_HOAT_DONG_VA_HIEN_TRANG.md).
 - [Hướng dẫn thao tác và kết quả kỳ vọng](docs/CHATBOT_LAB_HUONG_DAN_KIEM_THU.md).
+
+### Debug prompt và query đầu cuối
+
+Xem [hướng dẫn Trace trong Chatbot Lab](docs/CHATBOT_DEBUG_TRACE_HUONG_DAN.md): timeline, prompt thật, QueryPlan trước/sau điều chỉnh, backend/SQL, evidence và fallback. Bật `CHATBOT_TRACE_ENABLED=true` trong môi trường phát triển; tùy chọn `CHATBOT_TRACE_FILE_ENABLED=true` ghi JSONL xoay vòng vào `.local/logs/` ở gốc repo.
