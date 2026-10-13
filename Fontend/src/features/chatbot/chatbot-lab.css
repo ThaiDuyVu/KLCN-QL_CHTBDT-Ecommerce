@@ -403,3 +403,31 @@
     flex-wrap:wrap;
   }
 }
+
+.trace-panel { margin-top: 24px; min-width: 0; }
+.trace-heading, .trace-toolbar, .trace-summary { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.trace-heading { justify-content: space-between; }
+.trace-toolbar { margin: 20px 0; }
+.trace-toolbar label { display: grid; gap: 6px; font-size: 13px; min-width: 0; }
+.trace-toolbar select, .trace-toolbar input:not([type=checkbox]) { padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; background: white; max-width: 100%; }
+.trace-toolbar .trace-checkbox { display: flex; align-items: center; }
+.trace-summary { padding: 14px; background: #edf5f7; border-radius: 8px; font-size: 13px; }
+.trace-summary code { overflow-wrap: anywhere; }
+.trace-timeline { list-style: none; padding: 0; margin: 18px 0; }
+.trace-event { border: 1px solid #dce5ea; border-radius: 8px; margin: 8px 0; overflow: hidden; }
+.trace-event > details > summary { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; cursor: pointer; padding: 14px; font-size: 13px; }
+.trace-event summary strong { flex: 1; }
+.trace-dot { width: 9px; height: 9px; border-radius: 50%; background: #218269; flex-shrink: 0; }
+.trace-warning .trace-dot { background: #c58616; }
+.trace-error .trace-dot { background: #c63c3c; }
+.trace-running .trace-dot { background: #3583ce; }
+.trace-event-body { padding: 0 16px 14px; display: grid; gap: 10px; min-width: 0; }
+.trace-event-body code { overflow-wrap: anywhere; }
+.trace-event pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 480px; overflow: auto; background: #112333; color: #e6edf3; padding: 16px; border-radius: 8px; font-size: 12px; line-height: 1.6; }
+.trace-prompts { display: grid; gap: 8px; }
+.trace-prompts summary, .trace-payload summary { cursor: pointer; padding: 8px 0; }
+.trace-duration { height: 3px; background: #78b1be; }
+@media (max-width: 600px) { .trace-toolbar { align-items: stretch; flex-direction: column; } .trace-event > details > summary small { width: 100%; } }
+.trace-plan-diff { overflow-x: auto; margin-top: 16px; }
+.trace-plan-diff table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.trace-plan-diff th, .trace-plan-diff td { padding: 10px; border-bottom: 1px solid #dce5ea; text-align: left; }

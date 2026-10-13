@@ -1,6 +1,8 @@
-from uuid import UUID
+from uuid import UUID, uuid4
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, Response, HTTPException
+from app.shared.config import get_settings
+from app.shared.tracing import capture, enabled, store, event
 
 from app.features.chat.models import FeedbackRequest, SendMessageRequest
 from app.features.chat.service import ChatService
@@ -39,15 +41,32 @@ async def send_message(
     session_id: UUID,
     request: SendMessageRequest,
     http_request: Request,
+    http_response: Response,
     customer: AuthenticatedCustomer = Depends(get_authenticated_customer),
     service: ChatService = Depends(get_chat_service),
 ) -> ChatResponse:
-    return await service.send_message_async(
-        session_id=session_id,
-        request=request,
-        customer=customer,
-        cookies=dict(http_request.cookies),
-    )
+    async def run():
+        return await service.send_message_async(
+            session_id=session_id, request=request, customer=customer,
+            cookies=dict(http_request.cookies),
+        )
+    if not enabled(get_settings()):
+        return await run()
+    try:
+        trace_id = UUID(http_request.headers.get('X-Chat-Trace-Id') or str(uuid4()))
+    except ValueError:
+        raise HTTPException(400, 'X-Chat-Trace-Id phải là UUID.')
+    trace = store.create(trace_id, session_id, customer.customer_id)
+    http_response.headers['X-Chat-Trace-Id'] = str(trace_id)
+    http_response.headers['Cache-Control'] = 'no-store'
+    with capture(trace):
+        event('request.accepted', {'message': request.message, 'session_id': session_id,
+                                 'authentication': 'verified_by_backend'})
+        try:
+            return await run()
+        except HTTPException as exc:
+            exc.headers = {**(exc.headers or {}), 'X-Chat-Trace-Id': str(trace_id), 'Cache-Control': 'no-store'}
+            raise
 
 
 @router.post(
@@ -94,6 +113,8 @@ async def status(customer: AuthenticatedCustomer = Depends(get_authenticated_cus
     except (httpx.HTTPError, ValueError, KeyError, TypeError):
         pass
     return {
+        'trace_enabled': enabled(settings),
+        'trace_file_enabled': enabled(settings) and settings.chatbot_trace_file_enabled,
         'ai_enabled': settings.chatbot_ai_enabled,
         'product_mode': settings.product_advisor_mode,
         'chat_model': settings.ollama_chat_model,
@@ -107,3 +128,21 @@ async def status(customer: AuthenticatedCustomer = Depends(get_authenticated_cus
         'warehouse_configured': bool(settings.chatbot_warehouse_id),
         'conversation_storage': 'in-memory',
     }
+
+
+@router.get('/sessions/{session_id}/traces')
+def list_traces(session_id: UUID, response: Response,
+                customer: AuthenticatedCustomer = Depends(get_authenticated_customer)):
+    if not enabled(get_settings()):
+        raise HTTPException(404, 'Tracing chưa được bật trong môi trường phát triển.')
+    response.headers['Cache-Control'] = 'no-store'
+    return store.list(session_id, customer.customer_id)
+
+
+@router.get('/sessions/{session_id}/traces/{trace_id}')
+def get_trace(session_id: UUID, trace_id: UUID, response: Response,
+              customer: AuthenticatedCustomer = Depends(get_authenticated_customer)):
+    if not enabled(get_settings()):
+        raise HTTPException(404, 'Tracing chưa được bật trong môi trường phát triển.')
+    response.headers['Cache-Control'] = 'no-store'
+    return store.get(trace_id, session_id, customer.customer_id)

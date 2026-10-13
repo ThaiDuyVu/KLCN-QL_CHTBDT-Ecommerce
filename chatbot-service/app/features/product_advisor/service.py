@@ -1,3 +1,4 @@
+from app.shared.tracing import traced
 from uuid import UUID
 
 from app.shared.contracts.product import (
@@ -18,6 +19,7 @@ MOCK_VARIANT_ID = UUID(
 
 
 class MockProductAdvisorService:
+    @traced('product.mock_search', ('plan',))
     def search(
         self,
         plan: ProductSearchPlan,
@@ -48,6 +50,7 @@ class MockProductAdvisorService:
             )
         ]
 
+    @traced('product.mock_cards', ('matches',))
     def build_cards(
         self,
         matches: list[ProductMatch],

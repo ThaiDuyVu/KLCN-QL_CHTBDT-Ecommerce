@@ -1,8 +1,10 @@
+from app.shared.tracing import traced
 from app.shared.contracts.context import GroundedContext
 from app.shared.contracts.enums import Intent
 
 
 class MockResponseGenerationService:
+    @traced('response.mock_generate', ('context',))
     def generate(self, context: GroundedContext) -> str:
         if context.query_plan.intent == Intent.GREETING:
             return (

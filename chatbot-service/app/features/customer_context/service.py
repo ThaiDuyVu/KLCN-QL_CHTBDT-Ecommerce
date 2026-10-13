@@ -1,4 +1,5 @@
 """Map existing backend camelCase DTOs into the locked shared contracts."""
+from app.shared.tracing import traced
 from pydantic import ValidationError
 from fastapi import HTTPException
 
@@ -38,6 +39,7 @@ class CustomerContextService:
     def __init__(self, backend_client: BackendClient | None = None):
         self.backend_client = backend_client
 
+    @traced('customer.context', ('intent',))
     async def load_context(self, intent: str, cookies: dict[str, str]) -> CustomerContext:
         context = CustomerContext()
         if not cookies or self.backend_client is None:

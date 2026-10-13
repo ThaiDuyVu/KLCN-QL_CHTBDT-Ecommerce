@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from app.shared.tracing import traced, event
+
 import asyncio
 from collections.abc import Callable
 from decimal import Decimal
@@ -81,6 +83,7 @@ class ChatService:
             else MockResponseGenerationService()
         )
 
+    @traced("chat.pipeline", ("request", "session_id"))
     async def send_message_async(
         self,
         session_id: UUID,
@@ -142,7 +145,10 @@ class ChatService:
             recent_messages=recent_history,
         )
 
+        event("conversation.context", query_context)
         query_plan = await asyncio.to_thread(self.query_understanding.understand, query_context)
+
+        event("query.plan.initial", query_plan)
 
         product_matches: list[ProductMatch] = []
         product_cards: list[ProductCard] = []
@@ -166,6 +172,8 @@ class ChatService:
                         data["max_price"] = min(ceiling, product_search.max_price) if product_search.max_price is not None else ceiling
                         product_search = type(product_search).model_validate(data)
                         query_plan = query_plan.model_copy(update={"product_search": product_search})
+
+            event("query.plan.effective", {"product_search": product_search, "below_minimum": below_minimum, "cheaper_followup": cheaper})
 
             def search_and_build():
                 token = backend_cookies.set(cookies or None)
@@ -199,9 +207,11 @@ class ChatService:
                     query_plan.semantic_query or query_context.current_message,
                     top_k=self.knowledge_top_k,
                 )
-            except (KnowledgeUnavailable, KnowledgeRepositoryError):
+            except (KnowledgeUnavailable, KnowledgeRepositoryError) as exc:
+                event("knowledge.fallback", {"reason": type(exc).__name__, "action": "continue_without_knowledge"}, status="warning")
                 knowledge_chunks = []
 
+        event("retrieval.summary", {"intent": query_plan.intent, "products": len(product_matches), "cards": len(product_cards), "knowledge_chunks": len(knowledge_chunks), "knowledge_configured": self.knowledge_retrieval is not None})
         grounded_context = GroundedContext(
             query_plan=query_plan,
             user_query=query_context.current_message,
@@ -211,6 +221,7 @@ class ChatService:
             customer_context=context_payload,
         )
 
+        event("response.grounded_context", grounded_context)
         assistant_message = await asyncio.to_thread(self.response_generation.generate, grounded_context)
 
         if customer is not None:

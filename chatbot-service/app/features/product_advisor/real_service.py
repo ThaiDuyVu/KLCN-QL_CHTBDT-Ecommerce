@@ -1,4 +1,5 @@
 """Structured eligibility first, optional vector ranking, then live catalog enrichment."""
+from app.shared.tracing import traced
 
 from collections import defaultdict
 from contextvars import ContextVar
@@ -71,6 +72,7 @@ class RealProductAdvisorService:
             warranty_months=row.get("warrantyMonths"),
         )
 
+    @traced('product.search', ('plan',))
     def search(self, plan: ProductSearchPlan) -> list[ProductMatch]:
         if plan.in_stock_only and self.warehouse_id is None:
             raise ValueError("A warehouse is required for in_stock_only product search")
@@ -128,6 +130,7 @@ class RealProductAdvisorService:
                 break
         return matches
 
+    @traced('product.cards', ('matches',))
     def build_cards(self, matches: list[ProductMatch]) -> list[ProductCard]:
         plan = _current_plan.get()
         cards: list[ProductCard] = []

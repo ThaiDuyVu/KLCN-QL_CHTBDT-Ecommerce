@@ -1,4 +1,5 @@
 """Parameterized SQL only; the model never supplies a query or identifiers."""
+from app.shared.tracing import traced, event
 from collections.abc import Callable
 from dataclasses import dataclass
 import json
@@ -80,12 +81,13 @@ class PostgresKnowledgeRepository:
             cur.execute("""DELETE FROM knowledge_chunks c WHERE document_id = %s AND chunk_index >= %s
                 AND NOT EXISTS (SELECT 1 FROM chat_message_retrievals r WHERE r.chunk_id = c.chunk_id)""", (document.document_id, len(chunks)))
 
+    @traced("knowledge.vector_search", ("status", "top_k"))
     def search(self, vector: list[float], status: str, top_k: int) -> list[KnowledgeChunkMatch]:
         if not 1 <= top_k <= 20:
             raise ValueError("top_k must be between 1 and 20")
         literal = vector_literal(vector)
         with self.connect() as conn, conn.cursor() as cur:
-            cur.execute("""WITH eligible AS MATERIALIZED (
+            sql = """WITH eligible AS MATERIALIZED (
                 SELECT c.*, d.title, d.source, d.document_type FROM knowledge_chunks c
                 JOIN knowledge_documents d ON d.document_id = c.document_id
                 WHERE d.status = %s AND c.embedding_vector IS NOT NULL
@@ -93,8 +95,9 @@ class PostgresKnowledgeRepository:
                 AND vector_norm(c.embedding_vector) > 0)
                 SELECT chunk_id, chunk_index, content, 1 - (embedding_vector <=> %s::vector),
                     document_id, title, source, document_type
-                FROM eligible ORDER BY embedding_vector <=> %s::vector, chunk_id LIMIT %s""",
-                (status, len(vector), literal, literal, top_k))
+                FROM eligible ORDER BY embedding_vector <=> %s::vector, chunk_id LIMIT %s"""
+            event("knowledge.sql", {"sql": sql, "parameters": {"status": status, "dimensions": len(vector), "top_k": top_k, "vector": "omitted"}})
+            cur.execute(sql, (status, len(vector), literal, literal, top_k))
             return [KnowledgeChunkMatch(chunk_id=row[0], chunk_index=row[1], content=row[2], similarity_score=row[3],
                 source=KnowledgeSource(document_id=row[4], title=row[5], source=row[6], document_type=row[7])) for row in cur.fetchall()]
 

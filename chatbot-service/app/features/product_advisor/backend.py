@@ -1,4 +1,5 @@
 """Typed adapter to the existing authenticated backend product APIs."""
+from app.shared.tracing import traced, event
 
 from contextvars import ContextVar
 from typing import Any
@@ -20,12 +21,16 @@ class BackendProductClient:
             headers={"Authorization": f"Bearer {bearer_token}"} if bearer_token else {},
         )
 
+    @traced("backend.product_http", ("path", "kwargs"), result=False)
     def _get(self, path: str, **kwargs) -> httpx.Response:
         cookies = backend_cookies.get()
         request = self._client.build_request("GET", path, cookies=cookies, **kwargs)
         if cookies:
             request.headers.pop("Authorization", None)
-        return self._client.send(request)
+        response = self._client.send(request)
+        event("backend.product_result", {"path": path, "status_code": response.status_code, "body": response.json() if response.is_success else None})
+        response.raise_for_status()
+        return response
 
     def search(
         self, plan: ProductSearchPlan, warehouse_id: UUID | None, limit: int, offset: int
