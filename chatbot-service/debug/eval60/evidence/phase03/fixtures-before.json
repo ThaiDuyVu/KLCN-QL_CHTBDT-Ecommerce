@@ -1,0 +1,85 @@
+{
+  "runtime": {
+    "trace_enabled": true,
+    "trace_file_enabled": true,
+    "ai_enabled": true,
+    "product_mode": "real",
+    "chat_model": "qwen3:4b-instruct",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "ollama_reachable": true,
+    "chat_model_ready": true,
+    "embedding_model_ready": true,
+    "knowledge_configured": true,
+    "knowledge_status": "PUBLISHED",
+    "product_index_configured": true,
+    "warehouse_configured": true,
+    "conversation_storage": "in-memory"
+  },
+  "customer_role": "CUSTOMER",
+  "cart": {
+    "subtotal": 18990000.0,
+    "warehouse_id": "d13ea247-ab70-473b-80d6-c8adea60334c",
+    "items": [
+      {
+        "availableQuantity": 2,
+        "effectivePrice": 18990000.0,
+        "productName": "Xiaomi 14T Pro",
+        "quantity": 1,
+        "sku": "DEV-X14TP-BLU-512",
+        "variantId": "4dcb8a6e-0083-4c7e-aaee-6464eeee11c6"
+      }
+    ]
+  },
+  "orders": [
+    {
+      "orderId": "d917c500-6597-4f79-bde7-a1c5232de8e1",
+      "orderCode": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+      "orderDate": "2026-10-04T06:36:15.571545Z",
+      "status": "PENDING",
+      "totalAmount": 49990000.0,
+      "payment": {
+        "amount": 49990000.0,
+        "paymentMethod": "COD",
+        "status": "PENDING"
+      }
+    }
+  ],
+  "order_total_elements": 1,
+  "warranty_count": 0,
+  "ticket_count": 0,
+  "real_order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+  "nonexistent_order_code": "ORD-EVAL03-NOTFOUND-c60fc64a2c8d",
+  "nonexistent_code_global_db_count": 0,
+  "knowledge": [
+    {
+      "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+      "title": "DEMO — Chính sách đổi trả kiểm thử",
+      "source": "demo://chatbot-lab/return",
+      "document_type": "DEMO",
+      "status": "PUBLISHED",
+      "document_content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+      "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+      "chunk_index": 0,
+      "chunk_content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+      "dimensions": 1024
+    },
+    {
+      "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+      "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+      "source": "demo://chatbot-lab/payment",
+      "document_type": "DEMO",
+      "status": "PUBLISHED",
+      "document_content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+      "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+      "chunk_index": 0,
+      "chunk_content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+      "dimensions": 1024
+    }
+  ],
+  "ownership_readonly_check": {
+    "owner_detail_status": 200,
+    "other_customer_same_order_status": 404,
+    "other_customer_order_count": 1,
+    "secondary_identity_omitted": true
+  }
+}
