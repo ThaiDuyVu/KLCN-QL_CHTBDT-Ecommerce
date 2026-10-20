@@ -1,0 +1,175 @@
+{
+  "trace_id": "90939550-5381-4155-a983-76e3e33de140",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "786ce900-76de-4f32-aaab-7d760766f49a",
+      "parent_id": "d9cc4fda-b2d0-4ecf-9922-40d956f1a021",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2500.93,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop dưới 20 triệu, RAM ít nhất 16GB",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "d6211f8b-e274-4dbe-bef9-cb58d10a0dac",
+      "parent_id": "5da87206-70f9-422e-8dbb-0683fac40d86",
+      "name": "conversation.reference_resolution",
+      "status": "ok",
+      "offset_ms": 2588.38,
+      "duration_ms": null,
+      "output": {
+        "kind": "SECOND",
+        "status": "NO_REFERENCE"
+      }
+    },
+    {
+      "id": "edc252c3-900d-4d60-9398-0dae060f2e04",
+      "parent_id": "5da87206-70f9-422e-8dbb-0683fac40d86",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2588.54,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Lần gợi ý trước không có sản phẩm thứ hai. Bạn vui lòng nêu tên hoặc SKU cần hỏi.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "eace7ee1-53c4-469b-88a5-12e40201eda3",
+      "parent_id": "5da87206-70f9-422e-8dbb-0683fac40d86",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2588.76,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "d1d48919-6607-4eec-951c-94d8ad7ada06",
+      "parent_id": "f320dc9a-8fcb-4736-8415-535fb69241f2",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2589.21,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 9.53,
+      "duration_ms": 2593.09,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 51.49,
+      "duration_ms": 2520.92,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 53.21,
+      "duration_ms": 2447.65,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 53.77,
+      "duration_ms": 2447.04,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 54.27,
+      "duration_ms": 2446.49,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2501.11,
+      "duration_ms": 15.8,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2516.95,
+      "duration_ms": 37.67,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2554.67,
+      "duration_ms": 17.15,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2588.68,
+      "duration_ms": 0.07,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2589.08,
+      "duration_ms": 0.19,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

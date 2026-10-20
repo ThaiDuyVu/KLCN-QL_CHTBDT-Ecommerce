@@ -69,6 +69,9 @@ class BackendProductClient:
         categories = self._get("/api/v1/categories").json()
         brands = self._get("/api/v1/brands", params={"page": 0, "size": 100}).json()
         rows = brands.get("content", []) if isinstance(brands, dict) else brands
+        if isinstance(brands, dict) and (brands.get("totalPages", 1) > 1 or
+                                       brands.get("totalElements", len(rows)) > len(rows)):
+            raise ValueError("Brand taxonomy exceeds bounded coverage; cannot verify brand constraints")
         return ([r["categoryName"] for r in categories if r["status"] == "ACTIVE"],
                 [r["brandName"] for r in rows if r["status"] == "ACTIVE"])
 

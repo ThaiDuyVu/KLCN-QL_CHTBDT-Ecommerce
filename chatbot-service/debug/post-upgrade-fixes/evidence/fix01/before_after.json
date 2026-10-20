@@ -1,0 +1,1056 @@
+[
+  {
+    "id": "N03",
+    "prompt": "Tìm laptop Lenovo RAM 16GB.",
+    "historical_trace_id": "b09a9991-d54e-4fe0-8779-27cc750332cf",
+    "before_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": null,
+            "sku": "LEN-16GB-2024",
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop lenovo ram 16gb",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "before_normalized_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop Lenovo RAM 16GB.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "after_live_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": null,
+            "sku": "LEN-16GB-2024",
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop lenovo ram 16gb",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "after_effective_plan": null,
+    "after_query_plan": {
+      "clarification": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "after_response": {
+      "session_id": "synthetic-session_id-4e76f5d0bf25",
+      "message": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "after_grounding": {
+      "query_plan": {
+        "clarification": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Tìm laptop Lenovo RAM 16GB.",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "after_trace_id": "bd8df813-f1cd-4f9a-8f6b-eacef072810e",
+    "verdict": "PASS"
+  },
+  {
+    "id": "N04",
+    "prompt": "Tìm máy tính xách tay Dell dưới 20 triệu.",
+    "historical_trace_id": "12f98c4b-6e38-45f5-9ac3-3da57c1c71c7",
+    "before_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "máy tính xách tay dell dưới 20 triệu",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "before_normalized_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": null,
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm máy tính xách tay Dell dưới 20 triệu.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "after_live_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "máy tính xách tay dell dưới 20 triệu",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "after_effective_plan": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm máy tính xách tay Dell dưới 20 triệu.",
+        "top_k": 5
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "after_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm máy tính xách tay Dell dưới 20 triệu.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "after_response": {
+      "session_id": "synthetic-session_id-527e724fd7f0",
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "after_grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm máy tính xách tay Dell dưới 20 triệu.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      },
+      "user_query": "Tìm máy tính xách tay Dell dưới 20 triệu.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.4111612753810415,
+          "ranking_score": 0.4111612753810415,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell"
+          ]
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "after_trace_id": "3ef16ba5-b6b6-4f0d-8d6c-8864f764f21f",
+    "verdict": "PASS"
+  },
+  {
+    "id": "N12",
+    "prompt": "So sánh Xiaomi 15 bản 12GB/256GB với iPhone 15 bản 6GB/128GB.",
+    "historical_trace_id": "3256c39d-0869-4c28-94fc-32f5d960b33b",
+    "before_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": 12,
+            "storage_gb": 256,
+            "color": null
+          },
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "iPhone 15",
+            "sku": null,
+            "ram_gb": 6,
+            "storage_gb": 128,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "before_normalized_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          },
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "iPhone 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": "Điện thoại",
+        "brands": [
+          "Xiaomi",
+          "Apple"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "So sánh Xiaomi 15 bản 12GB/256GB với iPhone 15 bản 6GB/128GB.",
+        "top_k": 2
+      },
+      "semantic_query": null
+    },
+    "after_live_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": 12,
+            "storage_gb": 256,
+            "color": null
+          },
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "iPhone 15",
+            "sku": null,
+            "ram_gb": 6,
+            "storage_gb": 128,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "after_effective_plan": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": 12,
+            "storage_gb": 256,
+            "color": null
+          },
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "iPhone 15",
+            "sku": null,
+            "ram_gb": 6,
+            "storage_gb": 128,
+            "color": null
+          }
+        ],
+        "category": "Điện thoại",
+        "brands": [
+          "Xiaomi",
+          "Apple"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "So sánh Xiaomi 15 bản 12GB/256GB với iPhone 15 bản 6GB/128GB.",
+        "top_k": 2
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "after_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": 12,
+            "storage_gb": 256,
+            "color": null
+          },
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "iPhone 15",
+            "sku": null,
+            "ram_gb": 6,
+            "storage_gb": 128,
+            "color": null
+          }
+        ],
+        "category": "Điện thoại",
+        "brands": [
+          "Xiaomi",
+          "Apple"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "So sánh Xiaomi 15 bản 12GB/256GB với iPhone 15 bản 6GB/128GB.",
+        "top_k": 2
+      },
+      "semantic_query": null
+    },
+    "after_response": {
+      "session_id": "synthetic-session_id-b66bbd14147d",
+      "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\niPhone 15\n- DEV-IP15-BLK-128: RAM 6GB, bộ nhớ 128GB, màu Đen; giá 17,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+          "sku": "DEV-IP15-BLK-128",
+          "original_price": "17990000.0",
+          "effective_price": "17990000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/iphone-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "after_grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PRODUCT_COMPARE",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": 12,
+              "storage_gb": 256,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "iPhone 15",
+              "sku": null,
+              "ram_gb": 6,
+              "storage_gb": 128,
+              "color": null
+            }
+          ],
+          "category": "Điện thoại",
+          "brands": [
+            "Xiaomi",
+            "Apple"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "So sánh Xiaomi 15 bản 12GB/256GB với iPhone 15 bản 6GB/128GB.",
+          "top_k": 2
+        },
+        "semantic_query": null
+      },
+      "user_query": "So sánh Xiaomi 15 bản 12GB/256GB với iPhone 15 bản 6GB/128GB.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        },
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "brand_name": "Apple",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Apple A16 Bionic",
+            "Màn hình": "OLED 6,1 inch",
+            "Pin": "Pin tích hợp, sạc qua USB-C",
+            "RAM": "6 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+              "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+              "sku": "DEV-IP15-BLK-128",
+              "original_price": "17990000.0",
+              "effective_price": "17990000.0",
+              "ram": "6GB",
+              "storage": "128GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "after_trace_id": "9ba065e8-7c3a-4019-be8e-79c42b7cca47",
+    "verdict": "PASS"
+  },
+  {
+    "id": "N46",
+    "prompt": "Tìm laptop dưới 20 triệu nhưng RAM phải dưới 16GB.",
+    "historical_trace_id": "4419ed83-e391-407e-bc1e-0ef6a513ce05",
+    "before_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 1,
+        "min_storage_gb": 1,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop duoi 20 trieu nhung ram phai duoi 16GB",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "before_normalized_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop dưới 20 triệu nhưng RAM phải dưới 16GB.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "after_live_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 1,
+        "min_storage_gb": 1,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop duoi 20 trieu nhung ram phai duoi 16GB",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "after_effective_plan": null,
+    "after_query_plan": {
+      "clarification": "Bộ lọc dung lượng tối đa/khoảng/giới hạn nghiêm ngặt chưa được hỗ trợ. Bạn vui lòng dùng mức tối thiểu GB/TB hoặc một biến thể cụ thể.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "after_response": {
+      "session_id": "synthetic-session_id-fca140c99544",
+      "message": "Bộ lọc dung lượng tối đa/khoảng/giới hạn nghiêm ngặt chưa được hỗ trợ. Bạn vui lòng dùng mức tối thiểu GB/TB hoặc một biến thể cụ thể.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "after_grounding": {
+      "query_plan": {
+        "clarification": "Bộ lọc dung lượng tối đa/khoảng/giới hạn nghiêm ngặt chưa được hỗ trợ. Bạn vui lòng dùng mức tối thiểu GB/TB hoặc một biến thể cụ thể.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Tìm laptop dưới 20 triệu nhưng RAM phải dưới 16GB.",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "after_trace_id": "4c865395-3e26-4f3a-afab-13a81d07a66c",
+    "verdict": "PASS"
+  },
+  {
+    "id": "N47",
+    "prompt": "Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.",
+    "historical_trace_id": "29a344ef-8bf7-4dea-a649-dba85cf037d9",
+    "before_model_plan": null,
+    "before_normalized_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Điện thoại",
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "after_live_model_plan": null,
+    "after_effective_plan": {
+      "product_search": {
+        "targets": [],
+        "category": "Điện thoại",
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.",
+        "top_k": 2
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "after_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Điện thoại",
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.",
+        "top_k": 2
+      },
+      "semantic_query": null
+    },
+    "after_response": {
+      "session_id": "synthetic-session_id-bd1d96db0cf6",
+      "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\nXiaomi 14T Pro\n- DEV-X14TP-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 16,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X14TP-BLU-512: RAM 12GB, bộ nhớ 512GB, màu Xanh; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X14TP-GRY-512: RAM 16GB, bộ nhớ 512GB, màu Xám; giá 19,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        },
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+          "sku": "DEV-X14TP-BLK-256",
+          "original_price": "16990000.0",
+          "effective_price": "16990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-14t-pro/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "after_grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Xiaomi"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.",
+          "top_k": 2
+        },
+        "semantic_query": null
+      },
+      "user_query": "Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": 0.5196409464952518,
+          "ranking_score": 0.5196409464952518,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-GRN-512",
+              "original_price": "21990000.0",
+              "effective_price": "21990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xanh lá",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        },
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "MediaTek Dimensity 9300+",
+            "Màn hình": "AMOLED 6,67 inch",
+            "Pin": "5.000 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": 0.4757464941756888,
+          "ranking_score": 0.4757464941756888,
+          "eligible_variants": [
+            {
+              "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+              "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+              "sku": "DEV-X14TP-BLK-256",
+              "original_price": "16990000.0",
+              "effective_price": "16990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "4dcb8a6e-0083-4c7e-aaee-6464eeee11c6",
+              "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+              "sku": "DEV-X14TP-BLU-512",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Xanh",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "0ba90d96-69c4-46a0-b477-dab320bd7863",
+              "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+              "sku": "DEV-X14TP-GRY-512",
+              "original_price": "19990000.0",
+              "effective_price": "19990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xám",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "after_trace_id": "14172550-0a62-49b4-b665-2545bfb9ee89",
+    "verdict": "PASS"
+  }
+]

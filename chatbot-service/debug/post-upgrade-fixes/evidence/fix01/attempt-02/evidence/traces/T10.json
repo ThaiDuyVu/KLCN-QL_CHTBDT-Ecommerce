@@ -1,0 +1,341 @@
+{
+  "trace_id": "30e19924-3331-48b3-8564-a9934bd33b21",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "31724e2e-20b6-470f-9cdb-d05ba2e1bcf7",
+      "parent_id": "3c21a8ad-66e4-42c6-b198-297dc35f22e6",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1969.42,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": 32,
+          "min_storage_gb": 1,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop ram 32gb gia duoi 20triệu",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "c69f78ab-cc7d-4eef-8eca-0b37b7b132a9",
+      "parent_id": "3c21a8ad-66e4-42c6-b198-297dc35f22e6",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2009.09,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": 32,
+            "min_storage_gb": 1,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop ram 32gb gia duoi 20triệu",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE",
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 32,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm laptop RAM ít nhất 32GB, giá dưới 20 triệu.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "7877178c-5fd2-4fae-8c0f-958122520b5e",
+      "parent_id": "f030c00d-878f-4f03-a290-67da2e20145e",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2026.0,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 32,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop RAM ít nhất 32GB, giá dưới 20 triệu.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "28fcbd88-30da-4bb8-ada6-f74a57be632a",
+      "parent_id": "f030c00d-878f-4f03-a290-67da2e20145e",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2026.11,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 32,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop RAM ít nhất 32GB, giá dưới 20 triệu.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "55f81256-0526-4917-9adc-001d03452ff6",
+      "parent_id": "f030c00d-878f-4f03-a290-67da2e20145e",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 2026.2,
+      "duration_ms": 9.89,
+      "output": []
+    },
+    {
+      "id": "22328c69-eb80-4d8e-9f45-c31ac366bd65",
+      "parent_id": "f030c00d-878f-4f03-a290-67da2e20145e",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2036.1,
+      "duration_ms": 0.03,
+      "output": []
+    },
+    {
+      "id": "5361043a-80e2-40af-ac4a-d593bebde422",
+      "parent_id": "22328c69-eb80-4d8e-9f45-c31ac366bd65",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2036.12,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [],
+        "variants": 0,
+        "cards": 0
+      }
+    },
+    {
+      "id": "4ef9b1fc-1127-48b8-9dc8-067582de8ddd",
+      "parent_id": "f030c00d-878f-4f03-a290-67da2e20145e",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2036.25,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "9efee583-2a70-4d6b-8c9c-903b7f29f63f",
+      "parent_id": "ef610e9e-9c85-48f5-b06c-00107e48f7ad",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2036.48,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "no_matching_products"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 6.3,
+      "duration_ms": 2042.74,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 37.21,
+      "duration_ms": 1972.06,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 39.95,
+      "duration_ms": 1929.41,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 40.4,
+      "duration_ms": 1928.92,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 40.8,
+      "duration_ms": 1928.49,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1969.53,
+      "duration_ms": 11.58,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1981.14,
+      "duration_ms": 15.56,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1996.74,
+      "duration_ms": 11.95,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2026.2,
+      "duration_ms": 9.89,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2026.3,
+      "duration_ms": 9.78,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2036.1,
+      "duration_ms": 0.03,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2036.2,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2036.4,
+      "duration_ms": 0.11,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Laptop"
+          ],
+          [
+            "maxPrice",
+            "20000000"
+          ],
+          [
+            "minRamGb",
+            "32"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ]
+        ]
+      }
+    }
+  ]
+}
