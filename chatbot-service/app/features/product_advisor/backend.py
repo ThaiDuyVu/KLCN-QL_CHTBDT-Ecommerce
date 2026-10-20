@@ -64,3 +64,32 @@ class BackendProductClient:
         response = self._get("/api/v1/products", params={"page": page, "size": size})
         response.raise_for_status()
         return response.json()
+
+    def taxonomy(self) -> tuple[list[str], list[str]]:
+        categories = self._get("/api/v1/categories").json()
+        brands = self._get("/api/v1/brands", params={"page": 0, "size": 100}).json()
+        rows = brands.get("content", []) if isinstance(brands, dict) else brands
+        return ([r["categoryName"] for r in categories if r["status"] == "ACTIVE"],
+                [r["brandName"] for r in rows if r["status"] == "ACTIVE"])
+
+    def catalog_names(self) -> list[dict[str, Any]]:
+        rows = []
+        for page in range(5):
+            result = self.catalog_page(page)
+            rows.extend(result["content"])
+            if page + 1 >= result["totalPages"]:
+                return rows
+        raise ValueError("Catalog resolution exceeds bounded coverage")
+
+    def identity_candidates(self, keyword: str) -> list[dict[str, Any]]:
+        rows = []
+        for page in range(5):
+            result = self._get("/api/v1/product-variants", params={
+                "keyword": keyword, "page": page, "size": 100}).json()
+            rows.extend(result["content"])
+            if page + 1 >= result["totalPages"]:
+                return rows
+        raise ValueError("Identity resolution exceeds bounded coverage")
+
+    def variant(self, variant_id: UUID) -> dict[str, Any]:
+        return self._get(f"/api/v1/product-variants/{variant_id}").json()

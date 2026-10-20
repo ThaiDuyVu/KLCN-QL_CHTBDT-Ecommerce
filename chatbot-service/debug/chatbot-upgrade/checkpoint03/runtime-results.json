@@ -1,0 +1,916 @@
+[
+  {
+    "case_id": "T23",
+    "prompt": "Tìm laptop dưới 20 triệu, RAM ít nhất 16GB.",
+    "session_id": "b2d2c6d8-74a8-49c3-a528-6014e517545d",
+    "trace_id": "363cd34e-ca2c-45b6-a777-bd08b5a3bf47",
+    "timestamp": "2026-10-13T12:10:32.581672+00:00",
+    "http_status": 200,
+    "latency_ms": 9016.09,
+    "response": {
+      "session_id": "b2d2c6d8-74a8-49c3-a528-6014e517545d",
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "reference_resolution": null,
+    "effective_search": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "live_variant_checks": 1,
+    "verdict": "PASS"
+  },
+  {
+    "case_id": "T24",
+    "prompt": "Chiếc máy vừa gợi ý có giá bao nhiêu?",
+    "session_id": "b2d2c6d8-74a8-49c3-a528-6014e517545d",
+    "trace_id": "3c5272da-fde9-4e05-98df-232d0f7393f9",
+    "timestamp": "2026-10-13T12:10:34.950296+00:00",
+    "http_status": 200,
+    "latency_ms": 2308.07,
+    "response": {
+      "session_id": "b2d2c6d8-74a8-49c3-a528-6014e517545d",
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "PRICE"
+      ],
+      "references": {
+        "source": "owned_session_snapshot"
+      },
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+            "product_name": null,
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "reference_resolution": {
+      "kind": "LAST",
+      "status": "RESOLVED",
+      "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+      "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+      "captured_at": "2026-10-13 12:10:32.564059+00:00",
+      "refresh": "live_backend"
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+            "product_name": null,
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 1
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "live_variant_checks": 1,
+    "verdict": "PASS"
+  },
+  {
+    "case_id": "T25",
+    "prompt": "Có chiếc nào rẻ hơn mà RAM vẫn 16GB không?",
+    "session_id": "b2d2c6d8-74a8-49c3-a528-6014e517545d",
+    "trace_id": "b0470c1e-0b56-4cc2-b74d-e52c0f372307",
+    "timestamp": "2026-10-13T12:10:37.323879+00:00",
+    "http_status": 200,
+    "latency_ms": 2316.26,
+    "response": {
+      "session_id": "b2d2c6d8-74a8-49c3-a528-6014e517545d",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "PRICE"
+      ],
+      "references": {
+        "baseline": "historical_display_price"
+      },
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "15989999.0",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Có chiếc nào rẻ hơn mà RAM vẫn 16GB không?",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "reference_resolution": {
+      "kind": "CHEAPER",
+      "status": "RESOLVED",
+      "baseline": "historical_display_price",
+      "baseline_price": "15990000.0",
+      "max_price": "15989999.0",
+      "captured_at": "2026-10-13 12:10:34.938947+00:00"
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "15989999.0",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Có chiếc nào rẻ hơn mà RAM vẫn 16GB không?",
+        "top_k": 5
+      },
+      "below_minimum": false,
+      "cheaper_followup": true
+    },
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "no_matching_products"
+    },
+    "live_variant_checks": 0,
+    "verdict": "PASS"
+  },
+  {
+    "case_id": "T26",
+    "prompt": "Cái thứ hai là gì?",
+    "session_id": "b2d2c6d8-74a8-49c3-a528-6014e517545d",
+    "trace_id": "207e1760-8af2-4204-b874-ebbe60668f6e",
+    "timestamp": "2026-10-13T12:10:39.598647+00:00",
+    "http_status": 200,
+    "latency_ms": 2208.41,
+    "response": {
+      "session_id": "b2d2c6d8-74a8-49c3-a528-6014e517545d",
+      "message": "Lần gợi ý trước không có sản phẩm thứ hai. Bạn vui lòng nêu tên hoặc SKU cần hỏi.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "query_plan": {
+      "clarification": "Lần gợi ý trước không có sản phẩm thứ hai. Bạn vui lòng nêu tên hoặc SKU cần hỏi.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "reference_resolution": {
+      "kind": "SECOND",
+      "status": "NO_REFERENCE"
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "live_variant_checks": 0,
+    "verdict": "PASS"
+  },
+  {
+    "case_id": "T27",
+    "prompt": "Tìm điện thoại Xiaomi.",
+    "session_id": "181165ff-4c28-45a7-a30a-d334a5f52e43",
+    "trace_id": "cdcf71ac-5694-42d5-85b6-a089d926515b",
+    "timestamp": "2026-10-13T12:10:40.732479+00:00",
+    "http_status": 200,
+    "latency_ms": 1071.11,
+    "response": {
+      "session_id": "181165ff-4c28-45a7-a30a-d334a5f52e43",
+      "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\nXiaomi 14T Pro\n- DEV-X14TP-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 16,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X14TP-BLU-512: RAM 12GB, bộ nhớ 512GB, màu Xanh; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X14TP-GRY-512: RAM 16GB, bộ nhớ 512GB, màu Xám; giá 19,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\nXiaomi Redmi Note 13\n- DEV-RN13-BLK-128: RAM 6GB, bộ nhớ 128GB, màu Đen; giá 4,490,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        },
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+          "sku": "DEV-X14TP-BLK-256",
+          "original_price": "16990000.0",
+          "effective_price": "16990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-14t-pro/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        },
+        {
+          "product_id": "3dbc1257-30f4-4870-8077-d1d6cc2b1e66",
+          "product_name": "Xiaomi Redmi Note 13",
+          "variant_id": "bd13d3a2-99c0-4ac3-8225-9584eb91d01e",
+          "sku": "DEV-RN13-BLK-128",
+          "original_price": "4490000.0",
+          "effective_price": "4490000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-redmi-note-13/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Điện thoại",
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm điện thoại Xiaomi.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "reference_resolution": null,
+    "effective_search": {
+      "product_search": {
+        "targets": [],
+        "category": "Điện thoại",
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm điện thoại Xiaomi.",
+        "top_k": 5
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "live_variant_checks": 7,
+    "verdict": "PASS"
+  },
+  {
+    "case_id": "T28",
+    "prompt": "Máy đầu tiên còn hàng không?",
+    "session_id": "181165ff-4c28-45a7-a30a-d334a5f52e43",
+    "trace_id": "fb05f338-2404-4be7-a02c-ad84043b79ab",
+    "timestamp": "2026-10-13T12:10:43.804585+00:00",
+    "http_status": 200,
+    "latency_ms": 3013.6,
+    "response": {
+      "session_id": "181165ff-4c28-45a7-a30a-d334a5f52e43",
+      "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "STOCK"
+      ],
+      "references": {
+        "source": "owned_session_snapshot"
+      },
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+            "product_name": null,
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "reference_resolution": {
+      "kind": "FIRST",
+      "status": "RESOLVED",
+      "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+      "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+      "captured_at": "2026-10-13 12:10:40.722084+00:00",
+      "refresh": "live_backend"
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+            "product_name": null,
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 1
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "live_variant_checks": 1,
+    "verdict": "PASS"
+  },
+  {
+    "case_id": "T29",
+    "prompt": "Có phiên bản 512GB không?",
+    "session_id": "181165ff-4c28-45a7-a30a-d334a5f52e43",
+    "trace_id": "c0d270df-1a83-4cee-943e-49437bea24ae",
+    "timestamp": "2026-10-13T12:10:45.667807+00:00",
+    "http_status": 200,
+    "latency_ms": 1801.2,
+    "response": {
+      "session_id": "181165ff-4c28-45a7-a30a-d334a5f52e43",
+      "message": "Xiaomi 15\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+          "sku": "DEV-X15-WHT-512",
+          "original_price": "20990000.0",
+          "effective_price": "20990000.0",
+          "ram": "12GB",
+          "storage": "512GB",
+          "color": "Trắng",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "SPECIFICATIONS"
+      ],
+      "references": {
+        "source": "owned_session_snapshot"
+      },
+      "product_search": {
+        "targets": [
+          {
+            "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+            "variant_id": null,
+            "product_name": null,
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": 512,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "reference_resolution": {
+      "kind": "STORAGE",
+      "status": "RESOLVED",
+      "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+      "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+      "captured_at": "2026-10-13 12:10:43.791083+00:00",
+      "refresh": "live_backend"
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+            "variant_id": null,
+            "product_name": null,
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": 512,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 1
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "live_variant_checks": 2,
+    "verdict": "PASS"
+  },
+  {
+    "case_id": "T30",
+    "prompt": "Có loại rẻ hơn không?",
+    "session_id": "7e1d27b9-83ee-4f22-b047-ee7dbffac287",
+    "trace_id": "d39a1e15-e588-4c1f-ab45-5f15255333e5",
+    "timestamp": "2026-10-13T12:10:46.680775+00:00",
+    "http_status": 200,
+    "latency_ms": 949.05,
+    "response": {
+      "session_id": "7e1d27b9-83ee-4f22-b047-ee7dbffac287",
+      "message": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "query_plan": {
+      "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "reference_resolution": {
+      "kind": "CHEAPER",
+      "status": "NO_REFERENCE"
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "live_variant_checks": 0,
+    "verdict": "PASS"
+  },
+  {
+    "case_id": "T56",
+    "prompt": "Tìm laptop RAM 16GB và điện thoại Xiaomi, mỗi loại một chiếc.",
+    "session_id": "7628e43e-c38b-4bdc-b46c-590ed1008fdf",
+    "trace_id": "3997015f-5c0a-44cb-9fc3-87dc9a26bb4d",
+    "timestamp": "2026-10-13T12:10:49.601388+00:00",
+    "http_status": 200,
+    "latency_ms": 2852.47,
+    "response": {
+      "session_id": "7628e43e-c38b-4bdc-b46c-590ed1008fdf",
+      "message": "Mình hỗ trợ tìm từng nhóm sản phẩm. Bạn muốn tìm laptop hay điện thoại trước?",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "query_plan": {
+      "clarification": "Mình hỗ trợ tìm từng nhóm sản phẩm. Bạn muốn tìm laptop hay điện thoại trước?",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "reference_resolution": null,
+    "effective_search": null,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "live_variant_checks": 0,
+    "verdict": "DEFERRED_APPROVED_SCOPE"
+  },
+  {
+    "case_id": "R01-reference-after-restart",
+    "prompt": "Chiếc máy vừa gợi ý có giá bao nhiêu?",
+    "session_id": "b2d2c6d8-74a8-49c3-a528-6014e517545d",
+    "trace_id": "3118dfc7-99ea-4788-90e5-a35dbe0d226a",
+    "timestamp": "2026-10-13T12:10:53.258981+00:00",
+    "http_status": 200,
+    "latency_ms": 2701.48,
+    "response": {
+      "session_id": "b2d2c6d8-74a8-49c3-a528-6014e517545d",
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "PRICE"
+      ],
+      "references": {
+        "source": "owned_session_snapshot"
+      },
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+            "product_name": null,
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "reference_resolution": {
+      "kind": "LAST",
+      "status": "RESOLVED",
+      "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+      "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+      "captured_at": "2026-10-13 12:10:34.938947+00:00",
+      "refresh": "live_backend"
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+            "product_name": null,
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 1
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "live_variant_checks": 1,
+    "verdict": "PASS"
+  },
+  {
+    "case_id": "R02-storage-after-restart",
+    "prompt": "Bản 512GB thì sao?",
+    "session_id": "181165ff-4c28-45a7-a30a-d334a5f52e43",
+    "trace_id": "b4fcc6ce-af70-4df3-a7ef-3e406082c28d",
+    "timestamp": "2026-10-13T12:10:57.670798+00:00",
+    "http_status": 200,
+    "latency_ms": 4349.07,
+    "response": {
+      "session_id": "181165ff-4c28-45a7-a30a-d334a5f52e43",
+      "message": "Xiaomi 15\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+          "sku": "DEV-X15-WHT-512",
+          "original_price": "20990000.0",
+          "effective_price": "20990000.0",
+          "ram": "12GB",
+          "storage": "512GB",
+          "color": "Trắng",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "SPECIFICATIONS"
+      ],
+      "references": {
+        "source": "owned_session_snapshot"
+      },
+      "product_search": {
+        "targets": [
+          {
+            "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+            "variant_id": null,
+            "product_name": null,
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": 512,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "reference_resolution": {
+      "kind": "STORAGE",
+      "status": "RESOLVED",
+      "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+      "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+      "captured_at": "2026-10-13 12:10:45.656554+00:00",
+      "refresh": "live_backend"
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+            "variant_id": null,
+            "product_name": null,
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": 512,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 1
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "live_variant_checks": 2,
+    "verdict": "PASS"
+  }
+]

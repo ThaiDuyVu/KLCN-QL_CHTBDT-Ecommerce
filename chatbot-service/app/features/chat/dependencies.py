@@ -1,4 +1,6 @@
 from app.features.chat.service import MockChatService
+from app.features.conversation.service import ConversationService
+from app.features.conversation.postgres_repository import PostgresConversationRepository
 from app.features.knowledge.database import postgres_repository
 from app.features.knowledge.service import PgvectorKnowledgeRetrievalService
 from uuid import UUID
@@ -7,6 +9,7 @@ from app.features.product_advisor.backend import BackendProductClient
 from app.features.product_advisor.real_service import RealProductAdvisorService
 from app.features.product_advisor.semantic import OllamaEmbeddingClient, ProductSemanticIndex
 from app.features.product_advisor.protocol import ProductAdvisorService
+from app.features.query_understanding.normalization import DomainNormalizer
 from app.features.query_understanding.ollama_service import OllamaQueryUnderstandingService
 from app.features.response_generation.ollama_service import OllamaResponseGenerationService
 from app.shared.config import Settings
@@ -26,6 +29,7 @@ class UnavailableProductAdvisor:
 
 
 def build_chat_service(settings: Settings, *, product_advisor: ProductAdvisorService | None = None) -> tuple[MockChatService, OllamaClient | None]:
+    conversation = ConversationService(PostgresConversationRepository(settings.conversation_database_url)) if settings.conversation_storage == 'postgres' else ConversationService()
     if product_advisor is None and settings.product_advisor_mode == "real":
         product_advisor = RealProductAdvisorService(
             backend=BackendProductClient(settings.backend_base_url, settings.backend_bearer_token),
@@ -34,14 +38,16 @@ def build_chat_service(settings: Settings, *, product_advisor: ProductAdvisorSer
             embedder=OllamaEmbeddingClient(settings.ollama_base_url, settings.ollama_embedding_model),
         )
     if not settings.chatbot_ai_enabled:
-        return MockChatService(product_advisor=product_advisor), None
+        return MockChatService(product_advisor=product_advisor, conversation_service=conversation), None
     client = OllamaClient(settings)
     knowledge = None
     if settings.knowledge_database_url:
         repository = postgres_repository(settings.knowledge_database_url)
         knowledge = PgvectorKnowledgeRetrievalService(repository, client, status=settings.knowledge_document_status)
     return MockChatService(
-        query_understanding=OllamaQueryUnderstandingService(client, history_window=settings.chat_history_window),
+        conversation_service=conversation,
+        query_understanding=OllamaQueryUnderstandingService(client, history_window=settings.chat_history_window,
+            normalizer=DomainNormalizer(product_advisor.backend) if isinstance(product_advisor, RealProductAdvisorService) else None),
         product_advisor=product_advisor if product_advisor is not None else UnavailableProductAdvisor(),
         response_generation=OllamaResponseGenerationService(client),
         knowledge_retrieval=knowledge,

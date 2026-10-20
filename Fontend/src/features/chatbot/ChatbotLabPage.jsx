@@ -8,7 +8,7 @@ import TracePanel from './TracePanel';
 
 const money = (value) => value == null ? 'Chưa có dữ liệu' : new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Number(value));
 function sessionFor(userId) {
-  const key = `chatbot-lab.session.${userId}`;
+  const key = `chatbot-lab.session.v2.${userId}`;
   try {
     const stored = sessionStorage.getItem(key);
     if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(stored || '')) return stored;
@@ -33,6 +33,11 @@ export default function ChatbotLabPage() {
   const [traceId, setTraceId] = useState(null);
   const [runtime, setRuntime] = useState(null);
   const [statusError, setStatusError] = useState('');
+  const [currentSession, setCurrentSession] = useState(null);
+  const [sessions, setSessions] = useState([]);
+  const [sessionPage, setSessionPage] = useState(0);
+  const [hasOlder, setHasOlder] = useState(false);
+  const [closed, setClosed] = useState(false);
   const [messages, setMessages] = useState([]);
   const [draft, setDraft] = useState('');
   const [selected, setSelected] = useState(scenarios[0]);
@@ -49,8 +54,12 @@ export default function ChatbotLabPage() {
     let active = true;
     chatbotApi.status().then((data) => { if (active) setRuntime(data); })
       .catch((failure) => { if (active) setStatusError(errorText(failure)); });
+    chatbotApi.sessions().then((rows) => { if (active) { setSessions(rows); setSessionPage(0); } })
+      .catch((failure) => { if (active) setError(errorText(failure)); });
+    chatbotApi.session(sessionId).then((session) => { if (active) { setClosed(!session.is_active); setCurrentSession(session); } })
+      .catch((failure) => { if (active) { if (failure.status === 404) setCurrentSession(null); else setError(errorText(failure)); } });
     chatbotApi.history(sessionId).then((history) => {
-      if (active) setMessages(history.map((m) => ({ id: m.id, role: m.sender_type, text: m.message, rating: m.rating })));
+      if (active) { setMessages(history.map((m) => ({ id: m.id, role: m.sender_type, text: m.message, rating: m.rating }))); setHasOlder(history.length === 100); }
     }).catch((failure) => { if (active && failure.status !== 404) setError(errorText(failure)); })
       .finally(() => { if (active) setRestoring(false); });
     return () => { active = false; controller.current?.abort(); };
@@ -64,7 +73,7 @@ export default function ChatbotLabPage() {
   async function send(event) {
     event.preventDefault();
     const question = draft.trim();
-    if (!question || busy || restoring) return;
+    if (!question || busy || restoring || closed) return;
     setBusy(true); setError(''); setDraft(''); setElapsed(null);
     setMessages((items) => [...items, { id: crypto.randomUUID(), role: 'USER', text: question }]);
     const requestTraceId = runtime?.trace_enabled ? crypto.randomUUID() : null;
@@ -77,6 +86,7 @@ export default function ChatbotLabPage() {
       if (abort.signal.aborted) return;
       const duration = Math.round(performance.now() - started);
       setElapsed(duration); setLastResult(result);
+      chatbotApi.sessions().then((rows) => { setSessions(rows); setSessionPage(0); }).catch(() => {});
       let saved = null;
       try {
         const history = await chatbotApi.history(sessionId);
@@ -93,8 +103,40 @@ export default function ChatbotLabPage() {
   }
   function newSession() {
     const id = crypto.randomUUID();
-    try { sessionStorage.setItem(`chatbot-lab.session.${user.userId}`, id); } catch { /* No storage. */ }
-    setTraceId(null); setSessionId(id); setMessages([]); setLastResult(null); setError(''); setElapsed(null); setRestoring(true);
+    try { sessionStorage.setItem(`chatbot-lab.session.v2.${user.userId}`, id); } catch { /* No storage. */ }
+    setCurrentSession(null); setClosed(false); setTraceId(null); setSessionId(id); setMessages([]); setLastResult(null); setError(''); setElapsed(null); setRestoring(true);
+  }
+  function selectSession(id) {
+    controller.current?.abort();
+    try { sessionStorage.setItem(`chatbot-lab.session.v2.${user.userId}`, id); } catch { /* No storage. */ }
+    setSessionId(id); setTraceId(null); setMessages([]); setLastResult(null); setElapsed(null); setError(''); setRestoring(true);
+    setCurrentSession(sessions.find((s) => s.id === id) || null);
+    setClosed(sessions.find((s) => s.id === id)?.is_active === false);
+  }
+  async function olderHistory() {
+    if (!messages.length || busy || restoring) return;
+    setRestoring(true); setError('');
+    try {
+      const rows = await chatbotApi.history(sessionId, messages[0].id);
+      setMessages((items) => [...rows.map((m) => ({ id: m.id, role: m.sender_type, text: m.message, rating: m.rating })), ...items]);
+      setHasOlder(rows.length === 100);
+    } catch (failure) { setError(errorText(failure)); } finally { setRestoring(false); }
+  }
+  async function olderSessions() {
+    setError('');
+    try {
+      const rows = await chatbotApi.sessions(sessionPage + 1);
+      setSessions((items) => [...items, ...rows.filter((r) => !items.some((i) => i.id === r.id))]);
+      setSessionPage((page) => page + 1);
+    } catch (failure) { setError(errorText(failure)); }
+  }
+  async function closeSession() {
+    setError('');
+    try {
+      const result = await chatbotApi.close(sessionId); setClosed(true);
+      setCurrentSession((session) => ({ ...session, ...result }));
+      setSessions(await chatbotApi.sessions()); setSessionPage(0);
+    } catch (failure) { setError(errorText(failure)); }
   }
   async function rate(item, rating) {
     setFeedbackBusy(true); setError('');
@@ -108,6 +150,8 @@ export default function ChatbotLabPage() {
     const url = URL.createObjectURL(blob); const link = document.createElement('a');
     link.href = url; link.download = `chatbot-lab-${sessionId}.json`; link.click(); URL.revokeObjectURL(url);
   }
+
+  const displayedSessions = currentSession && !sessions.some((s) => s.id === currentSession.id) ? [currentSession, ...sessions] : sessions;
 
   return <main className="chatbot-lab">
     <header className="lab-header">
@@ -147,8 +191,8 @@ export default function ChatbotLabPage() {
         </div>
         {error && <p role="alert" className="lab-error">{error}</p>}
         <form onSubmit={send} className="lab-composer"><label htmlFor="chat-question">Câu hỏi của bạn</label>
-          <textarea id="chat-question" value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={4000} rows={3} placeholder="Nhập câu hỏi cần kiểm chứng…" disabled={busy || restoring} />
-          <div><small>{draft.length}/4000 ký tự · Enter xuống dòng</small><button type="submit" disabled={busy || restoring || !draft.trim()}>{busy ? 'Đang chờ…' : 'Gửi câu hỏi'}</button></div>
+          <textarea id="chat-question" value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={4000} rows={3} placeholder="Nhập câu hỏi cần kiểm chứng…" disabled={busy || restoring || closed} />
+          <div><small>{draft.length}/4000 ký tự · Enter xuống dòng</small><button type="submit" disabled={busy || restoring || closed || !draft.trim()}>{busy ? 'Đang chờ…' : 'Gửi câu hỏi'}</button></div>
         </form>
       </section>
       <aside className="lab-panel lab-inspector"><h2>Trạng thái & kết quả</h2><button type="button" onClick={refreshStatus}>Kiểm tra dịch vụ</button>
@@ -163,10 +207,19 @@ export default function ChatbotLabPage() {
           <dt>Kho / index sản phẩm</dt><dd>{runtime.warehouse_configured ? 'Có kho' : 'Chưa có kho'} / {runtime.product_index_configured ? 'Đã cấu hình index' : 'Chưa cấu hình index'}</dd>
         </dl>}
         <small>“Đã cấu hình” không đảm bảo database đã có dữ liệu hoặc index đã chạy.</small>
-        <hr /><h3>Phiên hiện tại</h3><code>{sessionId}</code><p>Thời gian gần nhất: {elapsed == null ? '—' : `${(elapsed / 1000).toFixed(1)} giây`}</p>
+        <hr /><label htmlFor="lab-session-history">Lịch sử phiên</label>
+        <select id="lab-session-history" value={sessionId} disabled={busy || restoring} onChange={(event) => selectSession(event.target.value)}>
+          {!displayedSessions.some((s) => s.id === sessionId) && <option value={sessionId}>Phiên mới</option>}
+          {displayedSessions.map((s) => <option key={s.id} value={s.id}>{new Date(s.created_at).toLocaleString('vi-VN')} · {s.is_active ? 'Đang mở' : 'Đã đóng'}</option>)}
+        </select>
+        {closed && <p>Phiên đã đóng. Bạn có thể đọc lịch sử hoặc tạo phiên mới.</p>}
+        <button type="button" onClick={closeSession} disabled={busy || restoring || closed || !displayedSessions.some((s) => s.id === sessionId)}>Đóng phiên</button>
+        {sessions.length >= (sessionPage + 1) * 20 && <button type="button" onClick={olderSessions} disabled={busy || restoring}>Tải thêm phiên cũ</button>}
+        {hasOlder && <button type="button" onClick={olderHistory} disabled={busy || restoring}>Tải tin nhắn cũ hơn</button>}
+        <h3>Phiên hiện tại</h3><code>{sessionId}</code><p>Thời gian gần nhất: {elapsed == null ? '—' : `${(elapsed / 1000).toFixed(1)} giây`}</p>
         <button type="button" onClick={exportResult} disabled={!messages.length}>Xuất kết quả JSON</button><small>File xuất chứa nội dung chat cá nhân. Chỉ chia sẻ dữ liệu kiểm thử.</small>
         <details><summary>Response JSON gần nhất</summary><pre>{lastResult ? JSON.stringify(lastResult, null, 2) : 'Chưa có response.'}</pre></details>
-        <p className="lab-footnote">Reload khôi phục tối đa 100 message văn bản. Card/nguồn/JSON chỉ giữ trong lần mở trang này. Restart server sẽ mất lịch sử và feedback.</p>
+        <p className="lab-footnote">{runtime?.conversation_storage === 'postgres' ? 'Lịch sử văn bản và tham chiếu sản phẩm được lưu qua restart. Khôi phục tối đa 100 tin gần nhất; cards/nguồn/JSON của lượt gửi chỉ hiển thị trong lần mở trang này.' : 'Lịch sử đang lưu trong RAM và mất sau restart.'} Feedback Đúng/Cần sửa chỉ lưu tạm trong RAM; không khôi phục sau restart.</p>
       </aside>
     </div>
     <TracePanel key={sessionId} sessionId={sessionId} traceId={traceId} onSelect={setTraceId} enabled={runtime?.trace_enabled} busy={busy} />

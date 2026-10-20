@@ -1,0 +1,69 @@
+{
+  "task_id": "c2c_chatbot_upgrade_03",
+  "verdict": "APPROVED_SCOPE_COMPLETED",
+  "branch": "dev/thai-duy-vu",
+  "head": "d235df5cc4411d12accae8489930a31d281abbf8",
+  "main_cases": {
+    "count": 12,
+    "passed": 11,
+    "deferred_approved_scope": 1,
+    "failed": 0
+  },
+  "extra_restart_reference_cases": {
+    "passed": 2
+  },
+  "python_full_isolated_postgres": {
+    "passed": 220,
+    "skipped": 1
+  },
+  "conversation_module": {
+    "tests": 19,
+    "postgres_integration_tests": 4
+  },
+  "frontend_focused": {
+    "passed": 9,
+    "files": 2
+  },
+  "frontend_build": "PASS",
+  "frontend_chatbot_eslint": "PASS",
+  "java_auth_integration": {
+    "passed": 17,
+    "skipped": 0
+  },
+  "history_survives_restart": true,
+  "feedback_persisted": false,
+  "canonical_identity_verified": true,
+  "multi_intent_implemented": false,
+  "summary_implemented": false,
+  "schema_changes": [],
+  "business_state_unchanged_vs_checkpoint02": true,
+  "source_sha256": {
+    "Fontend/src/features/chatbot/ChatbotLab.test.jsx": "0a9ef95e34c66aedc0a2804379ce0eed1b28286bcec8545cc548d7b124456a48",
+    "Fontend/src/features/chatbot/ChatbotLabPage.jsx": "1d1277b7c2ea1d134e3c3d1d7ddcba2e84a7616809ba2c2754c08a9401616f04",
+    "Fontend/src/features/chatbot/chatbotApi.js": "b1b4d1670f1e97b342cfd1eab84dec413bbe7680a966928b8b15aa4437c6a3a6",
+    "backend/src/main/java/com/example/backend/auth/dto/LoginSessionResponse.java": "ac89287dccfdf9a8bd4d16e4162daf36858c5c03005535b1f670990f532d5a52",
+    "backend/src/main/java/com/example/backend/auth/service/AuthServiceImpl.java": "42f4e307054037e1c9722d442ee21dfb39a3486ce1cb51e0c595d8e900af8be0",
+    "backend/src/test/java/com/example/backend/auth/integration/AuthMeIntegrationTest.java": "c6e22b7b65ed2640f3c0ba55fed5dfff8727be49df1233bc6fb389d911e10bea",
+    "chatbot-service/.env.example": "65125acc42c2b0e120cf45bf66c3a30afde66292fdccfbe2ddd1bb870d099ce4",
+    "chatbot-service/app/features/chat/dependencies.py": "b31b537b80e537d302cce2b7f49c64fd42b4a93f6e637ecac3d220abb7af4b09",
+    "chatbot-service/app/features/chat/router.py": "991ecdeeb74eb59f63907959ab6ab89582afe9d6f02d29c4d709756e1046d815",
+    "chatbot-service/app/features/chat/service.py": "d3568464a73c011bcbeffdf51ff4e0793306efc1af034816082f7bddb12eda21",
+    "chatbot-service/app/features/conversation/models.py": "44957f0c40fcd3e2f89dba31ca46b81882e7104f8ecea8ddd065add85b80f851",
+    "chatbot-service/app/features/conversation/repository.py": "4697c1864c73d1c47d8e3abd19d3184721e0c660d4c4421b4494452a8ebcc42d",
+    "chatbot-service/app/features/conversation/service.py": "1f82e12a373e42a0c9e7b16c0b507b868b817759cfa11935c7b7f0c537167b10",
+    "chatbot-service/app/features/customer_context/models.py": "af909c9debbcf67e5fb61d1a3ca4bf2934221efc166124cc2ec5b6db9a9c3850",
+    "chatbot-service/app/features/product_advisor/backend.py": "e92391e2b246fd19979dadf4d578c6c553c18a09de22d223007e2463e889efff",
+    "chatbot-service/app/features/product_advisor/real_service.py": "f7dfa7365a59099ec0434a9fdf4658eab5ba43ed7b339f4a254c42b78f30e244",
+    "chatbot-service/app/features/query_understanding/ollama_service.py": "3a122770e19043937e8d459a11047eb37ef96a7a59d8a816e3fefd48f3223be5",
+    "chatbot-service/app/features/response_generation/ollama_service.py": "eb45472e8910fa8279a7d2dcee7d0397550ecc8fac5e5e72ddb5e5afd0a8372c",
+    "chatbot-service/app/shared/backend/client.py": "0af506dc5424879a4fe34fd5e80c6777feff1a24bb6066d47c5f99654b4fa917",
+    "chatbot-service/app/shared/config.py": "92a7b0870a99e6c6de9e8ec436aaa8e149073cf17e084f58cad22d7afb30385a",
+    "chatbot-service/app/shared/contracts/product.py": "9bc5e9a7f30d54d2e37b628e40a102ea9d3f615d924fa89cf8a1568a87d99b4e",
+    "chatbot-service/app/shared/contracts/query.py": "9baab9dc5553766df337d49fdc4a5727d2fa2e3f3660a5c25674fd68c99742ff",
+    "chatbot-service/tests/conftest.py": "c8d5e6320ab057514ab3a03e510ec22640632a2e3f126933826c94a27ed15aac",
+    "chatbot-service/tests/test_backend_client.py": "70f07f7c42c8a16f32d55e6d395c7cb682f50052545af83d9a7fdb65d2b8926e",
+    "chatbot-service/app/features/conversation/postgres_repository.py": "8bc4535c800909d46b76a2b120f3f697a46256c690cd414f72329fa44960e2f8",
+    "chatbot-service/app/features/conversation/references.py": "93a1457f46e73bccf08e97e1a3ef174a2fdeeb8495c169d6af17a384d6db4213",
+    "chatbot-service/tests/test_persistent_conversation.py": "ff497ddc2b7e39cd65d0f3ada622d68fe95173e8944cc82179cd05debc85cbef"
+  }
+}

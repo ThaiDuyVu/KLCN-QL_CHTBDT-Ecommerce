@@ -153,6 +153,19 @@ class AuthMeIntegrationTest {
     }
 
     @Test
+    void customerIdentityUsesCustomerPrimaryKeyRatherThanUserId() throws Exception {
+        UUID customerId = UUID.randomUUID();
+        UUID customerRole = jdbcTemplate.queryForObject("SELECT role_id FROM roles WHERE role_name='CUSTOMER'", UUID.class);
+        jdbcTemplate.update("UPDATE user_roles SET role_id=? WHERE user_id=?", customerRole, ACTIVE_USER_ID);
+        jdbcTemplate.update("INSERT INTO customers(customer_id,user_id,full_name) VALUES(?,?,?)", customerId, ACTIVE_USER_ID, "Khách kiểm thử");
+        Cookie cookie = loginAndGetAccessTokenCookie();
+        mockMvc.perform(get("/api/auth/me").cookie(cookie))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId").value(ACTIVE_USER_ID.toString()))
+                .andExpect(jsonPath("$.customerId").value(customerId.toString()));
+    }
+
+    @Test
     void getCurrentUserWithRefreshTokenOnly_shouldReturnUnauthorized()
             throws Exception {
         Cookie refreshTokenCookie = loginAndGetRefreshTokenCookie();
@@ -243,6 +256,7 @@ class AuthMeIntegrationTest {
     }
 
     private void clearTestData() {
+        jdbcTemplate.update("DELETE FROM customers WHERE user_id=?", ACTIVE_USER_ID);
         jdbcTemplate.update(
                 "DELETE FROM refresh_tokens WHERE user_id = ?",
                 ACTIVE_USER_ID

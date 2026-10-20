@@ -1,5 +1,6 @@
 """Map existing backend camelCase DTOs into the locked shared contracts."""
-from app.shared.tracing import traced
+from app.shared.tracing import traced, event
+from datetime import datetime
 from pydantic import ValidationError
 from fastapi import HTTPException
 
@@ -40,7 +41,7 @@ class CustomerContextService:
         self.backend_client = backend_client
 
     @traced('customer.context', ('intent',))
-    async def load_context(self, intent: str, cookies: dict[str, str]) -> CustomerContext:
+    async def load_context(self, intent: str, cookies: dict[str, str], *, order_code: str | None = None, latest: bool = False) -> CustomerContext:
         context = CustomerContext()
         if not cookies or self.backend_client is None:
             return context
@@ -55,9 +56,24 @@ class CustomerContextService:
                             available_quantity=i.get('availableQuantity')) for i in row['items']])
             elif intent in {'ORDER_STATUS', 'PAYMENT_STATUS'}:
                 rows = await self.backend_client.get_recent_orders(cookies)
-                if intent == 'PAYMENT_STATUS' and rows:
-                    detail = await self.backend_client.get_order_detail(str(rows[0]['orderId']), cookies)
-                    rows = [detail] if detail else []
+                # The owned endpoint defines the candidate scope. No arbitrary ID lookup.
+                rows = sorted(rows, key=lambda r: (datetime.fromisoformat(r['orderDate'].replace('Z', '+00:00')), str(r['orderId'])), reverse=True)
+                if order_code is not None:
+                    rows = [r for r in rows if r['orderCode'] == order_code]
+                    if len(rows) > 1:
+                        raise ValueError('Ambiguous owned order code')
+                elif latest or intent == 'PAYMENT_STATUS':
+                    rows = rows[:1]
+                if intent == 'PAYMENT_STATUS':
+                    details = []
+                    for row in rows:
+                        detail = await self.backend_client.get_order_detail(str(row['orderId']), cookies)
+                        if detail is not None:
+                            if detail['orderId'] != row['orderId'] or detail['orderCode'] != row['orderCode']:
+                                raise ValueError('Order detail identity changed')
+                            details.append(detail)
+                    rows = details
+                event('customer.order_selection', {'selection': 'exact_code' if order_code else 'latest' if latest or intent == 'PAYMENT_STATUS' else 'recent', 'matched': len(rows), 'order_ids': [r['orderId'] for r in rows]})
                 context.recent_orders = [order_context(row) for row in rows]
             elif intent == 'WARRANTY_STATUS':
                 context.warranties = [warranty_context(row) for row in await self.backend_client.get_warranties(cookies)]
