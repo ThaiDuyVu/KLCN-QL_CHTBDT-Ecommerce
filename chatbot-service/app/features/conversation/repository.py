@@ -7,7 +7,7 @@ from uuid import UUID, uuid4
 
 from fastapi import HTTPException
 
-from app.features.conversation.models import ChatMessage, ChatSession, SenderType
+from app.features.conversation.models import ChatMessage, ChatSession, SenderType, EvidenceSnapshot
 from app.shared.config import get_settings
 from app.shared.contracts.response import ProductCard
 
@@ -19,6 +19,7 @@ class InMemoryConversationRepository:
     def __init__(self) -> None:
         self._sessions_by_id: dict[UUID, ChatSession] = {}
         self._messages_by_session: dict[UUID, list[ChatMessage]] = {}
+        self._snapshots: dict[UUID, EvidenceSnapshot] = {}
         self._last_product_cards: dict[UUID, list[ProductCard]] = {}
         self._lock = RLock()
 
@@ -29,7 +30,7 @@ class InMemoryConversationRepository:
     ) -> ChatSession:
         with self._lock:
             if session_id is not None and session_id in self._sessions_by_id:
-                return self._sessions_by_id[session_id]
+                return self.get_session(session_id, customer_id)
 
             session = ChatSession(customer_id=customer_id, id=session_id or uuid4())
             self._sessions_by_id[session.id] = session
@@ -114,3 +115,39 @@ class InMemoryConversationRepository:
             self.get_session(session_id, customer_id)
             if cards:
                 self._last_product_cards[session_id] = [card.model_copy(deep=True) for card in cards]
+
+
+    def get_snapshot(self, session_id, customer_id):
+        self.get_session(session_id, customer_id)
+        return self._snapshots.get(session_id) or (EvidenceSnapshot(cards=self._last_product_cards[session_id]) if self._last_product_cards.get(session_id) else None)
+
+    def save_assistant(self, session_id, customer_id, text, snapshot=None):
+        message = self.add_message(session_id, SenderType.ASSISTANT, text, customer_id)
+        if snapshot and snapshot.cards:
+            self._snapshots[session_id] = snapshot.model_copy(deep=True)
+            self.remember_product_cards(session_id, customer_id, snapshot.cards)
+        return message
+
+    def set_rating(self, session_id, message_id, customer_id, rating):
+        self.get_session(session_id, customer_id)
+        message = self.get_message(session_id, message_id)
+        if message is None:
+            raise HTTPException(404, 'Message not found')
+        message.rating = rating
+        return message
+
+    def list_sessions(self, customer_id, page=0, size=20):
+        rows = sorted((s for s in self._sessions_by_id.values() if s.customer_id == customer_id),
+                      key=lambda s: (s.created_at, str(s.id)), reverse=True)
+        return rows[page*size:(page+1)*size]
+
+
+    def history_page(self, session_id, customer_id, before=None, size=100):
+        with self._lock:
+            self.get_session(session_id,customer_id)
+            rows=self._messages_by_session.get(session_id,[])
+            if before is not None:
+                index=next((i for i,m in enumerate(rows) if m.id==before),None)
+                if index is None: raise HTTPException(404,'History cursor not found')
+                rows=rows[:index]
+            return list(rows[-size:])

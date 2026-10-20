@@ -12,14 +12,17 @@ import httpx
 from fastapi import HTTPException
 from app.shared.config import get_settings
 from app.features.product_advisor.backend import backend_cookies
+from app.features.product_advisor.real_service import ProductResolutionError
 
 from app.features.knowledge.protocol import KnowledgeRetrievalService
 from app.features.knowledge.repository import KnowledgeRepositoryError
-from app.features.knowledge.service import KnowledgeUnavailable, build_source_references
+from app.features.knowledge.service import KnowledgeUnavailable, build_source_references, relevant_chunks
 from app.shared.contracts.knowledge import KnowledgeChunkMatch
 
 from app.features.chat.models import SendMessageRequest
-from app.features.conversation.models import SenderType
+from app.features.conversation.models import SenderType, EvidenceSnapshot
+from app.features.conversation.references import resolve_reference
+from app.features.chat.policy import read_only_plan
 from app.features.conversation.service import ConversationService
 from app.features.customer_context.models import AuthenticatedCustomer
 from app.features.customer_context.service import CustomerContextService
@@ -83,8 +86,19 @@ class ChatService:
             else MockResponseGenerationService()
         )
 
+    async def send_message_async(self, session_id, request, customer=None, cookies=None):
+        repository = self.conversation_service.repository
+        if hasattr(repository, 'request_lock') and customer is not None:
+            lease = repository.request_lock(session_id, customer.customer_id)
+            await asyncio.to_thread(lease.__enter__)
+            try:
+                return await self._send_message_async(session_id, request, customer, cookies)
+            finally:
+                await asyncio.to_thread(lease.__exit__, None, None, None)
+        return await self._send_message_async(session_id, request, customer, cookies)
+
     @traced("chat.pipeline", ("request", "session_id"))
-    async def send_message_async(
+    async def _send_message_async(
         self,
         session_id: UUID,
         request: SendMessageRequest,
@@ -109,7 +123,7 @@ class ChatService:
                 else:
                     raise
 
-            self.conversation_service.add_message(
+            current_message = self.conversation_service.add_message(
                 session_id=session_id,
                 sender_type=SenderType.USER,
                 message=request.message,
@@ -123,7 +137,7 @@ class ChatService:
         else:
             recent_messages = []
 
-        recent_messages = recent_messages[:-1] if recent_messages else []
+        recent_messages = [m for m in recent_messages if m.id != current_message.id] if customer is not None else []
 
         recent_history = [
             SharedChatMessage(
@@ -146,8 +160,24 @@ class ChatService:
         )
 
         event("conversation.context", query_context)
-        query_plan = await asyncio.to_thread(self.query_understanding.understand, query_context)
+        def understand():
+            token = backend_cookies.set(cookies or None)
+            try:
+                return self.query_understanding.understand(query_context)
+            finally:
+                backend_cookies.reset(token)
+        try:
+            query_plan = read_only_plan(request.message)
+            if query_plan is not None:
+                event('query.read_only_guard', query_plan)
+            else:
+                query_plan = await asyncio.to_thread(understand)
+        except (httpx.HTTPError, ValueError) as exc:
+            raise HTTPException(status_code=503, detail="Chưa thể xác minh catalog sản phẩm; vui lòng thử lại.") from exc
 
+        if customer is not None:
+            snapshot = await asyncio.to_thread(self.conversation_service.repository.get_snapshot, session_id, customer.customer_id)
+            query_plan = resolve_reference(request.message, query_plan, snapshot)
         event("query.plan.initial", query_plan)
 
         product_matches: list[ProductMatch] = []
@@ -188,16 +218,21 @@ class ChatService:
                     product_matches, product_cards = await asyncio.to_thread(search_and_build)
                 if customer is not None:
                     self.conversation_service.repository.remember_product_cards(session_id, customer.customer_id, product_cards)
+            except ProductResolutionError as exc:
+                event('product.resolution_failed', {'reason': exc.reason}, status='warning')
+                query_plan = query_plan.model_copy(update={'clarification': str(exc)})
             except (httpx.HTTPError, ValueError) as exc:
                 raise HTTPException(status_code=503, detail="Chưa thể lấy dữ liệu sản phẩm. Kiểm tra backend, kho hàng và dịch vụ embedding.") from exc
 
         """chuyển tiếp 'cookies' nhận từ Client sang hệ thống Spring Boot qua BackendClient
         Spring Security sẽ chịu trách nhiệm giải mã cookies, xác thực danh tính 
         và trả về đúng dữ liệu thuộc sở hữu của Customer đó"""
-        context_payload = await self.customer_context_service.load_context(
-            query_plan.intent,
-            cookies or {},
-        )
+        context_options = {}
+        if query_plan.references.get('order_code'):
+            context_options['order_code'] = query_plan.references['order_code']
+        if query_plan.references.get('order_selection') == 'latest':
+            context_options['latest'] = True
+        context_payload = await self.customer_context_service.load_context(query_plan.intent, cookies or {}, **context_options)
 
         knowledge_chunks = []
         if query_plan.intent == Intent.KNOWLEDGE_QA and self.knowledge_retrieval is not None:
@@ -207,9 +242,11 @@ class ChatService:
                     query_plan.semantic_query or query_context.current_message,
                     top_k=self.knowledge_top_k,
                 )
+                knowledge_chunks = relevant_chunks(query_context.current_message, knowledge_chunks)
             except (KnowledgeUnavailable, KnowledgeRepositoryError) as exc:
                 event("knowledge.fallback", {"reason": type(exc).__name__, "action": "continue_without_knowledge"}, status="warning")
                 knowledge_chunks = []
+                query_plan = query_plan.model_copy(update={'clarification': 'Dịch vụ tra cứu tài liệu đang không khả dụng. Mình chưa thể xác minh câu trả lời; bạn vui lòng thử lại sau.'})
 
         event("retrieval.summary", {"intent": query_plan.intent, "products": len(product_matches), "cards": len(product_cards), "knowledge_chunks": len(knowledge_chunks), "knowledge_configured": self.knowledge_retrieval is not None})
         grounded_context = GroundedContext(
@@ -224,14 +261,6 @@ class ChatService:
         event("response.grounded_context", grounded_context)
         assistant_message = await asyncio.to_thread(self.response_generation.generate, grounded_context)
 
-        if customer is not None:
-            self.conversation_service.add_message(
-                session_id=session_id,
-                sender_type=SenderType.ASSISTANT,
-                message=assistant_message,
-                customer_id=customer.customer_id,
-            )
-
         response = ChatResponse(
             session_id=session_id,
             message=assistant_message,
@@ -244,6 +273,17 @@ class ChatService:
             else [],
         )
 
+        if customer is not None:
+            snapshot_search = product_search if product_cards else None
+            if product_cards and query_plan.references.get('source') == 'owned_session_snapshot' and snapshot and snapshot.search:
+                # A detail question changes the selected object, not the original discovery requirements.
+                snapshot_search = snapshot.search
+            categories = {match.category_name for match in product_matches if match.category_name}
+            if snapshot_search is not None and not snapshot_search.category and len(categories) == 1:
+                snapshot_search = snapshot_search.model_copy(update={'category': next(iter(categories))})
+            snapshot = EvidenceSnapshot(cards=product_cards, search=snapshot_search) if product_cards else None
+            await asyncio.to_thread(self.conversation_service.repository.save_assistant,
+                                    session_id, customer.customer_id, assistant_message, snapshot)
         if self.after_response is not None:
             await asyncio.to_thread(self.after_response, query_context, response, knowledge_chunks)
         return response
@@ -280,4 +320,3 @@ class ChatService:
 
 
 MockChatService = ChatService
-

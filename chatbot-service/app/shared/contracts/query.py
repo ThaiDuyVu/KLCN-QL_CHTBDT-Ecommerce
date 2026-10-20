@@ -1,11 +1,31 @@
 from decimal import Decimal
+from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 from app.shared.contracts.enums import Intent, RequestedField
 
+class ProductSelector(BaseModel):
+    """Explicit identity, separate from minimum discovery filters."""
+    model_config = ConfigDict(extra="forbid")
+    product_id: UUID | None = None
+    variant_id: UUID | None = None
+    product_name: str | None = Field(default=None, min_length=1)
+    sku: str | None = Field(default=None, min_length=1)
+    ram_gb: int | None = Field(default=None, ge=1)
+    storage_gb: int | None = Field(default=None, ge=1)
+    color: str | None = Field(default=None, min_length=1)
+
+    @model_validator(mode="after")
+    def identity_required(self):
+        if sum(value is not None for value in (self.product_id, self.variant_id, self.product_name, self.sku)) != 1:
+            raise ValueError("Exactly one explicit identity is required")
+        return self
+
+
 class ProductSearchPlan(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
+    targets: list[ProductSelector] = Field(default_factory=list, max_length=3)
     category: str | None = None
     brands: list[str] = Field(default_factory=list)
 
@@ -37,6 +57,7 @@ class ProductSearchPlan(BaseModel):
 class QueryPlan(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
+    clarification: str | None = None
     intent: Intent
 
     requested_fields: list[RequestedField] = Field(

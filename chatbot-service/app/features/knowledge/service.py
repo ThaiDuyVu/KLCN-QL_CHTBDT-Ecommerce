@@ -1,4 +1,7 @@
-from app.shared.tracing import traced
+from app.shared.tracing import traced, event
+import math
+import re
+from app.features.query_understanding.normalization import folded
 from uuid import UUID
 
 from app.features.knowledge.repository import IndexedChunk, KnowledgeRepository
@@ -10,6 +13,34 @@ from app.shared.ollama.protocol import EmbeddingModel
 
 class KnowledgeUnavailable(RuntimeError):
     pass
+
+
+def relevant_chunks(query: str, matches: list[KnowledgeChunkMatch]) -> list[KnowledgeChunkMatch]:
+    """Conservative topical gate over ranked, status-eligible candidates.
+
+    A cosine score alone is not calibrated relevance. Require the explicit
+    question topic in chunk text, retaining rank and original provenance.
+    Unsupported topics abstain rather than citing the nearest unrelated policy.
+    """
+    topics = {
+        'returns': ('doi tra', 'hoan tra', 'return'),
+        'payment': ('thanh toan', 'payment'),
+        'warranty': ('bao hanh', 'warranty'),
+        'promotion': ('khuyen mai', 'khuyen mai', 'promotion'),
+        'shipping': ('giao hang', 'van chuyen', 'shipping'),
+    }
+    q = folded(query)
+    wanted = [name for name, aliases in topics.items() if any(a in q for a in aliases)]
+    tokens = {t for t in re.findall(r'\w+', q) if len(t) >= 4} - {'theo', 'demo', 'lieu', 'chinh', 'sach', 'hang', 'minh', 'duoc', 'khong', 'nhung', 'thong'}
+    selected = []
+    for match in matches:
+        content = folded(match.content)
+        valid_score = math.isfinite(match.similarity_score) and match.similarity_score > 0
+        topical = any(any(alias in content for alias in topics[name]) for name in wanted) if wanted else bool(tokens.intersection(re.findall(r'\w+', content)))
+        if valid_score and topical:
+            selected.append(match)
+    event('knowledge.relevance', {'candidate_count': len(matches), 'selected_chunk_ids': [m.chunk_id for m in selected], 'rejected_chunk_ids': [m.chunk_id for m in matches if m not in selected], 'topics': wanted, 'policy': 'positive_cosine_and_explicit_topic'})
+    return selected
 
 
 def chunk_text(content: str, *, size: int = 1000, overlap: int = 150) -> list[str]:
@@ -76,7 +107,7 @@ class PgvectorKnowledgeRetrievalService:
             vector = validate_embeddings(self.embeddings.embed([query]), 1)[0]
         except OllamaError as exc:
             raise KnowledgeUnavailable("Knowledge embedding unavailable") from exc
-        return self.repository.search(vector, self.status, top_k)
+        return relevant_chunks(query, self.repository.search(vector, self.status, top_k))
 
     def record_retrievals(self, history_id: UUID, matches: list[KnowledgeChunkMatch]) -> None:
         self.repository.record_retrievals(history_id, matches)

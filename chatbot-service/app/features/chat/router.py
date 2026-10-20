@@ -1,6 +1,6 @@
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, Depends, Request, Response, HTTPException
+from fastapi import APIRouter, Depends, Request, Response, HTTPException, Query
 from app.shared.config import get_settings
 from app.shared.tracing import capture, enabled, store, event
 
@@ -90,10 +90,12 @@ def feedback_message(
 @router.get("/sessions/{session_id}/messages")
 def get_messages(
     session_id: UUID,
+    before: UUID | None = None,
+    size: int = Query(default=100, ge=1, le=100),
     customer: AuthenticatedCustomer = Depends(get_authenticated_customer),
     service: ChatService = Depends(get_chat_service),
 ):
-    return service.conversation_service.get_recent_messages(session_id, customer.customer_id, window=100)
+    return service.conversation_service.repository.history_page(session_id, customer.customer_id, before, size)
 
 
 @router.get("/status")
@@ -126,7 +128,9 @@ async def status(customer: AuthenticatedCustomer = Depends(get_authenticated_cus
         'knowledge_status': settings.knowledge_document_status,
         'product_index_configured': bool(settings.product_index_database_url),
         'warehouse_configured': bool(settings.chatbot_warehouse_id),
-        'conversation_storage': 'in-memory',
+        'conversation_storage': get_settings().conversation_storage,
+        'feedback_storage': 'memory',
+        'snapshot_storage': 'assistant-message-envelope' if get_settings().conversation_storage == 'postgres' else 'memory',
     }
 
 
@@ -146,3 +150,22 @@ def get_trace(session_id: UUID, trace_id: UUID, response: Response,
         raise HTTPException(404, 'Tracing chưa được bật trong môi trường phát triển.')
     response.headers['Cache-Control'] = 'no-store'
     return store.get(trace_id, session_id, customer.customer_id)
+
+
+@router.get('/sessions')
+def list_sessions(page: int = 0, size: int = 20,
+                  customer: AuthenticatedCustomer = Depends(get_authenticated_customer),
+                  service: ChatService = Depends(get_chat_service)):
+    return service.conversation_service.list_sessions(customer.customer_id,page,size)
+
+
+@router.get('/sessions/{session_id}')
+def session_detail(session_id: UUID, customer: AuthenticatedCustomer = Depends(get_authenticated_customer),
+                   service: ChatService = Depends(get_chat_service)):
+    return service.conversation_service.get_session(session_id,customer.customer_id)
+
+
+@router.post('/sessions/{session_id}/close')
+def close_session(session_id: UUID, customer: AuthenticatedCustomer = Depends(get_authenticated_customer),
+                  service: ChatService = Depends(get_chat_service)):
+    return service.conversation_service.end_session(session_id,customer.customer_id)

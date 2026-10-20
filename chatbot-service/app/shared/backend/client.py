@@ -92,19 +92,12 @@ class BackendClient:
     ) -> AuthenticatedCustomer:
         payload = await self.get_current_user(cookies)
 
-        user_id_raw = payload.get("userId") or payload.get("user_id")
-        display_name = payload.get("displayName") or payload.get("display_name")
-
-        if user_id_raw is None or display_name is None:
-            raise HTTPException(status_code=401, detail="Missing user identity data")
-
-        mapped = {
-            "user_id": user_id_raw,
-            "customer_id": user_id_raw,
-            "display_name": display_name,
-        }
-
-        return AuthenticatedCustomer.model_validate(mapped)
+        if payload.get("roleName") != "CUSTOMER" or not payload.get("customerId"):
+            raise HTTPException(status_code=403, detail="Tài khoản chưa có danh tính customer hợp lệ.")
+        try:
+            return AuthenticatedCustomer.from_backend_user(payload)
+        except (ValueError, TypeError) as exc:
+            raise HTTPException(status_code=502, detail="Backend trả về customer identity không hợp lệ.") from exc
 
     async def get_cart(self, cookies: dict[str, str]) -> dict[str, Any] | None:
         payload = await self._request_json("GET", "/api/cart", cookies=cookies)
@@ -124,6 +117,19 @@ class BackendClient:
             for key in ("content", "items", "orders", "data"):
                 value = payload.get(key)
                 if isinstance(value, list):
+                    total = payload.get('totalElements')
+                    if isinstance(total, int) and total > len(value) and key == 'content':
+                        if total > 500:
+                            raise HTTPException(status_code=503, detail='Danh sách đơn vượt giới hạn tra cứu chatbot; chưa thể xác minh mã đơn.')
+                        rows = list(value)
+                        for page in range(1, (total + 19) // 20):
+                            more = await self._request_json('GET', '/api/orders/mine', cookies=cookies, params={'page': page, 'size': 20})
+                            if not isinstance(more, dict) or not isinstance(more.get('content'), list) or more.get('totalElements') != total:
+                                raise HTTPException(status_code=503, detail='Danh sách đơn thay đổi hoặc không đầy đủ; vui lòng thử lại.')
+                            rows.extend(more['content'])
+                        if len(rows) != total or len({r.get('orderId') for r in rows}) != total:
+                            raise HTTPException(status_code=503, detail='Không thể xác minh đầy đủ danh sách đơn; vui lòng thử lại.')
+                        return rows
                     return value
             return [payload]
         return []

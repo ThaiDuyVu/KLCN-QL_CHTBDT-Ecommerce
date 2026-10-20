@@ -5,13 +5,16 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AuthContext } from '../../auth/AuthContext';
 import ChatbotLabPage from './ChatbotLabPage';
 import { chatbotApi } from './chatbotApi';
-vi.mock('./chatbotApi', () => ({ chatbotApi: { status: vi.fn(), send: vi.fn(), history: vi.fn(), rate: vi.fn() } }));
+vi.mock('./chatbotApi', () => ({ chatbotApi: { status: vi.fn(), send: vi.fn(), history: vi.fn(), sessions: vi.fn(), session: vi.fn(), close: vi.fn(), rate: vi.fn() } }));
 
 function show() {
   return render(<MemoryRouter><AuthContext.Provider value={{ user: { userId: 'test-user', displayName: 'Khách thử', roleName: 'CUSTOMER' } }}><ChatbotLabPage /></AuthContext.Provider></MemoryRouter>);
 }
 beforeEach(() => {
   sessionStorage.clear();
+  chatbotApi.sessions.mockResolvedValue([]);
+  chatbotApi.session.mockRejectedValue({ status: 404 });
+  chatbotApi.close.mockResolvedValue({ is_active: false });
   chatbotApi.status.mockResolvedValue({ ai_enabled: true, product_mode: 'real', chat_model: 'chat-test', embedding_model: 'embed-test', ollama_reachable: true });
   chatbotApi.history.mockResolvedValue([]);
   chatbotApi.rate.mockResolvedValue({ rating: 1 });
@@ -47,9 +50,47 @@ describe('Chatbot lab', () => {
     const user = userEvent.setup();
     chatbotApi.history.mockResolvedValueOnce([{ id: 'a', sender_type: 'ASSISTANT', message: 'Lịch sử cũ', rating: 0 }]);
     show(); await screen.findByText('Lịch sử cũ');
-    const oldId = sessionStorage.getItem('chatbot-lab.session.test-user');
+    const oldId = sessionStorage.getItem('chatbot-lab.session.v2.test-user');
     await user.click(screen.getByRole('button', { name: 'Cuộc trò chuyện mới' }));
     await waitFor(() => expect(screen.queryByText('Lịch sử cũ')).not.toBeInTheDocument());
-    expect(sessionStorage.getItem('chatbot-lab.session.test-user')).not.toBe(oldId);
+    expect(sessionStorage.getItem('chatbot-lab.session.v2.test-user')).not.toBe(oldId);
   });
+});
+
+
+describe('durable session selection', () => {
+  it('loads a previous owned session without leaking assistant metadata', async () => {
+    const previous = '11111111-1111-4111-8111-111111111111';
+    chatbotApi.sessions.mockResolvedValue([{ id: previous, created_at: '2026-10-13T00:00:00Z', is_active: true }]);
+    chatbotApi.history.mockImplementation((id) => Promise.resolve(id === previous ? [{ id: 'persisted', sender_type: 'ASSISTANT', message: 'Tin đã lưu qua restart', rating: 0 }] : []));
+    const user = userEvent.setup(); show();
+    await screen.findByRole('option', { name: /Đang mở/ });
+    await user.selectOptions(screen.getByLabelText('Lịch sử phiên'), previous);
+    expect(await screen.findByText('Tin đã lưu qua restart')).toBeInTheDocument();
+    expect(chatbotApi.history).toHaveBeenCalledWith(previous);
+  });
+  it('reads a closed session but allows a fresh conversation', async () => {
+    const previous = '22222222-2222-4222-8222-222222222222';
+    chatbotApi.sessions.mockResolvedValue([{ id: previous, created_at: '2026-10-13T00:00:00Z', is_active: false }]);
+    chatbotApi.session.mockImplementation((id) => id === previous ? Promise.resolve({ is_active: false }) : Promise.reject({ status: 404 }));
+    const user = userEvent.setup(); show();
+    await screen.findByRole('option', { name: /Đã đóng/ });
+    await user.selectOptions(screen.getByLabelText('Lịch sử phiên'), previous);
+    expect(await screen.findByText('Phiên đã đóng. Bạn có thể đọc lịch sử hoặc tạo phiên mới.')).toBeInTheDocument();
+    expect(screen.getByLabelText('Câu hỏi của bạn')).toBeDisabled();
+    await user.click(screen.getByRole('button', { name: 'Cuộc trò chuyện mới' }));
+    await waitFor(() => expect(screen.getByLabelText('Câu hỏi của bạn')).not.toBeDisabled());
+  });
+});
+
+
+it('keeps a selected old persisted session even outside the first list page', async () => {
+  const oldId = '33333333-3333-4333-8333-333333333333';
+  sessionStorage.setItem('chatbot-lab.session.v2.test-user', oldId);
+  chatbotApi.sessions.mockResolvedValue([]);
+  chatbotApi.session.mockResolvedValue({ id: oldId, created_at: '2026-10-01T00:00:00Z', is_active: true });
+  show();
+  await screen.findByRole('option', { name: /Đang mở/ });
+  expect(screen.getByLabelText('Lịch sử phiên')).toHaveValue(oldId);
+  expect(screen.getByRole('button', { name: 'Đóng phiên' })).not.toBeDisabled();
 });

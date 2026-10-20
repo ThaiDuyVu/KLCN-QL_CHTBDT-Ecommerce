@@ -1,6 +1,7 @@
 package com.example.backend.auth.service;
 
 import com.example.backend.auth.dto.LoginRequest;
+import com.example.backend.cart.repository.CustomerCartRepository;
 import com.example.backend.auth.dto.LoginSessionResponse;
 import com.example.backend.auth.entity.User;
 import com.example.backend.auth.exception.InvalidCredentialsException;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
+    private final CustomerCartRepository customers;
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtService jwtService;
@@ -27,9 +29,11 @@ public class AuthServiceImpl implements AuthService {
             PasswordEncoder passwordEncoder,
             CustomUserDetailsService customUserDetailsService,
             JwtService jwtService,
-            RefreshTokenService refreshTokenService
+            RefreshTokenService refreshTokenService,
+            CustomerCartRepository customers
     ) {
         this.userRepository = userRepository;
+        this.customers = customers;
         this.passwordEncoder = passwordEncoder;
         this.customUserDetailsService = customUserDetailsService;
         this.jwtService = jwtService;
@@ -127,12 +131,17 @@ public class AuthServiceImpl implements AuthService {
     public LoginSessionResponse getCurrentSession(
             AuthenticatedUserPrincipal principal
     ) {
-        return new LoginSessionResponse(
+        var response = new LoginSessionResponse(
                 principal.getUserId(),
                 principal.getUsername(),
                 principal.getDisplayName(),
                 principal.getRoleName()
         );
+        if ("CUSTOMER".equals(principal.getRoleName())) {
+            customers.findByUser_UserId(principal.getUserId())
+                    .ifPresent(customer -> response.setCustomerId(customer.getCustomerId()));
+        }
+        return response;
     }
 
     private void requireActiveUser(AuthenticatedUserPrincipal principal) {

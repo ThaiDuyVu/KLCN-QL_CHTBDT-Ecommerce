@@ -25,6 +25,9 @@ class Settings(BaseSettings):
     chatbot_trace_enabled: bool = False
     chatbot_trace_file_enabled: bool = False
 
+    conversation_storage: Literal["memory", "postgres"] = "memory"
+    conversation_database_url: str | None = None
+
     chat_history_window: int = Field(default=10, ge=0)
     default_top_k: int = Field(default=5, ge=1, le=20)
 

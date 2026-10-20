@@ -5,6 +5,7 @@ import java.util.UUID;
 public class LoginSessionResponse {
 
     private UUID userId;
+    private UUID customerId;
     private String username;
     private String displayName;
     private String roleName;
@@ -23,6 +24,10 @@ public class LoginSessionResponse {
         this.displayName = displayName;
         this.roleName = roleName;
     }
+
+    public UUID getCustomerId() { return customerId; }
+
+    public void setCustomerId(UUID customerId) { this.customerId = customerId; }
 
     public UUID getUserId() {
         return userId;
