@@ -307,3 +307,59 @@ def test_storage_reference_is_deferred_to_owned_snapshot_resolution(history):
         assert not p.clarification and p.product_search.targets[0].storage_gb == 512
     else:
         assert p.clarification and p.product_search is None
+
+
+@pytest.mark.parametrize('prompt', [
+    'Tìm Lenovo laptop RAM 16GB.',
+    'Lenovo laptop RAM 16GB dưới 20 triệu.',
+    'Tìm Acer máy tính xách tay RAM 16GB.',
+    'Tìm Acme điện thoại dưới 20 triệu.',
+    'Tìm Unlisted smartphone RAM 12GB.',
+])
+@pytest.mark.parametrize('model_brand', [False, True])
+def test_unknown_brand_before_product_type_never_broadens(prompt, model_brand):
+    from app.shared.contracts.query import ProductSearchPlan
+    brand = next(b for b in ['Lenovo', 'Acer', 'Acme', 'Unlisted'] if b in prompt)
+    model = QueryPlan(intent=Intent.PRODUCT_DISCOVERY, product_search=ProductSearchPlan(
+        category='Laptop', brands=[brand] if model_brand else []))
+    plan = normalized(prompt, model)
+    assert plan.clarification and plan.product_search is None
+
+
+@pytest.mark.parametrize('prefix', ['Dell', 'gaming', 'văn phòng', 'mỏng nhẹ', 'một chiếc', '2 chiếc', '16GB', 'cheap', 'high performance'])
+def test_before_type_known_brand_and_use_cases_do_not_become_unknown_brand(prefix):
+    plan = normalized('Tìm ' + prefix + ' laptop dưới 20 triệu.')
+    if prefix == '16GB':
+        assert plan.clarification and 'RAM hay bộ nhớ' in plan.clarification
+        return
+    assert not plan.clarification and plan.product_search.category == 'Laptop'
+    assert plan.product_search.brands == (['Dell'] if prefix == 'Dell' else [])
+
+
+def test_multiword_known_brand_before_type_is_grounded_as_a_whole():
+    b = Backend()
+    b.taxonomy = lambda: (['Laptop', 'Điện thoại'], ['Hewlett Packard', 'Dell'])
+    plan = normalized('Tìm Hewlett Packard laptop RAM 16GB.', backend=b)
+    assert not plan.clarification and plan.product_search.brands == ['Hewlett Packard']
+
+
+@pytest.mark.parametrize('prompt', ['Tìm Lenovo laptop RAM 16GB.', 'Tìm Acme điện thoại dưới 20 triệu.'])
+def test_unknown_brand_before_type_blocks_advisor_and_cards(prompt):
+    from app.features.chat.service import ChatService
+    from app.features.chat.models import SendMessageRequest
+    from app.features.query_understanding.ollama_service import OllamaQueryUnderstandingService
+    from app.features.response_generation.ollama_service import OllamaResponseGenerationService
+    from tests.test_query_product_v2 import NoLLM
+    from uuid import uuid4
+    class MissedBrand:
+        def chat(self, *args, **kwargs):
+            return '{"intent":"PRODUCT_DISCOVERY","product_search":{"category":"Laptop","brands":[]}}'
+    class NoRetrieval:
+        def search(self, *args):
+            raise AssertionError('Unresolved brand must not reach Product Advisor')
+        def build_cards(self, *args):
+            raise AssertionError('Unresolved brand must not build cards')
+    service = ChatService(query_understanding=OllamaQueryUnderstandingService(MissedBrand(), normalizer=DomainNormalizer(Backend())),
+                          product_advisor=NoRetrieval(), response_generation=OllamaResponseGenerationService(NoLLM()))
+    response = service.send_message(uuid4(), SendMessageRequest(message=prompt))
+    assert response.products == [] and 'chưa xác minh' in response.message
