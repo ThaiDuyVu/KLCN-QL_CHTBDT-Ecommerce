@@ -71,6 +71,10 @@ class ConversationService:
         self.repository.get_session(session_id, customer_id)
         return self.repository.get_recent_messages(session_id, window)
 
+    def get_context_messages(self, session_id, customer_id, window=10):
+        self.repository.get_session(session_id, customer_id)
+        return self.repository.get_context_messages(session_id, customer_id, window)
+
     def rate_message(
         self,
         session_id: UUID,

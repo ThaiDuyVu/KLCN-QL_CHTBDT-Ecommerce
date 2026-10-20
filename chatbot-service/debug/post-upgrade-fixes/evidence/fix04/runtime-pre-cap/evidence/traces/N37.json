@@ -1,0 +1,117 @@
+{
+  "trace_id": "8b65bdc5-15a4-48ff-8112-53e682dad1c1",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "55708b38-d6f0-421b-85d2-3aac36c5a367",
+      "parent_id": "656dbd34-acd7-41dc-996e-d650367d03fb",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 30.86,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "70bfd3e4-38d3-45a5-8a2a-e53baa52551b",
+      "parent_id": "656dbd34-acd7-41dc-996e-d650367d03fb",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 30.98,
+      "duration_ms": null,
+      "output": {
+        "actions": [
+          {
+            "kind": "cart",
+            "scope": "affirmative"
+          }
+        ]
+      }
+    },
+    {
+      "id": "0cc1d874-8a6c-4bfc-862d-ecaf36e2ebbc",
+      "parent_id": "656dbd34-acd7-41dc-996e-d650367d03fb",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 31.05,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "577c3c0c-0fc2-4bfd-98c5-ed1dee8e8ed2",
+      "parent_id": "656dbd34-acd7-41dc-996e-d650367d03fb",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 36.2,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "8f15e17f-e9e9-48fc-a651-c869b072cc4d",
+      "parent_id": "656dbd34-acd7-41dc-996e-d650367d03fb",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 36.32,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "048ccece-edb4-4988-af35-baceaf0a16f2",
+      "parent_id": "0b1f2f78-b037-4e5b-a6f1-5f9eb2f23cc9",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 36.52,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "transaction_not_supported"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 6.47,
+      "duration_ms": 35.9,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 36.28,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 36.45,
+      "duration_ms": 0.1,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": []
+}

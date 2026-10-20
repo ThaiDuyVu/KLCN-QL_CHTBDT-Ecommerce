@@ -1,0 +1,24 @@
+[
+  {
+    "command": "chatbot-service/.venv/bin/python -m pytest tests/test_conversation_safety.py -k original_guidance -q",
+    "exit_code": 1,
+    "counts": {
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0
+    },
+    "started_at": null,
+    "timing_limitation": "First direct invocation preceded common.run recording; start timestamp not retained. Artifact mtime below is not the execution start.",
+    "artifact_mtime_utc": "2026-10-20T13:04:04.288773+00:00",
+    "evidence": "before-safety.txt"
+  },
+  {
+    "command": "chatbot-service/.venv/bin/python chatbot-service/debug/post-upgrade-fixes/harness/fix04_faults.py",
+    "exit_code": 1,
+    "counts": null,
+    "started_at": null,
+    "timing_limitation": "First direct invocation preceded common.run recording; start timestamp not retained. Artifact mtime below is not the execution start.",
+    "artifact_mtime_utc": "2026-10-20T13:16:20.395623+00:00",
+    "evidence": "faults-attempt-01/HARNESS_NOTE.md"
+  }
+]

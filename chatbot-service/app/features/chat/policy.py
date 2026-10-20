@@ -4,36 +4,38 @@ import re
 from app.features.query_understanding.normalization import folded
 from app.shared.contracts.enums import Intent, RequestedField
 from app.shared.contracts.query import QueryPlan
+from app.features.chat.actions import analyze_actions, routing_text, ActionScope
+from app.shared.tracing import event
 
 TRANSACTION_REFUSAL = ('Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. '
                        'Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.')
 
 
 def transaction_request(message: str) -> bool:
-    q = folded(message)
-    # A guide/status question is read-only; imperative/action requests are refused.
-    if re.search(r'\b(?:lam sao|cach|huong dan|how to|da thanh toan chua|trang thai)\b', q):
-        # Mixed instructions still cannot hide an explicit delegated action.
-        if not re.search(r'\b(?:hay|giup|ho toi|ngay|please|for me)\b', q):
-            return False
-    actions = (r'\b(?:dat ngay|dat hang|tao don|place .*order|pay for me)\b',
-               r'\bthanh toan\b.*\b(?:giup|ho toi|ngay)\b',
-               r'\b(?:huy|cancel)\b.*\b(?:don|order)\b',
-               r'\b(?:sua|thay doi|cap nhat|doi)\b.*\b(?:dia chi|don hang|gio hang)\b',
-               r'\b(?:them|xoa|bo)\b.*\bgio hang\b',
-               r'\btao phieu\b.*\b(?:giup|ho toi)\b')
-    return any(re.search(pattern, q) for pattern in actions)
+    actions = analyze_actions(message)
+    return any(a.scope == ActionScope.AFFIRMATIVE for a in actions)
 
 
 def read_only_plan(message: str) -> QueryPlan | None:
     """Only explicit domains override the model; never derive ownership from text."""
-    q = folded(message)
+    actions = analyze_actions(message)
+    event('safety.action_analysis', {'actions': [{'kind': a.kind, 'scope': a.scope.value} for a in actions]})
+    q = routing_text(message)
     if transaction_request(message):
         return QueryPlan(intent=Intent.UNKNOWN, clarification=TRANSACTION_REFUSAL)
-    if any(x in q for x in ('khach hang khac', 'tai khoan khac', 'mat khau', 'another customer')):
-        return QueryPlan(intent=Intent.UNKNOWN, clarification='Mình không cung cấp thông tin riêng của khách hàng khác hoặc mật khẩu.')
+    raw = folded(message)
+    if re.search(r'\b(?:in|hien thi|tiet lo|print|show|cung cap)\b.*\b(?:cookie|jwt|token|mat khau)\b', raw):
+        return QueryPlan(intent=Intent.UNKNOWN, clarification='Mình không cung cấp cookie, JWT, token hoặc mật khẩu.')
     if any(x in q for x in ('chinh sach', 'doi tra', 'tai lieu', 'huong dan demo')):
         return QueryPlan(intent=Intent.KNOWLEDGE_QA, semantic_query=message)
+    product = any(re.search(r'(?<!\w)' + re.escape(word) + r'(?!\w)', q)
+                  for word in ('laptop', 'dien thoai', 'smartphone', 'may tinh xach tay', 'sku', 'ram'))
+    if actions and not product and not any(a.scope == ActionScope.AFFIRMATIVE for a in actions):
+        # No official procedural/policy evidence is approved in this checkpoint.
+        if any(a.scope in {ActionScope.GUIDANCE, ActionScope.QUOTED, ActionScope.HYPOTHETICAL} for a in actions):
+            return QueryPlan(intent=Intent.UNKNOWN, clarification='Mình chưa có tài liệu chính thức đủ để hướng dẫn thao tác này. Mình không thể xác nhận quy trình hoặc chính sách của cửa hàng.')
+    if any(x in q for x in ('khach hang khac', 'tai khoan khac', 'mat khau', 'another customer')):
+        return QueryPlan(intent=Intent.UNKNOWN, clarification='Mình không cung cấp thông tin riêng của khách hàng khác hoặc mật khẩu.')
     if 'giup toi nhung gi' in q or 'co the lam gi' in q:
         return QueryPlan(intent=Intent.HELP)
     if 'gio hang' in q:

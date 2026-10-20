@@ -1,0 +1,279 @@
+{
+  "trace_id": "fe1ed6a3-a4be-4fab-8c2e-94c844035edb",
+  "status": "warning",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "39f0c89d-406a-4cc2-8840-271c95919561",
+      "parent_id": "d08eb70b-9735-46dc-9174-fdec84458b45",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 33.94,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "065014ca-1279-433e-975b-44ac8982b329",
+      "parent_id": "d08eb70b-9735-46dc-9174-fdec84458b45",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 34.08,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "c670dc79-8db7-4ea1-a259-7004e887ecbf",
+      "parent_id": "a796c238-0eba-43be-9628-0f247d873a4e",
+      "name": "query.validation_failed",
+      "status": "warning",
+      "offset_ms": 2547.17,
+      "duration_ms": null,
+      "output": {
+        "errors": [
+          {
+            "type": "value_error",
+            "loc": [
+              "product_search",
+              "targets",
+              0
+            ],
+            "msg": "Value error, Exactly one explicit identity is required"
+          },
+          {
+            "type": "value_error",
+            "loc": [
+              "product_search",
+              "targets",
+              1
+            ],
+            "msg": "Value error, Exactly one explicit identity is required"
+          }
+        ],
+        "attempt": 1
+      }
+    },
+    {
+      "id": "82792937-64f8-428b-a42c-b9639ec4f8ce",
+      "parent_id": "a796c238-0eba-43be-9628-0f247d873a4e",
+      "name": "query.validation_failed",
+      "status": "warning",
+      "offset_ms": 5081.95,
+      "duration_ms": null,
+      "output": {
+        "errors": [
+          {
+            "type": "value_error",
+            "loc": [
+              "product_search",
+              "targets",
+              0
+            ],
+            "msg": "Value error, Exactly one explicit identity is required"
+          },
+          {
+            "type": "value_error",
+            "loc": [
+              "product_search",
+              "targets",
+              1
+            ],
+            "msg": "Value error, Exactly one explicit identity is required"
+          }
+        ],
+        "attempt": 2
+      }
+    },
+    {
+      "id": "7c586dc2-ae23-47da-aa60-d2c8215ebe0e",
+      "parent_id": "a796c238-0eba-43be-9628-0f247d873a4e",
+      "name": "query.fallback",
+      "status": "warning",
+      "offset_ms": 5082.05,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "reason": "model_or_schema_failure"
+      }
+    },
+    {
+      "id": "fe33f683-81b9-43b5-95a7-60ac955d73e2",
+      "parent_id": "a796c238-0eba-43be-9628-0f247d873a4e",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 5126.89,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": "Mình hỗ trợ tìm từng nhóm sản phẩm. Bạn muốn tìm loại sản phẩm nào trước?",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        },
+        "constraint_rejected": true
+      }
+    },
+    {
+      "id": "41842b25-c759-4632-8048-e4259bf50c97",
+      "parent_id": "d08eb70b-9735-46dc-9174-fdec84458b45",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 5146.48,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình hỗ trợ tìm từng nhóm sản phẩm. Bạn muốn tìm loại sản phẩm nào trước?",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "17890c35-433c-4447-a6a3-1de9d9679cdd",
+      "parent_id": "d08eb70b-9735-46dc-9174-fdec84458b45",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 5146.63,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "93eb1da0-13ba-463e-b1fe-6bf2807d341b",
+      "parent_id": "97b1ef35-888c-48c1-8fbf-6bbc4e33b111",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 5146.89,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 6.96,
+      "duration_ms": 5153.9,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 34.24,
+      "duration_ms": 5092.78,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 35.98,
+      "duration_ms": 2511.04,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 36.38,
+      "duration_ms": 2510.56,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 36.74,
+      "duration_ms": 2510.12,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 2547.27,
+      "duration_ms": 2534.59,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 2548.15,
+      "duration_ms": 2533.63,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 2549.1,
+      "duration_ms": 2532.61,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5082.2,
+      "duration_ms": 20.3,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5102.54,
+      "duration_ms": 8.49,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5111.08,
+      "duration_ms": 15.41,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 5146.56,
+      "duration_ms": 0.07,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 5146.79,
+      "duration_ms": 0.14,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

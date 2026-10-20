@@ -9,6 +9,7 @@ from fastapi import HTTPException
 
 from app.features.conversation.models import ChatMessage, ChatSession, SenderType, EvidenceSnapshot
 from app.shared.config import get_settings
+from app.features.conversation.context import completed_messages
 from app.shared.contracts.response import ProductCard
 
 
@@ -104,6 +105,11 @@ class InMemoryConversationRepository:
             limit = window if window is not None else get_settings().chat_history_window
             history = self._messages_by_session.get(session_id, [])
             return list(history)[-limit:] if limit > 0 else []
+
+    def get_context_messages(self, session_id, customer_id, window=10):
+        with self._lock:
+            self.get_session(session_id, customer_id)
+            return completed_messages(self._messages_by_session.get(session_id, [])[-100:], window)
 
     def last_product_cards(self, session_id: UUID, customer_id: UUID) -> list[ProductCard]:
         with self._lock:
