@@ -1,0 +1,198 @@
+[
+  {
+    "id": "fix01-full-python",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T07:26:38.036864+00:00",
+    "duration_seconds": 0.919,
+    "exit_code": 0,
+    "counts": {
+      "passed": 330,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-full-python.txt"
+  },
+  {
+    "id": "fix01-focused-final",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests/test_query_integrity.py tests/test_query_product_v2.py tests/test_query_contracts.py tests/test_ai_chat_flow.py tests/test_real_product_advisor.py tests/test_tracing.py -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T07:31:26.640273+00:00",
+    "duration_seconds": 0.64,
+    "exit_code": 0,
+    "counts": {
+      "passed": 167,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-focused-final.txt"
+  },
+  {
+    "id": "fix01-postgres-integration",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests/test_knowledge_postgres_integration.py tests/test_persistent_conversation.py -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T07:31:27.280927+00:00",
+    "duration_seconds": 0.762,
+    "exit_code": 0,
+    "counts": {
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-postgres-integration.txt"
+  },
+  {
+    "id": "fix01-full-python-final",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T07:31:28.043413+00:00",
+    "duration_seconds": 1.006,
+    "exit_code": 0,
+    "counts": {
+      "passed": 338,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-full-python-final.txt"
+  },
+  {
+    "id": "fix01-focused-acceptance",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests/test_query_integrity.py tests/test_query_product_v2.py tests/test_query_contracts.py tests/test_ai_chat_flow.py tests/test_real_product_advisor.py tests/test_tracing.py -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T07:33:19.161738+00:00",
+    "duration_seconds": 0.658,
+    "exit_code": 0,
+    "counts": {
+      "passed": 169,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-focused-acceptance.txt"
+  },
+  {
+    "id": "fix01-postgres-acceptance",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests/test_knowledge_postgres_integration.py tests/test_persistent_conversation.py -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T07:33:19.820135+00:00",
+    "duration_seconds": 0.798,
+    "exit_code": 0,
+    "counts": {
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-postgres-acceptance.txt"
+  },
+  {
+    "id": "fix01-full-python-acceptance",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T07:33:20.618949+00:00",
+    "duration_seconds": 1.134,
+    "exit_code": 0,
+    "counts": {
+      "passed": 340,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-full-python-acceptance.txt"
+  },
+  {
+    "id": "fix01-git-status",
+    "command": "git status -sb",
+    "cwd": ".",
+    "started_at": "2026-10-20T07:33:44.371908+00:00",
+    "duration_seconds": 0.063,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-git-status.txt"
+  },
+  {
+    "id": "fix01-baseline-source-diff",
+    "command": "git diff --exit-code 1c62129 HEAD -- chatbot-service/app chatbot-service/tests",
+    "cwd": ".",
+    "started_at": "2026-10-20T07:33:44.435698+00:00",
+    "duration_seconds": 0.024,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-baseline-source-diff.txt"
+  },
+  {
+    "id": "fix01-protected-reports",
+    "command": "git diff --exit-code HEAD -- chatbot-service/debug/eval60 chatbot-service/debug/chatbot-upgrade chatbot-service/debug/post-upgrade-validation chatbot-service/debug/CHATBOT_RUNTIME_DEBUG_REPORT.md",
+    "cwd": ".",
+    "started_at": "2026-10-20T07:33:44.459699+00:00",
+    "duration_seconds": 0.014,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-protected-reports.txt"
+  },
+  {
+    "id": "fix01-diff-check",
+    "command": "git diff --check",
+    "cwd": ".",
+    "started_at": "2026-10-20T07:33:44.474640+00:00",
+    "duration_seconds": 0.021,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-diff-check.txt"
+  },
+  {
+    "id": "fix01-real-runtime-final",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/post-upgrade-fixes/harness/fix01_runtime.py",
+    "cwd": ".",
+    "started_at": "2026-10-20T07:33:07.186506+00:00",
+    "duration_seconds": 77.407,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-real-runtime-final.txt"
+  },
+  {
+    "id": "fix01-cleanup",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/post-upgrade-fixes/harness/fix01_cleanup.py",
+    "cwd": ".",
+    "started_at": "2026-10-20T07:36:05.998421+00:00",
+    "duration_seconds": 1.709,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-cleanup.txt"
+  },
+  {
+    "id": "fix01-environment-build-isolated-backend",
+    "command": "./mvnw -q -DskipTests package",
+    "cwd": "backend",
+    "started_at": "2026-10-20T07:25:41.675358+00:00",
+    "duration_seconds": 5.54,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix01-environment-build-isolated-backend.txt"
+  }
+]

@@ -1,0 +1,689 @@
+{
+  "trace_id": "b2bc9cc8-418d-4835-9137-2d1886a4ca13",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "c7252900-d459-452e-b831-812366d2d545",
+      "parent_id": "fe3315c3-ed53-4224-b9d8-d2302ba227cf",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2293.29,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_COMPARE",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": 12,
+              "storage_gb": 256,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "iPhone 15",
+              "sku": null,
+              "ram_gb": 6,
+              "storage_gb": 128,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "3afc5fb0-94a5-4302-bbae-643cbfb88202",
+      "parent_id": "fe3315c3-ed53-4224-b9d8-d2302ba227cf",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2327.36,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_COMPARE",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "Xiaomi 15",
+                "sku": null,
+                "ram_gb": 12,
+                "storage_gb": 256,
+                "color": null
+              },
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "iPhone 15",
+                "sku": null,
+                "ram_gb": 6,
+                "storage_gb": 128,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": null,
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_COMPARE",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "Xiaomi 15",
+                "sku": null,
+                "ram_gb": 12,
+                "storage_gb": 256,
+                "color": null
+              },
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "iPhone 15",
+                "sku": null,
+                "ram_gb": 6,
+                "storage_gb": 128,
+                "color": null
+              }
+            ],
+            "category": "Điện thoại",
+            "brands": [
+              "Xiaomi",
+              "Apple"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "So sánh Xiaomi 15 bản 12GB/256GB với iPhone 15 bản 6GB/128GB.",
+            "top_k": 2
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "f8eb66a2-1116-4811-87b4-019d25093cce",
+      "parent_id": "72836c25-ab91-4ea3-b00a-da1d20b90d67",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2345.96,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_COMPARE",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": 12,
+              "storage_gb": 256,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "iPhone 15",
+              "sku": null,
+              "ram_gb": 6,
+              "storage_gb": 128,
+              "color": null
+            }
+          ],
+          "category": "Điện thoại",
+          "brands": [
+            "Xiaomi",
+            "Apple"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "So sánh Xiaomi 15 bản 12GB/256GB với iPhone 15 bản 6GB/128GB.",
+          "top_k": 2
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "f7948e6c-fb57-480d-a043-b278de628f8e",
+      "parent_id": "72836c25-ab91-4ea3-b00a-da1d20b90d67",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2346.11,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": 12,
+              "storage_gb": 256,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "iPhone 15",
+              "sku": null,
+              "ram_gb": 6,
+              "storage_gb": 128,
+              "color": null
+            }
+          ],
+          "category": "Điện thoại",
+          "brands": [
+            "Xiaomi",
+            "Apple"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "So sánh Xiaomi 15 bản 12GB/256GB với iPhone 15 bản 6GB/128GB.",
+          "top_k": 2
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "6d6acbbc-68a0-49b6-9dab-a3a7406b0c5a",
+      "parent_id": "72836c25-ab91-4ea3-b00a-da1d20b90d67",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 2346.23,
+      "duration_ms": 40.93,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        },
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "brand_name": "Apple",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Apple A16 Bionic",
+            "Màn hình": "OLED 6,1 inch",
+            "Pin": "Pin tích hợp, sạc qua USB-C",
+            "RAM": "6 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+              "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+              "sku": "DEV-IP15-BLK-128",
+              "original_price": "17990000.0",
+              "effective_price": "17990000.0",
+              "ram": "6GB",
+              "storage": "128GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "00cb0995-103c-401b-92dd-0b12fb8a3465",
+      "parent_id": "6d6acbbc-68a0-49b6-9dab-a3a7406b0c5a",
+      "name": "product.identity_resolution",
+      "status": "ok",
+      "offset_ms": 2346.31,
+      "duration_ms": 40.75,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        },
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "brand_name": "Apple",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Apple A16 Bionic",
+            "Màn hình": "OLED 6,1 inch",
+            "Pin": "Pin tích hợp, sạc qua USB-C",
+            "RAM": "6 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+              "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+              "sku": "DEV-IP15-BLK-128",
+              "original_price": "17990000.0",
+              "effective_price": "17990000.0",
+              "ram": "6GB",
+              "storage": "128GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "3d148efb-7697-4010-a7f4-ba6592390698",
+      "parent_id": "00cb0995-103c-401b-92dd-0b12fb8a3465",
+      "name": "product.stock_evidence",
+      "status": "ok",
+      "offset_ms": 2366.48,
+      "duration_ms": null,
+      "output": {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "warehouse_id": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "variants": [
+          {
+            "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+            "available_quantity": 2
+          }
+        ],
+        "status": "KNOWN_AVAILABLE"
+      }
+    },
+    {
+      "id": "96753970-e329-4c8d-ad6d-bdb28aa230af",
+      "parent_id": "00cb0995-103c-401b-92dd-0b12fb8a3465",
+      "name": "product.stock_evidence",
+      "status": "ok",
+      "offset_ms": 2386.91,
+      "duration_ms": null,
+      "output": {
+        "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+        "warehouse_id": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "variants": [
+          {
+            "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+            "available_quantity": 2
+          }
+        ],
+        "status": "KNOWN_AVAILABLE"
+      }
+    },
+    {
+      "id": "1fdace61-2c20-497a-9a6b-29fa5b08c817",
+      "parent_id": "72836c25-ab91-4ea3-b00a-da1d20b90d67",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2387.17,
+      "duration_ms": 18.41,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+          "sku": "DEV-IP15-BLK-128",
+          "original_price": "17990000.0",
+          "effective_price": "17990000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/iphone-15/main.jpg",
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "25ed5418-a13e-4246-bc4a-76aa63444832",
+      "parent_id": "1fdace61-2c20-497a-9a6b-29fa5b08c817",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2405.48,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "a40b71a6-dcf9-4d65-acb1-00b10ffbb840"
+        ],
+        "variants": 2,
+        "cards": 2
+      }
+    },
+    {
+      "id": "f5d9f088-e4a7-4c6e-9ea3-ccc7fd7169ef",
+      "parent_id": "72836c25-ab91-4ea3-b00a-da1d20b90d67",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2405.7,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_COMPARE",
+        "products": 2,
+        "cards": 2,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "6c1842cd-08c1-4bd1-ad40-9664a781b565",
+      "parent_id": "4637aded-d723-44e2-9772-1e10763d8341",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2406.1,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 14.01,
+      "duration_ms": 2404.01,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 61.67,
+      "duration_ms": 2265.97,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 63.91,
+      "duration_ms": 2229.33,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 64.41,
+      "duration_ms": 2228.78,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 64.89,
+      "duration_ms": 2228.26,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2293.45,
+      "duration_ms": 11.35,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2304.84,
+      "duration_ms": 8.59,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2313.48,
+      "duration_ms": 13.31,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2346.23,
+      "duration_ms": 40.93,
+      "status": "ok"
+    },
+    {
+      "name": "product.identity_resolution",
+      "offset_ms": 2346.31,
+      "duration_ms": 40.75,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2346.37,
+      "duration_ms": 10.71,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2357.15,
+      "duration_ms": 9.27,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2366.52,
+      "duration_ms": 8.59,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2375.19,
+      "duration_ms": 11.63,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2387.17,
+      "duration_ms": 18.41,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2387.28,
+      "duration_ms": 9.05,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2396.41,
+      "duration_ms": 8.98,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2405.66,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2405.93,
+      "duration_ms": 0.22,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a40b71a6-dcf9-4d65-acb1-00b10ffbb840/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a40b71a6-dcf9-4d65-acb1-00b10ffbb840/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

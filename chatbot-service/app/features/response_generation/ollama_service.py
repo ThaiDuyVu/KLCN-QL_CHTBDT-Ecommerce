@@ -7,6 +7,7 @@ from app.shared.ollama.client import OllamaError
 from app.shared.ollama.protocol import ChatModel
 from app.features.chat.policy import transaction_request, TRANSACTION_REFUSAL
 from app.features.query_understanding.normalization import folded
+from app.features.query_understanding.constraints import requested_count
 
 INSUFFICIENT = "Mình chưa đủ dữ liệu để trả lời chính xác yêu cầu này."
 
@@ -26,6 +27,10 @@ class OllamaResponseGenerationService:
         if context.query_plan.intent in {Intent.PRODUCT_DISCOVERY, Intent.PRODUCT_DETAIL, Intent.PRODUCT_COMPARE} and context.products and all(p.product_name for p in context.products):
             event("response.strategy", {"strategy": "deterministic_product_evidence", "reason": "verified_product_variants"})
             lines = []
+            count = requested_count(folded(context.user_query))
+            distinct_products = len({p.product_id for p in context.products})
+            if count is not None and distinct_products < count:
+                lines.append(f"Chỉ tìm thấy {distinct_products}/{count} sản phẩm phù hợp; các cấu hình bên dưới là biến thể của từng sản phẩm.")
             for product in context.products:
                 lines.append(product.product_name or str(product.product_id))
                 for variant in product.eligible_variants:

@@ -1,0 +1,738 @@
+{
+  "trace_id": "c0ed806a-d585-4205-ba9b-1c31ac32fecf",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "f00ff3bd-bee8-4f78-a097-bece3354b96f",
+      "parent_id": "1f2f9501-0279-455f-8eb5-c50c64a003c5",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1431.27,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": 12,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "dien thoai ram toi thieu 12gb",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "6c4bce20-1938-4e14-8038-841a5bc7377f",
+      "parent_id": "1f2f9501-0279-455f-8eb5-c50c64a003c5",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1462.15,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": 12,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "dien thoai ram toi thieu 12gb",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": 12,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm điện thoại RAM tối thiểu 12GB.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "3eca3421-59b4-47a3-b06d-973df044839e",
+      "parent_id": "dea4490e-ce93-4069-8083-5cdeadadef73",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1479.13,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": 12,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm điện thoại RAM tối thiểu 12GB.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "040dc788-b401-49dd-8434-da4e833c1396",
+      "parent_id": "dea4490e-ce93-4069-8083-5cdeadadef73",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1479.23,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": 12,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm điện thoại RAM tối thiểu 12GB.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "b71cfff2-32f4-4aee-8974-5aa3bc0b969b",
+      "parent_id": "dea4490e-ce93-4069-8083-5cdeadadef73",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 1479.34,
+      "duration_ms": 106.64,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": 0.5130450725555749,
+          "ranking_score": 0.5130450725555749,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-GRN-512",
+              "original_price": "21990000.0",
+              "effective_price": "21990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xanh lá",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "RAM từ 12GB"
+          ]
+        },
+        {
+          "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+          "product_name": "Samsung Galaxy A55",
+          "brand_name": "Samsung",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Exynos 1480",
+            "Màn hình": "Super AMOLED 6,6 inch",
+            "Pin": "5.000 mAh",
+            "RAM": "8-12 GB"
+          },
+          "semantic_score": 0.4686863310407392,
+          "ranking_score": 0.4686863310407392,
+          "eligible_variants": [
+            {
+              "variant_id": "16bfe6b0-f0bc-46a6-9443-0251887c66be",
+              "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+              "sku": "DEV-A55-ICE-256",
+              "original_price": "10490000.0",
+              "effective_price": "10490000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Xanh băng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "RAM từ 12GB"
+          ]
+        },
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "MediaTek Dimensity 9300+",
+            "Màn hình": "AMOLED 6,67 inch",
+            "Pin": "5.000 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": 0.45430187208029515,
+          "ranking_score": 0.45430187208029515,
+          "eligible_variants": [
+            {
+              "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+              "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+              "sku": "DEV-X14TP-BLK-256",
+              "original_price": "16990000.0",
+              "effective_price": "16990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "4dcb8a6e-0083-4c7e-aaee-6464eeee11c6",
+              "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+              "sku": "DEV-X14TP-BLU-512",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Xanh",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "0ba90d96-69c4-46a0-b477-dab320bd7863",
+              "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+              "sku": "DEV-X14TP-GRY-512",
+              "original_price": "19990000.0",
+              "effective_price": "19990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xám",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "RAM từ 12GB"
+          ]
+        },
+        {
+          "product_id": "6037875f-9598-49ad-92d4-5d48cc48d501",
+          "product_name": "Samsung Galaxy Z Flip6",
+          "brand_name": "Samsung",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Gen 3",
+            "Màn hình": "Dynamic AMOLED 2X 6,7 inch",
+            "Pin": "4.000 mAh",
+            "RAM": "12 GB"
+          },
+          "semantic_score": 0.4441089894836736,
+          "ranking_score": 0.4441089894836736,
+          "eligible_variants": [
+            {
+              "variant_id": "512516f7-cc1b-44e7-8db5-d2282e41a093",
+              "product_id": "6037875f-9598-49ad-92d4-5d48cc48d501",
+              "sku": "DEV-ZF6-GRY-256",
+              "original_price": "24990000.0",
+              "effective_price": "24990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Xám",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "f36f9b58-3364-4cae-a030-17c55400d4bf",
+              "product_id": "6037875f-9598-49ad-92d4-5d48cc48d501",
+              "sku": "DEV-ZF6-YLW-256",
+              "original_price": "24990000.0",
+              "effective_price": "24990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Vàng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "822146e0-fb60-46d3-be3a-c0310a73d618",
+              "product_id": "6037875f-9598-49ad-92d4-5d48cc48d501",
+              "sku": "DEV-ZF6-BLU-512",
+              "original_price": "28990000.0",
+              "effective_price": "28990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Xanh",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "RAM từ 12GB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5e4713c5-54a8-44cd-b250-5ad36b16d379",
+      "parent_id": "dea4490e-ce93-4069-8083-5cdeadadef73",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 1585.99,
+      "duration_ms": 37.46,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "RAM từ 12GB"
+          ]
+        },
+        {
+          "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+          "product_name": "Samsung Galaxy A55",
+          "variant_id": "16bfe6b0-f0bc-46a6-9443-0251887c66be",
+          "sku": "DEV-A55-ICE-256",
+          "original_price": "10490000.0",
+          "effective_price": "10490000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Xanh băng",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/samsung-galaxy-a55/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "RAM từ 12GB"
+          ]
+        },
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+          "sku": "DEV-X14TP-BLK-256",
+          "original_price": "16990000.0",
+          "effective_price": "16990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-14t-pro/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "RAM từ 12GB"
+          ]
+        },
+        {
+          "product_id": "6037875f-9598-49ad-92d4-5d48cc48d501",
+          "product_name": "Samsung Galaxy Z Flip6",
+          "variant_id": "512516f7-cc1b-44e7-8db5-d2282e41a093",
+          "sku": "DEV-ZF6-GRY-256",
+          "original_price": "24990000.0",
+          "effective_price": "24990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Xám",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/samsung-galaxy-z-flip6/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "RAM từ 12GB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "89504f89-5b9b-4e0b-afca-c4bbb86b03dc",
+      "parent_id": "5e4713c5-54a8-44cd-b250-5ad36b16d379",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 1623.23,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+          "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "6037875f-9598-49ad-92d4-5d48cc48d501"
+        ],
+        "variants": 10,
+        "cards": 4
+      }
+    },
+    {
+      "id": "608b995d-dbc1-4a9b-9aa0-764097af0ecd",
+      "parent_id": "dea4490e-ce93-4069-8083-5cdeadadef73",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1623.56,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 4,
+        "cards": 4,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "8372ba04-edd2-4e37-9157-30de7528d01a",
+      "parent_id": "50c8b844-34b7-4842-ba02-3ed2475518f9",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1624.41,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 11.61,
+      "duration_ms": 1627.3,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 49.74,
+      "duration_ms": 1412.64,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 51.04,
+      "duration_ms": 1380.19,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 51.45,
+      "duration_ms": 1379.75,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 51.82,
+      "duration_ms": 1379.34,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1431.41,
+      "duration_ms": 9.81,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1441.25,
+      "duration_ms": 7.1,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1448.39,
+      "duration_ms": 13.31,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1479.34,
+      "duration_ms": 106.64,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1479.41,
+      "duration_ms": 10.9,
+      "status": "ok"
+    },
+    {
+      "name": "product.embedding",
+      "offset_ms": 1490.37,
+      "duration_ms": 39.61,
+      "status": "ok"
+    },
+    {
+      "name": "product.vector_ranking",
+      "offset_ms": 1530.0,
+      "duration_ms": 14.67,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1544.71,
+      "duration_ms": 11.63,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1556.46,
+      "duration_ms": 9.83,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1566.62,
+      "duration_ms": 9.48,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1576.21,
+      "duration_ms": 9.28,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 1585.99,
+      "duration_ms": 37.46,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1586.37,
+      "duration_ms": 10.59,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1597.1,
+      "duration_ms": 8.42,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1605.61,
+      "duration_ms": 9.43,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1615.14,
+      "duration_ms": 7.92,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1623.52,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1624.02,
+      "duration_ms": 0.46,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Điện thoại"
+          ],
+          [
+            "minRamGb",
+            "12"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/d08f9c12-2196-4fc3-8aab-78d763628ce6/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/3fc00d9b-72e8-43de-8d5d-a275251aa08f/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/6037875f-9598-49ad-92d4-5d48cc48d501/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/d08f9c12-2196-4fc3-8aab-78d763628ce6/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/3fc00d9b-72e8-43de-8d5d-a275251aa08f/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/6037875f-9598-49ad-92d4-5d48cc48d501/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

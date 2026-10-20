@@ -1,10 +1,10 @@
 """Resolve only from owned displayed evidence, never from raw history facts."""
-import re
 from decimal import Decimal
 from app.features.query_understanding.normalization import folded, price_slots, capacity
 from app.shared.contracts.enums import Intent, RequestedField
 from app.shared.contracts.query import QueryPlan, ProductSearchPlan, ProductSelector
 from app.shared.tracing import event
+from app.features.query_understanding.constraints import storage_reference
 
 
 def resolve_reference(message, plan, snapshot):
@@ -13,7 +13,7 @@ def resolve_reference(message, plan, snapshot):
         return plan
     if any(term in q for term in ('gio hang', 'don hang', 'thanh toan', 'phieu bao hanh', 'bao hanh cua toi')):
         return plan
-    storage=re.search(r'\bban\s+(\d+)\s*(gb|tb)\b',q)
+    storage=storage_reference(q)
     kind=('CHEAPER' if 're hon' in q or 'cheaper' in q else 'SECOND' if 'thu hai' in q else
           'FIRST' if 'dau tien' in q else 'LAST' if 'vua goi y' in q else 'STORAGE' if storage else None)
     if kind is None or (plan.product_search and plan.product_search.targets): return plan

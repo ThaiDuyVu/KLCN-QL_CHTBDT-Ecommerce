@@ -1,0 +1,565 @@
+{
+  "trace_id": "81725072-098c-468f-bb73-7b1e97392b30",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "45853b35-50e9-4453-8137-d7316a122f7b",
+      "parent_id": "176881dc-4f99-4dd5-b871-3818ce4723b7",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1364.85,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "SM-A550F",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Samsung Galaxy A55",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "397024eb-2e90-40eb-b29f-1e316259ee33",
+      "parent_id": "176881dc-4f99-4dd5-b871-3818ce4723b7",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1400.58,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "SM-A550F",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Samsung Galaxy A55",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [
+            "WARRANTY"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "Samsung Galaxy A55",
+                "sku": null,
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Samsung Galaxy A55 được bảo hành bao nhiêu tháng?",
+            "top_k": 1
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "90e89c76-db0d-451c-b21a-956c423529ae",
+      "parent_id": "6ddcf213-f8c7-4aa6-afb6-f8eead3815f4",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1421.27,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "WARRANTY"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Samsung Galaxy A55",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Samsung"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Samsung Galaxy A55 được bảo hành bao nhiêu tháng?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "8cb64e08-1c4b-4fc5-83af-716bd3251b16",
+      "parent_id": "6ddcf213-f8c7-4aa6-afb6-f8eead3815f4",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1421.44,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Samsung Galaxy A55",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Samsung"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Samsung Galaxy A55 được bảo hành bao nhiêu tháng?",
+          "top_k": 1
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "1fe4809f-c5d9-4a4e-8d33-3dd2997b3508",
+      "parent_id": "6ddcf213-f8c7-4aa6-afb6-f8eead3815f4",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 1421.6,
+      "duration_ms": 19.93,
+      "output": [
+        {
+          "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+          "product_name": "Samsung Galaxy A55",
+          "brand_name": "Samsung",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Exynos 1480",
+            "Màn hình": "Super AMOLED 6,6 inch",
+            "Pin": "5.000 mAh",
+            "RAM": "8-12 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "4dd13751-01ab-49fb-b72c-14df17715edb",
+              "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+              "sku": "DEV-A55-NVY-128",
+              "original_price": "8490000.0",
+              "effective_price": "8490000.0",
+              "ram": "8GB",
+              "storage": "128GB",
+              "color": "Xanh đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "7dddf168-0b6a-480e-bf2d-38a4fde41af5",
+              "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+              "sku": "DEV-A55-LIL-256",
+              "original_price": "9490000.0",
+              "effective_price": "9490000.0",
+              "ram": "8GB",
+              "storage": "256GB",
+              "color": "Tím",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "16bfe6b0-f0bc-46a6-9443-0251887c66be",
+              "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+              "sku": "DEV-A55-ICE-256",
+              "original_price": "10490000.0",
+              "effective_price": "10490000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Xanh băng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "375dab67-ec49-43d5-92a5-599141779e3f",
+      "parent_id": "1fe4809f-c5d9-4a4e-8d33-3dd2997b3508",
+      "name": "product.identity_resolution",
+      "status": "ok",
+      "offset_ms": 1421.72,
+      "duration_ms": 19.64,
+      "output": [
+        {
+          "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+          "product_name": "Samsung Galaxy A55",
+          "brand_name": "Samsung",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Exynos 1480",
+            "Màn hình": "Super AMOLED 6,6 inch",
+            "Pin": "5.000 mAh",
+            "RAM": "8-12 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "4dd13751-01ab-49fb-b72c-14df17715edb",
+              "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+              "sku": "DEV-A55-NVY-128",
+              "original_price": "8490000.0",
+              "effective_price": "8490000.0",
+              "ram": "8GB",
+              "storage": "128GB",
+              "color": "Xanh đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "7dddf168-0b6a-480e-bf2d-38a4fde41af5",
+              "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+              "sku": "DEV-A55-LIL-256",
+              "original_price": "9490000.0",
+              "effective_price": "9490000.0",
+              "ram": "8GB",
+              "storage": "256GB",
+              "color": "Tím",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "16bfe6b0-f0bc-46a6-9443-0251887c66be",
+              "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+              "sku": "DEV-A55-ICE-256",
+              "original_price": "10490000.0",
+              "effective_price": "10490000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Xanh băng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "f3d53c61-b033-4e12-9e71-4652a8d61981",
+      "parent_id": "375dab67-ec49-43d5-92a5-599141779e3f",
+      "name": "product.stock_evidence",
+      "status": "ok",
+      "offset_ms": 1441.1,
+      "duration_ms": null,
+      "output": {
+        "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+        "warehouse_id": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "variants": [
+          {
+            "variant_id": "16bfe6b0-f0bc-46a6-9443-0251887c66be",
+            "available_quantity": 2
+          },
+          {
+            "variant_id": "7dddf168-0b6a-480e-bf2d-38a4fde41af5",
+            "available_quantity": 2
+          },
+          {
+            "variant_id": "4dd13751-01ab-49fb-b72c-14df17715edb",
+            "available_quantity": 2
+          }
+        ],
+        "status": "KNOWN_AVAILABLE"
+      }
+    },
+    {
+      "id": "40572e59-f534-4d83-b9d3-ea08da76db94",
+      "parent_id": "6ddcf213-f8c7-4aa6-afb6-f8eead3815f4",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 1441.55,
+      "duration_ms": 10.37,
+      "output": [
+        {
+          "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+          "product_name": "Samsung Galaxy A55",
+          "variant_id": "4dd13751-01ab-49fb-b72c-14df17715edb",
+          "sku": "DEV-A55-NVY-128",
+          "original_price": "8490000.0",
+          "effective_price": "8490000.0",
+          "ram": "8GB",
+          "storage": "128GB",
+          "color": "Xanh đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/samsung-galaxy-a55/main.jpg",
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "de2bb9c7-03e3-4b1d-8061-702a4308c657",
+      "parent_id": "40572e59-f534-4d83-b9d3-ea08da76db94",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 1451.8,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "d08f9c12-2196-4fc3-8aab-78d763628ce6"
+        ],
+        "variants": 3,
+        "cards": 1
+      }
+    },
+    {
+      "id": "d067ea4c-1a17-4f33-9d1b-da6f21f80fcb",
+      "parent_id": "6ddcf213-f8c7-4aa6-afb6-f8eead3815f4",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1452.12,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DETAIL",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "70b0e279-dc55-43f3-9983-41001daaee31",
+      "parent_id": "29d2f5ba-268f-4bbc-a7e2-f628509f7dea",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1452.75,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 8.51,
+      "duration_ms": 1459.02,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 41.67,
+      "duration_ms": 1359.19,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 42.98,
+      "duration_ms": 1321.7,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 43.4,
+      "duration_ms": 1321.25,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 43.78,
+      "duration_ms": 1320.81,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1365.1,
+      "duration_ms": 13.57,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1378.71,
+      "duration_ms": 9.25,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1388.01,
+      "duration_ms": 11.83,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1421.6,
+      "duration_ms": 19.93,
+      "status": "ok"
+    },
+    {
+      "name": "product.identity_resolution",
+      "offset_ms": 1421.72,
+      "duration_ms": 19.64,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1421.8,
+      "duration_ms": 10.52,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1432.44,
+      "duration_ms": 8.5,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 1441.55,
+      "duration_ms": 10.37,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1441.74,
+      "duration_ms": 9.89,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1452.04,
+      "duration_ms": 0.08,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1452.5,
+      "duration_ms": 0.32,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/d08f9c12-2196-4fc3-8aab-78d763628ce6/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/d08f9c12-2196-4fc3-8aab-78d763628ce6/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}
