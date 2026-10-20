@@ -1,0 +1,537 @@
+{
+  "trace_id": "d8fbe6c0-3cdf-4790-b425-bdeda298b009",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "231c8905-3085-436c-9c60-d0d174eebdcf",
+      "parent_id": "362c665d-4b6c-4ecc-8e5d-41e467ddbc7e",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2681.62,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": "16000000",
+          "max_price": null,
+          "min_ram_gb": 16,
+          "min_storage_gb": 1,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop giá trên 16 triệu và dưới 40 triệu RAM ít nhất 16GB",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "85c8f831-77e6-4583-9a19-2f41a971b334",
+      "parent_id": "362c665d-4b6c-4ecc-8e5d-41e467ddbc7e",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2708.12,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "16000000",
+            "max_price": null,
+            "min_ram_gb": 16,
+            "min_storage_gb": 1,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop giá trên 16 triệu và dưới 40 triệu RAM ít nhất 16GB",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE",
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "16000000",
+            "max_price": "40000000",
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm laptop giá trên 16 triệu và dưới 40 triệu RAM ít nhất 16GB.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "04828e54-b90e-4e54-8b6b-c01293df4e56",
+      "parent_id": "237f13ec-485f-48f2-9822-62b5caacd741",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2720.61,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": "16000000",
+          "max_price": "40000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop giá trên 16 triệu và dưới 40 triệu RAM ít nhất 16GB.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "4d074262-0d4f-422a-af3d-333e3915abab",
+      "parent_id": "237f13ec-485f-48f2-9822-62b5caacd741",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2720.71,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": "16000000",
+          "max_price": "40000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop giá trên 16 triệu và dưới 40 triệu RAM ít nhất 16GB.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "1b5f0538-17f2-4d6e-ae93-067d58decd41",
+      "parent_id": "237f13ec-485f-48f2-9822-62b5caacd741",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 2720.79,
+      "duration_ms": 76.57,
+      "output": [
+        {
+          "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+          "product_name": "Dell XPS 13",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core Ultra",
+            "Màn hình": "13,4 inch",
+            "Pin": "Pin tích hợp, sạc USB-C",
+            "RAM": "16-32 GB"
+          },
+          "semantic_score": 0.5051049307301658,
+          "ranking_score": 0.5051049307301658,
+          "eligible_variants": [
+            {
+              "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+              "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+              "sku": "DEV-XPS13-SL-512",
+              "original_price": "32990000.0",
+              "effective_price": "32990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            },
+            {
+              "variant_id": "eb3ea7d8-4a52-4865-bf18-1625a520da06",
+              "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+              "sku": "DEV-XPS13-GR-1TB",
+              "original_price": "36990000.0",
+              "effective_price": "36990000.0",
+              "ram": "16GB",
+              "storage": "1TB",
+              "color": "Xám",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        },
+        {
+          "product_id": "0bc0ada3-c4e9-41a1-9b5c-93c57c3f6ead",
+          "product_name": "ASUS ROG Zephyrus G14",
+          "brand_name": "ASUS",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "AMD Ryzen 9",
+            "Màn hình": "ROG Nebula 14 inch",
+            "Pin": "Pin tích hợp, sạc USB-C",
+            "RAM": "16-32 GB"
+          },
+          "semantic_score": 0.48536170139722823,
+          "ranking_score": 0.48536170139722823,
+          "eligible_variants": [
+            {
+              "variant_id": "1e38c614-9268-4cae-9206-d491f29c03b5",
+              "product_id": "0bc0ada3-c4e9-41a1-9b5c-93c57c3f6ead",
+              "sku": "DEV-ROGG14-GR-512",
+              "original_price": "39990000.0",
+              "effective_price": "39990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xám",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5142c589-47ce-4f37-bef1-29f8e40c22a0",
+      "parent_id": "237f13ec-485f-48f2-9822-62b5caacd741",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2797.37,
+      "duration_ms": 20.87,
+      "output": [
+        {
+          "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+          "product_name": "Dell XPS 13",
+          "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+          "sku": "DEV-XPS13-SL-512",
+          "original_price": "32990000.0",
+          "effective_price": "32990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-xps-13/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        },
+        {
+          "product_id": "0bc0ada3-c4e9-41a1-9b5c-93c57c3f6ead",
+          "product_name": "ASUS ROG Zephyrus G14",
+          "variant_id": "1e38c614-9268-4cae-9206-d491f29c03b5",
+          "sku": "DEV-ROGG14-GR-512",
+          "original_price": "39990000.0",
+          "effective_price": "39990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Xám",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/asus-rog-zephyrus-g14/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0219a897-f047-4785-b3e3-93f432042582",
+      "parent_id": "5142c589-47ce-4f37-bef1-29f8e40c22a0",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2818.12,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "de24f73c-c12f-43e6-ba87-13308ab4980c",
+          "0bc0ada3-c4e9-41a1-9b5c-93c57c3f6ead"
+        ],
+        "variants": 3,
+        "cards": 2
+      }
+    },
+    {
+      "id": "a4a6b7f2-15eb-4a0f-954a-f5ab5a92f4d0",
+      "parent_id": "237f13ec-485f-48f2-9822-62b5caacd741",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2818.38,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 2,
+        "cards": 2,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "6dec63f0-a319-4f84-8b4e-efe51a9eaf57",
+      "parent_id": "aa323d4f-8097-4941-b2ca-c21cbe7cdf14",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2818.91,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 9.75,
+      "duration_ms": 2821.31,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 48.17,
+      "duration_ms": 2660.11,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 49.87,
+      "duration_ms": 2631.68,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 50.27,
+      "duration_ms": 2631.23,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 50.64,
+      "duration_ms": 2630.8,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2681.79,
+      "duration_ms": 8.01,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2689.86,
+      "duration_ms": 8.06,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2697.93,
+      "duration_ms": 9.96,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2720.79,
+      "duration_ms": 76.57,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2720.83,
+      "duration_ms": 8.86,
+      "status": "ok"
+    },
+    {
+      "name": "product.embedding",
+      "offset_ms": 2729.72,
+      "duration_ms": 33.5,
+      "status": "ok"
+    },
+    {
+      "name": "product.vector_ranking",
+      "offset_ms": 2763.23,
+      "duration_ms": 11.41,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2774.69,
+      "duration_ms": 11.79,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2786.56,
+      "duration_ms": 10.45,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2797.37,
+      "duration_ms": 20.87,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2797.59,
+      "duration_ms": 8.9,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2806.76,
+      "duration_ms": 11.28,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2818.32,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2818.68,
+      "duration_ms": 0.27,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Laptop"
+          ],
+          [
+            "minPrice",
+            "16000000"
+          ],
+          [
+            "maxPrice",
+            "40000000"
+          ],
+          [
+            "minRamGb",
+            "16"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/api/v1/products/de24f73c-c12f-43e6-ba87-13308ab4980c/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/0bc0ada3-c4e9-41a1-9b5c-93c57c3f6ead/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/de24f73c-c12f-43e6-ba87-13308ab4980c/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/0bc0ada3-c4e9-41a1-9b5c-93c57c3f6ead/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "endpoint": "/api/chat",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}

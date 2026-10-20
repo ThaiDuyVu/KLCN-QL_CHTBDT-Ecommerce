@@ -1,0 +1,435 @@
+{
+  "trace_id": "1851a381-9052-44c1-8499-0e126c7de0f2",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "32c96c45-c9e3-4f45-9055-346ee941ec59",
+      "parent_id": "e27d8a71-b74d-4c4f-bd53-5efa058fdc48",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2255.7,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop giá dưới 20 triệu, RAM ít nhất 16GB",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "d82437e4-eb74-4652-9dfc-8c2481d0650e",
+      "parent_id": "e27d8a71-b74d-4c4f-bd53-5efa058fdc48",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2292.89,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop giá dưới 20 triệu, RAM ít nhất 16GB",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE",
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "3d09bd5c-5d09-44ea-ba3b-d554fc995281",
+      "parent_id": "d2716e5e-658a-4cdc-a68d-326c960a14b3",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2308.45,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "a0525248-aeb4-47e1-a0e7-b71d1c45d4e8",
+      "parent_id": "d2716e5e-658a-4cdc-a68d-326c960a14b3",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2308.62,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "c947dbc0-99ae-4dad-99fb-9edebb6df6c4",
+      "parent_id": "d2716e5e-658a-4cdc-a68d-326c960a14b3",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 2308.76,
+      "duration_ms": 54.72,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.46359225022561934,
+          "ranking_score": 0.46359225022561934,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e8c6b09f-8e9f-4002-9276-fe4b2b0da248",
+      "parent_id": "d2716e5e-658a-4cdc-a68d-326c960a14b3",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2363.5,
+      "duration_ms": 14.77,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "327034c4-f96b-4e30-ade5-4a4870198ef2",
+      "parent_id": "e8c6b09f-8e9f-4002-9276-fe4b2b0da248",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2378.2,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "a96df51c-538c-4fa9-8018-6b49ca025b34"
+        ],
+        "variants": 1,
+        "cards": 1
+      }
+    },
+    {
+      "id": "bfe9e64f-2899-49f1-b279-b3ec6172f64f",
+      "parent_id": "d2716e5e-658a-4cdc-a68d-326c960a14b3",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2378.41,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "3f4f3f1c-cbc4-4369-aee9-9c0ed6c66fa2",
+      "parent_id": "b8c533de-1a23-4d96-adb9-79ef4eefd138",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2378.71,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 5.3,
+      "duration_ms": 2380.85,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 29.23,
+      "duration_ms": 2263.94,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 30.44,
+      "duration_ms": 2225.11,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 30.83,
+      "duration_ms": 2224.66,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 31.19,
+      "duration_ms": 2224.23,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2255.96,
+      "duration_ms": 12.55,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2268.59,
+      "duration_ms": 9.04,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2277.67,
+      "duration_ms": 14.77,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2308.76,
+      "duration_ms": 54.72,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2308.85,
+      "duration_ms": 11.71,
+      "status": "ok"
+    },
+    {
+      "name": "product.embedding",
+      "offset_ms": 2320.61,
+      "duration_ms": 21.96,
+      "status": "ok"
+    },
+    {
+      "name": "product.vector_ranking",
+      "offset_ms": 2342.58,
+      "duration_ms": 13.83,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2356.44,
+      "duration_ms": 6.9,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2363.5,
+      "duration_ms": 14.77,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2363.58,
+      "duration_ms": 14.56,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2378.35,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2378.59,
+      "duration_ms": 0.15,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Laptop"
+          ],
+          [
+            "maxPrice",
+            "20000000"
+          ],
+          [
+            "minRamGb",
+            "16"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,519 @@
+{
+  "trace_id": "c87915d1-2265-4f0d-b1e6-8932cb1de6fa",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "59659ed6-5bd9-4263-83d3-67f1ba1fbfd2",
+      "parent_id": "fa5e80d8-abaf-4d83-8b5a-a4a23cbfa548",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1506.94,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "PRICE",
+          "STOCK"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "DEV-X15-BLK-256",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 1
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "f4d1b0c0-9241-4569-8f46-d3a42f65409e",
+      "parent_id": "fa5e80d8-abaf-4d83-8b5a-a4a23cbfa548",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1550.94,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [
+            "PRICE",
+            "STOCK"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "DEV-X15-BLK-256",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": null,
+            "top_k": 1
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [
+            "PRICE",
+            "STOCK"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "DEV-X15-BLK-256",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "SKU DEV-X15-BLK-256 hiện giá bao nhiêu và còn bao nhiêu máy?",
+            "top_k": 1
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "6e292f78-66a4-4a3a-8947-1deff1de748e",
+      "parent_id": "ccb9c6b3-9fc6-402b-94a7-c46d0a7b5a79",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1563.16,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "PRICE",
+          "STOCK"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "DEV-X15-BLK-256",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU DEV-X15-BLK-256 hiện giá bao nhiêu và còn bao nhiêu máy?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "b466565a-066d-419e-8791-29ba8ef445be",
+      "parent_id": "ccb9c6b3-9fc6-402b-94a7-c46d0a7b5a79",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1563.27,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "DEV-X15-BLK-256",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU DEV-X15-BLK-256 hiện giá bao nhiêu và còn bao nhiêu máy?",
+          "top_k": 1
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "c6204895-cfdb-41f7-8d29-d53dc1e0e1fe",
+      "parent_id": "ccb9c6b3-9fc6-402b-94a7-c46d0a7b5a79",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 1563.36,
+      "duration_ms": 25.33,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "68f14572-5c0a-4f8f-bba6-0ee2d53c0784",
+      "parent_id": "c6204895-cfdb-41f7-8d29-d53dc1e0e1fe",
+      "name": "product.identity_resolution",
+      "status": "ok",
+      "offset_ms": 1563.43,
+      "duration_ms": 25.21,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "1f774b5c-1d82-4619-9d3f-7cc12a5eea1d",
+      "parent_id": "68f14572-5c0a-4f8f-bba6-0ee2d53c0784",
+      "name": "product.stock_evidence",
+      "status": "ok",
+      "offset_ms": 1588.54,
+      "duration_ms": null,
+      "output": {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "warehouse_id": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "variants": [
+          {
+            "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+            "available_quantity": 2
+          }
+        ],
+        "status": "KNOWN_AVAILABLE"
+      }
+    },
+    {
+      "id": "ac342885-2e7c-4b05-8d21-b018b3bf43a6",
+      "parent_id": "ccb9c6b3-9fc6-402b-94a7-c46d0a7b5a79",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 1588.7,
+      "duration_ms": 9.03,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "f279b815-860d-4fec-a2db-fd6e300e91fb",
+      "parent_id": "ac342885-2e7c-4b05-8d21-b018b3bf43a6",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 1597.67,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "169710dd-d072-4e83-9fd0-e618d706ee26"
+        ],
+        "variants": 1,
+        "cards": 1
+      }
+    },
+    {
+      "id": "a919c059-9ca5-4118-9ee1-709b3afc662f",
+      "parent_id": "ccb9c6b3-9fc6-402b-94a7-c46d0a7b5a79",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1597.86,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DETAIL",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "6831241b-2426-4ec5-a091-81f6586e71f1",
+      "parent_id": "35613154-0314-4310-af49-b70b2e0df8ae",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1598.18,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 7.47,
+      "duration_ms": 1602.56,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 41.11,
+      "duration_ms": 1509.98,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 42.66,
+      "duration_ms": 1464.16,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 43.13,
+      "duration_ms": 1463.57,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 43.55,
+      "duration_ms": 1463.05,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1507.29,
+      "duration_ms": 13.52,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1520.85,
+      "duration_ms": 11.86,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1532.75,
+      "duration_ms": 17.98,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1563.36,
+      "duration_ms": 25.33,
+      "status": "ok"
+    },
+    {
+      "name": "product.identity_resolution",
+      "offset_ms": 1563.43,
+      "duration_ms": 25.21,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1563.47,
+      "duration_ms": 16.46,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1579.96,
+      "duration_ms": 8.5,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 1588.7,
+      "duration_ms": 9.03,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1588.76,
+      "duration_ms": 8.83,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1597.81,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1598.05,
+      "duration_ms": 0.15,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/product-variants",
+      "kwargs": {
+        "params": {
+          "keyword": "DEV-X15-BLK-256",
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "endpoint": "/api/chat",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}
