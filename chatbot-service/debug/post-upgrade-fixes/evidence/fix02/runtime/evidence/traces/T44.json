@@ -1,0 +1,87 @@
+{
+  "trace_id": "3f912e1c-87e7-4701-b2ee-8840b9c0230e",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "393af90f-4eb4-47fc-b317-f9bec141cde1",
+      "parent_id": "71aa671a-95fc-484b-8c25-a3154b2337e8",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 27.6,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình không cung cấp thông tin riêng của khách hàng khác hoặc mật khẩu.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "15effbe6-eae9-4d42-980a-4ed414e7d4b8",
+      "parent_id": "71aa671a-95fc-484b-8c25-a3154b2337e8",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 32.0,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình không cung cấp thông tin riêng của khách hàng khác hoặc mật khẩu.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "f296a71b-9e29-4276-bd50-256bb176cbe8",
+      "parent_id": "71aa671a-95fc-484b-8c25-a3154b2337e8",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 32.09,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "da6107ae-5cd0-432f-8fbb-b97ae671e7a1",
+      "parent_id": "6f7a3c6a-7c99-433d-8562-87ae978c099b",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 32.25,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 4.98,
+      "duration_ms": 32.06,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 32.06,
+      "duration_ms": 0.03,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 32.18,
+      "duration_ms": 0.1,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": []
+}

@@ -1,0 +1,112 @@
+{
+  "security": {
+    "staff_list_http": 200,
+    "staff_detail_http": 200,
+    "staff_null_warehouse": true,
+    "anonymous_http": 401,
+    "customer_staff_path_http": 403,
+    "unknown_owned_order_http": 404,
+    "owner_list_mixed_warehouse": true
+  },
+  "orders": [
+    {
+      "synthetic_order_code": "ORD-DIAG-DELIVERED",
+      "projection": {
+        "orderCode": "ORD-DIAG-DELIVERED",
+        "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "warehouseName": "Kho phát triển",
+        "status": "DELIVERED",
+        "totalAmount": 18990000.0,
+        "payment": {
+          "status": "PAID",
+          "paymentMethod": "COD",
+          "amount": 18990000.0
+        }
+      },
+      "fixture_owner_class": "primary",
+      "primary_customer_http_status": 200,
+      "secondary_customer_http_status": 404
+    },
+    {
+      "synthetic_order_code": "ORD-DIAG-FAILED",
+      "projection": {
+        "orderCode": "ORD-DIAG-FAILED",
+        "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "warehouseName": "Kho phát triển",
+        "status": "PENDING",
+        "totalAmount": 18990000.0,
+        "payment": {
+          "status": "FAILED",
+          "paymentMethod": "COD",
+          "amount": 18990000.0
+        }
+      },
+      "fixture_owner_class": "primary",
+      "primary_customer_http_status": 200,
+      "secondary_customer_http_status": 404
+    },
+    {
+      "synthetic_order_code": "ORD-DIAG-NOPAY",
+      "projection": {
+        "message": "Đơn không có đúng một payment; cần rà dữ liệu trước khi xử lý"
+      },
+      "fixture_owner_class": "primary",
+      "primary_customer_http_status": 409,
+      "secondary_customer_http_status": 404
+    },
+    {
+      "synthetic_order_code": "ORD-DIAG-NULLWAREHOUSE",
+      "projection": {
+        "orderCode": "ORD-DIAG-NULLWAREHOUSE",
+        "warehouseId": null,
+        "warehouseName": null,
+        "status": "PENDING",
+        "totalAmount": 18990000.0,
+        "payment": {
+          "status": "PENDING",
+          "paymentMethod": "COD",
+          "amount": 18990000.0
+        }
+      },
+      "fixture_owner_class": "primary",
+      "primary_customer_http_status": 200,
+      "secondary_customer_http_status": 404
+    },
+    {
+      "synthetic_order_code": "ORD-DIAG-EXPIRED",
+      "projection": {
+        "orderCode": "ORD-DIAG-EXPIRED",
+        "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "warehouseName": "Kho phát triển",
+        "status": "DELIVERED",
+        "totalAmount": 18990000.0,
+        "payment": {
+          "status": "PAID",
+          "paymentMethod": "COD",
+          "amount": 18990000.0
+        }
+      },
+      "fixture_owner_class": "primary",
+      "primary_customer_http_status": 200,
+      "secondary_customer_http_status": 404
+    },
+    {
+      "synthetic_order_code": "ORD-FIX02-MULTIPAY",
+      "projection": {
+        "message": "Đơn không có đúng một payment; cần rà dữ liệu trước khi xử lý"
+      },
+      "fixture_owner_class": "primary",
+      "primary_customer_http_status": 409,
+      "secondary_customer_http_status": 404
+    },
+    {
+      "synthetic_order_code": "ORD-FIX02-FOREIGN",
+      "projection": {
+        "message": "Không tìm thấy đơn hàng"
+      },
+      "fixture_owner_class": "secondary",
+      "primary_customer_http_status": 404,
+      "secondary_customer_http_status": 409
+    }
+  ]
+}

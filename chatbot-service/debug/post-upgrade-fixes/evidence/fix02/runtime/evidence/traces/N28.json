@@ -1,0 +1,131 @@
+{
+  "trace_id": "0873d75d-2bb4-43ca-810e-aec1b81555c6",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "7001e92c-f4c6-436d-bd2a-a9400078cc6f",
+      "parent_id": "4d260dbd-bf48-473d-b32e-c29d0ccc7bf0",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 26.85,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-NULLWAREHOUSE"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "276dbc0c-9300-40f2-8c01-832a8ee5a11a",
+      "parent_id": "4d260dbd-bf48-473d-b32e-c29d0ccc7bf0",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 31.38,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-NULLWAREHOUSE"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "363aac75-2c4d-4ee9-9b9e-a6d907cac017",
+      "parent_id": "e5adaa1b-063d-4907-a0f2-7b2f8cb8e57b",
+      "name": "customer.order_selection",
+      "status": "ok",
+      "offset_ms": 54.87,
+      "duration_ms": null,
+      "output": {
+        "selection": "exact_code",
+        "matched": 1,
+        "order_ids": [
+          "0c3daf9e-9704-4f68-983c-ad517898245c"
+        ]
+      }
+    },
+    {
+      "id": "704e48c8-ed75-4481-a984-26b71d8d3c94",
+      "parent_id": "4d260dbd-bf48-473d-b32e-c29d0ccc7bf0",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 54.96,
+      "duration_ms": null,
+      "output": {
+        "intent": "PAYMENT_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "7f56ee01-a624-4458-bc92-e150d19d31bb",
+      "parent_id": "e13d60bd-e7c6-4987-8629-241efccde7c0",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 55.2,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_customer_evidence",
+        "reason": "owned_order_payment"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 4.76,
+      "duration_ms": 56.18,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 31.44,
+      "duration_ms": 23.52,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 31.47,
+      "duration_ms": 11.73,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 43.22,
+      "duration_ms": 11.64,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 55.12,
+      "duration_ms": 0.11,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/orders/mine"
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders/mine/synthetic-order-8cb4219feb1a"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "java-before-null-warehouse",
+    "command": "./mvnw -q -Dapi.version=1.44 -Dtest=OrderReadIntegrationTest#nullWarehouseOwnerListAndDetail test",
+    "cwd": "backend",
+    "started_at": "2026-10-20T12:24:12.675233+00:00",
+    "duration_seconds": 9.672,
+    "exit_code": 1,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/java-before-null-warehouse.txt"
+  },
+  {
+    "id": "python-focused",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests/test_order_payment_read.py tests/test_backend_client.py tests/test_customer_context_mapping.py tests/test_final_grounding_safety.py tests/test_query_integrity.py -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T12:26:29.605193+00:00",
+    "duration_seconds": 0.473,
+    "exit_code": 0,
+    "counts": {
+      "passed": 191,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/python-focused.txt"
+  },
+  {
+    "id": "python-full",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T12:26:30.078578+00:00",
+    "duration_seconds": 0.941,
+    "exit_code": 0,
+    "counts": {
+      "passed": 396,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/python-full.txt"
+  },
+  {
+    "id": "java-order-auth",
+    "command": "./mvnw -q -Dapi.version=1.44 -Dtest=OrderReadIntegrationTest,OrderCheckoutIntegrationTest,OrderWorkflowTest,AuthMeIntegrationTest test",
+    "cwd": "backend",
+    "started_at": "2026-10-20T12:26:31.019554+00:00",
+    "duration_seconds": 15.605,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/java-order-auth.txt"
+  },
+  {
+    "id": "fix02-cleanup",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/post-upgrade-fixes/harness/fix02_cleanup.py",
+    "cwd": ".",
+    "started_at": "2026-10-20T12:30:13.423819+00:00",
+    "duration_seconds": 1.668,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix02-cleanup.txt"
+  },
+  {
+    "id": "setup-build-isolated-backend",
+    "command": "./mvnw -q -DskipTests package",
+    "cwd": "backend",
+    "started_at": "2026-10-20T12:23:05.923132+00:00",
+    "duration_seconds": 4.797,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/setup-build-isolated-backend.txt"
+  }
+]
