@@ -1,0 +1,89 @@
+{
+  "trace_id": "544ec047-aa04-4221-b6d4-86b379ba8bb8",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "587e5ac4-09ee-4b54-990c-71452d4d1aee",
+      "parent_id": "8b727bb3-4e57-49b0-90a1-b1c105d9c6c7",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 30.89,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "772ed217-bc01-42d1-8d3e-053824221e26",
+      "parent_id": "8b727bb3-4e57-49b0-90a1-b1c105d9c6c7",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 36.07,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "34c05456-d86a-4db6-bc8b-bb6785e19362",
+      "parent_id": "8b727bb3-4e57-49b0-90a1-b1c105d9c6c7",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 36.17,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "350cd8d0-8652-4e5e-8183-f42f0e163578",
+      "parent_id": "ac71b93c-4914-4a6f-9b13-238c5e44b885",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 36.35,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "transaction_not_supported"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 5.59,
+      "duration_ms": 36.34,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 36.13,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 36.27,
+      "duration_ms": 0.1,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [],
+  "upstream_statuses": [],
+  "errors": []
+}

@@ -1,0 +1,94 @@
+{
+  "trace_id": "ca157971-8898-4040-966b-b13b70adf848",
+  "status": "error",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "aca3ba7e-2d4b-4603-aa3e-8147349e1693",
+      "parent_id": "2d870fe9-ec6d-43dc-9a9f-19457f35b695",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 29.45,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-NOPAY"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "26c9faec-30b3-4064-9490-b739cb2f52a5",
+      "parent_id": "2d870fe9-ec6d-43dc-9a9f-19457f35b695",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 35.07,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-NOPAY"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 5.6,
+      "duration_ms": 54.54,
+      "status": "error"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 35.15,
+      "duration_ms": 24.75,
+      "status": "error"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 35.18,
+      "duration_ms": 9.13,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 44.34,
+      "duration_ms": 15.18,
+      "status": "error"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/orders/mine"
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders/mine/synthetic-order-63b535fe0c67"
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "path": "/api/orders/mine",
+      "status_code": 200
+    },
+    {
+      "path": "/api/orders/mine/synthetic-order-63b535fe0c67",
+      "status_code": 409
+    }
+  ],
+  "errors": []
+}

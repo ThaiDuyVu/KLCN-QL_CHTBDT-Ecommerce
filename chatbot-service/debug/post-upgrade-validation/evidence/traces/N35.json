@@ -1,0 +1,236 @@
+{
+  "trace_id": "ef2517a3-f46e-471a-b080-610eb0827f91",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "a5f177bc-46af-42b4-a90e-77b4094600be",
+      "parent_id": "4076154b-a28e-4816-b676-e6714def866d",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 802.54,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "chính sách đổi trả"
+      }
+    },
+    {
+      "id": "d115cf10-7313-442d-a9e8-6b9916a3cd0d",
+      "parent_id": "ed57c352-66b3-4a0a-898e-acff3c82c05a",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 817.68,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "chính sách đổi trả"
+      }
+    },
+    {
+      "id": "9ffba7bc-84e8-4ed7-b484-5146d38e49e4",
+      "parent_id": "ed57c352-66b3-4a0a-898e-acff3c82c05a",
+      "name": "knowledge.retrieve",
+      "status": "ok",
+      "offset_ms": 818.09,
+      "duration_ms": 40.34,
+      "output": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.6192554831505218,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        }
+      ]
+    },
+    {
+      "id": "a38386f3-a28b-43b1-8fbb-faab7cc5be2c",
+      "parent_id": "9ffba7bc-84e8-4ed7-b484-5146d38e49e4",
+      "name": "knowledge.vector_search",
+      "status": "ok",
+      "offset_ms": 844.6,
+      "duration_ms": 13.4,
+      "output": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.6192554831505218,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        },
+        {
+          "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+          "chunk_index": 0,
+          "content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+          "similarity_score": 0.42385579774186055,
+          "source": {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment",
+            "document_type": "DEMO"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f26b49b0-eb49-489d-9099-2103a2968389",
+      "parent_id": "9ffba7bc-84e8-4ed7-b484-5146d38e49e4",
+      "name": "knowledge.relevance",
+      "status": "ok",
+      "offset_ms": 858.27,
+      "duration_ms": null,
+      "output": {
+        "candidate_count": 2,
+        "selected_chunk_ids": [
+          "466d9bd6-e605-4688-83e7-0f0e825736e8"
+        ],
+        "rejected_chunk_ids": [
+          "74bcff7a-616d-4e34-bf35-e72eade1408c"
+        ],
+        "topics": [
+          "returns"
+        ],
+        "policy": "positive_cosine_and_explicit_topic"
+      }
+    },
+    {
+      "id": "ec051138-0e78-4802-9f2c-3a546c71fc34",
+      "parent_id": "ed57c352-66b3-4a0a-898e-acff3c82c05a",
+      "name": "knowledge.relevance",
+      "status": "ok",
+      "offset_ms": 858.61,
+      "duration_ms": null,
+      "output": {
+        "candidate_count": 1,
+        "selected_chunk_ids": [
+          "466d9bd6-e605-4688-83e7-0f0e825736e8"
+        ],
+        "rejected_chunk_ids": [],
+        "topics": [
+          "returns"
+        ],
+        "policy": "positive_cosine_and_explicit_topic"
+      }
+    },
+    {
+      "id": "a026c115-5e35-42cb-ad1d-e0d8fd239ecb",
+      "parent_id": "ed57c352-66b3-4a0a-898e-acff3c82c05a",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 858.69,
+      "duration_ms": null,
+      "output": {
+        "intent": "KNOWLEDGE_QA",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 1,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "69e80c9c-0304-497a-96ee-c1ad95af0b6a",
+      "parent_id": "c730c247-fa1b-4f7f-9195-c35e78301f15",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 859.18,
+      "duration_ms": null,
+      "output": {
+        "strategy": "extractive_knowledge_evidence",
+        "reason": "source_bound_excerpt"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 7.88,
+      "duration_ms": 862.72,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 40.01,
+      "duration_ms": 762.66,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 41.77,
+      "duration_ms": 760.74,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 42.22,
+      "duration_ms": 760.26,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 42.6,
+      "duration_ms": 759.84,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 817.93,
+      "duration_ms": 0.08,
+      "status": "ok"
+    },
+    {
+      "name": "knowledge.retrieve",
+      "offset_ms": 818.09,
+      "duration_ms": 40.34,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 818.14,
+      "duration_ms": 26.03,
+      "status": "ok"
+    },
+    {
+      "name": "knowledge.vector_search",
+      "offset_ms": 844.6,
+      "duration_ms": 13.4,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 859.0,
+      "duration_ms": 0.31,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [],
+  "upstream_statuses": [
+    {
+      "endpoint": "/api/chat",
+      "status_code": 200
+    },
+    {
+      "endpoint": "/api/embed",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}
