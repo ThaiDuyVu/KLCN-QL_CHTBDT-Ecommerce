@@ -1,0 +1,1538 @@
+[
+  {
+    "case_id": "T07-R1",
+    "prompt": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+    "session_id": "5726f448-4b2f-4a2a-ae0e-d3fe4f511e0e",
+    "trace_id": "41dd2d63-523b-44b6-9bef-baf09cd68386",
+    "timestamp": "2026-10-13T12:41:36.530464+00:00",
+    "http_status": 200,
+    "latency_ms": 2220.59,
+    "baseline_verdict": "PASS_WITH_WARNINGS",
+    "response": {
+      "session_id": "5726f448-4b2f-4a2a-ae0e-d3fe4f511e0e",
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "PRICE",
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.4635191646769181,
+          "ranking_score": 0.4635191646769181,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "PRODUCT_DISCOVERY",
+      "products": 1,
+      "cards": 1,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": [
+      {
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "checks": {
+          "effective_price": true,
+          "ram": true,
+          "storage": true,
+          "color": true,
+          "available_quantity": true,
+          "warranty_months": true,
+          "sku": true,
+          "identity": true
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "T07-R2",
+    "prompt": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+    "session_id": "9ca6eabe-7bae-4330-858f-53695a444697",
+    "trace_id": "ef767b62-158b-4c71-8b16-5d11b9af2ddc",
+    "timestamp": "2026-10-13T12:41:38.551420+00:00",
+    "http_status": 200,
+    "latency_ms": 1998.14,
+    "baseline_verdict": "PASS_WITH_WARNINGS",
+    "response": {
+      "session_id": "9ca6eabe-7bae-4330-858f-53695a444697",
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "PRICE",
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.46354496044456817,
+          "ranking_score": 0.46354496044456817,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "PRODUCT_DISCOVERY",
+      "products": 1,
+      "cards": 1,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": [
+      {
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "checks": {
+          "effective_price": true,
+          "ram": true,
+          "storage": true,
+          "color": true,
+          "available_quantity": true,
+          "warranty_months": true,
+          "sku": true,
+          "identity": true
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "T07-R3",
+    "prompt": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+    "session_id": "fcf24673-c598-4845-85ee-c59b51221b40",
+    "trace_id": "e4cdbb25-0c6a-4963-a69a-adcc3aa1a4fb",
+    "timestamp": "2026-10-13T12:41:40.567382+00:00",
+    "http_status": 200,
+    "latency_ms": 1991.58,
+    "baseline_verdict": "PASS_WITH_WARNINGS",
+    "response": {
+      "session_id": "fcf24673-c598-4845-85ee-c59b51221b40",
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "PRICE",
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.46354496044456817,
+          "ranking_score": 0.46354496044456817,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "PRODUCT_DISCOVERY",
+      "products": 1,
+      "cards": 1,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": [
+      {
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "checks": {
+          "effective_price": true,
+          "ram": true,
+          "storage": true,
+          "color": true,
+          "available_quantity": true,
+          "warranty_months": true,
+          "sku": true,
+          "identity": true
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "T15-R1",
+    "prompt": "Xiaomi 15 còn hàng không?",
+    "session_id": "a3b0126e-6551-45e6-ad37-d92eba4ce6af",
+    "trace_id": "0c347ab9-50a6-40c1-9dd1-48cd25d27bb4",
+    "timestamp": "2026-10-13T12:41:42.178665+00:00",
+    "http_status": 200,
+    "latency_ms": 1584.65,
+    "baseline_verdict": "FAIL",
+    "response": {
+      "session_id": "a3b0126e-6551-45e6-ad37-d92eba4ce6af",
+      "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "STOCK"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      },
+      "semantic_query": null
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-GRN-512",
+              "original_price": "21990000.0",
+              "effective_price": "21990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xanh lá",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "PRODUCT_DETAIL",
+      "products": 1,
+      "cards": 1,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": [
+      {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "checks": {
+          "effective_price": true,
+          "ram": true,
+          "storage": true,
+          "color": true,
+          "available_quantity": true,
+          "warranty_months": true,
+          "sku": true,
+          "identity": true
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "T15-R2",
+    "prompt": "Xiaomi 15 còn hàng không?",
+    "session_id": "efe4527a-eb03-4795-aca9-956ee148b3b2",
+    "trace_id": "a8b9eb5d-ec3c-44a6-b3ac-feb5bf432ac4",
+    "timestamp": "2026-10-13T12:41:43.723414+00:00",
+    "http_status": 200,
+    "latency_ms": 1513.34,
+    "baseline_verdict": "FAIL",
+    "response": {
+      "session_id": "efe4527a-eb03-4795-aca9-956ee148b3b2",
+      "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "STOCK"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      },
+      "semantic_query": null
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-GRN-512",
+              "original_price": "21990000.0",
+              "effective_price": "21990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xanh lá",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "PRODUCT_DETAIL",
+      "products": 1,
+      "cards": 1,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": [
+      {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "checks": {
+          "effective_price": true,
+          "ram": true,
+          "storage": true,
+          "color": true,
+          "available_quantity": true,
+          "warranty_months": true,
+          "sku": true,
+          "identity": true
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "T15-R3",
+    "prompt": "Xiaomi 15 còn hàng không?",
+    "session_id": "95fb01e1-9daa-493c-8da0-325574b66f8a",
+    "trace_id": "02348743-1317-4d44-ac4b-601ea18c3a3a",
+    "timestamp": "2026-10-13T12:41:45.280545+00:00",
+    "http_status": 200,
+    "latency_ms": 1526.9,
+    "baseline_verdict": "FAIL",
+    "response": {
+      "session_id": "95fb01e1-9daa-493c-8da0-325574b66f8a",
+      "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "STOCK"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      },
+      "semantic_query": null
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      },
+      "below_minimum": false,
+      "cheaper_followup": false
+    },
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-GRN-512",
+              "original_price": "21990000.0",
+              "effective_price": "21990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xanh lá",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "PRODUCT_DETAIL",
+      "products": 1,
+      "cards": 1,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": [
+      {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "checks": {
+          "effective_price": true,
+          "ram": true,
+          "storage": true,
+          "color": true,
+          "available_quantity": true,
+          "warranty_months": true,
+          "sku": true,
+          "identity": true
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "T30-R1",
+    "prompt": "Có loại rẻ hơn không?",
+    "session_id": "e10b9ffa-6ae7-4e03-be10-1528ef8459fc",
+    "trace_id": "87e58c8d-bf87-49f3-8b7a-4c61062dd19f",
+    "timestamp": "2026-10-13T12:41:46.273667+00:00",
+    "http_status": 200,
+    "latency_ms": 964.15,
+    "baseline_verdict": "FAIL",
+    "response": {
+      "session_id": "e10b9ffa-6ae7-4e03-be10-1528ef8459fc",
+      "message": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": {
+      "kind": "CHEAPER",
+      "status": "NO_REFERENCE"
+    },
+    "grounding": {
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "UNKNOWN",
+      "products": 0,
+      "cards": 0,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": []
+  },
+  {
+    "case_id": "T30-R2",
+    "prompt": "Có loại rẻ hơn không?",
+    "session_id": "1df02888-710f-4965-9513-118224d3d2ca",
+    "trace_id": "e9bd7c31-894c-4a52-87b9-3795a493ca14",
+    "timestamp": "2026-10-13T12:41:47.163181+00:00",
+    "http_status": 200,
+    "latency_ms": 866.41,
+    "baseline_verdict": "FAIL",
+    "response": {
+      "session_id": "1df02888-710f-4965-9513-118224d3d2ca",
+      "message": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": {
+      "kind": "CHEAPER",
+      "status": "NO_REFERENCE"
+    },
+    "grounding": {
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "UNKNOWN",
+      "products": 0,
+      "cards": 0,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": []
+  },
+  {
+    "case_id": "T30-R3",
+    "prompt": "Có loại rẻ hơn không?",
+    "session_id": "984fd863-11a8-4d71-b310-9c00be29333c",
+    "trace_id": "1750a30b-b140-479f-a09d-7ec2a458279b",
+    "timestamp": "2026-10-13T12:41:48.054898+00:00",
+    "http_status": 200,
+    "latency_ms": 864.58,
+    "baseline_verdict": "FAIL",
+    "response": {
+      "session_id": "984fd863-11a8-4d71-b310-9c00be29333c",
+      "message": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": {
+      "kind": "CHEAPER",
+      "status": "NO_REFERENCE"
+    },
+    "grounding": {
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "UNKNOWN",
+      "products": 0,
+      "cards": 0,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": []
+  },
+  {
+    "case_id": "T31-R1",
+    "prompt": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?",
+    "session_id": "baa0d28a-a55d-40dd-8701-f410387ab070",
+    "trace_id": "3852972a-f445-4d68-9d5c-7a364aca5163",
+    "timestamp": "2026-10-13T12:41:48.173139+00:00",
+    "http_status": 200,
+    "latency_ms": 96.88,
+    "baseline_verdict": "PASS_WITH_WARNINGS",
+    "response": {
+      "session_id": "baa0d28a-a55d-40dd-8701-f410387ab070",
+      "message": "Dưới đây là trích đoạn tài liệu liên quan; mình không xác nhận đây là chính sách chính thức của cửa hàng.\n\n[DEMO — chỉ dùng kiểm thử, không phải chính sách chính thức] DEMO — Chính sách đổi trả kiểm thử:\nĐây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+      "products": [],
+      "sources": [
+        {
+          "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "title": "DEMO — Chính sách đổi trả kiểm thử",
+          "source": "demo://chatbot-lab/return"
+        }
+      ],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": null,
+      "intent": "KNOWLEDGE_QA",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?"
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "extractive_knowledge_evidence",
+      "reason": "source_bound_excerpt"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [],
+      "knowledge_chunks": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.7443099783927279,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        }
+      ],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "KNOWLEDGE_QA",
+      "products": 0,
+      "cards": 0,
+      "knowledge_chunks": 1,
+      "knowledge_configured": true
+    },
+    "backend_checks": []
+  },
+  {
+    "case_id": "T31-R2",
+    "prompt": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?",
+    "session_id": "4efc84e0-d6c3-447f-813d-e04240def85c",
+    "trace_id": "d28c6909-c5db-407f-9731-fb25ccf59490",
+    "timestamp": "2026-10-13T12:41:48.260594+00:00",
+    "http_status": 200,
+    "latency_ms": 68.83,
+    "baseline_verdict": "PASS_WITH_WARNINGS",
+    "response": {
+      "session_id": "4efc84e0-d6c3-447f-813d-e04240def85c",
+      "message": "Dưới đây là trích đoạn tài liệu liên quan; mình không xác nhận đây là chính sách chính thức của cửa hàng.\n\n[DEMO — chỉ dùng kiểm thử, không phải chính sách chính thức] DEMO — Chính sách đổi trả kiểm thử:\nĐây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+      "products": [],
+      "sources": [
+        {
+          "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "title": "DEMO — Chính sách đổi trả kiểm thử",
+          "source": "demo://chatbot-lab/return"
+        }
+      ],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": null,
+      "intent": "KNOWLEDGE_QA",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?"
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "extractive_knowledge_evidence",
+      "reason": "source_bound_excerpt"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [],
+      "knowledge_chunks": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.7443118857407923,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        }
+      ],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "KNOWLEDGE_QA",
+      "products": 0,
+      "cards": 0,
+      "knowledge_chunks": 1,
+      "knowledge_configured": true
+    },
+    "backend_checks": []
+  },
+  {
+    "case_id": "T31-R3",
+    "prompt": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?",
+    "session_id": "a0a27851-7b52-418a-9be7-fff5edca394e",
+    "trace_id": "256ef757-af7a-42e4-9dd2-8219b8338ae9",
+    "timestamp": "2026-10-13T12:41:48.352800+00:00",
+    "http_status": 200,
+    "latency_ms": 76.1,
+    "baseline_verdict": "PASS_WITH_WARNINGS",
+    "response": {
+      "session_id": "a0a27851-7b52-418a-9be7-fff5edca394e",
+      "message": "Dưới đây là trích đoạn tài liệu liên quan; mình không xác nhận đây là chính sách chính thức của cửa hàng.\n\n[DEMO — chỉ dùng kiểm thử, không phải chính sách chính thức] DEMO — Chính sách đổi trả kiểm thử:\nĐây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+      "products": [],
+      "sources": [
+        {
+          "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "title": "DEMO — Chính sách đổi trả kiểm thử",
+          "source": "demo://chatbot-lab/return"
+        }
+      ],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": null,
+      "intent": "KNOWLEDGE_QA",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?"
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "extractive_knowledge_evidence",
+      "reason": "source_bound_excerpt"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [],
+      "knowledge_chunks": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.7443118857407923,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        }
+      ],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "KNOWLEDGE_QA",
+      "products": 0,
+      "cards": 0,
+      "knowledge_chunks": 1,
+      "knowledge_configured": true
+    },
+    "backend_checks": []
+  },
+  {
+    "case_id": "T51-R1",
+    "prompt": "Xiaomii 15 còn hàng hong?",
+    "session_id": "16b14746-79c3-43ab-9f1b-e8725da3931b",
+    "trace_id": "401b6b3d-1c2d-4f61-bf20-47f8a0bc4be0",
+    "timestamp": "2026-10-13T12:41:49.520983+00:00",
+    "http_status": 200,
+    "latency_ms": 1151.27,
+    "baseline_verdict": "FAIL",
+    "response": {
+      "session_id": "16b14746-79c3-43ab-9f1b-e8725da3931b",
+      "message": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "UNKNOWN",
+      "products": 0,
+      "cards": 0,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": []
+  },
+  {
+    "case_id": "T51-R2",
+    "prompt": "Xiaomii 15 còn hàng hong?",
+    "session_id": "44b2b0e0-3e19-458e-a877-806361d1db87",
+    "trace_id": "d861e77f-1826-4e55-ac2c-cd24444fdd4e",
+    "timestamp": "2026-10-13T12:41:50.634229+00:00",
+    "http_status": 200,
+    "latency_ms": 1092.06,
+    "baseline_verdict": "FAIL",
+    "response": {
+      "session_id": "44b2b0e0-3e19-458e-a877-806361d1db87",
+      "message": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "UNKNOWN",
+      "products": 0,
+      "cards": 0,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": []
+  },
+  {
+    "case_id": "T51-R3",
+    "prompt": "Xiaomii 15 còn hàng hong?",
+    "session_id": "6e1e77b6-6982-4cfe-b22c-462b11c26f05",
+    "trace_id": "bad6d0d3-19c8-4338-8cba-d039de712e35",
+    "timestamp": "2026-10-13T12:41:51.752712+00:00",
+    "http_status": 200,
+    "latency_ms": 1097.84,
+    "baseline_verdict": "FAIL",
+    "response": {
+      "session_id": "6e1e77b6-6982-4cfe-b22c-462b11c26f05",
+      "message": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "history_count": 0,
+    "query_plan": {
+      "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_counts": {
+        "recent_orders": 0,
+        "warranties": 0,
+        "warranty_tickets": 0
+      },
+      "cart_item_count": 0
+    },
+    "retrieval_summary": {
+      "intent": "UNKNOWN",
+      "products": 0,
+      "cards": 0,
+      "knowledge_chunks": 0,
+      "knowledge_configured": true
+    },
+    "backend_checks": []
+  }
+]

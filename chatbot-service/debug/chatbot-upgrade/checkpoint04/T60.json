@@ -1,0 +1,19 @@
+{
+  "case_id": "T60",
+  "prompt": "CUSTOMER kh\u00e1c GET trace/list",
+  "baseline_verdict": "PASS",
+  "timestamp": "2026-10-13T12:38:58.423492+00:00",
+  "session_id": "6e1e77b6-6982-4cfe-b22c-462b11c26f05",
+  "trace_id": null,
+  "observation": {
+    "owner_trace_status": 200,
+    "other_trace_status": 404,
+    "other_trace_list_status": 200,
+    "other_trace_list_count": 0,
+    "control_after_restart": "current_process_live_trace"
+  },
+  "verdict": "PASS",
+  "first_fault": "NO_FAULT",
+  "fix_status": "VERIFIED_HTTP_OR_BROWSER",
+  "target_trace_id": "bad6d0d3-19c8-4338-8cba-d039de712e35"
+}
