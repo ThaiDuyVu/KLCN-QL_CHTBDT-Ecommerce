@@ -130,7 +130,8 @@ IDENTITY_BOUNDARIES = frozenset(('de cho dung phuc vu hoc tap lam viec lap trinh
     'gia duoi tren tu co voi ram ssd storage dung luong bo nho can nao dang con hang '
     'tot re manh va hoac hay nhung mua giup xin toi muon tim canh bao it nhat toi thieu '
     'khong qua toi da ban mau chay choi game phai chi nhu cau price under for with '
-    'available in stock below above at least please find recommend cua hang thuong hieu mong nhe sieu sinh vien' ).split())
+    'available in stock below above at least please find recommend cua hang thuong hieu mong nhe sieu sinh vien '
+    'so sanh compare versus vs than mot hai ba bon nam chiec cai cac nhung loai one two three a an the some cheap budget lightweight powerful office work performance high' ).split())
 
 
 def validate_brands(text, plan, mentions, brands, named, fold, contains, original):
@@ -155,6 +156,19 @@ def validate_brands(text, plan, mentions, brands, named, fold, contains, origina
                     if not any(contains(text[m.start():], fold(row['productName']))
                                and fold(row['productName']).startswith(alias + ' ' + token) for row in named):
                         stated.append(token)
+    # The same identity slot can precede the type: "Lenovo laptop". Inspect
+    # only the adjacent noun-phrase position, not arbitrary residual tokens.
+    for _, aliases in mentions:
+        for alias in aliases:
+            for m in re.finditer(r'(?<!\w)([\w-]+)\s+' + re.escape(alias) + r'(?!\w)', text):
+                token = m[1]
+                if token in IDENTITY_BOUNDARIES or token.isdigit() or re.fullmatch(NUMBER + r'(?:gb|tb)', token):
+                    continue
+                prefix_text = text[:m.start() + len(token)]
+                grounded_names = known + [row['productName'] for row in named]
+                if any(re.search(r'(?<!\w)' + re.escape(fold(name)) + r'$', prefix_text) for name in grounded_names):
+                    continue
+                stated.append(token)
     for name in stated:
         if not any(fold(name) == fold(b) or fold(b).startswith(fold(name) + ' ') for b in brands):
             raise ConstraintError('Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.')

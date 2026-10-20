@@ -1,0 +1,124 @@
+FFFFF.....                                                               [100%]
+=================================== FAILURES ===================================
+_ test_unknown_brand_before_product_type_never_broadens[False-T\xecm Lenovo laptop RAM 16GB.] _
+
+prompt = 'Tìm Lenovo laptop RAM 16GB.', model_brand = False
+
+    @pytest.mark.parametrize('prompt', [
+        'Tìm Lenovo laptop RAM 16GB.',
+        'Lenovo laptop RAM 16GB dưới 20 triệu.',
+        'Tìm Acer máy tính xách tay RAM 16GB.',
+        'Tìm Acme điện thoại dưới 20 triệu.',
+        'Tìm Unlisted smartphone RAM 12GB.',
+    ])
+    @pytest.mark.parametrize('model_brand', [False, True])
+    def test_unknown_brand_before_product_type_never_broadens(prompt, model_brand):
+        from app.shared.contracts.query import ProductSearchPlan
+        brand = next(b for b in ['Lenovo', 'Acer', 'Acme', 'Unlisted'] if b in prompt)
+        model = QueryPlan(intent=Intent.PRODUCT_DISCOVERY, product_search=ProductSearchPlan(
+            category='Laptop', brands=[brand] if model_brand else []))
+        plan = normalized(prompt, model)
+>       assert plan.clarification and plan.product_search is None
+E       AssertionError: assert (None)
+E        +  where None = QueryPlan(clarification=None, intent=<Intent.PRODUCT_DISCOVERY: 'PRODUCT_DISCOVERY'>, requested_fields=[<RequestedFiel...one, cpu_keywords=[], in_stock_only=False, semantic_query='Tìm Lenovo laptop RAM 16GB.', top_k=5), semantic_query=None).clarification
+
+tests/test_query_integrity.py:326: AssertionError
+_ test_unknown_brand_before_product_type_never_broadens[False-Lenovo laptop RAM 16GB d\u01b0\u1edbi 20 tri\u1ec7u.] _
+
+prompt = 'Lenovo laptop RAM 16GB dưới 20 triệu.', model_brand = False
+
+    @pytest.mark.parametrize('prompt', [
+        'Tìm Lenovo laptop RAM 16GB.',
+        'Lenovo laptop RAM 16GB dưới 20 triệu.',
+        'Tìm Acer máy tính xách tay RAM 16GB.',
+        'Tìm Acme điện thoại dưới 20 triệu.',
+        'Tìm Unlisted smartphone RAM 12GB.',
+    ])
+    @pytest.mark.parametrize('model_brand', [False, True])
+    def test_unknown_brand_before_product_type_never_broadens(prompt, model_brand):
+        from app.shared.contracts.query import ProductSearchPlan
+        brand = next(b for b in ['Lenovo', 'Acer', 'Acme', 'Unlisted'] if b in prompt)
+        model = QueryPlan(intent=Intent.PRODUCT_DISCOVERY, product_search=ProductSearchPlan(
+            category='Laptop', brands=[brand] if model_brand else []))
+        plan = normalized(prompt, model)
+>       assert plan.clarification and plan.product_search is None
+E       AssertionError: assert (None)
+E        +  where None = QueryPlan(clarification=None, intent=<Intent.PRODUCT_DISCOVERY: 'PRODUCT_DISCOVERY'>, requested_fields=[<RequestedFiel...eywords=[], in_stock_only=False, semantic_query='Lenovo laptop RAM 16GB dưới 20 triệu.', top_k=5), semantic_query=None).clarification
+
+tests/test_query_integrity.py:326: AssertionError
+_ test_unknown_brand_before_product_type_never_broadens[False-T\xecm Acer m\xe1y t\xednh x\xe1ch tay RAM 16GB.] _
+
+prompt = 'Tìm Acer máy tính xách tay RAM 16GB.', model_brand = False
+
+    @pytest.mark.parametrize('prompt', [
+        'Tìm Lenovo laptop RAM 16GB.',
+        'Lenovo laptop RAM 16GB dưới 20 triệu.',
+        'Tìm Acer máy tính xách tay RAM 16GB.',
+        'Tìm Acme điện thoại dưới 20 triệu.',
+        'Tìm Unlisted smartphone RAM 12GB.',
+    ])
+    @pytest.mark.parametrize('model_brand', [False, True])
+    def test_unknown_brand_before_product_type_never_broadens(prompt, model_brand):
+        from app.shared.contracts.query import ProductSearchPlan
+        brand = next(b for b in ['Lenovo', 'Acer', 'Acme', 'Unlisted'] if b in prompt)
+        model = QueryPlan(intent=Intent.PRODUCT_DISCOVERY, product_search=ProductSearchPlan(
+            category='Laptop', brands=[brand] if model_brand else []))
+        plan = normalized(prompt, model)
+>       assert plan.clarification and plan.product_search is None
+E       AssertionError: assert (None)
+E        +  where None = QueryPlan(clarification=None, intent=<Intent.PRODUCT_DISCOVERY: 'PRODUCT_DISCOVERY'>, requested_fields=[<RequestedFiel...keywords=[], in_stock_only=False, semantic_query='Tìm Acer máy tính xách tay RAM 16GB.', top_k=5), semantic_query=None).clarification
+
+tests/test_query_integrity.py:326: AssertionError
+_ test_unknown_brand_before_product_type_never_broadens[False-T\xecm Acme \u0111i\u1ec7n tho\u1ea1i d\u01b0\u1edbi 20 tri\u1ec7u.] _
+
+prompt = 'Tìm Acme điện thoại dưới 20 triệu.', model_brand = False
+
+    @pytest.mark.parametrize('prompt', [
+        'Tìm Lenovo laptop RAM 16GB.',
+        'Lenovo laptop RAM 16GB dưới 20 triệu.',
+        'Tìm Acer máy tính xách tay RAM 16GB.',
+        'Tìm Acme điện thoại dưới 20 triệu.',
+        'Tìm Unlisted smartphone RAM 12GB.',
+    ])
+    @pytest.mark.parametrize('model_brand', [False, True])
+    def test_unknown_brand_before_product_type_never_broadens(prompt, model_brand):
+        from app.shared.contracts.query import ProductSearchPlan
+        brand = next(b for b in ['Lenovo', 'Acer', 'Acme', 'Unlisted'] if b in prompt)
+        model = QueryPlan(intent=Intent.PRODUCT_DISCOVERY, product_search=ProductSearchPlan(
+            category='Laptop', brands=[brand] if model_brand else []))
+        plan = normalized(prompt, model)
+>       assert plan.clarification and plan.product_search is None
+E       AssertionError: assert (None)
+E        +  where None = QueryPlan(clarification=None, intent=<Intent.PRODUCT_DISCOVERY: 'PRODUCT_DISCOVERY'>, requested_fields=[], references=...u_keywords=[], in_stock_only=False, semantic_query='Tìm Acme điện thoại dưới 20 triệu.', top_k=5), semantic_query=None).clarification
+
+tests/test_query_integrity.py:326: AssertionError
+_ test_unknown_brand_before_product_type_never_broadens[False-T\xecm Unlisted smartphone RAM 12GB.] _
+
+prompt = 'Tìm Unlisted smartphone RAM 12GB.', model_brand = False
+
+    @pytest.mark.parametrize('prompt', [
+        'Tìm Lenovo laptop RAM 16GB.',
+        'Lenovo laptop RAM 16GB dưới 20 triệu.',
+        'Tìm Acer máy tính xách tay RAM 16GB.',
+        'Tìm Acme điện thoại dưới 20 triệu.',
+        'Tìm Unlisted smartphone RAM 12GB.',
+    ])
+    @pytest.mark.parametrize('model_brand', [False, True])
+    def test_unknown_brand_before_product_type_never_broadens(prompt, model_brand):
+        from app.shared.contracts.query import ProductSearchPlan
+        brand = next(b for b in ['Lenovo', 'Acer', 'Acme', 'Unlisted'] if b in prompt)
+        model = QueryPlan(intent=Intent.PRODUCT_DISCOVERY, product_search=ProductSearchPlan(
+            category='Laptop', brands=[brand] if model_brand else []))
+        plan = normalized(prompt, model)
+>       assert plan.clarification and plan.product_search is None
+E       AssertionError: assert (None)
+E        +  where None = QueryPlan(clarification=None, intent=<Intent.PRODUCT_DISCOVERY: 'PRODUCT_DISCOVERY'>, requested_fields=[<RequestedFiel...pu_keywords=[], in_stock_only=False, semantic_query='Tìm Unlisted smartphone RAM 12GB.', top_k=5), semantic_query=None).clarification
+
+tests/test_query_integrity.py:326: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_query_integrity.py::test_unknown_brand_before_product_type_never_broadens[False-T\xecm Lenovo laptop RAM 16GB.]
+FAILED tests/test_query_integrity.py::test_unknown_brand_before_product_type_never_broadens[False-Lenovo laptop RAM 16GB d\u01b0\u1edbi 20 tri\u1ec7u.]
+FAILED tests/test_query_integrity.py::test_unknown_brand_before_product_type_never_broadens[False-T\xecm Acer m\xe1y t\xednh x\xe1ch tay RAM 16GB.]
+FAILED tests/test_query_integrity.py::test_unknown_brand_before_product_type_never_broadens[False-T\xecm Acme \u0111i\u1ec7n tho\u1ea1i d\u01b0\u1edbi 20 tri\u1ec7u.]
+FAILED tests/test_query_integrity.py::test_unknown_brand_before_product_type_never_broadens[False-T\xecm Unlisted smartphone RAM 12GB.]
+5 failed, 5 passed, 89 deselected in 0.19s
