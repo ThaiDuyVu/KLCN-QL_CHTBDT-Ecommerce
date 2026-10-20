@@ -3,12 +3,14 @@ from __future__ import annotations
 from app.shared.tracing import traced, event
 
 from typing import Any
+from uuid import UUID
 
 import httpx
 from fastapi import HTTPException
 
 from app.features.customer_context.models import AuthenticatedCustomer
 from app.shared.config import get_settings
+from app.shared.backend.errors import OwnedOrderPaymentIntegrityError, PAYMENT_CARDINALITY_MESSAGE
 
 
 class BackendClient:
@@ -64,6 +66,10 @@ class BackendClient:
         if response.status_code == 204:
             return None
 
+        if self._owned_payment_conflict(method, path, response):
+            event('backend.owned_payment_integrity', {'status_code': 409, 'operation': 'owned_order_detail'}, status='warning')
+            raise OwnedOrderPaymentIntegrityError()
+
         try:
             response.raise_for_status()
         except httpx.HTTPStatusError as exc:
@@ -79,6 +85,20 @@ class BackendClient:
             raise HTTPException(status_code=502, detail="Backend trả về JSON không hợp lệ.") from exc
 
         return data
+
+    @staticmethod
+    def _owned_payment_conflict(method: str, path: str, response: httpx.Response) -> bool:
+        # Match the existing ApiErrorResponse exactly, and only a UUID-scoped owned GET.
+        # Other409s, staff reads and mutations retain their ordinary error mapping.
+        prefix = '/api/orders/mine/'
+        if method.upper() != 'GET' or response.status_code != 409 or not path.startswith(prefix):
+            return False
+        try:
+            UUID(path[len(prefix):])
+            payload = response.json()
+        except (ValueError, TypeError):
+            return False
+        return payload == {'message': PAYMENT_CARDINALITY_MESSAGE}
 
     async def get_current_user(self, cookies: dict[str, str]) -> dict[str, Any]:
         payload = await self._request_json("GET", "/api/auth/me", cookies=cookies)

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "N27",
+    "group": "E",
+    "prompt": "Đơn hàng ORD-DIAG-NOPAY của tôi đã thanh toán chưa?",
+    "expected": "DELIVERED with no payment: explicitly unknown payment, not paid.",
+    "mode": "real_chat_api",
+    "profile": "default",
+    "session_class": "fresh_owned_customer",
+    "fixture": "isolated synthetic database clone",
+    "capability": "supported"
+  },
+  {
+    "id": "N28",
+    "group": "E",
+    "prompt": "Đơn hàng ORD-DIAG-NULLWAREHOUSE của tôi đã thanh toán chưa?",
+    "expected": "Nullable-warehouse DB fixture must not cause backend NPE; record safe upstream handling if it does.",
+    "mode": "real_chat_api",
+    "profile": "default",
+    "session_class": "fresh_owned_customer",
+    "fixture": "isolated synthetic database clone",
+    "capability": "supported"
+  }
+]

@@ -33,9 +33,11 @@ from app.features.query_understanding.service import MockQueryUnderstandingServi
 from app.features.response_generation.protocol import ResponseGenerationService
 from app.features.response_generation.service import MockResponseGenerationService
 from app.shared.backend.client import BackendClient
+from app.shared.backend.errors import OwnedOrderPaymentIntegrityError, PAYMENT_UNAVAILABLE_MESSAGE
 from app.shared.contracts.context import (
     ChatMessage as SharedChatMessage,
     GroundedContext,
+    CustomerContext,
     QueryContext,
 )
 from app.shared.contracts.enums import Intent, MessageRole
@@ -232,7 +234,15 @@ class ChatService:
             context_options['order_code'] = query_plan.references['order_code']
         if query_plan.references.get('order_selection') == 'latest':
             context_options['latest'] = True
-        context_payload = await self.customer_context_service.load_context(query_plan.intent, cookies or {}, **context_options)
+        try:
+            context_payload = await self.customer_context_service.load_context(query_plan.intent, cookies or {}, **context_options)
+        except OwnedOrderPaymentIntegrityError:
+            # The owned candidate was selected before detail retrieval. Do not replace it,
+            # invent payment evidence, or infer payment from the order summary/status.
+            query_plan = query_plan.model_copy(update={'clarification': PAYMENT_UNAVAILABLE_MESSAGE})
+            context_payload = CustomerContext()
+            event('customer.payment_unavailable', {'intent': query_plan.intent,
+                  'reason': 'owned_payment_integrity', 'payment_evidence_loaded': False}, status='warning')
 
         knowledge_chunks = []
         if query_plan.intent == Intent.KNOWLEDGE_QA and self.knowledge_retrieval is not None:

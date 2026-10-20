@@ -205,7 +205,7 @@ public class OrderServiceImpl implements OrderService {
     }
     private OrderResponse summary(Order o, Map<UUID, String> warehouseNames) {
         var r = new OrderResponse(); r.setOrderId(o.getOrderId()); r.setCustomerId(o.getCustomerId()); r.setOrderCode(o.getOrderCode()); r.setOrderDate(o.getOrderDate());
-        r.setWarehouseId(o.getWarehouseId()); r.setWarehouseName(warehouseNames.get(o.getWarehouseId()));
+        r.setWarehouseId(o.getWarehouseId()); r.setWarehouseName(o.getWarehouseId() == null ? null : warehouseNames.get(o.getWarehouseId()));
         r.setRecipientName(o.getRecipientName()); r.setRecipientPhone(o.getRecipientPhone()); r.setShippingAddress(o.getShippingAddress()); r.setNote(o.getNote());
         r.setSubtotal(o.getSubtotal()); r.setDiscountAmount(o.getDiscountAmount()); r.setShippingFee(o.getShippingFee()); r.setTotalAmount(o.getTotalAmount()); r.setStatus(o.getStatus()); return r;
     }

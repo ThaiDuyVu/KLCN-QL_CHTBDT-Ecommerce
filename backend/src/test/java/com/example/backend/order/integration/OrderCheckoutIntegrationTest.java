@@ -173,4 +173,31 @@ class OrderCheckoutIntegrationTest {
         assertThat(jdbc.queryForObject("SELECT count(*) FROM orders", Integer.class)).isZero();
         var r=request();r.setPaymentMethod(PaymentMethod.VNPAY);assertThatThrownBy(() -> orders.checkout(firstUser,r)).hasMessageContaining("VNPAY Sandbox chưa được cấu hình hoặc đang tắt");assertThat(stock("reserved_quantity")).isZero();
     }
+    @Test void checkoutStillRequiresSelectedWarehouseBeforeAnyFinancialMutation() {
+        add(firstUser,1);
+        jdbc.update("UPDATE carts SET warehouse_id=NULL WHERE customer_id=(SELECT customer_id FROM customers WHERE user_id=?)", firstUser);
+        assertThatThrownBy(() -> orders.checkout(firstUser,request())).hasMessageContaining("chọn chi nhánh");
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM orders",Integer.class)).isZero();
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM payments",Integer.class)).isZero();
+        assertThat(stock("reserved_quantity")).isZero();
+        assertThat(cart.get(firstUser).getItems()).hasSize(1);
+    }
+    @Test void installmentCheckoutPreservesExactlyOnePaymentAndApprovalGate() {
+        add(firstUser,1);
+        UUID provider=UUID.randomUUID();
+        jdbc.update("INSERT INTO installment_providers(provider_id,provider_code,provider_name,status) VALUES (?,?,?,'ACTIVE')", provider,"TEST-"+provider,"Đơn vị trả góp kiểm thử");
+        var r=request();r.setPaymentMethod(PaymentMethod.INSTALLMENT);r.setProviderId(provider);r.setTermMonths(6);r.setDownPayment(new BigDecimal("100000"));
+        var order=orders.checkout(firstUser,r);
+        assertThat(order.getWarehouseId()).isEqualTo(warehouse);
+        assertThat(order.getPayment().getPaymentMethod()).isEqualTo(PaymentMethod.INSTALLMENT);
+        assertThat(order.getPayment().getStatus()).isEqualTo(PaymentStatus.PENDING);
+        assertThat(order.getInstallment().status()).isEqualTo(InstallmentStatus.PENDING);
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM payments WHERE order_id=?",Integer.class,order.getOrderId())).isEqualTo(1);
+        assertThat(stock("reserved_quantity")).isEqualTo(1);
+        assertThatThrownBy(() -> orders.status(firstUser,false,order.getOrderId(),OrderStatus.CONFIRMED)).hasMessageContaining("chưa được duyệt");
+        jdbc.update("UPDATE installment_payments SET status='APPROVED' WHERE payment_id=?",order.getPayment().getPaymentId());
+        assertThat(orders.status(firstUser,false,order.getOrderId(),OrderStatus.CONFIRMED).getStatus()).isEqualTo(OrderStatus.CONFIRMED);
+        assertThat(stock("reserved_quantity")).isEqualTo(1);
+    }
+
 }
