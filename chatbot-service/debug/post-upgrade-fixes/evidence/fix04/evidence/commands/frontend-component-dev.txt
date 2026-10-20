@@ -1,0 +1,36 @@
+
+> ql-chtdbt-ecommerce-frontend@0.1.0 test
+> vitest run src/features/chatbot
+
+
+ RUN  v4.1.11 workspace://Fontend
+
+ ❯ src/features/chatbot/ChatbotLab.test.jsx (9 tests | 1 failed) 454ms
+   × removes an unpersisted optimistic user message before retry 68ms
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 11 passed (12)
+   Start at  20:09:14
+   Duration  1.18s (transform 91ms, setup 171ms, import 135ms, tests 575ms, environment 980ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/chatbot/ChatbotLab.test.jsx > removes an unpersisted optimistic user message before retry
+AssertionError: expected [ <textarea …(4)></textarea> ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/features/chatbot/ChatbotLab.test.jsx:129:50
+    127|   await user.click(screen.getByRole('button', { name: 'Gửi câu hỏi' })…
+    128|   await screen.findByRole('alert');
+    129|   expect(screen.queryAllByText('Câu hỏi retry')).toHaveLength(0);
+       |                                                  ^
+    130|   chatbotApi.send.mockResolvedValueOnce({ message: 'Đã trả lời', produ…
+    131|   await user.click(screen.getByRole('button', { name: 'Gửi câu hỏi' })…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯

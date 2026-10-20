@@ -1,0 +1,247 @@
+{
+  "trace_id": "82f03570-8b8b-4d45-9621-10e8a0575638",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "f026edb0-9e8b-47d7-aa3b-e32e59b3902c",
+      "parent_id": "b6a1f481-94d9-4804-aad1-d53356ca3f98",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 36.56,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "8802357f-b0de-4779-9f36-32475b340325",
+      "parent_id": "b6a1f481-94d9-4804-aad1-d53356ca3f98",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 36.75,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "0cab6c88-5c3d-48dc-bc76-f94672fb266c",
+      "parent_id": "2fa8de4a-0e6e-40f8-a5e8-967614b377e8",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1730.89,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "LEN-16GB-2024",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop lenovo ram 16gb",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "2339abe8-e928-4159-ba12-b9736a752ce2",
+      "parent_id": "2fa8de4a-0e6e-40f8-a5e8-967614b377e8",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1760.89,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "LEN-16GB-2024",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop lenovo ram 16gb",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        },
+        "constraint_rejected": true
+      }
+    },
+    {
+      "id": "7611c101-a27f-4cd8-b4cd-dff6c879b5ff",
+      "parent_id": "b6a1f481-94d9-4804-aad1-d53356ca3f98",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1774.4,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "f43194ea-f7c1-4800-b440-a7f12bac8368",
+      "parent_id": "b6a1f481-94d9-4804-aad1-d53356ca3f98",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1774.53,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "228ea71b-d436-4f20-be59-653ba5119daf",
+      "parent_id": "53c1aeac-884e-485d-904a-d75ac338071c",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1774.73,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 10.28,
+      "duration_ms": 1776.13,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 36.91,
+      "duration_ms": 1724.12,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 38.4,
+      "duration_ms": 1692.42,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 38.84,
+      "duration_ms": 1691.95,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 39.24,
+      "duration_ms": 1691.52,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1731.02,
+      "duration_ms": 10.94,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1741.98,
+      "duration_ms": 6.06,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1748.06,
+      "duration_ms": 12.51,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1774.48,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1774.67,
+      "duration_ms": 0.09,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

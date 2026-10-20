@@ -27,6 +27,11 @@ function safeSource(source) {
   try { const url = new URL(source); return ['http:', 'https:'].includes(url.protocol) ? url.href : null; } catch { return null; }
 }
 
+function restoredMessages(rows, current = []) {
+  const known = new Map(current.map((m) => [m.id, m]));
+  return rows.map((m) => ({ ...known.get(m.id), id: m.id, role: m.sender_type, text: m.message, rating: m.rating }));
+}
+
 export default function ChatbotLabPage() {
   const { user } = useAuth();
   const [sessionId, setSessionId] = useState(() => sessionFor(user.userId));
@@ -47,22 +52,29 @@ export default function ChatbotLabPage() {
   const [lastResult, setLastResult] = useState(null);
   const [elapsed, setElapsed] = useState(null);
   const [feedbackBusy, setFeedbackBusy] = useState(false);
+  const [needsSync, setNeedsSync] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const [loadingSessions, setLoadingSessions] = useState(false);
+  const version = useRef(0);
+  const sessionLoad = useRef(false);
   const controller = useRef(null);
   const end = useRef(null);
 
   useEffect(() => {
     let active = true;
-    chatbotApi.status().then((data) => { if (active) setRuntime(data); })
-      .catch((failure) => { if (active) setStatusError(errorText(failure)); });
-    chatbotApi.sessions().then((rows) => { if (active) { setSessions(rows); setSessionPage(0); } })
-      .catch((failure) => { if (active) setError(errorText(failure)); });
-    chatbotApi.session(sessionId).then((session) => { if (active) { setClosed(!session.is_active); setCurrentSession(session); } })
-      .catch((failure) => { if (active) { if (failure.status === 404) setCurrentSession(null); else setError(errorText(failure)); } });
+    const token = version.current;
+    const current = () => active && version.current === token;
+    chatbotApi.status().then((data) => { if (current()) setRuntime(data); })
+      .catch((failure) => { if (current()) setStatusError(errorText(failure)); });
+    chatbotApi.sessions().then((rows) => { if (current()) { setSessions(rows); setSessionPage(0); } })
+      .catch((failure) => { if (current()) setError(errorText(failure)); });
+    chatbotApi.session(sessionId).then((session) => { if (current()) { setClosed(!session.is_active); setCurrentSession(session); } })
+      .catch((failure) => { if (current()) { if (failure.status === 404) setCurrentSession(null); else setError(errorText(failure)); } });
     chatbotApi.history(sessionId).then((history) => {
-      if (active) { setMessages(history.map((m) => ({ id: m.id, role: m.sender_type, text: m.message, rating: m.rating }))); setHasOlder(history.length === 100); }
-    }).catch((failure) => { if (active && failure.status !== 404) setError(errorText(failure)); })
-      .finally(() => { if (active) setRestoring(false); });
-    return () => { active = false; controller.current?.abort(); };
+      if (current()) { setMessages(restoredMessages(history)); setHasOlder(history.length === 100); }
+    }).catch((failure) => { if (current() && failure.status !== 404) setError(errorText(failure)); })
+      .finally(() => { if (current()) setRestoring(false); });
+    return () => { active = false; version.current += 1; controller.current?.abort(); };
   }, [sessionId]);
   useEffect(() => { end.current?.scrollIntoView?.({ behavior: 'smooth', block: 'nearest' }); }, [messages, busy]);
 
@@ -73,7 +85,8 @@ export default function ChatbotLabPage() {
   async function send(event) {
     event.preventDefault();
     const question = draft.trim();
-    if (!question || busy || restoring || closed) return;
+    if (!question || busy || restoring || closed || needsSync || controller.current) return;
+    const token = version.current;
     setBusy(true); setError(''); setDraft(''); setElapsed(null);
     setMessages((items) => [...items, { id: crypto.randomUUID(), role: 'USER', text: question }]);
     const requestTraceId = runtime?.trace_enabled ? crypto.randomUUID() : null;
@@ -83,67 +96,108 @@ export default function ChatbotLabPage() {
     const timer = setTimeout(() => abort.abort(), 180000);
     try {
       const result = await chatbotApi.send(sessionId, question, abort.signal, requestTraceId);
-      if (abort.signal.aborted) return;
+      clearTimeout(timer);
+      if (abort.signal.aborted || token !== version.current) return;
       const duration = Math.round(performance.now() - started);
       setElapsed(duration); setLastResult(result);
-      chatbotApi.sessions().then((rows) => { setSessions(rows); setSessionPage(0); }).catch(() => {});
+      chatbotApi.sessions().then((rows) => { if (token === version.current) { setSessions(rows); setSessionPage(0); } }).catch(() => {});
       let saved = null;
       try {
         const history = await chatbotApi.history(sessionId);
         saved = history.filter((m) => m.sender_type === 'ASSISTANT' && m.message === result.message).at(-1);
-      } catch { /* Keep successful answers even if reading history fails. */ }
-      if (abort.signal.aborted) return;
+      } catch { /* Keep acknowledged responses even if reading history fails. */ }
+      if (abort.signal.aborted || token !== version.current) return;
       setMessages((items) => [...items, { id: saved?.id || crypto.randomUUID(), role: 'ASSISTANT', text: result.message,
         response: result, feedbackId: saved?.id, rating: saved?.rating || 0, duration }]);
     } catch (failure) {
-      setError(errorText(failure)); setDraft(question);
+      if (token !== version.current) return;
+      setError(errorText(failure)); setDraft(question); setNeedsSync(true);
+      // Reconcile the optimistic row from the existing history contract before retry.
+      // An audit USER may remain, but we never manufacture an ASSISTANT or replay POST.
+      try {
+        const history = await chatbotApi.history(sessionId);
+        if (token !== version.current) return;
+        setMessages((items) => restoredMessages(history, items)); setHasOlder(history.length === 100);
+        setNeedsSync(abort.signal.aborted);
+      } catch { /* Require explicit successful history reload before another POST. */ }
     } finally {
-      clearTimeout(timer); controller.current = null; setBusy(false);
+      clearTimeout(timer);
+      if (token === version.current) { controller.current = null; setBusy(false); }
     }
   }
+  function resetPending() {
+    version.current += 1;
+    controller.current?.abort(); controller.current = null;
+    sessionLoad.current = false;
+    setBusy(false); setFeedbackBusy(false); setClosing(false); setLoadingSessions(false); setNeedsSync(false); setHasOlder(false);
+  }
   function newSession() {
+    resetPending();
     const id = crypto.randomUUID();
     try { sessionStorage.setItem(`chatbot-lab.session.v2.${user.userId}`, id); } catch { /* No storage. */ }
     setCurrentSession(null); setClosed(false); setTraceId(null); setSessionId(id); setMessages([]); setLastResult(null); setError(''); setElapsed(null); setRestoring(true);
   }
   function selectSession(id) {
-    controller.current?.abort();
+    resetPending();
     try { sessionStorage.setItem(`chatbot-lab.session.v2.${user.userId}`, id); } catch { /* No storage. */ }
     setSessionId(id); setTraceId(null); setMessages([]); setLastResult(null); setElapsed(null); setError(''); setRestoring(true);
     setCurrentSession(sessions.find((s) => s.id === id) || null);
     setClosed(sessions.find((s) => s.id === id)?.is_active === false);
   }
+  async function reloadHistory() {
+    const token = version.current;
+    setRestoring(true); setError('');
+    try {
+      const rows = await chatbotApi.history(sessionId);
+      if (token !== version.current) return;
+      setMessages((items) => restoredMessages(rows, items)); setHasOlder(rows.length === 100); setNeedsSync(false);
+    } catch (failure) { if (token === version.current) setError(errorText(failure)); }
+    finally { if (token === version.current) setRestoring(false); }
+  }
   async function olderHistory() {
     if (!messages.length || busy || restoring) return;
+    const token = version.current;
     setRestoring(true); setError('');
     try {
       const rows = await chatbotApi.history(sessionId, messages[0].id);
-      setMessages((items) => [...rows.map((m) => ({ id: m.id, role: m.sender_type, text: m.message, rating: m.rating })), ...items]);
+      if (token !== version.current) return;
+      setMessages((items) => [...restoredMessages(rows).filter((m) => !items.some((i) => i.id === m.id)), ...items]);
       setHasOlder(rows.length === 100);
-    } catch (failure) { setError(errorText(failure)); } finally { setRestoring(false); }
+    } catch (failure) { if (token === version.current) setError(errorText(failure)); }
+    finally { if (token === version.current) setRestoring(false); }
   }
   async function olderSessions() {
-    setError('');
+    if (sessionLoad.current) return;
+    const token = version.current; const nextPage = sessionPage + 1;
+    sessionLoad.current = true; setLoadingSessions(true); setError('');
     try {
-      const rows = await chatbotApi.sessions(sessionPage + 1);
+      const rows = await chatbotApi.sessions(nextPage);
+      if (token !== version.current) return;
       setSessions((items) => [...items, ...rows.filter((r) => !items.some((i) => i.id === r.id))]);
-      setSessionPage((page) => page + 1);
-    } catch (failure) { setError(errorText(failure)); }
+      setSessionPage(nextPage);
+    } catch (failure) { if (token === version.current) setError(errorText(failure)); }
+    finally { if (token === version.current) { sessionLoad.current = false; setLoadingSessions(false); } }
   }
   async function closeSession() {
-    setError('');
+    const token = version.current;
+    setClosing(true); setError('');
     try {
-      const result = await chatbotApi.close(sessionId); setClosed(true);
-      setCurrentSession((session) => ({ ...session, ...result }));
-      setSessions(await chatbotApi.sessions()); setSessionPage(0);
-    } catch (failure) { setError(errorText(failure)); }
+      const result = await chatbotApi.close(sessionId);
+      if (token !== version.current) return;
+      setClosed(true); setCurrentSession((session) => ({ ...session, ...result }));
+      const rows = await chatbotApi.sessions();
+      if (token === version.current) { setSessions(rows); setSessionPage(0); }
+    } catch (failure) { if (token === version.current) setError(errorText(failure)); }
+    finally { if (token === version.current) setClosing(false); }
   }
   async function rate(item, rating) {
+    const token = version.current;
     setFeedbackBusy(true); setError('');
     try {
       await chatbotApi.rate(sessionId, item.feedbackId || item.id, rating);
-      setMessages((items) => items.map((m) => m.id === item.id ? { ...m, rating } : m));
-    } catch (failure) { setError(errorText(failure)); } finally { setFeedbackBusy(false); }
+      if (token === version.current) setMessages((items) => items.map((m) => m.id === item.id ? { ...m, rating } : m));
+    } catch (failure) { if (token === version.current) setError(errorText(failure)); }
+    finally { if (token === version.current) setFeedbackBusy(false); }
   }
   function exportResult() {
     const blob = new Blob([JSON.stringify({ exported_at: new Date().toISOString(), session_id: sessionId, runtime, scenario: selected, messages }, null, 2)], { type: 'application/json' });
@@ -165,7 +219,7 @@ export default function ChatbotLabPage() {
           onClick={() => { setSelected(scenario); setDraft(scenario.prompt); }}><span>{scenario.group}</span>{scenario.title}</button>)}
       </aside>
       <section className="lab-panel lab-chat" aria-label="Cuộc trò chuyện kiểm thử">
-        <div className="lab-chat-heading"><div><h2>Cuộc trò chuyện</h2><small>Lịch sử lưu trong RAM của server</small></div>
+        <div className="lab-chat-heading"><div><h2>Cuộc trò chuyện</h2><small>{runtime?.conversation_storage === 'postgres' ? 'Lịch sử lưu trong PostgreSQL' : runtime?.conversation_storage === 'memory' ? 'Lịch sử lưu trong RAM của server' : 'Đang xác minh chế độ lưu lịch sử'}</small></div>
           <button type="button" onClick={newSession} disabled={busy || restoring}>Cuộc trò chuyện mới</button></div>
         <div className="lab-expectation"><strong>Kỳ vọng · {selected.title}</strong><p>{selected.expected}</p></div>
         <div className="lab-transcript" role="log" aria-live="polite" aria-busy={busy || restoring}>
@@ -190,9 +244,11 @@ export default function ChatbotLabPage() {
           {busy && <p role="status" className="lab-working">Đang xử lý… Model lần đầu có thể cần tải vào bộ nhớ.</p>}<div ref={end} />
         </div>
         {error && <p role="alert" className="lab-error">{error}</p>}
+        {needsSync && <p>Chưa xác minh lượt gửi vừa rồi. Đọc lại lịch sử trước khi gửi lại.</p>}
+        <button type="button" onClick={reloadHistory} disabled={busy || restoring}>Đọc lại lịch sử</button>
         <form onSubmit={send} className="lab-composer"><label htmlFor="chat-question">Câu hỏi của bạn</label>
-          <textarea id="chat-question" value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={4000} rows={3} placeholder="Nhập câu hỏi cần kiểm chứng…" disabled={busy || restoring || closed} />
-          <div><small>{draft.length}/4000 ký tự · Enter xuống dòng</small><button type="submit" disabled={busy || restoring || closed || !draft.trim()}>{busy ? 'Đang chờ…' : 'Gửi câu hỏi'}</button></div>
+          <textarea id="chat-question" value={draft} onChange={(event) => setDraft(event.target.value)} maxLength={4000} rows={3} placeholder="Nhập câu hỏi cần kiểm chứng…" disabled={busy || restoring || closed || needsSync} />
+          <div><small>{draft.length}/4000 ký tự · Enter xuống dòng</small><button type="submit" disabled={busy || restoring || closed || needsSync || !draft.trim()}>{busy ? 'Đang chờ…' : 'Gửi câu hỏi'}</button></div>
         </form>
       </section>
       <aside className="lab-panel lab-inspector"><h2>Trạng thái & kết quả</h2><button type="button" onClick={refreshStatus}>Kiểm tra dịch vụ</button>
@@ -213,13 +269,13 @@ export default function ChatbotLabPage() {
           {displayedSessions.map((s) => <option key={s.id} value={s.id}>{new Date(s.created_at).toLocaleString('vi-VN')} · {s.is_active ? 'Đang mở' : 'Đã đóng'}</option>)}
         </select>
         {closed && <p>Phiên đã đóng. Bạn có thể đọc lịch sử hoặc tạo phiên mới.</p>}
-        <button type="button" onClick={closeSession} disabled={busy || restoring || closed || !displayedSessions.some((s) => s.id === sessionId)}>Đóng phiên</button>
-        {sessions.length >= (sessionPage + 1) * 20 && <button type="button" onClick={olderSessions} disabled={busy || restoring}>Tải thêm phiên cũ</button>}
+        <button type="button" onClick={closeSession} disabled={busy || restoring || closed || closing || !displayedSessions.some((s) => s.id === sessionId)}>Đóng phiên</button>
+        {sessions.length >= (sessionPage + 1) * 20 && <button type="button" onClick={olderSessions} disabled={busy || restoring || loadingSessions}>Tải thêm phiên cũ</button>}
         {hasOlder && <button type="button" onClick={olderHistory} disabled={busy || restoring}>Tải tin nhắn cũ hơn</button>}
         <h3>Phiên hiện tại</h3><code>{sessionId}</code><p>Thời gian gần nhất: {elapsed == null ? '—' : `${(elapsed / 1000).toFixed(1)} giây`}</p>
         <button type="button" onClick={exportResult} disabled={!messages.length}>Xuất kết quả JSON</button><small>File xuất chứa nội dung chat cá nhân. Chỉ chia sẻ dữ liệu kiểm thử.</small>
         <details><summary>Response JSON gần nhất</summary><pre>{lastResult ? JSON.stringify(lastResult, null, 2) : 'Chưa có response.'}</pre></details>
-        <p className="lab-footnote">{runtime?.conversation_storage === 'postgres' ? 'Lịch sử văn bản và tham chiếu sản phẩm được lưu qua restart. Khôi phục tối đa 100 tin gần nhất; cards/nguồn/JSON của lượt gửi chỉ hiển thị trong lần mở trang này.' : 'Lịch sử đang lưu trong RAM và mất sau restart.'} Feedback Đúng/Cần sửa chỉ lưu tạm trong RAM; không khôi phục sau restart.</p>
+        <p className="lab-footnote">{runtime?.conversation_storage === 'postgres' ? 'Lịch sử văn bản và tham chiếu sản phẩm được lưu qua restart. Khôi phục tối đa 100 tin gần nhất; cards/nguồn/JSON của lượt gửi chỉ hiển thị trong lần mở trang này.' : runtime?.conversation_storage === 'memory' ? 'Lịch sử đang lưu trong RAM và mất sau restart.' : 'Chưa xác minh chế độ lưu lịch sử.'} Feedback Đúng/Cần sửa chỉ lưu tạm trong RAM; không khôi phục sau restart.</p>
       </aside>
     </div>
     <TracePanel key={sessionId} sessionId={sessionId} traceId={traceId} onSelect={setTraceId} enabled={runtime?.trace_enabled} busy={busy} />

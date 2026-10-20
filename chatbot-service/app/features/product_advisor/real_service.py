@@ -145,6 +145,8 @@ class RealProductAdvisorService:
                 variants_by_product[product_id].add(variant_id)
             if len(page) < 100:
                 break
+        else:
+            raise ValueError('Structured product search exceeds bounded coverage; cannot claim complete results')
         if not variants_by_product:
             return []
         scores: dict[UUID, float] = {}

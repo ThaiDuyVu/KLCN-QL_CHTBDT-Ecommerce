@@ -9,6 +9,7 @@ from pydantic import ValidationError
 
 from app.features.conversation.models import ChatMessage, ChatSession, SenderType, StoredAssistantMessage
 from app.shared.tracing import event
+from app.features.conversation.context import completed_messages
 
 
 class PostgresConversationRepository:
@@ -127,6 +128,17 @@ class PostgresConversationRepository:
         with self.connect() as conn:
             rows=conn.execute('SELECT h.history_id,h.session_id,h.sender_type,h.message,h.created_at FROM chat_history h JOIN chat_sessions s ON s.session_id=h.session_id AND s.customer_id=h.customer_id WHERE h.session_id=%s ORDER BY h.created_at DESC,h.history_id DESC LIMIT %s',(session_id,min(limit,100))).fetchall()
         return [self.message(r) for r in reversed(rows)]
+
+    def get_context_messages(self, session_id, customer_id, window=10):
+        # Read a bounded audit tail; a failed USER is still available via history_page.
+        with self.connect() as conn:
+            self.owned(conn, session_id, customer_id)
+            rows = conn.execute('SELECT history_id,session_id,sender_type,message,created_at FROM chat_history WHERE session_id=%s AND customer_id=%s ORDER BY created_at DESC,history_id DESC LIMIT 100', (session_id, customer_id)).fetchall()
+        history = [self.message(row) for row in reversed(rows)]
+        result = completed_messages(history, window)
+        event('conversation.context_selection', {'audit_rows_scanned': len(history),
+              'context_messages': len(result), 'policy': 'completed_adjacent_turns', 'audit_preserved': True})
+        return result
 
     def get_message(self,session_id,message_id):
         with self.connect() as conn:

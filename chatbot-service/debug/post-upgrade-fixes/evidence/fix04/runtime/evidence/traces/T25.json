@@ -1,0 +1,382 @@
+{
+  "trace_id": "0e77db0d-8022-4108-a18e-dfb12908c5a2",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "b8512cc5-abae-4c03-9e32-411fd6bdb966",
+      "parent_id": "4c0212ba-3947-4476-b6d4-4c4880624d29",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 47.24,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 5,
+        "context_messages": 4,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "41366bc3-0b34-4209-ace2-e0191a1c2bc7",
+      "parent_id": "4c0212ba-3947-4476-b6d4-4c4880624d29",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 47.53,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "ff6c9e50-6ba5-4eff-a677-fcb8b7465a72",
+      "parent_id": "5ff47a74-20e9-4f23-8387-4b4ad2ca8481",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2506.95,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop dưới 20 triệu, RAM 16GB",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "1555624a-8dc1-4f76-9b81-cbda25adeb38",
+      "parent_id": "5ff47a74-20e9-4f23-8387-4b4ad2ca8481",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2546.07,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dưới 20 triệu, RAM 16GB",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Có chiếc nào rẻ hơn mà RAM vẫn 16GB không?",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "3a24b477-5d5a-489c-91c5-ea9b16adde00",
+      "parent_id": "4c0212ba-3947-4476-b6d4-4c4880624d29",
+      "name": "conversation.reference_resolution",
+      "status": "ok",
+      "offset_ms": 2563.13,
+      "duration_ms": null,
+      "output": {
+        "kind": "CHEAPER",
+        "status": "RESOLVED",
+        "baseline": "historical_display_price",
+        "baseline_price": "15990000.0",
+        "max_price": "15989999.0",
+        "captured_at": "2026-10-20 13:21:28.049891+00:00"
+      }
+    },
+    {
+      "id": "a0462235-0ea3-4b4d-9aed-5e93fbe236b3",
+      "parent_id": "4c0212ba-3947-4476-b6d4-4c4880624d29",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2563.24,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {
+          "baseline": "historical_display_price"
+        },
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "15989999.0",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Có chiếc nào rẻ hơn mà RAM vẫn 16GB không?",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "19e2f4e3-2dbf-44c2-8de9-725c2990e223",
+      "parent_id": "4c0212ba-3947-4476-b6d4-4c4880624d29",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2576.61,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "15989999.0",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Có chiếc nào rẻ hơn mà RAM vẫn 16GB không?",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": true
+      }
+    },
+    {
+      "id": "932149a0-cb22-4e76-8930-c5e9c2a6bcab",
+      "parent_id": "4c0212ba-3947-4476-b6d4-4c4880624d29",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 2576.81,
+      "duration_ms": 12.27,
+      "output": []
+    },
+    {
+      "id": "11ef2c96-46e6-4960-af05-3e7cf56b1bff",
+      "parent_id": "4c0212ba-3947-4476-b6d4-4c4880624d29",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2589.1,
+      "duration_ms": 0.04,
+      "output": []
+    },
+    {
+      "id": "a9037166-7989-42c9-9857-93d83cfa777a",
+      "parent_id": "11ef2c96-46e6-4960-af05-3e7cf56b1bff",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2589.12,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [],
+        "variants": 0,
+        "cards": 0
+      }
+    },
+    {
+      "id": "190452a8-8fab-4934-abf5-0edd08a32a24",
+      "parent_id": "4c0212ba-3947-4476-b6d4-4c4880624d29",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2589.35,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "b3c0986f-a695-4a94-bf8a-aeda6839a062",
+      "parent_id": "9beed737-3849-4d67-b4cf-d0391fd92ab9",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2589.83,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "no_matching_products"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 11.9,
+      "duration_ms": 2588.87,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 48.26,
+      "duration_ms": 2498.0,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 49.78,
+      "duration_ms": 2457.04,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 50.25,
+      "duration_ms": 2456.55,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 50.67,
+      "duration_ms": 2456.1,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2507.08,
+      "duration_ms": 14.55,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2521.68,
+      "duration_ms": 10.51,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2532.24,
+      "duration_ms": 13.39,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2576.81,
+      "duration_ms": 12.27,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2576.89,
+      "duration_ms": 12.17,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2589.1,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2589.26,
+      "duration_ms": 0.08,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2589.63,
+      "duration_ms": 0.22,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Laptop"
+          ],
+          [
+            "maxPrice",
+            "15989999.0"
+          ],
+          [
+            "minRamGb",
+            "16"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ]
+        ]
+      }
+    }
+  ]
+}

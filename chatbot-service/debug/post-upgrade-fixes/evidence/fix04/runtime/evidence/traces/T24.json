@@ -1,0 +1,459 @@
+{
+  "trace_id": "6085438b-205e-4b53-9f82-f9e8d5063ca1",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "03c6829f-9541-4e29-bfdd-b542992af8a0",
+      "parent_id": "553cb10f-84bd-457c-bd86-112f54f75f9b",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 33.71,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 3,
+        "context_messages": 2,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "32f3b258-9326-4466-b302-ff6acc64676f",
+      "parent_id": "553cb10f-84bd-457c-bd86-112f54f75f9b",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 33.9,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "39b8b70a-6610-47ed-94ec-7afad73d7c45",
+      "parent_id": "f32aeaa8-fa7e-4926-a6d3-0392b40482e9",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2432.95,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop dưới 20 triệu, RAM ít nhất 16GB",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "ce357b3c-6c5a-45fb-9aa6-ce5a22723e5b",
+      "parent_id": "553cb10f-84bd-457c-bd86-112f54f75f9b",
+      "name": "conversation.reference_resolution",
+      "status": "ok",
+      "offset_ms": 2497.04,
+      "duration_ms": null,
+      "output": {
+        "kind": "LAST",
+        "status": "RESOLVED",
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "captured_at": "2026-10-20 13:21:25.432545+00:00",
+        "refresh": "live_backend"
+      }
+    },
+    {
+      "id": "644ee45d-b9bb-494e-9114-2e9bf995b6d7",
+      "parent_id": "553cb10f-84bd-457c-bd86-112f54f75f9b",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2497.44,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {
+          "source": "owned_session_snapshot"
+        },
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_name": null,
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "4f2bfe14-b3a3-4594-a101-91c56d4914c3",
+      "parent_id": "553cb10f-84bd-457c-bd86-112f54f75f9b",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2497.58,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_name": null,
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 1
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "1329b309-ffc5-4305-8938-b75dcc01c856",
+      "parent_id": "553cb10f-84bd-457c-bd86-112f54f75f9b",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 2497.75,
+      "duration_ms": 20.31,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "c65edb12-1979-416f-a5e1-57fbf0a80975",
+      "parent_id": "1329b309-ffc5-4305-8938-b75dcc01c856",
+      "name": "product.identity_resolution",
+      "status": "ok",
+      "offset_ms": 2497.83,
+      "duration_ms": 20.16,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "28627595-d3a9-486e-a773-b156e492a5fd",
+      "parent_id": "c65edb12-1979-416f-a5e1-57fbf0a80975",
+      "name": "product.stock_evidence",
+      "status": "ok",
+      "offset_ms": 2517.86,
+      "duration_ms": null,
+      "output": {
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "warehouse_id": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "variants": [
+          {
+            "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+            "available_quantity": 2
+          }
+        ],
+        "status": "KNOWN_AVAILABLE"
+      }
+    },
+    {
+      "id": "2f1e9e55-0b66-4c9f-8ee7-890f62d82aa1",
+      "parent_id": "553cb10f-84bd-457c-bd86-112f54f75f9b",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2518.08,
+      "duration_ms": 15.91,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "af74b788-89ec-4194-a5d8-7a8f57267f35",
+      "parent_id": "2f1e9e55-0b66-4c9f-8ee7-890f62d82aa1",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2533.9,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "a96df51c-538c-4fa9-8018-6b49ca025b34"
+        ],
+        "variants": 1,
+        "cards": 1
+      }
+    },
+    {
+      "id": "69ad5dc0-d3d3-4841-9643-7d18dfa103a3",
+      "parent_id": "553cb10f-84bd-457c-bd86-112f54f75f9b",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2534.23,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DETAIL",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "64d07113-31d2-4524-9997-cd5929998205",
+      "parent_id": "28e28279-4585-453f-8e38-da5d7e978217",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2534.83,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 8.13,
+      "duration_ms": 2539.45,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 34.09,
+      "duration_ms": 2447.97,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 35.91,
+      "duration_ms": 2396.87,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 36.37,
+      "duration_ms": 2396.37,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 36.77,
+      "duration_ms": 2395.91,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2433.35,
+      "duration_ms": 18.33,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2451.71,
+      "duration_ms": 10.4,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2462.18,
+      "duration_ms": 19.28,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2497.75,
+      "duration_ms": 20.31,
+      "status": "ok"
+    },
+    {
+      "name": "product.identity_resolution",
+      "offset_ms": 2497.83,
+      "duration_ms": 20.16,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2497.89,
+      "duration_ms": 9.05,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2506.98,
+      "duration_ms": 10.78,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2518.08,
+      "duration_ms": 15.91,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2518.17,
+      "duration_ms": 15.59,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2534.14,
+      "duration_ms": 0.08,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2534.61,
+      "duration_ms": 0.28,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/product-variants/9ede9a3c-6406-4058-9ce0-414d19b7939f"
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

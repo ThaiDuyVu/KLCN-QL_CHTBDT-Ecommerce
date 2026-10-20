@@ -1,0 +1,69 @@
+...................................................................F.... [ 16%]
+........................................................................ [ 33%]
+........................................................................ [ 49%]
+........................................................................ [ 66%]
+........................................................................ [ 83%]
+........................................................................ [ 99%]
+.                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_independent_sessions_not_serialized_and_no_network_transaction ______
+
+pg = (<app.features.conversation.postgres_repository.PostgresConversationRepository object at 0x110300500>, UUID('7d07e398-...3-adad-4c40-bf4a-fcc738905db0'), '[REDACTED_DATABASE_URL]')
+
+    @pytest.mark.asyncio
+    async def test_independent_sessions_not_serialized_and_no_network_transaction(pg):
+        from threading import Barrier
+        import psycopg
+        repo,owner,_,dsn=pg;a=repo.create_session(owner);b=repo.create_session(owner);barrier=Barrier(2)
+        class ConcurrentUnderstanding(Understanding):
+            def understand(self,ctx):
+                with psycopg.connect(dsn, autocommit=True) as conn:
+                    assert conn.execute("SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND state='idle in transaction'").fetchone()[0]==0
+                barrier.wait(timeout=4)
+                return super().understand(ctx)
+>       results=await asyncio.gather(*(service(PostgresConversationRepository(dsn),ConcurrentUnderstanding()).send_message_async(s.id,SendMessageRequest(message='independent request'),customer(owner)) for s in [a,b]))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_conversation_safety.py:162:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app/features/chat/service.py:96: in send_message_async
+    return await self._send_message_async(session_id, request, customer, cookies)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/shared/tracing/__init__.py:247: in wrapper
+    return await fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+app/features/chat/service.py:172: in _send_message_async
+    query_plan = await blocking(understand)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/features/conversation/async_lease.py:19: in blocking
+    return await asyncio.shield(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/vu/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/lib/python3.12/asyncio/threads.py:25: in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/vu/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/lib/python3.12/concurrent/futures/thread.py:59: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app/features/chat/service.py:164: in understand
+    return self.query_understanding.understand(query_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <tests.test_conversation_safety.test_independent_sessions_not_serialized_and_no_network_transaction.<locals>.ConcurrentUnderstanding object at 0x1102c8e00>
+ctx = QueryContext(customer=AuthenticatedCustomer(user_id=UUID('89ab98cf-9ee8-48dd-8e64-eb98efe3065a'), customer_id=UUID('7d...'), session_id=UUID('0c5d1901-a6bc-4b6a-a8d1-6ebde397d065'), current_message='independent request', recent_messages=[])
+
+    def understand(self,ctx):
+        with psycopg.connect(dsn, autocommit=True) as conn:
+>           assert conn.execute("SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() AND state='idle in transaction'").fetchone()[0]==0
+E           assert 1 == 0
+
+tests/test_conversation_safety.py:159: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  workspace://chatbot-service/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_conversation_safety.py::test_independent_sessions_not_serialized_and_no_network_transaction
+1 failed, 432 passed, 1 warning in 5.63s

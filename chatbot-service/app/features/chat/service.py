@@ -22,6 +22,7 @@ from app.shared.contracts.knowledge import KnowledgeChunkMatch
 from app.features.chat.models import SendMessageRequest
 from app.features.conversation.models import SenderType, EvidenceSnapshot
 from app.features.conversation.references import resolve_reference
+from app.features.conversation.async_lease import blocking, request_lease
 from app.features.chat.policy import read_only_plan
 from app.features.conversation.service import ConversationService
 from app.features.customer_context.models import AuthenticatedCustomer
@@ -91,12 +92,9 @@ class ChatService:
     async def send_message_async(self, session_id, request, customer=None, cookies=None):
         repository = self.conversation_service.repository
         if hasattr(repository, 'request_lock') and customer is not None:
-            lease = repository.request_lock(session_id, customer.customer_id)
-            await asyncio.to_thread(lease.__enter__)
-            try:
+            async with request_lease(repository, session_id, customer.customer_id):
                 return await self._send_message_async(session_id, request, customer, cookies)
-            finally:
-                await asyncio.to_thread(lease.__exit__, None, None, None)
+
         return await self._send_message_async(session_id, request, customer, cookies)
 
     @traced("chat.pipeline", ("request", "session_id"))
@@ -125,21 +123,19 @@ class ChatService:
                 else:
                     raise
 
-            current_message = self.conversation_service.add_message(
+            self.conversation_service.add_message(
                 session_id=session_id,
                 sender_type=SenderType.USER,
                 message=request.message,
                 customer_id=customer.customer_id,
             )
-            recent_messages = self.conversation_service.get_recent_messages(
+            recent_messages = self.conversation_service.get_context_messages(
                 session_id=session_id,
                 customer_id=customer.customer_id,
-                window=get_settings().chat_history_window + 1,
+                window=get_settings().chat_history_window,
             )
         else:
             recent_messages = []
-
-        recent_messages = [m for m in recent_messages if m.id != current_message.id] if customer is not None else []
 
         recent_history = [
             SharedChatMessage(
@@ -173,12 +169,12 @@ class ChatService:
             if query_plan is not None:
                 event('query.read_only_guard', query_plan)
             else:
-                query_plan = await asyncio.to_thread(understand)
+                query_plan = await blocking(understand)
         except (httpx.HTTPError, ValueError) as exc:
             raise HTTPException(status_code=503, detail="Chưa thể xác minh catalog sản phẩm; vui lòng thử lại.") from exc
 
         if customer is not None:
-            snapshot = await asyncio.to_thread(self.conversation_service.repository.get_snapshot, session_id, customer.customer_id)
+            snapshot = await blocking(self.conversation_service.repository.get_snapshot, session_id, customer.customer_id)
             query_plan = resolve_reference(request.message, query_plan, snapshot)
         event("query.plan.initial", query_plan)
 
@@ -217,9 +213,7 @@ class ChatService:
 
             try:
                 if not below_minimum:
-                    product_matches, product_cards = await asyncio.to_thread(search_and_build)
-                if customer is not None:
-                    self.conversation_service.repository.remember_product_cards(session_id, customer.customer_id, product_cards)
+                    product_matches, product_cards = await blocking(search_and_build)
             except ProductResolutionError as exc:
                 event('product.resolution_failed', {'reason': exc.reason}, status='warning')
                 query_plan = query_plan.model_copy(update={'clarification': str(exc)})
@@ -247,7 +241,7 @@ class ChatService:
         knowledge_chunks = []
         if query_plan.intent == Intent.KNOWLEDGE_QA and self.knowledge_retrieval is not None:
             try:
-                knowledge_chunks = await asyncio.to_thread(
+                knowledge_chunks = await blocking(
                     self.knowledge_retrieval.retrieve,
                     query_plan.semantic_query or query_context.current_message,
                     top_k=self.knowledge_top_k,
@@ -269,7 +263,7 @@ class ChatService:
         )
 
         event("response.grounded_context", grounded_context)
-        assistant_message = await asyncio.to_thread(self.response_generation.generate, grounded_context)
+        assistant_message = await blocking(self.response_generation.generate, grounded_context)
 
         response = ChatResponse(
             session_id=session_id,
@@ -292,10 +286,10 @@ class ChatService:
             if snapshot_search is not None and not snapshot_search.category and len(categories) == 1:
                 snapshot_search = snapshot_search.model_copy(update={'category': next(iter(categories))})
             snapshot = EvidenceSnapshot(cards=product_cards, search=snapshot_search) if product_cards else None
-            await asyncio.to_thread(self.conversation_service.repository.save_assistant,
+            await blocking(self.conversation_service.repository.save_assistant,
                                     session_id, customer.customer_id, assistant_message, snapshot)
         if self.after_response is not None:
-            await asyncio.to_thread(self.after_response, query_context, response, knowledge_chunks)
+            await blocking(self.after_response, query_context, response, knowledge_chunks)
         return response
 
     def send_message(
