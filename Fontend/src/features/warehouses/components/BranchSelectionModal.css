@@ -1,0 +1,35 @@
+/* Mandatory branch step: rendered instead of the shop, so nothing behind it is interactive. */
+.branch-gate { min-height: 100vh; display: grid; place-items: center; padding: max(24px, env(safe-area-inset-top)) 16px 24px; background: linear-gradient(160deg, var(--emerald-950), var(--emerald-800)); }
+.branch-modal { width: min(560px, 100%); max-height: calc(100vh - 48px); display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 14px; padding: 26px 24px 20px; border-radius: 16px; background: var(--surface); box-shadow: 0 24px 60px rgba(0, 0, 0, .28); }
+.branch-modal h2 { margin: 0; color: var(--emerald-950); font-size: 1.35rem; }
+.branch-modal h2:focus-visible { outline-offset: 6px; }
+.branch-modal > p { margin: 0; color: var(--muted); font-size: .9rem; }
+.branch-modal-form { display: grid; gap: 12px; min-height: 0; }
+.branch-modal-search { display: grid; gap: 4px; font-size: .8rem; font-weight: 700; color: var(--emerald-950); }
+.branch-modal-search input { min-height: 42px; padding: 9px 12px; border: 1px solid var(--border); border-radius: 9px; font: inherit; font-weight: 400; }
+.branch-modal-options { display: grid; gap: 8px; margin: 0; padding: 2px; border: 0; min-height: 0; max-height: min(46vh, 420px); overflow-y: auto; overscroll-behavior: contain; }
+.branch-option { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; background: #fff; cursor: pointer; }
+.branch-option:hover { border-color: #a7cbbd; background: var(--emerald-50); }
+.branch-option.is-selected { border-color: var(--emerald-700); background: var(--emerald-50); box-shadow: inset 0 0 0 1px var(--emerald-700); }
+.branch-option input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--emerald-700); flex: 0 0 auto; }
+.branch-option:has(input:focus-visible) { outline: 3px solid #c98536; outline-offset: 2px; }
+.branch-option-text { display: grid; gap: 2px; min-width: 0; }
+.branch-option-text strong { color: var(--emerald-950); overflow-wrap: anywhere; }
+.branch-option-text span, .branch-option-text small { color: var(--muted); font-size: .84rem; overflow-wrap: anywhere; }
+.branch-option-text small { color: var(--emerald-800); font-weight: 700; }
+.branch-modal-options:disabled .branch-option { cursor: not-allowed; opacity: .7; }
+.branch-modal-empty, .branch-modal-status { margin: 0; color: var(--muted); }
+.branch-modal-problem, .branch-modal-confirm, .branch-modal-error { display: grid; gap: 10px; margin: 0; padding: 12px 14px; border-radius: 10px; font-size: .88rem; }
+.branch-modal-problem p, .branch-modal-confirm p { margin: 0; }
+.branch-modal-problem, .branch-modal-error { background: #fdecea; color: #8a2419; border: 1px solid #f3c7c0; }
+.branch-modal-problem .button { justify-self: start; }
+.branch-modal-confirm { background: #fff4e0; color: #6d4712; border: 1px solid #f1d6a6; }
+.branch-modal-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid var(--border); }
+.branch-modal-exit { display: flex; align-items: center; gap: 14px; font-size: .86rem; }
+@media (max-width: 560px) {
+  .branch-gate { place-items: end center; padding: 12px; }
+  .branch-modal { max-height: calc(100vh - 24px); padding: 20px 16px 16px; border-radius: 14px; }
+  .branch-modal-actions { flex-direction: column-reverse; align-items: stretch; }
+  .branch-modal-actions > .button { width: 100%; }
+  .branch-modal-exit { justify-content: space-between; }
+}
