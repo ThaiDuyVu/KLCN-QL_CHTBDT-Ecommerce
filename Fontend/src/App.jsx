@@ -40,6 +40,8 @@ import ForbiddenPage from './pages/ForbiddenPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 const ChatbotLabPage = lazy(() => import('./features/chatbot/ChatbotLabPage'));
+// Customer assistant is a storefront feature, independent of the developer Lab flag.
+const CustomerChatbotPage = lazy(() => import('./features/chatbot/CustomerChatbotPage'));
 const chatbotLabEnabled = import.meta.env.DEV || import.meta.env.VITE_CHATBOT_LAB_ENABLED === 'true';
 
 const ReportsPage = lazy(() => import('./features/reports/pages/ReportsPage'));
@@ -69,6 +71,7 @@ export default function App() {
             <Route path="my-warranties/:warrantyId" element={<WarrantyDetailPage customer />} />
             <Route path="my-warranty-tickets" element={<WarrantyTicketsPage customer />} />
             <Route path="my-warranty-tickets/:ticketId" element={<WarrantyTicketDetailPage customer />} />
+            <Route path="chatbot" element={<Suspense fallback={<p role="status">Đang tải Trợ lý AI…</p>}><CustomerChatbotPage /></Suspense>} />
           </Route>
           <Route element={<RequireRole roles={MANAGEMENT_ROLES} />}>
             <Route path="orders" element={<OrdersPage />} />

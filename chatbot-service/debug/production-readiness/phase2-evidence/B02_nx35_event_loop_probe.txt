@@ -1,0 +1,61 @@
+# NX-35 diagnosis probe (synthetic in-memory); PYTHONPATH pinned per tree; UTC 2026-10-21T04:44:50Z
+# (an earlier attempt without PYTHONPATH resolved both runs to the main checkout and was discarded)
+## f99f713 baseline
+app_module scratchpad/wt-f99f713/chatbot-service/app/__init__.py
+{'loop_ticks_during_add_message_1s': 0, 'cancel_issued_during_write': False, 'outcome': 'CANCELLED', 'lease_events': ['acquire', 'release'], 'assistant_saved': ['USER']}
+## df64381 candidate (df64381 + hotfix)
+app_module repo/chatbot-service/app/__init__.py
+{'loop_ticks_during_add_message_1s': 19, 'cancel_issued_during_write': True, 'outcome': 'CANCELLED', 'lease_events': ['acquire', 'release'], 'assistant_saved': ['USER']}
+
+## probe script
+"""NX-35 diagnosis: does the event loop run while add_message is in flight? (synthetic, in-memory)"""
+import asyncio, time, sys
+from contextlib import contextmanager
+from uuid import uuid4
+from app.features.chat.models import SendMessageRequest
+from app.features.chat.service import ChatService
+from app.features.conversation.repository import InMemoryConversationRepository
+from app.features.conversation.service import ConversationService
+from app.features.customer_context.models import AuthenticatedCustomer
+from app.shared.contracts.enums import Intent
+from app.shared.contracts.query import QueryPlan
+from app.features.response_generation.ollama_service import OllamaResponseGenerationService
+
+window = {}
+class Repo(InMemoryConversationRepository):
+    events = []
+    @contextmanager
+    def request_lock(self, s, c):
+        self.events.append('acquire'); yield; self.events.append('release')
+    def add_message(self, *a, **k):
+        window['start'] = time.monotonic(); time.sleep(1.0); window['end'] = time.monotonic()
+        return super().add_message(*a, **k)
+class QU:
+    def understand(self, ctx): return QueryPlan(intent=Intent.GREETING)
+class NoModel:
+    def chat(self, *a, **k): raise AssertionError
+
+async def main():
+    ticks = []
+    async def heartbeat():
+        while True:
+            ticks.append(time.monotonic()); await asyncio.sleep(0.05)
+    repo = Repo(); customer = AuthenticatedCustomer(user_id=uuid4(), customer_id=uuid4(), display_name='Synthetic')
+    sid = repo.create_session(customer.customer_id).id
+    svc = ChatService(conversation_service=ConversationService(repo), query_understanding=QU(),
+                      response_generation=OllamaResponseGenerationService(NoModel()))
+    hb = asyncio.create_task(heartbeat()); await asyncio.sleep(0.1)
+    task = asyncio.create_task(svc.send_message_async(sid, SendMessageRequest(message='probe'), customer))
+    await asyncio.sleep(0.3)               # cancel requested while add_message is sleeping
+    task.cancel(); cancel_sent = time.monotonic()
+    try:
+        await task; outcome = 'COMPLETED_DESPITE_CANCEL'
+    except asyncio.CancelledError:
+        outcome = 'CANCELLED'
+    hb.cancel()
+    inside = [t for t in ticks if window['start'] < t < window['end']]
+    print({'loop_ticks_during_add_message_1s': len(inside), 'cancel_issued_during_write': window['start'] < cancel_sent < window['end'],
+           'outcome': outcome, 'lease_events': repo.events,
+           'assistant_saved': [m.sender_type.value for m in repo.history_page(sid, customer.customer_id)]})
+import app, os; print('app_module', os.path.realpath(app.__file__))
+asyncio.run(main())

@@ -1,0 +1,161 @@
+{
+  "trace_id": "ce6ab1b0-8f73-4d37-bef4-979013907151",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "9706dcad-b664-47a0-b98e-77216e6a81f9",
+      "parent_id": "6e90a62a-8090-44dc-9d6b-0b837d3ec95c",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 34.69,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "465aaa7b-0178-49ba-b70f-61d3ba990c34",
+      "parent_id": "6e90a62a-8090-44dc-9d6b-0b837d3ec95c",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 34.92,
+      "duration_ms": null,
+      "output": {
+        "actions": [
+          {
+            "kind": "payment",
+            "scope": "information"
+          }
+        ]
+      }
+    },
+    {
+      "id": "c6bc6381-1e88-4e87-ab7e-d2fe21c4c797",
+      "parent_id": "6e90a62a-8090-44dc-9d6b-0b837d3ec95c",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 35.02,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-FAILED"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "9fe0e40a-a7ee-4308-95e4-0654035bef3d",
+      "parent_id": "6e90a62a-8090-44dc-9d6b-0b837d3ec95c",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 40.99,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-FAILED"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "e0379330-b7ea-477f-83a3-ea69cd0530b4",
+      "parent_id": "a18d5708-988a-464c-8726-e5ebcb2dec92",
+      "name": "customer.order_selection",
+      "status": "ok",
+      "offset_ms": 61.48,
+      "duration_ms": null,
+      "output": {
+        "selection": "exact_code",
+        "matched": 1,
+        "order_ids": [
+          "ee0927a9-5d75-4c79-b580-0d81153f31e3"
+        ]
+      }
+    },
+    {
+      "id": "db8fd240-0fff-490b-aa11-19427839018d",
+      "parent_id": "6e90a62a-8090-44dc-9d6b-0b837d3ec95c",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 61.59,
+      "duration_ms": null,
+      "output": {
+        "intent": "PAYMENT_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "fd6ea6fd-9d81-45cd-b7a7-817165bfb690",
+      "parent_id": "b36df358-afaa-4322-9d0b-fd9d289c9ade",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 61.87,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_customer_evidence",
+        "reason": "owned_order_payment"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 7.12,
+      "duration_ms": 61.66,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 41.04,
+      "duration_ms": 20.55,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 41.07,
+      "duration_ms": 9.28,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 50.37,
+      "duration_ms": 11.1,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 61.76,
+      "duration_ms": 0.14,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/orders/mine"
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders/mine/synthetic-order-fb03aa01f158"
+    }
+  ]
+}

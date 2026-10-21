@@ -1,0 +1,124 @@
+{
+  "executed_at": "2026-10-21T04:48:49.489707+00:00",
+  "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+  "rows": [
+    {
+      "prompt": "ORD-DIAG-NOPAY thanh toán chưa?",
+      "attempt": 1,
+      "http": 200,
+      "read_only_guard_used": false,
+      "model_raw_output": "{\"intent\":\"PAYMENT_STATUS\"}",
+      "order_selection": [
+        {
+          "selection": "latest",
+          "matched": 1,
+          "order_ids": [
+            "9c0b6e4f-7937-4369-8df9-e8fa357770db"
+          ]
+        }
+      ],
+      "answer": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; trạng thái thanh toán: PAID; phương thức: COD; số tiền: 18990000.0 VND.",
+      "trace_id": "4db11b58-f943-4cf8-b8a9-25e04900e74b"
+    },
+    {
+      "prompt": "ORD-DIAG-NOPAY thanh toán chưa?",
+      "attempt": 2,
+      "http": 200,
+      "read_only_guard_used": false,
+      "model_raw_output": "{\"intent\":\"PAYMENT_STATUS\"}",
+      "order_selection": [
+        {
+          "selection": "latest",
+          "matched": 1,
+          "order_ids": [
+            "9c0b6e4f-7937-4369-8df9-e8fa357770db"
+          ]
+        }
+      ],
+      "answer": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; trạng thái thanh toán: PAID; phương thức: COD; số tiền: 18990000.0 VND.",
+      "trace_id": "419733c1-13b6-4c6e-83ff-6e685063d3a5"
+    },
+    {
+      "prompt": "Mã ORD-DIAG-NOPAY đã thanh toán chưa?",
+      "attempt": 1,
+      "http": 200,
+      "read_only_guard_used": false,
+      "model_raw_output": "{\"intent\":\"PAYMENT_STATUS\"}",
+      "order_selection": [
+        {
+          "selection": "latest",
+          "matched": 1,
+          "order_ids": [
+            "9c0b6e4f-7937-4369-8df9-e8fa357770db"
+          ]
+        }
+      ],
+      "answer": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; trạng thái thanh toán: PAID; phương thức: COD; số tiền: 18990000.0 VND.",
+      "trace_id": "1f995d48-67a7-491b-a740-1ddc798178c3"
+    },
+    {
+      "prompt": "Mã ORD-DIAG-NOPAY đã thanh toán chưa?",
+      "attempt": 2,
+      "http": 200,
+      "read_only_guard_used": false,
+      "model_raw_output": "{\"intent\":\"PAYMENT_STATUS\"}",
+      "order_selection": [
+        {
+          "selection": "latest",
+          "matched": 1,
+          "order_ids": [
+            "9c0b6e4f-7937-4369-8df9-e8fa357770db"
+          ]
+        }
+      ],
+      "answer": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; trạng thái thanh toán: PAID; phương thức: COD; số tiền: 18990000.0 VND.",
+      "trace_id": "55464a3d-f0e6-40e9-8c0c-7d9d792bd4f5"
+    },
+    {
+      "prompt": "ORD-DIAG-NOPAY của tôi thế nào?",
+      "attempt": 1,
+      "http": 200,
+      "read_only_guard_used": false,
+      "model_raw_output": "{\"intent\":\"ORDER_STATUS\",\"clarification\":\"ORD-DIAG-NOPAY của tôi thế nào\",\"requested_fields\":[\"PAYMENT_STATUS\"]}",
+      "order_selection": [
+        {
+          "selection": "recent",
+          "matched": 6,
+          "order_ids": [
+            "9c0b6e4f-7937-4369-8df9-e8fa357770db",
+            "ee0927a9-5d75-4c79-b580-0d81153f31e3",
+            "4675bf05-2628-4bc6-b6bb-a8816e075b82",
+            "2ccacb3a-3ab2-4a13-80b5-9d936b62457f",
+            "d917c500-6597-4f79-bde7-a1c5232de8e1",
+            "387f950a-bab4-4b26-bd2d-5475c101f9a3"
+          ]
+        }
+      ],
+      "answer": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-FAILED: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-NOPAY: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-NULLWAREHOUSE: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-01421042-3B48-48AE-8313-E0A8A8AF2F29: trạng thái đơn hàng PENDING; tổng tiền 49990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-EXPIRED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.",
+      "trace_id": "67c44c7f-71d2-4246-badf-fda276061094"
+    },
+    {
+      "prompt": "ORD-DIAG-NOPAY của tôi thế nào?",
+      "attempt": 2,
+      "http": 200,
+      "read_only_guard_used": false,
+      "model_raw_output": "{\"intent\":\"ORDER_STATUS\",\"clarification\":\"ORD-DIAG-NOPAY của tôi thế nào\",\"requested_fields\":[\"PAYMENT_STATUS\"]}",
+      "order_selection": [
+        {
+          "selection": "recent",
+          "matched": 6,
+          "order_ids": [
+            "9c0b6e4f-7937-4369-8df9-e8fa357770db",
+            "ee0927a9-5d75-4c79-b580-0d81153f31e3",
+            "4675bf05-2628-4bc6-b6bb-a8816e075b82",
+            "2ccacb3a-3ab2-4a13-80b5-9d936b62457f",
+            "d917c500-6597-4f79-bde7-a1c5232de8e1",
+            "387f950a-bab4-4b26-bd2d-5475c101f9a3"
+          ]
+        }
+      ],
+      "answer": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-FAILED: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-NOPAY: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-NULLWAREHOUSE: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-01421042-3B48-48AE-8313-E0A8A8AF2F29: trạng thái đơn hàng PENDING; tổng tiền 49990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-EXPIRED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.",
+      "trace_id": "17bfea50-584f-44f3-962c-d0acdfb9f1c4"
+    }
+  ]
+}

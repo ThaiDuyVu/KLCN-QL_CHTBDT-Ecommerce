@@ -1,6 +1,7 @@
 """Map existing backend camelCase DTOs into the locked shared contracts."""
 from app.shared.tracing import traced, event
 from datetime import datetime
+from decimal import Decimal, InvalidOperation
 from pydantic import ValidationError
 from fastapi import HTTPException
 
@@ -43,6 +44,25 @@ class NoOwnedOrders(Exception):
     """The owned order list was returned successfully and is empty (not an error or 404)."""
 
 
+# Same sentence as the existing empty-cart branch in OllamaResponseGenerationService.generate.
+EMPTY_CART_MESSAGE = 'Giỏ hàng của bạn hiện đang trống.'
+
+
+class VerifiedEmptyCart(Exception):
+    """GET /api/cart returned 200 for a customer who never created a cart (cartId=null, no items)."""
+
+
+def never_created_cart(row: dict) -> bool:
+    # CartServiceImpl.get never creates a cart; it serializes cartId=null, items=[], subtotal=0.
+    # Anything else without a cart identity stays malformed (502).
+    if 'cartId' not in row or row['cartId'] is not None or row.get('items') != []:
+        return False
+    try:
+        return Decimal(str(row.get('subtotal'))) == 0
+    except (InvalidOperation, ValueError):
+        return False
+
+
 class CustomerContextService:
     def __init__(self, backend_client: BackendClient | None = None):
         self.backend_client = backend_client
@@ -55,6 +75,9 @@ class CustomerContextService:
         try:
             if intent == 'CART_STATUS':
                 row = await self.backend_client.get_cart(cookies)
+                if isinstance(row, dict) and never_created_cart(row):
+                    event('customer.cart_state', {'state': 'never_created', 'items': 0})
+                    raise VerifiedEmptyCart()
                 if row:
                     context.cart = CartContext(cart_id=row['cartId'], warehouse_id=row.get('warehouseId'),
                         warehouse_name=row.get('warehouseName'), subtotal=row['subtotal'],

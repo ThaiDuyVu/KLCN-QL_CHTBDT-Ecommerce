@@ -77,3 +77,19 @@
 @media (max-width: 850px) { .receipt-detail dl, .serial-detail dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 580px) { .inventory-table-wrap { padding: 14px; } .receipt-form, .receipt-detail, .serial-detail { padding: 18px; } .receipt-detail dl, .serial-detail dl { grid-template-columns: 1fr; } .inventory-tabs { overflow-x: auto; flex-wrap: nowrap; } .inventory-tabs a { white-space: nowrap; } }
 @media (max-width: 580px) { .variant-picker-filters { grid-template-columns:1fr; } .variant-selected-card { align-items:flex-start; flex-direction:column; } }
+
+/* Searchable category filter inside VariantSearchPicker (matches .receipt-form select). */
+.category-select { position: relative; display: grid; gap: .35rem; min-width: 0; font-size: .8rem; font-weight: 600; color: var(--emerald-950); }
+.category-select-list, .category-select-popup input { font-weight: 400; }
+.category-select-trigger { display: flex; align-items: center; justify-content: space-between; gap: .5rem; width: 100%; min-height: 42px; padding: 9px 12px; border: 1px solid var(--border); border-radius: 9px; background: #fff; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.category-select-trigger > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.category-select-trigger[aria-expanded="true"] { border-color: var(--emerald-700); }
+.category-select-popup { position: absolute; top: 100%; left: 0; z-index: 30; display: grid; gap: .4rem; width: max(100%, 240px); max-width: min(360px, calc(100vw - 32px)); margin-top: 4px; padding: .5rem; border: 1px solid var(--border); border-radius: 10px; background: #fff; box-shadow: 0 10px 28px rgba(9, 47, 39, .14); }
+.category-select-popup input { width: 100%; min-width: 0; }
+.category-select-list { max-height: 260px; overflow-y: auto; margin: 0; padding: 0; list-style: none; overscroll-behavior: contain; }
+.category-select-option { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .5rem .6rem; border-radius: 7px; cursor: pointer; overflow-wrap: anywhere; }
+.category-select-option.is-active { background: var(--emerald-50); outline: 1px solid #cbe5d9; }
+.category-select-option.is-selected { font-weight: 700; color: var(--emerald-900); }
+.category-select-check { color: var(--emerald-700); }
+.category-select-empty { margin: 0; padding: .3rem .6rem; color: var(--muted); font-size: .85rem; }
+@media (max-width: 580px) { .category-select-popup { width: 100%; max-width: none; } }

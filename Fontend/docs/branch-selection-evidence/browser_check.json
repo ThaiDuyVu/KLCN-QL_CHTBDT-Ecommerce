@@ -1,0 +1,92 @@
+{
+  "executed_at": "2026-10-21T08:15:17.521558+00:00",
+  "url": "http://localhost:5173",
+  "accounts": "synthetic seed users",
+  "rows": [
+    {
+      "step": "guest home",
+      "verdict": "PASS",
+      "note": "guest sees the shop; no dialog, no protected branch call",
+      "screenshot": "01-guest.png"
+    },
+    {
+      "step": "customer login shows mandatory dialog",
+      "verdict": "PASS",
+      "note": "options: ['Kho phát triển / Kho dữ liệu mẫu tại Thành phố Hồ Chí Minh / Chi nhánh của giỏ hàng hiện tại', 'Chi nhánh dự phòng / Chi nhánh không có tồn mẫu, dùng kiểm thử availability theo warehouse']; cart branch preselected; shop not mounted behind dialog",
+      "screenshot": "02-dialog.png"
+    },
+    {
+      "step": "Escape / backdrop do not dismiss",
+      "verdict": "PASS",
+      "note": "dialog still open after Escape and outside click",
+      "screenshot": null
+    },
+    {
+      "step": "switching branch with items warns in-dialog; keeping cart makes no request",
+      "verdict": "PASS",
+      "note": "warning: Giỏ hàng đang có 1 sản phẩm thuộc chi nhánh Kho phát triển. Đổi sang Chi nhánh dự phòng sẽ xóa toàn bộ sản phẩm trong gi; cart writes so far: 0",
+      "screenshot": "03-clear-warning.png"
+    },
+    {
+      "step": "confirm cart branch opens the shop",
+      "verdict": "PASS",
+      "note": "header: Chi nhánh mua sắm / Đổi chi nhánh mua sắm / Chọn chi nhánh / Kho phát triển / Chi nhánh dự phòng / Kho dữ liệu mẫu tại Thành phố Hồ Chí Minh · Tồn kho và giỏ hà; focus -> #main-content; cart writes: 0",
+      "screenshot": "04-shop-open.png"
+    },
+    {
+      "step": "catalog uses the confirmed branch, no dialog on navigation",
+      "verdict": "PASS",
+      "note": "2 product requests carry warehouseId of the selected branch",
+      "screenshot": "05-catalog.png"
+    },
+    {
+      "step": "refresh in same session",
+      "verdict": "PASS",
+      "note": "no dialog after reload (verified marker + cart branch + ACTIVE list)",
+      "screenshot": null
+    },
+    {
+      "step": "header selector keeps native clear-cart confirmation",
+      "verdict": "PASS",
+      "note": "confirm dismissed -> branch unchanged (True); cart writes: 0",
+      "screenshot": "06-header.png"
+    },
+    {
+      "step": "logout then login asks again",
+      "verdict": "PASS",
+      "note": "dialog shown again after a new login",
+      "screenshot": null
+    },
+    {
+      "step": "new browser session + direct product URL",
+      "verdict": "PASS",
+      "note": "new context asked again; after confirming stayed on /products/0bc0ada3-c4e9-41a1-9b5c-93c57c3f6ead?from=link",
+      "screenshot": "07-direct-detail.png"
+    },
+    {
+      "step": "mobile 390px dialog",
+      "verdict": "PASS",
+      "note": "page overflow 0px; continue button visible",
+      "screenshot": "08-mobile.png"
+    },
+    {
+      "step": "tablet 768px dialog",
+      "verdict": "PASS",
+      "note": "page overflow 0px; continue button visible",
+      "screenshot": "08-tablet.png"
+    },
+    {
+      "step": "STAFF management area has no shopping dialog",
+      "verdict": "PASS",
+      "note": "management layout, no branch dialog",
+      "screenshot": "09-staff.png"
+    },
+    {
+      "step": "add to cart / real branch switch with clearItems",
+      "verdict": "NOT_RUN",
+      "note": "would modify dev cart data; covered by BranchSelectionGate.test.jsx (C. Cart synchronization)"
+    }
+  ],
+  "page_errors": [],
+  "cart_write_requests": []
+}

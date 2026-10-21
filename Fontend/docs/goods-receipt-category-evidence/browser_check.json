@@ -1,0 +1,55 @@
+{
+  "executed_at": "2026-10-21T07:54:30.779434+00:00",
+  "url": "http://localhost:5173",
+  "account": "seed.staff (synthetic seed)",
+  "rows": [
+    {
+      "step": "open dropdown via keyboard",
+      "verdict": "PASS",
+      "note": "search box focused; 11 options incl. \"Tất cả\"",
+      "screenshot": "01-open.png"
+    },
+    {
+      "step": "accent-insensitive search, no SKU request while typing",
+      "verdict": "PASS",
+      "note": "options: ['Tất cả', 'Điện thoại & Máy tính bảng', 'Điện thoại']; SKU requests while typing: 0",
+      "screenshot": "02-search.png"
+    },
+    {
+      "step": "select via keyboard filters SKUs by categoryId",
+      "verdict": "PASS",
+      "note": "20 SKU results, all \"Điện thoại\"; request uses categoryId param",
+      "screenshot": "03-filtered.png"
+    },
+    {
+      "step": "multi-line isolation + click outside",
+      "verdict": "PASS",
+      "note": "line 1 keeps SKU DEV-A55-ICE-256, qty 2; line 2 shows \"Tất cả\"; outside click closed popup",
+      "screenshot": "04-multiline.png"
+    },
+    {
+      "step": "mobile 390px",
+      "verdict": "PASS",
+      "note": "popup x=77 w=236; page overflow 0px",
+      "screenshot": "05-mobile.png"
+    },
+    {
+      "step": "tablet 768px",
+      "verdict": "PASS",
+      "note": "popup x=293 w=240; page overflow 0px",
+      "screenshot": "05-tablet.png"
+    },
+    {
+      "step": "observation: parent category",
+      "verdict": "INFO",
+      "note": "\"Điện thoại & Máy tính bảng\" -> {'parentCategoryId': None, 'totalElements': 0}; API filters by exact categoryId (unchanged behaviour)"
+    },
+    {
+      "step": "edit screen",
+      "verdict": "NOT_RUN",
+      "note": "no DRAFT receipt exists in the dev DB; creating one would write business data (edit flow covered by component test)"
+    }
+  ],
+  "page_errors": [],
+  "receipt_write_requests": []
+}

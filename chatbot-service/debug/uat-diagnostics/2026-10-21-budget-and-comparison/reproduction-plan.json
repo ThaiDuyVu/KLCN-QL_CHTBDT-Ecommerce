@@ -1,0 +1,38 @@
+[
+  {
+    "id": "A1",
+    "session": "A",
+    "prompt": "tôi đang có 20tr tư vấn giúp tôi một laptop học công nghệ thông tin",
+    "expected": "Recognize Laptop/20million/use-case; eligible advice or targeted budget confirmation, not repeated all-fields question."
+  },
+  {
+    "id": "A2",
+    "session": "A",
+    "prompt": "20tr , hoc cong nghe thong tin",
+    "expected": "Use completed previous context to clarify only unresolved slot; avoid repeating all-fields question."
+  },
+  {
+    "id": "A-control",
+    "session": "C",
+    "prompt": "Tìm laptop dưới 20 triệu để học công nghệ thông tin.",
+    "expected": "PRODUCT_DISCOVERY Laptop/max_price20000000 and eligible cards."
+  },
+  {
+    "id": "B-setup",
+    "session": "B",
+    "prompt": "Gợi ý cho tôi một laptop Dell RAM 16GB dưới 20 triệu.",
+    "expected": "One eligible Dell card <=20million, to establish exact antecedent."
+  },
+  {
+    "id": "B1",
+    "session": "B",
+    "prompt": "so sánh sản phẩm trên với macbook air m1",
+    "expected": "Compare previous Dell card with real MacBook Air M1; no unrelated targets or repeated request for both names when one snapshot card exists."
+  },
+  {
+    "id": "B-control",
+    "session": "D",
+    "prompt": "So sánh Dell Inspiron 15 với MacBook Air M1.",
+    "expected": "PRODUCT_COMPARE with exact Dell Inspiron15 and MacBookAirM1 and two product cards."
+  }
+]
