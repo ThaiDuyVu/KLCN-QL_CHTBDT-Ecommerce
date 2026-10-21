@@ -1,0 +1,58 @@
+[
+  {
+    "command": [
+      "index_status",
+      "--project",
+      "/Users/vu/Documents/Vu/HUIT-Year4/KLTN/KLCN-QL_CHTBDT-Ecommerce-main"
+    ],
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "project: Users-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL_CHTBDT-Ecommerce-main\nnodes: 62152\nedges: 93312\nstatus: ready\nroot_path: /Users/vu/Documents/Vu/HUIT-Year4/KLTN/KLCN-QL_CHTBDT-Ecommerce-main\nindexed_at: 2026-10-20T16:48:05Z\nparse_partial:\n  files: 0\n  count: 9\n  truncated: true\n  omitted: 9\nparse_unusable:\n  files: 0\n  count: 0\n  truncated: false\nskipped:\n  files: 0\n  count: 0\n  truncated: false\nnot_indexed:\n  dirs: 0\n  dirs_count: 33\n  files: 0\n  files_count: 123\n  truncated: true\n  dirs_omitted: 33\n  files_omitted: 123\ncross_repo:\n  status: never_run\ndoc_links:\n  mentions: 800\n  unresolved:\n    ambiguous: 32\n    below_bar_tier: 33\n    missing: 24\n    test_only_target: 1\n  status: ok\nwatch:\n  watched: false\n  reason: cli_session\n  hint: \"Auto-sync watches only the active MCP session's project; re-run index_repository to refresh this index.\"\n"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "command": [
+      "trace_path",
+      "--project",
+      "/Users/vu/Documents/Vu/HUIT-Year4/KLTN/KLCN-QL_CHTBDT-Ecommerce-main",
+      "--function_name",
+      "resolve_reference",
+      "--direction",
+      "both",
+      "--depth",
+      "2"
+    ],
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "function: resolve_reference\ndirection: both\ncallees_total: 14\ncallees_total_relation: eq\ncallees: 14  (rows: name hop; qn = group prefix empty ? name : prefix + \".\" + name; \"\" marks empty prefix)\nUsers-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL_CHTBDT-Ecommerce-main.chatbot-service.app.features.query_understanding.constraints:\n  read_capacity 2\n  storage_reference 1\nUsers-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL_CHTBDT-Ecommerce-main.chatbot-service.app.features.query_understanding.normalization:\n  capacity 1\n  folded 1\n  price_slots 1\nUsers-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL_CHTBDT-Ecommerce-main.chatbot-service.app.shared.contracts.query:\n  ProductSearchPlan 1\n  ProductSelector 1\n  QueryPlan 1\nUsers-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL_CHTBDT-Ecommerce-main.chatbot-service.app.shared.tracing:\n  event 1\nUsers-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL_CHTBDT-Ecommerce-main.chatbot-service.debug.final-regression-120.harness.evaluate_current:\n  clarify 1\n  money 2\n  no_cards 2\nbuiltins:\n  int 1\n  len 1\ncallers_total: 2\ncallers_total_relation: eq\ncallers: 2  (rows: name hop; qn = group prefix empty ? name : prefix + \".\" + name; \"\" marks empty prefix)\nUsers-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL_CHTBDT-Ecommerce-main.chatbot-service.app.features.chat.service.ChatService:\n  _send_message_async 1\n  send_message_async 2\n"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "command": [
+      "check_index_coverage",
+      "--project",
+      "/Users/vu/Documents/Vu/HUIT-Year4/KLTN/KLCN-QL_CHTBDT-Ecommerce-main",
+      "--paths",
+      "[\"chatbot-service/app/features/query_understanding/normalization.py\", \"chatbot-service/app/features/query_understanding/constraints.py\", \"chatbot-service/app/features/query_understanding/ollama_service.py\", \"chatbot-service/app/features/conversation/references.py\", \"chatbot-service/app/features/chat/service.py\", \"chatbot-service/app/features/response_generation/ollama_service.py\", \"chatbot-service/app/features/product_advisor/real_service.py\"]"
+    ],
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "project: Users-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL_CHTBDT-Ecommerce-main\nsignal: best_effort\nindexed_at: 2026-10-20T16:48:05Z\nmetadata:\n  generation: 2026-10-20T16:48:05Z\n  index_mode: full\n  recorded_at: 2026-10-20T16:48:06Z\n  recording_status: complete\n  ignored_files_stored: 123\n  ignored_files_total: 123\n  hash_records_complete: true\n  coverage_version: 9\n  generation_matches: true\npaths: 7  (cols: requested_path path status freshness recommended_action coverage)\n  chatbot-service/app/features/query_understanding/normalization.py chatbot-service/app/features/query_understanding/normalization.py no_recorded_issue metadata_changed read_source_and_reindex []\n  chatbot-service/app/features/query_understanding/constraints.py chatbot-service/app/features/query_understanding/constraints.py no_recorded_issue metadata_changed read_source_and_reindex []\n  chatbot-service/app/features/query_understanding/ollama_service.py chatbot-service/app/features/query_understanding/ollama_service.py no_recorded_issue metadata_changed read_source_and_reindex []\n  chatbot-service/app/features/conversation/references.py chatbot-service/app/features/conversation/references.py no_recorded_issue metadata_changed read_source_and_reindex []\n  chatbot-service/app/features/chat/service.py chatbot-service/app/features/chat/service.py no_recorded_issue metadata_changed read_source_and_reindex []\n  chatbot-service/app/features/response_generation/ollama_service.py chatbot-service/app/features/response_generation/ollama_service.py no_recorded_issue metadata_changed read_source_and_reindex []\n  chatbot-service/app/features/product_advisor/real_service.py chatbot-service/app/features/product_advisor/real_service.py no_recorded_issue metadata_changed read_source_and_reindex []\npath_total: 7\npath_returned: 7\npath_has_more: false\nscopes: 0\nscope_total: 0\nscope_returned: 0\nscope_truncated: false\nhas_more: false\ncaveat: \"Best-effort signal only. No recorded issue does not prove graph or source completeness; read flagged source and qualify claims when metadata is changed or unavailable.\"\n"
+        }
+      ],
+      "isError": false
+    }
+  }
+]

@@ -1,0 +1,358 @@
+{
+  "trace_id": "6b1aeee6-4f19-4fef-8855-277c1cf6214c",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "e0211732-900f-4062-9b9f-a32ca15d426e",
+      "parent_id": "97c0b843-9c63-4114-8348-4c0c7c868a0d",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 46.15,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "fdd5a4fa-2822-4080-99fb-49dd3397670e",
+      "parent_id": "97c0b843-9c63-4114-8348-4c0c7c868a0d",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 46.4,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "4d95c1e2-6925-4b20-98a4-07b29313087f",
+      "parent_id": "0a24da1f-2144-497d-af9d-11c83a43f731",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1771.23,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [],
+          "min_price": "0",
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại giá tối đa 0 đồng",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "b447e672-4d06-4e6b-bac8-f998f1158669",
+      "parent_id": "0a24da1f-2144-497d-af9d-11c83a43f731",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1797.96,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": null,
+            "brands": [],
+            "min_price": "0",
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại giá tối đa 0 đồng",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "0",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm điện thoại giá tối đa 0 đồng.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "91c25cb7-0147-4b22-9276-b05eb4a2a218",
+      "parent_id": "97c0b843-9c63-4114-8348-4c0c7c868a0d",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1812.38,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": "0",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm điện thoại giá tối đa 0 đồng.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "51768417-ec6c-4554-95bb-6238e98cd89a",
+      "parent_id": "97c0b843-9c63-4114-8348-4c0c7c868a0d",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1812.47,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": "0",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm điện thoại giá tối đa 0 đồng.",
+          "top_k": 5
+        }
+      }
+    },
+    {
+      "id": "bad8c1d7-d7b2-4869-bbcc-0eeeee7afb11",
+      "parent_id": "97c0b843-9c63-4114-8348-4c0c7c868a0d",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 1812.58,
+      "duration_ms": 6.61,
+      "output": []
+    },
+    {
+      "id": "7c670e88-b224-4b7b-8099-7ee74f9bae8d",
+      "parent_id": "97c0b843-9c63-4114-8348-4c0c7c868a0d",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 1819.19,
+      "duration_ms": 0.03,
+      "output": []
+    },
+    {
+      "id": "3881faec-05ca-4589-98c5-3760825dc697",
+      "parent_id": "7c670e88-b224-4b7b-8099-7ee74f9bae8d",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 1819.21,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [],
+        "variants": 0,
+        "cards": 0
+      }
+    },
+    {
+      "id": "39748213-0565-467c-b766-ae52f0745da4",
+      "parent_id": "97c0b843-9c63-4114-8348-4c0c7c868a0d",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1819.37,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "7aca565d-d66a-460d-9230-d3b8b60f2431",
+      "parent_id": "49c9d562-6130-43e8-912f-420daf13f61e",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1819.59,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "no_matching_products"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 10.32,
+      "duration_ms": 1822.08,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 46.53,
+      "duration_ms": 1751.61,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 48.59,
+      "duration_ms": 1722.61,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 49.09,
+      "duration_ms": 1722.08,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 49.55,
+      "duration_ms": 1721.58,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1771.34,
+      "duration_ms": 8.76,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1780.13,
+      "duration_ms": 6.32,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1786.48,
+      "duration_ms": 11.1,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1812.58,
+      "duration_ms": 6.61,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1812.63,
+      "duration_ms": 6.55,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 1819.19,
+      "duration_ms": 0.03,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1819.32,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1819.51,
+      "duration_ms": 0.1,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Điện thoại"
+          ],
+          [
+            "maxPrice",
+            "0"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ]
+        ]
+      }
+    }
+  ]
+}

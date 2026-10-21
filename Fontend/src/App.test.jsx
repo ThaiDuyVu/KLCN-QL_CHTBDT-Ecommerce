@@ -10,6 +10,8 @@ import { WarehouseContext } from './features/warehouses/warehouseContext';
 const warehouseValue = {
   warehouses: [], selectedWarehouse: null, selectedWarehouseId: '', selectWarehouse: vi.fn(),
   isLoading: false, isChanging: false, error: '',
+  // A customer session whose branch is already confirmed (the gate itself is covered in BranchSelectionGate.test.jsx).
+  listStatus: 'ready', cartReady: true, branchConfirmed: true, reloadWarehouses: vi.fn(), clearRequiredFor: () => false,
 };
 
 function TestAuthProvider({ children, initialRole = null }) {

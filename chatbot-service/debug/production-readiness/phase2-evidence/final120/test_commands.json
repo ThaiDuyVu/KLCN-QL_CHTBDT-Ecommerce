@@ -1,0 +1,282 @@
+[
+  {
+    "id": "git-head",
+    "command": "git rev-parse HEAD",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:42:46.941812+00:00",
+    "duration_seconds": 0.008,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/git-head.txt"
+  },
+  {
+    "id": "git-branch",
+    "command": "git branch --show-current",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:42:46.950155+00:00",
+    "duration_seconds": 0.009,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/git-branch.txt"
+  },
+  {
+    "id": "git-status",
+    "command": "git status --short",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:42:46.959270+00:00",
+    "duration_seconds": 0.024,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/git-status.txt"
+  },
+  {
+    "id": "git-history",
+    "command": "git log --oneline -14",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:42:46.983264+00:00",
+    "duration_seconds": 0.015,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/git-history.txt"
+  },
+  {
+    "id": "git-accepted-diff",
+    "command": "git diff --stat 8b1753f HEAD -- chatbot-service/app backend/src Fontend/src/features/chatbot",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:42:46.998310+00:00",
+    "duration_seconds": 0.031,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/git-accepted-diff.txt"
+  },
+  {
+    "id": "build-isolated-backend",
+    "command": "./mvnw -q -DskipTests package",
+    "cwd": "backend",
+    "started_at": "2026-10-21T04:42:48.881262+00:00",
+    "duration_seconds": 4.726,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/build-isolated-backend.txt"
+  },
+  {
+    "id": "environment-setup",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/post-upgrade-validation/harness/environment.py",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:42:47.057833+00:00",
+    "duration_seconds": 14.817,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/environment-setup.txt"
+  },
+  {
+    "id": "runtime-final-source-all-prompts",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/production-readiness/phase2-evidence/final120/harness/run_runtime.py",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:43:21.007619+00:00",
+    "duration_seconds": 149.735,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/runtime-final-source-all-prompts.txt"
+  },
+  {
+    "id": "boundary-final-12",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/production-readiness/phase2-evidence/final120/harness/run_boundaries.py",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:46:13.252577+00:00",
+    "duration_seconds": 4.242,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/boundary-final-12.txt"
+  },
+  {
+    "id": "browser-final-history-restart",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/post-upgrade-validation/harness/browser.py",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:46:17.494719+00:00",
+    "duration_seconds": 10.451,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/browser-final-history-restart.txt"
+  },
+  {
+    "id": "evaluate-final-source",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/production-readiness/phase2-evidence/final120/harness/evaluate_current.py",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:46:27.946517+00:00",
+    "duration_seconds": 0.181,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/evaluate-final-source.txt"
+  },
+  {
+    "id": "ui-final-real-browser",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/production-readiness/phase2-evidence/final120/harness/ui_browser.py",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:46:28.127675+00:00",
+    "duration_seconds": 16.905,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/ui-final-real-browser.txt"
+  },
+  {
+    "id": "fix04-negative-controls",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/post-upgrade-fixes/harness/fix04_faults.py",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:46:45.033515+00:00",
+    "duration_seconds": 8.669,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/fix04-negative-controls.txt"
+  },
+  {
+    "id": "repeated-high-risk",
+    "command": "workspace://chatbot-service/.venv/bin/python workspace://chatbot-service/debug/post-upgrade-validation/harness/repeats.py",
+    "cwd": ".",
+    "started_at": "2026-10-21T04:46:53.702939+00:00",
+    "duration_seconds": 18.072,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/repeated-high-risk.txt"
+  },
+  {
+    "id": "python-focused",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests/test_query_product_v2.py tests/test_query_integrity.py tests/test_customer_context_mapping.py tests/test_customer_context_contracts.py tests/test_persistent_conversation.py tests/test_conversation_safety.py tests/test_pagination_boundaries.py tests/test_tracing.py tests/test_final_grounding_safety.py -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-21T04:51:13.473774+00:00",
+    "duration_seconds": 1.818,
+    "exit_code": 0,
+    "counts": {
+      "passed": 264,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/python-focused.txt"
+  },
+  {
+    "id": "python-full",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-21T04:51:15.293938+00:00",
+    "duration_seconds": 3.905,
+    "exit_code": 0,
+    "counts": {
+      "passed": 582,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/python-full.txt"
+  },
+  {
+    "id": "java-integration-contract",
+    "command": "./mvnw -q -Dapi.version=1.44 -Dtest=AuthMeIntegrationTest,AuthLoginIntegrationTest,AuthLogoutIntegrationTest,AuthRefreshIntegrationTest,ProductPersistenceIntegrationTest,OrderCheckoutIntegrationTest,OrderReadIntegrationTest,OrderWorkflowTest,GoodsReceiptInventoryIntegrationTest,WarehouseControllerTest,WarehouseServiceImplTest test",
+    "cwd": "backend",
+    "started_at": "2026-10-21T04:51:19.199649+00:00",
+    "duration_seconds": 25.454,
+    "exit_code": 0,
+    "counts": {
+      "passed": 89,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/java-integration-contract.txt"
+  },
+  {
+    "id": "frontend-full",
+    "command": "npm test",
+    "cwd": "Fontend",
+    "started_at": "2026-10-21T04:51:44.658964+00:00",
+    "duration_seconds": 2.486,
+    "exit_code": 0,
+    "counts": {
+      "passed": 59,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/frontend-full.txt"
+  },
+  {
+    "id": "frontend-eslint",
+    "command": "npm run lint",
+    "cwd": "Fontend",
+    "started_at": "2026-10-21T04:51:47.145794+00:00",
+    "duration_seconds": 2.867,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/frontend-eslint.txt"
+  },
+  {
+    "id": "frontend-build",
+    "command": "npm run build",
+    "cwd": "Fontend",
+    "started_at": "2026-10-21T04:51:50.013593+00:00",
+    "duration_seconds": 0.435,
+    "exit_code": 0,
+    "counts": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/frontend-build.txt"
+  }
+]

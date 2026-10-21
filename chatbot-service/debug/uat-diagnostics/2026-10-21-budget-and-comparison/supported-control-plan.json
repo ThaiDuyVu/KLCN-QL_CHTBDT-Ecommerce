@@ -1,0 +1,26 @@
+[
+  {
+    "id": "C-setup",
+    "session": "C",
+    "prompt": "Gợi ý cho tôi một laptop Dell RAM 16GB dưới 20 triệu.",
+    "expected": "One Dell card as unambiguous antecedent."
+  },
+  {
+    "id": "C-ref",
+    "session": "C",
+    "prompt": "so sánh sản phẩm trên với MacBook Air M2",
+    "expected": "Two grounded targets: previous single Dell + catalog-present MacBook Air M2."
+  },
+  {
+    "id": "C-last",
+    "session": "C",
+    "prompt": "so sánh máy vừa gợi ý với MacBook Air M2",
+    "expected": "Supported LAST phrase must allow compare, or clarify only truly missing information."
+  },
+  {
+    "id": "C-explicit",
+    "session": "D",
+    "prompt": "So sánh Dell Inspiron 15 với MacBook Air M2.",
+    "expected": "PRODUCT_COMPARE, two catalog-present names, two cards."
+  }
+]

@@ -1,0 +1,483 @@
+[
+  {
+    "id": "C-setup",
+    "session": "C",
+    "prompt": "Gợi ý cho tôi một laptop Dell RAM 16GB dưới 20 triệu.",
+    "expected": "One Dell card as unambiguous antecedent.",
+    "trace_id": "aa049721-2762-424a-b84c-ae26237399b6",
+    "http_status": 200,
+    "duration_ms": 1909.08,
+    "response": {
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop dell ram 16gb duoi 20 trieu",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "domain_validation": {
+      "original": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop dell ram 16gb duoi 20 trieu",
+          "top_k": 5
+        },
+        "semantic_query": null
+      },
+      "normalized": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Gợi ý cho tôi một laptop Dell RAM 16GB dưới 20 triệu.",
+          "top_k": 1
+        },
+        "semantic_query": null
+      },
+      "taxonomy_verified": true
+    },
+    "normalized": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Gợi ý cho tôi một laptop Dell RAM 16GB dưới 20 triệu.",
+        "top_k": 1
+      },
+      "semantic_query": null
+    },
+    "effective": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Gợi ý cho tôi một laptop Dell RAM 16GB dưới 20 triệu.",
+        "top_k": 1
+      }
+    },
+    "history_count": 0,
+    "reference_resolution": null,
+    "advisor_search_called": true
+  },
+  {
+    "id": "C-ref",
+    "session": "C",
+    "prompt": "so sánh sản phẩm trên với MacBook Air M2",
+    "expected": "Two grounded targets: previous single Dell + catalog-present MacBook Air M2.",
+    "trace_id": "05850a9c-e5f0-46bd-94f7-93db6276402a",
+    "http_status": 200,
+    "duration_ms": 1976.55,
+    "response": {
+      "message": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": null,
+            "sku": "DEV-DELL-I15-512",
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": "so sánh sản phẩm trên với MacBook Air M2"
+    },
+    "domain_validation": null,
+    "normalized": {
+      "clarification": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective": null,
+    "history_count": 2,
+    "reference_resolution": null,
+    "advisor_search_called": false
+  },
+  {
+    "id": "C-last",
+    "session": "C",
+    "prompt": "so sánh máy vừa gợi ý với MacBook Air M2",
+    "expected": "Supported LAST phrase must allow compare, or clarify only truly missing information.",
+    "trace_id": "0de1a773-dc0c-496b-bc64-4cee6a1812c0",
+    "http_status": 200,
+    "duration_ms": 2010.23,
+    "response": {
+      "message": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": null,
+            "sku": "DEV-DELL-I15-512",
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": "so sánh laptop dell ram 16gb với macbook air m2"
+    },
+    "domain_validation": null,
+    "normalized": {
+      "clarification": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective": null,
+    "history_count": 4,
+    "reference_resolution": null,
+    "advisor_search_called": false
+  },
+  {
+    "id": "C-explicit",
+    "session": "D",
+    "prompt": "So sánh Dell Inspiron 15 với MacBook Air M2.",
+    "expected": "PRODUCT_COMPARE, two catalog-present names, two cards.",
+    "trace_id": "6383fb47-7d5e-4db9-a53f-67acfbfeeaf8",
+    "http_status": 200,
+    "duration_ms": 1696.74,
+    "response": {
+      "message": "Sản phẩm tồn tại nhưng chưa có biến thể đang bán phù hợp cấu hình bạn yêu cầu; chưa thể kết luận hết hàng.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Dell Inspiron 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          },
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "MacBook Air M2",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "domain_validation": {
+      "original": {
+        "clarification": null,
+        "intent": "PRODUCT_COMPARE",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Dell Inspiron 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "MacBook Air M2",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 5
+        },
+        "semantic_query": null
+      },
+      "normalized": {
+        "clarification": null,
+        "intent": "PRODUCT_COMPARE",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Dell Inspiron 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "MacBook Air M2",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "So sánh Dell Inspiron 15 với MacBook Air M2.",
+          "top_k": 2
+        },
+        "semantic_query": null
+      },
+      "taxonomy_verified": true
+    },
+    "normalized": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Dell Inspiron 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          },
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "MacBook Air M2",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "So sánh Dell Inspiron 15 với MacBook Air M2.",
+        "top_k": 2
+      },
+      "semantic_query": null
+    },
+    "effective": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Dell Inspiron 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          },
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "MacBook Air M2",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "So sánh Dell Inspiron 15 với MacBook Air M2.",
+        "top_k": 2
+      }
+    },
+    "history_count": 0,
+    "reference_resolution": null,
+    "advisor_search_called": true
+  }
+]

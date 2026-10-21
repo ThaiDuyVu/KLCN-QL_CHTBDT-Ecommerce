@@ -1,13 +1,14 @@
 import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router';
 import { MANAGEMENT_ROLES, projectConfig, ROLES } from '../../config/projectConfig';
 import { useAuth } from '../../hooks/useAuth';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCart } from '../../hooks/useCart';
 import { useWarehouse } from '../../hooks/useWarehouse';
 import ShopIcon from '../ui/ShopIcon';
 import ComingSoonButton from '../ui/ComingSoonButton';
 import useProductRequest from '../../features/products/hooks/useProductRequest';
 import { categoryApi } from '../../features/categories/api/categoryApi';
+import BranchSelectionModal from '../../features/warehouses/components/BranchSelectionModal';
 
 const managementNavigation = [
   { to: '/', label: 'Tổng quan', end: true },
@@ -26,11 +27,17 @@ const managementNavigation = [
   { to: '/user-management', label: 'Người dùng', roles: [ROLES.ADMIN] },
 ];
 
+// The default post-login page (/account) is gated too, so the branch step follows login directly;
+// the dialog itself offers logout as the way out. Only the error page stays reachable.
+const BRANCH_GATE_EXEMPT = ['/forbidden'];
+
 const storefrontNavigation = [
   { to: '/', label: 'Trang chủ', end: true },
   { to: '/products', label: 'Cửa hàng' },
   { to: '/my-orders', label: 'Đơn hàng' },
   { to: '/my-warranties', label: 'Bảo hành' },
+  // Visible to guests too: the CUSTOMER route guard sends them through login first.
+  { to: '/chatbot', label: 'Trợ lý AI' },
 ];
 
 export default function AppLayout() {
@@ -39,11 +46,18 @@ export default function AppLayout() {
   const saleView = location.pathname === '/products' && new URLSearchParams(location.search).get('onSale') === 'true';
   const { user, signOut, isSigningOut, isLoading } = useAuth();
   const { itemCount, isLoading: isCartLoading, error: cartError } = useCart(true);
-  const { warehouses, selectedWarehouseId, selectWarehouse, isLoading: isWarehouseLoading,
-    isChanging: isWarehouseChanging, error: warehouseError } = useWarehouse();
+  const { warehouses, selectedWarehouse, selectedWarehouseId, selectWarehouse, isLoading: isWarehouseLoading,
+    isChanging: isWarehouseChanging, error: warehouseError, branchConfirmed } = useWarehouse();
   const [logoutError, setLogoutError] = useState('');
   const [managementMenuOpen, setManagementMenuOpen] = useState(false);
   const isStorefront = !user || user.roleName === ROLES.CUSTOMER;
+  // CUSTOMER shopping is only mounted after the session's branch is confirmed and verified.
+  const branchGated = user?.roleName === ROLES.CUSTOMER && !branchConfirmed && !BRANCH_GATE_EXEMPT.includes(location.pathname);
+  const wasGated = useRef(branchGated);
+  useEffect(() => {
+    if (wasGated.current && !branchGated) document.getElementById('main-content')?.focus();
+    wasGated.current = branchGated;
+  }, [branchGated]);
   const loadCategories = useCallback((signal) => user?.roleName === ROLES.CUSTOMER ? categoryApi.list(signal) : Promise.resolve([]), [user?.roleName]);
   const categories = useProductRequest(`storefront-search-categories:${user?.roleName}`, loadCategories);
 
@@ -70,6 +84,13 @@ export default function AppLayout() {
     {logoutError && <p className="auth-alert" role="alert">{logoutError}</p>}
     <Outlet />
   </>;
+
+  if (branchGated) {
+    return <>
+      {logoutError && <p className="auth-alert" role="alert">{logoutError}</p>}
+      <BranchSelectionModal onLogout={handleLogout} isSigningOut={isSigningOut} />
+    </>;
+  }
 
   if (isStorefront) {
     return (
@@ -116,9 +137,9 @@ export default function AppLayout() {
           </div>
           {user?.roleName === ROLES.CUSTOMER && <div className="storefront-context">
             <div className="storefront-context-inner">
-              <span className="storefront-context-label"><ShopIcon name="pin" /> Chọn chi nhánh</span>
+              <span className="storefront-context-label"><ShopIcon name="pin" /> Chi nhánh mua sắm</span>
               <label className="storefront-warehouse">
-                <span className="sr-only">Chi nhánh mua hàng</span>
+                <span className="sr-only">Đổi chi nhánh mua sắm</span>
                 <select id="shopping-warehouse" value={selectedWarehouseId} disabled={isWarehouseLoading || isWarehouseChanging}
                   title={warehouseError || undefined} onChange={(event) => selectWarehouse(event.target.value)}>
                   <option value="" disabled>Chọn chi nhánh</option>
@@ -127,11 +148,11 @@ export default function AppLayout() {
                   </option>)}
                 </select>
               </label>
-              <span className="storefront-context-help">Tồn kho và giỏ hàng được tính theo chi nhánh này</span>
+              <span className="storefront-context-help">{selectedWarehouse?.address ? `${selectedWarehouse.address} · ` : ''}Tồn kho và giỏ hàng được tính theo chi nhánh này</span>
             </div>
           </div>}
         </header>
-        <main id="main-content" className="storefront-content">{categories.error && <p id="storefront-category-error" className="auth-alert" role="alert">Chưa tải được danh mục tìm kiếm. <button type="button" onClick={categories.retry}>Thử lại</button></p>}{warehouseError && <p className="auth-alert" role="alert">{warehouseError}</p>}{outlet}</main>
+        <main id="main-content" className="storefront-content" tabIndex={-1}>{categories.error && <p id="storefront-category-error" className="auth-alert" role="alert">Chưa tải được danh mục tìm kiếm. <button type="button" onClick={categories.retry}>Thử lại</button></p>}{warehouseError && <p className="auth-alert" role="alert">{warehouseError}</p>}{outlet}</main>
         <footer className="storefront-footer"><div className="shop-footer-inner">
           <div><Link className="brand" to="/"><span className="brand-mark" aria-hidden="true">Đ</span>{projectConfig.appName}</Link><p>Khám phá thiết bị công nghệ.<br />Mua sắm tại chi nhánh bạn chọn.</p></div>
           <div><h2>Mua sắm</h2><Link to="/products">Tất cả sản phẩm</Link><Link to={user ? '/cart' : '/login'}>Giỏ hàng</Link><Link to="/products?onSale=true">Ưu đãi</Link></div>

@@ -1,0 +1,227 @@
+{
+  "trace_id": "a25f3fa7-bc9e-4937-9bff-f3e38e8003bc",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "7c48e075-93f6-4809-8562-fdce518c26a2",
+      "parent_id": "bc151d60-a4c4-4721-a925-5ba6953ca52c",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 51.52,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "8aeec583-5c57-4e8b-a3c4-6d5737fc7b23",
+      "parent_id": "bc151d60-a4c4-4721-a925-5ba6953ca52c",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 51.78,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "e9e06b08-b37c-45e8-8db9-ac4b44b91d2a",
+      "parent_id": "496cc33c-6b8c-433a-979f-1f4ce9052251",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2279.91,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 1,
+          "min_storage_gb": 1,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop duoi 20 trieu nhung ram phai duoi 16GB",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "c87f0a3e-5a8a-4100-a745-0819713b15f0",
+      "parent_id": "496cc33c-6b8c-433a-979f-1f4ce9052251",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2305.67,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 1,
+            "min_storage_gb": 1,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop duoi 20 trieu nhung ram phai duoi 16GB",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": "Bộ lọc dung lượng tối đa/khoảng/giới hạn nghiêm ngặt chưa được hỗ trợ. Bạn vui lòng dùng mức tối thiểu GB/TB hoặc một biến thể cụ thể.",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        },
+        "constraint_rejected": true
+      }
+    },
+    {
+      "id": "5d299b3e-837f-47ec-a865-f6899555b7ba",
+      "parent_id": "bc151d60-a4c4-4721-a925-5ba6953ca52c",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2320.75,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Bộ lọc dung lượng tối đa/khoảng/giới hạn nghiêm ngặt chưa được hỗ trợ. Bạn vui lòng dùng mức tối thiểu GB/TB hoặc một biến thể cụ thể.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "b54aa52f-28f1-4afd-8792-a8f963ce1255",
+      "parent_id": "bc151d60-a4c4-4721-a925-5ba6953ca52c",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2320.89,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "d027e671-2a76-4b36-b76f-451af93e89b4",
+      "parent_id": "7b53edce-44f0-4f40-8e8c-d7e03c0a1278",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2321.13,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 10.34,
+      "duration_ms": 2322.93,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 51.92,
+      "duration_ms": 2253.91,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 53.9,
+      "duration_ms": 2225.95,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 54.37,
+      "duration_ms": 2225.45,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 54.79,
+      "duration_ms": 2225.0,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2280.01,
+      "duration_ms": 8.76,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2288.8,
+      "duration_ms": 6.67,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2295.5,
+      "duration_ms": 9.8,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2320.84,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2321.04,
+      "duration_ms": 0.12,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

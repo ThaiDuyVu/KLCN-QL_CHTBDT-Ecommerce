@@ -1,0 +1,74 @@
+diff --git a/chatbot-service/app/features/chat/service.py b/chatbot-service/app/features/chat/service.py
+index 79c781b..995b3f3 100644
+--- a/chatbot-service/app/features/chat/service.py
++++ b/chatbot-service/app/features/chat/service.py
+@@ -25,7 +25,9 @@ from app.features.conversation.async_lease import blocking, request_lease
+ from app.features.chat.policy import read_only_plan
+ from app.features.conversation.service import ConversationService
+ from app.features.customer_context.models import AuthenticatedCustomer
+-from app.features.customer_context.service import CustomerContextService, NoOwnedOrders, NO_OWNED_ORDERS_MESSAGE
++from app.features.customer_context.service import (
++    CustomerContextService, EMPTY_CART_MESSAGE, NO_OWNED_ORDERS_MESSAGE, NoOwnedOrders, VerifiedEmptyCart,
++)
+ from app.features.product_advisor.protocol import ProductAdvisorService
+ from app.features.product_advisor.service import MockProductAdvisorService
+ from app.features.query_understanding.protocol import QueryUnderstandingService
+@@ -231,6 +233,10 @@ class ChatService:
+             # Only a successful empty owned list reaches here; backend errors keep their own path.
+             query_plan = query_plan.model_copy(update={'clarification': NO_OWNED_ORDERS_MESSAGE})
+             context_payload = CustomerContext()
++        except VerifiedEmptyCart:
++            # Same existing sentence as an initialized cart with no items; no cart ID is invented.
++            query_plan = query_plan.model_copy(update={'clarification': EMPTY_CART_MESSAGE})
++            context_payload = CustomerContext()
+ 
+         knowledge_chunks = []
+         if query_plan.intent == Intent.KNOWLEDGE_QA and self.knowledge_retrieval is not None:
+diff --git a/chatbot-service/app/features/customer_context/service.py b/chatbot-service/app/features/customer_context/service.py
+index fcbbba7..e98dcc5 100644
+--- a/chatbot-service/app/features/customer_context/service.py
++++ b/chatbot-service/app/features/customer_context/service.py
+@@ -1,6 +1,7 @@
+ """Map existing backend camelCase DTOs into the locked shared contracts."""
+ from app.shared.tracing import traced, event
+ from datetime import datetime
++from decimal import Decimal, InvalidOperation
+ from pydantic import ValidationError
+ from fastapi import HTTPException
+ 
+@@ -43,6 +44,25 @@ class NoOwnedOrders(Exception):
+     """The owned order list was returned successfully and is empty (not an error or 404)."""
+ 
+ 
++# Same sentence as the existing empty-cart branch in OllamaResponseGenerationService.generate.
++EMPTY_CART_MESSAGE = 'Giỏ hàng của bạn hiện đang trống.'
++
++
++class VerifiedEmptyCart(Exception):
++    """GET /api/cart returned 200 for a customer who never created a cart (cartId=null, no items)."""
++
++
++def never_created_cart(row: dict) -> bool:
++    # CartServiceImpl.get never creates a cart; it serializes cartId=null, items=[], subtotal=0.
++    # Anything else without a cart identity stays malformed (502).
++    if 'cartId' not in row or row['cartId'] is not None or row.get('items') != []:
++        return False
++    try:
++        return Decimal(str(row.get('subtotal'))) == 0
++    except (InvalidOperation, ValueError):
++        return False
++
++
+ class CustomerContextService:
+     def __init__(self, backend_client: BackendClient | None = None):
+         self.backend_client = backend_client
+@@ -55,6 +75,9 @@ class CustomerContextService:
+         try:
+             if intent == 'CART_STATUS':
+                 row = await self.backend_client.get_cart(cookies)
++                if isinstance(row, dict) and never_created_cart(row):
++                    event('customer.cart_state', {'state': 'never_created', 'items': 0})
++                    raise VerifiedEmptyCart()
+                 if row:
+                     context.cart = CartContext(cart_id=row['cartId'], warehouse_id=row.get('warehouseId'),
+                         warehouse_name=row.get('warehouseName'), subtotal=row['subtotal'],

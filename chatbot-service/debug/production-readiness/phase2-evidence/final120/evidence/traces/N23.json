@@ -1,0 +1,203 @@
+{
+  "trace_id": "7d8575dd-4f9b-47c8-a160-899c85c5687a",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "b4632bae-b482-4124-8844-0724bd45d217",
+      "parent_id": "96487721-ace9-46ec-b1dd-9c6b526490ad",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 26.56,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 3,
+        "context_messages": 2,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "7b7270ff-9e77-4ca4-8349-eb5e49889592",
+      "parent_id": "96487721-ace9-46ec-b1dd-9c6b526490ad",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 26.82,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "46a40ea5-3664-4a91-8c6b-42141c5d3e7b",
+      "parent_id": "a115c75f-13e2-4e44-a372-8aa78d0129a5",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2533.7,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại Xiaomi",
+          "top_k": 3
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "74e6a503-1c4e-4be1-87da-c9a2eda48d5e",
+      "parent_id": "96487721-ace9-46ec-b1dd-9c6b526490ad",
+      "name": "conversation.reference_resolution",
+      "status": "ok",
+      "offset_ms": 2575.38,
+      "duration_ms": null,
+      "output": {
+        "kind": "LAST",
+        "status": "AMBIGUOUS",
+        "case": null
+      }
+    },
+    {
+      "id": "6af73259-4e82-4c77-8a25-a7231edadee7",
+      "parent_id": "96487721-ace9-46ec-b1dd-9c6b526490ad",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2575.44,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Có nhiều sản phẩm vừa được gợi ý. Bạn muốn hỏi máy nào? Hãy nêu tên hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "654809d1-e76d-4cb2-97c2-78a50756c052",
+      "parent_id": "96487721-ace9-46ec-b1dd-9c6b526490ad",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2575.55,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "0f3e0b47-770a-4cf5-86f0-e404dd512840",
+      "parent_id": "611ef801-1c5c-48df-b0cf-565cd64b0261",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2575.87,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 5.35,
+      "duration_ms": 2582.87,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 26.94,
+      "duration_ms": 2533.23,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 28.64,
+      "duration_ms": 2505.0,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 29.07,
+      "duration_ms": 2504.52,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 29.46,
+      "duration_ms": 2504.08,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2533.86,
+      "duration_ms": 9.56,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2543.46,
+      "duration_ms": 6.18,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2549.67,
+      "duration_ms": 10.08,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2575.51,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2575.75,
+      "duration_ms": 0.15,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

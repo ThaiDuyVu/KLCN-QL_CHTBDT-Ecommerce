@@ -1,0 +1,161 @@
+{
+  "trace_id": "ac59bc8b-2b99-4c98-abf9-aa24a71fcbdc",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "7bfbe1da-a2b2-4fee-a6a4-2b11f2d9e6c4",
+      "parent_id": "49ef9b0e-2e6e-4e4a-8196-ddbaf97a903a",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 29.19,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "e776f0a7-4f49-409f-840d-05b742df55c5",
+      "parent_id": "49ef9b0e-2e6e-4e4a-8196-ddbaf97a903a",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 29.39,
+      "duration_ms": null,
+      "output": {
+        "actions": [
+          {
+            "kind": "payment",
+            "scope": "information"
+          }
+        ]
+      }
+    },
+    {
+      "id": "2fa86f4e-e15b-411a-8dac-3867bc43d0fb",
+      "parent_id": "49ef9b0e-2e6e-4e4a-8196-ddbaf97a903a",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 29.48,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_selection": "latest"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "92eb5678-991b-4c0d-8f4a-a6a6a1968404",
+      "parent_id": "49ef9b0e-2e6e-4e4a-8196-ddbaf97a903a",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 34.66,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_selection": "latest"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "5d967edd-ce06-40c7-ba0a-48ba1f736316",
+      "parent_id": "9722d4f9-9b90-4c06-bd9c-67f4c7de2249",
+      "name": "customer.order_selection",
+      "status": "ok",
+      "offset_ms": 76.77,
+      "duration_ms": null,
+      "output": {
+        "selection": "latest",
+        "matched": 1,
+        "order_ids": [
+          "9c0b6e4f-7937-4369-8df9-e8fa357770db"
+        ]
+      }
+    },
+    {
+      "id": "e2956dd3-cca7-4eb9-9796-35367a08cdab",
+      "parent_id": "49ef9b0e-2e6e-4e4a-8196-ddbaf97a903a",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 76.87,
+      "duration_ms": null,
+      "output": {
+        "intent": "PAYMENT_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "8b600c60-082c-40fd-905d-b678a0ef3f3b",
+      "parent_id": "eea1a967-4088-4d5e-91cf-df5075496bb3",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 77.17,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_customer_evidence",
+        "reason": "owned_order_payment"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 6.85,
+      "duration_ms": 82.52,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 34.72,
+      "duration_ms": 42.15,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 34.75,
+      "duration_ms": 10.83,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 45.61,
+      "duration_ms": 31.15,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 77.04,
+      "duration_ms": 0.17,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/orders/mine"
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders/mine/synthetic-order-15f1d5cd39c2"
+    }
+  ]
+}
