@@ -35,6 +35,7 @@ import PromotionsPage from './features/promotions/pages/PromotionsPage';
 import PromotionDetailPage from './features/promotions/pages/PromotionDetailPage';
 import PromotionFormPage from './features/promotions/pages/PromotionFormPage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import AccountPage from './pages/AccountPage';
 import ForbiddenPage from './pages/ForbiddenPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -50,6 +51,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="login" element={<LoginPage />} />
+      <Route path="register" element={<RegisterPage />} />
       {chatbotLabEnabled && <Route element={<RequireAuth />}>
         <Route path="chatbot-lab" element={<Suspense fallback={<p role="status">Đang tải phòng thử chatbot…</p>}><ChatbotLabPage /></Suspense>} />
       </Route>}
