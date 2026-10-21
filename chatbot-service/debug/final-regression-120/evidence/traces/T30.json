@@ -1,0 +1,200 @@
+{
+  "trace_id": "53ef2cc3-54c8-4b7c-9741-502e2e2a1fce",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "3cf422c3-02a6-48ca-8a11-b76be42a20bb",
+      "parent_id": "b75c43a3-e82c-447b-9c02-a81d25193999",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 43.91,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "79e18ceb-21ba-458d-a2ea-4af7bf516e43",
+      "parent_id": "b75c43a3-e82c-447b-9c02-a81d25193999",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 44.04,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "284ce117-ffed-4ba2-ba96-eb736f05beb9",
+      "parent_id": "85a8e7bc-00b6-4958-91d5-954837de3eaf",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 996.5,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop lập trình",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "10362cc4-5a1a-4107-ab12-89975e45cafa",
+      "parent_id": "b75c43a3-e82c-447b-9c02-a81d25193999",
+      "name": "conversation.reference_resolution",
+      "status": "ok",
+      "offset_ms": 1038.26,
+      "duration_ms": null,
+      "output": {
+        "kind": "CHEAPER",
+        "status": "NO_REFERENCE"
+      }
+    },
+    {
+      "id": "883af7d5-3453-4dc0-ac3f-294f80ca14fc",
+      "parent_id": "b75c43a3-e82c-447b-9c02-a81d25193999",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1038.34,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "005947d8-071b-4f5d-9b9b-a28093f28733",
+      "parent_id": "b75c43a3-e82c-447b-9c02-a81d25193999",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1038.48,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "a47880da-489e-4bb0-82de-6436bc14bc2e",
+      "parent_id": "410256d5-c5ce-4a77-b894-9fe93bd5ae61",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1038.74,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 11.03,
+      "duration_ms": 1041.6,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 44.18,
+      "duration_ms": 979.17,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 45.47,
+      "duration_ms": 950.99,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 45.88,
+      "duration_ms": 950.55,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 46.26,
+      "duration_ms": 950.13,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 996.62,
+      "duration_ms": 8.08,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1004.75,
+      "duration_ms": 6.24,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1011.03,
+      "duration_ms": 11.87,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1038.42,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1038.65,
+      "duration_ms": 0.13,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

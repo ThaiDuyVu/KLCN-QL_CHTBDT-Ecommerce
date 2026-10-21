@@ -1,0 +1,17 @@
+ Fontend/src/features/chatbot/ChatbotLab.test.jsx   |  81 ++++++++++++-
+ Fontend/src/features/chatbot/ChatbotLabPage.jsx    | 130 ++++++++++++++------
+ .../backend/order/service/OrderServiceImpl.java    |   2 +-
+ .../integration/OrderCheckoutIntegrationTest.java  |  27 +++++
+ .../integration/OrderReadIntegrationTest.java      | 133 +++++++++++++++++++++
+ chatbot-service/app/features/chat/actions.py       |  85 +++++++++++++
+ chatbot-service/app/features/chat/policy.py        |  34 +++---
+ chatbot-service/app/features/chat/service.py       |  44 +++----
+ .../app/features/conversation/async_lease.py       |  45 +++++++
+ .../app/features/conversation/context.py           |  17 +++
+ .../features/conversation/postgres_repository.py   |  12 ++
+ .../app/features/conversation/repository.py        |   6 +
+ .../app/features/conversation/service.py           |   4 +
+ .../app/features/product_advisor/real_service.py   |   2 +
+ chatbot-service/app/shared/backend/client.py       |  20 ++++
+ chatbot-service/app/shared/backend/errors.py       |  13 ++
+ 16 files changed, 580 insertions(+), 75 deletions(-)

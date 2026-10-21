@@ -1,0 +1,171 @@
+{
+  "trace_id": "09ca12e3-d0b8-4276-a123-4b4668262aa0",
+  "status": "warning",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "c3b18fb8-2e5d-40c9-b8b5-377e419d1c6d",
+      "parent_id": "8e6b4388-7643-4be4-b024-5da9782b7105",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 30.25,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "b6d52e3e-56f1-4312-9a96-312a8e5640ea",
+      "parent_id": "8e6b4388-7643-4be4-b024-5da9782b7105",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 30.38,
+      "duration_ms": null,
+      "output": {
+        "actions": [
+          {
+            "kind": "payment",
+            "scope": "information"
+          }
+        ]
+      }
+    },
+    {
+      "id": "eac867fa-59e2-484a-acd1-1388e60ab0dc",
+      "parent_id": "8e6b4388-7643-4be4-b024-5da9782b7105",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 30.47,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-NOPAY"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "7a6bd69c-2252-4033-b665-66872b1a2e3a",
+      "parent_id": "8e6b4388-7643-4be4-b024-5da9782b7105",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 37.36,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-NOPAY"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "316e59aa-0109-4fe8-86ce-be7440891148",
+      "parent_id": "bf1084bd-c329-4ac0-8540-51b99e6a1473",
+      "name": "backend.owned_payment_integrity",
+      "status": "warning",
+      "offset_ms": 56.86,
+      "duration_ms": null,
+      "output": {
+        "status_code": 409,
+        "operation": "owned_order_detail"
+      }
+    },
+    {
+      "id": "e33836f2-aec8-43ac-bedf-eb08f666b680",
+      "parent_id": "8e6b4388-7643-4be4-b024-5da9782b7105",
+      "name": "customer.payment_unavailable",
+      "status": "warning",
+      "offset_ms": 58.22,
+      "duration_ms": null,
+      "output": {
+        "intent": "PAYMENT_STATUS",
+        "reason": "owned_payment_integrity",
+        "payment_evidence_loaded": false
+      }
+    },
+    {
+      "id": "dbf6997a-d87e-48ec-a789-375ba04b514c",
+      "parent_id": "8e6b4388-7643-4be4-b024-5da9782b7105",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 58.25,
+      "duration_ms": null,
+      "output": {
+        "intent": "PAYMENT_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "4b99a600-975e-44cb-bca4-2a350dd8ff7d",
+      "parent_id": "1f531ca5-d732-462d-a0e5-b1aa9c66dfad",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 58.48,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 5.02,
+      "duration_ms": 59.32,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 37.45,
+      "duration_ms": 20.76,
+      "status": "error"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 37.48,
+      "duration_ms": 9.34,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 46.83,
+      "duration_ms": 11.1,
+      "status": "error"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 58.39,
+      "duration_ms": 0.12,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/orders/mine"
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders/mine/synthetic-order-e95d5a1843c7"
+    }
+  ]
+}

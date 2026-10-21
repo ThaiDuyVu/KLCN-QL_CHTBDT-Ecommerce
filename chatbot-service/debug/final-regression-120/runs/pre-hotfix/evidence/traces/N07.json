@@ -1,0 +1,529 @@
+{
+  "trace_id": "23dafa9e-efe4-4d33-a4c6-ec4ec8b73718",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "a7225fbe-f6ef-4155-b4ee-08f5b2415982",
+      "parent_id": "b3b73de0-a16f-4f84-b823-140e18b60bea",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 51.14,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "cb17d3c2-28e0-4d61-883c-11d0914a33c0",
+      "parent_id": "b3b73de0-a16f-4f84-b823-140e18b60bea",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 51.29,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "e44c2694-861a-4c46-8367-6e1404bdcf1c",
+      "parent_id": "d4870c1c-7954-4200-9d96-210e303f647c",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1745.7,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "DEV-X15-WHT-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU DEV-X15-WHT-512",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "fc56982d-444b-498b-8d17-f5eb1641e7f5",
+      "parent_id": "d4870c1c-7954-4200-9d96-210e303f647c",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1824.54,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "DEV-X15-WHT-512",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "SKU DEV-X15-WHT-512",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [
+            "PRICE"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "DEV-X15-WHT-512",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "SKU DEV-X15-WHT-512 giá bao nhiêu?",
+            "top_k": 1
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "24c63343-155d-4263-9a52-8045900c5ab8",
+      "parent_id": "b3b73de0-a16f-4f84-b823-140e18b60bea",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1859.2,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "DEV-X15-WHT-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU DEV-X15-WHT-512 giá bao nhiêu?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "6a4d0cd9-fb4d-4543-92e2-2aeb0bb1d584",
+      "parent_id": "b3b73de0-a16f-4f84-b823-140e18b60bea",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1859.35,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "DEV-X15-WHT-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU DEV-X15-WHT-512 giá bao nhiêu?",
+          "top_k": 1
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "eaee21e5-3695-4a7d-bf11-0662cd62ae22",
+      "parent_id": "b3b73de0-a16f-4f84-b823-140e18b60bea",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 1859.51,
+      "duration_ms": 23.24,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "c9a60589-ec14-49c5-884e-8a2239b8bf7e",
+      "parent_id": "eaee21e5-3695-4a7d-bf11-0662cd62ae22",
+      "name": "product.identity_resolution",
+      "status": "ok",
+      "offset_ms": 1859.62,
+      "duration_ms": 23.07,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "8254d731-ac08-499d-8d87-b122172fb8dc",
+      "parent_id": "c9a60589-ec14-49c5-884e-8a2239b8bf7e",
+      "name": "product.stock_evidence",
+      "status": "ok",
+      "offset_ms": 1882.57,
+      "duration_ms": null,
+      "output": {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "warehouse_id": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "variants": [
+          {
+            "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+            "available_quantity": 2
+          }
+        ],
+        "status": "KNOWN_AVAILABLE"
+      }
+    },
+    {
+      "id": "d456625f-d4d0-41e9-aa2e-5a01343989fe",
+      "parent_id": "b3b73de0-a16f-4f84-b823-140e18b60bea",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 1882.76,
+      "duration_ms": 7.69,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+          "sku": "DEV-X15-WHT-512",
+          "original_price": "20990000.0",
+          "effective_price": "20990000.0",
+          "ram": "12GB",
+          "storage": "512GB",
+          "color": "Trắng",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "4de2e0f3-9c92-4446-bfaf-9fa2b3732f29",
+      "parent_id": "d456625f-d4d0-41e9-aa2e-5a01343989fe",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 1890.37,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "169710dd-d072-4e83-9fd0-e618d706ee26"
+        ],
+        "variants": 1,
+        "cards": 1
+      }
+    },
+    {
+      "id": "a3ca3f47-fa38-4db6-aac1-1bf86470c1de",
+      "parent_id": "b3b73de0-a16f-4f84-b823-140e18b60bea",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1890.68,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DETAIL",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "841cff78-1ad2-4f3e-8d99-2ce3e5a0f61e",
+      "parent_id": "e180b5c9-36a2-4352-9433-4d3218e8f374",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1891.11,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 11.03,
+      "duration_ms": 1891.69,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 51.47,
+      "duration_ms": 1773.28,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 53.88,
+      "duration_ms": 1691.27,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 54.39,
+      "duration_ms": 1690.67,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 54.83,
+      "duration_ms": 1690.11,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1746.27,
+      "duration_ms": 46.79,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1793.1,
+      "duration_ms": 13.05,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1806.18,
+      "duration_ms": 17.75,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1859.51,
+      "duration_ms": 23.24,
+      "status": "ok"
+    },
+    {
+      "name": "product.identity_resolution",
+      "offset_ms": 1859.62,
+      "duration_ms": 23.07,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1859.69,
+      "duration_ms": 13.51,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1873.3,
+      "duration_ms": 9.15,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 1882.76,
+      "duration_ms": 7.69,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1882.83,
+      "duration_ms": 7.43,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1890.6,
+      "duration_ms": 0.08,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1890.94,
+      "duration_ms": 0.23,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/product-variants",
+      "kwargs": {
+        "params": {
+          "keyword": "DEV-X15-WHT-512",
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "trace_id": "5ee888e5-e48d-4860-a63b-bb0c3c0a9e7d",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "f6e5ac0c-11c1-4ee2-af6f-9b295c1b23e5",
+      "parent_id": "348ef55a-9530-4b2a-8f5e-af37feb4fb56",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 31.93,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "f6e5ac0c-11c1-4ee2-af6f-9b295c1b23e5",
+      "parent_id": "348ef55a-9530-4b2a-8f5e-af37feb4fb56",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 31.93,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "78cea6eb-71bd-42e9-8734-352857fa60e8",
+      "parent_id": "348ef55a-9530-4b2a-8f5e-af37feb4fb56",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 32.13,
+      "duration_ms": null,
+      "output": {
+        "actions": [
+          {
+            "kind": "payment",
+            "scope": "information"
+          }
+        ]
+      }
+    },
+    {
+      "id": "78cea6eb-71bd-42e9-8734-352857fa60e8",
+      "parent_id": "348ef55a-9530-4b2a-8f5e-af37feb4fb56",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 32.13,
+      "duration_ms": null,
+      "output": {
+        "actions": [
+          {
+            "kind": "payment",
+            "scope": "information"
+          }
+        ]
+      }
+    },
+    {
+      "id": "4dad290d-5e9a-44e1-8627-db3cbe85e9df",
+      "parent_id": "348ef55a-9530-4b2a-8f5e-af37feb4fb56",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 32.27,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_selection": "latest"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "a2f42cac-e3e3-449d-9523-8256abfa42b1",
+      "parent_id": "348ef55a-9530-4b2a-8f5e-af37feb4fb56",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 37.86,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_selection": "latest"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "e5c3146c-b5d4-4ff1-9498-0ea1bb22de22",
+      "parent_id": "0430b827-fb97-4c5d-867e-521051e2ecb5",
+      "name": "customer.order_selection",
+      "status": "ok",
+      "offset_ms": 92.16,
+      "duration_ms": null,
+      "output": {
+        "selection": "latest",
+        "matched": 1,
+        "order_ids": [
+          "26c8e4d3-ba7d-41db-96fc-56bbcd769437"
+        ]
+      }
+    },
+    {
+      "id": "30fc7ca1-237f-480e-a718-dcd33b27ca4d",
+      "parent_id": "348ef55a-9530-4b2a-8f5e-af37feb4fb56",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 92.26,
+      "duration_ms": null,
+      "output": {
+        "intent": "PAYMENT_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "51d0b8f1-ff6a-4acb-a6c5-d869df177895",
+      "parent_id": "dfbb8129-88bd-4b68-98d6-5af47ec2a7ae",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 92.62,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_customer_evidence",
+        "reason": "owned_order_payment"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 4.82,
+      "duration_ms": 95.2,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 37.93,
+      "duration_ms": 54.33,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 37.97,
+      "duration_ms": 12.76,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 50.76,
+      "duration_ms": 41.4,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 92.48,
+      "duration_ms": 0.18,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/orders/mine"
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders/mine/synthetic-order-8dbf2bbd629d"
+    }
+  ]
+}

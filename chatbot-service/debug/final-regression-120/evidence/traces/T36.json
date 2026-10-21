@@ -1,0 +1,210 @@
+{
+  "trace_id": "74933827-f933-4892-b727-adb2f229eaa4",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "cb844f1c-18e7-4499-b0e0-af1b6ee2312c",
+      "parent_id": "582d684a-0eb5-4234-9f17-d788767328bb",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 29.43,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "efa31465-8d06-4f4e-93cc-704067dea018",
+      "parent_id": "582d684a-0eb5-4234-9f17-d788767328bb",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 29.57,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "e4be5f22-7251-4ca7-9397-1186fdcf1e83",
+      "parent_id": "582d684a-0eb5-4234-9f17-d788767328bb",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 29.65,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "Cửa hàng có chính sách bảo hành trọn đời cho mọi sản phẩm không?"
+      }
+    },
+    {
+      "id": "d1fcba61-504f-446c-8878-f407b6d40ce2",
+      "parent_id": "582d684a-0eb5-4234-9f17-d788767328bb",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 34.58,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "Cửa hàng có chính sách bảo hành trọn đời cho mọi sản phẩm không?"
+      }
+    },
+    {
+      "id": "3c0e9b61-c3c1-4293-b667-30bc372b8c98",
+      "parent_id": "582d684a-0eb5-4234-9f17-d788767328bb",
+      "name": "knowledge.retrieve",
+      "status": "ok",
+      "offset_ms": 34.73,
+      "duration_ms": 38.89,
+      "output": []
+    },
+    {
+      "id": "91120db7-e67d-4d0b-acaa-841e8b1f512f",
+      "parent_id": "3c0e9b61-c3c1-4293-b667-30bc372b8c98",
+      "name": "knowledge.vector_search",
+      "status": "ok",
+      "offset_ms": 63.72,
+      "duration_ms": 9.79,
+      "output": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.34758171693956785,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        },
+        {
+          "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+          "chunk_index": 0,
+          "content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+          "similarity_score": 0.20182701712622164,
+          "source": {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment",
+            "document_type": "DEMO"
+          }
+        }
+      ]
+    },
+    {
+      "id": "c02b301d-245c-49ea-b8a6-174ff6c327ae",
+      "parent_id": "3c0e9b61-c3c1-4293-b667-30bc372b8c98",
+      "name": "knowledge.relevance",
+      "status": "ok",
+      "offset_ms": 73.58,
+      "duration_ms": null,
+      "output": {
+        "candidate_count": 2,
+        "selected_chunk_ids": [],
+        "rejected_chunk_ids": [
+          "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "74bcff7a-616d-4e34-bf35-e72eade1408c"
+        ],
+        "topics": [
+          "warranty"
+        ],
+        "policy": "positive_cosine_and_explicit_topic"
+      }
+    },
+    {
+      "id": "8f35cbe5-cb6f-4eaa-936e-7d39a8756d92",
+      "parent_id": "582d684a-0eb5-4234-9f17-d788767328bb",
+      "name": "knowledge.relevance",
+      "status": "ok",
+      "offset_ms": 73.71,
+      "duration_ms": null,
+      "output": {
+        "candidate_count": 0,
+        "selected_chunk_ids": [],
+        "rejected_chunk_ids": [],
+        "topics": [
+          "warranty"
+        ],
+        "policy": "positive_cosine_and_explicit_topic"
+      }
+    },
+    {
+      "id": "0f39633e-1249-4250-8856-f71f30cb4a7a",
+      "parent_id": "582d684a-0eb5-4234-9f17-d788767328bb",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 73.74,
+      "duration_ms": null,
+      "output": {
+        "intent": "KNOWLEDGE_QA",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "47193270-04a9-4a35-b6a6-a9e9a885fba6",
+      "parent_id": "c5a98dcd-5ca6-45a1-a548-52175d07d19b",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 73.94,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "insufficient_evidence"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 4.82,
+      "duration_ms": 74.95,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 34.64,
+      "duration_ms": 0.03,
+      "status": "ok"
+    },
+    {
+      "name": "knowledge.retrieve",
+      "offset_ms": 34.73,
+      "duration_ms": 38.89,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 34.75,
+      "duration_ms": 28.81,
+      "status": "ok"
+    },
+    {
+      "name": "knowledge.vector_search",
+      "offset_ms": 63.72,
+      "duration_ms": 9.79,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 73.87,
+      "duration_ms": 0.1,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": []
+}

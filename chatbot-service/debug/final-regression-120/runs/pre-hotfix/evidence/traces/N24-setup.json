@@ -1,0 +1,111 @@
+{
+  "trace_id": "fec51bbe-566c-4108-9615-aadd2e2bc660",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "ca743d1d-8f36-49a1-83dd-2c115339cf15",
+      "parent_id": "04045357-d175-4acc-aee3-be4139c1f4a4",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 429.4,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "GREETING",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "4d601d63-74d8-433f-a1b8-0f7a0e34a2b5",
+      "parent_id": "d04d544a-5792-46e0-85b6-a23ec783debd",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 448.29,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "GREETING",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "8fb3621d-79ef-4b75-bfca-77b3c66b9219",
+      "parent_id": "d04d544a-5792-46e0-85b6-a23ec783debd",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 448.55,
+      "duration_ms": null,
+      "output": {
+        "intent": "GREETING",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "281d2f8c-4963-4789-8083-b19f47bfa5bb",
+      "parent_id": "d9d3045b-2484-47b1-ac8d-d4c4aeb57337",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 448.94,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "greeting"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 10.13,
+      "duration_ms": 454.9,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 47.37,
+      "duration_ms": 382.16,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 49.53,
+      "duration_ms": 379.84,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 50.04,
+      "duration_ms": 379.31,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 50.51,
+      "duration_ms": 378.82,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 448.44,
+      "duration_ms": 0.1,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 448.81,
+      "duration_ms": 0.23,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": []
+}

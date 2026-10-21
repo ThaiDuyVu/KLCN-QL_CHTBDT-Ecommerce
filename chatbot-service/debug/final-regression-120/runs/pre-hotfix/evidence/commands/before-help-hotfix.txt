@@ -1,0 +1,13 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_capability_question_is_help_before_model_classification _________
+
+    def test_capability_question_is_help_before_model_classification():
+        plan=read_only_plan('Bạn có thể giúp tôi những gì?')
+>       assert plan is not None and plan.intent==Intent.HELP
+E       assert (None is not None)
+
+tests/test_final_release_regressions.py:8: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_final_release_regressions.py::test_capability_question_is_help_before_model_classification
+1 failed, 1 passed in 0.12s

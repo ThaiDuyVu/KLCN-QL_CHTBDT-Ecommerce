@@ -173,3 +173,15 @@ it('deduplicates cursor history without creating historical cards or sources', a
   expect(within(screen.getByRole('log')).getAllByText('Lịch sử 0')).toHaveLength(1);
   expect(document.querySelectorAll('.lab-product, .lab-sources')).toHaveLength(0);
 });
+
+it('allows safe retry when failed first POST is followed by nonexistent history', async () => {
+  const user = userEvent.setup(); show(); await screen.findByText('AI thật');
+  await user.type(screen.getByLabelText('Câu hỏi của bạn'), 'Xin chào');
+  chatbotApi.send.mockRejectedValueOnce({ status: 503, data: { detail: 'Controlled UAT send unavailable' } });
+  chatbotApi.history.mockRejectedValueOnce({ status: 404 });
+  await user.click(screen.getByRole('button', { name: 'Gửi câu hỏi' }));
+  await screen.findByRole('alert');
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Gửi câu hỏi' })).not.toBeDisabled());
+  expect(within(screen.getByRole('log')).queryAllByText('Xin chào')).toHaveLength(0);
+  expect(chatbotApi.send).toHaveBeenCalledTimes(1);
+});

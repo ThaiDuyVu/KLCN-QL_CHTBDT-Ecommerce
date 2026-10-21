@@ -1,0 +1,285 @@
+[
+  {
+    "id": "RAG01",
+    "cases": [
+      "N33",
+      "N34"
+    ],
+    "stage": "KNOWLEDGE_RETRIEVAL",
+    "status": "VERIFIED",
+    "severity": "MEDIUM",
+    "priority": "P1_AFTER_RAG_APPROVAL",
+    "disposition": "OPEN_DEFERRED_RAG",
+    "owner": "PERSON_3 / Knowledge",
+    "symptom": "N33 cites unrelated payment chunk; N34 returns return-policy chunk for promotion question.",
+    "cause": "relevant_chunks aliases omit doi hang / giam gia; with no matched topic, shared lexical tokens from DEMO boilerplate satisfy fallback overlap. Positive cosine alone does not establish support.",
+    "files": [
+      "chatbot-service/app/features/knowledge/service.py:relevant_chunks",
+      "chatbot-service/app/features/response_generation/ollama_service.py:generate"
+    ],
+    "fix": "After separate RAG approval, add evidence-based topic/relevance tests and require source support; do not fabricate official corpus or change algorithms in this checkpoint.",
+    "regression": "N33/N34 must retain FAIL until unrelated chunks are excluded and grounded abstention is verified. Test boilerplate-only overlap, zero relevant evidence and DEMO/official separation.",
+    "risk": "RAG quality design and official corpus/workflow require separate approval; no schema change proposed.",
+    "evidence": [
+      {
+        "case_id": "N33",
+        "trace_id": "9b05142c-af65-43b5-a507-fddcdb80a289",
+        "observed_verdict": "FAIL",
+        "path": "evidence/traces/N33.json",
+        "actual": {
+          "session_id": "synthetic-session_id-0855970cc3c0",
+          "message": "Dưới đây là trích đoạn tài liệu liên quan; mình không xác nhận đây là chính sách chính thức của cửa hàng.\n\n[DEMO — chỉ dùng kiểm thử, không phải chính sách chính thức] DEMO — Chính sách đổi trả kiểm thử:\nĐây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.\n\n[DEMO — chỉ dùng kiểm thử, không phải chính sách chính thức] DEMO — Hướng dẫn kiểm tra thanh toán:\nĐây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+          "products": [],
+          "sources": [
+            {
+              "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+              "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+              "title": "DEMO — Chính sách đổi trả kiểm thử",
+              "source": "demo://chatbot-lab/return"
+            },
+            {
+              "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+              "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+              "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+              "source": "demo://chatbot-lab/payment"
+            }
+          ],
+          "suggested_questions": []
+        }
+      },
+      {
+        "case_id": "N34",
+        "trace_id": "06f6e452-958c-4a37-bc18-5eb3143be605",
+        "observed_verdict": "FAIL",
+        "path": "evidence/traces/N34.json",
+        "actual": {
+          "session_id": "synthetic-session_id-3a5d90920ed1",
+          "message": "Dưới đây là trích đoạn tài liệu liên quan; mình không xác nhận đây là chính sách chính thức của cửa hàng.\n\n[DEMO — chỉ dùng kiểm thử, không phải chính sách chính thức] DEMO — Chính sách đổi trả kiểm thử:\nĐây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "products": [],
+          "sources": [
+            {
+              "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+              "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+              "title": "DEMO — Chính sách đổi trả kiểm thử",
+              "source": "demo://chatbot-lab/return"
+            }
+          ],
+          "suggested_questions": []
+        }
+      }
+    ],
+    "dependencies": "Independent reviewer approval of changes outside this checkpoint."
+  },
+  {
+    "id": "L01",
+    "cases": [
+      "T51"
+    ],
+    "stage": "UNSUPPORTED_CAPABILITY",
+    "status": "VERIFIED_LIMITATION",
+    "severity": "LOW",
+    "priority": "P2",
+    "disposition": "KNOWN_LIMITATION",
+    "owner": "PERSON_3 / Identity",
+    "symptom": "Typo Xiaomii15 is clarified rather than silently corrected.",
+    "cause": "Exact identity validation deliberately rejects uncertain model identity.",
+    "files": [
+      "chatbot-service/app/features/query_understanding/normalization.py"
+    ],
+    "fix": "Keep safe clarification; fuzzy suggestions require approved identity confidence policy.",
+    "regression": "Typo must never bind unrelated product or invent stock.",
+    "risk": "Broader fuzzy matching can weaken exact identity; not authorized here.",
+    "evidence": [
+      {
+        "case_id": "T51",
+        "trace_id": "6a9f5e3a-93a7-48cf-b77c-1bf02c2513d7",
+        "observed_verdict": "PASS_WITH_WARNINGS",
+        "path": "evidence/traces/T51.json",
+        "actual": {
+          "session_id": "synthetic-session_id-1c23c0528f1f",
+          "message": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+          "products": [],
+          "sources": [],
+          "suggested_questions": []
+        }
+      }
+    ],
+    "dependencies": "Independent reviewer approval of changes outside this checkpoint."
+  },
+  {
+    "id": "L02",
+    "cases": [
+      "T59"
+    ],
+    "stage": "CONVERSATION",
+    "status": "VERIFIED_CONTRACT_LIMITATION",
+    "severity": "LOW",
+    "priority": "P2",
+    "disposition": "KNOWN_LIMITATION",
+    "owner": "PERSON_1 / Conversation + frontend",
+    "symptom": "Text/IDs survive process restart; historical cards absent, feedback1→0 and trace200→404.",
+    "cause": "History API exposes text rows; feedback and dev trace index remain RAM-backed.",
+    "files": [
+      "chatbot-service/app/features/conversation/postgres_repository.py",
+      "chatbot-service/app/shared/tracing/__init__.py",
+      "Fontend/src/features/chatbot/ChatbotLabPage.jsx"
+    ],
+    "fix": "Do not promise durable metadata. Obtain approval for feedback1–5 vs API-1/0/1 mapping, trace retention and rich-history DTO if needed.",
+    "regression": "Current T59 guarantees text/IDs; future approved richer contract must restore real evidence, not derive it from text.",
+    "risk": "Requires explicit contracts/schema decisions, not an arbitrary mapping.",
+    "evidence": [
+      {
+        "case_id": "T59",
+        "trace_id": null,
+        "observed_verdict": "PASS_WITH_WARNINGS",
+        "path": "evidence/browser.json",
+        "actual": {
+          "browser_reload_text_equal": true,
+          "real_fastapi_restart_text_equal": true,
+          "same_owned_session": true,
+          "persisted_message_count": 10,
+          "history_ids_equal": true,
+          "feedback_rating_before": 1,
+          "feedback_rating_after": 0,
+          "trace_status_before": 200,
+          "trace_status_after_restart": 404,
+          "restored_product_cards": 0,
+          "expected_text_only_restore": true
+        }
+      }
+    ],
+    "dependencies": "Independent reviewer approval of changes outside this checkpoint."
+  },
+  {
+    "id": "L03",
+    "cases": [
+      "N18"
+    ],
+    "stage": "UNSUPPORTED_CAPABILITY",
+    "status": "VERIFIED_LIMITATION",
+    "severity": "LOW",
+    "priority": "P2",
+    "disposition": "KNOWN_LIMITATION",
+    "owner": "SHARED / Warehouse contract",
+    "symptom": "Only configured warehouse stock is returned; no all-warehouse aggregation.",
+    "cause": "Current chatbot warehouse is server-configured; response names selected-warehouse scope.",
+    "files": [
+      "chatbot-service/app/features/product_advisor/real_service.py",
+      "chatbot-service/app/shared/config.py"
+    ],
+    "fix": "Keep selected-warehouse wording; warehouse switching/aggregation needs approved design.",
+    "regression": "Do not claim all warehouses sold out from one warehouse zero stock.",
+    "risk": "New selection contract not authorized.",
+    "evidence": [
+      {
+        "case_id": "N18",
+        "trace_id": "86e3b6f5-080d-441b-81f8-20b3e5e10f12",
+        "observed_verdict": "PASS_WITH_WARNINGS",
+        "path": "evidence/traces/N18.json",
+        "actual": {
+          "session_id": "synthetic-session_id-10b6f6dceb9a",
+          "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+          "products": [
+            {
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "product_name": "Xiaomi 15",
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12,
+              "image_url": "/images/products/xiaomi-15/main.jpg",
+              "reasons": []
+            }
+          ],
+          "sources": [],
+          "suggested_questions": []
+        }
+      }
+    ],
+    "dependencies": "Independent reviewer approval of changes outside this checkpoint."
+  },
+  {
+    "id": "D01",
+    "cases": [
+      "T56",
+      "N43",
+      "N44",
+      "N48"
+    ],
+    "stage": "UNSUPPORTED_CAPABILITY",
+    "status": "VERIFIED_APPROVED_DEFERRAL",
+    "severity": "MEDIUM",
+    "priority": "P2_AFTER_MULTI_INTENT_APPROVAL",
+    "disposition": "DEFERRED_MULTI_INTENT",
+    "owner": "PERSON_1 / Orchestration + SHARED contract",
+    "symptom": "No bounded independent task execution; N44 returns cart subset without explicitly acknowledging omitted comparison.",
+    "cause": "Single-plan routing selects cart/order or asks a clarifying question; multi-task contract deferred.",
+    "files": [
+      "chatbot-service/app/features/chat/policy.py",
+      "chatbot-service/app/features/chat/service.py"
+    ],
+    "fix": "Design bounded tasks and explicit partial-completion wording after separate approval; do not advertise full multi-intent support.",
+    "regression": "N44 must disclose omitted comparison before its observed FAIL can become PASS; all4 remain scope-deferred even safe clarification is observed.",
+    "risk": "Public task/evidence orchestration contract not finalized.",
+    "evidence": [
+      {
+        "case_id": "T56",
+        "trace_id": "34e36de6-d07e-4b4a-a4ad-5c4d8271a330",
+        "observed_verdict": "PASS",
+        "path": "evidence/traces/T56.json",
+        "actual": {
+          "session_id": "synthetic-session_id-be28fa97463e",
+          "message": "Mình hỗ trợ tìm từng nhóm sản phẩm. Bạn muốn tìm loại sản phẩm nào trước?",
+          "products": [],
+          "sources": [],
+          "suggested_questions": []
+        }
+      },
+      {
+        "case_id": "N43",
+        "trace_id": "81079524-b7f3-4286-af4c-358b5f2fa8dc",
+        "observed_verdict": "PASS",
+        "path": "evidence/traces/N43.json",
+        "actual": {
+          "session_id": "synthetic-session_id-9ce7f5bcd85e",
+          "message": "Mình hỗ trợ tìm từng nhóm sản phẩm. Bạn muốn tìm loại sản phẩm nào trước?",
+          "products": [],
+          "sources": [],
+          "suggested_questions": []
+        }
+      },
+      {
+        "case_id": "N44",
+        "trace_id": "d2889c91-5fda-407e-8890-60c9e90f5363",
+        "observed_verdict": "FAIL",
+        "path": "evidence/traces/N44.json",
+        "actual": {
+          "session_id": "synthetic-session_id-9b1ef646508d",
+          "message": "Xiaomi 14T Pro (DEV-X14TP-BLU-512): 1 sản phẩm; giá mỗi sản phẩm 18990000.0 VND.\nTạm tính: 18990000.0 VND.",
+          "products": [],
+          "sources": [],
+          "suggested_questions": []
+        }
+      },
+      {
+        "case_id": "N48",
+        "trace_id": "e336ddaa-a349-4b25-a3af-a75abbb1a12f",
+        "observed_verdict": "PASS",
+        "path": "evidence/traces/N48.json",
+        "actual": {
+          "session_id": "synthetic-session_id-d7f64674fdc0",
+          "message": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-FAILED: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-NOPAY: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-NULLWAREHOUSE: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-01421042-3B48-48AE-8313-E0A8A8AF2F29: trạng thái đơn hàng PENDING; tổng tiền 49990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-EXPIRED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.",
+          "products": [],
+          "sources": [],
+          "suggested_questions": []
+        }
+      }
+    ],
+    "dependencies": "Independent reviewer approval of changes outside this checkpoint."
+  }
+]

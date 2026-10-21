@@ -1,0 +1,168 @@
+{
+  "trace_id": "9ee0cd8f-775a-4caa-a89f-c9a788acb898",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "78685403-97fc-4f99-84b2-512aa252a2e4",
+      "parent_id": "9f95646e-0fba-418a-a716-443017b52676",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 32.28,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "78685403-97fc-4f99-84b2-512aa252a2e4",
+      "parent_id": "9f95646e-0fba-418a-a716-443017b52676",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 32.28,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "59e09686-f574-42d5-9b5f-84f16ba821db",
+      "parent_id": "9f95646e-0fba-418a-a716-443017b52676",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 32.54,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "59e09686-f574-42d5-9b5f-84f16ba821db",
+      "parent_id": "9f95646e-0fba-418a-a716-443017b52676",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 32.54,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "d51fc911-58ef-4009-b47f-1badf91aa266",
+      "parent_id": "9f95646e-0fba-418a-a716-443017b52676",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 32.66,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "ORDER_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "1a54ccad-e24d-4705-b801-95fa34a713ed",
+      "parent_id": "9f95646e-0fba-418a-a716-443017b52676",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 38.25,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "ORDER_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "b6a8610c-fea4-4bc1-8a2d-f77776905ac0",
+      "parent_id": "342f4687-7442-40a1-81c6-a53b5b7939d0",
+      "name": "customer.order_selection",
+      "status": "ok",
+      "offset_ms": 61.96,
+      "duration_ms": null,
+      "output": {
+        "selection": "recent",
+        "matched": 6,
+        "order_ids": [
+          "26c8e4d3-ba7d-41db-96fc-56bbcd769437",
+          "e60506f0-aef8-432f-819c-84e62e8dba10",
+          "d8c7ecc8-abf2-4144-81ae-aa59b54938b6",
+          "2c6a8916-1185-43f1-a878-1eed739eafe4",
+          "d917c500-6597-4f79-bde7-a1c5232de8e1",
+          "70513651-d03f-4707-a350-e757741d4186"
+        ]
+      }
+    },
+    {
+      "id": "befe35d3-e4aa-4158-a28c-45876a4e51ab",
+      "parent_id": "9f95646e-0fba-418a-a716-443017b52676",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 62.13,
+      "duration_ms": null,
+      "output": {
+        "intent": "ORDER_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "381b7a0e-4d72-471f-897c-6d2c2cf37596",
+      "parent_id": "e604917a-fd16-4dee-8349-87487e7dfa95",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 62.53,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_customer_evidence",
+        "reason": "owned_order_payment"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 5.48,
+      "duration_ms": 63.5,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 38.3,
+      "duration_ms": 23.83,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 38.33,
+      "duration_ms": 23.61,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 62.35,
+      "duration_ms": 0.22,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/orders/mine"
+    }
+  ]
+}
