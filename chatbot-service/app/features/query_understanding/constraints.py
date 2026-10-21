@@ -91,6 +91,182 @@ def storage_reference(text):
     return re.search(r'\bban\s+(\d+)\s*(gb|tb)\b', text)
 
 
+# Existing customer-facing text. New price/scope wording awaits DR-13b, so every
+# price or scope clarification below reuses this exact string.
+GENERAL_CLARIFICATION = 'Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?'
+NO_ANTECEDENT_CLARIFICATION = 'Bạn muốn so sánh với sản phẩm nào? Mình chưa có sản phẩm tham chiếu trong phiên này.'
+PENDING_REFERENCE_CLARIFICATION = 'Bạn vui lòng xác nhận tên hoặc SKU của sản phẩm vừa nhắc đến.'
+
+
+class PriceRelation(Enum):
+    MAXIMUM = 'maximum'
+    MINIMUM = 'minimum'
+    # Unresolved: direction or bound semantics need DR-01/DR-02 before they can filter.
+    COMPARATIVE_MAXIMUM = 'comparative_maximum'
+    APPROXIMATE = 'approximate'
+    BUDGET = 'budget'
+    UNSPECIFIED = 'unspecified'
+
+
+@dataclass(frozen=True)
+class PriceEvidence:
+    min_price: Decimal | None
+    max_price: Decimal | None
+    spans: tuple[tuple[int, int], ...] = ()
+    unresolved: tuple[tuple[PriceRelation, tuple[int, int]], ...] = ()
+
+
+MONEY_UNITS = {'trieu': 1000000, 'tr': 1000000, 'cu': 1000000, 'million': 1000000,
+               'k': 1000, 'nghin': 1000, 'ngan': 1000, 'vnd': 1, 'dong': 1, 'd': 1}
+# These also spell ordinary words or specs ("cũ", "dòng", "ngắn", "4K"): money only in a price context.
+WEAK_UNITS = frozenset(('cu', 'k', 'ngan', 'dong', 'd'))
+_UNIT = r'(?:trieu|tr|cu|million|k|nghin|ngan|vnd|dong|d)\b'
+_NUMBER = r'(?<![\w.,/-])(\d+(?:[.,]\d+)*)'
+_AMOUNT = _NUMBER + r'\s*(' + _UNIT + r')?'
+_UPPER = r'(\d+(?:[.,]\d+)*)\s*(' + _UNIT + r')?'
+_NOT_MONEY = re.compile(r'\s*(?:gb|tb|mb|kb|inch|hz|may|chiec|cai|san pham|mau|dien thoai|smartphone|phone|'
+                        r'laptop|notebook|tablet|thang|nam|ngay|gio|phut)\b')
+_RANGE_LINK = r'\s*(?:den|toi|-|–|—)\s*'
+RANGES = (
+    re.compile(r'(?<!\w)(?:gia\s*)?tu\s*' + _AMOUNT + _RANGE_LINK + _UPPER),
+    re.compile(r'(?<!\w)giua\s*' + _AMOUNT + r'\s*(?:va|-|–)\s*' + _UPPER),
+    re.compile(_AMOUNT + _RANGE_LINK + _UPPER),
+)
+# Ordered within each alternation; the tail regex anchors at the amount, so the
+# longest operator ending there wins ("re hon" over "hon", "khong qua" over "khong ...").
+PRICE_OPERATORS = (
+    (PriceRelation.MAXIMUM, r'duoi|khong vuot qua|khong vuot|khong qua|toi da|under|<='),
+    (PriceRelation.COMPARATIVE_MAXIMUM, r'(?:gia\s+)?(?:re|thap|nho|it)\s+hon|cheaper than|less than|<'),
+    (PriceRelation.MINIMUM, r'gia tu|(?:cao|dat|lon)\s+hon|tren|toi thieu|hon'),
+    (PriceRelation.APPROXIMATE, r'tam khoang|tam|khoang|co|chung|xap xi|quanh|~'),
+    # Any other negated comparison ("khong duoi") is never read as its bare operator.
+    (PriceRelation.UNSPECIFIED, r'khong(?:\s+[a-z]+){1,3}|tu|>=|>'),
+)
+_OPERATOR_TAIL = re.compile(r'(?<!\w)(?P<op>' + '|'.join(
+    '(?P<r%d>%s)' % (i, grammar) for i, (_, grammar) in enumerate(PRICE_OPERATORS))
+    + r')\s*(?:(?:la|muc|gia)\s+)*$')
+_PRICE_CONTEXT = re.compile(r'(?<!\w)(gia|ngan sach|budget|price)(?!\w)')
+
+
+def _money(number, unit):
+    if re.fullmatch(r'\d{1,3}(?:[.,]\d{3})+', number):
+        number = number.replace('.', '').replace(',', '')
+    return Decimal(number.replace(',', '.')) * MONEY_UNITS.get(unit, 1)
+
+
+def _price_context(text, start):
+    # Only the clause tail since the last number or punctuation can qualify an amount.
+    tail = re.split(r'[\d,;.?!]', text[max(0, start - 24):start])[-1]
+    found = _PRICE_CONTEXT.findall(tail)
+    return found[-1] if found else None
+
+
+def _operator(text, start):
+    m = _OPERATOR_TAIL.search(text[:start])
+    if not m:
+        return None
+    return next(relation for i, (relation, _) in enumerate(PRICE_OPERATORS) if m['r%d' % i])
+
+
+def _is_money(text, m):
+    number, unit = m[1], m[2]
+    if unit is None:
+        if _NOT_MONEY.match(text, m.end()):
+            return False
+        return _price_context(text, m.start()) is not None
+    if unit not in WEAK_UNITS:
+        return True
+    raw = _money(number, None)
+    if (unit in {'dong', 'd'} and raw >= 1000) or (unit == 'k' and raw >= 10):
+        return True
+    return _operator(text, m.start()) is not None or _price_context(text, m.start()) is not None
+
+
+def price_evidence(text: str) -> PriceEvidence:
+    """Relational reading of folded text; anything not understood is reported, never dropped."""
+    lows, highs, spans, unresolved = [], [], [], []
+    for grammar in RANGES:
+        for m in grammar.finditer(text):
+            if any(start < m.end() and m.start() < end for start, end in spans):
+                continue
+            unit_low, unit_high = m[2] or m[4], m[4] or m[2]
+            # Bare "15-20" (model numbers, specs) is not money without a unit; "tu A den B"
+            # keeps the existing price_slots rule (a unit, or "gia" next to the interval).
+            if not unit_low and not (grammar is RANGES[0] and 'gia' in text[max(0, m.start()-8):m.start()+4]):
+                continue
+            lows.append(_money(m[1], unit_low))
+            highs.append(_money(m[3], unit_high))
+            spans.append((m.start(), m.end()))
+    for m in re.finditer(_AMOUNT, text):
+        if any(start <= m.start() < end for start, end in spans) or not _is_money(text, m):
+            continue
+        value, span = _money(m[1], m[2]), (m.start(), m.end())
+        relation = _operator(text, m.start())
+        suffix = re.match(r'\s*(tro xuong|do lai|tro lai|tro len)\b', text[m.end():])
+        if suffix:
+            stated = PriceRelation.MINIMUM if suffix[1] == 'tro len' else PriceRelation.MAXIMUM
+            relation = stated if relation in {None, stated} else PriceRelation.UNSPECIFIED
+            span = (m.start(), m.end() + suffix.end())
+        if relation is None:
+            context = _price_context(text, m.start())
+            relation = PriceRelation.BUDGET if context in {'ngan sach', 'budget'} else PriceRelation.UNSPECIFIED
+        if relation == PriceRelation.MAXIMUM:
+            highs.append(value)
+            spans.append(span)
+        elif relation == PriceRelation.MINIMUM:
+            lows.append(value)
+            spans.append(span)
+        else:
+            unresolved.append((relation, span))
+    # Decimal('0') is a valid bound: emptiness, not truthiness, decides absence.
+    return PriceEvidence(max(lows) if lows else None, min(highs) if highs else None,
+                         tuple(sorted(spans)), tuple(unresolved))
+
+
+def validate_price_coverage(text, evidence=None):
+    """Mirror of capacity coverage: every monetary token must belong to a parsed bound."""
+    evidence = evidence or price_evidence(text)
+    if evidence.unresolved:
+        raise ConstraintError(GENERAL_CLARIFICATION)
+    for m in re.finditer(r'(?<![\w.,])\d+(?:[.,]\d+)*\s*(?:trieu|tr|million|nghin|vnd)\b', text):
+        if not any(start <= m.start() and m.end() <= end for start, end in evidence.spans):
+            raise ConstraintError(GENERAL_CLARIFICATION)
+
+
+class ReferenceKind(Enum):
+    ORDINAL_FIRST = 'ORDINAL_FIRST'
+    ORDINAL_SECOND = 'ORDINAL_SECOND'
+    LAST = 'LAST'
+    CHEAPER = 'CHEAPER'
+    CHEAPER_BOUNDED = 'CHEAPER_BOUNDED'
+    STORAGE = 'STORAGE'
+
+
+_REFERENT = r'(?<!\w)(?:cai|may|chiec|san pham|mau|con|ban|loai|phien ban)\s+'
+_COMPARATIVE = re.compile(r'(?<!\w)(?:(?:gia\s+)?(?:re|thap)\s+hon|cheaper)(?!\w)')
+REFERENCE_PATTERNS = (
+    (ReferenceKind.ORDINAL_SECOND, re.compile(_REFERENT + r'(?:thu\s+(?:hai|2)|so\s+2)(?!\w)')),
+    (ReferenceKind.ORDINAL_SECOND, re.compile(r'^\s*(?:cai\s+)?thu hai(?!\w)(?!\s+(?:tuan|toi|nay|sau|ngay|tien))')),
+    (ReferenceKind.ORDINAL_FIRST, re.compile(_REFERENT + r'(?:dau tien|thu\s+(?:nhat|1)|so\s+1)(?!\w)')),
+    (ReferenceKind.ORDINAL_FIRST, re.compile(r'^\s*(?:cai\s+)?dau tien(?!\w)')),
+    (ReferenceKind.LAST, re.compile(r'(?<!\w)vua goi y(?!\w)|' + _REFERENT + r'vua\s+(?:nhac|roi)(?!\w)')),
+)
+
+
+def detect_reference(text: str) -> ReferenceKind | None:
+    """Shared by the normalizer and the owned-snapshot resolver (folded text)."""
+    for comparative in _COMPARATIVE.finditer(text):
+        # "RAM thấp hơn ..." compares capacity, not price.
+        if re.search(r'(?:ram|ssd|storage|dung luong|bo nho)(?:\s+\w+){0,2}\s*$', text[:comparative.start()]):
+            continue
+        bounded = re.match(r'\s*(?:(?:gia|muc|la|than)\s+)*\d', text[comparative.end():])
+        return ReferenceKind.CHEAPER_BOUNDED if bounded else ReferenceKind.CHEAPER
+    kind = next((kind for kind, pattern in REFERENCE_PATTERNS if pattern.search(text)), None)
+    if kind is None and storage_reference(text):
+        return ReferenceKind.STORAGE
+    return kind
+
+
 def validate_capacity_coverage(text):
     constraints = [read_capacity(text, slot) for slot in LABELS]
     spans = [span for c in constraints if c for span in c.spans]

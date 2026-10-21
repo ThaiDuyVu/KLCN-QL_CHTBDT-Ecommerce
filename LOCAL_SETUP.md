@@ -46,7 +46,7 @@ Log tại `.local/logs/`. Database lưu trong volume `klcn-ecommerce_postgres_da
 
 Các file `.env` được tạo riêng ở root, backend, Fontend và chatbot-service. Mật khẩu database và JWT secret được sinh ngẫu nhiên, không nằm trong tài liệu hoặc Git. Không ghi đè `.env` khi chạy lại. VNPay vẫn tắt vì chưa có thông tin merchant.
 
-Frontend gọi `/api` qua Vite proxy tới backend, bao gồm cookie đăng nhập và CSRF. Chatbot hiện là mock theo mã nguồn; chưa tích hợp Ollama/backend thật, nên không cần tải model Ollama để chạy phiên bản hiện tại.
+Frontend gọi `/api` qua Vite proxy tới backend, bao gồm cookie đăng nhập và CSRF. Chatbot mặc định chạy cấu hình phát triển: AI tắt, Product Advisor mock, hội thoại trong RAM, nên không cần tải model Ollama để chạy. Chế độ thật (Qwen/Ollama, backend + pgvector, PostgreSQL) và kiểm tra cấu hình khi `APP_ENV` không phải dev được mô tả ở `chatbot-service/README.md` mục "Chế độ chạy".
 
 ## Dùng runtime trong Terminal và IDE
 
@@ -77,7 +77,7 @@ npm test --prefix Fontend
 
 Script test backend chỉ định Docker API 1.44 để Testcontainers 1.20.6 kết nối được Docker Engine 29; không hạ phiên bản Docker hoặc thay đổi daemon.
 
-Frontend build thành công, 42 test đạt; chatbot 58 test đạt. Toàn bộ backend đã chạy `clean test` thành công: **242 test, 0 failures, 0 errors, 0 skipped**, bao gồm integration test PostgreSQL thực qua Testcontainers. Log: `.local/logs/backend-test.log`; báo cáo chi tiết: `backend/target/surefire-reports/`.
+Frontend build thành công, 42 test đạt (lần setup ban đầu). Kết quả test chatbot gần nhất xem `chatbot-service/debug/production-readiness/evidence/02_python_full_with_postgres.txt` (2026-10-21: 558 passed, 0 skipped, với PostgreSQL kiểm thử cô lập). Toàn bộ backend đã chạy `clean test` thành công: **242 test, 0 failures, 0 errors, 0 skipped**, bao gồm integration test PostgreSQL thực qua Testcontainers. Log: `.local/logs/backend-test.log`; báo cáo chi tiết: `backend/target/surefire-reports/`.
 
 Đã đồng bộ các test cũ với mã hiện tại: chọn chi nhánh trước khi thêm giỏ hàng/checkout; mô phỏng tồn kho giảm sau khi thêm giỏ để kiểm tra rollback; kiểm tra VNPay sandbox bị tắt; kỳ vọng đúng 6 migration V1–V6. Các test sản phẩm dùng đúng API và dependencies hiện tại. Không thay đổi logic nghiệp vụ, schema hoặc migration để làm test pass.
 

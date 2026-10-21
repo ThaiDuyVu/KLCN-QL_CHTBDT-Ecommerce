@@ -7,8 +7,9 @@ from app.shared.contracts.enums import Intent, RequestedField
 from app.shared.contracts.query import ProductSearchPlan, ProductSelector, QueryPlan
 from app.shared.tracing import event
 from app.features.query_understanding.constraints import (
-    CATEGORY_ALIASES, ConstraintError, ProductEvidence, Relation, category_mentions,
-    read_capacity, requested_count, validate_brands, validate_capacity_coverage, storage_reference,
+    CATEGORY_ALIASES, GENERAL_CLARIFICATION, NO_ANTECEDENT_CLARIFICATION, PENDING_REFERENCE_CLARIFICATION,
+    ConstraintError, ProductEvidence, ReferenceKind, Relation, category_mentions, detect_reference, price_evidence,
+    read_capacity, requested_count, validate_brands, validate_capacity_coverage, validate_price_coverage, storage_reference,
 )
 
 
@@ -27,25 +28,9 @@ def capacity(text: str, slot: str) -> tuple[int | None, bool]:
 
 
 def price_slots(text: str) -> tuple[Decimal | None, Decimal | None]:
-    amount = r'(\d+(?:[.,]\d+)*)\s*(trieu|tr|million|k|nghin|vnd|dong)?'
-    def money(number, unit):
-        if re.fullmatch(r'\d{1,3}(?:[.,]\d{3})+', number):
-            number = number.replace('.', '').replace(',', '')
-        return Decimal(number.replace(',', '.')) * {'trieu': 1000000, 'tr': 1000000, 'million': 1000000, 'k': 1000, 'nghin': 1000}.get(unit, 1)
-    interval = re.search(r'(?:gia\s*)?tu\s*' + amount + r'\s*(?:den|toi|-)\s*' + amount, text)
-    if interval and (interval[2] or interval[4] or 'gia' in text[max(0, interval.start()-8):interval.start()+4]):
-        return money(interval[1], interval[2] or interval[4]), money(interval[3], interval[4] or interval[2])
-    def bounds(grammar):
-        values = []
-        for m in re.finditer(grammar + r'\s*' + amount, text):
-            if re.match(r'\s*(?:gb|tb|mb|kb)\b', text[m.end():]):
-                continue
-            if m[2] or 'gia' in text[max(0, m.start()-8):m.start()+4]:
-                values.append(money(m[1], m[2]))
-        return values
-    low = bounds(r'(?:gia\s*)?(?:tren|hon|toi thieu|gia tu)')
-    high = bounds(r'(?:duoi|khong qua|khong vuot|toi da|under|<=)')
-    return max(low) if low else None, min(high) if high else None
+    # Resolved bounds only; callers needing unresolved amounts use price_evidence().
+    evidence = price_evidence(text)
+    return evidence.min_price, evidence.max_price
 
 
 
@@ -84,13 +69,16 @@ class DomainNormalizer:
         ids = re.search(r'(product|variant)\s*id\s*[:#]?\s*([0-9a-fA-F-]{36})', context.current_message, re.I)
         if named and any(re.search(re.escape(folded(r['productName'])) + r'\s+(pro|ultra|plus|max|lite)\b', q) for r in named):
             return QueryPlan(intent=Intent.UNKNOWN, clarification='Model có hậu tố chưa khớp chính xác catalog. Bạn vui lòng xác nhận tên hoặc SKU.')
-        minimum, maximum = price_slots(q)
         scope_prefix = q[:min(q.index(folded(r['productName'])) for r in named)] if len(named) > 1 else q
         pending_storage = storage_reference(q) if not named and not sku and not ids else None
         # Leave a supported reference unresolved for the owned-session resolver; do not
         # interpret its storage amount as either an unscoped filter or a grammar error.
         coverage_text = q[:pending_storage.start()] + q[pending_storage.end():] if pending_storage else scope_prefix
         validate_capacity_coverage(coverage_text)
+        prices = price_evidence(q)
+        # A monetary condition that was not understood must not disappear from discovery.
+        validate_price_coverage(q, prices)
+        minimum, maximum = prices.min_price, prices.max_price
         ram, ram_min = capacity(scope_prefix, 'ram')
         storage, storage_min = capacity(scope_prefix, 'storage')
         if ram == 0 or storage == 0:
@@ -140,7 +128,7 @@ class DomainNormalizer:
                     start = q.index(folded(target.product_name)) + len(folded(target.product_name))
                     end = q.index(folded(targets[i+1].product_name)) if i+1 < len(targets) else len(q)
                     scoped = q[start:end]
-                    if any(value is not None for value in price_slots(scoped)):
+                    if price_evidence(scoped).spans:
                         raise ConstraintError('Giới hạn giá riêng theo từng sản phẩm chưa được hỗ trợ. Bạn vui lòng tách yêu cầu hoặc xác nhận phạm vi giá.')
                 validate_capacity_coverage(scoped)
                 tr, tr_min = capacity(scoped, 'ram')
@@ -164,21 +152,28 @@ class DomainNormalizer:
             return QueryPlan(intent=Intent.UNKNOWN, clarification='Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.')
         # A family search is discovery; an explicit target is detail/compare.
         intent = Intent.PRODUCT_COMPARE if compare else Intent.PRODUCT_DETAIL if targets else Intent.PRODUCT_DISCOVERY
-        followup = any(x in q for x in ('re hon', 'vua goi y', 'thu hai', 'dau tien'))
+        reference = detect_reference(q)
+        # A bounded comparative carries its own price (A3.1 R2-R4); STORAGE stays a filter-less snapshot reference.
+        followup = reference in {ReferenceKind.CHEAPER, ReferenceKind.ORDINAL_FIRST, ReferenceKind.ORDINAL_SECOND, ReferenceKind.LAST}
+        if followup and reference != ReferenceKind.CHEAPER and (category or brand_slots):
+            # An ordinal/last phrase next to a newly stated category/brand is a new request.
+            followup = False
         if followup and not targets:
             if not context.recent_messages:
-                return QueryPlan(intent=Intent.UNKNOWN, clarification='Bạn muốn so sánh với sản phẩm nào? Mình chưa có sản phẩm tham chiếu trong phiên này.')
-            # General reference resolution is deferred; keep only a supported cheaper follow-up.
-            if 're hon' not in q:
-                return QueryPlan(intent=Intent.UNKNOWN, clarification='Bạn vui lòng xác nhận tên hoặc SKU của sản phẩm vừa nhắc đến.')
+                return QueryPlan(intent=Intent.UNKNOWN, clarification=NO_ANTECEDENT_CLARIFICATION)
+            # Ordinal/last identities are resolved only from the owned snapshot.
+            if reference != ReferenceKind.CHEAPER:
+                return QueryPlan(intent=Intent.UNKNOWN, clarification=PENDING_REFERENCE_CLARIFICATION)
             previous = plan.product_search
             if previous:
-                category = previous.category
-                aliases = {'phone':'Điện thoại','smartphone':'Điện thoại'}
-                category = aliases.get(folded(category or ''),category)
-                if category and category not in categories: category = None
-                history_text = folded(' '.join(m.content for m in context.recent_messages))
-                if not category: category = 'Laptop' if 'laptop' in history_text else None
+                # A category stated now outranks the model plan and history.
+                if not category:
+                    category = previous.category
+                    aliases = {'phone':'Điện thoại','smartphone':'Điện thoại'}
+                    category = aliases.get(folded(category or ''),category)
+                    if category and category not in categories: category = None
+                    history_text = folded(' '.join(m.content for m in context.recent_messages))
+                    if not category: category = 'Laptop' if 'laptop' in history_text else None
                 if ram is None:
                     # Repeated assistant variant facts are not user filter requirements.
                     # The owned snapshot resolver subsequently verifies current backend evidence.
@@ -187,10 +182,8 @@ class DomainNormalizer:
                     if prior_request:
                         ram, _ = capacity(folded(prior_request.content), 'ram')
         if not targets and not category and not brand_slots and ram is None and storage is None and minimum is None and maximum is None and not followup:
-            return QueryPlan(intent=Intent.UNKNOWN, clarification='Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?')
+            return QueryPlan(intent=Intent.UNKNOWN, clarification=GENERAL_CLARIFICATION)
         cpu = re.findall(r'\b(?:i[3579]|ryzen\s*[3579]|intel core\s*i[3579])\b', q)
-        if 're hon' in q and context.recent_messages and not targets:
-            minimum = None
         if not targets and ('het hang' in q or 'khong can con hang' in q):
             return QueryPlan(intent=Intent.UNKNOWN, clarification='Bạn muốn kiểm tra tồn kho của sản phẩm nào? Bộ lọc còn hàng/hết hàng cần được xác định rõ.')
         if count is not None and targets and count < len(targets):

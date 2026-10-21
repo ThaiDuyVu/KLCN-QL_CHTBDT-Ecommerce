@@ -4,7 +4,6 @@ from app.shared.tracing import traced, event
 
 import asyncio
 from collections.abc import Callable
-from decimal import Decimal
 from uuid import UUID
 
 import httpx
@@ -26,7 +25,7 @@ from app.features.conversation.async_lease import blocking, request_lease
 from app.features.chat.policy import read_only_plan
 from app.features.conversation.service import ConversationService
 from app.features.customer_context.models import AuthenticatedCustomer
-from app.features.customer_context.service import CustomerContextService
+from app.features.customer_context.service import CustomerContextService, NoOwnedOrders, NO_OWNED_ORDERS_MESSAGE
 from app.features.product_advisor.protocol import ProductAdvisorService
 from app.features.product_advisor.service import MockProductAdvisorService
 from app.features.query_understanding.protocol import QueryUnderstandingService
@@ -112,24 +111,29 @@ class ChatService:
         )
 
         if customer is not None:
+            # Repository I/O runs off the event loop; blocking() settles a started write before
+            # propagating cancellation, so the request lease is released only afterwards (Fix04).
             try:
-                self.conversation_service.get_session(session_id, customer.customer_id)
+                await blocking(self.conversation_service.get_session, session_id, customer.customer_id)
             except HTTPException as exc:
                 if exc.status_code == 404:
-                    self.conversation_service.create_session(
+                    await blocking(
+                        self.conversation_service.create_session,
                         customer_id=customer.customer_id,
                         session_id=session_id,
                     )
                 else:
                     raise
 
-            self.conversation_service.add_message(
+            await blocking(
+                self.conversation_service.add_message,
                 session_id=session_id,
                 sender_type=SenderType.USER,
                 message=request.message,
                 customer_id=customer.customer_id,
             )
-            recent_messages = self.conversation_service.get_context_messages(
+            recent_messages = await blocking(
+                self.conversation_service.get_context_messages,
                 session_id=session_id,
                 customer_id=customer.customer_id,
                 window=get_settings().chat_history_window,
@@ -187,21 +191,8 @@ class ChatService:
                 product_search = product_search.model_copy(update={"top_k": 1})
             elif query_plan.intent == Intent.PRODUCT_COMPARE:
                 product_search = product_search.model_copy(update={"top_k": min(product_search.top_k, 3)})
-            cheaper = any(term in request.message.casefold() for term in ("rẻ hơn", "thấp hơn", "cheaper"))
-            below_minimum = False
-            if cheaper and customer is not None:
-                previous = self.conversation_service.repository.last_product_cards(session_id, customer.customer_id)
-                prices = [card.effective_price for card in previous if card.effective_price is not None]
-                if prices:
-                    ceiling = min(prices) - Decimal("1")
-                    below_minimum = ceiling < 0 or (product_search.min_price is not None and ceiling < product_search.min_price)
-                    if not below_minimum:
-                        data = product_search.model_dump()
-                        data["max_price"] = min(ceiling, product_search.max_price) if product_search.max_price is not None else ceiling
-                        product_search = type(product_search).model_validate(data)
-                        query_plan = query_plan.model_copy(update={"product_search": product_search})
-
-            event("query.plan.effective", {"product_search": product_search, "below_minimum": below_minimum, "cheaper_followup": cheaper})
+            # Cheaper/ordinal follow-ups are resolved once, from the owned snapshot, by resolve_reference.
+            event("query.plan.effective", {"product_search": product_search})
 
             def search_and_build():
                 token = backend_cookies.set(cookies or None)
@@ -212,8 +203,7 @@ class ChatService:
                     backend_cookies.reset(token)
 
             try:
-                if not below_minimum:
-                    product_matches, product_cards = await blocking(search_and_build)
+                product_matches, product_cards = await blocking(search_and_build)
             except ProductResolutionError as exc:
                 event('product.resolution_failed', {'reason': exc.reason}, status='warning')
                 query_plan = query_plan.model_copy(update={'clarification': str(exc)})
@@ -237,6 +227,10 @@ class ChatService:
             context_payload = CustomerContext()
             event('customer.payment_unavailable', {'intent': query_plan.intent,
                   'reason': 'owned_payment_integrity', 'payment_evidence_loaded': False}, status='warning')
+        except NoOwnedOrders:
+            # Only a successful empty owned list reaches here; backend errors keep their own path.
+            query_plan = query_plan.model_copy(update={'clarification': NO_OWNED_ORDERS_MESSAGE})
+            context_payload = CustomerContext()
 
         knowledge_chunks = []
         if query_plan.intent == Intent.KNOWLEDGE_QA and self.knowledge_retrieval is not None:

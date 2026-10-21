@@ -11,7 +11,7 @@ import httpx
 
 from app.features.product_advisor.backend import BackendProductClient
 from app.features.product_advisor.normalization import capacity_gb
-from app.features.product_advisor.semantic import OllamaEmbeddingClient, ProductSemanticIndex
+from app.features.product_advisor.semantic import OllamaEmbeddingClient, ProductSemanticIndex, SemanticRankingUnavailable
 from app.shared.contracts.product import EligibleVariant, ProductMatch
 from app.shared.contracts.query import ProductSearchPlan
 from app.shared.contracts.response import ProductCard
@@ -151,9 +151,16 @@ class RealProductAdvisorService:
             return []
         scores: dict[UUID, float] = {}
         if plan.semantic_query and self.index is not None and self.embedder is not None:
-            scores = self.index.scores(
-                list(variants_by_product), self.embedder.embed(plan.semantic_query), self.embedder.model
-            )
+            # Ranking only orders already-verified structured results; its failure degrades
+            # to the deterministic product_id order. Source retrieval below stays fail-closed.
+            try:
+                scores = self.index.scores(
+                    list(variants_by_product), self.embedder.embed(plan.semantic_query), self.embedder.model
+                )
+            except (httpx.HTTPError, ValueError, SemanticRankingUnavailable) as exc:
+                scores = {}
+                event('product.ranking_degraded', {'reason': type(exc).__name__, 'fallback': 'product_id_order',
+                                                   'candidates': len(variants_by_product)}, status='warning')
         ranked_ids = sorted(variants_by_product, key=lambda key: (-scores.get(key, -2), str(key)))
         matches: list[ProductMatch] = []
         for product_id in ranked_ids:
