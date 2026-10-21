@@ -1,0 +1,16 @@
+{
+  "scope": "DISPOSABLE_CLONED_DB_ONLY",
+  "order_codes": [
+    "ORD-DIAG-DELIVERED",
+    "ORD-DIAG-FAILED",
+    "ORD-DIAG-NOPAY",
+    "ORD-DIAG-NULLWAREHOUSE",
+    "ORD-DIAG-EXPIRED"
+  ],
+  "new_orders": 5,
+  "new_payments": 4,
+  "new_warranties": 2,
+  "new_tickets": 1,
+  "nullable_warehouse_fixture": "schema-valid legacy row, not checkout mutation",
+  "cleanup_policy": "drop whole disposable DB/container; source hash checked separately"
+}

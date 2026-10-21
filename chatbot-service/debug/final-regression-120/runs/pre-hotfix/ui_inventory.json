@@ -1,0 +1,157 @@
+[
+  {
+    "id": "UI01",
+    "expected": "Anonymous /chatbot-lab redirects to login; synthetic CUSTOMER can log in with actual UI",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "anonymous_redirect": "/login",
+      "login_form_real": true,
+      "authenticated_route": "/chatbot-lab"
+    },
+    "started_at": "2026-10-20T13:53:50.728643+00:00",
+    "duration_ms": 938.81
+  },
+  {
+    "id": "UI02",
+    "expected": "Chatbot Lab accessible directly; status shows real AI and PostgreSQL",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "ai_real": true,
+      "storage": "postgres"
+    },
+    "started_at": "2026-10-20T13:53:51.667995+00:00",
+    "duration_ms": 2.23
+  },
+  {
+    "id": "UI03",
+    "expected": "Actual product POST renders valid card/price/RAM/storage/SKU/stock and answer",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "card": {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "product_name": "Xiaomi 15",
+        "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+        "sku": "DEV-X15-GRN-512",
+        "original_price": "21990000.0",
+        "effective_price": "21990000.0",
+        "ram": "16GB",
+        "storage": "512GB",
+        "color": "Xanh lá",
+        "available_quantity": 2,
+        "warranty_months": 12,
+        "image_url": "/images/products/xiaomi-15/main.jpg",
+        "reasons": []
+      },
+      "message": "Xiaomi 15\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng."
+    },
+    "started_at": "2026-10-20T13:53:51.670449+00:00",
+    "duration_ms": 3120.9
+  },
+  {
+    "id": "UI04",
+    "expected": "Product card navigates to real detail page",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "href": "/products/169710dd-d072-4e83-9fd0-e618d706ee26",
+      "real_product_detail_loaded": true
+    },
+    "started_at": "2026-10-20T13:53:54.790821+00:00",
+    "duration_ms": 414.24
+  },
+  {
+    "id": "UI05",
+    "expected": "DEMO Knowledge source shown as DEMO; absent official instructions explained",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "demo_sources": [
+        {
+          "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "title": "DEMO — Chính sách đổi trả kiểm thử",
+          "source": "demo://chatbot-lab/return"
+        }
+      ],
+      "guidance_message": "Mình chưa có tài liệu chính thức đủ để hướng dẫn thao tác này. Mình không thể xác nhận quy trình hoặc chính sách của cửa hàng."
+    },
+    "started_at": "2026-10-20T13:53:55.205907+00:00",
+    "duration_ms": 430.65
+  },
+  {
+    "id": "UI06",
+    "expected": "Fresh session, owned session switch, closed session are usable",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "closed_disables_send": true,
+      "fresh_works": true,
+      "selected_old_owned_session": true
+    },
+    "started_at": "2026-10-20T13:53:55.636928+00:00",
+    "duration_ms": 1243.74
+  },
+  {
+    "id": "UI07",
+    "expected": "History reload and cursor pagination deduplicate persisted text; no invented cards",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "cursor_rows_after_older": 106,
+      "unique_texts": 106,
+      "reload_window": 100,
+      "historical_cards": 0
+    },
+    "started_at": "2026-10-20T13:53:56.880993+00:00",
+    "duration_ms": 165.75
+  },
+  {
+    "id": "UI08",
+    "expected": "Session list pagination advances exactly one page",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "option_count_before": 21,
+      "after": 40,
+      "requested_page": 1
+    },
+    "started_at": "2026-10-20T13:53:57.047337+00:00",
+    "duration_ms": 261.54
+  },
+  {
+    "id": "UI09",
+    "expected": "503 before persistence displays error, preserves draft, safe retry has one displayed USER",
+    "status": "FAIL",
+    "execution": "REAL_BROWSER_CONTROLLED_503_THEN_REAL_RETRY",
+    "error_type": "AssertionError",
+    "message": "Locator expected to be enabled\nActual value: disabled \nCall log:\n  - Expect \"to_be_enabled\" get_by_label(\"Câu hỏi của bạn\") with timeout 20000ms\n  - waiting for get_by_label(\"Câu hỏi của bạn\")\n    44 × locator resolved to <textarea rows=\"3\" disabled maxlength=\"4000\" id=\"chat-question\" placeholder=\"Nhập câu hỏi cần kiểm chứng…\">Xin chào</textarea>\n       - unexpected value \"disabled\"\n\nAria snapshot:\n- textbox \"Câu hỏi của bạn\" [disabled]:\n  - /placeholder: Nhập câu hỏi cần kiểm chứng…\n  - text: Xin chào",
+    "screenshot": "evidence/ui/UI09-failure.png",
+    "started_at": "2026-10-20T13:53:57.309762+00:00",
+    "duration_ms": 20360.92
+  },
+  {
+    "id": "UI10",
+    "expected": "Switching sessions while POST pending cannot overwrite selected history",
+    "status": "FAIL",
+    "execution": "REAL_BROWSER_CONTROLLED_PENDING_NETWORK",
+    "error_type": "TimeoutError",
+    "message": "Locator.select_option: Timeout 30000ms exceeded.\nCall log:\n  - waiting for get_by_label(\"Lịch sử phiên\")\n    - locator resolved to <select disabled id=\"lab-session-history\">…</select>\n  - attempting select option action\n    2 × waiting for element to be visible and enabled\n      - element is not enabled\n    - retrying select option action\n    - waiting 20ms\n    2 × waiting for element to be visible and enabled\n      - element is not enabled\n    - retrying select option action\n      - waiting 100ms\n    60 × waiting for element to be visible and enabled\n       - element is not enabled\n     - retrying select option action\n       - waiting 500ms\n",
+    "screenshot": "evidence/ui/UI10-failure.png",
+    "started_at": "2026-10-20T13:54:17.668545+00:00",
+    "duration_ms": 30388.96
+  },
+  {
+    "id": "UI11",
+    "expected": "Double-submit while pending sends one POST; loading state visible",
+    "status": "FAIL",
+    "execution": "REAL_BROWSER_CONTROLLED_DELAY_REAL_SERVER_RESPONSE",
+    "error_type": "TimeoutError",
+    "message": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Cuộc trò chuyện mới\", exact=True)\n    - locator resolved to <button disabled type=\"button\">Cuộc trò chuyện mới</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n      - waiting 100ms\n    58 × waiting for element to be visible, enabled and stable\n       - element is not enabled\n     - retrying click action\n       - waiting 500ms\n",
+    "screenshot": "evidence/ui/UI11-failure.png",
+    "started_at": "2026-10-20T13:54:48.057486+00:00",
+    "duration_ms": 30118.25
+  }
+]

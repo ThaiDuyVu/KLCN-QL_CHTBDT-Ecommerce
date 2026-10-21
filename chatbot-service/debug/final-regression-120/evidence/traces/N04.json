@@ -1,0 +1,460 @@
+{
+  "trace_id": "11ab246b-e034-4a70-8ea5-72aa5052d104",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "3960e0a5-0f31-41c6-b841-c616fa0d003c",
+      "parent_id": "793bebce-ee08-4068-9bd7-03d38b0cb9e2",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 36.07,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "b595b90a-9ca4-46f7-bdf2-55262f425302",
+      "parent_id": "793bebce-ee08-4068-9bd7-03d38b0cb9e2",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 36.23,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "98e2ba8e-4bc4-4058-aff9-8f9c99c51a0e",
+      "parent_id": "1d9485a0-446b-424e-9daa-fbfc1b883d17",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1792.71,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "máy tính xách tay dell dưới 20 triệu",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "ba7801c7-ea8c-4fa1-8447-a160b0ed7849",
+      "parent_id": "1d9485a0-446b-424e-9daa-fbfc1b883d17",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1827.08,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "máy tính xách tay dell dưới 20 triệu",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Dell"
+            ],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm máy tính xách tay Dell dưới 20 triệu.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "c7f5cc5b-af46-4924-8e55-89cc5d432db7",
+      "parent_id": "793bebce-ee08-4068-9bd7-03d38b0cb9e2",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1848.32,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm máy tính xách tay Dell dưới 20 triệu.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "31db3e15-db4b-4175-affe-83653e185425",
+      "parent_id": "793bebce-ee08-4068-9bd7-03d38b0cb9e2",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1848.45,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm máy tính xách tay Dell dưới 20 triệu.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "b61294ea-5e12-4a8a-aab2-aa994b138edb",
+      "parent_id": "793bebce-ee08-4068-9bd7-03d38b0cb9e2",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 1848.6,
+      "duration_ms": 69.93,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.4111612753810415,
+          "ranking_score": 0.4111612753810415,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bf9a0698-8b1b-408c-8d63-74efb1eb2c6a",
+      "parent_id": "793bebce-ee08-4068-9bd7-03d38b0cb9e2",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 1918.55,
+      "duration_ms": 6.41,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "78d9fd93-859b-41c1-9d34-8d1e7a8c8a1a",
+      "parent_id": "bf9a0698-8b1b-408c-8d63-74efb1eb2c6a",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 1924.86,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "a96df51c-538c-4fa9-8018-6b49ca025b34"
+        ],
+        "variants": 1,
+        "cards": 1
+      }
+    },
+    {
+      "id": "95fb4c72-84a9-4a3a-883b-732ff663513d",
+      "parent_id": "793bebce-ee08-4068-9bd7-03d38b0cb9e2",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1925.17,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "abc7076b-f891-43bb-bed4-d0e2a46ea272",
+      "parent_id": "00bc6265-fc61-4c0a-a2bf-dc0887a48051",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1925.65,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 7.29,
+      "duration_ms": 1927.97,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 36.4,
+      "duration_ms": 1790.92,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 38.48,
+      "duration_ms": 1754.06,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 38.92,
+      "duration_ms": 1753.57,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 39.33,
+      "duration_ms": 1753.1,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1792.96,
+      "duration_ms": 12.19,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1805.2,
+      "duration_ms": 7.88,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1813.12,
+      "duration_ms": 13.08,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1848.6,
+      "duration_ms": 69.93,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1848.69,
+      "duration_ms": 9.55,
+      "status": "ok"
+    },
+    {
+      "name": "product.embedding",
+      "offset_ms": 1858.3,
+      "duration_ms": 36.92,
+      "status": "ok"
+    },
+    {
+      "name": "product.vector_ranking",
+      "offset_ms": 1895.24,
+      "duration_ms": 13.64,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1908.94,
+      "duration_ms": 9.4,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 1918.55,
+      "duration_ms": 6.41,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1918.66,
+      "duration_ms": 6.11,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1925.09,
+      "duration_ms": 0.08,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1925.46,
+      "duration_ms": 0.25,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Laptop"
+          ],
+          [
+            "maxPrice",
+            "20000000"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ],
+          [
+            "brands",
+            "Dell"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

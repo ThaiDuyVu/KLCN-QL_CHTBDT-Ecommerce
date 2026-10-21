@@ -119,7 +119,13 @@ export default function ChatbotLabPage() {
         if (token !== version.current) return;
         setMessages((items) => restoredMessages(history, items)); setHasOlder(history.length === 100);
         setNeedsSync(abort.signal.aborted);
-      } catch { /* Require explicit successful history reload before another POST. */ }
+      } catch (historyFailure) {
+        // A returned HTTP error followed by 404 means this session was not created.
+        // Abort/network ambiguity and unavailable history still require explicit sync.
+        if (token === version.current && historyFailure.status === 404 && failure.status >= 400 && !abort.signal.aborted) {
+          setMessages([]); setHasOlder(false); setNeedsSync(false);
+        }
+      }
     } finally {
       clearTimeout(timer);
       if (token === version.current) { controller.current = null; setBusy(false); }
