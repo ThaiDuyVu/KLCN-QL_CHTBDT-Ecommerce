@@ -1,0 +1,466 @@
+
+> ql-chtdbt-ecommerce-frontend@0.1.0 test
+> vitest run src/features/chatbot/ChatbotLab.test.jsx -t failed first POST
+
+
+ RUN  v4.1.11 workspace://Fontend
+
+ ❯ src/features/chatbot/ChatbotLab.test.jsx (13 tests | 1 failed | 12 skipped) 1161ms
+   × allows safe retry when failed first POST is followed by nonexistent history 1160ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  20:55:40
+   Duration  1.93s (transform 71ms, setup 93ms, import 103ms, tests 1.16s, environment 502ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/chatbot/ChatbotLab.test.jsx > allows safe retry when failed first POST is followed by nonexistent history
+Error: expect(element).not.toBeDisabled()
+
+Received element is disabled:
+  <button
+  disabled=""
+  type="submit"
+/>
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<main[39m
+        [33mclass[39m=[32m"chatbot-lab"[39m
+      [36m>[39m
+        [36m<header[39m
+          [33mclass[39m=[32m"lab-header"[39m
+        [36m>[39m
+          [36m<div>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"lab-eyebrow"[39m
+            [36m>[39m
+              [0mĐIỆN VIỆT / SANDBOX[0m
+            [36m</span>[39m
+            [36m<h1>[39m
+              [0mPhòng thử Chatbot[0m
+            [36m</h1>[39m
+            [36m<p>[39m
+              [0mKiểm chứng câu trả lời với dữ liệu thật trước khi đưa vào cửa hàng.[0m
+            [36m</p>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"lab-header-actions"[39m
+          [36m>[39m
+            [36m<a[39m
+              [33mdata-discover[39m=[32m"true"[39m
+              [33mhref[39m=[32m"/"[39m
+            [36m>[39m
+              [0mVề website[0m
+            [36m</a>[39m
+            [36m<a[39m
+              [33mdata-discover[39m=[32m"true"[39m
+              [33mhref[39m=[32m"/account"[39m
+            [36m>[39m
+              [0mKhách thử[0m
+              [0m · [0m
+              [0mCUSTOMER[0m
+            [36m</a>[39m
+          [36m</div>[39m
+        [36m</header>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"lab-notice"[39m
+        [36m>[39m
+          [0mTrang kiểm thử riêng. Chatbot chỉ tư vấn và đọc dữ liệu; không đặt hàng, thanh toán hay sửa giỏ. Tài liệu DEMO không phải chính sách chính thức.[0m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"lab-grid"[39m
+        [36m>[39m
+          [36m<aside[39m
+            [33mclass[39m=[32m"lab-panel lab-scenarios"[39m
+          [36m>[39m
+            [36m<h2>[39m
+              [0mKịch bản kiểm thử[0m
+            [36m</h2>[39m
+            [36m<p>[39m
+              [0mChọn câu mẫu, đọc kỳ vọng, rồi nhấn Gửi.[0m
+            [36m</p>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"true"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mCơ bản[0m
+              [36m</span>[39m
+              [0mChào hỏi[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mSản phẩm[0m
+              [36m</span>[39m
+              [0mTìm theo ngân sách[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mSản phẩm[0m
+              [36m</span>[39m
+              [0mHỏi tiếp theo ngữ cảnh[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mSản phẩm[0m
+              [36m</span>[39m
+              [0mKiểm tra tồn kho[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mTài liệu[0m
+              [36m</span>[39m
+              [0mChính sách đổi trả[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mCá nhân[0m
+              [36m</span>[39m
+              [0mGiỏ hàng của tôi[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mCá nhân[0m
+              [36m</span>[39m
+              [0mĐơn hàng gần đây[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mCá nhân[0m
+              [36m</span>[39m
+              [0mThanh toán đơn mới nhất[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mCá nhân[0m
+              [36m</span>[39m
+              [0mBảo hành[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mCá nhân[0m
+              [36m</span>[39m
+              [0mPhiếu bảo hành[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mGiới hạn[0m
+              [36m</span>[39m
+              [0mKhông đủ bằng chứng[0m
+            [36m</button>[39m
+            [36m<button[39m
+              [33maria-pressed[39m=[32m"false"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mGiới hạn[0m
+              [36m</span>[39m
+              [0mKhông thực hiện giao dịch[0m
+            [36m</button>[39m
+          [36m</aside>[39m
+          [36m<section[39m
+            [33maria-label[39m=[32m"Cuộc trò chuyện kiểm thử"[39m
+            [33mclass[39m=[32m"lab-panel lab-chat"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"lab-chat-heading"[39m
+            [36m>[39m
+              [36m<div>[39m
+                [36m<h2>[39m
+                  [0mCuộc trò chuyện[0m
+                [36m</h2>[39m
+                [36m<small>[39m
+                  [0mĐang xác minh chế độ lưu lịch sử[0m
+                [36m</small>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mCuộc trò chuyện mới[0m
+              [36m</button>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"lab-expectation"[39m
+            [36m>[39m
+              [36m<strong>[39m
+                [0mKỳ vọng · [0m
+                [0mChào hỏi[0m
+              [36m</strong>[39m
+              [36m<p>[39m
+                [0mChào bằng tiếng Việt; không tự đưa giá hoặc trạng thái đơn hàng.[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-busy[39m=[32m"false"[39m
+              [33maria-live[39m=[32m"polite"[39m
+              [33mclass[39m=[32m"lab-transcript"[39m
+              [33mrole[39m=[32m"log"[39m
+            [36m>[39m
+              [36m<article[39m
+                [33mclass[39m=[32m"lab-message lab-message-user"[39m
+              [36m>[39m
+                [36m<strong>[39m
+                  [0mBạn[0m
+                [36m</strong>[39m
+                [36m<p>[39m
+                  [0mXin chào[0m
+                [36m</p>[39m
+              [36m</article>[39m
+              [36m<div />[39m
+            [36m</div>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"lab-error"[39m
+              [33mrole[39m=[32m"alert"[39m
+            [36m>[39m
+              [0mControlled UAT send unavailable[0m
+            [36m</p>[39m
+            [36m<p>[39m
+              [0mChưa xác minh lượt gửi vừa rồi. Đọc lại lịch sử trước khi gửi lại.[0m
+            [36m</p>[39m
+            [36m<button[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mĐọc lại lịch sử[0m
+            [36m</button>[39m
+            [36m<form[39m
+              [33mclass[39m=[32m"lab-composer"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mfor[39m=[32m"chat-question"[39m
+              [36m>[39m
+                [0mCâu hỏi của bạn[0m
+              [36m</label>[39m
+              [36m<textarea[39m
+                [33mdisabled[39m=[32m""[39m
+                [33mid[39m=[32m"chat-question"[39m
+                [33mmaxlength[39m=[32m"4000"[39m
+                [33mplaceholder[39m=[32m"Nhập câu hỏi cần kiểm chứng…"[39m
+                [33mrows[39m=[32m"3"[39m
+              [36m>[39m
+                [0mXin chào[0m
+              [36m</textarea>[39m
+              [36m<div>[39m
+                [36m<small>[39m
+                  [0m8[0m
+                  [0m/4000 ký tự · Enter xuống dòng[0m
+                [36m</small>[39m
+                [36m<button[39m
+                  [33mdisabled[39m=[32m""[39m
+                  [33mtype[39m=[32m"submit"[39m
+                [36m>[39m
+                  [0mGửi câu hỏi[0m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</form>[39m
+          [36m</section>[39m
+          [36m<aside[39m
+            [33mclass[39m=[32m"lab-panel lab-inspector"[39m
+          [36m>[39m
+            [36m<h2>[39m
+              [0mTrạng thái & kết quả[0m
+            [36m</h2>[39m
+            [36m<button[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mKiểm tra dịch vụ[0m
+            [36m</button>[39m
+            [36m<dl>[39m
+              [36m<dt>[39m
+                [0mChế độ trả lời[0m
+              [36m</dt>[39m
+              [36m<dd[39m
+                [33mclass[39m=[32m"lab-good"[39m
+              [36m>[39m
+                [0mAI thật[0m
+              [36m</dd>[39m
+              [36m<dt>[39m
+                [0mSản phẩm[0m
+              [36m</dt>[39m
+              [36m<dd>[39m
+                [0mBackend thật[0m
+              [36m</dd>[39m
+              [36m<dt>[39m
+                [0mOllama[0m
+              [36m</dt>[39m
+              [36m<dd>[39m
+                [0mĐã kết nối[0m
+              [36m</dd>[39m
+              [36m<dt>[39m
+                [0mModel chat[0m
+              [36m</dt>[39m
+              [36m<dd>[39m
+                [0mchat-test[0m
+                [0m · [0m
+                [0mChưa tải[0m
+              [36m</dd>[39m
+              [36m<dt>[39m
+                [0mModel embedding[0m
+              [36m</dt>[39m
+              [36m<dd>[39m
+                [0membed-test[0m
+                [0m · [0m
+                [0mChưa tải[0m
+              [36m</dd>[39m
+              [36m<dt>[39m
+                [0mKnowledge DB[0m
+              [36m</dt>[39m
+              [36m<dd>[39m
+                [0mChưa cấu hình[0m
+              [36m</dd>[39m
+              [36m<dt>[39m
+                [0mKho / index sản phẩm[0m
+              [36m</dt>[39m
+              [36m<dd>[39m
+                [0mChưa có kho[0m
+                [0m / [0m
+                [0mChưa cấu hình index[0m
+              [36m</dd>[39m
+            [36m</dl>[39m
+            [36m<small>[39m
+              [0m“Đã cấu hình” không đảm bảo database đã có dữ liệu hoặc index đã chạy.[0m
+            [36m</small>[39m
+            [36m<hr />[39m
+            [36m<label[39m
+              [33mfor[39m=[32m"lab-session-history"[39m
+            [36m>[39m
+              [0mLịch sử phiên[0m
+            [36m</label>[39m
+            [36m<select[39m
+              [33mid[39m=[32m"lab-session-history"[39m
+            [36m>[39m
+              [36m<option[39m
+                [33mvalue[39m=[32m"5faa1c7c-dde5-489e-b06d-6f774a70e923"[39m
+              [36m>[39m
+                [0mPhiên mới[0m
+              [36m</option>[39m
+            [36m</select>[39m
+            [36m<button[39m
+              [33mdisabled[39m=[32m""[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mĐóng phiên[0m
+            [36m</button>[39m
+            [36m<h3>[39m
+              [0mPhiên hiện tại[0m
+            [36m</h3>[39m
+            [36m<code>[39m
+              [0m5faa1c7c-dde5-489e-b06d-6f774a70e923[0m
+            [36m</code>[39m
+            [36m<p>[39m
+              [0mThời gian gần nhất: [0m
+              [0m—[0m
+            [36m</p>[39m
+            [36m<button[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [0mXuất kết quả JSON[0m
+            [36m</button>[39m
+            [36m<small>[39m
+              [0mFile xuất chứa nội dung chat cá nhân. Chỉ chia sẻ dữ liệu kiểm thử.[0m
+            [36m</small>[39m
+            [36m<details>[39m
+              [36m<summary>[39m
+                [0mResponse JSON gần nhất[0m
+              [36m</summary>[39m
+              [36m<pre>[39m
+                [0mChưa có response.[0m
+              [36m</pre>[39m
+            [36m</details>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"lab-footnote"[39m
+            [36m>[39m
+              [0mChưa xác minh chế độ lưu lịch sử.[0m
+              [0m Feedback Đúng/Cần sửa chỉ lưu tạm trong RAM; không khôi phục sau restart.[0m
+            [36m</p>[39m
+          [36m</aside>[39m
+        [36m</div>[39m
+        [36m<section[39m
+          [33maria-label[39m=[32m"Truy vết xử lý chatbot"[39m
+          [33mclass[39m=[32m"lab-panel trace-panel"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"trace-heading"[39m
+          [36m>[39m
+            [36m<div>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"lab-eyebrow"[39m
+              [36m>[39m
+                [0mPROMPT → QUERY → EVIDENCE → ANSWER[0m
+              [36m</span>[39m
+              [36m<h2>[39m
+                [0mTruy vết từng công đoạn[0m
+              [36m</h2>[39m
+              [36m<p>[39m
+                [0mXem đầu vào, biến đổi, dữ liệu thực tế và vị trí fallback của từng lượt chat.[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"lab-warn"[39m
+            [36m>[39m
+              [0mChưa bật ghi trace[0m
+            [36m</span>[39m
+          [36m</div>[39m
+          [36m<p>[39m
+            [0mBật [0m
+            [36m<code>[39m
+              [0mCHATBOT_TRACE_ENABLED=true[0m
+            [36m</code>[39m
+            [0m với [0m
+            [36m<code>[39m
+              [0mAPP_ENV=development[0m
+            [36m</code>[39m
+            [0m trong chatbot-service/.env, khởi động lại chatbot rồi kiểm tra dịch vụ.[0m
+          [36m</p>[39m
+        [36m</section>[39m
+      [36m</main>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/features/chatbot/ChatbotLab.test.jsx:184:87
+    182|   await user.click(screen.getByRole('button', { name: 'Gửi câu hỏi' })…
+    183|   await screen.findByRole('alert');
+    184|   await waitFor(() => expect(screen.getByRole('button', { name: 'Gửi c…
+       |                                                                                       ^
+    185|   expect(within(screen.getByRole('log')).queryAllByText('Xin chào')).t…
+    186|   expect(chatbotApi.send).toHaveBeenCalledTimes(1);
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯

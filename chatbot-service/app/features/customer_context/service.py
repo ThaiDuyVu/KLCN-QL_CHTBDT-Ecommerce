@@ -36,6 +36,13 @@ def ticket_context(row: dict) -> WarrantyTicketContext:
         status=row['status'], created_at=row['createdAt'], resolved_at=row.get('resolvedAt'))
 
 
+NO_OWNED_ORDERS_MESSAGE = 'Tài khoản của bạn chưa có đơn hàng nào.'
+
+
+class NoOwnedOrders(Exception):
+    """The owned order list was returned successfully and is empty (not an error or 404)."""
+
+
 class CustomerContextService:
     def __init__(self, backend_client: BackendClient | None = None):
         self.backend_client = backend_client
@@ -56,10 +63,16 @@ class CustomerContextService:
                             available_quantity=i.get('availableQuantity')) for i in row['items']])
             elif intent in {'ORDER_STATUS', 'PAYMENT_STATUS'}:
                 rows = await self.backend_client.get_recent_orders(cookies)
+                if rows == [] and order_code is None:
+                    event('customer.order_selection', {'selection': 'none', 'matched': 0, 'owned_list': 'verified_empty'})
+                    raise NoOwnedOrders()
+                # Unknown (404/204/unexpected shape) stays "no evidence", never "no orders".
+                rows = rows or []
                 # The owned endpoint defines the candidate scope. No arbitrary ID lookup.
                 rows = sorted(rows, key=lambda r: (datetime.fromisoformat(r['orderDate'].replace('Z', '+00:00')), str(r['orderId'])), reverse=True)
                 if order_code is not None:
-                    rows = [r for r in rows if r['orderCode'] == order_code]
+                    # Displayed codes are upper-case UUIDs; a typed code may differ only in case.
+                    rows = [r for r in rows if r['orderCode'].casefold() == order_code.casefold()]
                     if len(rows) > 1:
                         raise ValueError('Ambiguous owned order code')
                 elif latest or intent == 'PAYMENT_STATUS':

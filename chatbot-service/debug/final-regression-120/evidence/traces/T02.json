@@ -1,0 +1,136 @@
+{
+  "trace_id": "4227220a-e58a-4682-9da5-e80c4c66b660",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "4a3f9ff8-42bf-4e46-952e-a90cc03b8d59",
+      "parent_id": "5e97cc72-c479-4064-938f-f68bd372d7fd",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 40.73,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "51c4f414-e975-4ad7-b234-9a28605c5365",
+      "parent_id": "5e97cc72-c479-4064-938f-f68bd372d7fd",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 41.06,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "72373a0f-21c5-4a8d-ada2-f3c21ca9d587",
+      "parent_id": "d6fd3ced-aac7-46d7-91c2-e40d755b5bab",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 414.35,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "GREETING",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "478eafc2-6740-4b29-8784-a32b90ef49e1",
+      "parent_id": "5e97cc72-c479-4064-938f-f68bd372d7fd",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 429.64,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "GREETING",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "32227794-391b-4901-8564-cc61a4d25e70",
+      "parent_id": "5e97cc72-c479-4064-938f-f68bd372d7fd",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 429.87,
+      "duration_ms": null,
+      "output": {
+        "intent": "GREETING",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "118bddd3-c272-4eda-a3b0-0649071ddcb6",
+      "parent_id": "d6d447d1-2190-4d49-98c3-862ffba877d0",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 430.19,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "greeting"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 6.86,
+      "duration_ms": 437.77,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 41.26,
+      "duration_ms": 373.18,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 42.8,
+      "duration_ms": 371.53,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 43.29,
+      "duration_ms": 371.03,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 43.84,
+      "duration_ms": 370.46,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 429.79,
+      "duration_ms": 0.08,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 430.09,
+      "duration_ms": 0.15,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": []
+}

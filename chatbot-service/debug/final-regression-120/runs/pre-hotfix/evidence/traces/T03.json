@@ -1,0 +1,161 @@
+{
+  "trace_id": "c021f1df-1a54-47ba-9f41-06216b769157",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "59345a67-d4a6-41fe-975d-b62cf0969445",
+      "parent_id": "ca09b022-98ac-4204-9efe-e53c44131d37",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 43.69,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "59345a67-d4a6-41fe-975d-b62cf0969445",
+      "parent_id": "ca09b022-98ac-4204-9efe-e53c44131d37",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 43.69,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "5c13b4f2-012e-4ea3-b617-681bdb191258",
+      "parent_id": "ca09b022-98ac-4204-9efe-e53c44131d37",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 43.87,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "5c13b4f2-012e-4ea3-b617-681bdb191258",
+      "parent_id": "ca09b022-98ac-4204-9efe-e53c44131d37",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 43.87,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "d0745697-5028-4d15-ab24-c856e276c7a9",
+      "parent_id": "22358279-6dc9-42c9-b782-388976c64034",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 406.57,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "GREETING",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "94c1a785-6289-4d76-a17d-e68e71ef1679",
+      "parent_id": "ca09b022-98ac-4204-9efe-e53c44131d37",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 423.94,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "GREETING",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "db6a8f21-fa08-4009-b6e5-7a1f69102c3e",
+      "parent_id": "ca09b022-98ac-4204-9efe-e53c44131d37",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 424.17,
+      "duration_ms": null,
+      "output": {
+        "intent": "GREETING",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "ea2e44b9-dcaa-40d0-b176-611ac225ec55",
+      "parent_id": "912bb473-1e84-41b6-8faf-c515a268fb7c",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 424.62,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "greeting"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 7.91,
+      "duration_ms": 432.43,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 44.06,
+      "duration_ms": 362.65,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 45.79,
+      "duration_ms": 360.73,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 46.34,
+      "duration_ms": 360.16,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 46.85,
+      "duration_ms": 359.62,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 424.08,
+      "duration_ms": 0.09,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 424.42,
+      "duration_ms": 0.27,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": []
+}

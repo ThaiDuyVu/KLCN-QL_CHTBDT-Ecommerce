@@ -1,0 +1,112 @@
+{
+  "trace_id": "d671dc21-8df5-47c2-8965-93640b6a671f",
+  "events": [
+    {
+      "id": "03fd1836-4b34-439e-a3de-7a87ac937a4e",
+      "parent_id": "93b8dab6-9cd9-47fd-adfd-9cab29a4846b",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1881.86,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "STOCK"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Xiaomi"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Xiaomi 15 còn hàng không?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "00796b77-ea4f-4535-b51d-db82027b9bba",
+      "parent_id": "93b8dab6-9cd9-47fd-adfd-9cab29a4846b",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1882.01,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Xiaomi"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Xiaomi 15 còn hàng không?",
+          "top_k": 1
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "1f7a569b-1bcb-4f80-abd0-0374296b4320",
+      "parent_id": "93b8dab6-9cd9-47fd-adfd-9cab29a4846b",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1911.72,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DETAIL",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "3456866d-ff7b-4b70-899a-976924fb8634",
+      "parent_id": "56567218-5a10-4582-af8e-fe1f1af90cbf",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1912.54,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "status": "ok"
+}

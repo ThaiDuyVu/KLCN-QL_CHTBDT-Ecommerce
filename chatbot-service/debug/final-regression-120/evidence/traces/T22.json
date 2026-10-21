@@ -1,0 +1,783 @@
+{
+  "trace_id": "0fab7b1d-eece-47c8-bb48-c9f9c1bea30e",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "db5c472f-4011-49c7-aba9-b54b25a76b0e",
+      "parent_id": "3cce221d-5bfb-4580-a5a0-20c1686629d8",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 41.56,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "89aa4228-0693-4dcf-85ef-e2fdf7df72eb",
+      "parent_id": "3cce221d-5bfb-4580-a5a0-20c1686629d8",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 41.81,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "6bc6b647-90a9-4c00-841f-fb36f7a6ae8c",
+      "parent_id": "a95a5383-7e44-4e8b-974b-f7dee6b649a1",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2257.57,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_COMPARE",
+        "requested_fields": [
+          "PRICE",
+          "STOCK",
+          "PROMOTION",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Dell Inspiron 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Dell XPS 13",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "45f41f08-6133-4351-bd08-c23e546aaf78",
+      "parent_id": "a95a5383-7e44-4e8b-974b-f7dee6b649a1",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2283.82,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_COMPARE",
+          "requested_fields": [
+            "PRICE",
+            "STOCK",
+            "PROMOTION",
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "Dell Inspiron 15",
+                "sku": null,
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              },
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "Dell XPS 13",
+                "sku": null,
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": null,
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_COMPARE",
+          "requested_fields": [
+            "PRICE",
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "Dell Inspiron 15",
+                "sku": null,
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              },
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "Dell XPS 13",
+                "sku": null,
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [
+              "Dell"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "So sánh Dell Inspiron 15 và Dell XPS 13 về giá và RAM.",
+            "top_k": 2
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "0aab260d-a2eb-4ad1-9d70-60c9703786a0",
+      "parent_id": "3cce221d-5bfb-4580-a5a0-20c1686629d8",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2297.19,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_COMPARE",
+        "requested_fields": [
+          "PRICE",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Dell Inspiron 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Dell XPS 13",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "So sánh Dell Inspiron 15 và Dell XPS 13 về giá và RAM.",
+          "top_k": 2
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "b5bfbec8-fe8e-4dcd-9019-233009b857a0",
+      "parent_id": "3cce221d-5bfb-4580-a5a0-20c1686629d8",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2297.35,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Dell Inspiron 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Dell XPS 13",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "So sánh Dell Inspiron 15 và Dell XPS 13 về giá và RAM.",
+          "top_k": 2
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "520a94b4-a393-4c83-bd9c-c623dfabbabd",
+      "parent_id": "3cce221d-5bfb-4580-a5a0-20c1686629d8",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 2297.51,
+      "duration_ms": 37.46,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": []
+        },
+        {
+          "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+          "product_name": "Dell XPS 13",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core Ultra",
+            "Màn hình": "13,4 inch",
+            "Pin": "Pin tích hợp, sạc USB-C",
+            "RAM": "16-32 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+              "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+              "sku": "DEV-XPS13-SL-512",
+              "original_price": "32990000.0",
+              "effective_price": "32990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            },
+            {
+              "variant_id": "eb3ea7d8-4a52-4865-bf18-1625a520da06",
+              "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+              "sku": "DEV-XPS13-GR-1TB",
+              "original_price": "36990000.0",
+              "effective_price": "36990000.0",
+              "ram": "16GB",
+              "storage": "1TB",
+              "color": "Xám",
+              "available_quantity": 2,
+              "warranty_months": 24
+            },
+            {
+              "variant_id": "58a94383-f725-4056-be6d-46e4c366d04e",
+              "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+              "sku": "DEV-XPS13-SL-1TB",
+              "original_price": "41990000.0",
+              "effective_price": "41990000.0",
+              "ram": "32GB",
+              "storage": "1TB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "aed23a2f-e1c5-48cc-82a5-331e26593f8d",
+      "parent_id": "520a94b4-a393-4c83-bd9c-c623dfabbabd",
+      "name": "product.identity_resolution",
+      "status": "ok",
+      "offset_ms": 2297.64,
+      "duration_ms": 37.12,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": []
+        },
+        {
+          "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+          "product_name": "Dell XPS 13",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core Ultra",
+            "Màn hình": "13,4 inch",
+            "Pin": "Pin tích hợp, sạc USB-C",
+            "RAM": "16-32 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+              "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+              "sku": "DEV-XPS13-SL-512",
+              "original_price": "32990000.0",
+              "effective_price": "32990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            },
+            {
+              "variant_id": "eb3ea7d8-4a52-4865-bf18-1625a520da06",
+              "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+              "sku": "DEV-XPS13-GR-1TB",
+              "original_price": "36990000.0",
+              "effective_price": "36990000.0",
+              "ram": "16GB",
+              "storage": "1TB",
+              "color": "Xám",
+              "available_quantity": 2,
+              "warranty_months": 24
+            },
+            {
+              "variant_id": "58a94383-f725-4056-be6d-46e4c366d04e",
+              "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+              "sku": "DEV-XPS13-SL-1TB",
+              "original_price": "41990000.0",
+              "effective_price": "41990000.0",
+              "ram": "32GB",
+              "storage": "1TB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "a3f82870-fe33-42fa-8105-62e1c5714aa3",
+      "parent_id": "aed23a2f-e1c5-48cc-82a5-331e26593f8d",
+      "name": "product.stock_evidence",
+      "status": "ok",
+      "offset_ms": 2318.08,
+      "duration_ms": null,
+      "output": {
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "warehouse_id": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "variants": [
+          {
+            "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+            "available_quantity": 2
+          }
+        ],
+        "status": "KNOWN_AVAILABLE"
+      }
+    },
+    {
+      "id": "6a4d02bb-91e8-4857-8010-98ce1a512717",
+      "parent_id": "aed23a2f-e1c5-48cc-82a5-331e26593f8d",
+      "name": "product.stock_evidence",
+      "status": "ok",
+      "offset_ms": 2334.48,
+      "duration_ms": null,
+      "output": {
+        "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+        "warehouse_id": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "variants": [
+          {
+            "variant_id": "eb3ea7d8-4a52-4865-bf18-1625a520da06",
+            "available_quantity": 2
+          },
+          {
+            "variant_id": "58a94383-f725-4056-be6d-46e4c366d04e",
+            "available_quantity": 2
+          },
+          {
+            "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+            "available_quantity": 2
+          }
+        ],
+        "status": "KNOWN_AVAILABLE"
+      }
+    },
+    {
+      "id": "6590c155-af7b-4105-9312-9e2766f74c5b",
+      "parent_id": "3cce221d-5bfb-4580-a5a0-20c1686629d8",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2334.98,
+      "duration_ms": 30.29,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+          "product_name": "Dell XPS 13",
+          "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+          "sku": "DEV-XPS13-SL-512",
+          "original_price": "32990000.0",
+          "effective_price": "32990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-xps-13/main.jpg",
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "db2f2e7a-181f-4796-b605-3adcc921f812",
+      "parent_id": "6590c155-af7b-4105-9312-9e2766f74c5b",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2365.16,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "de24f73c-c12f-43e6-ba87-13308ab4980c"
+        ],
+        "variants": 4,
+        "cards": 2
+      }
+    },
+    {
+      "id": "25b624a5-b9a6-49f2-9300-589b8b862026",
+      "parent_id": "3cce221d-5bfb-4580-a5a0-20c1686629d8",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2365.44,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_COMPARE",
+        "products": 2,
+        "cards": 2,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "dd97c016-2362-49ad-adfe-d3b5aa2923e5",
+      "parent_id": "cb6e20e3-1d51-4b35-8581-886ff9036c94",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2366.02,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 9.49,
+      "duration_ms": 2368.49,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 41.96,
+      "duration_ms": 2242.14,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 43.24,
+      "duration_ms": 2214.26,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 43.65,
+      "duration_ms": 2213.79,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 44.02,
+      "duration_ms": 2213.36,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2257.76,
+      "duration_ms": 7.28,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2265.08,
+      "duration_ms": 6.34,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2271.45,
+      "duration_ms": 11.65,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2297.51,
+      "duration_ms": 37.46,
+      "status": "ok"
+    },
+    {
+      "name": "product.identity_resolution",
+      "offset_ms": 2297.64,
+      "duration_ms": 37.12,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2297.72,
+      "duration_ms": 12.61,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2310.42,
+      "duration_ms": 7.57,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2318.14,
+      "duration_ms": 9.35,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2327.57,
+      "duration_ms": 6.81,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2334.98,
+      "duration_ms": 30.29,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2335.2,
+      "duration_ms": 7.55,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2342.82,
+      "duration_ms": 22.24,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2365.39,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2365.77,
+      "duration_ms": 0.3,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/de24f73c-c12f-43e6-ba87-13308ab4980c/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/de24f73c-c12f-43e6-ba87-13308ab4980c/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

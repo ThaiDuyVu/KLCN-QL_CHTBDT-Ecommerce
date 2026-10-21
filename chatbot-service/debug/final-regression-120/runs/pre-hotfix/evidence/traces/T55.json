@@ -1,0 +1,476 @@
+{
+  "trace_id": "f313b42a-2a4d-4ee1-a233-dc84cb304629",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "7a144b4d-9726-4afd-9cef-51d2bc748765",
+      "parent_id": "2ae74a8f-2c9e-48bc-a118-f5b6725ee144",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 48.71,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "29b9736a-28ad-436f-8684-fde6c5168502",
+      "parent_id": "2ae74a8f-2c9e-48bc-a118-f5b6725ee144",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 48.88,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "a7e3efd8-78a3-486b-a418-bb197b3e0918",
+      "parent_id": "f25fe578-94b5-472c-b998-966a8c045aed",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2498.51,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": 512,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop dell duoi 20tr, ram >=16, ssd >=512",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "038f45d7-65ef-4a5f-9d03-4ff4202e1d37",
+      "parent_id": "f25fe578-94b5-472c-b998-966a8c045aed",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2698.55,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 16,
+            "min_storage_gb": 512,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dell duoi 20tr, ram >=16, ssd >=512",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Dell"
+            ],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 16,
+            "min_storage_gb": 512,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm laptop Dell dưới 20tr, ram >=16, ssd >=512.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "fc181252-0f58-469e-ba10-6ceb1b8251cc",
+      "parent_id": "2ae74a8f-2c9e-48bc-a118-f5b6725ee144",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2736.24,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": 512,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop Dell dưới 20tr, ram >=16, ssd >=512.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "e141cf45-60e9-4005-b171-b4b0a8c06c8d",
+      "parent_id": "2ae74a8f-2c9e-48bc-a118-f5b6725ee144",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2736.36,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": 512,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop Dell dưới 20tr, ram >=16, ssd >=512.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "cf607bc3-cb5b-430d-bf1e-42ea96effb38",
+      "parent_id": "2ae74a8f-2c9e-48bc-a118-f5b6725ee144",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 2736.52,
+      "duration_ms": 78.11,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.6175756462956558,
+          "ranking_score": 0.6175756462956558,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell",
+            "RAM từ 16GB",
+            "Bộ nhớ từ 512GB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "73a9b660-f2e1-4f4c-8107-72e97bb36bbe",
+      "parent_id": "2ae74a8f-2c9e-48bc-a118-f5b6725ee144",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2814.64,
+      "duration_ms": 11.9,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell",
+            "RAM từ 16GB",
+            "Bộ nhớ từ 512GB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a69507e1-360f-4091-88d2-64a80069eb84",
+      "parent_id": "73a9b660-f2e1-4f4c-8107-72e97bb36bbe",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2826.46,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "a96df51c-538c-4fa9-8018-6b49ca025b34"
+        ],
+        "variants": 1,
+        "cards": 1
+      }
+    },
+    {
+      "id": "23b1fb78-8968-440e-bb30-e1e96d5b6150",
+      "parent_id": "2ae74a8f-2c9e-48bc-a118-f5b6725ee144",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2826.75,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "f7069060-6118-4ea3-b7a0-e157e260fe19",
+      "parent_id": "fd6cc1c9-2a57-4974-b5ea-3994f3e30c45",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2827.92,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 11.1,
+      "duration_ms": 2828.65,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 49.04,
+      "duration_ms": 2649.7,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 51.32,
+      "duration_ms": 2447.05,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 51.86,
+      "duration_ms": 2446.19,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 52.36,
+      "duration_ms": 2445.65,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2498.86,
+      "duration_ms": 141.22,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2640.15,
+      "duration_ms": 14.2,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2654.44,
+      "duration_ms": 43.39,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2736.52,
+      "duration_ms": 78.11,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2736.58,
+      "duration_ms": 15.07,
+      "status": "ok"
+    },
+    {
+      "name": "product.embedding",
+      "offset_ms": 2751.69,
+      "duration_ms": 37.23,
+      "status": "ok"
+    },
+    {
+      "name": "product.vector_ranking",
+      "offset_ms": 2788.93,
+      "duration_ms": 15.11,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2804.08,
+      "duration_ms": 10.29,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2814.64,
+      "duration_ms": 11.9,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2814.72,
+      "duration_ms": 11.65,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2826.67,
+      "duration_ms": 0.08,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2827.26,
+      "duration_ms": 0.71,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Laptop"
+          ],
+          [
+            "maxPrice",
+            "20000000"
+          ],
+          [
+            "minRamGb",
+            "16"
+          ],
+          [
+            "minStorageGb",
+            "512"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ],
+          [
+            "brands",
+            "Dell"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

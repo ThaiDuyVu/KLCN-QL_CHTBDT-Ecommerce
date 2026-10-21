@@ -36,7 +36,8 @@ def read_only_plan(message: str) -> QueryPlan | None:
             return QueryPlan(intent=Intent.UNKNOWN, clarification='Mình chưa có tài liệu chính thức đủ để hướng dẫn thao tác này. Mình không thể xác nhận quy trình hoặc chính sách của cửa hàng.')
     if any(x in q for x in ('khach hang khac', 'tai khoan khac', 'mat khau', 'another customer')):
         return QueryPlan(intent=Intent.UNKNOWN, clarification='Mình không cung cấp thông tin riêng của khách hàng khác hoặc mật khẩu.')
-    if 'giup toi nhung gi' in q or 'co the lam gi' in q:
+    # Folded 'những' shares spelling with clause separator 'nhưng'; retain the full help phrase.
+    if 'giup toi nhung gi' in raw or 'co the lam gi' in raw:
         return QueryPlan(intent=Intent.HELP)
     if 'gio hang' in q:
         return QueryPlan(intent=Intent.CART_STATUS)

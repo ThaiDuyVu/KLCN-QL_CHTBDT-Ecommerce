@@ -1,0 +1,226 @@
+{
+  "trace_id": "c3bbe025-59ef-45e5-9094-12d8402ebe8d",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "6251638b-04d5-415e-af75-2b06a874f851",
+      "parent_id": "9380de13-816c-43c4-aacb-c6e06040c578",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 35.01,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "525fa682-65bc-403d-9976-c255d6e1bc7d",
+      "parent_id": "9380de13-816c-43c4-aacb-c6e06040c578",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 35.13,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "cda95dd6-3806-449b-891c-22fcd155696f",
+      "parent_id": "9380de13-816c-43c4-aacb-c6e06040c578",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 35.18,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "Cửa hàng có cho đổi trả sản phẩm không?"
+      }
+    },
+    {
+      "id": "367ec4c2-fb01-4aee-ab77-062be55ba408",
+      "parent_id": "9380de13-816c-43c4-aacb-c6e06040c578",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 40.86,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "Cửa hàng có cho đổi trả sản phẩm không?"
+      }
+    },
+    {
+      "id": "1def8957-31bc-4b25-8ec4-b4c27e524c58",
+      "parent_id": "9380de13-816c-43c4-aacb-c6e06040c578",
+      "name": "knowledge.retrieve",
+      "status": "ok",
+      "offset_ms": 41.02,
+      "duration_ms": 34.37,
+      "output": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.5183480316347963,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        }
+      ]
+    },
+    {
+      "id": "c1d78a5b-79d5-49c1-bca9-7e37d088b81a",
+      "parent_id": "1def8957-31bc-4b25-8ec4-b4c27e524c58",
+      "name": "knowledge.vector_search",
+      "status": "ok",
+      "offset_ms": 66.9,
+      "duration_ms": 8.3,
+      "output": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.5183480316347963,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        },
+        {
+          "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+          "chunk_index": 0,
+          "content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+          "similarity_score": 0.29025919015541723,
+          "source": {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment",
+            "document_type": "DEMO"
+          }
+        }
+      ]
+    },
+    {
+      "id": "2031823b-f1a9-4a51-ba97-12ff35feb309",
+      "parent_id": "1def8957-31bc-4b25-8ec4-b4c27e524c58",
+      "name": "knowledge.relevance",
+      "status": "ok",
+      "offset_ms": 75.33,
+      "duration_ms": null,
+      "output": {
+        "candidate_count": 2,
+        "selected_chunk_ids": [
+          "466d9bd6-e605-4688-83e7-0f0e825736e8"
+        ],
+        "rejected_chunk_ids": [
+          "74bcff7a-616d-4e34-bf35-e72eade1408c"
+        ],
+        "topics": [
+          "returns"
+        ],
+        "policy": "positive_cosine_and_explicit_topic"
+      }
+    },
+    {
+      "id": "5bbe72d0-e457-4eb5-bd74-98c90fdacd10",
+      "parent_id": "9380de13-816c-43c4-aacb-c6e06040c578",
+      "name": "knowledge.relevance",
+      "status": "ok",
+      "offset_ms": 75.51,
+      "duration_ms": null,
+      "output": {
+        "candidate_count": 1,
+        "selected_chunk_ids": [
+          "466d9bd6-e605-4688-83e7-0f0e825736e8"
+        ],
+        "rejected_chunk_ids": [],
+        "topics": [
+          "returns"
+        ],
+        "policy": "positive_cosine_and_explicit_topic"
+      }
+    },
+    {
+      "id": "5a12a3f0-03c4-4873-a2f7-e47c8e6501d0",
+      "parent_id": "9380de13-816c-43c4-aacb-c6e06040c578",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 75.55,
+      "duration_ms": null,
+      "output": {
+        "intent": "KNOWLEDGE_QA",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 1,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "c27d938c-76a7-48e6-b196-06c9cd025568",
+      "parent_id": "f367d997-5220-4b8a-9d31-647ce1b628c2",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 75.82,
+      "duration_ms": null,
+      "output": {
+        "strategy": "extractive_knowledge_evidence",
+        "reason": "source_bound_excerpt"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 7.32,
+      "duration_ms": 74.28,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 40.93,
+      "duration_ms": 0.03,
+      "status": "ok"
+    },
+    {
+      "name": "knowledge.retrieve",
+      "offset_ms": 41.02,
+      "duration_ms": 34.37,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 41.04,
+      "duration_ms": 25.69,
+      "status": "ok"
+    },
+    {
+      "name": "knowledge.vector_search",
+      "offset_ms": 66.9,
+      "duration_ms": 8.3,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 75.73,
+      "duration_ms": 0.16,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": []
+}

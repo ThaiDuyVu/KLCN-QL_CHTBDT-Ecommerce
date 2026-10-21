@@ -1,0 +1,188 @@
+{
+  "trace_id": "98608e2e-c028-423f-8fd9-34a353f0ca37",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "73aa6ca4-2957-4a71-81c5-375b226020ca",
+      "parent_id": "e70af5cb-f057-4858-b743-46ef526b10ad",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 46.89,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "507b434a-0b51-4fbd-971a-03261039bfa1",
+      "parent_id": "e70af5cb-f057-4858-b743-46ef526b10ad",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 47.03,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "25e4ef2a-809b-4308-ac29-cebde10ffeed",
+      "parent_id": "3f8f9788-95fb-443f-b306-d33e442dc9a7",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2428.05,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": "25000000",
+          "max_price": null,
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop gia tu 25 trieu den 20 trieu",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "6a6ef314-24e9-499b-9c82-cf92096cc9af",
+      "parent_id": "e70af5cb-f057-4858-b743-46ef526b10ad",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2492.42,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Khoảng giá bị mâu thuẫn. Bạn muốn giá tối thiểu và tối đa bao nhiêu?",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "ae9b35a8-5062-45b5-ab4c-1c1a8d2af425",
+      "parent_id": "e70af5cb-f057-4858-b743-46ef526b10ad",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2492.69,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "bca05276-a5e6-415b-a622-cf8b9efcf481",
+      "parent_id": "c17d10ac-9eb8-496b-8977-189759d84d07",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2493.18,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 11.16,
+      "duration_ms": 2497.76,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 47.15,
+      "duration_ms": 2426.34,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 48.36,
+      "duration_ms": 2379.5,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 48.74,
+      "duration_ms": 2379.06,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 49.1,
+      "duration_ms": 2378.64,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2428.28,
+      "duration_ms": 16.04,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2444.38,
+      "duration_ms": 9.18,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2453.61,
+      "duration_ms": 19.5,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2492.59,
+      "duration_ms": 0.09,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2492.96,
+      "duration_ms": 0.29,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

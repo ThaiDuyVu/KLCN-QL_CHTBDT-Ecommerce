@@ -1,0 +1,261 @@
+{
+  "trace_id": "644641bc-4d19-4485-aa0d-31d63e35a970",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "2656407e-254d-458e-89b4-07aa6addad7a",
+      "parent_id": "300d9cc5-588a-48fd-9713-9d53f23920fa",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 34.02,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "2656407e-254d-458e-89b4-07aa6addad7a",
+      "parent_id": "300d9cc5-588a-48fd-9713-9d53f23920fa",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 34.02,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "d3df48fb-f3b5-4025-8e98-379afde625bb",
+      "parent_id": "300d9cc5-588a-48fd-9713-9d53f23920fa",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 34.44,
+      "duration_ms": null,
+      "output": {
+        "actions": [
+          {
+            "kind": "payment",
+            "scope": "guidance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "d3df48fb-f3b5-4025-8e98-379afde625bb",
+      "parent_id": "300d9cc5-588a-48fd-9713-9d53f23920fa",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 34.44,
+      "duration_ms": null,
+      "output": {
+        "actions": [
+          {
+            "kind": "payment",
+            "scope": "guidance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "3d68356b-a90e-4089-b879-e9d2eab9f9f0",
+      "parent_id": "300d9cc5-588a-48fd-9713-9d53f23920fa",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 34.53,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "Theo hướng dẫn DEMO, làm sao kiểm tra đơn hàng đã thanh toán chưa?"
+      }
+    },
+    {
+      "id": "5573c58d-df43-4eff-81a2-6e60c8d877e3",
+      "parent_id": "300d9cc5-588a-48fd-9713-9d53f23920fa",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 39.34,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "Theo hướng dẫn DEMO, làm sao kiểm tra đơn hàng đã thanh toán chưa?"
+      }
+    },
+    {
+      "id": "c162bd87-3118-44d6-aee1-0f0a75d8ba3f",
+      "parent_id": "300d9cc5-588a-48fd-9713-9d53f23920fa",
+      "name": "knowledge.retrieve",
+      "status": "ok",
+      "offset_ms": 39.48,
+      "duration_ms": 33.44,
+      "output": [
+        {
+          "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+          "chunk_index": 0,
+          "content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+          "similarity_score": 0.764115543856095,
+          "source": {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment",
+            "document_type": "DEMO"
+          }
+        }
+      ]
+    },
+    {
+      "id": "adb17923-1e90-434d-b90d-838222f0cd44",
+      "parent_id": "c162bd87-3118-44d6-aee1-0f0a75d8ba3f",
+      "name": "knowledge.vector_search",
+      "status": "ok",
+      "offset_ms": 66.43,
+      "duration_ms": 6.36,
+      "output": [
+        {
+          "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+          "chunk_index": 0,
+          "content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+          "similarity_score": 0.764115543856095,
+          "source": {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment",
+            "document_type": "DEMO"
+          }
+        },
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.49300381582954833,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f4c4a708-4fc7-4cdc-bce7-e374a01fde44",
+      "parent_id": "c162bd87-3118-44d6-aee1-0f0a75d8ba3f",
+      "name": "knowledge.relevance",
+      "status": "ok",
+      "offset_ms": 72.86,
+      "duration_ms": null,
+      "output": {
+        "candidate_count": 2,
+        "selected_chunk_ids": [
+          "74bcff7a-616d-4e34-bf35-e72eade1408c"
+        ],
+        "rejected_chunk_ids": [
+          "466d9bd6-e605-4688-83e7-0f0e825736e8"
+        ],
+        "topics": [
+          "payment"
+        ],
+        "policy": "positive_cosine_and_explicit_topic"
+      }
+    },
+    {
+      "id": "8c0446db-9382-41f7-bec5-25dba5a9bade",
+      "parent_id": "300d9cc5-588a-48fd-9713-9d53f23920fa",
+      "name": "knowledge.relevance",
+      "status": "ok",
+      "offset_ms": 73.04,
+      "duration_ms": null,
+      "output": {
+        "candidate_count": 1,
+        "selected_chunk_ids": [
+          "74bcff7a-616d-4e34-bf35-e72eade1408c"
+        ],
+        "rejected_chunk_ids": [],
+        "topics": [
+          "payment"
+        ],
+        "policy": "positive_cosine_and_explicit_topic"
+      }
+    },
+    {
+      "id": "23846e5a-5c63-4913-9ef5-821640d61696",
+      "parent_id": "300d9cc5-588a-48fd-9713-9d53f23920fa",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 73.08,
+      "duration_ms": null,
+      "output": {
+        "intent": "KNOWLEDGE_QA",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 1,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "0fd14969-ee1f-4deb-9263-ce22167b97b3",
+      "parent_id": "f5789d41-c600-494a-9c23-8dbd8e885e7f",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 73.37,
+      "duration_ms": null,
+      "output": {
+        "strategy": "extractive_knowledge_evidence",
+        "reason": "source_bound_excerpt"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 5.33,
+      "duration_ms": 74.49,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 39.39,
+      "duration_ms": 0.03,
+      "status": "ok"
+    },
+    {
+      "name": "knowledge.retrieve",
+      "offset_ms": 39.48,
+      "duration_ms": 33.44,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 39.52,
+      "duration_ms": 26.76,
+      "status": "ok"
+    },
+    {
+      "name": "knowledge.vector_search",
+      "offset_ms": 66.43,
+      "duration_ms": 6.36,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 73.26,
+      "duration_ms": 0.16,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": []
+}

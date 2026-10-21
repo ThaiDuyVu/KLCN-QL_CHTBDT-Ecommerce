@@ -1,7 +1,7 @@
 from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Depends, Request, Response, HTTPException, Query
-from app.shared.config import get_settings
+from app.shared.config import get_settings, is_dev_like
 from app.shared.tracing import capture, enabled, store, event
 
 from app.features.chat.models import FeedbackRequest, SendMessageRequest
@@ -98,7 +98,13 @@ def get_messages(
     return service.conversation_service.repository.history_page(session_id, customer.customer_id, before, size)
 
 
-@router.get("/status")
+def require_dev_like_environment() -> None:
+    # Lab diagnostics only; resolved before authentication so production adds no backend/Ollama call.
+    if not is_dev_like(get_settings().app_env):
+        raise HTTPException(404)
+
+
+@router.get("/status", dependencies=[Depends(require_dev_like_environment)])
 async def status(customer: AuthenticatedCustomer = Depends(get_authenticated_customer)):
     """Read-only lab readiness; never returns tokens or database connection strings."""
     import httpx

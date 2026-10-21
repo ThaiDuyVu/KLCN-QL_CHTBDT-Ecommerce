@@ -1,0 +1,71 @@
+{
+  "trace_id": "4ad489f8-04bc-42a3-9f1a-f8a3b7f5545c",
+  "session_id": "synthetic-session_id-5dad23ec013d",
+  "started_at": "2026-10-20T14:00:13.886266+00:00",
+  "status": "error",
+  "duration_ms": 15.55,
+  "events": [
+    {
+      "id": "b8b6a3f0-a292-4333-832f-7b85fc9569a6",
+      "parent_id": null,
+      "name": "request.accepted",
+      "status": "ok",
+      "offset_ms": 0.02,
+      "duration_ms": null,
+      "input": null,
+      "output": {
+        "message": "Xiaomi 15 còn hàng không?",
+        "session_id": "synthetic-session_id-5dad23ec013d",
+        "authentication": "verified_by_backend"
+      }
+    }
+  ],
+  "dropped_events": 0,
+  "capture_policy": "Sanitized payloads; 64k characters per payload, 1MB per trace, 256 events. Credentials and structured contact fields are redacted. Free-text may contain personal data.",
+  "error": {
+    "type": "HTTPException",
+    "frames": [
+      {
+        "file": "router.py",
+        "function": "run",
+        "line": 49
+      },
+      {
+        "file": "service.py",
+        "function": "send_message_async",
+        "line": 95
+      },
+      {
+        "file": "contextlib.py",
+        "function": "__aenter__",
+        "line": 210
+      },
+      {
+        "file": "async_lease.py",
+        "function": "request_lease",
+        "line": 33
+      },
+      {
+        "file": "threads.py",
+        "function": "to_thread",
+        "line": 25
+      },
+      {
+        "file": "thread.py",
+        "function": "run",
+        "line": 59
+      },
+      {
+        "file": "contextlib.py",
+        "function": "__enter__",
+        "line": 137
+      },
+      {
+        "file": "postgres_repository.py",
+        "function": "request_lock",
+        "line": 59
+      }
+    ],
+    "http_status": 409
+  }
+}

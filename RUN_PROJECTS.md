@@ -36,7 +36,7 @@ cd chatbot-service
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8090
 ```
 
-API docs: `http://localhost:8090/docs`. Hiện chatbot chạy mock.
+API docs: `http://localhost:8090/docs`. Mặc định chatbot chạy cấu hình phát triển (AI tắt, Product Advisor mock, hội thoại trong RAM). Bật chế độ thật và các biến bắt buộc khi `APP_ENV` không phải dev: xem `chatbot-service/README.md` mục "Chế độ chạy". `/api/v1/health` chỉ là liveness.
 
 ## Flutter Android
 

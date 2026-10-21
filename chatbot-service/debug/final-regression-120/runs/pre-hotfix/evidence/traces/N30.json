@@ -1,0 +1,123 @@
+{
+  "trace_id": "437a036d-5800-447e-a4d3-068f11b12aec",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "13b859fa-4fe6-4700-8df9-874ff346640c",
+      "parent_id": "099e8559-5cb7-4ac0-b450-bef27bcb236b",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 36.34,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "c8d7d76b-b878-4c85-818a-6ef898fcad74",
+      "parent_id": "099e8559-5cb7-4ac0-b450-bef27bcb236b",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 36.69,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "4f16dea1-ba7c-4662-a3ee-070f73249f08",
+      "parent_id": "099e8559-5cb7-4ac0-b450-bef27bcb236b",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 36.91,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "WARRANTY_TICKET_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "2d3b9ab5-afab-42a1-9fcd-769f87e63d31",
+      "parent_id": "099e8559-5cb7-4ac0-b450-bef27bcb236b",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 44.14,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "WARRANTY_TICKET_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "5e71b1d9-68fe-40b3-951d-ec20d03c65a0",
+      "parent_id": "099e8559-5cb7-4ac0-b450-bef27bcb236b",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 60.45,
+      "duration_ms": null,
+      "output": {
+        "intent": "WARRANTY_TICKET_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "d93311ff-92db-4fb9-ae82-71fed6490aff",
+      "parent_id": "9b1b92db-5f4b-4bf1-aebe-7233c04a757a",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 60.76,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_customer_evidence",
+        "reason": "owned_warranty"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 6.7,
+      "duration_ms": 60.91,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 44.22,
+      "duration_ms": 16.22,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 44.27,
+      "duration_ms": 16.09,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 60.64,
+      "duration_ms": 0.16,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/warranties/mine/tickets"
+    }
+  ]
+}

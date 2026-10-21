@@ -1,0 +1,7858 @@
+[
+  {
+    "case_id": "T01",
+    "trace_id": "2833d766-0606-41e0-b82b-8014df3d1705",
+    "path": "evidence/traces/T01.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 28.68,
+        "duration_ms": 534.18,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 71.73,
+        "duration_ms": 460.34,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 74.83,
+        "duration_ms": 456.52,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 75.27,
+        "duration_ms": 456.07,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 75.67,
+        "duration_ms": 455.66,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 546.02,
+        "duration_ms": 0.09,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 546.62,
+        "duration_ms": 0.23,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T02",
+    "trace_id": "4227220a-e58a-4682-9da5-e80c4c66b660",
+    "path": "evidence/traces/T02.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.86,
+        "duration_ms": 437.77,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 41.26,
+        "duration_ms": 373.18,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 42.8,
+        "duration_ms": 371.53,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 43.29,
+        "duration_ms": 371.03,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 43.84,
+        "duration_ms": 370.46,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 429.79,
+        "duration_ms": 0.08,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 430.09,
+        "duration_ms": 0.15,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T03",
+    "trace_id": "d8804ffd-6358-4273-921f-f0d95551111f",
+    "path": "evidence/traces/T03.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.85,
+        "duration_ms": 53.11,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 54.14,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 54.32,
+        "duration_ms": 0.1,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T04",
+    "trace_id": "33027e99-9f1e-4b39-8cc7-3cc69168e560",
+    "path": "evidence/traces/T04.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.59,
+        "duration_ms": 1163.84,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 35.92,
+        "duration_ms": 990.04,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 37.78,
+        "duration_ms": 934.53,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 38.25,
+        "duration_ms": 933.93,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 38.67,
+        "duration_ms": 933.44,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 973.23,
+        "duration_ms": 17.18,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 990.49,
+        "duration_ms": 11.47,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1002.0,
+        "duration_ms": 19.18,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1039.3,
+        "duration_ms": 113.05,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1039.38,
+        "duration_ms": 15.97,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1055.43,
+        "duration_ms": 59.82,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1115.26,
+        "duration_ms": 22.37,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1137.67,
+        "duration_ms": 14.2,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1152.36,
+        "duration_ms": 7.98,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1152.47,
+        "duration_ms": 7.67,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1160.49,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1160.79,
+        "duration_ms": 0.21,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T05",
+    "trace_id": "c3bbe025-59ef-45e5-9094-12d8402ebe8d",
+    "path": "evidence/traces/T05.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 7.32,
+        "duration_ms": 74.28,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 40.93,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 41.02,
+        "duration_ms": 34.37,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 41.04,
+        "duration_ms": 25.69,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 66.9,
+        "duration_ms": 8.3,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 75.73,
+        "duration_ms": 0.16,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T06",
+    "trace_id": "05023817-2aa4-4747-a022-56d18d538a66",
+    "path": "evidence/traces/T06.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.76,
+        "duration_ms": 54.54,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 36.76,
+        "duration_ms": 15.88,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 36.8,
+        "duration_ms": 15.25,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 52.85,
+        "duration_ms": 0.21,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T07",
+    "trace_id": "ed4ba4ac-2028-4410-a438-38308222643a",
+    "path": "evidence/traces/T07.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.99,
+        "duration_ms": 2280.23,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 31.84,
+        "duration_ms": 2142.02,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 33.1,
+        "duration_ms": 2109.16,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 33.48,
+        "duration_ms": 2108.73,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 33.84,
+        "duration_ms": 2108.32,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2142.48,
+        "duration_ms": 9.27,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2151.79,
+        "duration_ms": 6.68,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2158.51,
+        "duration_ms": 14.22,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2188.8,
+        "duration_ms": 72.97,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2188.86,
+        "duration_ms": 11.8,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 2200.7,
+        "duration_ms": 37.64,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 2238.34,
+        "duration_ms": 13.02,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2251.41,
+        "duration_ms": 10.21,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2261.78,
+        "duration_ms": 10.72,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2261.85,
+        "duration_ms": 10.5,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2272.61,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2272.89,
+        "duration_ms": 0.19,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T08",
+    "trace_id": "cf501ca1-79b8-4256-a500-ffde0a1cbc52",
+    "path": "evidence/traces/T08.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.29,
+        "duration_ms": 2158.4,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 45.1,
+        "duration_ms": 2009.59,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 46.41,
+        "duration_ms": 1974.56,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 46.83,
+        "duration_ms": 1974.11,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 47.21,
+        "duration_ms": 1973.68,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2021.16,
+        "duration_ms": 8.36,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2029.56,
+        "duration_ms": 7.14,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2036.77,
+        "duration_ms": 17.21,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2071.22,
+        "duration_ms": 73.87,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2071.29,
+        "duration_ms": 14.57,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 2085.9,
+        "duration_ms": 37.25,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 2123.17,
+        "duration_ms": 11.73,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2134.97,
+        "duration_ms": 9.97,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2145.11,
+        "duration_ms": 11.82,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2145.19,
+        "duration_ms": 11.57,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2157.05,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2157.33,
+        "duration_ms": 0.2,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T09",
+    "trace_id": "3e33b500-45d3-4f64-858e-b4433a50716f",
+    "path": "evidence/traces/T09.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.5,
+        "duration_ms": 1545.31,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 44.16,
+        "duration_ms": 1469.41,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 45.46,
+        "duration_ms": 1432.86,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 45.87,
+        "duration_ms": 1432.41,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 46.25,
+        "duration_ms": 1431.99,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1478.5,
+        "duration_ms": 9.22,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1487.77,
+        "duration_ms": 9.59,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1497.41,
+        "duration_ms": 14.94,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1529.24,
+        "duration_ms": 12.97,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1529.34,
+        "duration_ms": 12.86,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1542.23,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1542.4,
+        "duration_ms": 0.09,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1542.71,
+        "duration_ms": 0.18,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T10",
+    "trace_id": "5da91f7e-deaa-4812-a2be-12c84332f96a",
+    "path": "evidence/traces/T10.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 7.98,
+        "duration_ms": 2021.98,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 41.01,
+        "duration_ms": 1949.13,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 42.67,
+        "duration_ms": 1917.98,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 43.2,
+        "duration_ms": 1917.42,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 43.67,
+        "duration_ms": 1916.93,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1960.77,
+        "duration_ms": 8.81,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1969.61,
+        "duration_ms": 7.18,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1976.82,
+        "duration_ms": 12.77,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2004.76,
+        "duration_ms": 9.96,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2004.82,
+        "duration_ms": 9.89,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2014.74,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2014.9,
+        "duration_ms": 0.07,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2015.23,
+        "duration_ms": 0.22,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T11",
+    "trace_id": "3dfe8534-81d7-4ff6-ac68-8e564ff43005",
+    "path": "evidence/traces/T11.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.36,
+        "duration_ms": 1882.67,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 40.86,
+        "duration_ms": 1717.6,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 42.28,
+        "duration_ms": 1684.85,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 42.73,
+        "duration_ms": 1684.36,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 43.14,
+        "duration_ms": 1683.9,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1727.32,
+        "duration_ms": 8.95,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1736.32,
+        "duration_ms": 6.99,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1743.33,
+        "duration_ms": 14.56,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1771.49,
+        "duration_ms": 82.35,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1771.54,
+        "duration_ms": 6.41,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1777.99,
+        "duration_ms": 30.53,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1808.54,
+        "duration_ms": 13.23,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1821.79,
+        "duration_ms": 10.91,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1832.79,
+        "duration_ms": 9.04,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1841.91,
+        "duration_ms": 11.65,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1853.85,
+        "duration_ms": 25.41,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1854.05,
+        "duration_ms": 8.44,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1862.62,
+        "duration_ms": 7.46,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1870.17,
+        "duration_ms": 8.89,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1879.37,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1879.78,
+        "duration_ms": 0.31,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T12",
+    "trace_id": "7ceb5ed3-9a2a-4c43-825b-bf500b39eb80",
+    "path": "evidence/traces/T12.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.66,
+        "duration_ms": 1622.82,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 42.2,
+        "duration_ms": 1422.59,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 43.44,
+        "duration_ms": 1388.2,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 43.83,
+        "duration_ms": 1387.78,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 44.19,
+        "duration_ms": 1387.38,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1431.82,
+        "duration_ms": 9.82,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1441.67,
+        "duration_ms": 7.72,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1449.43,
+        "duration_ms": 14.83,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1477.07,
+        "duration_ms": 91.67,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1477.16,
+        "duration_ms": 8.28,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1485.48,
+        "duration_ms": 30.9,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1516.39,
+        "duration_ms": 10.33,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1526.76,
+        "duration_ms": 11.18,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1538.16,
+        "duration_ms": 10.84,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1549.1,
+        "duration_ms": 9.81,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1559.06,
+        "duration_ms": 9.21,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1568.75,
+        "duration_ms": 50.33,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1569.13,
+        "duration_ms": 12.32,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1581.54,
+        "duration_ms": 11.74,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1593.42,
+        "duration_ms": 13.03,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1606.54,
+        "duration_ms": 12.28,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1619.18,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1619.72,
+        "duration_ms": 0.46,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T13",
+    "trace_id": "851c07ab-e335-4406-8db8-5e7d634f2fd8",
+    "path": "evidence/traces/T13.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.13,
+        "duration_ms": 2068.6,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 47.81,
+        "duration_ms": 1844.08,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 49.18,
+        "duration_ms": 1804.99,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 49.6,
+        "duration_ms": 1804.53,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 49.97,
+        "duration_ms": 1804.12,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1854.35,
+        "duration_ms": 11.96,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1866.35,
+        "duration_ms": 8.67,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1875.07,
+        "duration_ms": 16.1,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1907.25,
+        "duration_ms": 111.84,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1907.32,
+        "duration_ms": 12.43,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1919.82,
+        "duration_ms": 35.74,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1955.57,
+        "duration_ms": 11.58,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1967.2,
+        "duration_ms": 13.05,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1980.33,
+        "duration_ms": 11.66,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1992.24,
+        "duration_ms": 12.29,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2004.65,
+        "duration_ms": 13.93,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2019.11,
+        "duration_ms": 45.26,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2019.48,
+        "duration_ms": 11.32,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2030.89,
+        "duration_ms": 10.85,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2041.88,
+        "duration_ms": 11.11,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2053.17,
+        "duration_ms": 10.8,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2064.6,
+        "duration_ms": 0.12,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2065.24,
+        "duration_ms": 0.48,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T14",
+    "trace_id": "98608e2e-c028-423f-8fd9-34a353f0ca37",
+    "path": "evidence/traces/T14.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.16,
+        "duration_ms": 2497.76,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 47.15,
+        "duration_ms": 2426.34,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 48.36,
+        "duration_ms": 2379.5,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 48.74,
+        "duration_ms": 2379.06,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 49.1,
+        "duration_ms": 2378.64,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2428.28,
+        "duration_ms": 16.04,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2444.38,
+        "duration_ms": 9.18,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2453.61,
+        "duration_ms": 19.5,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2492.59,
+        "duration_ms": 0.09,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2492.96,
+        "duration_ms": 0.29,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T15",
+    "trace_id": "434c4126-fe56-4a5d-876d-e8be929a4e7c",
+    "path": "evidence/traces/T15.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.32,
+        "duration_ms": 1797.02,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 48.0,
+        "duration_ms": 1692.66,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 49.88,
+        "duration_ms": 1650.95,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 50.46,
+        "duration_ms": 1650.33,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 51.01,
+        "duration_ms": 1649.74,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1701.06,
+        "duration_ms": 12.28,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1713.41,
+        "duration_ms": 8.07,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1721.54,
+        "duration_ms": 18.11,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1756.87,
+        "duration_ms": 26.89,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1756.97,
+        "duration_ms": 26.64,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1757.05,
+        "duration_ms": 14.51,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1771.73,
+        "duration_ms": 11.51,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1783.77,
+        "duration_ms": 10.01,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1783.95,
+        "duration_ms": 9.64,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1793.9,
+        "duration_ms": 0.07,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1794.3,
+        "duration_ms": 0.29,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T16",
+    "trace_id": "6bed4243-e86f-4a24-9f0d-a118d2df9218",
+    "path": "evidence/traces/T16.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.36,
+        "duration_ms": 1221.08,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 47.48,
+        "duration_ms": 1127.52,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 48.68,
+        "duration_ms": 1093.4,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 49.06,
+        "duration_ms": 1092.98,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 49.42,
+        "duration_ms": 1092.58,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1142.27,
+        "duration_ms": 8.64,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1150.97,
+        "duration_ms": 7.24,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1158.26,
+        "duration_ms": 15.96,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1188.91,
+        "duration_ms": 20.97,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1188.97,
+        "duration_ms": 20.81,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1189.02,
+        "duration_ms": 10.85,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1199.95,
+        "duration_ms": 9.57,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1209.89,
+        "duration_ms": 8.81,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1210.0,
+        "duration_ms": 8.5,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1218.81,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1219.13,
+        "duration_ms": 0.27,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T17",
+    "trace_id": "87580523-cdb3-4ac4-99c4-2ba547428b82",
+    "path": "evidence/traces/T17.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.26,
+        "duration_ms": 2589.58,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 39.4,
+        "duration_ms": 2497.23,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 40.63,
+        "duration_ms": 2467.53,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 41.02,
+        "duration_ms": 2467.11,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 41.38,
+        "duration_ms": 2466.7,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2508.33,
+        "duration_ms": 9.5,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2517.86,
+        "duration_ms": 5.99,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2523.89,
+        "duration_ms": 11.87,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2552.28,
+        "duration_ms": 24.32,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 2552.4,
+        "duration_ms": 24.11,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2552.48,
+        "duration_ms": 14.16,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2566.74,
+        "duration_ms": 9.52,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2576.61,
+        "duration_ms": 8.11,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2576.71,
+        "duration_ms": 7.82,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2584.85,
+        "duration_ms": 0.07,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2585.24,
+        "duration_ms": 0.28,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T18",
+    "trace_id": "2f84c478-8ec3-48b6-8669-405352f6f941",
+    "path": "evidence/traces/T18.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.03,
+        "duration_ms": 1649.22,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 43.48,
+        "duration_ms": 1556.06,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 44.8,
+        "duration_ms": 1525.37,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 45.22,
+        "duration_ms": 1524.91,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 45.6,
+        "duration_ms": 1524.48,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1570.37,
+        "duration_ms": 8.87,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1579.28,
+        "duration_ms": 6.57,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1585.9,
+        "duration_ms": 12.3,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1615.77,
+        "duration_ms": 20.3,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1615.86,
+        "duration_ms": 20.08,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1615.92,
+        "duration_ms": 10.35,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1626.39,
+        "duration_ms": 9.23,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1636.08,
+        "duration_ms": 8.07,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1636.23,
+        "duration_ms": 7.74,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1644.32,
+        "duration_ms": 0.07,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1644.72,
+        "duration_ms": 0.28,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T19",
+    "trace_id": "69425a5a-5f5f-4e0f-ae40-bb740d5e54a2",
+    "path": "evidence/traces/T19.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.44,
+        "duration_ms": 1149.24,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 49.89,
+        "duration_ms": 1065.03,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 51.31,
+        "duration_ms": 1039.29,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 51.76,
+        "duration_ms": 1038.82,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 52.14,
+        "duration_ms": 1038.39,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1090.77,
+        "duration_ms": 7.27,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1098.08,
+        "duration_ms": 5.75,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1103.86,
+        "duration_ms": 10.32,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1128.54,
+        "duration_ms": 14.78,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1128.63,
+        "duration_ms": 14.58,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1128.7,
+        "duration_ms": 7.97,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1136.75,
+        "duration_ms": 6.2,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1143.32,
+        "duration_ms": 6.26,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1143.47,
+        "duration_ms": 5.94,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1149.72,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1150.1,
+        "duration_ms": 0.3,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T20",
+    "trace_id": "f20c4f13-d2d6-4d56-bc74-19daf6cbcd40",
+    "path": "evidence/traces/T20.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.58,
+        "duration_ms": 1450.36,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 37.22,
+        "duration_ms": 1368.24,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 38.71,
+        "duration_ms": 1341.64,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 39.2,
+        "duration_ms": 1341.13,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 39.61,
+        "duration_ms": 1340.69,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1380.51,
+        "duration_ms": 7.22,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1387.76,
+        "duration_ms": 6.15,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1393.95,
+        "duration_ms": 10.7,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1420.79,
+        "duration_ms": 17.96,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1420.86,
+        "duration_ms": 17.74,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1420.92,
+        "duration_ms": 9.09,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1430.11,
+        "duration_ms": 8.16,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1438.76,
+        "duration_ms": 7.0,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1438.92,
+        "duration_ms": 6.64,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1445.88,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1446.3,
+        "duration_ms": 0.34,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T21",
+    "trace_id": "c1c9be14-33e2-4bef-b141-96713b531f79",
+    "path": "evidence/traces/T21.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.81,
+        "duration_ms": 1548.67,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 52.82,
+        "duration_ms": 1445.1,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 54.56,
+        "duration_ms": 1409.8,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 55.1,
+        "duration_ms": 1409.22,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 55.6,
+        "duration_ms": 1408.68,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1464.57,
+        "duration_ms": 10.28,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1474.89,
+        "duration_ms": 7.05,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1481.98,
+        "duration_ms": 14.93,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1515.25,
+        "duration_ms": 21.0,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1515.37,
+        "duration_ms": 20.77,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1515.45,
+        "duration_ms": 10.81,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1526.31,
+        "duration_ms": 9.5,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1536.25,
+        "duration_ms": 9.69,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1536.37,
+        "duration_ms": 9.39,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1546.07,
+        "duration_ms": 0.08,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1546.47,
+        "duration_ms": 0.29,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T22",
+    "trace_id": "0fab7b1d-eece-47c8-bb48-c9f9c1bea30e",
+    "path": "evidence/traces/T22.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.49,
+        "duration_ms": 2368.49,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 41.96,
+        "duration_ms": 2242.14,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 43.24,
+        "duration_ms": 2214.26,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 43.65,
+        "duration_ms": 2213.79,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 44.02,
+        "duration_ms": 2213.36,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2257.76,
+        "duration_ms": 7.28,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2265.08,
+        "duration_ms": 6.34,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2271.45,
+        "duration_ms": 11.65,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2297.51,
+        "duration_ms": 37.46,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 2297.64,
+        "duration_ms": 37.12,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2297.72,
+        "duration_ms": 12.61,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2310.42,
+        "duration_ms": 7.57,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2318.14,
+        "duration_ms": 9.35,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2327.57,
+        "duration_ms": 6.81,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2334.98,
+        "duration_ms": 30.29,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2335.2,
+        "duration_ms": 7.55,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2342.82,
+        "duration_ms": 22.24,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2365.39,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2365.77,
+        "duration_ms": 0.3,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T23",
+    "trace_id": "cc623003-1dd8-4fcc-8150-682ee7e6cd96",
+    "path": "evidence/traces/T23.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.27,
+        "duration_ms": 2185.07,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 48.67,
+        "duration_ms": 2052.22,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 49.95,
+        "duration_ms": 2024.83,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 50.4,
+        "duration_ms": 2024.34,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 50.77,
+        "duration_ms": 2023.92,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2074.97,
+        "duration_ms": 7.88,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2082.9,
+        "duration_ms": 6.74,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2089.68,
+        "duration_ms": 10.49,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2116.18,
+        "duration_ms": 66.56,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2116.27,
+        "duration_ms": 12.02,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 2128.31,
+        "duration_ms": 34.24,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 2162.56,
+        "duration_ms": 13.07,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2175.66,
+        "duration_ms": 6.91,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2182.76,
+        "duration_ms": 5.46,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2182.85,
+        "duration_ms": 5.22,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2188.32,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2188.61,
+        "duration_ms": 0.21,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T24",
+    "trace_id": "e1075e40-b5ca-4a65-9283-796deaeb7550",
+    "path": "evidence/traces/T24.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.77,
+        "duration_ms": 2456.38,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 26.41,
+        "duration_ms": 2380.33,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 28.15,
+        "duration_ms": 2351.31,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 28.59,
+        "duration_ms": 2350.83,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 28.98,
+        "duration_ms": 2350.38,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2379.69,
+        "duration_ms": 8.5,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2388.23,
+        "duration_ms": 5.72,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2393.98,
+        "duration_ms": 12.22,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2422.91,
+        "duration_ms": 16.71,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 2423.0,
+        "duration_ms": 16.49,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2423.07,
+        "duration_ms": 7.05,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2430.16,
+        "duration_ms": 8.98,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2439.68,
+        "duration_ms": 8.65,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2439.82,
+        "duration_ms": 8.22,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2448.49,
+        "duration_ms": 0.08,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2448.96,
+        "duration_ms": 0.35,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T25",
+    "trace_id": "2b2c5440-50cc-4dcb-9850-513400560a85",
+    "path": "evidence/traces/T25.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.92,
+        "duration_ms": 2443.14,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 43.79,
+        "duration_ms": 2360.4,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 45.55,
+        "duration_ms": 2330.73,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 46.12,
+        "duration_ms": 2330.12,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 46.66,
+        "duration_ms": 2329.54,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2376.43,
+        "duration_ms": 7.71,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2384.17,
+        "duration_ms": 6.7,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2390.91,
+        "duration_ms": 12.66,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2431.06,
+        "duration_ms": 8.06,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2431.13,
+        "duration_ms": 7.97,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2439.13,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2439.28,
+        "duration_ms": 0.07,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2439.62,
+        "duration_ms": 0.2,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T26",
+    "trace_id": "69cd8678-dd2e-4af6-ae20-164064d905fb",
+    "path": "evidence/traces/T26.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.38,
+        "duration_ms": 2437.23,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 44.14,
+        "duration_ms": 2367.47,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 45.79,
+        "duration_ms": 2329.09,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 46.34,
+        "duration_ms": 2328.51,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 46.84,
+        "duration_ms": 2327.97,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2375.06,
+        "duration_ms": 10.01,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2385.12,
+        "duration_ms": 11.82,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2396.97,
+        "duration_ms": 14.22,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2436.52,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2436.9,
+        "duration_ms": 0.31,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T27",
+    "trace_id": "f3397922-ac25-46af-b2e2-41120d57bcf7",
+    "path": "evidence/traces/T27.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.97,
+        "duration_ms": 1118.47,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 39.33,
+        "duration_ms": 941.77,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 41.0,
+        "duration_ms": 910.01,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 41.51,
+        "duration_ms": 909.47,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 41.99,
+        "duration_ms": 908.96,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 951.18,
+        "duration_ms": 9.15,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 960.38,
+        "duration_ms": 7.45,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 967.88,
+        "duration_ms": 12.49,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 996.39,
+        "duration_ms": 91.46,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 996.47,
+        "duration_ms": 9.05,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1005.58,
+        "duration_ms": 32.48,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1038.09,
+        "duration_ms": 15.99,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1054.12,
+        "duration_ms": 10.54,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1064.79,
+        "duration_ms": 9.82,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1074.77,
+        "duration_ms": 12.65,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1087.88,
+        "duration_ms": 24.79,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1088.21,
+        "duration_ms": 8.89,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1097.23,
+        "duration_ms": 9.01,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1106.35,
+        "duration_ms": 6.09,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1112.79,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1113.26,
+        "duration_ms": 0.36,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T28",
+    "trace_id": "dab69cea-cbaa-4c2a-8068-495a252579bc",
+    "path": "evidence/traces/T28.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 17.32,
+        "duration_ms": 3202.28,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 51.81,
+        "duration_ms": 3114.67,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 53.55,
+        "duration_ms": 3078.43,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 53.99,
+        "duration_ms": 3077.95,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 54.4,
+        "duration_ms": 3077.5,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 3132.26,
+        "duration_ms": 13.71,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 3146.0,
+        "duration_ms": 6.14,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 3152.17,
+        "duration_ms": 13.83,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 3183.99,
+        "duration_ms": 15.75,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 3184.06,
+        "duration_ms": 15.62,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 3184.1,
+        "duration_ms": 6.93,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 3191.06,
+        "duration_ms": 8.43,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 3199.76,
+        "duration_ms": 6.65,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 3199.83,
+        "duration_ms": 6.42,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 3206.53,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 3206.83,
+        "duration_ms": 0.22,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T29",
+    "trace_id": "085d22be-9d71-4a59-ab7d-cf2ee34450fa",
+    "path": "evidence/traces/T29.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.26,
+        "duration_ms": 1961.35,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 32.58,
+        "duration_ms": 1896.09,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 33.99,
+        "duration_ms": 1866.59,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 34.43,
+        "duration_ms": 1866.1,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 34.84,
+        "duration_ms": 1865.65,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1900.77,
+        "duration_ms": 8.59,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1909.4,
+        "duration_ms": 7.37,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1916.8,
+        "duration_ms": 11.51,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1942.06,
+        "duration_ms": 8.66,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1942.11,
+        "duration_ms": 8.52,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1942.15,
+        "duration_ms": 8.28,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1950.72,
+        "duration_ms": 7.12,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1950.82,
+        "duration_ms": 6.87,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1957.96,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1958.31,
+        "duration_ms": 0.25,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T30",
+    "trace_id": "53ef2cc3-54c8-4b7c-9741-502e2e2a1fce",
+    "path": "evidence/traces/T30.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.03,
+        "duration_ms": 1041.6,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 44.18,
+        "duration_ms": 979.17,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 45.47,
+        "duration_ms": 950.99,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 45.88,
+        "duration_ms": 950.55,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 46.26,
+        "duration_ms": 950.13,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 996.62,
+        "duration_ms": 8.08,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1004.75,
+        "duration_ms": 6.24,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1011.03,
+        "duration_ms": 11.87,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1038.42,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1038.65,
+        "duration_ms": 0.13,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T31",
+    "trace_id": "297121e9-b231-461b-b043-e7391cd2e0e0",
+    "path": "evidence/traces/T31.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 12.53,
+        "duration_ms": 80.86,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 49.27,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 49.38,
+        "duration_ms": 37.35,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 49.41,
+        "duration_ms": 28.27,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 77.84,
+        "duration_ms": 8.72,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 87.09,
+        "duration_ms": 0.16,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T32",
+    "trace_id": "afa420da-6c4f-4edf-9fa5-f4be626e6941",
+    "path": "evidence/traces/T32.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.23,
+        "duration_ms": 66.56,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 34.7,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 34.79,
+        "duration_ms": 31.01,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 34.82,
+        "duration_ms": 23.14,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 58.1,
+        "duration_ms": 7.56,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 66.1,
+        "duration_ms": 0.16,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T33",
+    "trace_id": "d217f36e-7766-43d7-a394-885333e1a01b",
+    "path": "evidence/traces/T33.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.0,
+        "duration_ms": 68.68,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 34.25,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 34.34,
+        "duration_ms": 33.5,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 34.37,
+        "duration_ms": 25.91,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 60.43,
+        "duration_ms": 7.24,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 68.15,
+        "duration_ms": 0.16,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T34",
+    "trace_id": "aadf0746-9df2-464f-b0d5-a1665859f01b",
+    "path": "evidence/traces/T34.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.02,
+        "duration_ms": 71.69,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 34.45,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 34.53,
+        "duration_ms": 36.67,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 34.56,
+        "duration_ms": 28.21,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 62.92,
+        "duration_ms": 8.15,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 71.53,
+        "duration_ms": 0.16,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T35",
+    "trace_id": "000b2f70-2aa0-4d9a-b056-451e92f329a9",
+    "path": "evidence/traces/T35.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.39,
+        "duration_ms": 72.98,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 39.41,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 39.5,
+        "duration_ms": 36.75,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 39.53,
+        "duration_ms": 28.91,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 68.6,
+        "duration_ms": 7.51,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 76.61,
+        "duration_ms": 0.2,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T36",
+    "trace_id": "74933827-f933-4892-b727-adb2f229eaa4",
+    "path": "evidence/traces/T36.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.82,
+        "duration_ms": 74.95,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 34.64,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 34.73,
+        "duration_ms": 38.89,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 34.75,
+        "duration_ms": 28.81,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 63.72,
+        "duration_ms": 9.79,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 73.87,
+        "duration_ms": 0.1,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T37",
+    "trace_id": "567f39d0-7704-4c45-aa06-a5b20c92f9c8",
+    "path": "evidence/traces/T37.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 7.34,
+        "duration_ms": 45.64,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 36.19,
+        "duration_ms": 10.92,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 36.21,
+        "duration_ms": 10.8,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 47.26,
+        "duration_ms": 0.12,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T38",
+    "trace_id": "90be10d1-8405-43d0-a85c-43ed2c6a6628",
+    "path": "evidence/traces/T38.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.99,
+        "duration_ms": 43.65,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 33.05,
+        "duration_ms": 9.11,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 33.08,
+        "duration_ms": 8.91,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 42.37,
+        "duration_ms": 0.22,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T39",
+    "trace_id": "71c4c377-4a61-4087-a08c-46e27bd71522",
+    "path": "evidence/traces/T39.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.06,
+        "duration_ms": 59.83,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 41.56,
+        "duration_ms": 20.27,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 41.59,
+        "duration_ms": 8.86,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 50.47,
+        "duration_ms": 11.26,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 61.99,
+        "duration_ms": 0.13,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T40",
+    "trace_id": "a91b069e-bf3d-4337-aa7c-2397e795971c",
+    "path": "evidence/traces/T40.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.15,
+        "duration_ms": 47.68,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 35.11,
+        "duration_ms": 12.3,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 35.14,
+        "duration_ms": 11.72,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 47.6,
+        "duration_ms": 0.16,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T41",
+    "trace_id": "36a00277-5c94-4756-9318-f9c9d0caad5a",
+    "path": "evidence/traces/T41.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.72,
+        "duration_ms": 47.21,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 38.83,
+        "duration_ms": 11.23,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 38.86,
+        "duration_ms": 11.12,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 50.22,
+        "duration_ms": 0.11,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T42",
+    "trace_id": "29d1b427-eaea-4b79-a027-095b76c9eebc",
+    "path": "evidence/traces/T42.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.99,
+        "duration_ms": 58.31,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 35.76,
+        "duration_ms": 21.23,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 35.79,
+        "duration_ms": 10.88,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 46.69,
+        "duration_ms": 10.18,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 57.15,
+        "duration_ms": 0.14,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T43",
+    "trace_id": "ef3f1923-0e96-470f-a4d4-57493f6823ad",
+    "path": "evidence/traces/T43.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.82,
+        "duration_ms": 46.09,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 37.72,
+        "duration_ms": 9.02,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 37.75,
+        "duration_ms": 8.93,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 46.89,
+        "duration_ms": 0.13,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T44",
+    "trace_id": "a500a484-83e5-4568-9b67-1f4ad08b2294",
+    "path": "evidence/traces/T44.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.95,
+        "duration_ms": 33.91,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 33.38,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 33.52,
+        "duration_ms": 0.1,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T45",
+    "trace_id": "76c868cd-3ec4-4dd3-8a24-a3ff73057490",
+    "path": "evidence/traces/T45.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.59,
+        "duration_ms": 33.14,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 32.43,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 32.59,
+        "duration_ms": 0.12,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T46",
+    "trace_id": "25795e8b-7e32-4e28-90ef-4efafd2d6bb2",
+    "path": "evidence/traces/T46.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 7.76,
+        "duration_ms": 33.49,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 35.59,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 35.73,
+        "duration_ms": 0.1,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T47",
+    "trace_id": "0f76c387-9d68-42aa-a8ee-4d649a7b610d",
+    "path": "evidence/traces/T47.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.91,
+        "duration_ms": 33.94,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 33.01,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 33.15,
+        "duration_ms": 0.08,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T48",
+    "trace_id": "32f54369-9fbd-4482-8919-dc2a304ff8bd",
+    "path": "evidence/traces/T48.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.6,
+        "duration_ms": 33.0,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 32.44,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 32.58,
+        "duration_ms": 0.11,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T49",
+    "trace_id": "677b3279-c825-45f9-b0f9-c6e7d1ba03a9",
+    "path": "evidence/traces/T49.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.98,
+        "duration_ms": 1950.99,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 29.01,
+        "duration_ms": 1876.44,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 30.22,
+        "duration_ms": 1842.92,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 30.6,
+        "duration_ms": 1842.5,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 30.96,
+        "duration_ms": 1842.1,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1873.32,
+        "duration_ms": 9.78,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1883.13,
+        "duration_ms": 6.91,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1890.08,
+        "duration_ms": 14.75,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1919.55,
+        "duration_ms": 17.34,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1919.6,
+        "duration_ms": 17.19,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1919.64,
+        "duration_ms": 8.96,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1928.69,
+        "duration_ms": 7.83,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1936.9,
+        "duration_ms": 8.63,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1937.01,
+        "duration_ms": 8.37,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1945.63,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1945.95,
+        "duration_ms": 0.25,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T50",
+    "trace_id": "57f43d5f-95a4-4473-b36a-00886afc9ca6",
+    "path": "evidence/traces/T50.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.64,
+        "duration_ms": 80.31,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 49.14,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 49.24,
+        "duration_ms": 35.29,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 49.27,
+        "duration_ms": 25.57,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 74.98,
+        "duration_ms": 9.39,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 84.83,
+        "duration_ms": 0.15,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T51",
+    "trace_id": "6a9f5e3a-93a7-48cf-b77c-1bf02c2513d7",
+    "path": "evidence/traces/T51.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.32,
+        "duration_ms": 1220.59,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 27.92,
+        "duration_ms": 1168.37,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 29.7,
+        "duration_ms": 1139.15,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 30.09,
+        "duration_ms": 1138.73,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 30.45,
+        "duration_ms": 1138.35,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1168.99,
+        "duration_ms": 8.62,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1177.66,
+        "duration_ms": 6.59,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1184.28,
+        "duration_ms": 11.62,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1210.74,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1210.96,
+        "duration_ms": 0.13,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T52",
+    "trace_id": "7c12bb73-2d90-4c0e-9dfb-bca254bae660",
+    "path": "evidence/traces/T52.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.65,
+        "duration_ms": 1738.26,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 52.76,
+        "duration_ms": 1637.94,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 55.11,
+        "duration_ms": 1610.55,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 55.64,
+        "duration_ms": 1609.99,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 56.13,
+        "duration_ms": 1609.47,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1665.84,
+        "duration_ms": 7.68,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1673.56,
+        "duration_ms": 6.6,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1680.18,
+        "duration_ms": 9.68,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1705.98,
+        "duration_ms": 23.27,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1706.09,
+        "duration_ms": 23.03,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1706.17,
+        "duration_ms": 12.91,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1719.18,
+        "duration_ms": 9.61,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1729.27,
+        "duration_ms": 7.88,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1729.42,
+        "duration_ms": 7.51,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1737.3,
+        "duration_ms": 0.08,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1737.78,
+        "duration_ms": 0.34,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T53",
+    "trace_id": "038a11e0-6511-4f99-8063-2dff5329edf6",
+    "path": "evidence/traces/T53.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.56,
+        "duration_ms": 1272.77,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 42.05,
+        "duration_ms": 1114.82,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 43.52,
+        "duration_ms": 1092.58,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 43.98,
+        "duration_ms": 1092.09,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 44.38,
+        "duration_ms": 1091.67,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1136.21,
+        "duration_ms": 6.4,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1142.64,
+        "duration_ms": 4.28,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1146.95,
+        "duration_ms": 9.14,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1167.55,
+        "duration_ms": 78.0,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1167.63,
+        "duration_ms": 7.59,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1175.25,
+        "duration_ms": 33.69,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1208.96,
+        "duration_ms": 12.48,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1221.56,
+        "duration_ms": 8.41,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1230.03,
+        "duration_ms": 7.5,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1237.63,
+        "duration_ms": 7.55,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1245.56,
+        "duration_ms": 22.93,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1245.85,
+        "duration_ms": 6.31,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1252.27,
+        "duration_ms": 10.0,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1262.37,
+        "duration_ms": 5.9,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1268.6,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1269.09,
+        "duration_ms": 0.39,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T54",
+    "trace_id": "16fd969b-9242-4c41-a809-30b2d13ab66a",
+    "path": "evidence/traces/T54.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.23,
+        "duration_ms": 1273.22,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 46.07,
+        "duration_ms": 1209.93,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 48.01,
+        "duration_ms": 1168.7,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 48.42,
+        "duration_ms": 1168.25,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 48.79,
+        "duration_ms": 1167.82,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1216.94,
+        "duration_ms": 8.95,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1225.95,
+        "duration_ms": 6.84,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1232.82,
+        "duration_ms": 22.92,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1271.53,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1271.68,
+        "duration_ms": 0.08,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T55",
+    "trace_id": "104c2212-f916-4916-9382-ad6c915655a5",
+    "path": "evidence/traces/T55.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.46,
+        "duration_ms": 2682.96,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 43.51,
+        "duration_ms": 2531.8,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 45.27,
+        "duration_ms": 2486.29,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 45.73,
+        "duration_ms": 2485.78,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 46.16,
+        "duration_ms": 2485.3,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2531.89,
+        "duration_ms": 14.58,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2546.51,
+        "duration_ms": 11.53,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2558.13,
+        "duration_ms": 16.2,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2591.84,
+        "duration_ms": 74.47,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2591.98,
+        "duration_ms": 11.07,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 2603.08,
+        "duration_ms": 35.7,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 2638.81,
+        "duration_ms": 14.58,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2653.44,
+        "duration_ms": 12.62,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2666.33,
+        "duration_ms": 8.94,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2666.45,
+        "duration_ms": 8.6,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2675.44,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2675.83,
+        "duration_ms": 1.04,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T56",
+    "trace_id": "34e36de6-d07e-4b4a-a4ad-5c4d8271a330",
+    "path": "evidence/traces/T56.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 12.25,
+        "duration_ms": 3146.84,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 56.04,
+        "duration_ms": 3074.77,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 58.32,
+        "duration_ms": 1849.37,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 58.83,
+        "duration_ms": 1848.83,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 59.29,
+        "duration_ms": 1848.34,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 1908.86,
+        "duration_ms": 1194.94,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 1909.55,
+        "duration_ms": 1194.23,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 1910.27,
+        "duration_ms": 1193.48,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 3103.97,
+        "duration_ms": 7.84,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 3111.87,
+        "duration_ms": 7.04,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 3118.94,
+        "duration_ms": 11.42,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 3145.97,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 3146.15,
+        "duration_ms": 0.1,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "T57",
+    "trace_id": null,
+    "path": null,
+    "execution": "REAL_SECURITY_API",
+    "stage_timings": []
+  },
+  {
+    "case_id": "T58",
+    "trace_id": null,
+    "path": null,
+    "execution": "REAL_SECURITY_API",
+    "stage_timings": []
+  },
+  {
+    "case_id": "T59",
+    "trace_id": null,
+    "path": null,
+    "execution": "REAL_CHROME_AND_FASTAPI_RESTART",
+    "stage_timings": []
+  },
+  {
+    "case_id": "T60",
+    "trace_id": null,
+    "path": null,
+    "execution": "REAL_SECURITY_API",
+    "stage_timings": []
+  },
+  {
+    "case_id": "N01",
+    "trace_id": "c23b1a8e-32b3-467d-9116-35b527684bb2",
+    "path": "evidence/traces/N01.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.82,
+        "duration_ms": 2583.11,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 66.96,
+        "duration_ms": 2403.71,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 71.0,
+        "duration_ms": 2366.42,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 71.44,
+        "duration_ms": 2365.91,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 71.81,
+        "duration_ms": 2365.49,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2437.66,
+        "duration_ms": 9.85,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2447.54,
+        "duration_ms": 8.87,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2456.45,
+        "duration_ms": 13.4,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2484.06,
+        "duration_ms": 81.37,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2484.13,
+        "duration_ms": 6.11,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 2490.28,
+        "duration_ms": 42.18,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 2532.47,
+        "duration_ms": 9.65,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2542.13,
+        "duration_ms": 7.42,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2549.65,
+        "duration_ms": 7.09,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2556.83,
+        "duration_ms": 8.32,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2565.44,
+        "duration_ms": 18.96,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2565.65,
+        "duration_ms": 6.53,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2572.25,
+        "duration_ms": 7.02,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2579.37,
+        "duration_ms": 4.83,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2584.5,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2584.87,
+        "duration_ms": 0.33,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N02",
+    "trace_id": "577086cb-147b-4bef-966f-2e1f2048853d",
+    "path": "evidence/traces/N02.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.18,
+        "duration_ms": 1908.61,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 37.4,
+        "duration_ms": 1739.53,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 39.02,
+        "duration_ms": 1706.75,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 39.4,
+        "duration_ms": 1706.21,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 39.77,
+        "duration_ms": 1705.53,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1746.22,
+        "duration_ms": 9.37,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1755.6,
+        "duration_ms": 7.45,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1763.11,
+        "duration_ms": 13.41,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1790.67,
+        "duration_ms": 86.63,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1790.74,
+        "duration_ms": 9.2,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1799.98,
+        "duration_ms": 29.62,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1829.62,
+        "duration_ms": 12.99,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1842.64,
+        "duration_ms": 12.1,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1854.82,
+        "duration_ms": 13.6,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1868.52,
+        "duration_ms": 8.16,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1877.32,
+        "duration_ms": 26.51,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1877.67,
+        "duration_ms": 9.28,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1887.04,
+        "duration_ms": 8.29,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1895.48,
+        "duration_ms": 8.13,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1903.93,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1904.37,
+        "duration_ms": 0.36,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N03",
+    "trace_id": "54b4e400-0442-4370-8709-eaf9fb215154",
+    "path": "evidence/traces/N03.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.04,
+        "duration_ms": 1977.78,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 57.5,
+        "duration_ms": 1887.06,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 60.52,
+        "duration_ms": 1852.44,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 60.94,
+        "duration_ms": 1851.98,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 61.31,
+        "duration_ms": 1851.55,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1913.14,
+        "duration_ms": 13.52,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1926.68,
+        "duration_ms": 5.89,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1932.6,
+        "duration_ms": 11.44,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1975.53,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1975.76,
+        "duration_ms": 0.13,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N04",
+    "trace_id": "11ab246b-e034-4a70-8ea5-72aa5052d104",
+    "path": "evidence/traces/N04.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 7.29,
+        "duration_ms": 1927.97,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 36.4,
+        "duration_ms": 1790.92,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 38.48,
+        "duration_ms": 1754.06,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 38.92,
+        "duration_ms": 1753.57,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 39.33,
+        "duration_ms": 1753.1,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1792.96,
+        "duration_ms": 12.19,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1805.2,
+        "duration_ms": 7.88,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1813.12,
+        "duration_ms": 13.08,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1848.6,
+        "duration_ms": 69.93,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1848.69,
+        "duration_ms": 9.55,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1858.3,
+        "duration_ms": 36.92,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1895.24,
+        "duration_ms": 13.64,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1908.94,
+        "duration_ms": 9.4,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1918.55,
+        "duration_ms": 6.41,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1918.66,
+        "duration_ms": 6.11,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1925.09,
+        "duration_ms": 0.08,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1925.46,
+        "duration_ms": 0.25,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N05",
+    "trace_id": "d6788be3-184c-4744-823f-e9e07a96cb6b",
+    "path": "evidence/traces/N05.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.4,
+        "duration_ms": 1781.63,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 43.57,
+        "duration_ms": 1705.19,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 46.33,
+        "duration_ms": 1671.58,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 46.82,
+        "duration_ms": 1671.06,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 47.24,
+        "duration_ms": 1670.57,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1718.09,
+        "duration_ms": 9.4,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1727.54,
+        "duration_ms": 8.22,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1735.79,
+        "duration_ms": 12.14,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1765.24,
+        "duration_ms": 10.29,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1765.33,
+        "duration_ms": 10.18,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1775.54,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1775.72,
+        "duration_ms": 0.1,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1776.06,
+        "duration_ms": 0.18,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N06",
+    "trace_id": "97b0d9ab-e441-4146-ab2c-7e58e152d2f1",
+    "path": "evidence/traces/N06.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.81,
+        "duration_ms": 1806.58,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 43.91,
+        "duration_ms": 1735.57,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 46.02,
+        "duration_ms": 1704.47,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 46.52,
+        "duration_ms": 1703.93,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 46.98,
+        "duration_ms": 1703.44,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1750.65,
+        "duration_ms": 7.12,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1757.8,
+        "duration_ms": 5.84,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1763.67,
+        "duration_ms": 15.25,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1793.96,
+        "duration_ms": 9.0,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1794.09,
+        "duration_ms": 8.76,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1803.06,
+        "duration_ms": 0.12,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1803.31,
+        "duration_ms": 0.11,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1803.7,
+        "duration_ms": 0.16,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N07",
+    "trace_id": "25b0b2fc-a2e9-4a24-b55f-0cd476ec38a4",
+    "path": "evidence/traces/N07.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.84,
+        "duration_ms": 1701.54,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 59.3,
+        "duration_ms": 1601.07,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 61.89,
+        "duration_ms": 1561.06,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 62.39,
+        "duration_ms": 1560.53,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 62.85,
+        "duration_ms": 1560.04,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1623.22,
+        "duration_ms": 14.27,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1637.52,
+        "duration_ms": 7.83,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1645.38,
+        "duration_ms": 14.5,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1679.36,
+        "duration_ms": 16.4,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1679.43,
+        "duration_ms": 16.26,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1679.47,
+        "duration_ms": 8.57,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1688.08,
+        "duration_ms": 7.42,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1695.77,
+        "duration_ms": 5.91,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1695.83,
+        "duration_ms": 5.69,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1701.79,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1702.05,
+        "duration_ms": 0.19,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N08",
+    "trace_id": "e4aa949e-cdcf-430e-a370-871b85fd590e",
+    "path": "evidence/traces/N08.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.8,
+        "duration_ms": 1863.9,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 41.31,
+        "duration_ms": 1769.54,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 43.21,
+        "duration_ms": 1713.68,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 43.63,
+        "duration_ms": 1713.19,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 44.01,
+        "duration_ms": 1712.74,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1757.2,
+        "duration_ms": 15.73,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1773.05,
+        "duration_ms": 13.49,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1786.63,
+        "duration_ms": 22.89,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1840.98,
+        "duration_ms": 18.49,
+        "status": "error"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1841.12,
+        "duration_ms": 18.05,
+        "status": "error"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1841.21,
+        "duration_ms": 15.06,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1859.78,
+        "duration_ms": 0.12,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1860.32,
+        "duration_ms": 0.29,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N09",
+    "trace_id": "34d14a84-cfa9-4893-8a5b-f180a40f7529",
+    "path": "evidence/traces/N09.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.64,
+        "duration_ms": 2818.27,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 50.97,
+        "duration_ms": 2701.32,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 53.02,
+        "duration_ms": 2654.18,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 53.51,
+        "duration_ms": 2653.64,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 53.98,
+        "duration_ms": 2653.11,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2707.82,
+        "duration_ms": 12.22,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2720.07,
+        "duration_ms": 9.29,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2729.41,
+        "duration_ms": 21.11,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2774.48,
+        "duration_ms": 30.07,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 2774.59,
+        "duration_ms": 29.88,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2774.66,
+        "duration_ms": 15.07,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2789.85,
+        "duration_ms": 14.25,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2804.56,
+        "duration_ms": 8.9,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2804.66,
+        "duration_ms": 8.56,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2813.61,
+        "duration_ms": 0.08,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2813.98,
+        "duration_ms": 0.32,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N10",
+    "trace_id": "61abb13c-d46f-42c6-b69e-ea8927710409",
+    "path": "evidence/traces/N10.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.84,
+        "duration_ms": 2828.1,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 59.39,
+        "duration_ms": 2716.56,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 63.24,
+        "duration_ms": 2681.39,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 63.67,
+        "duration_ms": 2680.92,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 64.06,
+        "duration_ms": 2680.48,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2744.84,
+        "duration_ms": 10.27,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2755.16,
+        "duration_ms": 7.15,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2762.34,
+        "duration_ms": 12.62,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2796.92,
+        "duration_ms": 24.18,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 2797.06,
+        "duration_ms": 23.92,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2797.15,
+        "duration_ms": 13.5,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2810.78,
+        "duration_ms": 9.88,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2821.11,
+        "duration_ms": 6.66,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2821.25,
+        "duration_ms": 6.31,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2827.89,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2828.26,
+        "duration_ms": 0.32,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N11",
+    "trace_id": "40ddf113-93ee-4ad8-8d1d-46502d280dae",
+    "path": "evidence/traces/N11.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.33,
+        "duration_ms": 2751.46,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 39.37,
+        "duration_ms": 2579.46,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 41.11,
+        "duration_ms": 2549.62,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 41.54,
+        "duration_ms": 2549.15,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 41.93,
+        "duration_ms": 2548.72,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2590.92,
+        "duration_ms": 9.9,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2600.85,
+        "duration_ms": 5.12,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2606.0,
+        "duration_ms": 12.01,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2637.22,
+        "duration_ms": 91.89,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2637.35,
+        "duration_ms": 12.62,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 2650.02,
+        "duration_ms": 41.03,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 2691.07,
+        "duration_ms": 17.75,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2708.87,
+        "duration_ms": 10.92,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2719.9,
+        "duration_ms": 8.89,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2729.12,
+        "duration_ms": 16.89,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2729.31,
+        "duration_ms": 7.63,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2737.03,
+        "duration_ms": 8.72,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2746.14,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2746.58,
+        "duration_ms": 0.42,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N12",
+    "trace_id": "ed4dfa71-0ce2-4b07-ab38-6e754d274b78",
+    "path": "evidence/traces/N12.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 12.05,
+        "duration_ms": 2404.2,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 53.4,
+        "duration_ms": 2272.92,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 55.3,
+        "duration_ms": 2232.95,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 55.74,
+        "duration_ms": 2232.45,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 56.15,
+        "duration_ms": 2231.98,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2288.73,
+        "duration_ms": 9.81,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2298.57,
+        "duration_ms": 8.57,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2307.19,
+        "duration_ms": 18.23,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2344.19,
+        "duration_ms": 35.24,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 2344.29,
+        "duration_ms": 35.0,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2344.36,
+        "duration_ms": 10.79,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2355.23,
+        "duration_ms": 10.14,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2365.51,
+        "duration_ms": 7.31,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2372.9,
+        "duration_ms": 6.13,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2379.44,
+        "duration_ms": 21.39,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2379.59,
+        "duration_ms": 6.95,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2386.67,
+        "duration_ms": 13.88,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2401.01,
+        "duration_ms": 0.09,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2401.5,
+        "duration_ms": 0.37,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N13",
+    "trace_id": "b4f08297-6979-4069-8456-e843b242d0e7",
+    "path": "evidence/traces/N13.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 18.97,
+        "duration_ms": 2532.37,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 60.88,
+        "duration_ms": 2430.27,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 64.02,
+        "duration_ms": 2389.7,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 64.62,
+        "duration_ms": 2389.03,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 65.11,
+        "duration_ms": 2388.5,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2453.97,
+        "duration_ms": 11.55,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2465.57,
+        "duration_ms": 7.78,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2473.39,
+        "duration_ms": 12.68,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2510.29,
+        "duration_ms": 18.21,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 2510.4,
+        "duration_ms": 17.77,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2510.48,
+        "duration_ms": 10.54,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2521.15,
+        "duration_ms": 6.46,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2528.52,
+        "duration_ms": 8.5,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2528.7,
+        "duration_ms": 8.01,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2537.16,
+        "duration_ms": 0.07,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2537.68,
+        "duration_ms": 0.36,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N14",
+    "trace_id": "c4817f2d-71b8-4848-941b-13a28a41ad6a",
+    "path": "evidence/traces/N14.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 17.55,
+        "duration_ms": 1778.38,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 63.25,
+        "duration_ms": 1676.65,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 65.22,
+        "duration_ms": 1622.06,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 65.7,
+        "duration_ms": 1621.54,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 66.16,
+        "duration_ms": 1621.03,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1687.7,
+        "duration_ms": 16.99,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1704.74,
+        "duration_ms": 11.92,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1716.72,
+        "duration_ms": 18.76,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1759.48,
+        "duration_ms": 16.47,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1759.59,
+        "duration_ms": 16.23,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1759.73,
+        "duration_ms": 9.09,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1768.9,
+        "duration_ms": 6.54,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1775.97,
+        "duration_ms": 8.86,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1776.13,
+        "duration_ms": 8.49,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1784.96,
+        "duration_ms": 0.08,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1785.37,
+        "duration_ms": 0.3,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N15",
+    "trace_id": "fba854c1-b33f-48be-85cd-86030c0907cc",
+    "path": "evidence/traces/N15.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.14,
+        "duration_ms": 1678.92,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 32.59,
+        "duration_ms": 1578.95,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 34.53,
+        "duration_ms": 1549.29,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 34.96,
+        "duration_ms": 1548.83,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 35.34,
+        "duration_ms": 1548.41,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1584.08,
+        "duration_ms": 8.46,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1592.59,
+        "duration_ms": 6.54,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1599.16,
+        "duration_ms": 11.69,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1628.2,
+        "duration_ms": 31.01,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1628.29,
+        "duration_ms": 30.75,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1628.36,
+        "duration_ms": 10.18,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1638.65,
+        "duration_ms": 19.85,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1659.22,
+        "duration_ms": 9.85,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1659.41,
+        "duration_ms": 9.41,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1669.23,
+        "duration_ms": 0.09,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1669.76,
+        "duration_ms": 0.39,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N16",
+    "trace_id": "02e3df8e-88cd-4e06-a51b-74a7df243494",
+    "path": "evidence/traces/N16.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.05,
+        "duration_ms": 2044.36,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 38.31,
+        "duration_ms": 1936.18,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 40.23,
+        "duration_ms": 1900.8,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 40.67,
+        "duration_ms": 1900.33,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 41.08,
+        "duration_ms": 1899.89,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1941.23,
+        "duration_ms": 10.86,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1952.14,
+        "duration_ms": 6.77,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1958.94,
+        "duration_ms": 14.79,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1993.07,
+        "duration_ms": 28.93,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1993.14,
+        "duration_ms": 28.77,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1993.21,
+        "duration_ms": 18.93,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2012.19,
+        "duration_ms": 9.45,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2022.01,
+        "duration_ms": 10.29,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2022.12,
+        "duration_ms": 9.92,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2032.43,
+        "duration_ms": 0.11,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2032.86,
+        "duration_ms": 0.3,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N17",
+    "trace_id": "41638318-32f5-4c61-9973-747397251437",
+    "path": "evidence/traces/N17.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.24,
+        "duration_ms": 1359.06,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 45.24,
+        "duration_ms": 1164.49,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 47.28,
+        "duration_ms": 1132.11,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 47.77,
+        "duration_ms": 1131.59,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 48.2,
+        "duration_ms": 1131.12,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1179.56,
+        "duration_ms": 8.63,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1188.23,
+        "duration_ms": 8.96,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1197.23,
+        "duration_ms": 11.51,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1228.7,
+        "duration_ms": 100.8,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1228.79,
+        "duration_ms": 11.12,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1239.96,
+        "duration_ms": 45.36,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1285.34,
+        "duration_ms": 17.33,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1302.72,
+        "duration_ms": 10.59,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1313.42,
+        "duration_ms": 7.78,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1321.29,
+        "duration_ms": 7.74,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1329.51,
+        "duration_ms": 24.33,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1329.86,
+        "duration_ms": 8.39,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1338.36,
+        "duration_ms": 7.71,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1346.2,
+        "duration_ms": 7.4,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1353.99,
+        "duration_ms": 0.08,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1354.58,
+        "duration_ms": 0.48,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N18",
+    "trace_id": "86e3b6f5-080d-441b-81f8-20b3e5e10f12",
+    "path": "evidence/traces/N18.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.63,
+        "duration_ms": 1727.28,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 46.93,
+        "duration_ms": 1636.74,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 48.6,
+        "duration_ms": 1597.39,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 49.01,
+        "duration_ms": 1596.95,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 49.38,
+        "duration_ms": 1596.53,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1646.22,
+        "duration_ms": 10.66,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1656.93,
+        "duration_ms": 12.03,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1669.04,
+        "duration_ms": 13.97,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1698.36,
+        "duration_ms": 18.93,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1698.44,
+        "duration_ms": 18.74,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1698.49,
+        "duration_ms": 10.06,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1708.63,
+        "duration_ms": 8.26,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1717.29,
+        "duration_ms": 8.06,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1717.42,
+        "duration_ms": 7.75,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1725.49,
+        "duration_ms": 0.08,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1725.89,
+        "duration_ms": 0.29,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N19",
+    "trace_id": "dab5cf20-9033-4b21-9c70-fd99278494c8",
+    "path": "evidence/traces/N19.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.39,
+        "duration_ms": 2022.51,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 48.85,
+        "duration_ms": 1947.65,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 50.8,
+        "duration_ms": 1919.29,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 51.26,
+        "duration_ms": 1918.79,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 51.68,
+        "duration_ms": 1918.32,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1970.27,
+        "duration_ms": 7.8,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1978.12,
+        "duration_ms": 6.41,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1984.57,
+        "duration_ms": 11.36,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2017.28,
+        "duration_ms": 0.07,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2017.62,
+        "duration_ms": 0.19,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N20",
+    "trace_id": "9eff3685-5e64-4430-8f04-c54e7d8fb468",
+    "path": "evidence/traces/N20.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.26,
+        "duration_ms": 1028.94,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 42.81,
+        "duration_ms": 970.81,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 44.63,
+        "duration_ms": 933.31,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 45.03,
+        "duration_ms": 932.87,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 45.4,
+        "duration_ms": 932.46,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 978.13,
+        "duration_ms": 8.0,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 986.18,
+        "duration_ms": 7.86,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 994.09,
+        "duration_ms": 18.88,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1025.81,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1026.01,
+        "duration_ms": 0.11,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N21",
+    "trace_id": "3fdba0b2-c0b3-4261-bf8e-2f6743824fbc",
+    "path": "evidence/traces/N21.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 7.95,
+        "duration_ms": 2518.81,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 37.11,
+        "duration_ms": 2420.32,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 39.33,
+        "duration_ms": 2387.57,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 39.85,
+        "duration_ms": 2386.99,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 40.33,
+        "duration_ms": 2386.45,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2427.14,
+        "duration_ms": 9.01,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2436.19,
+        "duration_ms": 7.55,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2443.78,
+        "duration_ms": 13.04,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2479.16,
+        "duration_ms": 22.3,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 2479.47,
+        "duration_ms": 21.87,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2479.56,
+        "duration_ms": 9.33,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2488.93,
+        "duration_ms": 12.07,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2501.49,
+        "duration_ms": 10.1,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2501.63,
+        "duration_ms": 9.7,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2511.77,
+        "duration_ms": 0.1,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2512.35,
+        "duration_ms": 0.39,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N22",
+    "trace_id": "28064bc9-78bf-4e97-86cf-8759aa2c2665",
+    "path": "evidence/traces/N22.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.24,
+        "duration_ms": 6799.72,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 45.84,
+        "duration_ms": 6692.9,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 47.6,
+        "duration_ms": 6636.23,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 48.03,
+        "duration_ms": 6635.71,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 48.42,
+        "duration_ms": 6635.23,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 6684.57,
+        "duration_ms": 20.77,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 6705.4,
+        "duration_ms": 12.26,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 6717.71,
+        "duration_ms": 20.33,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 6761.09,
+        "duration_ms": 19.81,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 6761.18,
+        "duration_ms": 19.59,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 6761.24,
+        "duration_ms": 19.16,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 6780.92,
+        "duration_ms": 12.39,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 6781.08,
+        "duration_ms": 11.59,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 6793.51,
+        "duration_ms": 0.11,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 6794.24,
+        "duration_ms": 0.44,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N23",
+    "trace_id": "e0f6d850-5dce-4a9e-8969-f449862badc7",
+    "path": "evidence/traces/N23.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.26,
+        "duration_ms": 2902.35,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 33.11,
+        "duration_ms": 2841.31,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 34.77,
+        "duration_ms": 2807.43,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 35.23,
+        "duration_ms": 2806.94,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 35.63,
+        "duration_ms": 2806.49,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2842.4,
+        "duration_ms": 10.33,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2852.79,
+        "duration_ms": 7.97,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2860.82,
+        "duration_ms": 13.07,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2894.13,
+        "duration_ms": 0.07,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2894.56,
+        "duration_ms": 0.24,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N24",
+    "trace_id": "201507f2-2da9-4f8b-ae77-fc5c94071776",
+    "path": "evidence/traces/N24.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 7.09,
+        "duration_ms": 16.56,
+        "status": "error"
+      }
+    ]
+  },
+  {
+    "case_id": "N25",
+    "trace_id": "f758ebc2-8471-4ba9-b763-1034fc6475ae",
+    "path": "evidence/traces/N25.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.07,
+        "duration_ms": 63.97,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 53.09,
+        "duration_ms": 10.78,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 53.12,
+        "duration_ms": 10.7,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 64.04,
+        "duration_ms": 0.13,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N26",
+    "trace_id": "94ab76bf-f261-4c32-a9b7-8b3ee185541e",
+    "path": "evidence/traces/N26.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.06,
+        "duration_ms": 56.73,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 35.01,
+        "duration_ms": 20.03,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 35.04,
+        "duration_ms": 9.89,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 44.94,
+        "duration_ms": 9.99,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 55.19,
+        "duration_ms": 0.13,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N27",
+    "trace_id": "09ca12e3-d0b8-4276-a123-4b4668262aa0",
+    "path": "evidence/traces/N27.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.02,
+        "duration_ms": 59.32,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 37.45,
+        "duration_ms": 20.76,
+        "status": "error"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 37.48,
+        "duration_ms": 9.34,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 46.83,
+        "duration_ms": 11.1,
+        "status": "error"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 58.39,
+        "duration_ms": 0.12,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N28",
+    "trace_id": "c2991929-298a-4113-a240-4d6be5b0b72b",
+    "path": "evidence/traces/N28.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.08,
+        "duration_ms": 57.48,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 37.35,
+        "duration_ms": 18.54,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 37.38,
+        "duration_ms": 9.83,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 47.24,
+        "duration_ms": 8.55,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 56.05,
+        "duration_ms": 0.16,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N29",
+    "trace_id": "c1d543d5-a1ca-495a-86f4-e7a6636f04c3",
+    "path": "evidence/traces/N29.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.82,
+        "duration_ms": 56.23,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 43.41,
+        "duration_ms": 12.74,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 43.44,
+        "duration_ms": 12.61,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 56.32,
+        "duration_ms": 0.14,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N30",
+    "trace_id": "b2e096c8-80e2-4eae-ac8a-29233b0d062b",
+    "path": "evidence/traces/N30.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.22,
+        "duration_ms": 45.84,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 33.79,
+        "duration_ms": 10.68,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 33.82,
+        "duration_ms": 10.58,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 44.64,
+        "duration_ms": 0.15,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N31",
+    "trace_id": "b5cb112a-ea33-4bc3-ae0f-b9b457e536ab",
+    "path": "evidence/traces/N31.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.1,
+        "duration_ms": 92.64,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 39.39,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 39.48,
+        "duration_ms": 51.87,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 39.51,
+        "duration_ms": 40.28,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 79.94,
+        "duration_ms": 11.25,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 91.67,
+        "duration_ms": 0.16,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N32",
+    "trace_id": "ca2abe3a-4f02-4a35-9c65-19d0c11aa662",
+    "path": "evidence/traces/N32.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.36,
+        "duration_ms": 83.9,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 35.39,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 35.48,
+        "duration_ms": 46.81,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 35.51,
+        "duration_ms": 33.95,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 69.61,
+        "duration_ms": 12.53,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 82.64,
+        "duration_ms": 0.17,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N33",
+    "trace_id": "9b05142c-af65-43b5-a507-fddcdb80a289",
+    "path": "evidence/traces/N33.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.5,
+        "duration_ms": 87.43,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 42.78,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 42.86,
+        "duration_ms": 48.11,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 42.89,
+        "duration_ms": 34.82,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 77.89,
+        "duration_ms": 12.88,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 91.59,
+        "duration_ms": 0.24,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N34",
+    "trace_id": "06f6e452-958c-4a37-bc18-5eb3143be605",
+    "path": "evidence/traces/N34.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.73,
+        "duration_ms": 90.47,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 41.9,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 41.99,
+        "duration_ms": 49.1,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 42.02,
+        "duration_ms": 37.06,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 79.26,
+        "duration_ms": 11.65,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 91.44,
+        "duration_ms": 0.19,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N35",
+    "trace_id": "3fab19b4-0cc6-4291-b449-36eea2d6edf7",
+    "path": "evidence/traces/N35.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.1,
+        "duration_ms": 964.99,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 30.93,
+        "duration_ms": 868.71,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 32.19,
+        "duration_ms": 867.21,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 32.59,
+        "duration_ms": 866.79,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 32.96,
+        "duration_ms": 866.39,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 915.76,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 915.92,
+        "duration_ms": 41.14,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 915.98,
+        "duration_ms": 23.71,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 939.86,
+        "duration_ms": 16.97,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 957.45,
+        "duration_ms": 0.25,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N36",
+    "trace_id": "720a6de8-e317-4fc3-a313-cdeedf3228ac",
+    "path": "evidence/traces/N36.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.02,
+        "duration_ms": 82.4,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 49.86,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 49.96,
+        "duration_ms": 34.98,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 50.01,
+        "duration_ms": 26.89,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 77.08,
+        "duration_ms": 7.74,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 85.24,
+        "duration_ms": 0.11,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N37",
+    "trace_id": "a46e4c31-86cd-44d0-9eb5-5327575c6eca",
+    "path": "evidence/traces/N37.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.15,
+        "duration_ms": 38.39,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 40.36,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 40.53,
+        "duration_ms": 0.11,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N38",
+    "trace_id": "aedf0c94-072c-460e-9e70-026d09bd8334",
+    "path": "evidence/traces/N38.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.13,
+        "duration_ms": 34.12,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 33.61,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 33.77,
+        "duration_ms": 0.12,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N39",
+    "trace_id": "a3784ebe-8b80-4a0c-9ca8-fe651f51cda7",
+    "path": "evidence/traces/N39.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.77,
+        "duration_ms": 36.83,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 35.35,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 35.51,
+        "duration_ms": 0.13,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N40",
+    "trace_id": "1af72f7c-7157-4c27-bc30-42d95f15bbf1",
+    "path": "evidence/traces/N40.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.13,
+        "duration_ms": 2777.1,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 28.81,
+        "duration_ms": 2640.17,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 30.82,
+        "duration_ms": 2603.91,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 31.22,
+        "duration_ms": 2603.47,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 31.59,
+        "duration_ms": 2603.06,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2634.96,
+        "duration_ms": 11.58,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2646.58,
+        "duration_ms": 8.0,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2654.61,
+        "duration_ms": 13.61,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2684.96,
+        "duration_ms": 77.96,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2685.06,
+        "duration_ms": 15.6,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 2700.69,
+        "duration_ms": 36.56,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 2737.32,
+        "duration_ms": 12.8,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2750.14,
+        "duration_ms": 12.56,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2762.94,
+        "duration_ms": 6.34,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2763.05,
+        "duration_ms": 6.03,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2769.44,
+        "duration_ms": 0.08,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2770.36,
+        "duration_ms": 0.69,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N41",
+    "trace_id": "8f3e3ccf-0864-471b-9ed1-953dc4f39910",
+    "path": "evidence/traces/N41.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.64,
+        "duration_ms": 42.98,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 47.24,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 47.43,
+        "duration_ms": 0.15,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N42",
+    "trace_id": "a8340c77-3b21-4091-ae09-622e6c1b9a1f",
+    "path": "evidence/traces/N42.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.02,
+        "duration_ms": 382.0,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 31.94,
+        "duration_ms": 320.76,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 33.81,
+        "duration_ms": 285.62,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 34.2,
+        "duration_ms": 285.2,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 34.57,
+        "duration_ms": 284.82,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 319.56,
+        "duration_ms": 8.57,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 328.18,
+        "duration_ms": 7.35,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 335.58,
+        "duration_ms": 16.12,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 373.38,
+        "duration_ms": 0.11,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 373.86,
+        "duration_ms": 0.26,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N43",
+    "trace_id": "81079524-b7f3-4286-af4c-358b5f2fa8dc",
+    "path": "evidence/traces/N43.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.39,
+        "duration_ms": 5264.35,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 52.78,
+        "duration_ms": 5193.52,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 54.9,
+        "duration_ms": 2583.76,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 55.39,
+        "duration_ms": 2583.2,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 55.86,
+        "duration_ms": 2582.67,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 2638.85,
+        "duration_ms": 2564.92,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 2639.74,
+        "duration_ms": 2563.99,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 2640.67,
+        "duration_ms": 2563.02,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5204.01,
+        "duration_ms": 22.76,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5226.8,
+        "duration_ms": 9.31,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5236.15,
+        "duration_ms": 9.78,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 5263.31,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 5263.5,
+        "duration_ms": 0.22,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N44",
+    "trace_id": "d2889c91-5fda-407e-8890-60c9e90f5363",
+    "path": "evidence/traces/N44.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.84,
+        "duration_ms": 63.54,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 50.12,
+        "duration_ms": 17.09,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 50.18,
+        "duration_ms": 16.91,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 67.39,
+        "duration_ms": 0.15,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N45",
+    "trace_id": "22da8689-8d4d-40b5-a23e-881297d88793",
+    "path": "evidence/traces/N45.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 7.58,
+        "duration_ms": 2435.81,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 40.14,
+        "duration_ms": 2345.65,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 42.3,
+        "duration_ms": 2296.42,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 42.7,
+        "duration_ms": 2295.97,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 43.07,
+        "duration_ms": 2295.56,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2338.91,
+        "duration_ms": 11.24,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2350.19,
+        "duration_ms": 12.33,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2362.57,
+        "duration_ms": 22.28,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2405.25,
+        "duration_ms": 22.78,
+        "status": "error"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 2405.35,
+        "duration_ms": 22.29,
+        "status": "error"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2405.42,
+        "duration_ms": 12.05,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2417.57,
+        "duration_ms": 9.31,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2428.29,
+        "duration_ms": 0.07,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2428.67,
+        "duration_ms": 0.27,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N46",
+    "trace_id": "67379cd9-f19e-491d-9273-b83ab0b8b827",
+    "path": "evidence/traces/N46.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.36,
+        "duration_ms": 2564.85,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 55.25,
+        "duration_ms": 2488.06,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 57.76,
+        "duration_ms": 2451.32,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 58.26,
+        "duration_ms": 2450.78,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 58.73,
+        "duration_ms": 2450.27,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2509.3,
+        "duration_ms": 11.09,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2520.42,
+        "duration_ms": 7.46,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2527.92,
+        "duration_ms": 14.57,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2563.16,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2563.43,
+        "duration_ms": 0.14,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N47",
+    "trace_id": "3784bdfc-dd23-4f16-bd4b-e60cbd6679e0",
+    "path": "evidence/traces/N47.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.58,
+        "duration_ms": 5568.46,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 51.69,
+        "duration_ms": 5385.46,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 53.71,
+        "duration_ms": 1632.47,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 54.17,
+        "duration_ms": 1631.97,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 54.62,
+        "duration_ms": 1631.47,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 1686.32,
+        "duration_ms": 3691.68,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 1687.02,
+        "duration_ms": 3690.94,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 1687.81,
+        "duration_ms": 3690.1,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5378.41,
+        "duration_ms": 33.6,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5412.12,
+        "duration_ms": 11.48,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5423.61,
+        "duration_ms": 12.83,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 5456.13,
+        "duration_ms": 91.81,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5456.24,
+        "duration_ms": 15.78,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 5472.06,
+        "duration_ms": 36.87,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 5508.95,
+        "duration_ms": 15.47,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5524.45,
+        "duration_ms": 11.94,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5536.52,
+        "duration_ms": 10.97,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 5547.94,
+        "duration_ms": 13.54,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5548.25,
+        "duration_ms": 7.25,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 5555.6,
+        "duration_ms": 5.65,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 5561.6,
+        "duration_ms": 0.07,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 5562.15,
+        "duration_ms": 0.44,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "N48",
+    "trace_id": "e336ddaa-a349-4b25-a3af-a75abbb1a12f",
+    "path": "evidence/traces/N48.json",
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.87,
+        "duration_ms": 71.57,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 58.99,
+        "duration_ms": 16.48,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 59.02,
+        "duration_ms": 16.25,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 75.71,
+        "duration_ms": 0.23,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case_id": "B01",
+    "trace_id": null,
+    "path": null,
+    "execution": "CONTROLLED_PYTHON_TRANSPORT_OR_POSTGRES_FAULT_INJECTION",
+    "stage_timings": []
+  },
+  {
+    "case_id": "B02",
+    "trace_id": null,
+    "path": null,
+    "execution": "CONTROLLED_PYTHON_TRANSPORT_OR_POSTGRES_FAULT_INJECTION",
+    "stage_timings": []
+  },
+  {
+    "case_id": "B03",
+    "trace_id": null,
+    "path": null,
+    "execution": "CONTROLLED_PYTHON_TRANSPORT_OR_POSTGRES_FAULT_INJECTION",
+    "stage_timings": []
+  },
+  {
+    "case_id": "B04",
+    "trace_id": null,
+    "path": null,
+    "execution": "CONTROLLED_PYTHON_TRANSPORT_OR_POSTGRES_FAULT_INJECTION",
+    "stage_timings": []
+  },
+  {
+    "case_id": "B05",
+    "trace_id": null,
+    "path": null,
+    "execution": "CONTROLLED_PYTHON_TRANSPORT_OR_POSTGRES_FAULT_INJECTION",
+    "stage_timings": []
+  },
+  {
+    "case_id": "B06",
+    "trace_id": null,
+    "path": null,
+    "execution": "CONTROLLED_PYTHON_TRANSPORT_OR_POSTGRES_FAULT_INJECTION",
+    "stage_timings": []
+  },
+  {
+    "case_id": "B07",
+    "trace_id": null,
+    "path": null,
+    "execution": "CONTROLLED_PYTHON_TRANSPORT_OR_POSTGRES_FAULT_INJECTION",
+    "stage_timings": []
+  },
+  {
+    "case_id": "B08",
+    "trace_id": null,
+    "path": null,
+    "execution": "REAL_CONCURRENT_QWEN_API",
+    "stage_timings": [],
+    "requests": [
+      {
+        "trace_id": "0abfef43-c04b-43f2-aeba-3e626e8fb248",
+        "path": "evidence/traces/B08-0abfef43-c04b-43f2-aeba-3e626e8fb248.json",
+        "http_status": 409
+      },
+      {
+        "trace_id": "d671dc21-8df5-47c2-8965-93640b6a671f",
+        "path": "evidence/traces/B08-d671dc21-8df5-47c2-8965-93640b6a671f.json",
+        "http_status": 200
+      }
+    ]
+  },
+  {
+    "case_id": "B09",
+    "trace_id": null,
+    "path": null,
+    "execution": "CONTROLLED_PYTHON_TRANSPORT_OR_POSTGRES_FAULT_INJECTION",
+    "stage_timings": []
+  },
+  {
+    "case_id": "B10",
+    "trace_id": null,
+    "path": null,
+    "execution": "CONTROLLED_PYTHON_TRANSPORT_OR_POSTGRES_FAULT_INJECTION",
+    "stage_timings": []
+  },
+  {
+    "case_id": "B11",
+    "trace_id": null,
+    "path": null,
+    "execution": "REAL_SECURITY_API",
+    "stage_timings": []
+  },
+  {
+    "case_id": "B12",
+    "trace_id": null,
+    "path": null,
+    "execution": "CONTROLLED_PYTHON_TRANSPORT_OR_POSTGRES_FAULT_INJECTION",
+    "stage_timings": []
+  }
+]

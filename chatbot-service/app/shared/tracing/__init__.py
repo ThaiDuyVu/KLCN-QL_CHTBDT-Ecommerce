@@ -23,7 +23,8 @@ _current = ContextVar('chat_trace', default=None)
 _parent = ContextVar('chat_trace_parent', default=None)
 SENSITIVE = {'password', 'authorization', 'cookie', 'cookies', 'setcookie', 'token', 'accesstoken',
              'refreshtoken', 'secret', 'jwtsecret', 'databaseurl', 'dsn', 'email', 'phone',
-             'phonenumber', 'address', 'shippingaddress', 'recipientphone', 'recipientaddress'}
+             'phonenumber', 'address', 'shippingaddress', 'recipientphone', 'recipientaddress',
+             'imei', 'imeis', 'imeinumber', 'imeinumbers', 'serial', 'serials', 'serialnumber', 'serialnumbers'}
 
 
 def sanitize(value):
@@ -160,7 +161,8 @@ _file_handler = None
 
 
 def enabled(settings):
-    return settings.chatbot_trace_enabled and settings.app_env.lower() in {'development', 'local', 'test'}
+    from app.shared.config import is_dev_like
+    return settings.chatbot_trace_enabled and is_dev_like(settings.app_env)
 
 
 def persist(trace):

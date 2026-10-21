@@ -1,0 +1,190 @@
+{
+  "trace_id": "46fc5a5e-006a-41b8-a8f6-19efbf160b0d",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "4e6fce40-605d-440b-b55b-b30e634cfb00",
+      "parent_id": "e3dc683a-a29f-45dc-a2cd-798bb1ffb39e",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 43.07,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "c0630491-d141-4b9f-bc66-343e26d71a29",
+      "parent_id": "e3dc683a-a29f-45dc-a2cd-798bb1ffb39e",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 43.22,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "49e69133-5a4b-4239-afe4-06cdb9d35d90",
+      "parent_id": "69df61cb-7edb-4b54-b6f5-1d7bf422cfb1",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1016.62,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "cái thứ hai có giá bao nhiêu"
+      }
+    },
+    {
+      "id": "ff417bbb-09cf-4219-85f0-2212a3185b45",
+      "parent_id": "e3dc683a-a29f-45dc-a2cd-798bb1ffb39e",
+      "name": "conversation.reference_resolution",
+      "status": "ok",
+      "offset_ms": 1062.78,
+      "duration_ms": null,
+      "output": {
+        "kind": "SECOND",
+        "status": "NO_REFERENCE"
+      }
+    },
+    {
+      "id": "7b4021e6-f25b-42b7-b0f4-25201ddde513",
+      "parent_id": "e3dc683a-a29f-45dc-a2cd-798bb1ffb39e",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1062.87,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "3f278fe3-f3bc-4f2b-9950-3679bcdd70fd",
+      "parent_id": "e3dc683a-a29f-45dc-a2cd-798bb1ffb39e",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1063.03,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "1e3315fe-d21e-4c48-b279-6e7ef768d3a8",
+      "parent_id": "39696d22-b4c7-48ff-9e0c-8177cbb364b6",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1063.39,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 8.55,
+      "duration_ms": 1067.98,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 43.36,
+      "duration_ms": 1004.66,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 45.2,
+      "duration_ms": 971.36,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 45.64,
+      "duration_ms": 970.89,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 46.04,
+      "duration_ms": 970.45,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1016.71,
+      "duration_ms": 8.81,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1025.57,
+      "duration_ms": 8.7,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1034.29,
+      "duration_ms": 13.23,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1062.97,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1063.24,
+      "duration_ms": 0.21,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}
