@@ -127,10 +127,11 @@ class BackendClient:
             return {"items": payload} if payload else {"items": []}
         return payload
 
-    async def get_recent_orders(self, cookies: dict[str, str]) -> list[dict[str, Any]]:
+    async def get_recent_orders(self, cookies: dict[str, str]) -> list[dict[str, Any]] | None:
+        """[] only for a successful empty list; None when the owned list was not returned."""
         payload = await self._request_json("GET", "/api/orders/mine", cookies=cookies)
         if payload is None:
-            return []
+            return None
         if isinstance(payload, list):
             return payload
         if isinstance(payload, dict):
@@ -152,7 +153,7 @@ class BackendClient:
                         return rows
                     return value
             return [payload]
-        return []
+        return None
 
     async def get_order_detail(
         self,

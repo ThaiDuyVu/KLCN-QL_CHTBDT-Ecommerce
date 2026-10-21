@@ -13,12 +13,65 @@ python3.12 -m venv .venv
 .venv/bin/python -m uvicorn app.main:app --port 8090
 ```
 
-Mặc định giữ mock pipeline V3.5. Copy `.env.example` thành `.env` và đặt
-`CHATBOT_AI_ENABLED=true` để dùng Query Understanding và Response Generation thật.
-Cấu hình model, timeout và địa chỉ Ollama qua các biến trong `.env.example`.
-Endpoint chat xác thực customer qua backend bằng cookie; lịch sử và feedback
-sử dụng ConversationService với repository in-memory, chưa lưu bền vào PostgreSQL. ProductAdvisor thật cần được inject qua
-`build_chat_service(settings, product_advisor=...)`; nếu chưa có thì không trả sản phẩm mẫu.
+Copy `.env.example` thành `.env`. Endpoint chat xác thực customer qua backend bằng cookie.
+
+## Chế độ chạy
+
+Mỗi thành phần được chọn độc lập; mặc định là cấu hình phát triển.
+
+| Thành phần | Mặc định (dev) | Thật | Biến |
+|---|---|---|---|
+| Query Understanding + Response Generation | tắt (mock, không gọi Ollama) | Qwen qua Ollama | `CHATBOT_AI_ENABLED=true`, `OLLAMA_*` |
+| Product Advisor | `mock` (sản phẩm mẫu) | backend Spring + pgvector index | `PRODUCT_ADVISOR_MODE=real`, `PRODUCT_INDEX_DATABASE_URL`, tùy chọn `CHATBOT_WAREHOUSE_ID` |
+| Hội thoại, snapshot | `memory` (mất khi restart) | PostgreSQL bảng `chat_sessions`/`chat_history` | `CONVERSATION_STORAGE=postgres`, `CONVERSATION_DATABASE_URL` |
+| Feedback, trace | RAM của process | chưa có lưu bền | `CHATBOT_TRACE_ENABLED` chỉ có hiệu lực ở môi trường dev |
+
+Không có kho (`CHATBOT_WAREHOUSE_ID` rỗng) vẫn hợp lệ: câu trả lời ghi "chưa xác định tồn kho
+vì chưa chọn kho", còn tìm "còn hàng" sẽ báo không khả dụng. Chatbot dùng một kho chung,
+chưa dùng kho khách chọn trên storefront.
+
+### Kiểm tra cấu hình khi khởi động
+
+`APP_ENV` thuộc `development`, `local`, `test` là môi trường dev. Với mọi giá trị khác
+(ví dụ `production`, `staging`), service **từ chối khởi động** nếu thiếu một trong các điều kiện:
+`CHATBOT_AI_ENABLED=true`, `PRODUCT_ADVISOR_MODE=real`, `CONVERSATION_STORAGE=postgres`,
+`CONVERSATION_DATABASE_URL`, `PRODUCT_INDEX_DATABASE_URL`, và `CHATBOT_TRACE_ENABLED`/`CHATBOT_TRACE_FILE_ENABLED`
+đều tắt. Thông báo lỗi chỉ nêu tên biến, không in giá trị.
+
+Ở mọi môi trường, khi đang chạy AI tắt, Product Advisor mock, hội thoại memory, thiếu kho, hoặc
+`APP_ENV` không được đặt tường minh, service ghi một log WARNING `chatbot.runtime_configuration`
+(logger `chatbot.runtime`) gồm `app_env`, `app_env_explicit` và danh sách cảnh báo.
+
+Giới hạn cần biết khi triển khai:
+
+- Mặc định `APP_ENV=development`. **Nếu quên đặt `APP_ENV`, kiểm tra trên bị bỏ qua** và mock/memory
+  vẫn chạy; khi đó chỉ còn log WARNING. Môi trường triển khai phải đặt tường minh `APP_ENV=production`,
+  `PRODUCT_ADVISOR_MODE=real`, `CONVERSATION_STORAGE=postgres`, `CHATBOT_AI_ENABLED=true` và lấy URL/secret từ
+  secret store. Repo chưa có cấu hình deploy production để tự bảo đảm điều này.
+- `GET /api/v1/health` chỉ là liveness (process còn sống), không kiểm tra database, backend hay Ollama.
+  Chưa có endpoint readiness (`/api/v1/ready` đang chờ quyết định DR-05a).
+- `GET /api/v1/chat/status` là trang chẩn đoán của Chatbot Lab, trả 404 ngoài môi trường dev.
+
+### Hành vi đáng chú ý
+
+- Điều kiện giá được đọc theo quan hệ: "dưới/không quá/tối đa X", "trên/hơn/đắt hơn/tối thiểu X",
+  "X trở xuống/đổ lại", "X trở lên", "từ A đến B", "A–B triệu". Số tiền mà chatbot chưa hiểu chắc
+  ("tầm/khoảng/cỡ X", "ngân sách X", "rẻ hơn/thấp hơn X", "giá X") **không bị bỏ qua**: chatbot hỏi lại
+  thay vì tìm kiếm thiếu điều kiện giá. Ngữ nghĩa của các dạng này đang chờ quyết định DR-01/DR-02.
+- Tham chiếu ("máy đầu tiên", "cái thứ hai", "máy vừa gợi ý", "có loại rẻ hơn không?") chỉ dùng thẻ đã
+  hiển thị trong phiên của chính khách. Nếu câu nêu loại/hãng mới, chatbot không áp phạm vi cũ.
+- Khi embedding hoặc pgvector index lỗi, kết quả lọc có cấu trúc vẫn được trả theo thứ tự cố định và
+  trace ghi `product.ranking_degraded`; lỗi backend tìm kiếm/chi tiết sản phẩm vẫn trả 503.
+- Khách có danh sách đơn rỗng (backend trả 200) nhận "Tài khoản của bạn chưa có đơn hàng nào."; lỗi
+  backend không bị diễn giải thành "chưa có đơn". Mã đơn so khớp không phân biệt hoa thường.
+
+### Chưa làm trong đợt này
+
+Phân trang catalog/brand vượt 500 sản phẩm/100 brand (vẫn trả 503 an toàn, DR-04); thông báo
+"tìm quá rộng" (DR-13b); xử lý sản phẩm có promotion chồng lấn (vẫn 503, DR-13a); giới hạn số đơn hiển thị
+(DR-06); readiness endpoint (DR-05a); widget chatbot trên storefront (DR-03); feedback/idempotency lưu bền
+(DR-08); kho theo khách (DR-07); câu trả lời giỏ hàng khi khách chưa từng có giỏ (backend trả `cartId: null`,
+chatbot hiện trả 502); Knowledge RAG chính thức, multi-intent, cross-session memory.
 
 ## Knowledge RAG
 

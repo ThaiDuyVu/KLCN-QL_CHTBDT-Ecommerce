@@ -1,0 +1,121 @@
+# NX tests on baseline f99f713 (detached worktree f99f713c43b14937e88f1afdde2931fd0a9afd29); UTC 2026-10-21T04:08:26Z
+# same test file sha256: 3a0349b95025572ddf11f1ae93a1ba65cbfa45ff79c13b53aa5326aee1d68e4e; app package resolved: app/__init__.py
+# --tb=line: one line per failure = test line + exception; ImportError lines are after-only new-API tests, not BR
+tests/test_production_remediation.py:91: AssertionError: assert (Decimal('15000000'), None) == (None, None)
+tests/test_production_remediation.py:98: AssertionError: assert False
+tests/test_production_remediation.py:117: AssertionError: assert ('Điện thoại', None, None) == ('Điện thoại'...l('10000000'))
+tests/test_production_remediation.py:117: AssertionError: assert ('Điện thoại', None, None) == ('Điện thoại'...l('10000000'))
+tests/test_production_remediation.py:117: AssertionError: assert ('Điện thoại', None, None) == ('Điện thoại'...00000'), None)
+tests/test_production_remediation.py:123: AssertionError: assert (None, None) == (Decimal('150...l('20000000'))
+tests/test_production_remediation.py:123: AssertionError: assert (None, None) == (Decimal('150...l('20000000'))
+tests/test_production_remediation.py:123: AssertionError: assert (None, None) == (Decimal('150...l('20000000'))
+tests/test_production_remediation.py:137: AssertionError: assert (None is None and 'Thương hiệu ...ng hãng khác.' == 'Bạn muốn tìm...o nhu cầu gì?'
+tests/test_production_remediation.py:137: AssertionError: assert (None is None and 'Thương hiệu ...ng hãng khác.' == 'Bạn muốn tìm...o nhu cầu gì?'
+tests/test_production_remediation.py:137: AssertionError: assert (ProductSearchPlan(targets=[], category='Laptop', brands=[], min_price=None, max_price=None, min_ram_gb=None, min_storage_gb=None, cpu_keywords=[], in_stock_only=False, semantic_query='Tìm laptop cỡ 15 triệu', top_k=5) is None)
+tests/test_production_remediation.py:137: AssertionError: assert (ProductSearchPlan(targets=[], category='Laptop', brands=[], min_price=None, max_price=None, min_ram_gb=None, min_storage_gb=None, cpu_keywords=[], in_stock_only=False, semantic_query='Tìm laptop giá khoảng 15 triệu', top_k=5) is None)
+tests/test_production_remediation.py:137: AssertionError: assert (ProductSearchPlan(targets=[], category='Laptop', brands=[], min_price=None, max_price=None, min_ram_gb=None, min_storage_gb=None, cpu_keywords=[], in_stock_only=False, semantic_query='Tìm laptop giá tầm 15 triệu', top_k=5) is None)
+tests/test_production_remediation.py:143: AssertionError: assert (None is None and 'Thương hiệu ...ng hãng khác.' == 'Bạn muốn tìm...o nhu cầu gì?'
+tests/test_production_remediation.py:143: AssertionError: assert (ProductSearchPlan(targets=[], category='Laptop', brands=[], min_price=None, max_price=None, min_ram_gb=None, min_storage_gb=None, cpu_keywords=[], in_stock_only=False, semantic_query='Tìm laptop với ngân sách 20tr', top_k=5) is None)
+tests/test_production_remediation.py:168: AssertionError: assert (ProductSearchPlan(targets=[], category='Điện thoại', brands=['Apple'], min_price=None, max_price=Decimal('16999999'), ... min_storage_gb=None, cpu_keywords=[], in_stock_only=False, semantic_query='Có laptop Dell nào rẻ hơn không?', top_k=5) is None)
+tests/test_production_remediation.py:173: AssertionError: assert (<Intent.PRODU...ODUCT_DETAIL'> == <Intent.PRODU...CT_DISCOVERY'>
+tests/test_production_remediation.py:179: AssertionError: assert <Intent.PRODUCT_DETAIL: 'PRODUCT_DETAIL'> != <Intent.PRODUCT_DETAIL: 'PRODUCT_DETAIL'>
+tests/test_production_remediation.py:186: AssertionError: assert (False)
+tests/test_production_remediation.py:202: AssertionError: assert (<Intent.UNKNOWN: 'UNKNOWN'> == <Intent.PRODU...CT_DISCOVERY'>
+tests/test_production_remediation.py:223: AssertionError: assert False
+tests/test_production_remediation.py:235: AssertionError: assert (<Intent.PRODU...ODUCT_DETAIL'> == <Intent.PRODU...CT_DISCOVERY'>
+tests/test_production_remediation.py:245: httpx.HTTPStatusError: embed
+tests/test_production_remediation.py:245: httpx.ReadTimeout: embed timeout
+tests/test_production_remediation.py:245: ValueError: Embedding model returned an empty vector
+tests/test_production_remediation.py:272: psycopg.OperationalError: connection timeout synthetic-secret
+tests/test_production_remediation.py:287: AssertionError: assert None == 5
+tests/test_production_remediation.py:298: psycopg.OperationalError: down
+tests/test_production_remediation.py:344: Failed: DID NOT RAISE ValueError
+tests/test_production_remediation.py:368: ImportError: cannot import name 'validate_runtime_settings' from 'app.shared.config' (/private/tmp/claude-501/-Users-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL-CHTBDT-Ecommerce-main/568828cd-4f62-40ee-a9ce-922689a6444b/scratchpad/baseline-f99f713/chatbot-service/app/shared/config.py)
+tests/test_production_remediation.py:368: ImportError: cannot import name 'validate_runtime_settings' from 'app.shared.config' (/private/tmp/claude-501/-Users-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL-CHTBDT-Ecommerce-main/568828cd-4f62-40ee-a9ce-922689a6444b/scratchpad/baseline-f99f713/chatbot-service/app/shared/config.py)
+tests/test_production_remediation.py:368: ImportError: cannot import name 'validate_runtime_settings' from 'app.shared.config' (/private/tmp/claude-501/-Users-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL-CHTBDT-Ecommerce-main/568828cd-4f62-40ee-a9ce-922689a6444b/scratchpad/baseline-f99f713/chatbot-service/app/shared/config.py)
+tests/test_production_remediation.py:368: ImportError: cannot import name 'validate_runtime_settings' from 'app.shared.config' (/private/tmp/claude-501/-Users-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL-CHTBDT-Ecommerce-main/568828cd-4f62-40ee-a9ce-922689a6444b/scratchpad/baseline-f99f713/chatbot-service/app/shared/config.py)
+tests/test_production_remediation.py:368: ImportError: cannot import name 'validate_runtime_settings' from 'app.shared.config' (/private/tmp/claude-501/-Users-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL-CHTBDT-Ecommerce-main/568828cd-4f62-40ee-a9ce-922689a6444b/scratchpad/baseline-f99f713/chatbot-service/app/shared/config.py)
+tests/test_production_remediation.py:368: ImportError: cannot import name 'validate_runtime_settings' from 'app.shared.config' (/private/tmp/claude-501/-Users-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL-CHTBDT-Ecommerce-main/568828cd-4f62-40ee-a9ce-922689a6444b/scratchpad/baseline-f99f713/chatbot-service/app/shared/config.py)
+tests/test_production_remediation.py:368: ImportError: cannot import name 'validate_runtime_settings' from 'app.shared.config' (/private/tmp/claude-501/-Users-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL-CHTBDT-Ecommerce-main/568828cd-4f62-40ee-a9ce-922689a6444b/scratchpad/baseline-f99f713/chatbot-service/app/shared/config.py)
+tests/test_production_remediation.py:375: ImportError: cannot import name 'validate_runtime_settings' from 'app.shared.config' (/private/tmp/claude-501/-Users-vu-Documents-Vu-HUIT-Year4-KLTN-KLCN-QL-CHTBDT-Ecommerce-main/568828cd-4f62-40ee-a9ce-922689a6444b/scratchpad/baseline-f99f713/chatbot-service/app/shared/config.py)
+tests/test_production_remediation.py:391: StopIteration
+tests/test_production_remediation.py:437: assert (200 == 200 and 10.03269458306022 < 1.0)
+tests/test_production_remediation.py:473: AssertionError: assert 'release' not in ['acquire', 'user_written', 'release']
+tests/test_production_remediation.py:501: AssertionError: assert 'chưa có đơn hàng' in 'Mình chưa đủ dữ liệu để trả lời chính xác yêu cầu này.'
+tests/test_production_remediation.py:521: AssertionError: assert [] == ['ORD-0142ABC...E0A8A8AF2F29']
+tests/test_production_remediation.py:531: Failed: DID NOT RAISE HTTPException
+tests/test_production_remediation.py:544: AssertionError: assert 200 == 404
+tests/test_production_remediation.py:554: AssertionError: assert (<Intent.ORDER...ORDER_STATUS'> == <Intent.ORDER...ORDER_STATUS'>
+tests/test_production_remediation.py:573: AssertionError: assert [(<Intent.ORD...D-INJECTED'})] == [(<Intent.ORD...STATUS'>, {})]
+tests/test_production_remediation.py:589: assert False
+PASSED tests/test_production_remediation.py::test_nx03_more_than_amount_stays_minimum[h\u01a1n 20 tri\u1ec7u]
+PASSED tests/test_production_remediation.py::test_nx03_more_than_amount_stays_minimum[\u0111\u1eaft h\u01a1n 20 tri\u1ec7u]
+PASSED tests/test_production_remediation.py::test_nx03_more_than_amount_stays_minimum[tr\xean 20 tri\u1ec7u]
+PASSED tests/test_production_remediation.py::test_nx06_existing_range_and_contradiction_control
+PASSED tests/test_production_remediation.py::test_nx09_model_numbers_capacity_count_cpu_are_not_money[Xiaomi 15 gi\xe1 bao nhi\xeau-<lambda>]
+PASSED tests/test_production_remediation.py::test_nx09_model_numbers_capacity_count_cpu_are_not_money[So s\xe1nh Dell XPS 13 v\xe0 Dell Inspiron 15-<lambda>]
+PASSED tests/test_production_remediation.py::test_nx09_model_numbers_capacity_count_cpu_are_not_money[Ch\u1ec9 g\u1ee3i \xfd \u0111\xfang 2 \u0111i\u1ec7n tho\u1ea1i Xiaomi-<lambda>]
+PASSED tests/test_production_remediation.py::test_nx09_model_numbers_capacity_count_cpu_are_not_money[Xiaomi 15 b\u1ea3n 12GB/256GB-<lambda>]
+PASSED tests/test_production_remediation.py::test_nx09_model_numbers_capacity_count_cpu_are_not_money[T\xecm laptop d\u01b0\u1edbi 20 tri\u1ec7u, CPU Intel i5-<lambda>]
+PASSED tests/test_production_remediation.py::test_nx10_zero_price_bound_is_kept
+PASSED tests/test_production_remediation.py::test_nx15_cheaper_ceiling_and_fresh_session_controls
+PASSED tests/test_production_remediation.py::test_nx17_ordinal_references_still_resolve[M\xe1y \u0111\u1ea7u ti\xean c\xf2n h\xe0ng kh\xf4ng?-0]
+PASSED tests/test_production_remediation.py::test_nx17_ordinal_references_still_resolve[C\xe1i th\u1ee9 hai c\xf3 gi\xe1 bao nhi\xeau?-1]
+PASSED tests/test_production_remediation.py::test_nx17_ordinal_references_still_resolve[M\xe1y \u0111\u1ea7u ti\xean c\xf3 gi\xe1 bao nhi\xeau?-0]
+PASSED tests/test_production_remediation.py::test_nx17_last_reference_still_resolves_single_card
+PASSED tests/test_production_remediation.py::test_explicit_minimum_survives_cheaper_follow_up
+PASSED tests/test_production_remediation.py::test_nx25_structured_search_failure_stays_unavailable
+PASSED tests/test_production_remediation.py::test_nx30_detail_conflicts_stay_unavailable[body0]
+PASSED tests/test_production_remediation.py::test_nx30_detail_conflicts_stay_unavailable[body1]
+PASSED tests/test_production_remediation.py::test_unavailable_order_list_is_never_reported_as_empty
+PASSED tests/test_production_remediation.py::test_nx40_duplicate_owned_code_stays_ambiguous
+PASSED tests/test_production_remediation.py::test_nx43_read_only_guard_still_supplies_order_code
+FAILED tests/test_production_remediation.py::test_nx01_cheaper_than_amount_is_never_a_minimum
+FAILED tests/test_production_remediation.py::test_nx02_lower_than_amount_is_not_a_minimum_and_clarifies_pending_dr02
+FAILED tests/test_production_remediation.py::test_nx04_suffix_bounds_are_read[T\xecm \u0111i\u1ec7n tho\u1ea1i 10 tri\u1ec7u tr\u1edf xu\u1ed1ng-None-high0]
+FAILED tests/test_production_remediation.py::test_nx04_suffix_bounds_are_read[T\xecm \u0111i\u1ec7n tho\u1ea1i 10 tri\u1ec7u \u0111\u1ed5 l\u1ea1i-None-high1]
+FAILED tests/test_production_remediation.py::test_nx04_suffix_bounds_are_read[T\xecm \u0111i\u1ec7n tho\u1ea1i 10 tri\u1ec7u tr\u1edf l\xean-low2-None]
+FAILED tests/test_production_remediation.py::test_nx05_unit_ranges_are_read[T\xecm laptop gi\xe1 15\u201320 tri\u1ec7u]
+FAILED tests/test_production_remediation.py::test_nx05_unit_ranges_are_read[T\xecm laptop 15 \u0111\u1ebfn 20 tri\u1ec7u]
+FAILED tests/test_production_remediation.py::test_nx05_unit_ranges_are_read[T\xecm laptop gi\xe1 15-20 tri\u1ec7u]
+FAILED tests/test_production_remediation.py::test_nx07_approximate_amount_clarifies_pending_dr01[T\xecm laptop t\u1ea7m 15 tri\u1ec7u]
+FAILED tests/test_production_remediation.py::test_nx07_approximate_amount_clarifies_pending_dr01[T\xecm laptop kho\u1ea3ng 15 tri\u1ec7u]
+FAILED tests/test_production_remediation.py::test_nx07_approximate_amount_clarifies_pending_dr01[T\xecm laptop c\u1ee1 15 tri\u1ec7u]
+FAILED tests/test_production_remediation.py::test_nx07_approximate_amount_clarifies_pending_dr01[T\xecm laptop gi\xe1 kho\u1ea3ng 15 tri\u1ec7u]
+FAILED tests/test_production_remediation.py::test_nx07_approximate_amount_clarifies_pending_dr01[T\xecm laptop gi\xe1 t\u1ea7m 15 tri\u1ec7u]
+FAILED tests/test_production_remediation.py::test_nx08_budget_amount_clarifies_pending_dr01[T\xecm laptop ng\xe2n s\xe1ch 20tr]
+FAILED tests/test_production_remediation.py::test_nx08_budget_amount_clarifies_pending_dr01[T\xecm laptop v\u1edbi ng\xe2n s\xe1ch 20tr]
+FAILED tests/test_production_remediation.py::test_nx11_new_scope_without_price_does_not_reuse_phone_snapshot
+FAILED tests/test_production_remediation.py::test_nx12_first_time_phrase_is_not_an_ordinal_reference
+FAILED tests/test_production_remediation.py::test_nx13_weekday_is_not_an_ordinal_reference
+FAILED tests/test_production_remediation.py::test_nx14_explicit_cheaper_amount_with_snapshot_failsafe
+FAILED tests/test_production_remediation.py::test_nx16_lower_reference_uses_the_same_resolver
+FAILED tests/test_production_remediation.py::test_nx18_new_scope_with_cheaper_amount_failsafe
+FAILED tests/test_production_remediation.py::test_ordinal_next_to_new_brand_is_a_new_request
+FAILED tests/test_production_remediation.py::test_nx23_embedding_failure_degrades_ranking_only[error0]
+FAILED tests/test_production_remediation.py::test_nx23_embedding_failure_degrades_ranking_only[error1]
+FAILED tests/test_production_remediation.py::test_nx23_embedding_failure_degrades_ranking_only[error2]
+FAILED tests/test_production_remediation.py::test_nx24_index_database_failure_degrades_without_leaking_driver_message
+FAILED tests/test_production_remediation.py::test_index_connections_are_time_bounded
+FAILED tests/test_production_remediation.py::test_nx24_pipeline_returns_verified_cards_when_index_is_down
+FAILED tests/test_production_remediation.py::test_nx31_production_lifespan_refuses_mock_memory_without_printing_values
+FAILED tests/test_production_remediation.py::test_nx31_validator_matrix_names_only_the_variable[override0-CHATBOT_AI_ENABLED]
+FAILED tests/test_production_remediation.py::test_nx31_validator_matrix_names_only_the_variable[override1-PRODUCT_ADVISOR_MODE]
+FAILED tests/test_production_remediation.py::test_nx31_validator_matrix_names_only_the_variable[override2-CONVERSATION_STORAGE]
+FAILED tests/test_production_remediation.py::test_nx31_validator_matrix_names_only_the_variable[override3-CONVERSATION_DATABASE_URL]
+FAILED tests/test_production_remediation.py::test_nx31_validator_matrix_names_only_the_variable[override4-PRODUCT_INDEX_DATABASE_URL]
+FAILED tests/test_production_remediation.py::test_nx31_validator_matrix_names_only_the_variable[override5-CHATBOT_TRACE_ENABLED]
+FAILED tests/test_production_remediation.py::test_nx31_validator_matrix_names_only_the_variable[override6-CHATBOT_TRACE_FILE_ENABLED]
+FAILED tests/test_production_remediation.py::test_validator_accepts_complete_production_and_any_development_profile
+FAILED tests/test_production_remediation.py::test_nx32_implicit_app_env_warns_without_secret_and_still_starts
+FAILED tests/test_production_remediation.py::test_nx34_slow_repository_does_not_block_event_loop
+FAILED tests/test_production_remediation.py::test_nx35_cancel_during_user_write_releases_lease_after_write_settles
+FAILED tests/test_production_remediation.py::test_nx36_verified_empty_order_list_is_answered_as_no_orders
+FAILED tests/test_production_remediation.py::test_nx39_lower_case_order_code_matches_the_single_owned_order
+FAILED tests/test_production_remediation.py::test_case_variant_duplicates_are_ambiguous_not_chosen
+FAILED tests/test_production_remediation.py::test_nx41_status_endpoint_is_hidden_outside_development
+FAILED tests/test_production_remediation.py::test_nx42_model_authored_references_are_discarded
+FAILED tests/test_production_remediation.py::test_nx42_injected_code_does_not_filter_owned_context
+FAILED tests/test_production_remediation.py::test_nx44_warranty_device_identifiers_are_redacted
+47 failed, 22 passed, 1 warning in 13.38s
+exit=1

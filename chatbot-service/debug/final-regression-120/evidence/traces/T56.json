@@ -1,0 +1,261 @@
+{
+  "trace_id": "34e36de6-d07e-4b4a-a4ad-5c4d8271a330",
+  "status": "warning",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "8975a50d-47ff-4b1a-bf67-1d4e80016e32",
+      "parent_id": "e6b80398-7396-453d-9928-59c932d9da1e",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 55.62,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "71d05678-3ef6-4958-a1e1-5b87cd43aab3",
+      "parent_id": "e6b80398-7396-453d-9928-59c932d9da1e",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 55.81,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "942fc20d-220c-44b9-83d2-5336ee122bc0",
+      "parent_id": "2dea3fc0-c83d-483b-9260-9bfc9c736497",
+      "name": "query.validation_failed",
+      "status": "warning",
+      "offset_ms": 1908.8,
+      "duration_ms": null,
+      "output": {
+        "errors": [
+          {
+            "type": "value_error",
+            "loc": [
+              "product_search",
+              "targets",
+              0
+            ],
+            "msg": "Value error, Exactly one explicit identity is required"
+          }
+        ],
+        "attempt": 1
+      }
+    },
+    {
+      "id": "29375daa-7861-4952-9600-d232d7c36f95",
+      "parent_id": "2dea3fc0-c83d-483b-9260-9bfc9c736497",
+      "name": "query.validation_failed",
+      "status": "warning",
+      "offset_ms": 3103.84,
+      "duration_ms": null,
+      "output": {
+        "errors": [
+          {
+            "type": "value_error",
+            "loc": [
+              "product_search",
+              "targets",
+              0
+            ],
+            "msg": "Value error, Exactly one explicit identity is required"
+          }
+        ],
+        "attempt": 2
+      }
+    },
+    {
+      "id": "6389f8af-c0bc-4b2f-93cb-ed98544825af",
+      "parent_id": "2dea3fc0-c83d-483b-9260-9bfc9c736497",
+      "name": "query.fallback",
+      "status": "warning",
+      "offset_ms": 3103.89,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "reason": "model_or_schema_failure"
+      }
+    },
+    {
+      "id": "04cff25a-f140-449d-9049-f8fe8c75f7f1",
+      "parent_id": "2dea3fc0-c83d-483b-9260-9bfc9c736497",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 3130.67,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": "Mình hỗ trợ tìm từng nhóm sản phẩm. Bạn muốn tìm loại sản phẩm nào trước?",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        },
+        "constraint_rejected": true
+      }
+    },
+    {
+      "id": "88024baa-4da3-49ad-9b57-7c62b4c07fc0",
+      "parent_id": "e6b80398-7396-453d-9928-59c932d9da1e",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 3145.88,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình hỗ trợ tìm từng nhóm sản phẩm. Bạn muốn tìm loại sản phẩm nào trước?",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "7b26564d-6f67-47a4-8b31-8fe0d06e98cf",
+      "parent_id": "e6b80398-7396-453d-9928-59c932d9da1e",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 3146.02,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "5f558cd7-c0c2-43f5-9949-9daf34bc5170",
+      "parent_id": "611ac2df-30e1-4f9d-86b1-9490a29f9ff5",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 3146.22,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 12.25,
+      "duration_ms": 3146.84,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 56.04,
+      "duration_ms": 3074.77,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 58.32,
+      "duration_ms": 1849.37,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 58.83,
+      "duration_ms": 1848.83,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 59.29,
+      "duration_ms": 1848.34,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 1908.86,
+      "duration_ms": 1194.94,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 1909.55,
+      "duration_ms": 1194.23,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 1910.27,
+      "duration_ms": 1193.48,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 3103.97,
+      "duration_ms": 7.84,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 3111.87,
+      "duration_ms": 7.04,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 3118.94,
+      "duration_ms": 11.42,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 3145.97,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 3146.15,
+      "duration_ms": 0.1,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

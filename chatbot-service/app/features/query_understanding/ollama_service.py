@@ -54,8 +54,9 @@ class OllamaQueryUnderstandingService:
                     output = self.model.chat(messages, schema=schema)
                     done({"raw_output": output})
                 plan = QueryPlan.model_validate_json(output)
-                # Clarification is application-controlled, never a free-form model answer.
-                plan = plan.model_copy(update={"clarification": None})
+                # Clarification and references are application-controlled: references come only
+                # from the read-only guard and the owned-snapshot resolver, never from model text.
+                plan = plan.model_copy(update={"clarification": None, "references": {}})
                 event("query.validation", plan)
                 return self.normalizer.normalize(plan, context) if self.normalizer else plan
             except OllamaError as exc:

@@ -46,3 +46,43 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
+
+
+DEV_LIKE_ENVIRONMENTS = frozenset(('development', 'local', 'test'))
+
+
+def is_dev_like(app_env: str) -> bool:
+    return app_env.lower() in DEV_LIKE_ENVIRONMENTS
+
+
+def validate_runtime_settings(settings: Settings) -> None:
+    """Refuse a non-development start that would serve mock, memory or traced behaviour.
+
+    Called from the application lifespan, not as a model validator, so Settings objects
+    built for tests (including app_env='production') stay constructible.
+    """
+    if is_dev_like(settings.app_env):
+        return
+    invalid = [name for name, ok in (
+        ('CHATBOT_AI_ENABLED', settings.chatbot_ai_enabled),
+        ('PRODUCT_ADVISOR_MODE', settings.product_advisor_mode == 'real'),
+        ('CONVERSATION_STORAGE', settings.conversation_storage == 'postgres'),
+        ('CONVERSATION_DATABASE_URL', bool(settings.conversation_database_url)),
+        ('PRODUCT_INDEX_DATABASE_URL', bool(settings.product_index_database_url)),
+        ('CHATBOT_TRACE_ENABLED', not settings.chatbot_trace_enabled),
+        ('CHATBOT_TRACE_FILE_ENABLED', not settings.chatbot_trace_file_enabled),
+    ) if not ok]
+    if invalid:
+        # Variable names only; values may be connection strings or tokens.
+        raise ValueError(f"Invalid chatbot configuration for APP_ENV={settings.app_env!r}: " + ', '.join(invalid))
+
+
+def runtime_warnings(settings: Settings) -> list[str]:
+    """Non-blocking signals for an operator; detection only, a forgotten APP_ENV still starts."""
+    return [code for code, active in (
+        ('ai_disabled', not settings.chatbot_ai_enabled),
+        ('product_advisor_mock', settings.product_advisor_mode == 'mock'),
+        ('conversation_memory', settings.conversation_storage == 'memory'),
+        ('app_env_implicit', 'app_env' not in settings.model_fields_set),
+        ('warehouse_unconfigured', not settings.chatbot_warehouse_id),
+    ) if active]
