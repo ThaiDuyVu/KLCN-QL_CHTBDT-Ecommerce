@@ -1,0 +1,24 @@
+{
+  "commands": [
+    {
+      "command": ".venv/bin/python -m pytest tests/test_query_integrity.py tests/test_pipeline_tracing.py -q",
+      "exit_code": 4,
+      "result": "NO_TESTS_RAN: tests/test_pipeline_tracing.py absent in this checkout"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/test_query_integrity.py -q",
+      "exit_code": 0,
+      "passed": 111,
+      "duration_seconds": 0.24
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/test_tracing.py -q",
+      "exit_code": 0,
+      "passed": 6,
+      "warnings": 1,
+      "duration_seconds": 0.15,
+      "warning": "Starlette TestClient httpx integration deprecation"
+    }
+  ],
+  "note": "Existing tests only; no new production code or tests changed; passing tests do not cover the demonstrated noun-phrase failure."
+}

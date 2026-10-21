@@ -1,0 +1,1959 @@
+[
+  {
+    "trace_id": "c264dcb2-38a8-4521-ac81-25ce11780767",
+    "timestamp_utc": "2026-10-21T06:19:59.271961+00:00",
+    "duration_ms": 1423.45,
+    "status": "ok",
+    "prompt": "tôi đang có 20tr tư vấn giúp tôi một laptop học công nghệ thông tin",
+    "history_count": 0,
+    "history_excerpt": [],
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop học công nghệ thông tin",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "normalized_plan": {
+      "clarification": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "grounded_product_count": 0,
+    "advisor_search_called": false,
+    "semantic_ranking_called": false,
+    "backend_reads": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "response": {
+      "message": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "events": [
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 69.97,
+        "duration_ms": 1281.72,
+        "raw_model_output": "{\"intent\":\"PRODUCT_DISCOVERY\",\"product_search\":{\"category\":\"Laptop\",\"max_price\":20000000,\"semantic_query\":\"laptop học công nghệ thông tin\"}}"
+      },
+      {
+        "id": "ca2c3c22-0f99-410a-8ca6-167d50c0ea15",
+        "parent_id": "47efb2d4-7daf-48a4-88d0-b480c812c820",
+        "name": "query.validation",
+        "status": "ok",
+        "offset_ms": 1351.81,
+        "duration_ms": null,
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop học công nghệ thông tin",
+            "top_k": 5
+          },
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "36139992-511e-4a61-8851-19449af1acb3",
+        "parent_id": "47efb2d4-7daf-48a4-88d0-b480c812c820",
+        "name": "query.domain_validation",
+        "status": "ok",
+        "offset_ms": 1396.34,
+        "duration_ms": null,
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "20000000",
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop học công nghệ thông tin",
+              "top_k": 5
+            },
+            "semantic_query": null
+          },
+          "normalized": {
+            "clarification": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+            "intent": "UNKNOWN",
+            "requested_fields": [],
+            "references": {},
+            "product_search": null,
+            "semantic_query": null
+          },
+          "constraint_rejected": true
+        }
+      },
+      {
+        "id": "3603e479-5fec-40bc-9d02-814cba83ecb2",
+        "parent_id": "be02d565-45c5-4210-aa62-6db3189dcd08",
+        "name": "query.plan.initial",
+        "status": "ok",
+        "offset_ms": 1411.38,
+        "duration_ms": null,
+        "output": {
+          "clarification": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "aa92c760-165d-4969-b7f1-e5e39d34a407",
+        "parent_id": "be02d565-45c5-4210-aa62-6db3189dcd08",
+        "name": "retrieval.summary",
+        "status": "ok",
+        "offset_ms": 1411.51,
+        "duration_ms": null,
+        "output": {
+          "intent": "UNKNOWN",
+          "products": 0,
+          "cards": 0,
+          "knowledge_chunks": 0,
+          "knowledge_configured": true
+        }
+      },
+      {
+        "id": "86bcbb5a-33a7-481f-9a6f-0c96244e7e27",
+        "parent_id": "d9098f61-8f9c-40aa-becc-53f88ee8134d",
+        "name": "response.strategy",
+        "status": "ok",
+        "offset_ms": 1411.77,
+        "duration_ms": null,
+        "output": {
+          "strategy": "deterministic_guard",
+          "reason": "clarification"
+        }
+      }
+    ]
+  },
+  {
+    "trace_id": "66b04315-8e0d-402f-9c6e-d7669510feb7",
+    "timestamp_utc": "2026-10-21T06:21:28.852349+00:00",
+    "duration_ms": 1638.32,
+    "status": "ok",
+    "prompt": "20tr , hoc cong nghe thong tin",
+    "history_count": 2,
+    "history_excerpt": [
+      {
+        "role": "USER",
+        "content": "tôi đang có 20tr tư vấn giúp tôi một laptop học công nghệ thông tin",
+        "created_at": "2026-10-21T06:19:59.317354Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+        "created_at": "2026-10-21T06:20:00.688727Z"
+      }
+    ],
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop hoc cong nghe thong tin",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "normalized_plan": {
+      "clarification": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "grounded_product_count": 0,
+    "advisor_search_called": false,
+    "semantic_ranking_called": false,
+    "backend_reads": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "response": {
+      "message": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "events": [
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 50.05,
+        "duration_ms": 1521.68,
+        "raw_model_output": "{\"intent\":\"PRODUCT_DISCOVERY\",\"product_search\":{\"category\":\"Laptop\",\"max_price\":20000000,\"semantic_query\":\"laptop hoc cong nghe thong tin\"}}"
+      },
+      {
+        "id": "a9a5c853-4301-4ce3-b2d6-bbfca82a962e",
+        "parent_id": "61f60fd7-b9a1-4653-8171-e3065253121b",
+        "name": "query.validation",
+        "status": "ok",
+        "offset_ms": 1571.87,
+        "duration_ms": null,
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop hoc cong nghe thong tin",
+            "top_k": 5
+          },
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "7b7f4625-183a-420d-93a7-7584511ab0d6",
+        "parent_id": "61f60fd7-b9a1-4653-8171-e3065253121b",
+        "name": "query.domain_validation",
+        "status": "ok",
+        "offset_ms": 1616.14,
+        "duration_ms": null,
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "20000000",
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop hoc cong nghe thong tin",
+              "top_k": 5
+            },
+            "semantic_query": null
+          },
+          "normalized": {
+            "clarification": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+            "intent": "UNKNOWN",
+            "requested_fields": [],
+            "references": {},
+            "product_search": null,
+            "semantic_query": null
+          },
+          "constraint_rejected": true
+        }
+      },
+      {
+        "id": "82f48c94-9952-49d0-8e2d-cdf63e7262af",
+        "parent_id": "9ee8edd7-349c-4379-bf63-38d1a8c8c333",
+        "name": "query.plan.initial",
+        "status": "ok",
+        "offset_ms": 1627.6,
+        "duration_ms": null,
+        "output": {
+          "clarification": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "a1ff48aa-59ea-4464-8c87-e3f675a05b4e",
+        "parent_id": "9ee8edd7-349c-4379-bf63-38d1a8c8c333",
+        "name": "retrieval.summary",
+        "status": "ok",
+        "offset_ms": 1627.71,
+        "duration_ms": null,
+        "output": {
+          "intent": "UNKNOWN",
+          "products": 0,
+          "cards": 0,
+          "knowledge_chunks": 0,
+          "knowledge_configured": true
+        }
+      },
+      {
+        "id": "35c730bd-36f6-4913-957a-dd8906290666",
+        "parent_id": "d83ba65d-317d-459e-ad0f-80a232954246",
+        "name": "response.strategy",
+        "status": "ok",
+        "offset_ms": 1627.97,
+        "duration_ms": null,
+        "output": {
+          "strategy": "deterministic_guard",
+          "reason": "clarification"
+        }
+      }
+    ]
+  },
+  {
+    "trace_id": "ed2aa839-1920-4cc6-bb19-0ca28de2c892",
+    "timestamp_utc": "2026-10-21T06:21:39.054722+00:00",
+    "duration_ms": 1699.17,
+    "status": "ok",
+    "prompt": "laptop dell",
+    "history_count": 4,
+    "history_excerpt": [
+      {
+        "role": "USER",
+        "content": "tôi đang có 20tr tư vấn giúp tôi một laptop học công nghệ thông tin",
+        "created_at": "2026-10-21T06:19:59.317354Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+        "created_at": "2026-10-21T06:20:00.688727Z"
+      },
+      {
+        "role": "USER",
+        "content": "20tr , hoc cong nghe thong tin",
+        "created_at": "2026-10-21T06:21:28.884162Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+        "created_at": "2026-10-21T06:21:30.487055Z"
+      }
+    ],
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop học công nghệ thông tin",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "normalized_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop dell",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop dell",
+        "top_k": 5
+      }
+    },
+    "grounded_product_count": 2,
+    "advisor_search_called": true,
+    "semantic_ranking_called": true,
+    "backend_reads": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/search/advanced",
+        "kwargs": {
+          "params": [
+            [
+              "limit",
+              "100"
+            ],
+            [
+              "offset",
+              "0"
+            ],
+            [
+              "category",
+              "Laptop"
+            ],
+            [
+              "warehouseId",
+              "d13ea247-ab70-473b-80d6-c8adea60334c"
+            ],
+            [
+              "inStockOnly",
+              "false"
+            ],
+            [
+              "brands",
+              "Dell"
+            ]
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/products/de24f73c-c12f-43e6-ba87-13308ab4980c/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/de24f73c-c12f-43e6-ba87-13308ab4980c/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      }
+    ],
+    "response": {
+      "message": "Dell XPS 13\n- DEV-XPS13-SL-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 32,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.\n- DEV-XPS13-GR-1TB: RAM 16GB, bộ nhớ 1TB, màu Xám; giá 36,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.\n- DEV-XPS13-SL-1TB: RAM 32GB, bộ nhớ 1TB, màu Bạc; giá 41,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.\nDell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+          "product_name": "Dell XPS 13",
+          "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+          "sku": "DEV-XPS13-SL-512",
+          "original_price": "32990000.0",
+          "effective_price": "32990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-xps-13/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell"
+          ]
+        },
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "events": [
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 52.3,
+        "duration_ms": 1468.79,
+        "raw_model_output": "{\"intent\":\"PRODUCT_DISCOVERY\",\"product_search\":{\"category\":\"Laptop\",\"max_price\":20000000,\"semantic_query\":\"laptop học công nghệ thông tin\"}}"
+      },
+      {
+        "id": "4782857f-b4e3-4e9f-9947-003474a5aee7",
+        "parent_id": "5fa96911-bbab-4eff-b3ae-e6ae90bd92aa",
+        "name": "query.validation",
+        "status": "ok",
+        "offset_ms": 1521.14,
+        "duration_ms": null,
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop học công nghệ thông tin",
+            "top_k": 5
+          },
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "3fcf2c22-0a72-48db-a627-5e68efa6e04d",
+        "parent_id": "5fa96911-bbab-4eff-b3ae-e6ae90bd92aa",
+        "name": "query.domain_validation",
+        "status": "ok",
+        "offset_ms": 1581.64,
+        "duration_ms": null,
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "20000000",
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop học công nghệ thông tin",
+              "top_k": 5
+            },
+            "semantic_query": null
+          },
+          "normalized": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [
+                "Dell"
+              ],
+              "min_price": null,
+              "max_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop dell",
+              "top_k": 5
+            },
+            "semantic_query": null
+          },
+          "taxonomy_verified": true
+        }
+      },
+      {
+        "id": "e8a6ab35-768f-4f97-9a28-9456b73397f8",
+        "parent_id": "94d02565-62d4-45b4-b82a-d681242d796b",
+        "name": "query.plan.initial",
+        "status": "ok",
+        "offset_ms": 1600.65,
+        "duration_ms": null,
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Dell"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dell",
+            "top_k": 5
+          },
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "ad072781-7ba6-4d18-9176-98708d5c0975",
+        "parent_id": "94d02565-62d4-45b4-b82a-d681242d796b",
+        "name": "query.plan.effective",
+        "status": "ok",
+        "offset_ms": 1600.77,
+        "duration_ms": null,
+        "output": {
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Dell"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dell",
+            "top_k": 5
+          }
+        }
+      },
+      {
+        "id": "66f5e446-33b8-4f43-b53d-e74f1e19b017",
+        "parent_id": "94d02565-62d4-45b4-b82a-d681242d796b",
+        "name": "product.search",
+        "status": "ok",
+        "offset_ms": 1600.92,
+        "duration_ms": 72.78,
+        "output": [
+          {
+            "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+            "product_name": "Dell XPS 13",
+            "brand_name": "Dell",
+            "category_name": "Laptop",
+            "specifications": {
+              "CPU": "Intel Core Ultra",
+              "Màn hình": "13,4 inch",
+              "Pin": "Pin tích hợp, sạc USB-C",
+              "RAM": "16-32 GB"
+            },
+            "semantic_score": 0.6602874566495259,
+            "ranking_score": 0.6602874566495259,
+            "eligible_variants": [
+              {
+                "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+                "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+                "sku": "DEV-XPS13-SL-512",
+                "original_price": "32990000.0",
+                "effective_price": "32990000.0",
+                "ram": "16GB",
+                "storage": "512GB",
+                "color": "Bạc",
+                "available_quantity": 2,
+                "warranty_months": 24
+              },
+              {
+                "variant_id": "eb3ea7d8-4a52-4865-bf18-1625a520da06",
+                "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+                "sku": "DEV-XPS13-GR-1TB",
+                "original_price": "36990000.0",
+                "effective_price": "36990000.0",
+                "ram": "16GB",
+                "storage": "1TB",
+                "color": "Xám",
+                "available_quantity": 2,
+                "warranty_months": 24
+              },
+              {
+                "variant_id": "58a94383-f725-4056-be6d-46e4c366d04e",
+                "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+                "sku": "DEV-XPS13-SL-1TB",
+                "original_price": "41990000.0",
+                "effective_price": "41990000.0",
+                "ram": "32GB",
+                "storage": "1TB",
+                "color": "Bạc",
+                "available_quantity": 2,
+                "warranty_months": 24
+              }
+            ],
+            "reasons": [
+              "Danh mục: Laptop",
+              "Thương hiệu: Dell"
+            ]
+          },
+          {
+            "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+            "product_name": "Dell Inspiron 15",
+            "brand_name": "Dell",
+            "category_name": "Laptop",
+            "specifications": {
+              "CPU": "Intel Core i5",
+              "Màn hình": "Full HD 15,6 inch",
+              "Pin": "Pin tích hợp",
+              "RAM": "16 GB"
+            },
+            "semantic_score": 0.5785725648917461,
+            "ranking_score": 0.5785725648917461,
+            "eligible_variants": [
+              {
+                "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+                "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+                "sku": "DEV-DELL-I15-512",
+                "original_price": "15990000.0",
+                "effective_price": "15990000.0",
+                "ram": "16GB",
+                "storage": "512GB",
+                "color": "Bạc",
+                "available_quantity": 2,
+                "warranty_months": 24
+              }
+            ],
+            "reasons": [
+              "Danh mục: Laptop",
+              "Thương hiệu: Dell"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "478ae621-283c-4af9-88ed-8ebcf8180249",
+        "parent_id": "94d02565-62d4-45b4-b82a-d681242d796b",
+        "name": "product.cards",
+        "status": "ok",
+        "offset_ms": 1673.71,
+        "duration_ms": 16.92,
+        "output": [
+          {
+            "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+            "product_name": "Dell XPS 13",
+            "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+            "sku": "DEV-XPS13-SL-512",
+            "original_price": "32990000.0",
+            "effective_price": "32990000.0",
+            "ram": "16GB",
+            "storage": "512GB",
+            "color": "Bạc",
+            "available_quantity": 2,
+            "warranty_months": 24,
+            "image_url": "/images/products/dell-xps-13/main.jpg",
+            "reasons": [
+              "Danh mục: Laptop",
+              "Thương hiệu: Dell"
+            ]
+          },
+          {
+            "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+            "product_name": "Dell Inspiron 15",
+            "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+            "sku": "DEV-DELL-I15-512",
+            "original_price": "15990000.0",
+            "effective_price": "15990000.0",
+            "ram": "16GB",
+            "storage": "512GB",
+            "color": "Bạc",
+            "available_quantity": 2,
+            "warranty_months": 24,
+            "image_url": "/images/products/dell-inspiron-15/main.jpg",
+            "reasons": [
+              "Danh mục: Laptop",
+              "Thương hiệu: Dell"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "6e68233f-ff7a-4bbd-8a47-cd37564e8096",
+        "parent_id": "94d02565-62d4-45b4-b82a-d681242d796b",
+        "name": "retrieval.summary",
+        "status": "ok",
+        "offset_ms": 1690.8,
+        "duration_ms": null,
+        "output": {
+          "intent": "PRODUCT_DISCOVERY",
+          "products": 2,
+          "cards": 2,
+          "knowledge_chunks": 0,
+          "knowledge_configured": true
+        }
+      },
+      {
+        "id": "94cb5e74-2972-44b7-b48f-c62ff31c8827",
+        "parent_id": "dcdd82b2-7102-48fe-966b-00b62c1e81ae",
+        "name": "response.strategy",
+        "status": "ok",
+        "offset_ms": 1691.4,
+        "duration_ms": null,
+        "output": {
+          "strategy": "deterministic_product_evidence",
+          "reason": "verified_product_variants"
+        }
+      }
+    ]
+  },
+  {
+    "trace_id": "70057760-c91e-4e5b-b77c-284b776ebf0b",
+    "timestamp_utc": "2026-10-21T06:22:45.665145+00:00",
+    "duration_ms": 4949.73,
+    "status": "ok",
+    "prompt": "so sanh voi macbook air m1",
+    "history_count": 6,
+    "history_excerpt": [
+      {
+        "role": "USER",
+        "content": "20tr , hoc cong nghe thong tin",
+        "created_at": "2026-10-21T06:21:28.884162Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Bạn muốn tìm loại máy nào, ngân sách bao nhiêu và dùng cho nhu cầu gì?",
+        "created_at": "2026-10-21T06:21:30.487055Z"
+      },
+      {
+        "role": "USER",
+        "content": "laptop dell",
+        "created_at": "2026-10-21T06:21:39.085076Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Dell XPS 13\n- DEV-XPS13-SL-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 32,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.\n- DEV-XPS13-GR-1TB: RAM 16GB, bộ nhớ 1TB, màu Xám; giá 36,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.\n- DEV-XPS13-SL-1TB: RAM 32GB, bộ nhớ 1TB, màu Bạc; giá 41,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.\nDell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+        "created_at": "2026-10-21T06:21:40.750399Z"
+      }
+    ],
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [
+        "PRICE",
+        "STOCK",
+        "SPECIFICATIONS",
+        "WARRANTY"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop dell hoc cong nghe thong tin",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "normalized_plan": {
+      "clarification": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "grounded_product_count": 0,
+    "advisor_search_called": false,
+    "semantic_ranking_called": false,
+    "backend_reads": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "response": {
+      "message": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "events": [
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 43.55,
+        "duration_ms": 4847.85,
+        "raw_model_output": "{\"intent\":\"PRODUCT_COMPARE\",\"product_search\":{\"category\":\"Laptop\",\"max_price\":20000000,\"min_ram_gb\":16,\"semantic_query\":\"laptop dell hoc cong nghe thong tin\",\"top_k\":5},\"references\":{\"DEV-XPS13-SL-512\":\"PRODUCT_DETAIL\",\"DEV-XPS13-GR-1TB\":\"PRODUCT_DETAIL\",\"DEV-XPS13-SL-1TB\":\"PRODUCT_DETAIL\",\"DEV-DELL-I15-512\":\"PRODUCT_DETAIL\"},\"requested_fields\":[\"PRICE\",\"STOCK\",\"SPECIFICATIONS\",\"WARRANTY\"]}"
+      },
+      {
+        "id": "68239f38-4a6a-4bde-b5f1-80d1b59c2d62",
+        "parent_id": "561ebf60-e789-412c-92d1-6451871e5199",
+        "name": "query.validation",
+        "status": "ok",
+        "offset_ms": 4891.46,
+        "duration_ms": null,
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_COMPARE",
+          "requested_fields": [
+            "PRICE",
+            "STOCK",
+            "SPECIFICATIONS",
+            "WARRANTY"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dell hoc cong nghe thong tin",
+            "top_k": 5
+          },
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "d2476db6-09bb-4beb-81d0-d6de6e6f4da8",
+        "parent_id": "9f9cbe51-fddd-427a-a8fe-230d442cf834",
+        "name": "query.plan.initial",
+        "status": "ok",
+        "offset_ms": 4941.17,
+        "duration_ms": null,
+        "output": {
+          "clarification": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "7070e724-2d29-42ac-9b0f-d5e120f1c11d",
+        "parent_id": "9f9cbe51-fddd-427a-a8fe-230d442cf834",
+        "name": "retrieval.summary",
+        "status": "ok",
+        "offset_ms": 4941.3,
+        "duration_ms": null,
+        "output": {
+          "intent": "UNKNOWN",
+          "products": 0,
+          "cards": 0,
+          "knowledge_chunks": 0,
+          "knowledge_configured": true
+        }
+      },
+      {
+        "id": "67164e07-7e54-46db-827d-5dd4820a4665",
+        "parent_id": "7407695c-db96-4919-b78e-e0f730afc059",
+        "name": "response.strategy",
+        "status": "ok",
+        "offset_ms": 4941.64,
+        "duration_ms": null,
+        "output": {
+          "strategy": "deterministic_guard",
+          "reason": "clarification"
+        }
+      }
+    ]
+  },
+  {
+    "trace_id": "f7ab41c9-02c3-4602-8331-db4261ba9d0c",
+    "timestamp_utc": "2026-10-21T06:23:09.226760+00:00",
+    "duration_ms": 3223.7,
+    "status": "ok",
+    "prompt": "so sánh sản phẩm trên với macbook air m1",
+    "history_count": 8,
+    "history_excerpt": [
+      {
+        "role": "USER",
+        "content": "laptop dell",
+        "created_at": "2026-10-21T06:21:39.085076Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Dell XPS 13\n- DEV-XPS13-SL-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 32,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.\n- DEV-XPS13-GR-1TB: RAM 16GB, bộ nhớ 1TB, màu Xám; giá 36,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.\n- DEV-XPS13-SL-1TB: RAM 32GB, bộ nhớ 1TB, màu Bạc; giá 41,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.\nDell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+        "created_at": "2026-10-21T06:21:40.750399Z"
+      },
+      {
+        "role": "USER",
+        "content": "so sanh voi macbook air m1",
+        "created_at": "2026-10-21T06:22:45.687539Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+        "created_at": "2026-10-21T06:22:50.611536Z"
+      }
+    ],
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": null,
+            "sku": "DEV-XPS13-SL-512",
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          },
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": null,
+            "sku": "DEV-XPS13-GR-1TB",
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          },
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": null,
+            "sku": "DEV-XPS13-SL-1TB",
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 3
+      },
+      "semantic_query": "so sanh voi macbook air m1"
+    },
+    "normalized_plan": {
+      "clarification": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "grounded_product_count": 0,
+    "advisor_search_called": false,
+    "semantic_ranking_called": false,
+    "backend_reads": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "response": {
+      "message": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "events": [
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 57.81,
+        "duration_ms": 3082.88,
+        "raw_model_output": "{\"intent\":\"PRODUCT_COMPARE\",\"product_search\":{\"targets\":[{\"sku\":\"DEV-XPS13-SL-512\",\"variant_id\":null},{\"sku\":\"DEV-XPS13-GR-1TB\",\"variant_id\":null},{\"sku\":\"DEV-XPS13-SL-1TB\",\"variant_id\":null}],\"top_k\":3},\"semantic_query\":\"so sanh voi macbook air m1\"}"
+      },
+      {
+        "id": "63f4deef-6e17-4950-80fd-9aa6dfca75b0",
+        "parent_id": "e2ada17b-48be-4dce-8ef9-110d2094fe47",
+        "name": "query.validation",
+        "status": "ok",
+        "offset_ms": 3140.76,
+        "duration_ms": null,
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_COMPARE",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "DEV-XPS13-SL-512",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              },
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "DEV-XPS13-GR-1TB",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              },
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "DEV-XPS13-SL-1TB",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": null,
+            "top_k": 3
+          },
+          "semantic_query": "so sanh voi macbook air m1"
+        }
+      },
+      {
+        "id": "c0aabbd4-5225-4d58-a5e1-39e0d328f420",
+        "parent_id": "08fb7b54-bce0-4206-9027-cc9066d48381",
+        "name": "query.plan.initial",
+        "status": "ok",
+        "offset_ms": 3212.57,
+        "duration_ms": null,
+        "output": {
+          "clarification": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "23c9e438-acb0-4b44-acc7-bf39d91d83c0",
+        "parent_id": "08fb7b54-bce0-4206-9027-cc9066d48381",
+        "name": "retrieval.summary",
+        "status": "ok",
+        "offset_ms": 3212.69,
+        "duration_ms": null,
+        "output": {
+          "intent": "UNKNOWN",
+          "products": 0,
+          "cards": 0,
+          "knowledge_chunks": 0,
+          "knowledge_configured": true
+        }
+      },
+      {
+        "id": "5bb1bf6f-13d5-4736-8c11-87b6647521dd",
+        "parent_id": "3e368599-99a4-4e59-b0ee-3e3480d530af",
+        "name": "response.strategy",
+        "status": "ok",
+        "offset_ms": 3213.11,
+        "duration_ms": null,
+        "output": {
+          "strategy": "deterministic_guard",
+          "reason": "clarification"
+        }
+      }
+    ]
+  },
+  {
+    "trace_id": "cd16696d-2011-42c6-878b-82a1b058db22",
+    "timestamp_utc": "2026-10-21T06:23:34.832835+00:00",
+    "duration_ms": 2263.16,
+    "status": "ok",
+    "prompt": "gợi ý cho tôi một laptop dell 16G ram",
+    "history_count": 10,
+    "history_excerpt": [
+      {
+        "role": "USER",
+        "content": "so sanh voi macbook air m1",
+        "created_at": "2026-10-21T06:22:45.687539Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+        "created_at": "2026-10-21T06:22:50.611536Z"
+      },
+      {
+        "role": "USER",
+        "content": "so sánh sản phẩm trên với macbook air m1",
+        "created_at": "2026-10-21T06:23:09.262272Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+        "created_at": "2026-10-21T06:23:12.446640Z"
+      }
+    ],
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop dell 16G ram",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "normalized_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "gợi ý cho tôi một laptop dell 16G ram",
+        "top_k": 1
+      },
+      "semantic_query": null
+    },
+    "effective_search": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [
+          "Dell"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "gợi ý cho tôi một laptop dell 16G ram",
+        "top_k": 1
+      }
+    },
+    "grounded_product_count": 1,
+    "advisor_search_called": true,
+    "semantic_ranking_called": true,
+    "backend_reads": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/search/advanced",
+        "kwargs": {
+          "params": [
+            [
+              "limit",
+              "100"
+            ],
+            [
+              "offset",
+              "0"
+            ],
+            [
+              "category",
+              "Laptop"
+            ],
+            [
+              "warehouseId",
+              "d13ea247-ab70-473b-80d6-c8adea60334c"
+            ],
+            [
+              "inStockOnly",
+              "false"
+            ],
+            [
+              "brands",
+              "Dell"
+            ]
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      }
+    ],
+    "response": {
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "events": [
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 66.46,
+        "duration_ms": 2040.85,
+        "raw_model_output": "{\"intent\":\"PRODUCT_DISCOVERY\",\"product_search\":{\"category\":\"Laptop\",\"max_price\":20000000,\"min_ram_gb\":16,\"semantic_query\":\"laptop dell 16G ram\",\"top_k\":5}}"
+      },
+      {
+        "id": "de86554c-3cf2-4a11-b5d8-acbb894f0820",
+        "parent_id": "64039cf3-9f01-46fa-9e52-aabc22ee7989",
+        "name": "query.validation",
+        "status": "ok",
+        "offset_ms": 2107.36,
+        "duration_ms": null,
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dell 16G ram",
+            "top_k": 5
+          },
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "74cf064f-2329-4652-a377-e3d330215744",
+        "parent_id": "64039cf3-9f01-46fa-9e52-aabc22ee7989",
+        "name": "query.domain_validation",
+        "status": "ok",
+        "offset_ms": 2151.53,
+        "duration_ms": null,
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "20000000",
+              "min_ram_gb": 16,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop dell 16G ram",
+              "top_k": 5
+            },
+            "semantic_query": null
+          },
+          "normalized": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [
+              "SPECIFICATIONS"
+            ],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [
+                "Dell"
+              ],
+              "min_price": null,
+              "max_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "gợi ý cho tôi một laptop dell 16G ram",
+              "top_k": 1
+            },
+            "semantic_query": null
+          },
+          "taxonomy_verified": true
+        }
+      },
+      {
+        "id": "cf692a36-6131-4fce-8ac0-ecba12706b8f",
+        "parent_id": "969b06d9-555b-444f-938a-c17f0c889f07",
+        "name": "query.plan.initial",
+        "status": "ok",
+        "offset_ms": 2169.43,
+        "duration_ms": null,
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Dell"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "gợi ý cho tôi một laptop dell 16G ram",
+            "top_k": 1
+          },
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "f888479d-19ff-44ba-9097-a56b609f9f09",
+        "parent_id": "969b06d9-555b-444f-938a-c17f0c889f07",
+        "name": "query.plan.effective",
+        "status": "ok",
+        "offset_ms": 2169.56,
+        "duration_ms": null,
+        "output": {
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Dell"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "gợi ý cho tôi một laptop dell 16G ram",
+            "top_k": 1
+          }
+        }
+      },
+      {
+        "id": "c00a2782-46cc-43d4-ae8c-b4cd2e5f9a6e",
+        "parent_id": "969b06d9-555b-444f-938a-c17f0c889f07",
+        "name": "product.search",
+        "status": "ok",
+        "offset_ms": 2169.73,
+        "duration_ms": 74.81,
+        "output": [
+          {
+            "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+            "product_name": "Dell Inspiron 15",
+            "brand_name": "Dell",
+            "category_name": "Laptop",
+            "specifications": {
+              "CPU": "Intel Core i5",
+              "Màn hình": "Full HD 15,6 inch",
+              "Pin": "Pin tích hợp",
+              "RAM": "16 GB"
+            },
+            "semantic_score": 0.6426178853987263,
+            "ranking_score": 0.6426178853987263,
+            "eligible_variants": [
+              {
+                "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+                "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+                "sku": "DEV-DELL-I15-512",
+                "original_price": "15990000.0",
+                "effective_price": "15990000.0",
+                "ram": "16GB",
+                "storage": "512GB",
+                "color": "Bạc",
+                "available_quantity": 2,
+                "warranty_months": 24
+              }
+            ],
+            "reasons": [
+              "Danh mục: Laptop",
+              "Thương hiệu: Dell"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "76e77342-ddaa-4415-84cc-ffaa2b4d2f7a",
+        "parent_id": "969b06d9-555b-444f-938a-c17f0c889f07",
+        "name": "product.cards",
+        "status": "ok",
+        "offset_ms": 2244.56,
+        "duration_ms": 9.36,
+        "output": [
+          {
+            "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+            "product_name": "Dell Inspiron 15",
+            "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+            "sku": "DEV-DELL-I15-512",
+            "original_price": "15990000.0",
+            "effective_price": "15990000.0",
+            "ram": "16GB",
+            "storage": "512GB",
+            "color": "Bạc",
+            "available_quantity": 2,
+            "warranty_months": 24,
+            "image_url": "/images/products/dell-inspiron-15/main.jpg",
+            "reasons": [
+              "Danh mục: Laptop",
+              "Thương hiệu: Dell"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "08f50865-0175-4bbd-b915-9cef31833ddb",
+        "parent_id": "969b06d9-555b-444f-938a-c17f0c889f07",
+        "name": "retrieval.summary",
+        "status": "ok",
+        "offset_ms": 2254.1,
+        "duration_ms": null,
+        "output": {
+          "intent": "PRODUCT_DISCOVERY",
+          "products": 1,
+          "cards": 1,
+          "knowledge_chunks": 0,
+          "knowledge_configured": true
+        }
+      },
+      {
+        "id": "aabef75f-8b40-400c-9c4f-d8f8c0cae552",
+        "parent_id": "81d9e78c-c576-4995-9307-1c17569f461e",
+        "name": "response.strategy",
+        "status": "ok",
+        "offset_ms": 2254.75,
+        "duration_ms": null,
+        "output": {
+          "strategy": "deterministic_product_evidence",
+          "reason": "verified_product_variants"
+        }
+      }
+    ]
+  },
+  {
+    "trace_id": "94e19c12-5e80-4dab-a874-89fddb77e252",
+    "timestamp_utc": "2026-10-21T06:23:49.953741+00:00",
+    "duration_ms": 3214.53,
+    "status": "ok",
+    "prompt": "so sánh sản phẩm trên với macbook air m1",
+    "history_count": 10,
+    "history_excerpt": [
+      {
+        "role": "USER",
+        "content": "so sánh sản phẩm trên với macbook air m1",
+        "created_at": "2026-10-21T06:23:09.262272Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+        "created_at": "2026-10-21T06:23:12.446640Z"
+      },
+      {
+        "role": "USER",
+        "content": "gợi ý cho tôi một laptop dell 16G ram",
+        "created_at": "2026-10-21T06:23:34.871903Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+        "created_at": "2026-10-21T06:23:37.092779Z"
+      }
+    ],
+    "validated_model_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_COMPARE",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": null,
+            "sku": "DEV-DELL-I15-512",
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": null,
+        "top_k": 5
+      },
+      "semantic_query": "so sánh sản phẩm trên với macbook air m1"
+    },
+    "normalized_plan": {
+      "clarification": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_search": null,
+    "grounded_product_count": 0,
+    "advisor_search_called": false,
+    "semantic_ranking_called": false,
+    "backend_reads": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "response": {
+      "message": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "events": [
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 63.47,
+        "duration_ms": 3096.43,
+        "raw_model_output": "{\"intent\":\"PRODUCT_COMPARE\",\"product_search\":{\"targets\":[{\"sku\":\"DEV-DELL-I15-512\"}],\"top_k\":5},\"semantic_query\":\"so sánh sản phẩm trên với macbook air m1\"}"
+      },
+      {
+        "id": "fad6d6b7-2440-437a-9181-a8494eb30b8b",
+        "parent_id": "6d27e340-6140-4703-9cf7-52e3b3a86961",
+        "name": "query.validation",
+        "status": "ok",
+        "offset_ms": 3159.96,
+        "duration_ms": null,
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_COMPARE",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "DEV-DELL-I15-512",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": null,
+            "top_k": 5
+          },
+          "semantic_query": "so sánh sản phẩm trên với macbook air m1"
+        }
+      },
+      {
+        "id": "9ed4f334-7a78-4d5c-8214-a5cab66afd62",
+        "parent_id": "2b6ed298-32ff-471e-b357-6275f80cddeb",
+        "name": "query.plan.initial",
+        "status": "ok",
+        "offset_ms": 3205.92,
+        "duration_ms": null,
+        "output": {
+          "clarification": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "id": "b6d00102-7a28-4eb1-888e-a1d040e1f7fc",
+        "parent_id": "2b6ed298-32ff-471e-b357-6275f80cddeb",
+        "name": "retrieval.summary",
+        "status": "ok",
+        "offset_ms": 3206.07,
+        "duration_ms": null,
+        "output": {
+          "intent": "UNKNOWN",
+          "products": 0,
+          "cards": 0,
+          "knowledge_chunks": 0,
+          "knowledge_configured": true
+        }
+      },
+      {
+        "id": "0ed55aa4-b179-41e3-8f65-2f9964bf059c",
+        "parent_id": "3691b29f-fbc6-448d-8133-8ac79bc3c7ce",
+        "name": "response.strategy",
+        "status": "ok",
+        "offset_ms": 3206.55,
+        "duration_ms": null,
+        "output": {
+          "strategy": "deterministic_guard",
+          "reason": "clarification"
+        }
+      }
+    ]
+  }
+]

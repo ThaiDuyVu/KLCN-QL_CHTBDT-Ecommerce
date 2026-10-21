@@ -1,0 +1,27 @@
+ Fontend/src/features/chatbot/ChatbotLab.test.jsx   |  93 ++++++++++-
+ Fontend/src/features/chatbot/ChatbotLabPage.jsx    | 136 +++++++++++-----
+ .../backend/order/service/OrderServiceImpl.java    |   2 +-
+ .../integration/OrderCheckoutIntegrationTest.java  |  27 ++++
+ .../integration/OrderReadIntegrationTest.java      | 133 ++++++++++++++++
+ chatbot-service/app/features/chat/actions.py       |  85 ++++++++++
+ chatbot-service/app/features/chat/policy.py        |  37 +++--
+ chatbot-service/app/features/chat/router.py        |  10 +-
+ chatbot-service/app/features/chat/service.py       |  78 +++++----
+ .../app/features/conversation/async_lease.py       |  45 ++++++
+ .../app/features/conversation/context.py           |  17 ++
+ .../features/conversation/postgres_repository.py   |  12 ++
+ .../app/features/conversation/references.py        |  79 ++++++---
+ .../app/features/conversation/repository.py        |   6 +
+ .../app/features/conversation/service.py           |   4 +
+ .../app/features/customer_context/service.py       |  15 +-
+ .../app/features/product_advisor/real_service.py   |  17 +-
+ .../app/features/product_advisor/semantic.py       |  18 ++-
+ .../features/query_understanding/constraints.py    | 176 +++++++++++++++++++++
+ .../features/query_understanding/normalization.py  |  67 ++++----
+ .../features/query_understanding/ollama_service.py |   5 +-
+ chatbot-service/app/main.py                        |  18 ++-
+ chatbot-service/app/shared/backend/client.py       |  27 +++-
+ chatbot-service/app/shared/backend/errors.py       |  13 ++
+ chatbot-service/app/shared/config.py               |  40 +++++
+ chatbot-service/app/shared/tracing/__init__.py     |   6 +-
+ 26 files changed, 992 insertions(+), 174 deletions(-)

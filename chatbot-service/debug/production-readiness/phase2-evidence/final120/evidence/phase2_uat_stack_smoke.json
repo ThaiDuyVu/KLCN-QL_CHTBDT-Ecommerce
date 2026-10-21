@@ -1,0 +1,31 @@
+{
+  "executed_at": "2026-10-21T04:54:27.545464+00:00",
+  "url": "http://localhost:5173/chatbot-lab",
+  "rows": [
+    {
+      "check": "status labels",
+      "ai_real": true,
+      "postgres": true,
+      "mock_label": false
+    },
+    {
+      "prompt": "Tìm laptop dưới 20 triệu.",
+      "http_status": 200,
+      "cards": 2,
+      "answer_prefix": "ASUS Vivobook 15\n- DEV-ASUS-V15-512: RAM 8GB, bộ nhớ 512GB, màu Xanh; giá 12,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.\nDe"
+    },
+    {
+      "prompt": "Cho tôi xem giỏ hàng của mình.",
+      "http_status": 200,
+      "cards": 0,
+      "answer_prefix": "Xiaomi 14T Pro (DEV-X14TP-BLU-512): 1 sản phẩm; giá mỗi sản phẩm 18990000.0 VND.\nTạm tính: 18990000.0 VND."
+    },
+    {
+      "prompt": "Bạn có thể đặt hàng giúp tôi không?",
+      "http_status": 200,
+      "cards": 0,
+      "answer_prefix": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của web"
+    }
+  ],
+  "page_errors": []
+}

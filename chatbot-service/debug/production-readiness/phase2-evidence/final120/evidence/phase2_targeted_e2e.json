@@ -1,0 +1,188 @@
+{
+  "executed_at": "2026-10-21T04:48:12.903900+00:00",
+  "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+  "chat_port": 8091,
+  "cases": {
+    "CART_A_never_created": {
+      "prompt": "Cho tôi xem giỏ hàng của mình.",
+      "http_status": 200,
+      "message": "Giỏ hàng của bạn hiện đang trống.",
+      "cards": 0,
+      "intent": "CART_STATUS",
+      "references": {},
+      "backend_calls": [
+        "/api/cart"
+      ],
+      "trace_id": "4b0a195f-05f6-43c1-927e-4f25e128f592",
+      "strategy": [
+        {
+          "strategy": "deterministic_guard",
+          "reason": "clarification"
+        }
+      ]
+    },
+    "CART_B_initialized_empty": {
+      "prompt": "Cho tôi xem giỏ hàng của mình.",
+      "http_status": 200,
+      "message": "Giỏ hàng của bạn hiện đang trống.",
+      "cards": 0,
+      "intent": "CART_STATUS",
+      "references": {},
+      "backend_calls": [
+        "/api/cart"
+      ],
+      "trace_id": "0276b604-24c1-4ee3-915f-a87c52f0c078",
+      "strategy": [
+        {
+          "strategy": "deterministic_guard",
+          "reason": "empty_cart"
+        }
+      ]
+    },
+    "CART_C_with_items": {
+      "prompt": "Cho tôi xem giỏ hàng của mình.",
+      "http_status": 200,
+      "message": "Xiaomi 14T Pro (DEV-X14TP-BLU-512): 1 sản phẩm; giá mỗi sản phẩm 18990000.0 VND.\nTạm tính: 18990000.0 VND.",
+      "cards": 0,
+      "intent": "CART_STATUS",
+      "references": {},
+      "backend_calls": [
+        "/api/cart"
+      ],
+      "trace_id": "c943647b-cc4d-4383-b75c-6542a46dcb2f",
+      "strategy": [
+        {
+          "strategy": "deterministic_customer_evidence",
+          "reason": "owned_cart"
+        }
+      ]
+    },
+    "ORDER_code_without_word_don_hang": {
+      "prompt": "ORD-DIAG-NOPAY thanh toán chưa?",
+      "http_status": 200,
+      "message": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; trạng thái thanh toán: PAID; phương thức: COD; số tiền: 18990000.0 VND.",
+      "cards": 0,
+      "intent": "PAYMENT_STATUS",
+      "references": {},
+      "backend_calls": [
+        "/api/orders/mine",
+        "/api/orders/mine/synthetic-order-15f1d5cd39c2"
+      ],
+      "trace_id": "9e499921-27f0-400c-b403-a22cb1cb8a9d",
+      "strategy": [
+        {
+          "strategy": "deterministic_customer_evidence",
+          "reason": "owned_order_payment"
+        }
+      ]
+    },
+    "ORDER_lowercase_code": {
+      "prompt": "Đơn hàng ord-diag-nopay của tôi đã thanh toán chưa?",
+      "http_status": 200,
+      "message": "Không thể xác minh trạng thái thanh toán của đơn hàng này vì dữ liệu thanh toán chưa đầy đủ hoặc không nhất quán.",
+      "cards": 0,
+      "intent": "PAYMENT_STATUS",
+      "references": {
+        "order_code": "ord-diag-nopay"
+      },
+      "backend_calls": [
+        "/api/orders/mine",
+        "/api/orders/mine/synthetic-order-a6699bf2fab8"
+      ],
+      "trace_id": "65c003cc-fcc5-4083-a853-649f2d818577",
+      "strategy": [
+        {
+          "strategy": "deterministic_guard",
+          "reason": "clarification"
+        }
+      ]
+    },
+    "ORDER_foreign_code": {
+      "prompt": "Đơn hàng ORD-DIAG-DELIVERED của tôi đã thanh toán chưa?",
+      "http_status": 200,
+      "message": "Mình không tìm thấy mã đơn này trong danh sách đơn hàng thuộc tài khoản của bạn; không sử dụng đơn khác để trả lời.",
+      "cards": 0,
+      "intent": "PAYMENT_STATUS",
+      "references": {
+        "order_code": "ORD-DIAG-DELIVERED"
+      },
+      "backend_calls": [
+        "/api/orders/mine"
+      ],
+      "trace_id": "44323de5-ab0a-4c18-b808-621e665b8001",
+      "strategy": [
+        {
+          "strategy": "deterministic_guard",
+          "reason": "owned_order_not_found"
+        }
+      ]
+    },
+    "ORDER_none_for_new_customer": {
+      "prompt": "Đơn hàng gần nhất của tôi thế nào?",
+      "http_status": 200,
+      "message": "Tài khoản của bạn chưa có đơn hàng nào.",
+      "cards": 0,
+      "intent": "ORDER_STATUS",
+      "references": {},
+      "backend_calls": [
+        "/api/orders/mine"
+      ],
+      "trace_id": "4a1ba8b8-cf73-42ae-bfb3-2e1eb16d0b04",
+      "strategy": [
+        {
+          "strategy": "deterministic_guard",
+          "reason": "clarification"
+        }
+      ]
+    }
+  },
+  "backend_contract_case_a": {
+    "http_status": 200,
+    "cartId_is_null": true,
+    "items": [],
+    "subtotal": 0,
+    "keys": [
+      "cartId",
+      "discountAmount",
+      "items",
+      "originalSubtotal",
+      "subtotal",
+      "warehouseId",
+      "warehouseName"
+    ]
+  },
+  "cart_c_source_of_truth": [
+    {
+      "sku": "DEV-X14TP-BLU-512",
+      "quantity": 1,
+      "effectivePrice": 18990000.0
+    },
+    {
+      "subtotal": 18990000.0
+    }
+  ],
+  "case_a_carts_after": 0,
+  "latest_order_code_customer1": [
+    "2026-10-21T04:42:01.938108Z",
+    "ORD-DIAG-DELIVERED"
+  ],
+  "business_counts_before": {
+    "carts": 2,
+    "cart_items": 1,
+    "orders": 7,
+    "payments": 6,
+    "order_items": 4,
+    "inventory": 38
+  },
+  "business_counts_after": {
+    "carts": 2,
+    "cart_items": 1,
+    "orders": 7,
+    "payments": 6,
+    "order_items": 4,
+    "inventory": 38
+  },
+  "business_counts_unchanged": true,
+  "synthetic_account_removed": true,
+  "synthetic_account": "phase2.nocart.<random> (clone only, removed)"
+}

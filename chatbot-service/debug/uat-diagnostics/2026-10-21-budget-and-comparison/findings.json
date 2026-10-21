@@ -1,0 +1,103 @@
+[
+  {
+    "id": "F01",
+    "stage": "DOMAIN_NORMALIZATION / PRICE_VALIDATION",
+    "severity": "HIGH",
+    "verified": true,
+    "symptom": "A1/A2 lặp lại câu hỏi dù Qwen đã đọc đúng Laptop/max_price20000000.",
+    "cause": "co sau folding bắt từ có thành APPROXIMATE; bare20tr thành UNSPECIFIED. validate_price_coverage rejects unresolved; DR-01 còn pending và DR-13b ép dùng generic clarification.",
+    "source": [
+      "app/features/query_understanding/constraints.py:143",
+      "app/features/query_understanding/constraints.py:226",
+      "app/features/query_understanding/normalization.py:40"
+    ],
+    "trace_ids": [
+      "c264dcb2-38a8-4521-ac81-25ce11780767",
+      "66b04315-8e0d-402f-9c6e-d7669510feb7"
+    ],
+    "recommendation": "Review DR-01/DR-13b: budget/approximate semantics và targeted clarification; giữ các slot đã biết, không tự mở rộng giá nếu chưa duyệt."
+  },
+  {
+    "id": "F02",
+    "stage": "DOMAIN_NORMALIZATION + CONVERSATION_REFERENCE",
+    "severity": "HIGH",
+    "verified": true,
+    "symptom": "Không xử lý so sánh một sản phẩm tham chiếu + một sản phẩm mới, ngay cả M2 có catalog.",
+    "cause": "Exact name matching chỉ current_message; compare yêu cầu len(targets)==2 trước resolver; sản phẩm trên không có ReferenceKind; LAST được nhận ở cách nói khác nhưng generic compare clarification không thuộc whitelist resolver và resolver chỉ trả PRODUCT_DETAIL cho ordinal/last.",
+    "source": [
+      "app/features/query_understanding/normalization.py:151",
+      "app/features/query_understanding/constraints.py:247",
+      "app/features/conversation/references.py:37"
+    ],
+    "trace_ids": [
+      "94e19c12-5e80-4dab-a874-89fddb77e252",
+      "05850a9c-e5f0-46bd-94f7-93db6276402a",
+      "0de1a773-dc0c-496b-bc64-4cee6a1812c0"
+    ],
+    "recommendation": "Resolve mixed comparison targets trước completeness guard; validate snapshot+backend; giữ intentCOMPARE và ràng buộc từng target. Thiếu/mơ hồ mới hỏi đúng target."
+  },
+  {
+    "id": "F03",
+    "stage": "PRODUCT_DATA / RESPONSE_EXPLANATION",
+    "severity": "MEDIUM",
+    "verified": true,
+    "symptom": "M1 không có trong catalog nhưng câu trả lời không nói rõ mà yêu cầu lại cả hai tên.",
+    "cause": "Normalizer chuyển request sang UNKNOWN trước identity lookup result có thể giải thích product-not-found.",
+    "source": [
+      "app/features/query_understanding/normalization.py:151"
+    ],
+    "trace_ids": [
+      "94e19c12-5e80-4dab-a874-89fddb77e252"
+    ],
+    "recommendation": "Nêu rõ Dell đã biết, M1 chưa có dữ liệu; không bịa thông số hay thay bằng M2 âm thầm."
+  },
+  {
+    "id": "F04",
+    "stage": "DOMAIN_NORMALIZATION / FILTER_PROVENANCE",
+    "severity": "HIGH",
+    "verified": true,
+    "symptom": "Follow-up laptop Dell mất budget20M; thêm cả XPS giá32.99M.",
+    "cause": "Model max_price từ history bị normalizer rebuild chỉ current_message thànhNone; không có general partial-slot merge.",
+    "source": [
+      "app/features/query_understanding/normalization.py:49",
+      "app/features/query_understanding/normalization.py:200"
+    ],
+    "trace_ids": [
+      "ed2aa839-1920-4cc6-bb19-0ca28de2c892"
+    ],
+    "recommendation": "Thiết kế state/slot provenance theo session, explicit-current overrides history và scope-change rules; không dùng text ASSISTANT làm nguồn giá hiện tại."
+  },
+  {
+    "id": "F05",
+    "stage": "DOMAIN_NORMALIZATION / PRODUCT_FILTER_SCOPE",
+    "severity": "HIGH",
+    "verified": true,
+    "symptom": "Đủ tên Dell+MacBookM2 vẫn không so sánh; M2 bị loại dù có ACTIVEvariant.",
+    "cause": "Plan có brands[Dell] áp cho cả2targets. _eligible loại Apple; gắn nhãn VARIANT_NOT_FOUND gây hiểu sai.",
+    "source": [
+      "app/features/query_understanding/normalization.py:106",
+      "app/features/product_advisor/real_service.py:46",
+      "app/features/product_advisor/real_service.py:116"
+    ],
+    "trace_ids": [
+      "6383fb47-7d5e-4db9-a53f-67acfbfeeaf8"
+    ],
+    "recommendation": "Ràng buộc brand theo target khiCOMPARE; regressionDell+Apple; không bỏ brand filters toàn cục cho discovery."
+  },
+  {
+    "id": "F06",
+    "stage": "DOMAIN_NORMALIZATION / CAPACITY_GRAMMAR",
+    "severity": "MEDIUM",
+    "verified": true,
+    "symptom": "16G ram không trở thành hard filter dù modelđọc16GB.",
+    "cause": "Reverse grammar cần GB/TB; coverage cũng không bắt singleG; normalizer rebuild min_ram=None.",
+    "source": [
+      "app/features/query_understanding/constraints.py:52",
+      "app/features/query_understanding/normalization.py:85"
+    ],
+    "trace_ids": [
+      "cd16696d-2011-42c6-878b-82a1b058db22"
+    ],
+    "recommendation": "Thêm grammar/coverage cho shorthand được duyệt, tránh trả32GB khi exactvariant16GB được hỏi; giữ phân biệt exact-vs-min."
+  }
+]

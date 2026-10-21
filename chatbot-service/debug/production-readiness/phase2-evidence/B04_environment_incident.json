@@ -1,0 +1,13 @@
+{
+  "id": "ENV-INC-01",
+  "summary": "Acceptance harness rebuilt backend/target/backend-0.0.1-SNAPSHOT.jar while the user's dev backend (scripts/start.sh, PID 81482, port 8080) was running from that file.",
+  "jar_rebuilt_at_local": "2026-10-21 11:42:53 +07:00 (environment.py: ./mvnw -q -DskipTests package)",
+  "symptom": "From 11:52 the 8080 JVM threw java.lang.NoClassDefFoundError / ClassNotFoundException (lazy class loading from a replaced jar); dev chatbot (8090) then got 10s ReadTimeout from the backend and correctly returned 503 (fail-closed).",
+  "affected": "User's dev stack only. The isolated acceptance stack (8081) started from the new jar after the rebuild and was not affected; acceptance results are unaffected.",
+  "detection": "Phase 2 UAT smoke on http://localhost:5173/chatbot-lab (POST 503); trace showed backend.product_http ReadTimeout; backend.log showed NoClassDefFoundError.",
+  "remediation": "Stopped only PID 81482 (SIGTERM, verified as .local/pids/backend.pid) and re-ran bash scripts/start.sh, which started only the backend (ollama/frontend/chatbot reported already running). New backend PID 89762. Backend sources unchanged since 6c7e408, so the rebuilt jar matches the source tree.",
+  "verification": "UAT smoke after restart: status 'AI thật' + PostgreSQL, product search 200 with 2 cards, cart 200 matching backend, transaction refused, 0 page errors (evidence/phase2_uat_stack_smoke.json in final120/).",
+  "correction_to_cleanup_json": "final120/cleanup.json field normal_application_processes_modified=false is a hard-coded literal in finalize.py and is NOT accurate for this run: the user's dev backend process was restarted once to repair this incident.",
+  "harness_risk": "Pre-existing design of post-upgrade-validation/harness/environment.py (also used by final-regression-120). Recommendation: build to a separate output path or copy the jar before starting the isolated backend; out of scope to change here.",
+  "dev_database": "Dev ecommerce-postgres business fingerprint (finalize source_snapshot) unchanged; UAT smoke added only chat_sessions/chat_history rows for seed.customer1 (normal Lab usage)."
+}

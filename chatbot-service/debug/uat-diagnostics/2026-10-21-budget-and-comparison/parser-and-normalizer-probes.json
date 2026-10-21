@@ -1,0 +1,267 @@
+{
+  "execution": "CONTROLLED_REPLAY_WITH_CAPTURED_REAL_CATALOG_NOT_MODEL_E2E",
+  "price_probes": [
+    {
+      "prompt": "tôi đang có 20tr tư vấn giúp tôi một laptop học công nghệ thông tin",
+      "min_price": null,
+      "max_price": null,
+      "unresolved": [
+        {
+          "relation": "approximate",
+          "span": [
+            12,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "prompt": "20tr , hoc cong nghe thong tin",
+      "min_price": null,
+      "max_price": null,
+      "unresolved": [
+        {
+          "relation": "unspecified",
+          "span": [
+            0,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "prompt": "Tìm laptop dưới 20 triệu để học công nghệ thông tin.",
+      "min_price": null,
+      "max_price": "20000000",
+      "unresolved": []
+    },
+    {
+      "prompt": "ngân sách 20 triệu",
+      "min_price": null,
+      "max_price": null,
+      "unresolved": [
+        {
+          "relation": "budget",
+          "span": [
+            10,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "prompt": "tầm 20 triệu",
+      "min_price": null,
+      "max_price": null,
+      "unresolved": [
+        {
+          "relation": "approximate",
+          "span": [
+            4,
+            12
+          ]
+        }
+      ]
+    }
+  ],
+  "reference_probes": [
+    {
+      "prompt": "so sánh sản phẩm trên với macbook air m1",
+      "model_plan_for_control": {
+        "clarification": null,
+        "intent": "PRODUCT_COMPARE",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "DEV-DELL-I15-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "MacBook Air M1",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 5
+        },
+        "semantic_query": null
+      },
+      "detected_reference": null,
+      "normalized": {
+        "clarification": "Chưa xác minh được tên sản phẩm trong catalog. Bạn vui lòng xác nhận tên hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "after_reference_resolver": {
+        "clarification": "Chưa xác minh được tên sản phẩm trong catalog. Bạn vui lòng xác nhận tên hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "prompt": "so sánh máy vừa gợi ý với MacBook Air M1",
+      "model_plan_for_control": {
+        "clarification": null,
+        "intent": "PRODUCT_COMPARE",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "DEV-DELL-I15-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "MacBook Air M1",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 5
+        },
+        "semantic_query": null
+      },
+      "detected_reference": "LAST",
+      "normalized": {
+        "clarification": "Chưa xác minh được tên sản phẩm trong catalog. Bạn vui lòng xác nhận tên hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "after_reference_resolver": {
+        "clarification": "Chưa xác minh được tên sản phẩm trong catalog. Bạn vui lòng xác nhận tên hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "prompt": "So sánh Dell Inspiron 15 với MacBook Air M1.",
+      "model_plan_for_control": {
+        "clarification": null,
+        "intent": "PRODUCT_COMPARE",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "DEV-DELL-I15-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            },
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "MacBook Air M1",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 5
+        },
+        "semantic_query": null
+      },
+      "detected_reference": null,
+      "normalized": {
+        "clarification": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "after_reference_resolver": {
+        "clarification": "Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    }
+  ],
+  "catalog_targets": [
+    {
+      "productId": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+      "productName": "Dell Inspiron 15",
+      "description": "Laptop Dell dành cho học tập và làm việc",
+      "categoryId": "7ad000e0-03ce-4a4f-8090-22b3afcf968a",
+      "brandId": "d7f0f319-24a9-4b0e-a475-a4fc0d94ceab",
+      "status": "ACTIVE",
+      "categoryName": "Laptop",
+      "brandName": "Dell",
+      "createdAt": "2026-10-03T15:25:34.99221Z",
+      "updatedAt": "2026-10-03T15:25:34.99221Z",
+      "warehouseId": null,
+      "availableQuantity": null,
+      "primaryImageUrl": "/images/products/dell-inspiron-15/main.jpg",
+      "originalPrice": 15990000.0,
+      "effectivePrice": 15990000.0,
+      "discountAmount": 0.0,
+      "promotion": null
+    }
+  ]
+}

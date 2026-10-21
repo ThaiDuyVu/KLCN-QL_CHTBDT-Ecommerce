@@ -1,0 +1,540 @@
+{
+  "trace_id": "c05a7244-5ca6-43bf-95cc-d39d59f37d1e",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "291ae267-04af-4468-952f-01e0ba501f19",
+      "parent_id": "2113d3c5-ea73-470b-914d-5fb860aafed6",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 44.47,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "e6c28c75-6a55-4401-a1e1-c5bfbe0bbc1b",
+      "parent_id": "2113d3c5-ea73-470b-914d-5fb860aafed6",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 44.67,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "c71cbba6-8288-4734-994d-cf655aa478e8",
+      "parent_id": "e50cb1c8-2175-47b1-81d9-2cc2b2994def",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1036.76,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "iPhone 15",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "0b602bde-0bb6-4f5d-a155-dedbf782431f",
+      "parent_id": "e50cb1c8-2175-47b1-81d9-2cc2b2994def",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1068.62,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "iPhone 15",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [
+            "STOCK"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "iPhone 15",
+                "sku": null,
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": "Điện thoại",
+            "brands": [
+              "Apple"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "iPhone 15 còn hàng không?",
+            "top_k": 1
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "52247e79-7a81-4a81-8410-57a55579f5a5",
+      "parent_id": "2113d3c5-ea73-470b-914d-5fb860aafed6",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1081.58,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "STOCK"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "iPhone 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": "Điện thoại",
+          "brands": [
+            "Apple"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "iPhone 15 còn hàng không?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "2e1d8d3b-d0f3-4beb-8fc3-bbf0dfce2015",
+      "parent_id": "2113d3c5-ea73-470b-914d-5fb860aafed6",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1081.67,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "iPhone 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": "Điện thoại",
+          "brands": [
+            "Apple"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "iPhone 15 còn hàng không?",
+          "top_k": 1
+        }
+      }
+    },
+    {
+      "id": "b7d5180b-cbc2-4a78-b7ea-fc1ccab43d11",
+      "parent_id": "2113d3c5-ea73-470b-914d-5fb860aafed6",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 1081.78,
+      "duration_ms": 19.21,
+      "output": [
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "brand_name": "Apple",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Apple A16 Bionic",
+            "Màn hình": "OLED 6,1 inch",
+            "Pin": "Pin tích hợp, sạc qua USB-C",
+            "RAM": "6 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+              "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+              "sku": "DEV-IP15-BLK-128",
+              "original_price": "17990000.0",
+              "effective_price": "17990000.0",
+              "ram": "6GB",
+              "storage": "128GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "734dcbde-d8e5-483d-bbc2-0d26ec2b332f",
+              "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+              "sku": "DEV-IP15-BLU-256",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "6GB",
+              "storage": "256GB",
+              "color": "Xanh dương",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "b0162e3d-60d7-4134-b2bf-d364cc8856d2",
+      "parent_id": "b7d5180b-cbc2-4a78-b7ea-fc1ccab43d11",
+      "name": "product.identity_resolution",
+      "status": "ok",
+      "offset_ms": 1081.86,
+      "duration_ms": 19.05,
+      "output": [
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "brand_name": "Apple",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Apple A16 Bionic",
+            "Màn hình": "OLED 6,1 inch",
+            "Pin": "Pin tích hợp, sạc qua USB-C",
+            "RAM": "6 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+              "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+              "sku": "DEV-IP15-BLK-128",
+              "original_price": "17990000.0",
+              "effective_price": "17990000.0",
+              "ram": "6GB",
+              "storage": "128GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "734dcbde-d8e5-483d-bbc2-0d26ec2b332f",
+              "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+              "sku": "DEV-IP15-BLU-256",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "6GB",
+              "storage": "256GB",
+              "color": "Xanh dương",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "2d55f64f-f7a0-4e69-86e7-5169c519546b",
+      "parent_id": "b0162e3d-60d7-4134-b2bf-d364cc8856d2",
+      "name": "product.stock_evidence",
+      "status": "ok",
+      "offset_ms": 1100.77,
+      "duration_ms": null,
+      "output": {
+        "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+        "warehouse_id": "d13ea247-ab70-473b-80d6-c8adea60334c",
+        "variants": [
+          {
+            "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+            "available_quantity": 2
+          },
+          {
+            "variant_id": "734dcbde-d8e5-483d-bbc2-0d26ec2b332f",
+            "available_quantity": 2
+          }
+        ],
+        "status": "KNOWN_AVAILABLE"
+      }
+    },
+    {
+      "id": "f60d2562-e466-4d4e-9a80-7f587daaa599",
+      "parent_id": "2113d3c5-ea73-470b-914d-5fb860aafed6",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 1101.0,
+      "duration_ms": 9.75,
+      "output": [
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+          "sku": "DEV-IP15-BLK-128",
+          "original_price": "17990000.0",
+          "effective_price": "17990000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/iphone-15/main.jpg",
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "db8a1c00-2f4b-4b3b-a7cc-585983307387",
+      "parent_id": "f60d2562-e466-4d4e-9a80-7f587daaa599",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 1110.68,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "a40b71a6-dcf9-4d65-acb1-00b10ffbb840"
+        ],
+        "variants": 2,
+        "cards": 1
+      }
+    },
+    {
+      "id": "6b31046b-b531-4acb-a5ba-f66e95f4fdc7",
+      "parent_id": "2113d3c5-ea73-470b-914d-5fb860aafed6",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1110.99,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DETAIL",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "4f357cbe-d815-4e09-972f-1deb6826fd82",
+      "parent_id": "0c3b9b95-1f00-4949-90d3-8a29966f3d9c",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1111.45,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 9.64,
+      "duration_ms": 1110.6,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 44.8,
+      "duration_ms": 1024.01,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 46.03,
+      "duration_ms": 990.69,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 46.43,
+      "duration_ms": 990.27,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 46.79,
+      "duration_ms": 989.87,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1036.87,
+      "duration_ms": 12.02,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1048.93,
+      "duration_ms": 7.31,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1056.28,
+      "duration_ms": 11.86,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1081.78,
+      "duration_ms": 19.21,
+      "status": "ok"
+    },
+    {
+      "name": "product.identity_resolution",
+      "offset_ms": 1081.86,
+      "duration_ms": 19.05,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1081.91,
+      "duration_ms": 10.62,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1092.59,
+      "duration_ms": 8.07,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 1101.0,
+      "duration_ms": 9.75,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1101.1,
+      "duration_ms": 9.47,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1110.94,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1111.27,
+      "duration_ms": 0.22,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a40b71a6-dcf9-4d65-acb1-00b10ffbb840/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a40b71a6-dcf9-4d65-acb1-00b10ffbb840/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

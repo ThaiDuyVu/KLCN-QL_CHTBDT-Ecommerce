@@ -25,7 +25,9 @@ from app.features.conversation.async_lease import blocking, request_lease
 from app.features.chat.policy import read_only_plan
 from app.features.conversation.service import ConversationService
 from app.features.customer_context.models import AuthenticatedCustomer
-from app.features.customer_context.service import CustomerContextService, NoOwnedOrders, NO_OWNED_ORDERS_MESSAGE
+from app.features.customer_context.service import (
+    CustomerContextService, EMPTY_CART_MESSAGE, NO_OWNED_ORDERS_MESSAGE, NoOwnedOrders, VerifiedEmptyCart,
+)
 from app.features.product_advisor.protocol import ProductAdvisorService
 from app.features.product_advisor.service import MockProductAdvisorService
 from app.features.query_understanding.protocol import QueryUnderstandingService
@@ -230,6 +232,10 @@ class ChatService:
         except NoOwnedOrders:
             # Only a successful empty owned list reaches here; backend errors keep their own path.
             query_plan = query_plan.model_copy(update={'clarification': NO_OWNED_ORDERS_MESSAGE})
+            context_payload = CustomerContext()
+        except VerifiedEmptyCart:
+            # Same existing sentence as an initialized cart with no items; no cart ID is invented.
+            query_plan = query_plan.model_copy(update={'clarification': EMPTY_CART_MESSAGE})
             context_payload = CustomerContext()
 
         knowledge_chunks = []
