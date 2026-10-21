@@ -12,7 +12,7 @@ function normalize(value) {
 
 // Mandatory branch step for CUSTOMER storefront sessions. It cannot be dismissed: no backdrop
 // click, no Escape, no skip. The only ways out are confirming a branch or leaving the session.
-export default function BranchSelectionModal({ onLogout, isSigningOut }) {
+export default function BranchSelectionModal({ onLogout, isSigningOut, logoutError = '' }) {
   const id = useId();
   const { warehouses, selectedWarehouseId, selectWarehouse, isChanging, error, listStatus, reloadWarehouses,
     clearRequiredFor, cartReady } = useWarehouse();
@@ -115,11 +115,13 @@ export default function BranchSelectionModal({ onLogout, isSigningOut }) {
     </form>;
   }
 
-  return <div className="branch-gate">
+  // storefront-shell only scopes the retail theme tokens; the overlay itself is .branch-gate.
+  return <div className="branch-gate storefront-shell">
     <div className="branch-modal" role="dialog" aria-modal="true" aria-labelledby={`${id}-title`} aria-describedby={`${id}-desc`} ref={dialog} onKeyDown={onKeyDown}>
       <h2 id={`${id}-title`} ref={title} tabIndex={-1}>Chọn chi nhánh mua sắm</h2>
       <p id={`${id}-desc`}>Vui lòng chọn chi nhánh bạn muốn mua hàng. Sản phẩm, tồn kho và giỏ hàng sẽ được hiển thị theo chi nhánh này.</p>
       {body}
+      {logoutError && <p className="branch-modal-error" role="alert">{logoutError}</p>}
       <div className="branch-modal-actions">
         <div className="branch-modal-exit">
           <button type="button" className="button button-quiet" onClick={onLogout} disabled={isSigningOut || working}>{isSigningOut ? 'Đang thoát…' : 'Đăng xuất'}</button>

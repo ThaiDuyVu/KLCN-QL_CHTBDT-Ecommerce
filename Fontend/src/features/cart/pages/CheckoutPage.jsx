@@ -32,6 +32,8 @@ export default function CheckoutPage() {
   const [addingAddress, setAddingAddress] = useState(false);
   const [addressBusy, setAddressBusy] = useState(false);
   const [addressFormError, setAddressFormError] = useState('');
+  // The form sits outside the checkout <form> (no nested forms), so bring it into view when opened.
+  const revealAddressForm = useCallback((node) => { node?.scrollIntoView?.({ behavior: 'smooth', block: 'start' }); }, []);
   const loadAddresses = useCallback((signal) => addressApi.list(signal), []);
   const { data: addresses, error: addressesError, isLoading: addressesLoading, retry: retryAddresses } = useProductRequest('checkout-addresses', loadAddresses);
   const activeAddressId = addresses?.some((item) => item.addressId === selectedAddressId)
@@ -117,7 +119,9 @@ export default function CheckoutPage() {
         <button className="button checkout-submit" disabled={busy || !activeAddressId || addressesLoading || addressesError || !data.warehouseId || (paymentMethod === 'INSTALLMENT' && (providersLoading || providerError || !providers?.length)) || (paymentMethod === 'VNPAY' && !vnpayConfig?.enabled)}>{busy ? 'Đang tạo đơn…' : paymentMethod === 'COD' ? 'Đặt hàng COD' : paymentMethod === 'VNPAY' ? 'Đặt hàng và thanh toán VNPAY' : 'Gửi hồ sơ trả góp'}</button>
         <p className="checkout-recovery">Nếu request bị gián đoạn, hãy kiểm tra <Link to="/my-orders">đơn của tôi</Link> trước khi đặt lại.</p>
       </form>
-      {addingAddress && <section className="panel checkout-section"><h2>Thêm địa chỉ mới</h2><AddressForm address={{ recipientName: user?.displayName || '' }} onSubmit={createAddress} onCancel={() => setAddingAddress(false)} submitting={addressBusy} error={addressFormError} /></section>}
+      {addingAddress && <section className="panel checkout-section checkout-address-form" ref={revealAddressForm} aria-labelledby="checkout-new-address-title">
+        <div className="checkout-section-heading"><span aria-hidden="true">+</span><div><h2 id="checkout-new-address-title">Thêm địa chỉ mới</h2><p>Địa chỉ sẽ được lưu vào sổ địa chỉ và chọn cho đơn này</p></div></div>
+        <AddressForm address={{ recipientName: user?.displayName || '' }} onSubmit={createAddress} onCancel={() => setAddingAddress(false)} submitting={addressBusy} error={addressFormError} /></section>}
       </div>
 
       <aside className="panel order-summary checkout-summary" aria-labelledby="checkout-summary-title">
