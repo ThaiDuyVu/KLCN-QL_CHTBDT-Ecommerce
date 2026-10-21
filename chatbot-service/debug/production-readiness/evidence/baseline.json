@@ -1,0 +1,35 @@
+{
+  "captured_utc_note": "Step 0, before any code change (git status from session start)",
+  "workspace": "QL_CHTBDT_Ecommerce (KLCN-QL_CHTBDT-Ecommerce-main)",
+  "branch": "dev/thai-duy-vu",
+  "head": "a267d1c7758b164eba9e11b45a5b1e469c14fd84",
+  "plan_baseline": "f99f713c43b14937e88f1afdde2931fd0a9afd29",
+  "diff_f99f713_to_head": [
+    "chatbot-service/debug/production-readiness/01_REMEDIATION_PLAN.md (docs only)"
+  ],
+  "pre_existing_uncommitted_changes_not_made_by_phase1": [
+    "M Fontend/src/features/chatbot/ChatbotLab.test.jsx",
+    "M Fontend/src/features/chatbot/ChatbotLabPage.jsx",
+    "M chatbot-service/app/features/chat/policy.py",
+    "?? chatbot-service/debug/final-regression-120/",
+    "?? chatbot-service/tests/test_final_release_regressions.py"
+  ],
+  "frozen_cases_sha256": {
+    "debug/post-upgrade-validation/cases.json": "9c0104a14d032bbb774c1a2434ff21d3d66487b4e78655dcd0889c24207a2835",
+    "debug/final-regression-120/cases.json": "9c0104a14d032bbb774c1a2434ff21d3d66487b4e78655dcd0889c24207a2835"
+  },
+  "frozen_cases_sha256_at_step0": "9c0104a14d032bbb774c1a2434ff21d3d66487b4e78655dcd0889c24207a2835",
+  "python": "3.12.15",
+  "dependencies": {
+    "fastapi": "0.142.2",
+    "pydantic": "2.13.5",
+    "pydantic-settings": "2.15.0",
+    "httpx": "0.28.1",
+    "psycopg": "3.3.6",
+    "pytest": "9.1.1",
+    "pytest-asyncio": "1.4.0",
+    "starlette": "1.7.0",
+    "uvicorn": "0.54.0"
+  },
+  "baseline_tests": "423 passed, 12 skipped (PostgreSQL-gated), exit 0 -> 00_baseline_pytest.txt"
+}
