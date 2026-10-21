@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { inventoryApi } from '../api/inventoryApi';
+import SearchableCategorySelect from './SearchableCategorySelect';
 
 export default function VariantSearchPicker({ value, onSelect, categories, brands }) {
   const [open, setOpen] = useState(!value);
@@ -43,7 +44,7 @@ export default function VariantSearchPicker({ value, onSelect, categories, brand
       <input autoComplete="off" value={keyword} onChange={(event) => { setKeyword(event.target.value); setPage(0); }} placeholder="Ví dụ: DELL-512 hoặc Inspiron" />
     </label>
     <div className="variant-picker-filters">
-      <label>Danh mục<select value={categoryId} onChange={(event) => { setCategoryId(event.target.value); setPage(0); }}><option value="">Tất cả</option>{categories.map((item) => <option key={item.categoryId} value={item.categoryId}>{item.categoryName}</option>)}</select></label>
+      <SearchableCategorySelect categories={categories} value={categoryId} onChange={(id) => { setCategoryId(id); setPage(0); }} />
       <label>Thương hiệu<select value={brandId} onChange={(event) => { setBrandId(event.target.value); setPage(0); }}><option value="">Tất cả</option>{brands.map((item) => <option key={item.brandId} value={item.brandId}>{item.brandName}</option>)}</select></label>
       <label>Quản lý thiết bị<select value={trackingType} onChange={(event) => { setTrackingType(event.target.value); setPage(0); }}><option value="">Tất cả</option><option value="NONE">Không</option><option value="SERIAL">Serial</option><option value="IMEI">IMEI</option></select></label>
     </div>
