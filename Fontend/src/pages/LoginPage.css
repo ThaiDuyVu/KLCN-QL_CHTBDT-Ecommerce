@@ -50,3 +50,10 @@
   .login-options { flex-wrap: wrap; gap: 16px; }
   .login-policy { margin-top: 36px; }
 }
+.login-link { color: #0c3b31; font-weight: 600; }
+.login-link:hover { text-decoration: underline; }
+.register-hint { margin: -8px 0 0; color: #687a74; font-size: 11px; line-height: 1.5; }
+.register-rules { display: grid; gap: 4px; margin: -6px 0 0; padding: 0; list-style: none; color: #687a74; font-size: 11px; }
+.register-rules li { display: flex; align-items: center; gap: 8px; }
+.register-rules li > span[aria-hidden] { width: 14px; text-align: center; font-weight: 700; }
+.register-rules li.is-met { color: #16705b; }
