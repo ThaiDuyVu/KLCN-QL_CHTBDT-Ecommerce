@@ -40,6 +40,14 @@ const storefrontNavigation = [
   { to: '/chatbot', label: 'Trợ lý AI' },
 ];
 
+// Decorative placeholder of the home page shown behind the branch dialog.
+function StorefrontBackdrop() {
+  return <div className="storefront-backdrop">
+    <div className="storefront-backdrop-hero"><span /><span /><span /></div>
+    <div className="storefront-backdrop-grid">{Array.from({ length: 8 }, (_, index) => <div key={index}><span /><span /><span /></div>)}</div>
+  </div>;
+}
+
 export default function AppLayout() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -85,16 +93,11 @@ export default function AppLayout() {
     <Outlet />
   </>;
 
-  if (branchGated) {
-    return <>
-      {logoutError && <p className="auth-alert" role="alert">{logoutError}</p>}
-      <BranchSelectionModal onLogout={handleLogout} isSigningOut={isSigningOut} />
-    </>;
-  }
-
   if (isStorefront) {
-    return (
-      <div className="storefront-shell">
+    // While the branch is unconfirmed the shop stays visible behind the dialog but inert and blurred.
+    // Page routes are not mounted, so no catalog, stock or cart view loads for an unverified branch.
+    const shell = (
+      <div className={`storefront-shell${branchGated ? ' is-branch-gated' : ''}`} inert={branchGated || undefined} aria-hidden={branchGated || undefined}>
         <a className="skip-link" href="#main-content">Đến nội dung chính</a>
         <header className="storefront-header">
           <div className="storefront-header-main">
@@ -132,7 +135,7 @@ export default function AppLayout() {
                 <button className="button button-quiet storefront-logout" onClick={handleLogout} disabled={isSigningOut}>
                   {isSigningOut ? 'Đang thoát…' : 'Đăng xuất'}
                 </button>
-              </> : isLoading ? <span role="status">Đang kiểm tra phiên…</span> : <Link className="button" to="/login">Đăng nhập</Link>}
+              </> : isLoading ? <span role="status">Đang kiểm tra phiên…</span> : <><Link className="button button-quiet" to="/register">Đăng ký</Link><Link className="button" to="/login">Đăng nhập</Link></>}
             </div>
           </div>
           {user?.roleName === ROLES.CUSTOMER && <div className="storefront-context">
@@ -152,7 +155,7 @@ export default function AppLayout() {
             </div>
           </div>}
         </header>
-        <main id="main-content" className="storefront-content" tabIndex={-1}>{categories.error && <p id="storefront-category-error" className="auth-alert" role="alert">Chưa tải được danh mục tìm kiếm. <button type="button" onClick={categories.retry}>Thử lại</button></p>}{warehouseError && <p className="auth-alert" role="alert">{warehouseError}</p>}{outlet}</main>
+        <main id="main-content" className="storefront-content" tabIndex={-1}>{branchGated ? <StorefrontBackdrop /> : <>{categories.error && <p id="storefront-category-error" className="auth-alert" role="alert">Chưa tải được danh mục tìm kiếm. <button type="button" onClick={categories.retry}>Thử lại</button></p>}{warehouseError && <p className="auth-alert" role="alert">{warehouseError}</p>}{outlet}</>}</main>
         <footer className="storefront-footer"><div className="shop-footer-inner">
           <div><Link className="brand" to="/"><span className="brand-mark" aria-hidden="true">Đ</span>{projectConfig.appName}</Link><p>Khám phá thiết bị công nghệ.<br />Mua sắm tại chi nhánh bạn chọn.</p></div>
           <div><h2>Mua sắm</h2><Link to="/products">Tất cả sản phẩm</Link><Link to={user ? '/cart' : '/login'}>Giỏ hàng</Link><Link to="/products?onSale=true">Ưu đãi</Link></div>
@@ -161,6 +164,11 @@ export default function AppLayout() {
         </div><div className="shop-footer-bottom"><span>{projectConfig.appName} · Thiết bị công nghệ</span><span>COD · Trả góp nội bộ</span></div></footer>
       </div>
     );
+    if (!branchGated) return shell;
+    return <>
+      {shell}
+      <BranchSelectionModal onLogout={handleLogout} isSigningOut={isSigningOut} logoutError={logoutError} />
+    </>;
   }
 
   return (

@@ -16,6 +16,8 @@ public interface UserRepository extends JpaRepository<User, UUID>, org.springfra
 
     boolean existsByUsername(String username);
 
+    boolean existsByUsernameIgnoreCase(String username);
+
     boolean existsByEmail(String email);
 
     boolean existsByEmailAndUserIdNot(String email, UUID userId);

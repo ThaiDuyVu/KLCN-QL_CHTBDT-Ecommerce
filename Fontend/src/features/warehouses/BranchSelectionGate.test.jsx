@@ -86,6 +86,11 @@ describe('A. Mandatory branch dialog', () => {
     expect(screen.queryByRole('heading', { name: 'Trang chủ' })).not.toBeInTheDocument();
     expect(screen.queryByRole('navigation', { name: 'Điều hướng cửa hàng' })).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: /Giỏ hàng/ })).not.toBeInTheDocument();
+    // The shop stays visible behind the dialog, but inert and hidden from assistive technology.
+    const backdrop = document.querySelector('.storefront-shell.is-branch-gated');
+    expect(backdrop).toHaveAttribute('inert');
+    expect(backdrop).toHaveAttribute('aria-hidden', 'true');
+    expect(backdrop.contains(modal)).toBe(false);
     const radios = within(modal).getAllByRole('radio');
     expect(radios).toHaveLength(2);
     expect(within(modal).getByRole('radio', { name: /Chi nhánh Quận 1.*12 Lê Lợi, Quận 1/ })).not.toBeChecked();
@@ -239,7 +244,7 @@ describe('C. Cart synchronization', () => {
     const user = userEvent.setup(); cartApi.get.mockResolvedValue(cartAt('w1', [ITEM]));
     const nativeConfirm = vi.spyOn(window, 'confirm');
     show(); const modal = await dialog();
-    await user.click(within(modal).getByRole('radio', { name: /Thủ Đức/ }));
+    await user.click(await within(modal).findByRole('radio', { name: /Thủ Đức/ }));
     await user.click(continueButton());
     expect(within(modal).getByRole('alert')).toHaveTextContent('Giỏ hàng đang có 1 sản phẩm thuộc chi nhánh Chi nhánh Quận 1');
     expect(cartApi.selectWarehouse).not.toHaveBeenCalled();
