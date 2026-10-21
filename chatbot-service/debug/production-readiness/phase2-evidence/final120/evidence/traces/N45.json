@@ -1,0 +1,434 @@
+{
+  "trace_id": "4ff9e4fe-a1a3-4e4e-812c-e52bbf16a645",
+  "status": "warning",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "bd94415e-412f-46ac-8906-25d0e2fd0b70",
+      "parent_id": "d366910c-fcb9-44a6-9ed8-b48be02a75aa",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 40.3,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "c4ec3e58-7a4c-4ccb-a5d5-321f61249bce",
+      "parent_id": "d366910c-fcb9-44a6-9ed8-b48be02a75aa",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 40.54,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "0a403090-dd84-46e7-8824-a0e5648dbdfe",
+      "parent_id": "1e675220-10c1-4bb9-b31d-8e33923722bf",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2127.13,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": 64,
+          "min_storage_gb": 4,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Xiaomi 15 bản RAM 64GB dung lượng 4TB",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "9429a68e-c9de-4475-b580-d0dc6b506557",
+      "parent_id": "1e675220-10c1-4bb9-b31d-8e33923722bf",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2151.24,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": 64,
+            "min_storage_gb": 4,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Xiaomi 15 bản RAM 64GB dung lượng 4TB",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [
+            "STOCK",
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": "Xiaomi 15",
+                "sku": null,
+                "ram_gb": 64,
+                "storage_gb": 4096,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [
+              "Xiaomi"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Xiaomi 15 bản RAM 64GB dung lượng 4TB còn hàng không?",
+            "top_k": 1
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "6487f381-26c3-44cb-8fc4-c279c1e95a97",
+      "parent_id": "d366910c-fcb9-44a6-9ed8-b48be02a75aa",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2166.16,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "STOCK",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": 64,
+              "storage_gb": 4096,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Xiaomi"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Xiaomi 15 bản RAM 64GB dung lượng 4TB còn hàng không?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "55dedba8-04b7-4f91-acee-23c685d93e7d",
+      "parent_id": "d366910c-fcb9-44a6-9ed8-b48be02a75aa",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2166.28,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": 64,
+              "storage_gb": 4096,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Xiaomi"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Xiaomi 15 bản RAM 64GB dung lượng 4TB còn hàng không?",
+          "top_k": 1
+        }
+      }
+    },
+    {
+      "id": "dc907b4f-1558-4cef-afd4-3ad6b35f7456",
+      "parent_id": "d366910c-fcb9-44a6-9ed8-b48be02a75aa",
+      "name": "product.search",
+      "status": "error",
+      "offset_ms": 2166.41,
+      "duration_ms": 15.95,
+      "output": {
+        "type": "ProductResolutionError",
+        "frames": [
+          {
+            "file": "__init__.py",
+            "function": "span",
+            "line": 228
+          },
+          {
+            "file": "__init__.py",
+            "function": "wrapper",
+            "line": 260
+          },
+          {
+            "file": "real_service.py",
+            "function": "search",
+            "line": 139
+          },
+          {
+            "file": "__init__.py",
+            "function": "wrapper",
+            "line": 260
+          },
+          {
+            "file": "real_service.py",
+            "function": "resolve",
+            "line": 119
+          }
+        ]
+      }
+    },
+    {
+      "id": "1cf32841-5f1a-4d3c-88b9-59cfa0c28d79",
+      "parent_id": "dc907b4f-1558-4cef-afd4-3ad6b35f7456",
+      "name": "product.identity_resolution",
+      "status": "error",
+      "offset_ms": 2166.48,
+      "duration_ms": 15.74,
+      "output": {
+        "type": "ProductResolutionError",
+        "frames": [
+          {
+            "file": "__init__.py",
+            "function": "span",
+            "line": 228
+          },
+          {
+            "file": "__init__.py",
+            "function": "wrapper",
+            "line": 260
+          },
+          {
+            "file": "real_service.py",
+            "function": "resolve",
+            "line": 119
+          }
+        ]
+      }
+    },
+    {
+      "id": "4fe1dc37-417e-4bdb-b496-0974602c8e97",
+      "parent_id": "d366910c-fcb9-44a6-9ed8-b48be02a75aa",
+      "name": "product.resolution_failed",
+      "status": "warning",
+      "offset_ms": 2182.48,
+      "duration_ms": null,
+      "output": {
+        "reason": "VARIANT_NOT_FOUND"
+      }
+    },
+    {
+      "id": "87f40f48-c9de-4abd-a81e-72062f9a40e2",
+      "parent_id": "d366910c-fcb9-44a6-9ed8-b48be02a75aa",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2182.62,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DETAIL",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "071a4b31-36b1-4316-a369-059aef281974",
+      "parent_id": "ff926631-3f15-45f5-86b5-6ac68d306f8c",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2182.97,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 14.39,
+      "duration_ms": 2183.02,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 40.68,
+      "duration_ms": 2110.76,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 43.2,
+      "duration_ms": 2083.87,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 43.59,
+      "duration_ms": 2083.45,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 43.95,
+      "duration_ms": 2083.06,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2127.23,
+      "duration_ms": 9.14,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2136.41,
+      "duration_ms": 5.86,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2142.29,
+      "duration_ms": 8.45,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2166.41,
+      "duration_ms": 15.95,
+      "status": "error"
+    },
+    {
+      "name": "product.identity_resolution",
+      "offset_ms": 2166.48,
+      "duration_ms": 15.74,
+      "status": "error"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2166.54,
+      "duration_ms": 7.56,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2174.19,
+      "duration_ms": 7.59,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2182.55,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2182.84,
+      "duration_ms": 0.16,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,3782 @@
+[
+  {
+    "id": "R-T07-1",
+    "prompt": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+    "expected": "Laptop, max_price=20000000, min_ram_gb=16; every variant/card eligible.",
+    "started_at": "2026-10-21T04:46:53.951357+00:00",
+    "duration_ms": 2156.22,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-56fcee772466",
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "trace_id": "0cda5122-af1f-4d83-ab7c-0586f2cf9249",
+    "trace_evidence": "evidence/traces/R-T07-1.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "PRICE",
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "effective_query_plan": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      }
+    },
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop giá dưới 20 triệu, RAM ít nhất 16GB",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      },
+      "user_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.46355253892513626,
+          "ranking_score": 0.46355253892513626,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [
+      {
+        "kind": "eligible_variant",
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      }
+    ],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/search/advanced",
+        "kwargs": {
+          "params": [
+            [
+              "limit",
+              "100"
+            ],
+            [
+              "offset",
+              "0"
+            ],
+            [
+              "category",
+              "Laptop"
+            ],
+            [
+              "maxPrice",
+              "20000000"
+            ],
+            [
+              "minRamGb",
+              "16"
+            ],
+            [
+              "warehouseId",
+              "d13ea247-ab70-473b-80d6-c8adea60334c"
+            ],
+            [
+              "inStockOnly",
+              "false"
+            ]
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.14,
+        "duration_ms": 2117.75,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 47.79,
+        "duration_ms": 1974.57,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 49.07,
+        "duration_ms": 1946.02,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 49.48,
+        "duration_ms": 1945.57,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 49.87,
+        "duration_ms": 1945.14,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1995.25,
+        "duration_ms": 8.88,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2004.16,
+        "duration_ms": 5.87,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2010.06,
+        "duration_ms": 10.96,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 2037.29,
+        "duration_ms": 67.3,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2037.37,
+        "duration_ms": 9.51,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 2046.91,
+        "duration_ms": 32.67,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 2079.6,
+        "duration_ms": 14.7,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2094.33,
+        "duration_ms": 10.06,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 2104.6,
+        "duration_ms": 8.12,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 2104.71,
+        "duration_ms": 7.84,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2112.84,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2113.19,
+        "duration_ms": 0.25,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T07"
+  },
+  {
+    "id": "R-T07-2",
+    "prompt": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+    "expected": "Laptop, max_price=20000000, min_ram_gb=16; every variant/card eligible.",
+    "started_at": "2026-10-21T04:46:56.119124+00:00",
+    "duration_ms": 2040.81,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-1312f51a8ac8",
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "trace_id": "edb2848d-afb1-43fa-8e09-abd7caca16df",
+    "trace_evidence": "evidence/traces/R-T07-2.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "PRICE",
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "effective_query_plan": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      }
+    },
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop giá dưới 20 triệu, RAM ít nhất 16GB",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      },
+      "user_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.46359225022561934,
+          "ranking_score": 0.46359225022561934,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [
+      {
+        "kind": "eligible_variant",
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      }
+    ],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/search/advanced",
+        "kwargs": {
+          "params": [
+            [
+              "limit",
+              "100"
+            ],
+            [
+              "offset",
+              "0"
+            ],
+            [
+              "category",
+              "Laptop"
+            ],
+            [
+              "maxPrice",
+              "20000000"
+            ],
+            [
+              "minRamGb",
+              "16"
+            ],
+            [
+              "warehouseId",
+              "d13ea247-ab70-473b-80d6-c8adea60334c"
+            ],
+            [
+              "inStockOnly",
+              "false"
+            ]
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 11.31,
+        "duration_ms": 2003.63,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 49.2,
+        "duration_ms": 1896.13,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 50.7,
+        "duration_ms": 1868.83,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 51.26,
+        "duration_ms": 1868.25,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 51.7,
+        "duration_ms": 1867.78,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1919.64,
+        "duration_ms": 8.11,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1927.76,
+        "duration_ms": 5.39,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1933.18,
+        "duration_ms": 11.64,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1959.96,
+        "duration_ms": 39.82,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1960.01,
+        "duration_ms": 7.68,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1967.71,
+        "duration_ms": 17.54,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1985.27,
+        "duration_ms": 7.39,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1992.68,
+        "duration_ms": 6.93,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1999.79,
+        "duration_ms": 6.75,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1999.86,
+        "duration_ms": 6.54,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 2006.65,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 2006.92,
+        "duration_ms": 0.19,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T07"
+  },
+  {
+    "id": "R-T07-3",
+    "prompt": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+    "expected": "Laptop, max_price=20000000, min_ram_gb=16; every variant/card eligible.",
+    "started_at": "2026-10-21T04:46:58.168739+00:00",
+    "duration_ms": 2016.74,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-ee9ba46e7092",
+      "message": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "trace_id": "565e336d-9b49-426d-996e-c3b43ac288b2",
+    "trace_evidence": "evidence/traces/R-T07-3.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [
+        "PRICE",
+        "SPECIFICATIONS"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "effective_query_plan": {
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+        "top_k": 5
+      }
+    },
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": "Laptop",
+        "brands": [],
+        "min_price": null,
+        "max_price": "20000000",
+        "min_ram_gb": 16,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop giá dưới 20 triệu, RAM ít nhất 16GB",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      },
+      "user_query": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.46359225022561934,
+          "ranking_score": 0.46359225022561934,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [
+      {
+        "kind": "eligible_variant",
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      }
+    ],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/search/advanced",
+        "kwargs": {
+          "params": [
+            [
+              "limit",
+              "100"
+            ],
+            [
+              "offset",
+              "0"
+            ],
+            [
+              "category",
+              "Laptop"
+            ],
+            [
+              "maxPrice",
+              "20000000"
+            ],
+            [
+              "minRamGb",
+              "16"
+            ],
+            [
+              "warehouseId",
+              "d13ea247-ab70-473b-80d6-c8adea60334c"
+            ],
+            [
+              "inStockOnly",
+              "false"
+            ]
+          ]
+        }
+      },
+      {
+        "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.32,
+        "duration_ms": 1984.95,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 29.62,
+        "duration_ms": 1873.93,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 30.83,
+        "duration_ms": 1846.77,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 31.23,
+        "duration_ms": 1846.34,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 31.67,
+        "duration_ms": 1845.86,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1877.76,
+        "duration_ms": 8.17,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1885.98,
+        "duration_ms": 6.42,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1892.43,
+        "duration_ms": 10.43,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1918.35,
+        "duration_ms": 51.17,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1918.41,
+        "duration_ms": 7.56,
+        "status": "ok"
+      },
+      {
+        "name": "product.embedding",
+        "offset_ms": 1926.0,
+        "duration_ms": 19.38,
+        "status": "ok"
+      },
+      {
+        "name": "product.vector_ranking",
+        "offset_ms": 1945.39,
+        "duration_ms": 12.37,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1957.79,
+        "duration_ms": 11.54,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1969.53,
+        "duration_ms": 7.87,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1969.63,
+        "duration_ms": 7.61,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1977.53,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1977.86,
+        "duration_ms": 0.23,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T07"
+  },
+  {
+    "id": "R-T15-1",
+    "prompt": "Xiaomi 15 còn hàng không?",
+    "expected": "Exact Xiaomi 15, all active variants and selected-warehouse stock; one representative card.",
+    "started_at": "2026-10-21T04:47:00.197694+00:00",
+    "duration_ms": 1635.2,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-8f60ba0e9354",
+      "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "bcd5fea9-4af2-414c-b7e9-f5566c6b8bb8",
+    "trace_evidence": "evidence/traces/R-T15-1.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "STOCK"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      },
+      "semantic_query": null
+    },
+    "effective_query_plan": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      }
+    },
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "STOCK"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Xiaomi"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Xiaomi 15 còn hàng không?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      },
+      "user_query": "Xiaomi 15 còn hàng không?",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-GRN-512",
+              "original_price": "21990000.0",
+              "effective_price": "21990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xanh lá",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [
+      {
+        "kind": "eligible_variant",
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      },
+      {
+        "kind": "eligible_variant",
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      },
+      {
+        "kind": "eligible_variant",
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      }
+    ],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 12.57,
+        "duration_ms": 1595.2,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 48.16,
+        "duration_ms": 1508.22,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 49.58,
+        "duration_ms": 1481.36,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 50.1,
+        "duration_ms": 1480.81,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 50.52,
+        "duration_ms": 1480.36,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1531.09,
+        "duration_ms": 7.81,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1538.94,
+        "duration_ms": 6.22,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1545.18,
+        "duration_ms": 10.56,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1570.21,
+        "duration_ms": 18.53,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1570.31,
+        "duration_ms": 18.3,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1570.37,
+        "duration_ms": 9.87,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1580.33,
+        "duration_ms": 7.97,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1588.74,
+        "duration_ms": 7.15,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1588.89,
+        "duration_ms": 6.82,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1596.0,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1596.35,
+        "duration_ms": 0.26,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T15"
+  },
+  {
+    "id": "R-T15-2",
+    "prompt": "Xiaomi 15 còn hàng không?",
+    "expected": "Exact Xiaomi 15, all active variants and selected-warehouse stock; one representative card.",
+    "started_at": "2026-10-21T04:47:01.844089+00:00",
+    "duration_ms": 1564.64,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-53a5517a3b7f",
+      "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "59132f97-8db2-465f-8f1e-01df9b7354b0",
+    "trace_evidence": "evidence/traces/R-T15-2.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "STOCK"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      },
+      "semantic_query": null
+    },
+    "effective_query_plan": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      }
+    },
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "STOCK"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Xiaomi"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Xiaomi 15 còn hàng không?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      },
+      "user_query": "Xiaomi 15 còn hàng không?",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-GRN-512",
+              "original_price": "21990000.0",
+              "effective_price": "21990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xanh lá",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [
+      {
+        "kind": "eligible_variant",
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      },
+      {
+        "kind": "eligible_variant",
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      },
+      {
+        "kind": "eligible_variant",
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      }
+    ],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.8,
+        "duration_ms": 1525.76,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 46.46,
+        "duration_ms": 1432.86,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 47.78,
+        "duration_ms": 1402.33,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 48.28,
+        "duration_ms": 1401.8,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 48.68,
+        "duration_ms": 1401.38,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1450.25,
+        "duration_ms": 7.7,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1457.97,
+        "duration_ms": 7.02,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1465.02,
+        "duration_ms": 13.74,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1492.76,
+        "duration_ms": 20.5,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1492.81,
+        "duration_ms": 20.34,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1492.86,
+        "duration_ms": 12.65,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1505.59,
+        "duration_ms": 7.29,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1513.27,
+        "duration_ms": 9.16,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1513.39,
+        "duration_ms": 8.87,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1522.55,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1522.94,
+        "duration_ms": 0.27,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T15"
+  },
+  {
+    "id": "R-T15-3",
+    "prompt": "Xiaomi 15 còn hàng không?",
+    "expected": "Exact Xiaomi 15, all active variants and selected-warehouse stock; one representative card.",
+    "started_at": "2026-10-21T04:47:03.420222+00:00",
+    "duration_ms": 1563.59,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-46a9fcdabc7a",
+      "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "534836b8-8db7-459d-9608-35ecc0cfb8b1",
+    "trace_evidence": "evidence/traces/R-T15-3.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DETAIL",
+      "requested_fields": [
+        "STOCK"
+      ],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      },
+      "semantic_query": null
+    },
+    "effective_query_plan": {
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [
+          "Xiaomi"
+        ],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15 còn hàng không?",
+        "top_k": 1
+      }
+    },
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [
+          {
+            "product_id": null,
+            "variant_id": null,
+            "product_name": "Xiaomi 15",
+            "sku": null,
+            "ram_gb": null,
+            "storage_gb": null,
+            "color": null
+          }
+        ],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomi 15",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_product_evidence",
+      "reason": "verified_product_variants"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "STOCK"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": "Xiaomi 15",
+              "sku": null,
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [
+            "Xiaomi"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Xiaomi 15 còn hàng không?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      },
+      "user_query": "Xiaomi 15 còn hàng không?",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": null,
+          "ranking_score": null,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-GRN-512",
+              "original_price": "21990000.0",
+              "effective_price": "21990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xanh lá",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": []
+        }
+      ],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [
+      {
+        "kind": "eligible_variant",
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      },
+      {
+        "kind": "eligible_variant",
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      },
+      {
+        "kind": "eligible_variant",
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+        "identity": true,
+        "price": true,
+        "quantity": true,
+        "configuration": true
+      }
+    ],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+        "kwargs": {
+          "params": {
+            "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.23,
+        "duration_ms": 1527.44,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 49.93,
+        "duration_ms": 1434.9,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 51.39,
+        "duration_ms": 1407.25,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 51.95,
+        "duration_ms": 1406.67,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 52.39,
+        "duration_ms": 1406.19,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1458.8,
+        "duration_ms": 7.04,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1465.88,
+        "duration_ms": 6.62,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1472.54,
+        "duration_ms": 11.69,
+        "status": "ok"
+      },
+      {
+        "name": "product.search",
+        "offset_ms": 1498.01,
+        "duration_ms": 18.29,
+        "status": "ok"
+      },
+      {
+        "name": "product.identity_resolution",
+        "offset_ms": 1498.11,
+        "duration_ms": 18.07,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1498.18,
+        "duration_ms": 8.32,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1506.58,
+        "duration_ms": 9.3,
+        "status": "ok"
+      },
+      {
+        "name": "product.cards",
+        "offset_ms": 1516.31,
+        "duration_ms": 8.18,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1516.45,
+        "duration_ms": 7.87,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1524.61,
+        "duration_ms": 0.06,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1524.96,
+        "duration_ms": 0.3,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T15"
+  },
+  {
+    "id": "R-T30-1",
+    "prompt": "Có loại rẻ hơn không?",
+    "expected": "Fresh session cheaper: ask for baseline, no arbitrary products.",
+    "started_at": "2026-10-21T04:47:04.996513+00:00",
+    "duration_ms": 985.27,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-074f3d0d9582",
+      "message": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "dff65dcd-ed52-486a-9cba-45115652cb1b",
+    "trace_evidence": "evidence/traces/R-T30-1.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop lập trình",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": {
+      "kind": "CHEAPER",
+      "status": "NO_REFERENCE",
+      "case": "R4"
+    },
+    "grounding": {
+      "query_plan": {
+        "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Có loại rẻ hơn không?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 10.45,
+        "duration_ms": 945.24,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 48.06,
+        "duration_ms": 879.7,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 49.39,
+        "duration_ms": 853.16,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 49.95,
+        "duration_ms": 852.57,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 50.33,
+        "duration_ms": 852.16,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 902.67,
+        "duration_ms": 8.37,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 911.08,
+        "duration_ms": 7.09,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 918.21,
+        "duration_ms": 8.98,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 941.93,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 942.12,
+        "duration_ms": 0.11,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T30"
+  },
+  {
+    "id": "R-T30-2",
+    "prompt": "Có loại rẻ hơn không?",
+    "expected": "Fresh session cheaper: ask for baseline, no arbitrary products.",
+    "started_at": "2026-10-21T04:47:05.982871+00:00",
+    "duration_ms": 888.94,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-7e5bcc6331be",
+      "message": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "3eb57401-e68e-429c-ae0e-c2021968fd0f",
+    "trace_evidence": "evidence/traces/R-T30-2.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop lập trình",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": {
+      "kind": "CHEAPER",
+      "status": "NO_REFERENCE",
+      "case": "R4"
+    },
+    "grounding": {
+      "query_plan": {
+        "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Có loại rẻ hơn không?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.17,
+        "duration_ms": 852.18,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 45.25,
+        "duration_ms": 789.88,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 46.85,
+        "duration_ms": 766.6,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 47.44,
+        "duration_ms": 765.99,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 47.91,
+        "duration_ms": 765.49,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 813.58,
+        "duration_ms": 7.56,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 821.18,
+        "duration_ms": 5.27,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 826.47,
+        "duration_ms": 8.24,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 849.12,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 849.29,
+        "duration_ms": 0.1,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T30"
+  },
+  {
+    "id": "R-T30-3",
+    "prompt": "Có loại rẻ hơn không?",
+    "expected": "Fresh session cheaper: ask for baseline, no arbitrary products.",
+    "started_at": "2026-10-21T04:47:06.872721+00:00",
+    "duration_ms": 898.53,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-3a9ccfff96dd",
+      "message": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "173f94cc-281a-4dd8-bcde-2d89122c4935",
+    "trace_evidence": "evidence/traces/R-T30-3.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "laptop lập trình",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": {
+      "kind": "CHEAPER",
+      "status": "NO_REFERENCE",
+      "case": "R4"
+    },
+    "grounding": {
+      "query_plan": {
+        "clarification": "Mình chưa có sản phẩm tham chiếu trong phiên này. Bạn vui lòng nêu tên sản phẩm hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Có loại rẻ hơn không?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.48,
+        "duration_ms": 860.55,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 42.7,
+        "duration_ms": 802.08,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 44.21,
+        "duration_ms": 773.63,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 44.77,
+        "duration_ms": 773.04,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 45.28,
+        "duration_ms": 772.51,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 817.96,
+        "duration_ms": 7.99,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 825.98,
+        "duration_ms": 5.83,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 831.84,
+        "duration_ms": 12.54,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 857.47,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 857.67,
+        "duration_ms": 0.11,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T30"
+  },
+  {
+    "id": "R-T31-1",
+    "prompt": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?",
+    "expected": "DEMO return period: 7 days from receipt; only supporting return source.",
+    "started_at": "2026-10-21T04:47:07.772298+00:00",
+    "duration_ms": 118.48,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-2b01429e1e5e",
+      "message": "Dưới đây là trích đoạn tài liệu liên quan; mình không xác nhận đây là chính sách chính thức của cửa hàng.\n\n[DEMO — chỉ dùng kiểm thử, không phải chính sách chính thức] DEMO — Chính sách đổi trả kiểm thử:\nĐây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+      "products": [],
+      "sources": [
+        {
+          "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "title": "DEMO — Chính sách đổi trả kiểm thử",
+          "source": "demo://chatbot-lab/return"
+        }
+      ],
+      "suggested_questions": []
+    },
+    "trace_id": "cb3587ba-f827-458c-b391-f0bf48f7661f",
+    "trace_evidence": "evidence/traces/R-T31-1.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "KNOWLEDGE_QA",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?"
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "extractive_knowledge_evidence",
+      "reason": "source_bound_excerpt"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?"
+      },
+      "user_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?",
+      "products": [],
+      "knowledge_chunks": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.7443099783927279,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        }
+      ],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [
+      {
+        "kind": "knowledge_chunk",
+        "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+        "mapping": true,
+        "text": true,
+        "eligible": true
+      }
+    ],
+    "backend_calls": [],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 14.0,
+        "duration_ms": 81.51,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 52.24,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 52.35,
+        "duration_ms": 35.36,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 52.38,
+        "duration_ms": 25.48,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 78.06,
+        "duration_ms": 9.39,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 88.12,
+        "duration_ms": 0.2,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T31"
+  },
+  {
+    "id": "R-T31-2",
+    "prompt": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?",
+    "expected": "DEMO return period: 7 days from receipt; only supporting return source.",
+    "started_at": "2026-10-21T04:47:07.900004+00:00",
+    "duration_ms": 86.72,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-a1bf922d4e6a",
+      "message": "Dưới đây là trích đoạn tài liệu liên quan; mình không xác nhận đây là chính sách chính thức của cửa hàng.\n\n[DEMO — chỉ dùng kiểm thử, không phải chính sách chính thức] DEMO — Chính sách đổi trả kiểm thử:\nĐây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+      "products": [],
+      "sources": [
+        {
+          "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "title": "DEMO — Chính sách đổi trả kiểm thử",
+          "source": "demo://chatbot-lab/return"
+        }
+      ],
+      "suggested_questions": []
+    },
+    "trace_id": "279b5260-a6c2-4277-9bc4-269a67e9e2ce",
+    "trace_evidence": "evidence/traces/R-T31-2.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "KNOWLEDGE_QA",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?"
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "extractive_knowledge_evidence",
+      "reason": "source_bound_excerpt"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?"
+      },
+      "user_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?",
+      "products": [],
+      "knowledge_chunks": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.7443118857407923,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        }
+      ],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [
+      {
+        "kind": "knowledge_chunk",
+        "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+        "mapping": true,
+        "text": true,
+        "eligible": true
+      }
+    ],
+    "backend_calls": [],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 6.06,
+        "duration_ms": 59.28,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 39.21,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 39.32,
+        "duration_ms": 19.72,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 39.35,
+        "duration_ms": 12.09,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 51.6,
+        "duration_ms": 7.27,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 59.36,
+        "duration_ms": 0.19,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T31"
+  },
+  {
+    "id": "R-T31-3",
+    "prompt": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?",
+    "expected": "DEMO return period: 7 days from receipt; only supporting return source.",
+    "started_at": "2026-10-21T04:47:07.993482+00:00",
+    "duration_ms": 81.19,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-94e9ca1fda54",
+      "message": "Dưới đây là trích đoạn tài liệu liên quan; mình không xác nhận đây là chính sách chính thức của cửa hàng.\n\n[DEMO — chỉ dùng kiểm thử, không phải chính sách chính thức] DEMO — Chính sách đổi trả kiểm thử:\nĐây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+      "products": [],
+      "sources": [
+        {
+          "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "title": "DEMO — Chính sách đổi trả kiểm thử",
+          "source": "demo://chatbot-lab/return"
+        }
+      ],
+      "suggested_questions": []
+    },
+    "trace_id": "f12a3eef-97b5-4382-b450-99e2c42e561c",
+    "trace_evidence": "evidence/traces/R-T31-3.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "KNOWLEDGE_QA",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?"
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "extractive_knowledge_evidence",
+      "reason": "source_bound_excerpt"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?"
+      },
+      "user_query": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?",
+      "products": [],
+      "knowledge_chunks": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.7443118857407923,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        }
+      ],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [
+      {
+        "kind": "knowledge_chunk",
+        "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+        "mapping": true,
+        "text": true,
+        "eligible": true
+      }
+    ],
+    "backend_calls": [],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.29,
+        "duration_ms": 55.88,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 34.81,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.retrieve",
+        "offset_ms": 34.9,
+        "duration_ms": 19.71,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 34.94,
+        "duration_ms": 12.13,
+        "status": "ok"
+      },
+      {
+        "name": "knowledge.vector_search",
+        "offset_ms": 47.22,
+        "duration_ms": 7.2,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 54.99,
+        "duration_ms": 0.17,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T31"
+  },
+  {
+    "id": "R-T51-1",
+    "prompt": "Xiaomii 15 còn hàng hong?",
+    "expected": "Typo ambiguous: ask confirmation safely; auto correction is an approved limitation.",
+    "started_at": "2026-10-21T04:47:08.082090+00:00",
+    "duration_ms": 1198.2,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-33515154920e",
+      "message": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "8a1eb498-53c0-460a-9f93-bbf579cf96d0",
+    "trace_evidence": "evidence/traces/R-T51-1.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomii 15",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Xiaomii 15 còn hàng hong?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.19,
+        "duration_ms": 1146.46,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 31.19,
+        "duration_ms": 1095.23,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 32.44,
+        "duration_ms": 1070.55,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 32.83,
+        "duration_ms": 1070.14,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 33.19,
+        "duration_ms": 1069.74,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1103.14,
+        "duration_ms": 7.27,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1110.46,
+        "duration_ms": 5.23,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1115.73,
+        "duration_ms": 10.34,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1141.1,
+        "duration_ms": 0.05,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1141.33,
+        "duration_ms": 0.18,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T51"
+  },
+  {
+    "id": "R-T51-2",
+    "prompt": "Xiaomii 15 còn hàng hong?",
+    "expected": "Typo ambiguous: ask confirmation safely; auto correction is an approved limitation.",
+    "started_at": "2026-10-21T04:47:09.281292+00:00",
+    "duration_ms": 1123.03,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-cc81cb5fb47c",
+      "message": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "134dbe50-f11f-41f7-ac40-d13c80ccc6cc",
+    "trace_evidence": "evidence/traces/R-T51-2.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomii 15",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Xiaomii 15 còn hàng hong?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 9.47,
+        "duration_ms": 1086.74,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 44.52,
+        "duration_ms": 1020.64,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 45.94,
+        "duration_ms": 992.88,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 46.38,
+        "duration_ms": 992.42,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 46.89,
+        "duration_ms": 991.89,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1038.95,
+        "duration_ms": 8.52,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1047.5,
+        "duration_ms": 6.48,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1054.01,
+        "duration_ms": 10.81,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1077.78,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1077.98,
+        "duration_ms": 0.13,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T51"
+  },
+  {
+    "id": "R-T51-3",
+    "prompt": "Xiaomii 15 còn hàng hong?",
+    "expected": "Typo ambiguous: ask confirmation safely; auto correction is an approved limitation.",
+    "started_at": "2026-10-21T04:47:10.405426+00:00",
+    "duration_ms": 1340.71,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-c0d90b4535ba",
+      "message": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "7a895475-2f65-4abf-9b4b-24d03f16040b",
+    "trace_evidence": "evidence/traces/R-T51-3.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": {
+      "clarification": null,
+      "intent": "PRODUCT_DISCOVERY",
+      "requested_fields": [],
+      "references": {},
+      "product_search": {
+        "targets": [],
+        "category": null,
+        "brands": [],
+        "min_price": null,
+        "max_price": null,
+        "min_ram_gb": null,
+        "min_storage_gb": null,
+        "cpu_keywords": [],
+        "in_stock_only": false,
+        "semantic_query": "Xiaomii 15",
+        "top_k": 5
+      },
+      "semantic_query": null
+    },
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Xiaomii 15 còn hàng hong?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "path": "/api/v1/categories"
+      },
+      {
+        "path": "/api/v1/brands",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      },
+      {
+        "path": "/api/v1/products",
+        "kwargs": {
+          "params": {
+            "page": 0,
+            "size": 100
+          }
+        }
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.81,
+        "duration_ms": 1302.68,
+        "status": "ok"
+      },
+      {
+        "name": "query.understand",
+        "offset_ms": 57.81,
+        "duration_ms": 1214.06,
+        "status": "ok"
+      },
+      {
+        "name": "query.model_attempt",
+        "offset_ms": 60.21,
+        "duration_ms": 1153.57,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.chat",
+        "offset_ms": 60.75,
+        "duration_ms": 1153.01,
+        "status": "ok"
+      },
+      {
+        "name": "ollama.http",
+        "offset_ms": 61.54,
+        "duration_ms": 1152.21,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1213.87,
+        "duration_ms": 35.32,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1249.22,
+        "duration_ms": 9.66,
+        "status": "ok"
+      },
+      {
+        "name": "backend.product_http",
+        "offset_ms": 1258.91,
+        "duration_ms": 12.67,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 1300.4,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 1300.59,
+        "duration_ms": 0.14,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "repeated_case": "T51"
+  }
+]
