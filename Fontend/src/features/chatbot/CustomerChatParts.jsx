@@ -38,6 +38,36 @@ export function CustomerProductCard({ product }) {
   </article>;
 }
 
+// Values arrive formatted by the chatbot from verified catalog data; `best` marks measurably better cells only.
+export function ComparisonTable({ comparison }) {
+  const products = Array.isArray(comparison?.products) ? comparison.products : [];
+  const rows = Array.isArray(comparison?.rows) ? comparison.rows : [];
+  if (products.length < 2 || rows.length === 0) return null;
+  const names = products.map((product) => product.product_name).join(' và ');
+  return <div className="cchat-compare" role="region" aria-label={`Bảng so sánh ${names}`} tabIndex={0}>
+    <table>
+      <caption>So sánh thông số{comparison.category_name ? ` · ${comparison.category_name}` : ''}</caption>
+      <thead>
+        <tr>
+          <th scope="col">Thông số</th>
+          {products.map((product) => <th scope="col" key={product.product_id}>
+            <Link to={`/products/${encodeURIComponent(product.product_id)}`}>{product.product_name}</Link>
+          </th>)}
+        </tr>
+      </thead>
+      <tbody>{rows.map((row) => <tr key={row.key}>
+        <th scope="row">{row.label}</th>
+        {products.map((product, index) => {
+          const best = Array.isArray(row.best) && row.best.includes(index);
+          return <td key={product.product_id} className={best ? 'is-best' : undefined}>
+            {row.values?.[index] ?? '—'}{best && <span className="cchat-compare-best">Tốt hơn</span>}
+          </td>;
+        })}
+      </tr>)}</tbody>
+    </table>
+  </div>;
+}
+
 export function SourceList({ sources }) {
   return <div className="cchat-sources">
     <strong>Nguồn tham khảo</strong>
@@ -58,6 +88,7 @@ export function MessageBubble({ item, onSuggestion, suggestionsDisabled }) {
     {/* Plain text only: model output is never interpreted as HTML. */}
     <p className="cchat-message-text">{item.text}</p>
     {item.pending && <small className="cchat-message-note">Đang gửi…</small>}
+    {item.comparison && <ComparisonTable comparison={item.comparison} />}
     {item.products?.length > 0 && <div className="cchat-products">{item.products.map((product) => <CustomerProductCard key={`${product.product_id}-${product.variant_id || ''}`} product={product} />)}</div>}
     {item.sources?.length > 0 && <SourceList sources={item.sources} />}
     {item.suggestions?.length > 0 && <div className="cchat-suggestions" aria-label="Gợi ý câu hỏi tiếp theo">

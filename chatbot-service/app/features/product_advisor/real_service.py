@@ -199,13 +199,18 @@ class RealProductAdvisorService:
                 eligible_variants=eligible,
                 reasons=reasons,
             ))
-            if len(matches) >= plan.top_k:
+            if len(matches) >= plan.top_k and plan.target_price is None:
                 break
+        if plan.target_price is not None:
+            # "khoảng 25 triệu": every candidate in the band is read, then the closest prices come first.
+            matches.sort(key=lambda m: min(abs(v.effective_price - plan.target_price) for v in m.eligible_variants))
+            matches = matches[:plan.top_k]
         return matches
 
     @traced('product.cards', ('matches',))
-    def build_cards(self, matches: list[ProductMatch]) -> list[ProductCard]:
-        plan = _current_plan.get()
+    def build_cards(self, matches: list[ProductMatch], plan: ProductSearchPlan | None = None) -> list[ProductCard]:
+        # A combo builds each type's cards against that type's own search, not the last one run.
+        plan = plan or _current_plan.get()
         cards: list[ProductCard] = []
         refreshed_matches = []
         for match in matches:

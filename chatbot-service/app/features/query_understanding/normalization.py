@@ -7,9 +7,10 @@ from app.shared.contracts.enums import Intent, RequestedField
 from app.shared.contracts.query import ProductSearchPlan, ProductSelector, QueryPlan
 from app.shared.tracing import event
 from app.features.query_understanding.constraints import (
-    CATEGORY_ALIASES, GENERAL_CLARIFICATION, NO_ANTECEDENT_CLARIFICATION, PENDING_REFERENCE_CLARIFICATION,
+    CATEGORY_ALIASES, GENERAL_CLARIFICATION, NO_ANTECEDENT_CLARIFICATION, PENDING_REFERENCE_CLARIFICATION, PRICE_COMPARATIVES,
     ConstraintError, ProductEvidence, ReferenceKind, Relation, category_mentions, detect_reference, price_evidence,
     read_capacity, requested_count, validate_brands, validate_capacity_coverage, validate_price_coverage, storage_reference,
+    variant_storage_wording,
 )
 
 
@@ -20,6 +21,29 @@ def folded(value: str) -> str:
 
 def contains(text: str, phrase: str) -> bool:
     return re.search(r'(?<!\w)' + re.escape(phrase) + r'(?!\w)', text) is not None
+
+
+def expand_brandless_names(text: str, products, brands) -> str:
+    """Customers drop the brand ("Galaxy S24", "Inspiron 15"); write the catalog name back (R3).
+
+    Only the part after a catalog brand counts, and it must carry a digit or several words, so a
+    lone family word ("galaxy") or a bare number never becomes a product. Longer names win
+    ("galaxy s24 ultra").
+    """
+    brand_names = sorted({folded(b) for b in brands}, key=len, reverse=True)
+    aliases = []
+    for row in products:
+        full = folded(row['productName'])
+        brand = next((b for b in brand_names if full.startswith(b + ' ')), None)
+        if brand:
+            alias = full[len(brand) + 1:]
+            # "Xiaomi 15" minus its brand is just "15", which also sits inside "iPhone 15".
+            if re.search(r'[a-z]', alias) and (any(ch.isdigit() for ch in alias) or ' ' in alias):
+                aliases.append((alias, full))
+    for alias, full in sorted(aliases, key=lambda pair: len(pair[0]), reverse=True):
+        if contains(text, alias) and not contains(text, full):
+            text = re.sub(r'(?<!\w)' + re.escape(alias) + r'(?!\w)', full, text)
+    return text
 
 
 def capacity(text: str, slot: str) -> tuple[int | None, bool]:
@@ -47,13 +71,56 @@ class DomainNormalizer:
                                             'constraint_rejected': True})
             return clarification
 
+    def _mentions_brand(self, q: str) -> bool:
+        try:
+            _, brands = self.backend.taxonomy()
+        except Exception:
+            return False
+        return any(contains(q, folded(b)) for b in brands or [])
+
+    def _mentions_product_name(self, q: str) -> bool:
+        try:
+            _, brands = self.backend.taxonomy()
+            products = self.backend.catalog_names()
+        except Exception:
+            return False
+        expanded = expand_brandless_names(q, products, brands or [])
+        return any(contains(expanded, folded(r['productName'])) for r in products)
+
+    def _bundle(self, q, context, plan, mentions, brand_slots, prices, ram, storage) -> QueryPlan:
+        """One search per product type under one shared budget; the combo is chosen after retrieval."""
+        if ram is not None or storage is not None:
+            raise ConstraintError('Cấu hình riêng cho từng loại trong combo chưa được hỗ trợ. Bạn vui lòng hỏi từng loại sản phẩm.')
+        if prices.min_price is not None and prices.target is None:
+            raise ConstraintError('Mức giá tối thiểu cho combo chưa được hỗ trợ. Bạn muốn tổng ngân sách tối đa bao nhiêu?')
+        aliases = '|'.join(re.escape(a) for _, hits in mentions for a in hits)
+        if re.search(r'(?<!\w)(?:[2-9]|hai|ba|bon|nam)\s+(?:chiec\s+|cai\s+)?(?:' + aliases + r')(?!\w)', q):
+            raise ConstraintError('Mỗi loại trong combo mình gợi ý 1 sản phẩm. Bạn vui lòng hỏi riêng nếu cần nhiều máy cùng loại.')
+        starts = sorted((min(m.start() for a in hits for m in re.finditer(r'(?<!\w)' + re.escape(a) + r'(?!\w)', q)), name)
+                        for name, hits in mentions)
+        segments = []
+        for i, (start, name) in enumerate(starts):
+            part = q[start:starts[i + 1][0] if i + 1 < len(starts) else len(q)]
+            # A brand belongs to the product type it follows: "1 iPhone và 1 laptop Dell".
+            own = [b for b in brand_slots if contains(part, folded(b)) or (b == 'Apple' and contains(part, 'iphone'))]
+            segments.append(ProductSearchPlan(category=name, brands=own, max_price=prices.max_price,
+                                              semantic_query=context.current_message, top_k=20))
+        goal = prices.target if prices.target is not None else prices.max_price
+        normalized = QueryPlan(intent=Intent.PRODUCT_DISCOVERY, requested_fields=[RequestedField.PRICE],
+                               product_search=segments[0], bundle=segments, budget=goal,
+                               references={'budget_kind': 'approximate' if prices.target is not None else 'maximum'})
+        event('query.domain_validation', {'original': plan, 'normalized': normalized, 'taxonomy_verified': True, 'bundle': True})
+        return normalized
+
     def _normalize(self, plan: QueryPlan, context) -> QueryPlan:
         q = folded(context.current_message)
         personal = any(x in q for x in ('cua toi', 'my order', 'gio hang'))
-        product_words = ('laptop', 'may tinh xach tay', 'tablet', 'may tinh bang', 'dien thoai', 'smartphone', 'iphone', 'xiaomi', 'xiaomii', 'samsung', 'dell', 'sku', 'product id', 'variant id', 'ram', 'ssd', 're hon', 'may vua re')
+        product_words = ('laptop', 'may tinh xach tay', 'tablet', 'may tinh bang', 'dien thoai', 'smartphone', 'iphone', 'xiaomi', 'xiaomii', 'samsung', 'dell', 'sku', 'product id', 'variant id', 'ram', 'ssd', 're hon', 'dat hon', 'mac hon', 'may vua re')
         product_words += tuple(alias for aliases in CATEGORY_ALIASES.values() for alias in aliases)
         if not any(x in q for x in product_words) and plan.intent not in {Intent.PRODUCT_DISCOVERY, Intent.PRODUCT_DETAIL, Intent.PRODUCT_COMPARE}:
-            return plan
+            # A bare brand follow-up ("của ASUS") is still a product filter.
+            if plan.intent not in {Intent.UNKNOWN} or not (self._mentions_brand(q) or self._mentions_product_name(q)):
+                return plan
         if personal and plan.intent in {Intent.CART_STATUS, Intent.ORDER_STATUS, Intent.PAYMENT_STATUS, Intent.WARRANTY_STATUS, Intent.WARRANTY_TICKET_STATUS}:
             return plan
         categories, brands = self.backend.taxonomy()
@@ -61,12 +128,15 @@ class DomainNormalizer:
             # Missing taxonomy is a dependency/configuration failure, not NOT_FOUND.
             raise ValueError('Catalog taxonomy unavailable or incomplete')
         products = self.backend.catalog_names()
+        q = expand_brandless_names(q, products, brands)
         count = requested_count(q)
         named = [r for r in products if contains(q, folded(r['productName']))]
         # Prefer a longer name when one catalog name is a prefix of another.
         named = [r for r in named if not any(r is not other and folded(r['productName']) in folded(other['productName']) for other in named)]
         sku = re.search(r'\bsku\s*[:#]?\s*([A-Za-z0-9][A-Za-z0-9_-]*)', context.current_message, re.I)
         ids = re.search(r'(product|variant)\s*id\s*[:#]?\s*([0-9a-fA-F-]{36})', context.current_message, re.I)
+        if named or sku or ids:
+            q = variant_storage_wording(q)
         if named and any(re.search(re.escape(folded(r['productName'])) + r'\s+(pro|ultra|plus|max|lite)\b', q) for r in named):
             return QueryPlan(intent=Intent.UNKNOWN, clarification='Model có hậu tố chưa khớp chính xác catalog. Bạn vui lòng xác nhận tên hoặc SKU.')
         scope_prefix = q[:min(q.index(folded(r['productName'])) for r in named)] if len(named) > 1 else q
@@ -87,8 +157,10 @@ class DomainNormalizer:
             return QueryPlan(intent=Intent.UNKNOWN, clarification='Khoảng giá bị mâu thuẫn. Bạn muốn giá tối thiểu và tối đa bao nhiêu?')
         mentions = category_mentions(q, categories, folded, contains)
         category_names = list(dict.fromkeys(c for c, _ in mentions))
-        # Product identities may span categories in a comparison; general discovery may not.
-        if len(category_names) > 1 and len(named) < 2:
+        # Product identities may span categories in a comparison; several product types without
+        # named products are a combo ("1 điện thoại và 1 laptop"), searched one type at a time.
+        bundle = len(category_names) > 1 and not named
+        if len(category_names) > 1 and len(named) == 1:
             raise ConstraintError('Mình hỗ trợ tìm từng nhóm sản phẩm. Bạn muốn tìm loại sản phẩm nào trước?')
         category = category_names[0] if len(category_names) == 1 else None
         previous_search = plan.product_search
@@ -97,6 +169,8 @@ class DomainNormalizer:
             if contains(q, folded(model_category)) and model_category not in categories and not mentions:
                 raise ConstraintError('Danh mục được yêu cầu chưa xác minh được trong catalog hiện tại.')
         brand_slots = validate_brands(q, plan, mentions, brands, named, folded, contains, context.current_message)
+        if bundle:
+            return self._bundle(q, context, plan, mentions, brand_slots, prices, ram, storage)
         fields = []
         for field, signals in [(RequestedField.PRICE, ('gia', 'price')), (RequestedField.STOCK, ('con hang', 'het hang', 'ton kho', 'stock', 'bao nhieu may')), (RequestedField.WARRANTY, ('bao hanh', 'warranty')), (RequestedField.SPECIFICATIONS, ('ram', 'ssd', 'mau', 'color', 'cau hinh', 'dung luong'))]:
             if any(x in q for x in signals): fields.append(field)
@@ -114,9 +188,16 @@ class DomainNormalizer:
         elif re.search(r'(?:xiaom\w*|iphone|samsung galaxy|dell inspiron|dell xps)\s+\d+', q):
             return QueryPlan(intent=Intent.UNKNOWN, clarification='Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).')
         # Grounded model identities absent from catalog must never degrade to discovery.
+        # A brand the model mislabels as a product name ("hãng Dell") is a brand filter, not an unknown model.
+        brand_names = {folded(b) for b in brands}
         if not targets and previous_search and any(
-                t.product_name and contains(q, folded(t.product_name)) for t in previous_search.targets):
+                t.product_name and folded(t.product_name) not in brand_names and contains(q, folded(t.product_name))
+                for t in previous_search.targets):
             raise ConstraintError('Chưa xác minh được tên sản phẩm trong catalog. Bạn vui lòng xác nhận tên hoặc SKU.')
+        if targets:
+            # An explicit product identity already fixes the brand ("Dell XPS 13", "iPhone 15"); a brand filter
+            # on top would only drop the other product of a comparison.
+            brand_slots = []
         if len(targets) > 1 and (ram is not None or storage is not None):
             raise ConstraintError('Cấu hình chung của nhiều sản phẩm chưa rõ. Bạn vui lòng nêu cấu hình ngay sau từng tên sản phẩm.')
         if targets:
@@ -147,22 +228,28 @@ class DomainNormalizer:
             ram, ram_min = capacity(q, 'ram')
             storage, storage_min = capacity(q, 'storage')
         exact = bool(targets)
-        compare = any(x in q for x in ('so sanh', 'compare'))
+        # "X với Y cái nào hơn", "X vs Y", "X khác gì Y" compare two named products without "so sánh".
+        compare = (any(x in q for x in ('so sanh', 'compare', ' vs ', 'versus')) or
+                   (len(targets) == 2 and re.search(r'(?<!\w)(?:nao (?:hon|tot|manh|re|dat)|khac (?:gi|nhau)|hay hon)(?!\w)', q) is not None))
         if compare and len(targets) != 2:
             return QueryPlan(intent=Intent.UNKNOWN, clarification='Bạn vui lòng xác định đúng hai sản phẩm cần so sánh bằng tên hoặc SKU.')
         # A family search is discovery; an explicit target is detail/compare.
         intent = Intent.PRODUCT_COMPARE if compare else Intent.PRODUCT_DETAIL if targets else Intent.PRODUCT_DISCOVERY
+        if compare:
+            # "iPhone 15 với Dell XPS 13": the "iphone" category alias must not filter out the other product;
+            # a mixed-category comparison is explained after both identities are verified.
+            category = None
         reference = detect_reference(q)
         # A bounded comparative carries its own price (A3.1 R2-R4); STORAGE stays a filter-less snapshot reference.
-        followup = reference in {ReferenceKind.CHEAPER, ReferenceKind.ORDINAL_FIRST, ReferenceKind.ORDINAL_SECOND, ReferenceKind.LAST}
-        if followup and reference != ReferenceKind.CHEAPER and (category or brand_slots):
+        followup = reference in {*PRICE_COMPARATIVES, ReferenceKind.ORDINAL_FIRST, ReferenceKind.ORDINAL_SECOND, ReferenceKind.LAST}
+        if followup and reference not in PRICE_COMPARATIVES and (category or brand_slots):
             # An ordinal/last phrase next to a newly stated category/brand is a new request.
             followup = False
         if followup and not targets:
             if not context.recent_messages:
                 return QueryPlan(intent=Intent.UNKNOWN, clarification=NO_ANTECEDENT_CLARIFICATION)
             # Ordinal/last identities are resolved only from the owned snapshot.
-            if reference != ReferenceKind.CHEAPER:
+            if reference not in PRICE_COMPARATIVES:
                 return QueryPlan(intent=Intent.UNKNOWN, clarification=PENDING_REFERENCE_CLARIFICATION)
             previous = plan.product_search
             if previous:
@@ -191,7 +278,8 @@ class DomainNormalizer:
         evidence = ProductEvidence(category, tuple(brand_slots), tuple(targets), minimum, maximum,
             None if exact and not ram_min else ram, None if exact and not storage_min else storage, count)
         search = ProductSearchPlan(category=category, brands=brand_slots,
-            min_price=minimum, max_price=maximum, min_ram_gb=None if exact and not ram_min else ram,
+            min_price=minimum, max_price=maximum, target_price=prices.target,
+            min_ram_gb=None if exact and not ram_min else ram,
             min_storage_gb=None if exact and not storage_min else storage,
             cpu_keywords=cpu, in_stock_only=RequestedField.STOCK in fields and not targets,
             semantic_query=context.current_message, targets=targets, top_k=max(1,len(targets)) if targets else count or 5)
@@ -210,6 +298,7 @@ def variant_color(text, original):
     if color is None:
         color = next((v for k, v in {'black': 'Đen', 'white': 'Trắng', 'blue': 'Xanh',
                                    'red': 'Đỏ', 'silver': 'Bạc'}.items() if contains(text, k)), None)
-    if color is None and re.search(r'\b(?:mau|color)\s+(?!nao\b|gi\b|sac\b|which\b)[\w-]+', text):
+    # "mẫu" and "màu" both fold to "mau": "mẫu khác / mẫu này" is not an unknown colour.
+    if color is None and re.search(r'\b(?:mau|color)\s+(?!nao\b|gi\b|sac\b|which\b|khac\b|nay\b|do\b|kia\b|ay\b|moi\b)[\w-]+', text):
         raise ConstraintError('Màu biến thể chưa xác định rõ. Bạn vui lòng xác nhận màu hoặc SKU; mình sẽ không bỏ qua điều kiện màu.')
     return color
