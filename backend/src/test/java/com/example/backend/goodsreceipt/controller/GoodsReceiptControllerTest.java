@@ -73,7 +73,7 @@ class GoodsReceiptControllerTest {
         when(goodsReceiptService.getGoodsReceipts(0, 20)).thenReturn(response);
 
         mockMvc.perform(get("/api/goods-receipts")
-                        .with(authenticatedAs("USER")))
+                        .with(authenticatedAs("STAFF")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].receiptCode").value("GR-001"))
                 .andExpect(jsonPath("$.content[0].totalAmount").value(350000.00))
@@ -87,7 +87,7 @@ class GoodsReceiptControllerTest {
                 .thenReturn(response);
 
         mockMvc.perform(get("/api/goods-receipts/{receiptId}", response.getReceiptId())
-                        .with(authenticatedAs("USER")))
+                        .with(authenticatedAs("STAFF")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.receiptId").value(response.getReceiptId().toString()))
                 .andExpect(jsonPath("$.items[0].quantity").value(2))
@@ -101,7 +101,7 @@ class GoodsReceiptControllerTest {
                 .thenThrow(new GoodsReceiptNotFoundException("Không tìm thấy phiếu nhập"));
 
         mockMvc.perform(get("/api/goods-receipts/{receiptId}", receiptId)
-                        .with(authenticatedAs("USER")))
+                        .with(authenticatedAs("STAFF")))
                 .andExpect(status().isNotFound());
     }
 
@@ -111,7 +111,7 @@ class GoodsReceiptControllerTest {
                 .thenReturn(goodsReceiptResponse());
 
         mockMvc.perform(post("/api/goods-receipts")
-                        .with(authenticatedAs("USER"))
+                        .with(authenticatedAs("STAFF"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validRequestBody()))
@@ -128,7 +128,7 @@ class GoodsReceiptControllerTest {
                 .thenThrow(new ReceiptCodeAlreadyExistsException("Mã phiếu nhập đã tồn tại"));
 
         mockMvc.perform(post("/api/goods-receipts")
-                        .with(authenticatedAs("USER"))
+                        .with(authenticatedAs("STAFF"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validRequestBody()))
@@ -141,7 +141,7 @@ class GoodsReceiptControllerTest {
                 .thenThrow(new GoodsReceiptReferenceNotFoundException("Không tìm thấy nhân viên"));
 
         mockMvc.perform(post("/api/goods-receipts")
-                        .with(authenticatedAs("USER"))
+                        .with(authenticatedAs("STAFF"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validRequestBody()))
@@ -156,7 +156,7 @@ class GoodsReceiptControllerTest {
                 ));
 
         mockMvc.perform(post("/api/goods-receipts")
-                        .with(authenticatedAs("USER"))
+                        .with(authenticatedAs("STAFF"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validRequestBody()))
@@ -178,7 +178,7 @@ class GoodsReceiptControllerTest {
                 + "}";
 
         mockMvc.perform(post("/api/goods-receipts")
-                        .with(authenticatedAs("USER"))
+                        .with(authenticatedAs("STAFF"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidRequest))
@@ -230,6 +230,46 @@ class GoodsReceiptControllerTest {
     }
 
     @Test
+    void customer_cannotListOrCreateGoodsReceipts() throws Exception {
+        mockMvc.perform(get("/api/goods-receipts")
+                        .with(authenticatedAs("CUSTOMER")))
+                .andExpect(status().isForbidden());
+        mockMvc.perform(get("/api/goods-receipts/{receiptId}", UUID.randomUUID())
+                        .with(authenticatedAs("CUSTOMER")))
+                .andExpect(status().isForbidden());
+        mockMvc.perform(post("/api/goods-receipts")
+                        .with(authenticatedAs("CUSTOMER"))
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(validRequestBody()))
+                .andExpect(status().isForbidden());
+
+        verifyNoInteractions(goodsReceiptService);
+    }
+
+    @Test
+    void warehouseKeeper_canCreateButNotConfirmGoodsReceipts() throws Exception {
+        when(goodsReceiptService.createGoodsReceipt(any(CreateGoodsReceiptRequest.class)))
+                .thenReturn(goodsReceiptResponse());
+
+        mockMvc.perform(post("/api/goods-receipts")
+                        .with(authenticatedAs("WAREHOUSE_KEEPER"))
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(validRequestBody()))
+                .andExpect(status().isCreated());
+        mockMvc.perform(patch("/api/goods-receipts/{receiptId}/status", UUID.randomUUID())
+                        .with(authenticatedAs("WAREHOUSE_KEEPER"))
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"status\":\"CONFIRMED\"}"))
+                .andExpect(status().isForbidden());
+        mockMvc.perform(get("/api/goods-receipts")
+                        .with(authenticatedAs("SALES_STAFF")))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     void updateGoodsReceiptStatus_shouldReturn401WhenUnauthenticated() throws Exception {
         mockMvc.perform(patch("/api/goods-receipts/{receiptId}/status", UUID.randomUUID())
                         .with(csrf())
@@ -276,7 +316,7 @@ class GoodsReceiptControllerTest {
     @Test
     void createGoodsReceipt_shouldReturn400WhenRequiredHeaderFieldIsMissing() throws Exception {
         mockMvc.perform(post("/api/goods-receipts")
-                        .with(authenticatedAs("USER"))
+                        .with(authenticatedAs("STAFF"))
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"receiptCode\":\"GR-001\"}"))

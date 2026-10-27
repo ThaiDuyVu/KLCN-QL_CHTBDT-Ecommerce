@@ -1,5 +1,6 @@
 package com.example.backend.supplier.controller;
 
+import com.example.backend.common.security.RequireAnyAuthority;
 import com.example.backend.supplier.dto.request.CreateSupplierRequest;
 import com.example.backend.supplier.dto.request.UpdateSupplierRequest;
 import com.example.backend.supplier.dto.response.SupplierPageResponse;
@@ -30,6 +31,7 @@ public class SupplierController {
     }
 
     @GetMapping
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER"})
     public ResponseEntity<SupplierPageResponse> getSuppliers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
@@ -46,6 +48,7 @@ public class SupplierController {
     }
 
     @GetMapping("/{supplierId}")
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER"})
     public ResponseEntity<SupplierResponse> getSupplierById(
             @PathVariable UUID supplierId
     ) {
@@ -53,6 +56,7 @@ public class SupplierController {
     }
 
     @PostMapping
+    @RequireAnyAuthority({"ADMIN", "MANAGER"})
     public ResponseEntity<SupplierResponse> createSupplier(
             @Valid @RequestBody CreateSupplierRequest request
     ) {
@@ -62,6 +66,7 @@ public class SupplierController {
     }
 
     @PutMapping("/{supplierId}")
+    @RequireAnyAuthority({"ADMIN", "MANAGER"})
     public ResponseEntity<SupplierResponse> updateSupplier(
             @PathVariable UUID supplierId,
             @Valid @RequestBody UpdateSupplierRequest request

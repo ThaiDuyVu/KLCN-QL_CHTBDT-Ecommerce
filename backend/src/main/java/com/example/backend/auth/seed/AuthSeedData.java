@@ -31,6 +31,10 @@ public class AuthSeedData implements CommandLineRunner {
             {"seed.admin", "Quản trị viên mẫu", "ADMIN"},
             {"seed.manager", "Quản lý cửa hàng mẫu", "MANAGER"},
             {"seed.staff", "Nhân viên cửa hàng mẫu", "STAFF"},
+            {"seed.sales", "Nhân viên bán hàng mẫu", "SALES_STAFF"},
+            {"seed.warehouse", "Thủ kho mẫu", "WAREHOUSE_KEEPER"},
+            {"seed.technician", "Nhân viên kỹ thuật mẫu", "WARRANTY_TECHNICIAN"},
+            {"seed.delivery", "Nhân viên giao hàng mẫu", "DELIVERY_STAFF"},
             {"seed.customer1", "Khách hàng mẫu 01", "CUSTOMER"},
             {"seed.customer2", "Khách hàng mẫu 02", "CUSTOMER"}
     };

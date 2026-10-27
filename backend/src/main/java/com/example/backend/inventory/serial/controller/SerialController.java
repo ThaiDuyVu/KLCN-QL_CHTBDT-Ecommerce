@@ -15,7 +15,7 @@ public class SerialController {
     public SerialController(SerialQueryService service) { this.service = service; }
 
     @GetMapping
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER", "SALES_STAFF", "WARRANTY_TECHNICIAN"})
     public ResponseEntity<SerialPageResponse> list(@RequestParam(required = false) String keyword,
             @RequestParam(required = false) UUID variantId, @RequestParam(required = false) UUID warehouseId,
             @RequestParam(required = false) SerialStatus status,
@@ -24,10 +24,10 @@ public class SerialController {
     }
 
     @GetMapping("/lookup")
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER", "SALES_STAFF", "WARRANTY_TECHNICIAN"})
     public ResponseEntity<SerialResponse> lookup(@RequestParam String code) { return ResponseEntity.ok(service.lookup(code)); }
 
     @GetMapping("/{serialId}")
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER", "SALES_STAFF", "WARRANTY_TECHNICIAN"})
     public ResponseEntity<SerialResponse> detail(@PathVariable UUID serialId) { return ResponseEntity.ok(service.getById(serialId)); }
 }
