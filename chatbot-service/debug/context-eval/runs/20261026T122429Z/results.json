@@ -1,0 +1,1442 @@
+[
+  {
+    "case": "C16",
+    "dimension": "D13_bundle_budget",
+    "title": "Combo điện thoại + laptop trong ngân sách",
+    "turn": 1,
+    "say": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+    "expect": {
+      "products": true,
+      "bundle_categories": [
+        "Điện thoại",
+        "Laptop"
+      ],
+      "max_total": 100000000,
+      "text_any": [
+        "Tổng cộng"
+      ]
+    },
+    "verdict": "PASS",
+    "failures": [],
+    "notes": [
+      "tổng combo 83,980,000"
+    ],
+    "reply": "Với ngân sách 100.000.000 đ, mình gợi ý combo 1 điện thoại + 1 laptop:\n\nĐiện thoại: iPhone 16\n• RAM 8GB, bộ nhớ 512GB, màu Hồng: giá 30.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nLaptop: ASUS ROG Zephyrus G14\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nTổng cộng: 83.980.000 đ, còn dư 16.020.000 đ so với ngân sách của bạn.\n\nBạn có thể bấm “Xem chi tiết” trên từng thẻ sản phẩm, hoặc cho mình biết nếu muốn đổi lựa chọn trong combo nhé.",
+    "cards": [
+      {
+        "product": "iPhone 16",
+        "sku": "DEV-IP16-PNK-512",
+        "ram": 8,
+        "storage": 512,
+        "price": 30990000
+      },
+      {
+        "product": "ASUS ROG Zephyrus G14",
+        "sku": "DEV-ROGG14-GR-1TB",
+        "ram": 32,
+        "storage": 1024,
+        "price": 52990000
+      }
+    ],
+    "effective_filters": {
+      "category": "Điện thoại",
+      "max_price": "100000000",
+      "top_k": 20
+    },
+    "trace": [
+      {
+        "name": "conversation.context_selection",
+        "output": {
+          "audit_rows_scanned": 1,
+          "context_messages": 0,
+          "policy": "completed_adjacent_turns",
+          "audit_preserved": true
+        }
+      },
+      {
+        "name": "query.domain_validation",
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [
+              "PRICE",
+              "STOCK"
+            ],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Điện thoại",
+              "brands": [],
+              "min_price": null,
+              "max_price": "10000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "điện thoại",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": "điện thoại"
+          },
+          "normalized": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [
+              "PRICE"
+            ],
+            "references": {
+              "budget_kind": "maximum"
+            },
+            "product_search": {
+              "targets": [],
+              "category": "Điện thoại",
+              "brands": [],
+              "min_price": null,
+              "max_price": "100000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+              "top_k": 20
+            },
+            "bundle": [
+              {
+                "targets": [],
+                "category": "Điện thoại",
+                "brands": [],
+                "min_price": null,
+                "max_price": "100000000",
+                "target_price": null,
+                "min_ram_gb": null,
+                "min_storage_gb": null,
+                "cpu_keywords": [],
+                "in_stock_only": false,
+                "semantic_query": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+                "top_k": 20
+              },
+              {
+                "targets": [],
+                "category": "Laptop",
+                "brands": [],
+                "min_price": null,
+                "max_price": "100000000",
+                "target_price": null,
+                "min_ram_gb": null,
+                "min_storage_gb": null,
+                "cpu_keywords": [],
+                "in_stock_only": false,
+                "semantic_query": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+                "top_k": 20
+              }
+            ],
+            "budget": "100000000",
+            "semantic_query": null
+          },
+          "taxonomy_verified": true,
+          "bundle": true
+        }
+      },
+      {
+        "name": "query.plan.initial",
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE"
+          ],
+          "references": {
+            "budget_kind": "maximum"
+          },
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "100000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+            "top_k": 20
+          },
+          "bundle": [
+            {
+              "targets": [],
+              "category": "Điện thoại",
+              "brands": [],
+              "min_price": null,
+              "max_price": "100000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+              "top_k": 20
+            },
+            {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "100000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+              "top_k": 20
+            }
+          ],
+          "budget": "100000000",
+          "semantic_query": null
+        }
+      },
+      {
+        "name": "query.plan.effective",
+        "output": {
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "100000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+            "top_k": 20
+          }
+        }
+      },
+      {
+        "name": "response.strategy",
+        "output": {
+          "strategy": "deterministic_product_evidence",
+          "reason": "verified_bundle"
+        }
+      }
+    ],
+    "seconds": 10.48
+  },
+  {
+    "case": "C16",
+    "dimension": "D13_bundle_budget",
+    "title": "Combo điện thoại + laptop trong ngân sách",
+    "turn": 2,
+    "say": "máy thứ hai bảo hành bao lâu",
+    "expect": {
+      "products": true,
+      "referent": "card:prev:2"
+    },
+    "verdict": "PASS",
+    "failures": [],
+    "notes": [],
+    "reply": "Đây là thông tin chi tiết của ASUS ROG Zephyrus G14:\n\nASUS ROG Zephyrus G14\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+    "cards": [
+      {
+        "product": "ASUS ROG Zephyrus G14",
+        "sku": "DEV-ROGG14-GR-1TB",
+        "ram": 32,
+        "storage": 1024,
+        "price": 52990000
+      }
+    ],
+    "effective_filters": {
+      "targets": [
+        {
+          "product_id": null,
+          "variant_id": "7c7555cd-0e26-44e6-83da-a1ce95e2f1bc",
+          "product_name": null,
+          "sku": null,
+          "ram_gb": null,
+          "storage_gb": null,
+          "color": null
+        }
+      ],
+      "top_k": 1
+    },
+    "trace": [
+      {
+        "name": "conversation.context_selection",
+        "output": {
+          "audit_rows_scanned": 3,
+          "context_messages": 2,
+          "policy": "completed_adjacent_turns",
+          "audit_preserved": true
+        }
+      },
+      {
+        "name": "conversation.reference_resolution",
+        "output": {
+          "kind": "ORDINAL_SECOND",
+          "status": "RESOLVED",
+          "product_id": "0bc0ada3-c4e9-41a1-9b5c-93c57c3f6ead",
+          "variant_id": "7c7555cd-0e26-44e6-83da-a1ce95e2f1bc",
+          "captured_at": "2026-10-26 12:24:39.458206+00:00",
+          "refresh": "live_backend"
+        }
+      },
+      {
+        "name": "query.plan.initial",
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [
+            "WARRANTY"
+          ],
+          "references": {
+            "source": "owned_session_snapshot"
+          },
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": "7c7555cd-0e26-44e6-83da-a1ce95e2f1bc",
+                "product_name": null,
+                "sku": null,
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": null,
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "name": "query.plan.effective",
+        "output": {
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": "7c7555cd-0e26-44e6-83da-a1ce95e2f1bc",
+                "product_name": null,
+                "sku": null,
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": null,
+            "top_k": 1
+          }
+        }
+      },
+      {
+        "name": "response.strategy",
+        "output": {
+          "strategy": "deterministic_product_evidence",
+          "reason": "verified_product_variants"
+        }
+      }
+    ],
+    "seconds": 3.12
+  },
+  {
+    "case": "C17",
+    "dimension": "D13_bundle_budget",
+    "title": "Combo ngân sách thấp + đổi thứ tự loại",
+    "turn": 1,
+    "say": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+    "expect": {
+      "products": true,
+      "bundle_categories": [
+        "Điện thoại",
+        "Laptop"
+      ],
+      "max_total": 40000000
+    },
+    "verdict": "PASS",
+    "failures": [],
+    "notes": [
+      "tổng combo 39,980,000"
+    ],
+    "reply": "Với ngân sách 40.000.000 đ, mình gợi ý combo 1 laptop + 1 điện thoại:\n\nLaptop: MacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nĐiện thoại: Xiaomi 14T Pro\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 16.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nTổng cộng: 39.980.000 đ, còn dư 20.000 đ so với ngân sách của bạn.\n\nBạn có thể bấm “Xem chi tiết” trên từng thẻ sản phẩm, hoặc cho mình biết nếu muốn đổi lựa chọn trong combo nhé.",
+    "cards": [
+      {
+        "product": "MacBook Air M2",
+        "sku": "DEV-MBA-M2-256",
+        "ram": 8,
+        "storage": 256,
+        "price": 22990000
+      },
+      {
+        "product": "Xiaomi 14T Pro",
+        "sku": "DEV-X14TP-BLK-256",
+        "ram": 12,
+        "storage": 256,
+        "price": 16990000
+      }
+    ],
+    "effective_filters": {
+      "category": "Laptop",
+      "max_price": "40000000",
+      "top_k": 20
+    },
+    "trace": [
+      {
+        "name": "conversation.context_selection",
+        "output": {
+          "audit_rows_scanned": 1,
+          "context_messages": 0,
+          "policy": "completed_adjacent_turns",
+          "audit_preserved": true
+        }
+      },
+      {
+        "name": "query.domain_validation",
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [
+              "PRICE",
+              "STOCK"
+            ],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "40000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "normalized": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [
+              "PRICE"
+            ],
+            "references": {
+              "budget_kind": "maximum"
+            },
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "40000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+              "top_k": 20
+            },
+            "bundle": [
+              {
+                "targets": [],
+                "category": "Laptop",
+                "brands": [],
+                "min_price": null,
+                "max_price": "40000000",
+                "target_price": null,
+                "min_ram_gb": null,
+                "min_storage_gb": null,
+                "cpu_keywords": [],
+                "in_stock_only": false,
+                "semantic_query": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+                "top_k": 20
+              },
+              {
+                "targets": [],
+                "category": "Điện thoại",
+                "brands": [],
+                "min_price": null,
+                "max_price": "40000000",
+                "target_price": null,
+                "min_ram_gb": null,
+                "min_storage_gb": null,
+                "cpu_keywords": [],
+                "in_stock_only": false,
+                "semantic_query": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+                "top_k": 20
+              }
+            ],
+            "budget": "40000000",
+            "semantic_query": null
+          },
+          "taxonomy_verified": true,
+          "bundle": true
+        }
+      },
+      {
+        "name": "query.plan.initial",
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE"
+          ],
+          "references": {
+            "budget_kind": "maximum"
+          },
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "40000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+            "top_k": 20
+          },
+          "bundle": [
+            {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "40000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+              "top_k": 20
+            },
+            {
+              "targets": [],
+              "category": "Điện thoại",
+              "brands": [],
+              "min_price": null,
+              "max_price": "40000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+              "top_k": 20
+            }
+          ],
+          "budget": "40000000",
+          "semantic_query": null
+        }
+      },
+      {
+        "name": "query.plan.effective",
+        "output": {
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "40000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+            "top_k": 20
+          }
+        }
+      },
+      {
+        "name": "response.strategy",
+        "output": {
+          "strategy": "deterministic_product_evidence",
+          "reason": "verified_bundle"
+        }
+      }
+    ],
+    "seconds": 2.0
+  },
+  {
+    "case": "C18",
+    "dimension": "D14_approximate_price",
+    "title": "Giá khoảng / tầm",
+    "turn": 1,
+    "say": "laptop khoảng 25tr",
+    "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_price_band": [
+        21250000,
+        28750000
+      ]
+    },
+    "verdict": "PASS",
+    "failures": [],
+    "notes": [],
+    "reply": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+    "cards": [
+      {
+        "product": "MacBook Air M2",
+        "sku": "DEV-MBA-M2-256",
+        "ram": 8,
+        "storage": 256,
+        "price": 22990000
+      }
+    ],
+    "effective_filters": {
+      "category": "Laptop",
+      "min_price": "21250000",
+      "max_price": "28750000",
+      "top_k": 5
+    },
+    "trace": [
+      {
+        "name": "conversation.context_selection",
+        "output": {
+          "audit_rows_scanned": 1,
+          "context_messages": 0,
+          "policy": "completed_adjacent_turns",
+          "audit_preserved": true
+        }
+      },
+      {
+        "name": "query.domain_validation",
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "25000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop khoảng 25tr",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "normalized": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": "21250000",
+              "max_price": "28750000",
+              "target_price": "25000000",
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop khoảng 25tr",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "taxonomy_verified": true
+        }
+      },
+      {
+        "name": "query.plan.initial",
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "21250000",
+            "max_price": "28750000",
+            "target_price": "25000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop khoảng 25tr",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "name": "query.plan.effective",
+        "output": {
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "21250000",
+            "max_price": "28750000",
+            "target_price": "25000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop khoảng 25tr",
+            "top_k": 5
+          }
+        }
+      },
+      {
+        "name": "response.strategy",
+        "output": {
+          "strategy": "deterministic_product_evidence",
+          "reason": "verified_product_variants"
+        }
+      }
+    ],
+    "seconds": 1.43
+  },
+  {
+    "case": "C18",
+    "dimension": "D14_approximate_price",
+    "title": "Giá khoảng / tầm",
+    "turn": 2,
+    "say": "dt tầm 20 triệu",
+    "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "min_price_band": [
+        17000000,
+        23000000
+      ]
+    },
+    "verdict": "PASS",
+    "failures": [],
+    "notes": [],
+    "reply": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Trắng: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 15\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 17.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S24\n• RAM 8GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xám: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 14\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Đỏ: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+    "cards": [
+      {
+        "product": "Xiaomi 14T Pro",
+        "sku": "DEV-X14TP-BLU-512",
+        "ram": 12,
+        "storage": 512,
+        "price": 18990000
+      },
+      {
+        "product": "Xiaomi 15",
+        "sku": "DEV-X15-BLK-256",
+        "ram": 12,
+        "storage": 256,
+        "price": 18990000
+      },
+      {
+        "product": "iPhone 15",
+        "sku": "DEV-IP15-BLK-128",
+        "ram": 6,
+        "storage": 128,
+        "price": 17990000
+      },
+      {
+        "product": "Samsung Galaxy S24",
+        "sku": "DEV-S24-BLK-256",
+        "ram": 8,
+        "storage": 256,
+        "price": 18990000
+      },
+      {
+        "product": "iPhone 14",
+        "sku": "DEV-IP14-BLU-256",
+        "ram": 6,
+        "storage": 256,
+        "price": 18990000
+      }
+    ],
+    "effective_filters": {
+      "category": "Điện thoại",
+      "min_price": "17000000",
+      "max_price": "23000000",
+      "top_k": 5
+    },
+    "trace": [
+      {
+        "name": "conversation.context_selection",
+        "output": {
+          "audit_rows_scanned": 3,
+          "context_messages": 2,
+          "policy": "completed_adjacent_turns",
+          "audit_preserved": true
+        }
+      },
+      {
+        "name": "query.domain_validation",
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "20000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop tầm 20 triệu",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "normalized": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Điện thoại",
+              "brands": [],
+              "min_price": "17000000",
+              "max_price": "23000000",
+              "target_price": "20000000",
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "dt tầm 20 triệu",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "taxonomy_verified": true
+        }
+      },
+      {
+        "name": "query.plan.initial",
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": "17000000",
+            "max_price": "23000000",
+            "target_price": "20000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "dt tầm 20 triệu",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "name": "query.plan.effective",
+        "output": {
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": "17000000",
+            "max_price": "23000000",
+            "target_price": "20000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "dt tầm 20 triệu",
+            "top_k": 5
+          }
+        }
+      },
+      {
+        "name": "response.strategy",
+        "output": {
+          "strategy": "deterministic_product_evidence",
+          "reason": "verified_product_variants"
+        }
+      }
+    ],
+    "seconds": 1.93
+  },
+  {
+    "case": "C18",
+    "dimension": "D14_approximate_price",
+    "title": "Giá khoảng / tầm",
+    "turn": 3,
+    "say": "rẻ hơn",
+    "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "price_vs_prev": "lt"
+    },
+    "verdict": "PASS",
+    "failures": [],
+    "notes": [],
+    "reply": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Kem: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lá: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 16.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 14\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 15.990.000 đ, còn 4 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+    "cards": [
+      {
+        "product": "Samsung Galaxy S23",
+        "sku": "DEV-S23-BLK-128",
+        "ram": 8,
+        "storage": 128,
+        "price": 13990000
+      },
+      {
+        "product": "Xiaomi Redmi Note 13",
+        "sku": "DEV-RN13-BLK-128",
+        "ram": 6,
+        "storage": 128,
+        "price": 4490000
+      },
+      {
+        "product": "Xiaomi 14T Pro",
+        "sku": "DEV-X14TP-BLK-256",
+        "ram": 12,
+        "storage": 256,
+        "price": 16990000
+      },
+      {
+        "product": "Samsung Galaxy A55",
+        "sku": "DEV-A55-NVY-128",
+        "ram": 8,
+        "storage": 128,
+        "price": 8490000
+      },
+      {
+        "product": "iPhone 14",
+        "sku": "DEV-IP14-BLK-128",
+        "ram": 6,
+        "storage": 128,
+        "price": 15990000
+      }
+    ],
+    "effective_filters": {
+      "category": "Điện thoại",
+      "max_price": "17989999.0",
+      "top_k": 5
+    },
+    "trace": [
+      {
+        "name": "conversation.context_selection",
+        "output": {
+          "audit_rows_scanned": 5,
+          "context_messages": 4,
+          "policy": "completed_adjacent_turns",
+          "audit_preserved": true
+        }
+      },
+      {
+        "name": "query.domain_validation",
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": "0",
+              "max_price": "20000000",
+              "target_price": "20000000",
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop rẻ hơn",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "normalized": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": null,
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "rẻ hơn",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "taxonomy_verified": true
+        }
+      },
+      {
+        "name": "conversation.reference_resolution",
+        "output": {
+          "kind": "CHEAPER",
+          "status": "RESOLVED",
+          "case": "R1",
+          "baseline": "historical_display_price",
+          "baseline_price": "17990000.0",
+          "min_price": null,
+          "max_price": "17989999.0",
+          "captured_at": "2026-10-26 12:24:48.057703+00:00"
+        }
+      },
+      {
+        "name": "query.plan.initial",
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE"
+          ],
+          "references": {
+            "baseline": "historical_display_price",
+            "carry_min_price": "",
+            "carry_max_price": ""
+          },
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "17989999.0",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "rẻ hơn",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "name": "query.plan.effective",
+        "output": {
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "17989999.0",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "rẻ hơn",
+            "top_k": 5
+          }
+        }
+      },
+      {
+        "name": "response.strategy",
+        "output": {
+          "strategy": "deterministic_product_evidence",
+          "reason": "verified_product_variants"
+        }
+      }
+    ],
+    "seconds": 4.13
+  },
+  {
+    "case": "C19",
+    "dimension": "D14_approximate_price",
+    "title": "Mức giá cố định lớn hơn / rẻ hơn",
+    "turn": 1,
+    "say": "laptop giá lớn hơn 30tr",
+    "expect": {
+      "products": true,
+      "category": "Laptop"
+    },
+    "verdict": "PASS",
+    "failures": [],
+    "notes": [],
+    "reply": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 32.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám: giá 36.990.000 đ, hiện đã hết hàng tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 8GB, bộ nhớ 512GB, màu Xám không gian: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+    "cards": [
+      {
+        "product": "Dell XPS 13",
+        "sku": "DEV-XPS13-SL-512",
+        "ram": 16,
+        "storage": 512,
+        "price": 32990000
+      },
+      {
+        "product": "ASUS ROG Zephyrus G14",
+        "sku": "DEV-ROGG14-GR-512",
+        "ram": 16,
+        "storage": 512,
+        "price": 39990000
+      },
+      {
+        "product": "MacBook Pro 14 M3",
+        "sku": "DEV-MBP14-M3-SG-512",
+        "ram": 8,
+        "storage": 512,
+        "price": 39990000
+      }
+    ],
+    "effective_filters": {
+      "category": "Laptop",
+      "min_price": "30000000",
+      "top_k": 5
+    },
+    "trace": [
+      {
+        "name": "conversation.context_selection",
+        "output": {
+          "audit_rows_scanned": 1,
+          "context_messages": 0,
+          "policy": "completed_adjacent_turns",
+          "audit_preserved": true
+        }
+      },
+      {
+        "name": "query.domain_validation",
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": null,
+              "max_price": "30000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop giá lớn hơn 30tr",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "normalized": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [
+              "PRICE"
+            ],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": "30000000",
+              "max_price": null,
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop giá lớn hơn 30tr",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "taxonomy_verified": true
+        }
+      },
+      {
+        "name": "query.plan.initial",
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "30000000",
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop giá lớn hơn 30tr",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "name": "query.plan.effective",
+        "output": {
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "30000000",
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop giá lớn hơn 30tr",
+            "top_k": 5
+          }
+        }
+      },
+      {
+        "name": "response.strategy",
+        "output": {
+          "strategy": "deterministic_product_evidence",
+          "reason": "verified_product_variants"
+        }
+      }
+    ],
+    "seconds": 1.57
+  },
+  {
+    "case": "C19",
+    "dimension": "D14_approximate_price",
+    "title": "Mức giá cố định lớn hơn / rẻ hơn",
+    "turn": 2,
+    "say": "dt rẽ hơn 15tr",
+    "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "max_price": 14999999
+    },
+    "verdict": "PASS",
+    "failures": [],
+    "notes": [],
+    "reply": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+    "cards": [
+      {
+        "product": "Samsung Galaxy A55",
+        "sku": "DEV-A55-NVY-128",
+        "ram": 8,
+        "storage": 128,
+        "price": 8490000
+      },
+      {
+        "product": "Samsung Galaxy S23",
+        "sku": "DEV-S23-BLK-128",
+        "ram": 8,
+        "storage": 128,
+        "price": 13990000
+      },
+      {
+        "product": "Xiaomi Redmi Note 13",
+        "sku": "DEV-RN13-BLK-128",
+        "ram": 6,
+        "storage": 128,
+        "price": 4490000
+      }
+    ],
+    "effective_filters": {
+      "category": "Điện thoại",
+      "max_price": "14999999",
+      "top_k": 5
+    },
+    "trace": [
+      {
+        "name": "conversation.context_selection",
+        "output": {
+          "audit_rows_scanned": 3,
+          "context_messages": 2,
+          "policy": "completed_adjacent_turns",
+          "audit_preserved": true
+        }
+      },
+      {
+        "name": "query.domain_validation",
+        "output": {
+          "original": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Laptop",
+              "brands": [],
+              "min_price": "15000000",
+              "max_price": "150000000",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "laptop giá rẻ hơn 15tr",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "normalized": {
+            "clarification": null,
+            "intent": "PRODUCT_DISCOVERY",
+            "requested_fields": [],
+            "references": {},
+            "product_search": {
+              "targets": [],
+              "category": "Điện thoại",
+              "brands": [],
+              "min_price": null,
+              "max_price": "14999999",
+              "target_price": null,
+              "min_ram_gb": null,
+              "min_storage_gb": null,
+              "cpu_keywords": [],
+              "in_stock_only": false,
+              "semantic_query": "dt rẽ hơn 15tr",
+              "top_k": 5
+            },
+            "bundle": [],
+            "budget": null,
+            "semantic_query": null
+          },
+          "taxonomy_verified": true
+        }
+      },
+      {
+        "name": "query.plan.initial",
+        "output": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "14999999",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "dt rẽ hơn 15tr",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        }
+      },
+      {
+        "name": "query.plan.effective",
+        "output": {
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "14999999",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "dt rẽ hơn 15tr",
+            "top_k": 5
+          }
+        }
+      },
+      {
+        "name": "response.strategy",
+        "output": {
+          "strategy": "deterministic_product_evidence",
+          "reason": "verified_product_variants"
+        }
+      }
+    ],
+    "seconds": 3.54
+  }
+]

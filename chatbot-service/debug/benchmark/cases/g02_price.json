@@ -1,0 +1,392 @@
+{
+ "group": "G2",
+ "title": "Giá, ngân sách, combo",
+ "cases": [
+  {
+   "id": "G2-01",
+   "difficulty": "D",
+   "probe": false,
+   "title": "laptop dưới 20 triệu",
+   "turns": [
+    {
+     "say": "laptop dưới 20 triệu",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-02",
+   "difficulty": "D",
+   "probe": false,
+   "title": "điện thoại dưới 10 triệu",
+   "turns": [
+    {
+     "say": "điện thoại dưới 10 triệu",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "max_price": 10000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-03",
+   "difficulty": "D",
+   "probe": false,
+   "title": "laptop trên 40 triệu",
+   "turns": [
+    {
+     "say": "laptop trên 40 triệu",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_price": 40000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-04",
+   "difficulty": "V",
+   "probe": false,
+   "title": "điện thoại từ 15 đến 20 triệu",
+   "turns": [
+    {
+     "say": "điện thoại từ 15 đến 20 triệu",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "min_price": 15000000,
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-05",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop khoảng 25tr",
+   "turns": [
+    {
+     "say": "laptop khoảng 25tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_price": 21250000,
+      "max_price": 28750000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-06",
+   "difficulty": "V",
+   "probe": false,
+   "title": "dt tầm 20 triệu",
+   "turns": [
+    {
+     "say": "dt tầm 20 triệu",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "min_price": 17000000,
+      "max_price": 23000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-07",
+   "difficulty": "V",
+   "probe": false,
+   "title": "điện thoại giá 10 triệu",
+   "turns": [
+    {
+     "say": "điện thoại giá 10 triệu",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "min_price": 8500000,
+      "max_price": 11500000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-08",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop ngân sách 30tr",
+   "turns": [
+    {
+     "say": "laptop ngân sách 30tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 30000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-09",
+   "difficulty": "V",
+   "probe": false,
+   "title": "tôi có 15 triệu mua điện thoại",
+   "turns": [
+    {
+     "say": "tôi có 15 triệu mua điện thoại",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "max_price": 15000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-10",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop rẻ hơn 16 triệu",
+   "turns": [
+    {
+     "say": "laptop rẻ hơn 16 triệu",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 15999999
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-11",
+   "difficulty": "V",
+   "probe": false,
+   "title": "dt rẽ hơn 15tr",
+   "turns": [
+    {
+     "say": "dt rẽ hơn 15tr",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "max_price": 14999999
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-12",
+   "difficulty": "D",
+   "probe": false,
+   "title": "laptop giá lớn hơn 45tr",
+   "turns": [
+    {
+     "say": "laptop giá lớn hơn 45tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_price": 45000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-13",
+   "difficulty": "D",
+   "probe": false,
+   "title": "điện thoại không quá 9 triệu",
+   "turns": [
+    {
+     "say": "điện thoại không quá 9 triệu",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "max_price": 9000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-14",
+   "difficulty": "D",
+   "probe": false,
+   "title": "laptop dưới 10 triệu",
+   "turns": [
+    {
+     "say": "laptop dưới 10 triệu",
+     "expect": {
+      "empty": true,
+      "category": "Laptop",
+      "max_price": 10000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-15",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop từ 30tr đến 20tr",
+   "turns": [
+    {
+     "say": "laptop từ 30tr đến 20tr",
+     "expect": {
+      "clarify": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-16",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop tầm 15-20tr",
+   "turns": [
+    {
+     "say": "laptop tầm 15-20tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_price": 15000000,
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-17",
+   "difficulty": "V",
+   "probe": false,
+   "title": "điện thoại dưới 20 củ",
+   "turns": [
+    {
+     "say": "điện thoại dưới 20 củ",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-18",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+   "turns": [
+    {
+     "say": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+     "expect": {
+      "products": true,
+      "bundle_categories": [
+       "Điện thoại",
+       "Laptop"
+      ],
+      "max_total": 100000000,
+      "text_any": [
+       "Tổng cộng"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-19",
+   "difficulty": "V",
+   "probe": false,
+   "title": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+   "turns": [
+    {
+     "say": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+     "expect": {
+      "products": true,
+      "bundle_categories": [
+       "Điện thoại",
+       "Laptop"
+      ],
+      "max_total": 40000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-20",
+   "difficulty": "V",
+   "probe": false,
+   "title": "tôi có 15 triệu mua 1 laptop và 1 điện thoại",
+   "turns": [
+    {
+     "say": "tôi có 15 triệu mua 1 laptop và 1 điện thoại",
+     "expect": {
+      "products": true,
+      "bundle_categories": [
+       "Điện thoại",
+       "Laptop"
+      ],
+      "text_any": [
+       "cao hơn",
+       "chưa tìm được"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-21",
+   "difficulty": "K",
+   "probe": false,
+   "title": "khoảng 50 triệu cho 1 laptop và 1 điện thoại",
+   "turns": [
+    {
+     "say": "khoảng 50 triệu cho 1 laptop và 1 điện thoại",
+     "expect": {
+      "products": true,
+      "bundle_categories": [
+       "Điện thoại",
+       "Laptop"
+      ],
+      "min_total": 42500000,
+      "max_total": 57500000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-22",
+   "difficulty": "K",
+   "probe": false,
+   "title": "100tr mua 2 điện thoại và 1 laptop",
+   "turns": [
+    {
+     "say": "100tr mua 2 điện thoại và 1 laptop",
+     "expect": {
+      "clarify": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G2-23",
+   "difficulty": "D",
+   "probe": false,
+   "title": "laptop 500k",
+   "turns": [
+    {
+     "say": "laptop 500k",
+     "expect": {
+      "safe_no_answer": true
+     }
+    }
+   ]
+  }
+ ]
+}

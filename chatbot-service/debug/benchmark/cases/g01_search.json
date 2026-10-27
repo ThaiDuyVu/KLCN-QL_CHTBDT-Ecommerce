@@ -1,0 +1,326 @@
+{
+ "group": "G1",
+ "title": "Tìm sản phẩm theo điều kiện",
+ "cases": [
+  {
+   "id": "G1-01",
+   "difficulty": "D",
+   "probe": false,
+   "title": "laptop Dell",
+   "turns": [
+    {
+     "say": "laptop Dell",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-02",
+   "difficulty": "D",
+   "probe": false,
+   "title": "điện thoại Samsung",
+   "turns": [
+    {
+     "say": "điện thoại Samsung",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Samsung"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-03",
+   "difficulty": "D",
+   "probe": false,
+   "title": "điện thoại Apple",
+   "turns": [
+    {
+     "say": "điện thoại Apple",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Apple"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-04",
+   "difficulty": "D",
+   "probe": false,
+   "title": "laptop ASUS",
+   "turns": [
+    {
+     "say": "laptop ASUS",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "ASUS"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-05",
+   "difficulty": "D",
+   "probe": false,
+   "title": "laptop RAM 16GB",
+   "turns": [
+    {
+     "say": "laptop RAM 16GB",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_ram": 16
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-06",
+   "difficulty": "D",
+   "probe": false,
+   "title": "laptop RAM 32GB",
+   "turns": [
+    {
+     "say": "laptop RAM 32GB",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_ram": 32
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-07",
+   "difficulty": "V",
+   "probe": false,
+   "title": "điện thoại RAM 12GB",
+   "turns": [
+    {
+     "say": "điện thoại RAM 12GB",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "min_ram": 12
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-08",
+   "difficulty": "V",
+   "probe": false,
+   "title": "điện thoại bộ nhớ 512GB",
+   "turns": [
+    {
+     "say": "điện thoại bộ nhớ 512GB",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "min_storage": 512
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-09",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop SSD 1TB",
+   "turns": [
+    {
+     "say": "laptop SSD 1TB",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_storage": 1024
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-10",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop Apple RAM 16GB",
+   "turns": [
+    {
+     "say": "laptop Apple RAM 16GB",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Apple",
+      "min_ram": 16
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-11",
+   "difficulty": "V",
+   "probe": false,
+   "title": "điện thoại Xiaomi RAM 16GB",
+   "turns": [
+    {
+     "say": "điện thoại Xiaomi RAM 16GB",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Xiaomi",
+      "min_ram": 16
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-12",
+   "difficulty": "V",
+   "probe": false,
+   "title": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+   "turns": [
+    {
+     "say": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Samsung",
+      "min_ram": 12,
+      "min_storage": 512
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-13",
+   "difficulty": "D",
+   "probe": false,
+   "title": "gợi ý 2 laptop",
+   "turns": [
+    {
+     "say": "gợi ý 2 laptop",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "count": 2
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-14",
+   "difficulty": "D",
+   "probe": false,
+   "title": "gợi ý 3 điện thoại Samsung",
+   "turns": [
+    {
+     "say": "gợi ý 3 điện thoại Samsung",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Samsung",
+      "count": 3
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-15",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop còn hàng",
+   "turns": [
+    {
+     "say": "laptop còn hàng",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "in_stock": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-16",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop RAM 64GB",
+   "turns": [
+    {
+     "say": "laptop RAM 64GB",
+     "expect": {
+      "empty": true,
+      "category": "Laptop",
+      "min_ram": 64
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-17",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop Lenovo",
+   "turns": [
+    {
+     "say": "laptop Lenovo",
+     "expect": {
+      "safe_no_answer": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-18",
+   "difficulty": "V",
+   "probe": false,
+   "title": "máy tính bảng",
+   "turns": [
+    {
+     "say": "máy tính bảng",
+     "expect": {
+      "safe_no_answer": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-19",
+   "difficulty": "D",
+   "probe": false,
+   "title": "cho mình xem điện thoại Xiaomi",
+   "turns": [
+    {
+     "say": "cho mình xem điện thoại Xiaomi",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Xiaomi"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G1-20",
+   "difficulty": "D",
+   "probe": false,
+   "title": "tìm giúp mình laptop để làm việc",
+   "turns": [
+    {
+     "say": "tìm giúp mình laptop để làm việc",
+     "expect": {
+      "products": true,
+      "category": "Laptop"
+     }
+    }
+   ]
+  }
+ ]
+}
