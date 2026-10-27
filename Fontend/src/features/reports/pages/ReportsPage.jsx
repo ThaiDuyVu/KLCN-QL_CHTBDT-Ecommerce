@@ -2,6 +2,8 @@ import { useCallback, useState } from 'react';
 import PageHeader from '../../../components/ui/PageHeader';
 import useProductRequest from '../../products/hooks/useProductRequest';
 import { inventoryApi } from '../../inventory/api/inventoryApi';
+import { reportApi } from '../api/reportApi';
+import { EXPORT_RESOURCES, encodeForExcel, reportSections, saveFile, sectionsToTsv } from '../reportExport';
 import ReportWidget from '../components/ReportWidget';
 import { RevenueChart, TopProductsChart, WarehouseRevenueChart } from '../components/ReportCharts';
 import { SummaryCards, OrderStatusSummary, PaymentSummary, GoodsReceiptSummary, LowStockTable } from '../components/ReportSummaries';
@@ -17,10 +19,22 @@ function initialFilter() {
   return { from: localDate(from), to: localDate(to), warehouseId: '' };
 }
 
+const THRESHOLD_KEY = 'reports.lowStockThreshold';
+function savedThreshold() {
+  try {
+    const raw = window.localStorage.getItem(THRESHOLD_KEY);
+    const value = Number(raw);
+    return raw !== null && Number.isInteger(value) && value >= 0 && value <= 1000 ? value : 5;
+  } catch { return 5; }
+}
+const EXPORT_LIMITS = { 'top-products': { limit: 20 }, 'low-stock': { limit: 100 } };
+
 export default function ReportsPage() {
   const [filters, setFilters] = useState(initialFilter);
-  const [threshold, setThreshold] = useState(5);
+  const [threshold, setThreshold] = useState(savedThreshold);
   const [error, setError] = useState('');
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState('');
   const loadWarehouses = useCallback((signal) => inventoryApi.warehouses(signal), []);
   const warehouses = useProductRequest('report-warehouse-options', loadWarehouses);
   function apply(event) {
@@ -34,8 +48,26 @@ export default function ReportsPage() {
       return;
     }
     setError('');
-    setThreshold(Number(form.get('threshold')));
+    const nextThreshold = Number(form.get('threshold'));
+    setThreshold(nextThreshold);
+    try { window.localStorage.setItem(THRESHOLD_KEY, String(nextThreshold)); } catch { /* trình duyệt chặn lưu: vẫn dùng ngưỡng trong phiên */ }
     setFilters({ from, to, warehouseId: String(form.get('warehouseId') || '') });
+  }
+  async function exportFile() {
+    setExporting(true);
+    setExportError('');
+    try {
+      const results = await Promise.all(EXPORT_RESOURCES.map((resource) => reportApi.get(resource,
+        { ...filters, ...(resource === 'low-stock' ? { threshold } : {}), ...EXPORT_LIMITS[resource] })));
+      const data = Object.fromEntries(EXPORT_RESOURCES.map((resource, index) => [resource, results[index]]));
+      const warehouseName = (warehouses.data?.content || []).find((row) => row.warehouseId === filters.warehouseId)?.warehouseName;
+      const text = sectionsToTsv(reportSections(data, { ...filters, warehouseName, threshold }));
+      saveFile(encodeForExcel(text), `bao-cao_${filters.from}_${filters.to}.csv`);
+    } catch (exception) {
+      setExportError(exception?.message || 'Chưa xuất được báo cáo.');
+    } finally {
+      setExporting(false);
+    }
   }
   return <div className="reports-page">
     <PageHeader title="Thống kê & Báo cáo" description="Theo dõi kết quả bán hàng, giá vốn và tồn kho từ dữ liệu nghiệp vụ đã ghi nhận." />
@@ -43,10 +75,12 @@ export default function ReportsPage() {
       <label>Từ ngày<input type="date" name="from" defaultValue={filters.from} required /></label>
       <label>Đến ngày<input type="date" name="to" defaultValue={filters.to} required /></label>
       <label>Chi nhánh<select name="warehouseId" defaultValue="" disabled={warehouses.isLoading || !!warehouses.error}><option value="">Tất cả chi nhánh</option>{(warehouses.data?.content || []).map((row) => <option value={row.warehouseId} key={row.warehouseId}>{row.warehouseName}</option>)}</select></label>
-      <label>Ngưỡng tồn khả dụng<input type="number" name="threshold" min="0" max="1000" defaultValue="5" required /></label>
+      <label>Ngưỡng tồn khả dụng<input type="number" name="threshold" min="0" max="1000" defaultValue={threshold} required /></label>
       <button className="button" type="submit">Áp dụng</button>
+      <button className="button button-quiet" type="button" onClick={exportFile} disabled={exporting}>{exporting ? 'Đang xuất…' : 'Xuất file Excel (CSV)'}</button>
     </form>
     {error && <p className="auth-alert" role="alert">{error}</p>}
+    {exportError && <p className="auth-alert" role="alert">Xuất báo cáo thất bại: {exportError}</p>}
     {warehouses.error && <p className="auth-alert" role="alert">Chưa tải được chi nhánh: {warehouses.error.message} <button className="button button-quiet" onClick={warehouses.retry}>Thử lại</button></p>}
     <div className="report-scope"><strong>{filters.from} → {filters.to}</strong><span>Doanh thu theo ngày đặt đơn · Chỉ Order DELIVERED</span></div>
     <ReportWidget resource="summary" filters={filters} title="Kết quả kinh doanh" description="Lợi nhuận gộp chưa trừ chi phí vận hành; payment PAID không đồng nghĩa với doanh thu.">{(data) => <SummaryCards data={data} />}</ReportWidget>
