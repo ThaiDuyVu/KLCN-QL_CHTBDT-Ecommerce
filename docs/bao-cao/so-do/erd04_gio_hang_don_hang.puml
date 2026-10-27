@@ -1,0 +1,159 @@
+@startuml
+' ERD 04 — Giỏ hàng và đơn hàng — sinh tự động từ schema PostgreSQL (Flyway V1–V8), 9 bảng
+hide circle
+skinparam linetype ortho
+skinparam entity {
+  BackgroundColor<<mới>> #E3F2FD
+  BackgroundColor<<thiết kế sẵn>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title ERD 04 — Giỏ hàng và đơn hàng
+
+entity "carts" as carts {
+  * cart_id : UUID <<PK>>
+  --
+  * customer_id : UUID <<FK>>
+  * created_at : TIMESTAMPTZ
+  * updated_at : TIMESTAMPTZ
+  * status : VARCHAR
+    warehouse_id : UUID <<FK>>
+}
+
+entity "cart_items" as cart_items {
+  * cart_item_id : UUID <<PK>>
+  --
+  * cart_id : UUID <<FK>>
+  * variant_id : UUID <<FK>>
+  * quantity : INT
+  * unit_price : DECIMAL
+}
+
+entity "orders" as orders {
+  * order_id : UUID <<PK>>
+  --
+  * customer_id : UUID <<FK>>
+  * order_code : VARCHAR
+  * order_date : TIMESTAMPTZ
+  * recipient_name : VARCHAR
+  * recipient_phone : VARCHAR
+  * shipping_address : TEXT
+  * subtotal : DECIMAL
+  * discount_amount : DECIMAL
+  * shipping_fee : DECIMAL
+  * total_amount : DECIMAL
+  * status : VARCHAR
+    note : TEXT
+    warehouse_id : UUID <<FK>>
+}
+
+entity "order_items" as order_items {
+  * order_item_id : UUID <<PK>>
+  --
+  * order_id : UUID <<FK>>
+  * variant_id : UUID <<FK>>
+    serial_id : UUID <<FK>>
+  * quantity : INT
+  * cost_price : DECIMAL
+  * unit_price : DECIMAL
+  * discount_amount : DECIMAL
+  * final_unit_price : DECIMAL
+}
+
+entity "payments" as payments {
+  * payment_id : UUID <<PK>>
+  --
+  * order_id : UUID <<FK>>
+  * payment_method : VARCHAR
+    transaction_code : VARCHAR
+  * amount : DECIMAL
+  * payment_date : TIMESTAMPTZ
+  * status : VARCHAR
+}
+
+entity "installment_payments" as installment_payments {
+  * installment_id : UUID <<PK>>
+  --
+  * payment_id : UUID <<FK>>
+  * provider_id : UUID <<FK>>
+  * total_amount : DECIMAL
+  * down_payment : DECIMAL
+  * remaining_amount : DECIMAL
+  * term_months : INT
+  * status : VARCHAR
+}
+
+entity "installment_providers" as installment_providers {
+  * provider_id : UUID <<PK>>
+  --
+  * provider_name : VARCHAR
+  * provider_code : VARCHAR
+    contact_phone : VARCHAR
+    contact_email : VARCHAR
+  * status : VARCHAR
+}
+
+entity "invoices" as invoices <<thiết kế sẵn>> {
+  * invoice_id : UUID <<PK>>
+  --
+  * order_id : UUID <<FK>>
+  * invoice_number : VARCHAR
+  * issued_date : TIMESTAMPTZ
+  * total_amount : DECIMAL
+  * status : VARCHAR
+}
+
+entity "shipments" as shipments <<thiết kế sẵn>> {
+  * shipment_id : UUID <<PK>>
+  --
+  * order_id : UUID <<FK>>
+  * employee_id : UUID <<FK>>
+    tracking_number : VARCHAR
+    shipping_provider : VARCHAR
+    shipped_date : TIMESTAMPTZ
+    delivered_date : TIMESTAMPTZ
+  * status : VARCHAR
+}
+
+entity "customers" as customers <<tham chiếu>> {
+  * customer_id : UUID <<PK>>
+}
+
+entity "employees" as employees <<tham chiếu>> {
+  * employee_id : UUID <<PK>>
+}
+
+entity "product_variants" as product_variants <<tham chiếu>> {
+  * variant_id : UUID <<PK>>
+}
+
+entity "serial_numbers" as serial_numbers <<tham chiếu>> {
+  * serial_id : UUID <<PK>>
+}
+
+entity "warehouses" as warehouses <<tham chiếu>> {
+  * warehouse_id : UUID <<PK>>
+}
+
+customers ||--o{ carts : customer_id
+warehouses |o--o{ carts : warehouse_id
+carts ||--o{ cart_items : cart_id
+product_variants ||--o{ cart_items : variant_id
+customers ||--o{ orders : customer_id
+warehouses |o--o{ orders : warehouse_id
+orders ||--o{ order_items : order_id
+product_variants ||--o{ order_items : variant_id
+serial_numbers |o--o| order_items : serial_id
+orders ||--o{ payments : order_id
+payments ||--o| installment_payments : payment_id
+installment_providers ||--o{ installment_payments : provider_id
+orders ||--o| invoices : order_id
+orders ||--o{ shipments : order_id
+employees ||--o{ shipments : employee_id
+
+legend right
+  <<mới>>: bảng có trong CSDL, chưa có trong ERD báo cáo cũ
+  <<thiết kế sẵn>>: bảng có trong CSDL, chưa có chức năng sử dụng
+  <<tham chiếu>>: thực thể thuộc ERD khác
+  * : NOT NULL
+endlegend
+@enduml

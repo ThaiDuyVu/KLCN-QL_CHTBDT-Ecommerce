@@ -1,0 +1,112 @@
+@startuml
+' ERD 01 — Người dùng và phân quyền — sinh tự động từ schema PostgreSQL (Flyway V1–V8), 9 bảng
+hide circle
+skinparam linetype ortho
+skinparam entity {
+  BackgroundColor<<mới>> #E3F2FD
+  BackgroundColor<<thiết kế sẵn>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title ERD 01 — Người dùng và phân quyền
+
+entity "users" as users {
+  * user_id : UUID <<PK>>
+  --
+  * username : VARCHAR
+  * password : VARCHAR
+  * email : VARCHAR
+    display_name : VARCHAR
+    phone : VARCHAR
+  * status : VARCHAR
+  * created_at : TIMESTAMPTZ
+  * updated_at : TIMESTAMPTZ
+}
+
+entity "roles" as roles {
+  * role_id : UUID <<PK>>
+  --
+  * role_name : VARCHAR
+    description : VARCHAR
+}
+
+entity "permissions" as permissions {
+  * permission_id : UUID <<PK>>
+  --
+  * permission_name : VARCHAR
+    description : VARCHAR
+}
+
+entity "user_roles" as user_roles {
+  * user_id : UUID <<PK,FK>>
+  --
+  * role_id : UUID <<PK,FK>>
+}
+
+entity "role_permissions" as role_permissions {
+  * role_id : UUID <<PK,FK>>
+  --
+  * permission_id : UUID <<PK,FK>>
+}
+
+entity "employees" as employees {
+  * employee_id : UUID <<PK>>
+  --
+  * user_id : UUID <<FK>>
+  * employee_code : VARCHAR
+  * full_name : VARCHAR
+    position : VARCHAR
+}
+
+entity "customers" as customers {
+  * customer_id : UUID <<PK>>
+  --
+  * user_id : UUID <<FK>>
+  * full_name : VARCHAR
+    address : VARCHAR
+  * loyalty_point : INT
+}
+
+entity "refresh_tokens" as refresh_tokens <<mới>> {
+  * refresh_token_id : UUID <<PK>>
+  --
+  * user_id : UUID <<FK>>
+  * token_hash : VARCHAR
+  * created_at : TIMESTAMPTZ
+  * expires_at : TIMESTAMPTZ
+    revoked_at : TIMESTAMPTZ
+    replaced_by_token_id : UUID <<FK>>
+}
+
+entity "customer_addresses" as customer_addresses <<mới>> {
+  * address_id : UUID <<PK>>
+  --
+  * customer_id : UUID <<FK>>
+    label : VARCHAR
+  * recipient_name : VARCHAR
+  * recipient_phone : VARCHAR
+  * address_line : VARCHAR
+    ward : VARCHAR
+    district : VARCHAR
+    province : VARCHAR
+  * is_default : BOOLEAN
+  * created_at : TIMESTAMPTZ
+  * updated_at : TIMESTAMPTZ
+}
+
+users ||--o| user_roles : user_id
+roles ||--o{ user_roles : role_id
+roles ||--o{ role_permissions : role_id
+permissions ||--o{ role_permissions : permission_id
+users ||--o| employees : user_id
+users ||--o| customers : user_id
+users ||--o{ refresh_tokens : user_id
+refresh_tokens |o--o{ refresh_tokens : replaced_by_token_id
+customers ||--o{ customer_addresses : customer_id
+
+legend right
+  <<mới>>: bảng có trong CSDL, chưa có trong ERD báo cáo cũ
+  <<thiết kế sẵn>>: bảng có trong CSDL, chưa có chức năng sử dụng
+  <<tham chiếu>>: thực thể thuộc ERD khác
+  * : NOT NULL
+endlegend
+@enduml
