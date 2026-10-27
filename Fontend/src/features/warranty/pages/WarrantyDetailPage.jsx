@@ -10,9 +10,24 @@ export default function WarrantyDetailPage({ customer = false }) {
   const [error, setError] = useState(''); const [submitting, setSubmitting] = useState(false); const [notice, setNotice] = useState('');
   const load = useCallback((signal) => (customer ? warrantyApi.myWarranty(warrantyId, signal) : warrantyApi.warranty(warrantyId, signal)), [customer, warrantyId]);
   useEffect(() => { const c = new AbortController(); load(c.signal).then(setData).catch(e => { if (e.name !== 'AbortError') setError(e.message); }).finally(() => setLoading(false)); return () => c.abort(); }, [load]);
-  async function submit(e) { e.preventDefault(); const issue = String(new FormData(e.currentTarget).get('issueDescription') || '').trim(); if (!issue) return;
-    setSubmitting(true); setError(''); setNotice(''); try { await warrantyApi.createTicket(warrantyId, issue); const refreshed = await warrantyApi.myWarranty(warrantyId); setData(refreshed); setNotice('Đã gửi yêu cầu bảo hành.'); e.currentTarget.reset(); }
-    catch (nextError) { setError(nextError.message); } finally { setSubmitting(false); } }
+  async function submit(e) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const issue = String(new FormData(form).get('issueDescription') || '').trim();
+    if (!issue) return;
+    setSubmitting(true); setError(''); setNotice('');
+    try {
+      await warrantyApi.createTicket(warrantyId, issue);
+      const refreshed = await warrantyApi.myWarranty(warrantyId);
+      setData(refreshed);
+      form.reset();
+      setNotice('Đã gửi yêu cầu bảo hành.');
+    } catch (nextError) {
+      setError(nextError.message);
+    } finally {
+      setSubmitting(false);
+    }
+  }
   return <><PageHeader title="Chi tiết bảo hành" description={data ? `${data.productName} · ${data.sku}` : 'Thông tin thiết bị và lịch sử yêu cầu'} />
     <Link className="button button-quiet" to={customer ? '/my-warranties' : '/warranties'}>Quay lại</Link>{loading && <p role="status">Đang tải bảo hành…</p>}{error && <p className="auth-alert" role="alert">{error}</p>}{notice && <p role="status">{notice}</p>}
     {data && <div className="warranty-grid"><section className="panel warranty-device"><h2>{data.productName}</h2><p>SKU: <strong>{data.sku}</strong></p><p>Serial: <strong>{data.serialNumber}</strong></p><p>IMEI: {data.imeiNumbers?.join(', ') || 'Không có'}</p><p>Khách hàng: {data.customerName}</p><p>Đơn hàng: {data.orderCode}</p><p>Thời hạn: {formatDate(data.startDate)} – {formatDate(data.endDate)}</p><p className={`warranty-status ${data.status === 'EXPIRED' ? 'expired' : ''}`}>{warrantyStatus[data.status]}</p></section>
