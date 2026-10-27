@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -131,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
         payments.saveAndFlush(payment);
         if (provider != null) installmentService.createForPayment(payment, provider, request);
         cartItems.deleteAll(links); cartItems.flush(); cart.setUpdatedAt(OffsetDateTime.now()); carts.save(cart);
-        var response = full(order, true, snapshots, List.of(payment));
+        var response = full(order, true, snapshots, List.of(payment), OrderStaffPolicy.ANY);
         if (payment.getPaymentMethod() == PaymentMethod.VNPAY) {
             var link = vnpay.paymentUrl(order, payment, clientIp);
             response.getPayment().setPaymentUrl(link.getPaymentUrl());
@@ -156,12 +157,26 @@ public class OrderServiceImpl implements OrderService {
         if (customer && !order.getCustomerId().equals(customerId(userId))) throw new CommerceException(404, "Không tìm thấy đơn hàng");
     }
     public OrderResponse detail(UUID userId, boolean customer, UUID id) {
+        return detail(userId, customer, id, OrderStaffPolicy.ANY);
+    }
+    public OrderResponse staffDetail(UUID id, Collection<String> authorities) {
+        return detail(null, false, id, OrderStaffPolicy.permitted(authorities));
+    }
+    private OrderResponse detail(UUID userId, boolean customer, UUID id, Predicate<OrderStatus> permitted) {
         var order = orders.findById(id).orElseThrow(() -> new CommerceException(404, "Không tìm thấy đơn hàng"));
         owned(order, userId, customer);
-        return full(order, customer, items.findByOrderIdOrderByVariantIdAscOrderItemIdAsc(id), payments.findByOrderId(id));
+        return full(order, customer, items.findByOrderIdOrderByVariantIdAscOrderItemIdAsc(id), payments.findByOrderId(id), permitted);
     }
     @Transactional
     public OrderResponse status(UUID userId, boolean customer, UUID id, OrderStatus status) {
+        return status(userId, customer, id, status, OrderStaffPolicy.ANY);
+    }
+    @Transactional
+    public OrderResponse staffStatus(UUID userId, UUID id, OrderStatus status, Collection<String> authorities) {
+        return status(userId, false, id, status, OrderStaffPolicy.permitted(authorities));
+    }
+    private OrderResponse status(UUID userId, boolean customer, UUID id, OrderStatus status, Predicate<OrderStatus> permitted) {
+        if (!permitted.test(status)) throw new CommerceException(403, "Chức danh của bạn không được chuyển đơn sang trạng thái " + status);
         var order = orders.lockById(id).orElseThrow(() -> new CommerceException(404, "Không tìm thấy đơn hàng"));
         owned(order, userId, customer);
         var paymentRows = payments.lockByOrderId(id);
@@ -195,7 +210,7 @@ public class OrderServiceImpl implements OrderService {
             warrantyProvisioning.createForDeliveredOrder(order, snapshots);
         }
         order.setStatus(status); orders.saveAndFlush(order);
-        return full(order, customer, snapshots, paymentRows);
+        return full(order, customer, snapshots, paymentRows, permitted);
     }
     private Map<UUID, ProductVariant> variantMap(List<UUID> ids) {
         return variants.findByVariantIdIn(ids).stream().collect(Collectors.toMap(ProductVariant::getVariantId, v -> v));
@@ -209,7 +224,8 @@ public class OrderServiceImpl implements OrderService {
         r.setRecipientName(o.getRecipientName()); r.setRecipientPhone(o.getRecipientPhone()); r.setShippingAddress(o.getShippingAddress()); r.setNote(o.getNote());
         r.setSubtotal(o.getSubtotal()); r.setDiscountAmount(o.getDiscountAmount()); r.setShippingFee(o.getShippingFee()); r.setTotalAmount(o.getTotalAmount()); r.setStatus(o.getStatus()); return r;
     }
-    private OrderResponse full(Order order, boolean customer, List<OrderItem> snapshots, List<Payment> paymentRows) {
+    private OrderResponse full(Order order, boolean customer, List<OrderItem> snapshots, List<Payment> paymentRows,
+                               Predicate<OrderStatus> permitted) {
         var r = summary(order); var products = variantMap(snapshots.stream().map(OrderItem::getVariantId).distinct().toList());
         List<UUID> serialIds = snapshots.stream().map(OrderItem::getSerialId).filter(Objects::nonNull).toList();
         Map<UUID, SerialNumber> serialMap = serialIds.isEmpty() ? Map.of()
@@ -248,7 +264,7 @@ public class OrderServiceImpl implements OrderService {
         if (p.getPaymentMethod() == PaymentMethod.VNPAY && p.getStatus() == PaymentStatus.PENDING && p.getTransactionCode() != null) {
             allowed = allowed.stream().filter(next -> next != OrderStatus.CANCELLED).toList();
         }
-        r.setAllowedStatuses(allowed); return r;
+        r.setAllowedStatuses(allowed.stream().filter(permitted).toList()); return r;
     }
 
     private void allocateSerials(Order order, List<OrderItem> snapshots) {

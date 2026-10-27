@@ -57,16 +57,16 @@ public class WarrantyController {
             @PathVariable UUID warrantyId) { return service.myWarranty(user.getUserId(), warrantyId); }
 
     @GetMapping
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WARRANTY_TECHNICIAN"})
     public WarrantyPageResponse list(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) { return service.warranties(page, size); }
 
     @GetMapping("/lookup")
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WARRANTY_TECHNICIAN"})
     public WarrantyResponse lookup(@RequestParam String code) { return service.lookup(code); }
 
     @GetMapping("/tickets")
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WARRANTY_TECHNICIAN"})
     public WarrantyTicketPageResponse tickets(@RequestParam(required = false) String keyword,
             @RequestParam(required = false) WarrantyTicketStatus status,
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
@@ -74,17 +74,17 @@ public class WarrantyController {
     }
 
     @GetMapping("/tickets/{ticketId}")
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WARRANTY_TECHNICIAN"})
     public WarrantyTicketResponse ticket(@PathVariable UUID ticketId) { return service.ticket(ticketId); }
 
     @PatchMapping("/tickets/{ticketId}")
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WARRANTY_TECHNICIAN"})
     public WarrantyTicketResponse updateTicket(@AuthenticationPrincipal AuthenticatedUserPrincipal user,
             @PathVariable UUID ticketId, @Valid @RequestBody UpdateWarrantyTicketRequest request) {
         return service.updateTicket(user.getUserId(), ticketId, request);
     }
 
     @GetMapping("/{warrantyId}")
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WARRANTY_TECHNICIAN"})
     public WarrantyResponse warranty(@PathVariable UUID warrantyId) { return service.warranty(warrantyId); }
 }

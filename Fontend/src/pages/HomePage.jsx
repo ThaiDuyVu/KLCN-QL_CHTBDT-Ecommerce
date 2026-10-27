@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import PageHeader from '../components/ui/PageHeader';
 import { useAuth } from '../hooks/useAuth';
 import { useWarehouse } from '../hooks/useWarehouse';
-import { ROLES } from '../config/projectConfig';
+import { INVENTORY_ROLES, MANAGEMENT_ROLES, ORDER_ROLES, ROLE_LABELS, ROLES, WARRANTY_ROLES } from '../config/projectConfig';
 import { categoryApi } from '../features/categories/api/categoryApi';
 import { productApi } from '../features/products/api/productApi';
 import useProductRequest from '../features/products/hooks/useProductRequest';
@@ -97,9 +97,20 @@ function StorefrontHome({ customer }) {
 }
 
 function ManagementHome() {
+  const { user } = useAuth();
+  const can = (roles) => roles.includes(user?.roleName);
+  // Each job title only sees shortcuts it is allowed to open (same groups as the routes).
+  const primary = can(ORDER_ROLES) ? { to: '/orders', label: 'Xem đơn hàng →' }
+    : can(WARRANTY_ROLES) ? { to: '/warranty-tickets', label: 'Xem phiếu bảo hành →' }
+      : { to: '/products', label: 'Xem sản phẩm →' };
+  const cards = [
+    { to: '/products', eyebrow: 'Sản phẩm', title: 'Danh mục thiết bị', text: 'Xem sản phẩm và phiên bản.', roles: MANAGEMENT_ROLES },
+    { to: '/inventory', eyebrow: 'Kho hàng', title: 'Tồn kho theo chi nhánh', text: 'Theo dõi số lượng khả dụng.', roles: INVENTORY_ROLES },
+    { to: '/warranties', eyebrow: 'Hậu mãi', title: 'Bảo hành thiết bị', text: 'Tra cứu Serial/IMEI.', roles: WARRANTY_ROLES },
+  ].filter((card) => can(card.roles));
   return <section>
-    <PageHeader eyebrow="Điện Việt / Vận hành" title="Không gian vận hành cửa hàng" description="Truy cập nhanh các nghiệp vụ hàng ngày." />
-    <div className="hero panel"><div><span className="badge">Bảng điều hướng</span><h2>Mọi nghiệp vụ trong một nơi.</h2><p>Theo dõi đơn hàng, tồn kho, Serial/IMEI và bảo hành.</p><Link to="/orders" className="button">Xem đơn hàng →</Link></div><div className="hero-illustration" aria-hidden="true"><span>ĐV</span><p>PRODUCT<br />ORDER<br />INVENTORY</p></div></div>
-    <div className="card-grid"><Link className="panel overview-card" to="/products"><span className="eyebrow">Sản phẩm</span><h2>Danh mục thiết bị</h2><p className="muted">Xem sản phẩm và phiên bản.</p></Link><Link className="panel overview-card" to="/inventory"><span className="eyebrow">Kho hàng</span><h2>Tồn kho theo chi nhánh</h2><p className="muted">Theo dõi số lượng khả dụng.</p></Link><Link className="panel overview-card" to="/warranties"><span className="eyebrow">Hậu mãi</span><h2>Bảo hành thiết bị</h2><p className="muted">Tra cứu Serial/IMEI.</p></Link></div>
+    <PageHeader eyebrow={`Điện Việt / ${ROLE_LABELS[user?.roleName] || 'Vận hành'}`} title="Không gian vận hành cửa hàng" description="Truy cập nhanh các nghiệp vụ hàng ngày." />
+    <div className="hero panel"><div><span className="badge">Bảng điều hướng</span><h2>Mọi nghiệp vụ trong một nơi.</h2><p>Theo dõi đơn hàng, tồn kho, Serial/IMEI và bảo hành.</p><Link to={primary.to} className="button">{primary.label}</Link></div><div className="hero-illustration" aria-hidden="true"><span>ĐV</span><p>PRODUCT<br />ORDER<br />INVENTORY</p></div></div>
+    <div className="card-grid">{cards.map((card) => <Link className="panel overview-card" to={card.to} key={card.to}><span className="eyebrow">{card.eyebrow}</span><h2>{card.title}</h2><p className="muted">{card.text}</p></Link>)}</div>
   </section>;
 }
