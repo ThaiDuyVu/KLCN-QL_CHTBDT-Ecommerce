@@ -1,0 +1,198 @@
+@startuml
+' Sơ đồ lớp thiết kế — 3.7.4.3 Giỏ hàng và đơn hàng (Shopping Cart & Order)
+' Sinh từ mã nguồn: thuộc tính lấy từ lớp @Entity, phương thức từ interface *Service, quan hệ và bội số từ khóa ngoại schema.
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor<<chưa cài đặt>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title Sơ đồ lớp thiết kế — 3.7.4.3 Giỏ hàng và đơn hàng (Shopping Cart & Order)
+
+package "Entity (tầng dữ liệu)" {
+class Cart <<entity>> {
+  - cartId : UUID {id}
+  - customerId : UUID
+  - warehouseId : UUID
+  - createdAt : OffsetDateTime
+  - updatedAt : OffsetDateTime
+  - status : String
+}
+class CartItem <<entity>> {
+  - cartItemId : UUID {id}
+  - cartId : UUID
+  - variantId : UUID
+  - quantity : Integer
+  - unitPrice : BigDecimal
+}
+class Order <<entity>> {
+  - orderId : UUID {id}
+  - customerId : UUID
+  - warehouseId : UUID
+  - orderCode : String
+  - orderDate : OffsetDateTime
+  - recipientName : String
+  - recipientPhone : String
+  - shippingAddress : String
+  - note : String
+  - subtotal : BigDecimal
+  - discountAmount : BigDecimal
+  - shippingFee : BigDecimal
+  - totalAmount : BigDecimal
+  - status : OrderStatus
+}
+class OrderItem <<entity>> {
+  - orderItemId : UUID {id}
+  - orderId : UUID
+  - variantId : UUID
+  - serialId : UUID
+  - quantity : Integer
+  - costPrice : BigDecimal
+  - unitPrice : BigDecimal
+  - discountAmount : BigDecimal
+  - finalUnitPrice : BigDecimal
+}
+class Payment <<entity>> {
+  - paymentId : UUID {id}
+  - orderId : UUID
+  - paymentMethod : PaymentMethod
+  - transactionCode : String
+  - amount : BigDecimal
+  - paymentDate : OffsetDateTime
+  - status : PaymentStatus
+}
+class InstallmentPayment <<entity>> {
+  - installmentId : UUID {id}
+  - paymentId : UUID
+  - providerId : UUID
+  - totalAmount : BigDecimal
+  - downPayment : BigDecimal
+  - remainingAmount : BigDecimal
+  - termMonths : Integer
+  - status : InstallmentStatus
+}
+class InstallmentProvider <<entity>> {
+  - providerId : UUID {id}
+  - providerName : String
+  - providerCode : String
+  - contactPhone : String
+  - contactEmail : String
+  - status : InstallmentProviderStatus
+}
+class Invoice <<chưa cài đặt>> {
+  - invoiceId : UUID {id}
+  - orderId : UUID
+  - invoiceNumber : String
+  - issuedDate : OffsetDateTime
+  - totalAmount : BigDecimal
+  - status : String
+}
+class Shipment <<chưa cài đặt>> {
+  - shipmentId : UUID {id}
+  - orderId : UUID
+  - employeeId : UUID
+  - trackingNumber : String
+  - shippingProvider : String
+  - shippedDate : OffsetDateTime
+  - deliveredDate : OffsetDateTime
+  - status : String
+}
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+enum PaymentMethod {
+  COD
+  VNPAY
+  INSTALLMENT
+}
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+enum InstallmentStatus {
+  PENDING
+  PROCESSING
+  APPROVED
+  REJECTED
+}
+enum InstallmentProviderStatus {
+  ACTIVE
+  INACTIVE
+}
+}
+class Customer <<tham chiếu>>
+class Employee <<tham chiếu>>
+class ProductVariant <<tham chiếu>>
+class SerialNumber <<tham chiếu>>
+class Warehouse <<tham chiếu>>
+package "Service (tầng nghiệp vụ)" {
+interface CartService {
+  + get(userId) : CartResponse
+  + selectWarehouse(userId, request) : CartResponse
+  + add(userId, request) : CartResponse
+  + quantity(userId, itemId, request) : CartResponse
+  + remove(userId, itemId) : CartResponse
+}
+interface OrderService {
+  + checkout(userId, request) : OrderResponse
+  + checkout(userId, request, clientIp) : OrderResponse
+  + list(userId, customer, page, size) : OrderPageResponse
+  + detail(userId, customer, orderId) : OrderResponse
+  + status(userId, customer, orderId, status) : OrderResponse
+}
+interface OrderStockService {
+  + apply(warehouseId, Map<UUID, quantities, action) : void
+}
+interface VnpayService {
+  + enabled() : boolean
+  + validateCheckout(amount) : void
+  + paymentUrl(order, payment, clientIp) : VnpayPaymentUrlResponse
+  + resume(userId, orderId, clientIp) : VnpayPaymentUrlResponse
+  + synchronize(userId, orderId) : void
+  + notifyPayment(MultiValueMap<String, parameters) : VnpayIpnResponse
+  + returnRedirect(MultiValueMap<String, parameters) : String
+}
+interface ReportService {
+  + summary(filter) : ReportSummaryResponse
+  + revenue(filter) : RevenueResponse
+  + orderStatuses(filter) : List<OrderStatusRow>
+  + topProducts(filter, limit) : List<TopProductRow>
+  + warehouses(filter) : List<WarehouseReportRow>
+  + payments(filter) : List<PaymentReportRow>
+  + goodsReceipts(filter) : GoodsReceiptReportResponse
+  + lowStock(filter, threshold, limit) : List<LowStockRow>
+}
+}
+Customer "1" -- "0..*" Cart : customerId >
+Warehouse "0..1" -- "0..*" Cart : warehouseId >
+Cart "1" -- "0..*" CartItem : cartId >
+ProductVariant "1" -- "0..*" CartItem : variantId >
+Customer "1" -- "0..*" Order : customerId >
+Warehouse "0..1" -- "0..*" Order : warehouseId >
+Order "1" -- "0..*" OrderItem : orderId >
+ProductVariant "1" -- "0..*" OrderItem : variantId >
+SerialNumber "0..1" -- "0..1" OrderItem : serialId >
+Order "1" -- "0..*" Payment : orderId >
+Payment "1" -- "0..1" InstallmentPayment : paymentId >
+InstallmentProvider "1" -- "0..*" InstallmentPayment : providerId >
+Order "1" -- "0..1" Invoice : orderId >
+Order "1" -- "0..*" Shipment : orderId >
+Employee "1" -- "0..*" Shipment : employeeId >
+Order ..> OrderStatus
+Payment ..> PaymentMethod
+Payment ..> PaymentStatus
+InstallmentPayment ..> InstallmentStatus
+InstallmentProvider ..> InstallmentProviderStatus
+CartService ..> Cart : sử dụng
+OrderService ..> Order : sử dụng
+OrderService ..> Payment : sử dụng
+OrderStockService ..> Order : sử dụng
+VnpayService ..> Payment : sử dụng
+ReportService ..> Order : sử dụng
+@enduml

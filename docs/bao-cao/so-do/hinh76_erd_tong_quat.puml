@@ -1,0 +1,149 @@
+@startuml
+' Hình 76. ERD tổng quát — 49 bảng, 75 khóa ngoại, sinh tự động từ schema thật
+hide circle
+hide members
+skinparam linetype ortho
+skinparam entity {
+  BackgroundColor<<mới>> #E3F2FD
+  BackgroundColor<<thiết kế sẵn>> #FFF3E0
+}
+package "ERD 01 — Người dùng và phân quyền" {
+  entity "users" as users
+  entity "roles" as roles
+  entity "permissions" as permissions
+  entity "user_roles" as user_roles
+  entity "role_permissions" as role_permissions
+  entity "employees" as employees
+  entity "customers" as customers
+  entity "refresh_tokens" as refresh_tokens <<mới>>
+  entity "customer_addresses" as customer_addresses <<mới>>
+}
+package "ERD 02 — Danh mục và sản phẩm" {
+  entity "categories" as categories
+  entity "brands" as brands
+  entity "products" as products
+  entity "product_variants" as product_variants
+  entity "product_images" as product_images
+  entity "specifications" as specifications
+}
+package "ERD 03 — Nhà cung cấp và kho" {
+  entity "suppliers" as suppliers
+  entity "warehouses" as warehouses
+  entity "goods_receipts" as goods_receipts
+  entity "goods_receipt_items" as goods_receipt_items
+  entity "goods_receipt_item_devices" as goods_receipt_item_devices <<mới>>
+  entity "goods_receipt_item_device_imeis" as goods_receipt_item_device_imeis <<mới>>
+  entity "inventory" as inventory
+  entity "serial_numbers" as serial_numbers
+  entity "imei" as imei
+}
+package "ERD 04 — Giỏ hàng và đơn hàng" {
+  entity "carts" as carts
+  entity "cart_items" as cart_items
+  entity "orders" as orders
+  entity "order_items" as order_items
+  entity "payments" as payments
+  entity "installment_payments" as installment_payments
+  entity "installment_providers" as installment_providers
+  entity "invoices" as invoices <<thiết kế sẵn>>
+  entity "shipments" as shipments <<thiết kế sẵn>>
+}
+package "ERD 05 — Hậu mãi và chăm sóc khách hàng" {
+  entity "warranties" as warranties
+  entity "warranty_tickets" as warranty_tickets
+  entity "promotions" as promotions
+  entity "promotion_products" as promotion_products
+  entity "reviews" as reviews <<thiết kế sẵn>>
+  entity "return_requests" as return_requests <<thiết kế sẵn>>
+  entity "return_items" as return_items <<thiết kế sẵn>>
+}
+package "ERD 06 — Chatbot và hội thoại" {
+  entity "chat_sessions" as chat_sessions
+  entity "chat_history" as chat_history
+  entity "chatbot_qna" as chatbot_qna <<thiết kế sẵn>>
+  entity "chatbot_scripts" as chatbot_scripts <<thiết kế sẵn>>
+  entity "message_feedback" as message_feedback <<thiết kế sẵn>>
+}
+package "ERD 07 — Kho tri thức RAG và chỉ mục ngữ nghĩa" {
+  entity "knowledge_documents" as knowledge_documents
+  entity "knowledge_chunks" as knowledge_chunks
+  entity "chat_message_retrievals" as chat_message_retrievals
+  entity "product_semantic_index" as product_semantic_index <<mới>>
+}
+
+carts ||--o{ cart_items : cart_id
+product_variants ||--o{ cart_items : variant_id
+customers ||--o{ carts : customer_id
+warehouses |o--o{ carts : warehouse_id
+categories |o--o{ categories : parent_id
+chat_sessions ||--o{ chat_history : session_id
+customers ||--o{ chat_history : customer_id
+employees |o--o{ chat_history : employee_id
+chat_history ||--o{ chat_message_retrievals : history_id
+knowledge_chunks ||--o{ chat_message_retrievals : chunk_id
+customers ||--o{ chat_sessions : customer_id
+employees |o--o{ chat_sessions : employee_id
+employees ||--o{ chatbot_qna : employee_id
+employees ||--o{ chatbot_scripts : employee_id
+customers ||--o{ customer_addresses : customer_id
+users ||--o| customers : user_id
+users ||--o| employees : user_id
+goods_receipt_item_devices ||--o{ goods_receipt_item_device_imeis : receipt_device_id
+goods_receipt_items ||--o{ goods_receipt_item_devices : receipt_item_id
+goods_receipts ||--o{ goods_receipt_items : receipt_id
+product_variants ||--o{ goods_receipt_items : variant_id
+suppliers ||--o{ goods_receipts : supplier_id
+warehouses ||--o{ goods_receipts : warehouse_id
+employees ||--o{ goods_receipts : employee_id
+serial_numbers ||--o{ imei : serial_id
+payments ||--o| installment_payments : payment_id
+installment_providers ||--o{ installment_payments : provider_id
+warehouses ||--o{ inventory : warehouse_id
+product_variants ||--o{ inventory : variant_id
+orders ||--o| invoices : order_id
+knowledge_documents ||--o{ knowledge_chunks : document_id
+employees ||--o{ knowledge_documents : employee_id
+chat_history ||--o| message_feedback : history_id
+customers ||--o{ message_feedback : customer_id
+orders ||--o{ order_items : order_id
+product_variants ||--o{ order_items : variant_id
+serial_numbers |o--o| order_items : serial_id
+customers ||--o{ orders : customer_id
+warehouses |o--o{ orders : warehouse_id
+orders ||--o{ payments : order_id
+products ||--o{ product_images : product_id
+products ||--o| product_semantic_index : product_id
+products ||--o{ product_variants : product_id
+categories ||--o{ products : category_id
+brands ||--o{ products : brand_id
+promotions ||--o{ promotion_products : promotion_id
+products ||--o{ promotion_products : product_id
+users ||--o{ refresh_tokens : user_id
+refresh_tokens |o--o{ refresh_tokens : replaced_by_token_id
+serial_numbers |o--o{ return_items : serial_id
+return_requests ||--o{ return_items : return_id
+order_items ||--o{ return_items : order_item_id
+orders ||--o{ return_requests : order_id
+customers ||--o{ return_requests : customer_id
+employees |o--o{ return_requests : employee_id
+customers ||--o{ reviews : customer_id
+products ||--o{ reviews : product_id
+order_items ||--o{ reviews : order_item_id
+employees |o--o{ reviews : employee_id
+roles ||--o{ role_permissions : role_id
+permissions ||--o{ role_permissions : permission_id
+product_variants ||--o{ serial_numbers : variant_id
+warehouses ||--o{ serial_numbers : warehouse_id
+orders ||--o{ shipments : order_id
+employees ||--o{ shipments : employee_id
+products ||--o{ specifications : product_id
+users ||--o| user_roles : user_id
+roles ||--o{ user_roles : role_id
+serial_numbers ||--o| warranties : serial_id
+order_items ||--o{ warranties : order_item_id
+customers ||--o{ warranties : customer_id
+warranties ||--o{ warranty_tickets : warranty_id
+serial_numbers ||--o{ warranty_tickets : serial_id
+customers ||--o{ warranty_tickets : customer_id
+employees |o--o{ warranty_tickets : employee_id
+@enduml

@@ -1,0 +1,74 @@
+@startuml
+' Sơ đồ lớp thiết kế — 3.7.4.5 Khuyến mãi và đánh giá (Promotion & Review)
+' Sinh từ mã nguồn: thuộc tính lấy từ lớp @Entity, phương thức từ interface *Service, quan hệ và bội số từ khóa ngoại schema.
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor<<chưa cài đặt>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title Sơ đồ lớp thiết kế — 3.7.4.5 Khuyến mãi và đánh giá (Promotion & Review)
+
+package "Entity (tầng dữ liệu)" {
+class Promotion <<entity>> {
+  - promotionId : UUID {id}
+  - promotionName : String
+  - description : String
+  - discountType : DiscountType
+  - discountValue : BigDecimal
+  - startDate : OffsetDateTime
+  - endDate : OffsetDateTime
+  - status : PromotionStatus
+}
+class PromotionProduct <<entity>> {
+
+}
+class Review <<chưa cài đặt>> {
+  - reviewId : UUID {id}
+  - customerId : UUID
+  - productId : UUID
+  - orderItemId : UUID
+  - employeeId : UUID
+  - rating : Integer
+  - reviewText : String
+  - replyText : String
+  - createdAt : OffsetDateTime
+  - repliedAt : OffsetDateTime
+  - status : String
+}
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+enum PromotionStatus {
+  ACTIVE
+  INACTIVE
+}
+}
+class Customer <<tham chiếu>>
+class Employee <<tham chiếu>>
+class OrderItem <<tham chiếu>>
+class Product <<tham chiếu>>
+package "Service (tầng nghiệp vụ)" {
+interface PromotionService {
+  + list(page, size, keyword, status) : PromotionPageResponse
+  + detail(id) : PromotionResponse
+  + create(request) : PromotionResponse
+  + update(id, request) : PromotionResponse
+  + status(id, status) : PromotionResponse
+  + delete(id) : void
+  + resolve(productIds, now) : Map<UUID,Promotion>
+  + resolveForCheckout(productIds, now) : Map<UUID,Promotion>
+  + calculate(unitPrice, promotion) : PromotionPrice
+}
+}
+Promotion "1" -- "0..*" PromotionProduct : promotionId >
+Product "1" -- "0..*" PromotionProduct : productId >
+Customer "1" -- "0..*" Review : customerId >
+Product "1" -- "0..*" Review : productId >
+OrderItem "1" -- "0..*" Review : orderItemId >
+Employee "0..1" -- "0..*" Review : employeeId >
+Promotion ..> DiscountType
+Promotion ..> PromotionStatus
+PromotionService ..> Promotion : sử dụng
+@enduml

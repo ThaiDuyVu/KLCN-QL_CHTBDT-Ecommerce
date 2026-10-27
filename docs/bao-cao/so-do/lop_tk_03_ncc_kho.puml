@@ -1,0 +1,143 @@
+@startuml
+' Sơ đồ lớp thiết kế — 3.7.4.2b Nhà cung cấp và kho hàng (Supplier & Warehouse)
+' Sinh từ mã nguồn: thuộc tính lấy từ lớp @Entity, phương thức từ interface *Service, quan hệ và bội số từ khóa ngoại schema.
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor<<chưa cài đặt>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title Sơ đồ lớp thiết kế — 3.7.4.2b Nhà cung cấp và kho hàng (Supplier & Warehouse)
+
+package "Entity (tầng dữ liệu)" {
+class Supplier <<entity>> {
+  - supplierId : UUID {id}
+  - supplierCode : String
+  - supplierName : String
+  - phone : String
+  - email : String
+  - address : String
+  - status : SupplierStatus
+}
+class Warehouse <<entity>> {
+  - warehouseId : UUID {id}
+  - warehouseName : String
+  - address : String
+  - status : WarehouseStatus
+}
+class GoodsReceipt <<entity>> {
+  - receiptId : UUID {id}
+  - receiptCode : String
+  - receiptDate : OffsetDateTime
+  - totalAmount : BigDecimal
+  - status : GoodsReceiptStatus
+}
+class GoodsReceiptItem <<entity>> {
+  - receiptItemId : UUID {id}
+  - quantity : Integer
+  - unitCost : BigDecimal
+}
+class GoodsReceiptItemDevice <<entity>> {
+  - receiptDeviceId : UUID {id}
+  - serialNumber : String
+}
+class GoodsReceiptItemDeviceImei <<entity>> {
+  - receiptDeviceImeiId : UUID {id}
+  - imeiNumber : String
+}
+class Inventory <<entity>> {
+  - inventoryId : UUID {id}
+  - quantity : Integer
+  - reservedQuantity : Integer
+  - updatedAt : OffsetDateTime
+}
+class SerialNumber <<entity>> {
+  - serialId : UUID {id}
+  - serialNumber : String
+  - status : SerialStatus
+}
+class Imei <<entity>> {
+  - imeiId : UUID {id}
+  - imeiNumber : String
+}
+enum GoodsReceiptStatus {
+  DRAFT
+  CONFIRMED
+  CANCELLED
+}
+enum SerialStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+  RETURNED
+  DEFECTIVE
+}
+enum SupplierStatus {
+  ACTIVE
+  INACTIVE
+}
+enum WarehouseStatus {
+  ACTIVE
+  INACTIVE
+}
+}
+class Employee <<tham chiếu>>
+class ProductVariant <<tham chiếu>>
+package "Service (tầng nghiệp vụ)" {
+interface SupplierService {
+  + getSuppliers(page, size) : SupplierPageResponse
+  + getSupplierById(supplierId) : SupplierResponse
+  + createSupplier(request) : SupplierResponse
+  + updateSupplier(supplierId, request) : SupplierResponse
+}
+interface WarehouseService {
+  + getWarehouses(page, size) : WarehousePageResponse
+  + getWarehouseById(warehouseId) : WarehouseResponse
+  + createWarehouse(request) : WarehouseResponse
+  + updateWarehouse(warehouseId, request) : WarehouseResponse
+}
+interface GoodsReceiptService {
+  + getGoodsReceipts(page, size) : GoodsReceiptPageResponse
+  + getGoodsReceiptById(receiptId) : GoodsReceiptResponse
+  + createGoodsReceipt(request) : GoodsReceiptResponse
+  + updateGoodsReceipt(receiptId, request) : GoodsReceiptResponse
+  + updateGoodsReceiptStatus(receiptId, targetStatus) : GoodsReceiptResponse
+}
+interface InventoryService {
+  + getInventory(keyword, warehouseId, variantId, page, size) : InventoryPageResponse
+  + getInventoryById(inventoryId) : InventoryResponse
+}
+interface SerialAllocationService {
+  + reserveAvailable(variantId, warehouseId, quantity) : List<UUID>
+  + releaseReserved(serialIds) : void
+  + markSold(serialIds) : void
+}
+interface SerialQueryService {
+  + search(keyword, variantId, warehouseId, status, page, size) : SerialPageResponse
+  + getById(serialId) : SerialResponse
+  + lookup(code) : SerialResponse
+}
+}
+Supplier "1" -- "0..*" GoodsReceipt : supplierId >
+Warehouse "1" -- "0..*" GoodsReceipt : warehouseId >
+Employee "1" -- "0..*" GoodsReceipt : employeeId >
+GoodsReceipt "1" -- "0..*" GoodsReceiptItem : receiptId >
+ProductVariant "1" -- "0..*" GoodsReceiptItem : variantId >
+GoodsReceiptItem "1" -- "0..*" GoodsReceiptItemDevice : receiptItemId >
+GoodsReceiptItemDevice "1" -- "0..*" GoodsReceiptItemDeviceImei : receiptDeviceId >
+Warehouse "1" -- "0..*" Inventory : warehouseId >
+ProductVariant "1" -- "0..*" Inventory : variantId >
+ProductVariant "1" -- "0..*" SerialNumber : variantId >
+Warehouse "1" -- "0..*" SerialNumber : warehouseId >
+SerialNumber "1" -- "0..*" Imei : serialId >
+Supplier ..> SupplierStatus
+Warehouse ..> WarehouseStatus
+GoodsReceipt ..> GoodsReceiptStatus
+SerialNumber ..> SerialStatus
+SupplierService ..> Supplier : sử dụng
+WarehouseService ..> Warehouse : sử dụng
+GoodsReceiptService ..> GoodsReceipt : sử dụng
+InventoryService ..> Inventory : sử dụng
+SerialAllocationService ..> SerialNumber : sử dụng
+SerialQueryService ..> SerialNumber : sử dụng
+@enduml

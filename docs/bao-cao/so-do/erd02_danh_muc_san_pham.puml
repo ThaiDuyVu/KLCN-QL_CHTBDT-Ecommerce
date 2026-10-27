@@ -1,0 +1,85 @@
+@startuml
+' ERD 02 — Danh mục và sản phẩm — sinh tự động từ schema PostgreSQL (Flyway V1–V8), 6 bảng
+hide circle
+skinparam linetype ortho
+skinparam entity {
+  BackgroundColor<<mới>> #E3F2FD
+  BackgroundColor<<thiết kế sẵn>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title ERD 02 — Danh mục và sản phẩm
+
+entity "categories" as categories {
+  * category_id : UUID <<PK>>
+  --
+    parent_id : UUID <<FK>>
+  * category_name : VARCHAR
+    description : TEXT
+  * status : VARCHAR
+}
+
+entity "brands" as brands {
+  * brand_id : UUID <<PK>>
+  --
+  * brand_name : VARCHAR
+    description : TEXT
+  * status : VARCHAR
+}
+
+entity "products" as products {
+  * product_id : UUID <<PK>>
+  --
+  * category_id : UUID <<FK>>
+  * brand_id : UUID <<FK>>
+  * product_name : VARCHAR
+    description : TEXT
+  * status : VARCHAR
+  * created_at : TIMESTAMPTZ
+  * updated_at : TIMESTAMPTZ
+}
+
+entity "product_variants" as product_variants {
+  * variant_id : UUID <<PK>>
+  --
+  * product_id : UUID <<FK>>
+  * sku : VARCHAR
+  * price : DECIMAL
+  * cost_price : DECIMAL
+    color : VARCHAR
+    storage : VARCHAR
+    ram : VARCHAR
+  * status : VARCHAR
+  * tracking_type : VARCHAR
+  * warranty_months : INT
+}
+
+entity "product_images" as product_images {
+  * image_id : UUID <<PK>>
+  --
+  * product_id : UUID <<FK>>
+  * image_url : VARCHAR
+  * is_primary : BOOLEAN
+}
+
+entity "specifications" as specifications {
+  * specification_id : UUID <<PK>>
+  --
+  * product_id : UUID <<FK>>
+  * spec_key : VARCHAR
+  * spec_value : VARCHAR
+}
+
+categories |o--o{ categories : parent_id
+categories ||--o{ products : category_id
+brands ||--o{ products : brand_id
+products ||--o{ product_variants : product_id
+products ||--o{ product_images : product_id
+products ||--o{ specifications : product_id
+
+legend right
+  <<mới>>: bảng có trong CSDL, chưa có trong ERD báo cáo cũ
+  <<thiết kế sẵn>>: bảng có trong CSDL, chưa có chức năng sử dụng
+  <<tham chiếu>>: thực thể thuộc ERD khác
+  * : NOT NULL
+endlegend
+@enduml

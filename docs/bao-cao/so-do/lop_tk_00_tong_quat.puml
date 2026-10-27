@@ -1,0 +1,139 @@
+@startuml
+' Sơ đồ lớp thiết kế tổng quát (Hình 82) — 7 package, chỉ hiển thị tên lớp; quan hệ từ khóa ngoại schema.
+' Bỏ ReturnRequest/ReturnItem theo quyết định D3 (đổi trả ngoài phạm vi).
+hide empty members
+skinparam class {
+  BackgroundColor<<chưa cài đặt>> #FFF3E0
+}
+title Sơ đồ lớp thiết kế tổng quát của hệ thống
+package "1. User & Access Control" {
+  class User
+  class Role
+  class Permission
+  class UserRole
+  class RolePermission
+  class Employee
+  class Customer
+  class RefreshToken
+  class CustomerAddress
+}
+package "2. Product Catalog" {
+  class Category
+  class Brand
+  class Product
+  class ProductVariant
+  class ProductImage
+  class Specification
+}
+package "3. Supplier & Warehouse" {
+  class Supplier
+  class Warehouse
+  class GoodsReceipt
+  class GoodsReceiptItem
+  class GoodsReceiptItemDevice
+  class GoodsReceiptItemDeviceImei
+  class Inventory
+  class SerialNumber
+  class Imei
+}
+package "4. Shopping Cart & Order" {
+  class Cart
+  class CartItem
+  class Order
+  class OrderItem
+  class Payment
+  class InstallmentPayment
+  class InstallmentProvider
+  class Invoice <<chưa cài đặt>>
+  class Shipment <<chưa cài đặt>>
+}
+package "5. Warranty" {
+  class Warranty
+  class WarrantyTicket
+}
+package "6. Promotion & Review" {
+  class Promotion
+  class PromotionProduct
+  class Review <<chưa cài đặt>>
+}
+package "7. Chatbot & RAG (chatbot-service)" {
+  class ChatSession
+  class ChatHistory
+  class ChatbotQnA <<chưa cài đặt>>
+  class ChatbotScript <<chưa cài đặt>>
+  class MessageFeedback <<chưa cài đặt>>
+  class KnowledgeDocument
+  class KnowledgeChunk
+  class ChatMessageRetrieval
+  class ProductSemanticIndex
+}
+Cart "1" -- "0..*" CartItem
+ProductVariant "1" -- "0..*" CartItem
+Customer "1" -- "0..*" Cart
+Warehouse "0..1" -- "0..*" Cart
+Category "0..1" -- "0..*" Category
+ChatSession "1" -- "0..*" ChatHistory
+Customer "1" -- "0..*" ChatHistory
+Employee "0..1" -- "0..*" ChatHistory
+ChatHistory "1" -- "0..*" ChatMessageRetrieval
+KnowledgeChunk "1" -- "0..*" ChatMessageRetrieval
+Customer "1" -- "0..*" ChatSession
+Employee "0..1" -- "0..*" ChatSession
+Employee "1" -- "0..*" ChatbotQnA
+Employee "1" -- "0..*" ChatbotScript
+Customer "1" -- "0..*" CustomerAddress
+User "1" -- "0..1" Customer
+User "1" -- "0..1" Employee
+GoodsReceiptItemDevice "1" -- "0..*" GoodsReceiptItemDeviceImei
+GoodsReceiptItem "1" -- "0..*" GoodsReceiptItemDevice
+GoodsReceipt "1" -- "0..*" GoodsReceiptItem
+ProductVariant "1" -- "0..*" GoodsReceiptItem
+Supplier "1" -- "0..*" GoodsReceipt
+Warehouse "1" -- "0..*" GoodsReceipt
+Employee "1" -- "0..*" GoodsReceipt
+SerialNumber "1" -- "0..*" Imei
+Payment "1" -- "0..1" InstallmentPayment
+InstallmentProvider "1" -- "0..*" InstallmentPayment
+Warehouse "1" -- "0..*" Inventory
+ProductVariant "1" -- "0..*" Inventory
+Order "1" -- "0..1" Invoice
+KnowledgeDocument "1" -- "0..*" KnowledgeChunk
+Employee "1" -- "0..*" KnowledgeDocument
+ChatHistory "1" -- "0..1" MessageFeedback
+Customer "1" -- "0..*" MessageFeedback
+Order "1" -- "0..*" OrderItem
+ProductVariant "1" -- "0..*" OrderItem
+SerialNumber "0..1" -- "0..1" OrderItem
+Customer "1" -- "0..*" Order
+Warehouse "0..1" -- "0..*" Order
+Order "1" -- "0..*" Payment
+Product "1" -- "0..*" ProductImage
+Product "1" -- "0..1" ProductSemanticIndex
+Product "1" -- "0..*" ProductVariant
+Category "1" -- "0..*" Product
+Brand "1" -- "0..*" Product
+Promotion "1" -- "0..*" PromotionProduct
+Product "1" -- "0..*" PromotionProduct
+User "1" -- "0..*" RefreshToken
+RefreshToken "0..1" -- "0..*" RefreshToken
+Customer "1" -- "0..*" Review
+Product "1" -- "0..*" Review
+OrderItem "1" -- "0..*" Review
+Employee "0..1" -- "0..*" Review
+Role "1" -- "0..*" RolePermission
+Permission "1" -- "0..*" RolePermission
+ProductVariant "1" -- "0..*" SerialNumber
+Warehouse "1" -- "0..*" SerialNumber
+Order "1" -- "0..*" Shipment
+Employee "1" -- "0..*" Shipment
+Product "1" -- "0..*" Specification
+User "1" -- "0..1" UserRole
+Role "1" -- "0..*" UserRole
+SerialNumber "1" -- "0..1" Warranty
+OrderItem "1" -- "0..*" Warranty
+Customer "1" -- "0..*" Warranty
+Warranty "1" -- "0..*" WarrantyTicket
+SerialNumber "1" -- "0..*" WarrantyTicket
+Customer "1" -- "0..*" WarrantyTicket
+Employee "0..1" -- "0..*" WarrantyTicket
+@enduml

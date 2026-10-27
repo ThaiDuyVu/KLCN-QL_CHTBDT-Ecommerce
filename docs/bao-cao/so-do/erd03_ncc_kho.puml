@@ -1,0 +1,119 @@
+@startuml
+' ERD 03 — Nhà cung cấp và kho — sinh tự động từ schema PostgreSQL (Flyway V1–V8), 9 bảng
+hide circle
+skinparam linetype ortho
+skinparam entity {
+  BackgroundColor<<mới>> #E3F2FD
+  BackgroundColor<<thiết kế sẵn>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title ERD 03 — Nhà cung cấp và kho
+
+entity "suppliers" as suppliers {
+  * supplier_id : UUID <<PK>>
+  --
+  * supplier_code : VARCHAR
+  * supplier_name : VARCHAR
+    phone : VARCHAR
+    email : VARCHAR
+    address : VARCHAR
+  * status : VARCHAR
+}
+
+entity "warehouses" as warehouses {
+  * warehouse_id : UUID <<PK>>
+  --
+  * warehouse_name : VARCHAR
+    address : VARCHAR
+  * status : VARCHAR
+}
+
+entity "goods_receipts" as goods_receipts {
+  * receipt_id : UUID <<PK>>
+  --
+  * receipt_code : VARCHAR
+  * supplier_id : UUID <<FK>>
+  * warehouse_id : UUID <<FK>>
+  * employee_id : UUID <<FK>>
+  * receipt_date : TIMESTAMPTZ
+  * total_amount : DECIMAL
+  * status : VARCHAR
+}
+
+entity "goods_receipt_items" as goods_receipt_items {
+  * receipt_item_id : UUID <<PK>>
+  --
+  * receipt_id : UUID <<FK>>
+  * variant_id : UUID <<FK>>
+  * quantity : INT
+  * unit_cost : DECIMAL
+}
+
+entity "goods_receipt_item_devices" as goods_receipt_item_devices <<mới>> {
+  * receipt_device_id : UUID <<PK>>
+  --
+  * receipt_item_id : UUID <<FK>>
+  * serial_number : VARCHAR
+}
+
+entity "goods_receipt_item_device_imeis" as goods_receipt_item_device_imeis <<mới>> {
+  * receipt_device_imei_id : UUID <<PK>>
+  --
+  * receipt_device_id : UUID <<FK>>
+  * imei_number : VARCHAR
+}
+
+entity "inventory" as inventory {
+  * inventory_id : UUID <<PK>>
+  --
+  * warehouse_id : UUID <<FK>>
+  * variant_id : UUID <<FK>>
+  * quantity : INT
+  * reserved_quantity : INT
+  * updated_at : TIMESTAMPTZ
+}
+
+entity "serial_numbers" as serial_numbers {
+  * serial_id : UUID <<PK>>
+  --
+  * variant_id : UUID <<FK>>
+  * warehouse_id : UUID <<FK>>
+  * serial_number : VARCHAR
+  * status : VARCHAR
+}
+
+entity "imei" as imei {
+  * imei_id : UUID <<PK>>
+  --
+  * serial_id : UUID <<FK>>
+  * imei_number : VARCHAR
+}
+
+entity "employees" as employees <<tham chiếu>> {
+  * employee_id : UUID <<PK>>
+}
+
+entity "product_variants" as product_variants <<tham chiếu>> {
+  * variant_id : UUID <<PK>>
+}
+
+suppliers ||--o{ goods_receipts : supplier_id
+warehouses ||--o{ goods_receipts : warehouse_id
+employees ||--o{ goods_receipts : employee_id
+goods_receipts ||--o{ goods_receipt_items : receipt_id
+product_variants ||--o{ goods_receipt_items : variant_id
+goods_receipt_items ||--o{ goods_receipt_item_devices : receipt_item_id
+goods_receipt_item_devices ||--o{ goods_receipt_item_device_imeis : receipt_device_id
+warehouses ||--o{ inventory : warehouse_id
+product_variants ||--o{ inventory : variant_id
+product_variants ||--o{ serial_numbers : variant_id
+warehouses ||--o{ serial_numbers : warehouse_id
+serial_numbers ||--o{ imei : serial_id
+
+legend right
+  <<mới>>: bảng có trong CSDL, chưa có trong ERD báo cáo cũ
+  <<thiết kế sẵn>>: bảng có trong CSDL, chưa có chức năng sử dụng
+  <<tham chiếu>>: thực thể thuộc ERD khác
+  * : NOT NULL
+endlegend
+@enduml

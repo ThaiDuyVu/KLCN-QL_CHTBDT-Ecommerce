@@ -1,0 +1,79 @@
+@startuml
+' Hình 31. Sơ đồ Use-Case hệ thống tổng quát (vẽ lại ở Giai đoạn 3)
+' 7 tác nhân theo 1.3.1; đã bỏ UC-SYS-13 Đổi trả / bồi hoàn (D3); chatbot trên Website và Mobile App (D5). Mã UC-SYS-14..19 cũ đã đánh số lại thành UC-SYS-13..18 (Giai đoạn 6).
+' Giữ mã UC hiện tại; đánh số lại ở Giai đoạn 6.
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Khách hàng" as KH
+actor "Nhân viên bán hàng" as NVBH
+actor "Thủ kho" as TK
+actor "Nhân viên kỹ thuật/bảo hành" as NVKT
+actor "Nhân viên giao hàng" as NVGH
+actor "Quản lý cửa hàng" as QL
+actor "Admin" as AD
+actor "Cổng thanh toán" as CTT <<hệ thống ngoài>>
+actor "Đơn vị tài chính" as DVTC <<hệ thống ngoài>>
+
+rectangle "Hệ thống quản lý cửa hàng thiết bị điện tử (Website + Mobile App)" {
+  package "Danh mục & kho" {
+    usecase "UC-SYS-01 Quản lý danh mục sản phẩm & mã Serial/IMEI" as S01
+    usecase "UC-SYS-02 Lập & duyệt phiếu nhập kho" as S02
+    usecase "UC-SYS-03 Xuất kho" as S03
+    usecase "UC-SYS-04 Thực hiện kiểm kê kho" as S04
+    usecase "UC-SYS-05 Cấu hình cảnh báo tồn kho" as S05
+  }
+  package "Bán hàng & giao hàng" {
+    usecase "UC-SYS-06 Tra cứu & tìm kiếm sản phẩm" as S06
+    usecase "UC-SYS-15 Đặt hàng online" as S16
+    usecase "UC-SYS-16 Tra cứu lịch sử đơn & trạng thái giao" as S17
+    usecase "UC-SYS-07 Xử lý đơn hàng trả góp" as S07
+    usecase "UC-SYS-08 In hóa đơn VAT & phiếu giao hàng" as S08
+    usecase "UC-SYS-09 Cập nhật trạng thái giao hàng & lắp đặt" as S09
+    usecase "UC-SYS-10 Quản lý thông tin & hạng thành viên KH" as S10
+  }
+  package "Bảo hành" {
+    usecase "UC-SYS-11 Tra cứu thông tin bảo hành" as S11
+    usecase "UC-SYS-12 Lập phiếu tiếp nhận & cập nhật trạng thái bảo hành" as S12
+  }
+  package "Quản trị & chatbot" {
+    usecase "UC-SYS-13 Xem báo cáo quản trị" as S14
+    usecase "UC-SYS-14 Quản lý người dùng" as S15
+    usecase "UC-SYS-17 Tương tác với chatbot tư vấn" as S18
+    usecase "UC-SYS-18 Quản lý kịch bản/dữ liệu chatbot" as S19
+  }
+}
+
+QL --> S01
+TK --> S02
+QL --> S02
+TK --> S03
+TK --> S04
+QL --> S04
+QL --> S05
+
+KH --> S06
+KH --> S16
+S16 --> CTT
+S16 ..> TK : phụ (kiểm tra tồn kho tự động)
+KH --> S17
+NVBH --> S07
+S07 ..> KH : phụ
+S07 --> DVTC
+NVBH --> S08
+NVGH --> S09
+S09 ..> KH : phụ (nhận thông báo)
+NVBH --> S10
+AD --> S10
+
+NVKT --> S11
+NVKT --> S12
+S12 ..> KH : phụ
+
+QL --> S14
+AD --> S15
+KH --> S18
+S18 ..> NVBH : phụ
+AD --> S19
+@enduml
