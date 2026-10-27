@@ -81,8 +81,25 @@ def test_postgres_survives_new_instance_and_preserves_snapshot_window(pg):
     assert history[1].id==saved.id and len(fresh.last_product_cards(s.id,owner))==1
     assert len(fresh.get_recent_messages(s.id,1))==1
     repo.set_rating(s.id,saved.id,owner,1)
-    assert repo.get_message(s.id,saved.id).rating==1 and fresh.get_message(s.id,saved.id).rating==0
-    with fresh.connect() as c:assert c.execute('SELECT count(*) FROM message_feedback WHERE history_id=%s',(saved.id,)).fetchone()[0]==0
+    assert repo.get_message(s.id,saved.id).rating==1 and fresh.get_message(s.id,saved.id).rating==1
+    with fresh.connect() as c:
+        assert c.execute('SELECT rating,customer_id FROM message_feedback WHERE history_id=%s',(saved.id,)).fetchone()==(5,owner)
+
+
+def test_postgres_feedback_update_clear_and_scope(pg):
+    repo,owner,other,dsn=pg;s=repo.create_session(owner)
+    reply=repo.save_assistant(s.id,owner,'Gợi ý laptop',snapshot())
+    assert repo.set_rating(s.id,reply.id,owner,-1).rating==-1
+    assert repo.set_rating(s.id,reply.id,owner,1).rating==1
+    with repo.connect() as c:
+        assert c.execute('SELECT count(*),max(rating) FROM message_feedback WHERE history_id=%s',(reply.id,)).fetchone()==(1,5)
+    assert [m.rating for m in PostgresConversationRepository(dsn).history_page(s.id,owner)]==[1]
+    assert repo.set_rating(s.id,reply.id,owner,0).rating==0
+    with repo.connect() as c:
+        assert c.execute('SELECT count(*) FROM message_feedback WHERE history_id=%s',(reply.id,)).fetchone()[0]==0
+    other_session=repo.create_session(owner)
+    with pytest.raises(HTTPException) as e:repo.set_rating(other_session.id,reply.id,owner,1)
+    assert e.value.status_code==404
 
 
 def test_postgres_multiple_sessions_and_owner_isolation(pg):
@@ -134,7 +151,7 @@ def test_reference_refreshes_live_price_stock_not_history_text():
     backend.data[P1]['variants'][0]['availableQuantity']=0
     advisor=RealProductAdvisorService(backend,W);matches=advisor.search(p.product_search)
     text=OllamaResponseGenerationService(NoLLM()).generate(GroundedContext(query_plan=p,user_query='Máy đầu tiên còn hàng không?',products=matches))
-    assert '17,000,000' in text and 'hết hàng' in text and '18,990,000' not in text
+    assert '17.000.000 đ' in text and 'hết hàng' in text and '18.990.000' not in text
     assert advisor.build_cards(matches)[0].available_quantity==0
     assert s.cards[0].effective_price==18990000
 

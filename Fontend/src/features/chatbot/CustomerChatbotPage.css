@@ -49,6 +49,18 @@
 .cchat-product-reasons { margin: 0; padding-left: 18px; font-size: .78rem; color: var(--emerald-800); }
 .cchat-product-link { justify-self: start; min-height: 34px; padding: 6px 12px; font-size: .82rem; }
 
+.cchat-compare { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+.cchat-compare:focus-visible { outline: 3px solid #c98536; outline-offset: 2px; }
+.cchat-compare table { width: 100%; min-width: 440px; border-collapse: collapse; font-size: .84rem; }
+.cchat-compare caption { padding: 10px 12px; text-align: left; font-weight: 800; color: var(--emerald-950); }
+.cchat-compare th, .cchat-compare td { padding: 8px 12px; border-top: 1px solid var(--border); text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.cchat-compare thead th { background: var(--emerald-50); color: var(--emerald-950); }
+.cchat-compare thead th a:hover { color: var(--emerald-700); }
+/* The label column stays visible while a narrow screen scrolls the product columns. */
+.cchat-compare tbody th { position: sticky; left: 0; background: #fff; color: var(--muted); font-weight: 700; white-space: nowrap; }
+.cchat-compare td.is-best { background: #eef8f2; color: var(--emerald-900); font-weight: 700; }
+.cchat-compare-best { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: var(--emerald-700); color: #fff; font-size: .7rem; font-weight: 700; white-space: nowrap; }
+
 .cchat-sources { font-size: .82rem; }
 .cchat-sources ul { margin: 4px 0 0; padding-left: 18px; }
 .cchat-sources a { color: var(--emerald-700); text-decoration: underline; }
@@ -86,4 +98,9 @@
   .cchat-transcript { max-height: none; min-height: 240px; overflow: visible; }
   .cchat-message { max-width: 100%; }
   .cchat-composer-row .button { width: 100%; }
+  /* Two products fit a phone; a third column still scrolls inside the table frame. */
+  .cchat-compare table { min-width: 0; font-size: .78rem; }
+  .cchat-compare th, .cchat-compare td { padding: 6px 8px; }
+  .cchat-compare tbody th { width: 28%; white-space: normal; }
+  .cchat-compare-best { display: block; width: fit-content; margin: 4px 0 0; }
 }

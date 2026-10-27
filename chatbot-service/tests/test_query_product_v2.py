@@ -136,8 +136,8 @@ def test_exact_non_cheapest_sku_id_variant_cards_and_message(selector):
     m=a.search(p);cards=a.build_cards(m)
     assert len(cards)==1 and cards[0].variant_id==V2 and cards[0].effective_price==21990000
     text=answer(p,m)
-    assert 'DEV-X15-GRN-512' in text and '21,990,000' in text and 'còn 2' in text and '12 tháng' in text
-    assert 'DEV-X15-BLK-256' not in text
+    assert 'RAM 16GB, bộ nhớ 512GB' in text and '21.990.000 đ' in text and 'còn 2' in text and '12 tháng' in text
+    assert 'RAM 12GB, bộ nhớ 256GB' not in text
 
 
 def test_mixed_stock_preserved_and_no_semantic_identity():
@@ -203,7 +203,7 @@ def test_discovery_text_uses_only_eligible_variants_not_general_ram_spec():
     ctx=GroundedContext(query_plan=QueryPlan(intent=Intent.PRODUCT_DISCOVERY,product_search=ProductSearchPlan(min_ram_gb=16)),
                         user_query='RAM ít nhất16',products=m)
     text=OllamaResponseGenerationService(NoLLM()).generate(ctx)
-    assert 'DEV-X15-GRN-512' in text and 'DEV-X15-BLK-256' not in text
+    assert 'RAM 16GB, bộ nhớ 512GB' in text and 'RAM 12GB, bộ nhớ 256GB' not in text
 
 
 @pytest.mark.parametrize('phrase,expected', [('dưới 20.000.000 VND',20000000),('dưới 20,5 triệu',20500000),('giá từ 15000000 VND',None)])
@@ -250,7 +250,7 @@ def test_fractional_promotion_price_is_not_rounded_away():
     b=Backend();b.data[P1]['variants'][0]['effectivePrice']='18990000.25'
     p=ProductSearchPlan(targets=[ProductSelector(sku='DEV-X15-BLK-256')])
     a=RealProductAdvisorService(b,W);m=a.search(p)
-    assert '18,990,000.25 VND' in answer(p,m)
+    assert '18.990.000,25 đ' in answer(p,m)
 
 
 def test_pipeline_missing_sku_clarifies_without_cards():

@@ -3,6 +3,7 @@ from __future__ import annotations
 from app.shared.tracing import traced, event
 
 import asyncio
+from decimal import Decimal
 from collections.abc import Callable
 from uuid import UUID
 
@@ -11,6 +12,8 @@ import httpx
 from fastapi import HTTPException
 from app.shared.config import get_settings
 from app.features.product_advisor.backend import backend_cookies
+from app.features.product_advisor.bundle import choose_bundle
+from app.features.comparison.builder import build_comparison, cross_category_message, mixed_categories
 from app.features.product_advisor.real_service import ProductResolutionError
 
 from app.features.knowledge.protocol import KnowledgeRetrievalService
@@ -199,18 +202,48 @@ class ChatService:
             def search_and_build():
                 token = backend_cookies.set(cookies or None)
                 try:
+                    if query_plan.bundle:
+                        return search_bundle()
                     matches = self.product_advisor.search(product_search)
+                    excluded = set(filter(None, query_plan.references.get('exclude_products', '').split(',')))
+                    if excluded:
+                        # "Còn mẫu nào khác": same requirements, only products not shown yet.
+                        limit = int(query_plan.references.get('result_limit') or product_search.top_k)
+                        matches = [m for m in matches if str(m.product_id) not in excluded][:limit]
                     return matches, self.product_advisor.build_cards(matches)
                 finally:
                     backend_cookies.reset(token)
 
+            def search_bundle():
+                # One verified search per product type; the combo is chosen from live prices and stock.
+                candidates = [self.product_advisor.search(segment) for segment in query_plan.bundle]
+                chosen, fits = choose_bundle(candidates, query_plan.budget, query_plan.bundle[0].max_price)
+                bundle_fit['fits'] = fits
+                cards = [card for match, segment in zip(chosen, query_plan.bundle)
+                         for card in self.product_advisor.build_cards([match], plan=segment)]
+                event('product.bundle', {'types': [s.category for s in query_plan.bundle], 'chosen': len(chosen),
+                                         'within_budget': fits, 'budget': query_plan.budget})
+                return (chosen if len(cards) == len(query_plan.bundle) else []), cards
+
+            bundle_fit = {}
             try:
                 product_matches, product_cards = await blocking(search_and_build)
+                if query_plan.bundle:
+                    query_plan = query_plan.model_copy(update={'references': {
+                        **query_plan.references, 'bundle_within_budget': 'true' if bundle_fit.get('fits') else 'false'}})
+                    if not product_matches:
+                        product_cards = []
             except ProductResolutionError as exc:
                 event('product.resolution_failed', {'reason': exc.reason}, status='warning')
                 query_plan = query_plan.model_copy(update={'clarification': str(exc)})
             except (httpx.HTTPError, ValueError) as exc:
                 raise HTTPException(status_code=503, detail="Chưa thể lấy dữ liệu sản phẩm. Kiểm tra backend, kho hàng và dịch vụ embedding.") from exc
+            if query_plan.intent == Intent.PRODUCT_COMPARE and mixed_categories(product_matches):
+                # Specifications of different product types are not comparable: explain and decline.
+                event('product.compare_declined', {'reason': 'mixed_categories',
+                                                   'categories': [m.category_name for m in product_matches]})
+                query_plan = query_plan.model_copy(update={'clarification': cross_category_message(product_matches)})
+                product_matches, product_cards = [], []
 
         """chuyển tiếp 'cookies' nhận từ Client sang hệ thống Spring Boot qua BackendClient
         Spring Security sẽ chịu trách nhiệm giải mã cookies, xác thực danh tính 
@@ -270,6 +303,7 @@ class ChatService:
             message=assistant_message,
             products=product_cards,
             sources=build_source_references(knowledge_chunks),
+            comparison=build_comparison(product_matches, product_cards) if query_plan.intent == Intent.PRODUCT_COMPARE and not query_plan.clarification else None,
             suggested_questions=[
                 "Bạn muốn tìm sản phẩm nào?",
             ]
@@ -278,14 +312,28 @@ class ChatService:
         )
 
         if customer is not None:
-            snapshot_search = product_search if product_cards else None
+            # A combo spans product types, so no single search can be refined by the next turn.
+            snapshot_search = product_search if product_cards and not query_plan.bundle else None
             if product_cards and query_plan.references.get('source') == 'owned_session_snapshot' and snapshot and snapshot.search:
                 # A detail question changes the selected object, not the original discovery requirements.
                 snapshot_search = snapshot.search
+            references = query_plan.references
+            if snapshot_search is not None and references.get('baseline') == 'historical_display_price':
+                # A bound derived from displayed prices is not a user requirement; it must not leak into the next turn.
+                snapshot_search = snapshot_search.model_copy(update={
+                    'min_price': Decimal(references['carry_min_price']) if references.get('carry_min_price') else None,
+                    'max_price': Decimal(references['carry_max_price']) if references.get('carry_max_price') else None})
+            if snapshot_search is not None and references.get('result_limit'):
+                snapshot_search = snapshot_search.model_copy(update={'top_k': int(references['result_limit'])})
             categories = {match.category_name for match in product_matches if match.category_name}
             if snapshot_search is not None and not snapshot_search.category and len(categories) == 1:
                 snapshot_search = snapshot_search.model_copy(update={'category': next(iter(categories))})
-            snapshot = EvidenceSnapshot(cards=product_cards, search=snapshot_search) if product_cards else None
+            list_cards = []
+            if len({card.product_id for card in product_cards}) > 1:
+                list_cards = product_cards
+            elif references.get('source') == 'owned_session_snapshot' and snapshot:
+                list_cards = snapshot.list_cards or (snapshot.cards if len({c.product_id for c in snapshot.cards}) > 1 else [])
+            snapshot = EvidenceSnapshot(cards=product_cards, list_cards=list_cards, search=snapshot_search) if product_cards else None
             await blocking(self.conversation_service.repository.save_assistant,
                                     session_id, customer.customer_id, assistant_message, snapshot)
         if self.after_response is not None:

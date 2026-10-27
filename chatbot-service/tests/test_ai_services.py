@@ -86,7 +86,11 @@ def test_context_window_preserves_current_message_omits_identity():
     assert data["recent_messages"][0]["content"] == context.recent_messages[0].content
     assert str(context.customer.user_id) not in str(messages)
     assert context.customer.display_name not in str(messages)
-    assert schema == QueryPlan.model_json_schema()
+    expected = QueryPlan.model_json_schema()
+    # Combo fields are normalizer-only and hidden from the model schema.
+    for name in ('bundle', 'budget'):
+        expected['properties'].pop(name)
+    assert schema == expected
 
 
 def test_history_changes_interpretation_with_same_current_message():

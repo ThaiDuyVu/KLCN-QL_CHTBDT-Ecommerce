@@ -1,7 +1,6 @@
 """Durable owner-scoped conversation, using existing V1 columns only."""
 from contextlib import contextmanager
 from hashlib import sha256
-from threading import RLock
 from uuid import UUID, uuid4
 
 from fastapi import HTTPException
@@ -12,6 +11,9 @@ from app.shared.tracing import event
 from app.features.conversation.context import completed_messages
 
 
+FEEDBACK = '(SELECT f.rating FROM message_feedback f WHERE f.history_id=h.history_id)'
+
+
 class PostgresConversationRepository:
     storage = 'postgres'
 
@@ -19,8 +21,6 @@ class PostgresConversationRepository:
         if not database_url:
             raise ValueError('CONVERSATION_DATABASE_URL is required for postgres storage')
         self.database_url = database_url
-        self._ratings = {}
-        self._lock = RLock()
 
     @contextmanager
     def connect(self):
@@ -101,9 +101,15 @@ class PostgresConversationRepository:
                 pass  # Existing plain text remains readable; USER never supplies snapshots.
         return text, None
 
+    @staticmethod
+    def stored_rating(value):
+        # message_feedback lưu thang 1–5; API dùng -1 / 0 / 1.
+        if value is None or value == 3: return 0
+        return 1 if value >= 4 else -1
+
     def message(self, row):
         role=SenderType(row[2]);text,_=self.decode(role,row[3])
-        with self._lock: rating=self._ratings.get(row[0],0)
+        rating=self.stored_rating(row[5]) if len(row) > 5 else 0
         return ChatMessage(id=row[0],session_id=row[1],sender_type=role,message=text,rating=rating,created_at=row[4])
 
     def add_message(self, session_id, sender_type, message, customer_id=None):
@@ -126,14 +132,14 @@ class PostgresConversationRepository:
         limit=10 if window is None else window
         if limit <= 0: return []
         with self.connect() as conn:
-            rows=conn.execute('SELECT h.history_id,h.session_id,h.sender_type,h.message,h.created_at FROM chat_history h JOIN chat_sessions s ON s.session_id=h.session_id AND s.customer_id=h.customer_id WHERE h.session_id=%s ORDER BY h.created_at DESC,h.history_id DESC LIMIT %s',(session_id,min(limit,100))).fetchall()
+            rows=conn.execute('SELECT h.history_id,h.session_id,h.sender_type,h.message,h.created_at,'+FEEDBACK+' FROM chat_history h JOIN chat_sessions s ON s.session_id=h.session_id AND s.customer_id=h.customer_id WHERE h.session_id=%s ORDER BY h.created_at DESC,h.history_id DESC LIMIT %s',(session_id,min(limit,100))).fetchall()
         return [self.message(r) for r in reversed(rows)]
 
     def get_context_messages(self, session_id, customer_id, window=10):
         # Read a bounded audit tail; a failed USER is still available via history_page.
         with self.connect() as conn:
             self.owned(conn, session_id, customer_id)
-            rows = conn.execute('SELECT history_id,session_id,sender_type,message,created_at FROM chat_history WHERE session_id=%s AND customer_id=%s ORDER BY created_at DESC,history_id DESC LIMIT 100', (session_id, customer_id)).fetchall()
+            rows = conn.execute('SELECT h.history_id,h.session_id,h.sender_type,h.message,h.created_at,'+FEEDBACK+' FROM chat_history h WHERE h.session_id=%s AND h.customer_id=%s ORDER BY h.created_at DESC,h.history_id DESC LIMIT 100', (session_id, customer_id)).fetchall()
         history = [self.message(row) for row in reversed(rows)]
         result = completed_messages(history, window)
         event('conversation.context_selection', {'audit_rows_scanned': len(history),
@@ -142,7 +148,7 @@ class PostgresConversationRepository:
 
     def get_message(self,session_id,message_id):
         with self.connect() as conn:
-            row=conn.execute('SELECT history_id,session_id,sender_type,message,created_at FROM chat_history WHERE session_id=%s AND history_id=%s',(session_id,message_id)).fetchone()
+            row=conn.execute('SELECT h.history_id,h.session_id,h.sender_type,h.message,h.created_at,'+FEEDBACK+' FROM chat_history h WHERE h.session_id=%s AND h.history_id=%s',(session_id,message_id)).fetchone()
         return self.message(row) if row else None
 
     def get_snapshot(self,session_id,customer_id):
@@ -162,12 +168,19 @@ class PostgresConversationRepository:
         pass  # Committed atomically with the ASSISTANT envelope in save_assistant.
 
     def set_rating(self,session_id,message_id,customer_id,rating):
-        self.get_session(session_id,customer_id)
-        message=self.get_message(session_id,message_id)
-        if message is None: raise HTTPException(404,'Message not found')
-        with self._lock:self._ratings[message_id]=rating
-        message.rating=rating
-        return message
+        with self.connect() as conn:
+            self.owned(conn,session_id,customer_id)
+            found=conn.execute('SELECT 1 FROM chat_history WHERE session_id=%s AND history_id=%s AND customer_id=%s',
+                               (session_id,message_id,customer_id)).fetchone()
+            if found is None: raise HTTPException(404,'Message not found')
+            if rating == 0:
+                conn.execute('DELETE FROM message_feedback WHERE history_id=%s AND customer_id=%s',(message_id,customer_id))
+            else:
+                conn.execute('INSERT INTO message_feedback(history_id,customer_id,rating) VALUES(%s,%s,%s) '
+                             'ON CONFLICT (history_id) DO UPDATE SET rating=EXCLUDED.rating,created_at=clock_timestamp()',
+                             (message_id,customer_id,5 if rating > 0 else 1))
+        event('conversation.feedback_persisted', {'history_id':message_id, 'rating':rating, 'storage':self.storage})
+        return self.get_message(session_id,message_id)
 
 
     def history_page(self, session_id, customer_id, before=None, size=100):
@@ -179,8 +192,8 @@ class PostgresConversationRepository:
                 cursor=conn.execute('SELECT created_at,history_id FROM chat_history WHERE session_id=%s AND customer_id=%s AND history_id=%s',
                                     (session_id,customer_id,before)).fetchone()
                 if cursor is None: raise HTTPException(404,'History cursor not found')
-                condition=' AND (created_at,history_id)<(%s,%s)'
+                condition=' AND (h.created_at,h.history_id)<(%s,%s)'
                 args.extend(cursor)
             args.append(size)
-            rows=conn.execute('SELECT history_id,session_id,sender_type,message,created_at FROM chat_history WHERE session_id=%s AND customer_id=%s'+condition+' ORDER BY created_at DESC,history_id DESC LIMIT %s',args).fetchall()
+            rows=conn.execute('SELECT h.history_id,h.session_id,h.sender_type,h.message,h.created_at,'+FEEDBACK+' FROM chat_history h WHERE h.session_id=%s AND h.customer_id=%s'+condition+' ORDER BY h.created_at DESC,h.history_id DESC LIMIT %s',args).fetchall()
         return [self.message(r) for r in reversed(rows)]

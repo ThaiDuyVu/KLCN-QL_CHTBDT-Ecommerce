@@ -38,6 +38,9 @@ class ChatMessage(BaseModel):
 class EvidenceSnapshot(BaseModel):
     model_config = ConfigDict(extra="forbid")
     cards: list[ProductCard] = Field(default_factory=list, max_length=20)
+    # Latest multi-product list, kept while the customer drills into one of its items, so
+    # "máy đầu tiên" / "cái nào rẻ hơn" still mean that list after a detail answer.
+    list_cards: list[ProductCard] = Field(default_factory=list, max_length=20)
     search: ProductSearchPlan | None = None
     captured_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 

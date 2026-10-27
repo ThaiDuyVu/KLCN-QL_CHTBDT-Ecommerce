@@ -22,6 +22,9 @@ class OllamaQueryUnderstandingService:
     @traced("query.understand", ("context",))
     def understand(self, context: QueryContext) -> QueryPlan:
         schema = QueryPlan.model_json_schema()
+        # Bundles are built by the normalizer; keep them out of the small model's output schema.
+        for name in ('bundle', 'budget'):
+            schema['properties'].pop(name, None)
         history = context.recent_messages[-self.history_window:] if self.history_window else []
         messages = [
             {"role": "system", "content": (
@@ -56,7 +59,7 @@ class OllamaQueryUnderstandingService:
                 plan = QueryPlan.model_validate_json(output)
                 # Clarification and references are application-controlled: references come only
                 # from the read-only guard and the owned-snapshot resolver, never from model text.
-                plan = plan.model_copy(update={"clarification": None, "references": {}})
+                plan = plan.model_copy(update={"clarification": None, "references": {}, "bundle": [], "budget": None})
                 event("query.validation", plan)
                 return self.normalizer.normalize(plan, context) if self.normalizer else plan
             except OllamaError as exc:
