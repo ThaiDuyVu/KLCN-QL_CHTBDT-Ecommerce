@@ -21,11 +21,14 @@ class Action:
 
 
 ACTIONS = {
-    'order': r'\b(?:dat hang|dat ngay|tao don|place\s+(?:an?\s+)?order)\b',
+    # Folded "đắt" is also "dat": bare "dat" is an order only with a delegation word or a quantity.
+    'order': (r'\b(?:dat hang|dat ngay|tao don|place\s+(?:an?\s+)?order|'
+              r'dat\s+(?:giup|ho|dum|luon|cho\s+(?:toi|minh|em|tui|anh|chi)(?!\s+(?:qua|the|vay|nhi|hon|lam|ghe)\b))|dat\s+(?:\d+|mot|hai|ba)\s+(?:cai|chiec|may|san pham)|'
+              r'mua\s+(?:giup|ho|dum)|order\s+(?:for me|giup))\b'),
     'payment': r'\b(?:thanh toan|pay(?: for me)?)\b',
     'cancel': r'\b(?:huy|cancel)\b[^,;.!?\n]*?\b(?:don|order)\b',
     'change': r'\b(?:sua|thay doi|cap nhat|doi)\b[^,;.!?\n]*?\b(?:dia chi|don hang|gio hang)\b',
-    'cart': r'\b(?:them|xoa|bo)\b[^,;.!?\n]*?\bgio hang\b',
+    'cart': r'\b(?:them|xoa|bo)\b[^,;.!?\n]*?\bgio hang\b|\bthem\b[^,;.!?\n]*?\bvao gio\b',
     'ticket': r'\btao phieu\b',
 }
 DELEGATE = r'\b(?:hay|giup|ho toi|ngay|please|for me|thuc hien|tien hanh)\b'

@@ -1,0 +1,34 @@
+[
+  {"id": "H01", "dimension": "D1_price_comparative", "title": "Diễn đạt khác của đắt hơn / rẻ hơn", "turns": [
+    {"say": "cho mình xem điện thoại Samsung", "expect": {"products": true, "category": "Điện thoại", "brand": "Samsung"}},
+    {"say": "có loại nào đắt hơn chút không", "expect": {"products": true, "category": "Điện thoại", "brand": "Samsung", "price_vs_prev": "gt"}},
+    {"say": "có cái nào giá thấp hơn không", "expect": {"products": true, "category": "Điện thoại", "brand": "Samsung", "price_vs_prev": "lt"}}
+  ]},
+  {"id": "H02", "dimension": "D2_refine_carry_over", "title": "Thu hẹp bằng câu cụt", "turns": [
+    {"say": "mình cần laptop để làm việc", "expect": {"products": true, "category": "Laptop"}},
+    {"say": "RAM 16GB trở lên", "expect": {"products": true, "category": "Laptop", "min_ram": 16}},
+    {"say": "tối đa 40 triệu thôi", "expect": {"products": true, "category": "Laptop", "min_ram": 16, "max_price": 40000000}}
+  ]},
+  {"id": "H03", "dimension": "D3_slot_override", "title": "Đổi hãng trên điện thoại", "turns": [
+    {"say": "điện thoại Xiaomi dưới 20 triệu", "expect": {"products": true, "category": "Điện thoại", "brand": "Xiaomi", "max_price": 20000000}},
+    {"say": "thế còn Samsung", "expect": {"products": true, "category": "Điện thoại", "brand": "Samsung", "max_price": 20000000}}
+  ]},
+  {"id": "H04", "dimension": "D4_pronoun_reference", "title": "Đại từ sau khi hỏi tên sản phẩm", "turns": [
+    {"say": "Dell XPS 13 có mấy phiên bản", "expect": {"products": true, "product": "Dell XPS 13"}},
+    {"say": "con đó giá bao nhiêu", "expect": {"products": true, "product": "Dell XPS 13"}},
+    {"say": "bản 1TB của nó thì sao", "expect": {"products": true, "product": "Dell XPS 13", "min_storage": 1024}}
+  ]},
+  {"id": "H05", "dimension": "D6_compare_follow_up", "title": "Chọn trong danh sách vừa gợi ý", "turns": [
+    {"say": "gợi ý vài điện thoại Apple", "expect": {"products": true, "category": "Điện thoại", "brand": "Apple", "min_cards": 2}},
+    {"say": "máy nào đắt nhất", "expect": {"products": true, "product": "iPhone 16"}},
+    {"say": "cái thứ hai còn hàng không", "expect": {"products": true, "referent": "card:turn1:2"}}
+  ]},
+  {"id": "H06", "dimension": "D9_more_results", "title": "Xin thêm gợi ý", "turns": [
+    {"say": "gợi ý 2 laptop", "expect": {"products": true, "category": "Laptop"}},
+    {"say": "có mẫu khác không", "expect": {"products": true, "category": "Laptop", "exclude_prev": true}}
+  ]},
+  {"id": "H07", "dimension": "D12_stale_slot_reset", "title": "Câu mới đủ ý không kế thừa điều kiện cũ", "turns": [
+    {"say": "laptop ASUS RAM 32GB", "expect": {"products": true, "category": "Laptop", "brand": "ASUS", "min_ram": 32}},
+    {"say": "tìm giúp mình điện thoại dưới 10 triệu", "expect": {"products": true, "category": "Điện thoại", "max_price": 10000000}}
+  ]}
+]

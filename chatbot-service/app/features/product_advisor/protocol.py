@@ -15,5 +15,6 @@ class ProductAdvisorService(Protocol):
     def build_cards(
         self,
         matches: list[ProductMatch],
+        plan: ProductSearchPlan | None = None,
     ) -> list[ProductCard]:
         ...

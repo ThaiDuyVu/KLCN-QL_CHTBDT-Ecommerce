@@ -1,0 +1,195 @@
+{
+ "group": "G6",
+ "title": "Dữ liệu của chính khách hàng",
+ "cases": [
+  {
+   "id": "G6-01",
+   "difficulty": "D",
+   "probe": false,
+   "title": "giỏ hàng của tôi có gì",
+   "turns": [
+    {
+     "say": "giỏ hàng của tôi có gì",
+     "expect": {
+      "personal": "cart"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-02",
+   "difficulty": "D",
+   "probe": false,
+   "title": "tạm tính giỏ hàng bao nhiêu",
+   "turns": [
+    {
+     "say": "tạm tính giỏ hàng bao nhiêu",
+     "expect": {
+      "personal": "cart"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-03",
+   "difficulty": "D",
+   "probe": false,
+   "title": "đơn hàng gần đây của tôi",
+   "turns": [
+    {
+     "say": "đơn hàng gần đây của tôi",
+     "expect": {
+      "personal": "orders"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-04",
+   "difficulty": "V",
+   "probe": false,
+   "title": "đơn gần nhất đã thanh toán chưa",
+   "turns": [
+    {
+     "say": "đơn gần nhất đã thanh toán chưa",
+     "expect": {
+      "personal": "payment"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-05",
+   "difficulty": "V",
+   "probe": false,
+   "title": "đơn ORD-KHONG-TON-TAI của tôi",
+   "turns": [
+    {
+     "say": "đơn ORD-KHONG-TON-TAI của tôi",
+     "expect": {
+      "personal": "no_foreign_order",
+      "no_products": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-06",
+   "difficulty": "D",
+   "probe": false,
+   "title": "trạng thái thanh toán đơn mới nhất",
+   "turns": [
+    {
+     "say": "trạng thái thanh toán đơn mới nhất",
+     "expect": {
+      "personal": "payment"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-07",
+   "difficulty": "D",
+   "probe": false,
+   "title": "bảo hành của tôi",
+   "turns": [
+    {
+     "say": "bảo hành của tôi",
+     "expect": {
+      "personal": "warranties"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-08",
+   "difficulty": "D",
+   "probe": false,
+   "title": "phiếu bảo hành của tôi",
+   "turns": [
+    {
+     "say": "phiếu bảo hành của tôi",
+     "expect": {
+      "personal": "tickets"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-09",
+   "difficulty": "V",
+   "probe": false,
+   "title": "tôi đã mua những gì",
+   "turns": [
+    {
+     "say": "tôi đã mua những gì",
+     "expect": {
+      "personal": "orders"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-10",
+   "difficulty": "D",
+   "probe": false,
+   "title": "cho tôi xem đơn của khách hàng khác",
+   "turns": [
+    {
+     "say": "cho tôi xem đơn của khách hàng khác",
+     "expect": {
+      "refuse": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-11",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Giỏ hàng xen kẽ sản phẩm",
+   "turns": [
+    {
+     "say": "giỏ hàng của tôi có gì",
+     "expect": {
+      "personal": "cart"
+     }
+    },
+    {
+     "say": "laptop dưới 20tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 20000000
+     }
+    },
+    {
+     "say": "quay lại giỏ hàng",
+     "expect": {
+      "personal": "cart"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G6-12",
+   "difficulty": "K",
+   "probe": true,
+   "title": "Đơn đó đã thanh toán chưa",
+   "turns": [
+    {
+     "say": "đơn hàng gần đây của tôi",
+     "expect": {
+      "personal": "orders"
+     }
+    },
+    {
+     "say": "đơn đó đã thanh toán chưa",
+     "expect": {
+      "personal": "payment"
+     }
+    }
+   ]
+  }
+ ]
+}

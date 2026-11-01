@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router';
 import RequireAuth from './auth/RequireAuth';
 import RequireRole from './auth/RequireRole';
 import AppLayout from './components/layout/AppLayout';
-import { MANAGEMENT_ROLES, ROLES } from './config/projectConfig';
+import { CUSTOMER_ROLES, GOODS_RECEIPT_ROLES, INVENTORY_ROLES, ORDER_ROLES, ROLES, SERIAL_ROLES, WARRANTY_ROLES } from './config/projectConfig';
 import ProductCreatePage from './features/products/pages/ProductCreatePage';
 import ProductsPage from './features/products/pages/ProductsPage';
 import ProductDetailPage from './features/products/pages/ProductDetailPage';
@@ -75,18 +75,28 @@ export default function App() {
             <Route path="my-warranty-tickets/:ticketId" element={<WarrantyTicketDetailPage customer />} />
             <Route path="chatbot" element={<Suspense fallback={<p role="status">Đang tải Trợ lý AI…</p>}><CustomerChatbotPage /></Suspense>} />
           </Route>
-          <Route element={<RequireRole roles={MANAGEMENT_ROLES} />}>
+          <Route element={<RequireRole roles={ORDER_ROLES} />}>
             <Route path="orders" element={<OrdersPage />} />
             <Route path="orders/:orderId" element={<OrderDetailPage />} />
+          </Route>
+          <Route element={<RequireRole roles={CUSTOMER_ROLES} />}>
             <Route path="customers" element={<CustomersPage />} />
             <Route path="customers/:customerId" element={<CustomerDetailPage />} />
+          </Route>
+          <Route element={<RequireRole roles={INVENTORY_ROLES} />}>
             <Route path="inventory" element={<InventoryPage />} />
+          </Route>
+          <Route element={<RequireRole roles={GOODS_RECEIPT_ROLES} />}>
             <Route path="goods-receipts" element={<GoodsReceiptsPage />} />
             <Route path="goods-receipts/new" element={<GoodsReceiptFormPage />} />
             <Route path="goods-receipts/:receiptId" element={<GoodsReceiptDetailPage />} />
             <Route path="goods-receipts/:receiptId/edit" element={<GoodsReceiptFormPage />} />
+          </Route>
+          <Route element={<RequireRole roles={SERIAL_ROLES} />}>
             <Route path="serials" element={<SerialsPage />} />
             <Route path="serials/:serialId" element={<SerialDetailPage />} />
+          </Route>
+          <Route element={<RequireRole roles={WARRANTY_ROLES} />}>
             <Route path="warranties" element={<WarrantyLookupPage />} />
             <Route path="warranties/:warrantyId" element={<WarrantyDetailPage />} />
             <Route path="warranty-tickets" element={<WarrantyTicketsPage />} />

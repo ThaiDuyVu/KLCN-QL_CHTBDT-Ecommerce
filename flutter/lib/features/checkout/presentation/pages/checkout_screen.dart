@@ -165,6 +165,15 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     final selectedAddress = ref.watch(selectedAddressProvider);
     final selectedPayment = ref.watch(selectedPaymentMethodProvider);
 
+    // VNPAY đang tắt ở backend thì không cho giữ lựa chọn này
+    ref.listen<AsyncValue<bool>>(vnpayEnabledProvider, (_, next) {
+      if (next.valueOrNull == false &&
+          ref.read(selectedPaymentMethodProvider) == PaymentMethodOption.vnpay) {
+        ref.read(selectedPaymentMethodProvider.notifier).state =
+            PaymentMethodOption.cod;
+      }
+    });
+
     // Tự động gán địa chỉ mặc định khi danh sách địa chỉ tải xong
     ref.listen<AsyncValue<List<AddressModel>>>(addressListProvider, (_, next) {
       next.whenData((addresses) {
@@ -584,7 +593,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
             const SizedBox(height: 12),
-            ...PaymentMethodOption.values.map((method) {
+            ...availablePaymentMethods(
+              vnpayEnabled: ref.watch(vnpayEnabledProvider).valueOrNull ?? false,
+            ).map((method) {
               final isSelected = selectedPayment == method;
               return Container(
                 margin: const EdgeInsets.only(bottom: 8),

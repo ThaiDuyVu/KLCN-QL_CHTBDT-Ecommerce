@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/address_model.dart';
 import '../../data/address_repository.dart';
+import '../../data/payment_config_repository.dart';
 import '../../data/payment_method.dart';
 
 final addressRepositoryProvider = Provider<AddressRepository>((ref) {
@@ -31,4 +32,12 @@ final selectedAddressProvider =
 
 final selectedPaymentMethodProvider = StateProvider<PaymentMethodOption>((ref) {
   return PaymentMethodOption.cod;
+});
+
+final paymentConfigRepositoryProvider = Provider<PaymentConfigRepository>((ref) {
+  return PaymentConfigRepository();
+});
+
+final vnpayEnabledProvider = FutureProvider.autoDispose<bool>((ref) {
+  return ref.watch(paymentConfigRepositoryProvider).isVnpayEnabled();
 });

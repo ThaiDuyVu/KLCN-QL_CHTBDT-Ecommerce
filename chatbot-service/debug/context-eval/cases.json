@@ -1,0 +1,647 @@
+[
+ {
+  "id": "C01",
+  "dimension": "D1_price_comparative",
+  "title": "Chuỗi rẻ hơn / mắc hơn (tái hiện UAT)",
+  "turns": [
+   {
+    "say": "Tôi cần tìm 1 laptop ram 16G",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "min_ram": 16
+    }
+   },
+   {
+    "say": "có sản phẩm nào mắc hơn xíu",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "min_ram": 16,
+     "price_vs_prev": "gt"
+    }
+   },
+   {
+    "say": "rẻ hơn chút",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "min_ram": 16,
+     "price_vs_prev": "lt"
+    }
+   },
+   {
+    "say": "rẻ hơn nữa",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "min_ram": 16,
+     "price_vs_prev": "lt"
+    }
+   }
+  ]
+ },
+ {
+  "id": "C02",
+  "dimension": "D2_refine_carry_over",
+  "title": "Thu hẹp dần điều kiện, giữ điều kiện cũ",
+  "turns": [
+   {
+    "say": "gợi ý laptop RAM 16GB",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "min_ram": 16
+    }
+   },
+   {
+    "say": "chỉ lấy hãng Dell thôi",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "brand": "Dell",
+     "min_ram": 16
+    }
+   },
+   {
+    "say": "dưới 35 triệu",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "brand": "Dell",
+     "min_ram": 16,
+     "max_price": 35000000
+    }
+   },
+   {
+    "say": "bỏ điều kiện giá, có bản 1TB không",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "brand": "Dell",
+     "min_storage": 1024
+    }
+   }
+  ]
+ },
+ {
+  "id": "C03",
+  "dimension": "D3_slot_override",
+  "title": "Đổi hãng nhưng giữ danh mục",
+  "turns": [
+   {
+    "say": "laptop Dell nào đang có",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "brand": "Dell"
+    }
+   },
+   {
+    "say": "còn của ASUS thì sao",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "brand": "ASUS"
+    }
+   },
+   {
+    "say": "Apple thì có mẫu nào",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "brand": "Apple"
+    }
+   }
+  ]
+ },
+ {
+  "id": "C04",
+  "dimension": "D12_stale_slot_reset",
+  "title": "Đổi danh mục phải bỏ điều kiện không còn phù hợp",
+  "turns": [
+   {
+    "say": "laptop RAM 32GB",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "min_ram": 32
+    }
+   },
+   {
+    "say": "giờ tôi muốn xem điện thoại Samsung",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "brand": "Samsung"
+    }
+   }
+  ]
+ },
+ {
+  "id": "C05",
+  "dimension": "D4_ordinal_reference",
+  "title": "Tham chiếu thứ tự trên nhiều kết quả",
+  "turns": [
+   {
+    "say": "gợi ý 3 laptop",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "min_cards": 2
+    }
+   },
+   {
+    "say": "máy thứ hai giá bao nhiêu",
+    "expect": {
+     "products": true,
+     "referent": "card:prev:2"
+    }
+   },
+   {
+    "say": "máy đầu tiên bảo hành bao lâu",
+    "expect": {
+     "products": true,
+     "referent": "card:turn1:1",
+     "text_any": [
+      "bảo hành"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "C06",
+  "dimension": "D4_pronoun_reference",
+  "title": "Đại từ 'nó / máy này' cho 1 sản phẩm",
+  "turns": [
+   {
+    "say": "MacBook Air M2 giá bao nhiêu",
+    "expect": {
+     "products": true,
+     "product": "MacBook Air M2"
+    }
+   },
+   {
+    "say": "nó còn hàng không",
+    "expect": {
+     "products": true,
+     "product": "MacBook Air M2",
+     "text_any": [
+      "còn",
+      "hết hàng",
+      "tồn"
+     ]
+    }
+   },
+   {
+    "say": "máy này bảo hành mấy tháng",
+    "expect": {
+     "products": true,
+     "product": "MacBook Air M2",
+     "text_any": [
+      "bảo hành"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "C07",
+  "dimension": "D5_variant_follow_up",
+  "title": "Hỏi tiếp phiên bản của sản phẩm vừa nói",
+  "turns": [
+   {
+    "say": "Xiaomi 15 có những bản nào",
+    "expect": {
+     "products": true,
+     "product": "Xiaomi 15"
+    }
+   },
+   {
+    "say": "bản 512GB giá bao nhiêu",
+    "expect": {
+     "products": true,
+     "product": "Xiaomi 15",
+     "min_storage": 512
+    }
+   },
+   {
+    "say": "còn bản RAM 16GB thì sao",
+    "expect": {
+     "products": true,
+     "product": "Xiaomi 15",
+     "min_ram": 16
+    }
+   }
+  ]
+ },
+ {
+  "id": "C08",
+  "dimension": "D6_compare_follow_up",
+  "title": "Hỏi tiếp trong phạm vi 2 sản phẩm đang so sánh",
+  "turns": [
+   {
+    "say": "so sánh Dell XPS 13 và MacBook Air M2",
+    "expect": {
+     "products": true,
+     "product_set": [
+      "Dell XPS 13",
+      "MacBook Air M2"
+     ]
+    }
+   },
+   {
+    "say": "cái nào rẻ hơn",
+    "expect": {
+     "within_products": [
+      "Dell XPS 13",
+      "MacBook Air M2"
+     ],
+     "text_any": [
+      "MacBook Air M2"
+     ]
+    }
+   },
+   {
+    "say": "cái nào RAM nhiều hơn",
+    "expect": {
+     "within_products": [
+      "Dell XPS 13",
+      "MacBook Air M2"
+     ],
+     "text_any": [
+      "Dell XPS 13"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "C09",
+  "dimension": "D7_topic_switch_return",
+  "title": "Chen câu hỏi giỏ hàng rồi quay lại sản phẩm",
+  "turns": [
+   {
+    "say": "laptop dưới 20 triệu",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "max_price": 20000000
+    }
+   },
+   {
+    "say": "giỏ hàng của tôi có gì",
+    "expect": {}
+   },
+   {
+    "say": "quay lại laptop lúc nãy, có máy nào rẻ hơn không",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "price_vs": "turn1:lt"
+    }
+   }
+  ]
+ },
+ {
+  "id": "C10",
+  "dimension": "D8_long_distance",
+  "title": "Tham chiếu sản phẩm cách 3 lượt",
+  "turns": [
+   {
+    "say": "điện thoại Samsung RAM 12GB",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "brand": "Samsung",
+     "min_ram": 12
+    }
+   },
+   {
+    "say": "xin chào",
+    "expect": {}
+   },
+   {
+    "say": "bạn có thể làm gì",
+    "expect": {}
+   },
+   {
+    "say": "cái đầu tiên lúc nãy giá bao nhiêu",
+    "expect": {
+     "products": true,
+     "referent": "card:turn1:1"
+    }
+   }
+  ]
+ },
+ {
+  "id": "C11",
+  "dimension": "D9_more_results",
+  "title": "Xin thêm lựa chọn khác",
+  "turns": [
+   {
+    "say": "gợi ý 1 điện thoại Apple",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "brand": "Apple"
+    }
+   },
+   {
+    "say": "còn mẫu nào khác không",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "brand": "Apple",
+     "exclude_prev": true
+    }
+   }
+  ]
+ },
+ {
+  "id": "C12",
+  "dimension": "D10_correction",
+  "title": "Người dùng sửa lại điều kiện vừa nói",
+  "turns": [
+   {
+    "say": "laptop RAM 8GB",
+    "expect": {
+     "products": true,
+     "category": "Laptop"
+    }
+   },
+   {
+    "say": "à không, ý tôi là RAM 32GB",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "min_ram": 32
+    }
+   },
+   {
+    "say": "của ASUS",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "brand": "ASUS",
+     "min_ram": 32
+    }
+   }
+  ]
+ },
+ {
+  "id": "C13",
+  "dimension": "D11_colloquial",
+  "title": "Văn nói: 'con này', 'con nào rẻ nhất'",
+  "turns": [
+   {
+    "say": "mấy con điện thoại Xiaomi",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "brand": "Xiaomi"
+    }
+   },
+   {
+    "say": "con nào rẻ nhất",
+    "expect": {
+     "products": true,
+     "product": "Xiaomi Redmi Note 13"
+    }
+   },
+   {
+    "say": "có con nào mắc hơn xíu không",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "brand": "Xiaomi",
+     "price_vs_prev": "gt"
+    }
+   }
+  ]
+ },
+ {
+  "id": "C14",
+  "dimension": "D2_budget_change",
+  "title": "Đổi ngân sách tương đối",
+  "turns": [
+   {
+    "say": "điện thoại dưới 20 triệu",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "max_price": 20000000
+    }
+   },
+   {
+    "say": "tăng ngân sách lên 25 triệu",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "max_price": 25000000
+    }
+   },
+   {
+    "say": "chỉ Apple thôi",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "brand": "Apple",
+     "max_price": 25000000
+    }
+   }
+  ]
+ },
+ {
+  "id": "C15",
+  "dimension": "D12_stale_slot_reset",
+  "title": "Yêu cầu mới không được kế thừa hãng cũ",
+  "turns": [
+   {
+    "say": "laptop Dell dưới 20 triệu",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "brand": "Dell",
+     "max_price": 20000000
+    }
+   },
+   {
+    "say": "tìm điện thoại",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại"
+    }
+   }
+  ]
+ },
+ {
+  "id": "C16",
+  "dimension": "D13_bundle_budget",
+  "title": "Combo điện thoại + laptop trong ngân sách",
+  "turns": [
+   {
+    "say": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+    "expect": {
+     "products": true,
+     "bundle_categories": [
+      "Điện thoại",
+      "Laptop"
+     ],
+     "max_total": 100000000,
+     "text_any": [
+      "Tổng cộng"
+     ]
+    }
+   },
+   {
+    "say": "máy thứ hai bảo hành bao lâu",
+    "expect": {
+     "products": true,
+     "referent": "card:prev:2"
+    }
+   }
+  ]
+ },
+ {
+  "id": "C17",
+  "dimension": "D13_bundle_budget",
+  "title": "Combo ngân sách thấp + đổi thứ tự loại",
+  "turns": [
+   {
+    "say": "ngân sách 40 triệu mua 1 laptop và 1 điện thoại",
+    "expect": {
+     "products": true,
+     "bundle_categories": [
+      "Điện thoại",
+      "Laptop"
+     ],
+     "max_total": 40000000
+    }
+   }
+  ]
+ },
+ {
+  "id": "C18",
+  "dimension": "D14_approximate_price",
+  "title": "Giá khoảng / tầm",
+  "turns": [
+   {
+    "say": "laptop khoảng 25tr",
+    "expect": {
+     "products": true,
+     "category": "Laptop",
+     "min_price_band": [
+      21250000,
+      28750000
+     ]
+    }
+   },
+   {
+    "say": "dt tầm 20 triệu",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "min_price_band": [
+      17000000,
+      23000000
+     ]
+    }
+   },
+   {
+    "say": "rẻ hơn",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "price_vs_prev": "lt"
+    }
+   }
+  ]
+ },
+ {
+  "id": "C19",
+  "dimension": "D14_approximate_price",
+  "title": "Mức giá cố định lớn hơn / rẻ hơn",
+  "turns": [
+   {
+    "say": "laptop giá lớn hơn 30tr",
+    "expect": {
+     "products": true,
+     "category": "Laptop"
+    }
+   },
+   {
+    "say": "dt rẽ hơn 15tr",
+    "expect": {
+     "products": true,
+     "category": "Điện thoại",
+     "max_price": 14999999
+    }
+   }
+  ]
+ },
+ {
+  "id": "C20",
+  "dimension": "D15_compare",
+  "title": "So sánh cùng danh mục bằng thông số",
+  "turns": [
+   {
+    "say": "so sánh Dell XPS 13 và MacBook Air M2",
+    "expect": {
+     "products": true,
+     "product_set": [
+      "Dell XPS 13",
+      "MacBook Air M2"
+     ],
+     "text_any": [
+      "RAM cao hơn"
+     ]
+    }
+   },
+   {
+    "say": "cái nào rẻ hơn",
+    "expect": {
+     "products": true,
+     "product": "MacBook Air M2"
+    }
+   }
+  ]
+ },
+ {
+  "id": "C21",
+  "dimension": "D15_compare",
+  "title": "So sánh khác danh mục bị từ chối",
+  "turns": [
+   {
+    "say": "so sánh iPhone 15 với Dell XPS 13",
+    "expect": {
+     "no_products": true,
+     "text_any": [
+      "không so sánh"
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "id": "C22",
+  "dimension": "D15_compare",
+  "title": "So sánh không dùng chữ 'so sánh'",
+  "turns": [
+   {
+    "say": "Xiaomi 15 với iPhone 15 cái nào hơn",
+    "expect": {
+     "products": true,
+     "product_set": [
+      "Xiaomi 15",
+      "iPhone 15"
+     ],
+     "text_any": [
+      "Tóm lại"
+     ]
+    }
+   }
+  ]
+ }
+]

@@ -1,0 +1,151 @@
+@startuml
+' Sơ đồ lớp thiết kế — 3.7.4.2a Sản phẩm (Product Catalog)
+' Sinh từ mã nguồn: thuộc tính lấy từ lớp @Entity, phương thức từ interface *Service, quan hệ và bội số từ khóa ngoại schema.
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor<<chưa cài đặt>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title Sơ đồ lớp thiết kế — 3.7.4.2a Sản phẩm (Product Catalog)
+
+package "Entity (tầng dữ liệu)" {
+class Category <<entity>> {
+  - categoryId : UUID {id}
+  - categoryName : String
+  - description : String
+  - status : CategoryStatus
+}
+class Brand <<entity>> {
+  - brandId : UUID {id}
+  - brandName : String
+  - description : String
+  - status : BrandStatus
+}
+class Product <<entity>> {
+  - productId : UUID {id}
+  - productName : String
+  - description : String
+  - status : ProductStatus
+  - createdAt : OffsetDateTime
+  - updatedAt : OffsetDateTime
+}
+class ProductVariant <<entity>> {
+  - variantId : UUID {id}
+  - sku : String
+  - price : BigDecimal
+  - costPrice : BigDecimal
+  - color : String
+  - storage : String
+  - ram : String
+  - status : ProductVariantStatus
+  - trackingType : ProductTrackingType
+  - warrantyMonths : Integer
+}
+class ProductImage <<entity>> {
+  - imageId : UUID {id}
+  - imageUrl : String
+  - primary : Boolean
+}
+class Specification <<entity>> {
+  - specificationId : UUID
+  - specKey : String
+  - specValue : String
+}
+enum CategoryStatus {
+  ACTIVE
+  INACTIVE
+}
+enum BrandStatus {
+  ACTIVE
+  INACTIVE
+}
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+}
+enum ProductVariantStatus {
+  ACTIVE
+  INACTIVE
+}
+enum ProductTrackingType {
+  NONE
+  SERIAL
+  IMEI
+}
+}
+package "Service (tầng nghiệp vụ)" {
+interface CategoryService {
+  + createCategory(request) : CategoryResponse
+  + getAllCategories() : List<CategoryResponse>
+  + getRootCategories() : List<CategoryResponse>
+  + getCategoryChildren(parentId) : List<CategoryResponse>
+  + getCategoryById(id) : CategoryResponse
+  + updateCategory(id, request) : CategoryResponse
+  + deleteCategory(id) : void
+}
+interface BrandService {
+  + createBrand(request) : BrandResponse
+  + getBrands(page, size) : BrandPageResponse
+  + getBrandById(id) : BrandResponse
+  + updateBrand(id, request) : BrandResponse
+  + deleteBrand(id) : void
+}
+interface ProductService {
+  + createProduct(request) : ProductResponse
+  + getProducts(page, size) : ProductPageResponse
+  + getProducts(page, size, keyword, categoryId, brandId, status) : ProductPageResponse
+  + getProducts(page, size, keyword, categoryId, brandId, status, warehouseId) : ProductPageResponse
+  + getProducts(page, size, keyword, categoryId, brandId, status, warehouseId, onSale) : ProductPageResponse
+  + getProductById(id) : ProductResponse
+  + getProductById(id, warehouseId) : ProductResponse
+  + updateProduct(id, request) : ProductResponse
+  + deleteProduct(id) : void
+}
+interface ProductVariantService {
+  + createVariant(request) : ProductVariantResponse
+  + getVariants(productId, page, size) : ProductVariantPageResponse
+  + searchVariants(page, size, keyword, categoryId, brandId, trackingType) : ProductVariantPageResponse
+  + getVariantsByProductId(productId) : List<ProductVariantResponse>
+  + getVariantById(id) : ProductVariantResponse
+  + updateVariant(id, request) : ProductVariantResponse
+  + deleteVariant(id) : void
+}
+interface ProductImageService {
+  + createImage(productId, request) : ProductImageResponse
+  + getImages(productId) : List<ProductImageResponse>
+  + getImageById(productId, imageId) : ProductImageResponse
+  + updateImage(productId, imageId, request) : ProductImageResponse
+  + deleteImage(productId, imageId) : void
+}
+interface SpecificationService {
+  + createSpecification(productId, request) : SpecificationResponse
+  + getSpecifications(productId) : List<SpecificationResponse>
+  + getSpecificationById(productId, specificationId) : SpecificationResponse
+  + updateSpecification(productId, specificationId, request) : SpecificationResponse
+  + deleteSpecification(productId, specificationId) : void
+}
+interface ProductDetailService {
+  + getProductDetail(productId) : ProductDetailResponse
+  + getProductDetail(productId, warehouseId) : ProductDetailResponse
+}
+}
+Category "0..1" -- "0..*" Category : parentId >
+Category "1" -- "0..*" Product : categoryId >
+Brand "1" -- "0..*" Product : brandId >
+Product "1" -- "0..*" ProductVariant : productId >
+Product "1" -- "0..*" ProductImage : productId >
+Product "1" -- "0..*" Specification : productId >
+Category ..> CategoryStatus
+Brand ..> BrandStatus
+Product ..> ProductStatus
+ProductVariant ..> ProductVariantStatus
+ProductVariant ..> ProductTrackingType
+CategoryService ..> Category : sử dụng
+BrandService ..> Brand : sử dụng
+ProductService ..> Product : sử dụng
+ProductVariantService ..> ProductVariant : sử dụng
+ProductImageService ..> ProductImage : sử dụng
+SpecificationService ..> Specification : sử dụng
+ProductDetailService ..> Product : sử dụng
+@enduml

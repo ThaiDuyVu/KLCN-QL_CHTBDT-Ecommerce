@@ -15,7 +15,7 @@ public class InventoryController {
     public InventoryController(InventoryService inventoryService) { this.inventoryService = inventoryService; }
 
     @GetMapping
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER", "SALES_STAFF"})
     public ResponseEntity<InventoryPageResponse> list(
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) UUID warehouseId,
@@ -26,7 +26,7 @@ public class InventoryController {
     }
 
     @GetMapping("/{inventoryId}")
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER", "SALES_STAFF"})
     public ResponseEntity<InventoryResponse> detail(@PathVariable UUID inventoryId) {
         return ResponseEntity.ok(inventoryService.getInventoryById(inventoryId));
     }

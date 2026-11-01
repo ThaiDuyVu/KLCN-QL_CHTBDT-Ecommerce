@@ -1,0 +1,225 @@
+@startuml
+' Sơ đồ lớp mức PHÂN TÍCH (3.6.1) — khái niệm nghiệp vụ rút ra từ các use case đã chốt.
+' Chỉ có thuộc tính chính và quan hệ có bội số; không có kiểu dữ liệu, phương thức hay bảng trung gian kỹ thuật.
+' <<chưa cài đặt>>: có trong phân tích/thiết kế, hệ thống hiện chưa cài đặt (giữ theo quyết định D2).
+hide empty members
+hide circle
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor<<chưa cài đặt>> #FFF3E0
+}
+title Sơ đồ lớp phân tích tổng quát
+
+package "Người dùng" {
+  class TaiKhoan as "Tài khoản (User)" {
+    tên đăng nhập
+    email, số điện thoại
+    trạng thái
+  }
+  class VaiTro as "Vai trò (Role)" {
+    tên vai trò
+  }
+  class Quyen as "Quyền (Permission)" {
+    tên quyền
+  }
+  class NhanVien as "Nhân viên (Employee)" {
+    mã nhân viên
+    họ tên, chức vụ
+  }
+  class KhachHang as "Khách hàng (Customer)" {
+    họ tên
+    điểm tích lũy
+    hạng thành viên
+  }
+  class DiaChi as "Địa chỉ giao hàng" {
+    người nhận, số điện thoại
+    địa chỉ
+    mặc định
+  }
+}
+
+package "Hàng hóa" {
+  class DanhMuc as "Danh mục (Category)" {
+    tên danh mục
+  }
+  class ThuongHieu as "Thương hiệu (Brand)" {
+    tên thương hiệu
+  }
+  class SanPham as "Sản phẩm (Product)" {
+    tên sản phẩm
+    mô tả
+  }
+  class BienThe as "Biến thể (ProductVariant)" {
+    SKU
+    màu, RAM, bộ nhớ
+    giá bán
+    cách theo dõi (không / Serial / IMEI)
+    thời hạn bảo hành
+  }
+  class ThongSo as "Thông số kỹ thuật" {
+    tên thông số
+    giá trị
+  }
+  class KhuyenMai as "Khuyến mãi (Promotion)" {
+    loại giảm (%, số tiền)
+    giá trị giảm
+    thời gian áp dụng
+  }
+}
+
+package "Kho" {
+  class NhaCungCap as "Nhà cung cấp (Supplier)" {
+    mã, tên, liên hệ
+  }
+  class ChiNhanh as "Kho / chi nhánh (Warehouse)" {
+    tên, địa chỉ
+  }
+  class TonKho as "Tồn kho (Inventory)" {
+    số lượng
+    số lượng giữ chỗ
+  }
+  class PhieuNhap as "Phiếu nhập kho (GoodsReceipt)" {
+    mã phiếu, ngày nhập
+    tổng tiền
+    trạng thái duyệt
+  }
+  class ThietBi as "Thiết bị (Serial / IMEI)" {
+    số Serial
+    các mã IMEI
+    trạng thái
+  }
+  class DonDatHangNCC as "Đơn đặt hàng NCC" <<chưa cài đặt>> {
+    mã đơn, trạng thái duyệt
+  }
+  class PhieuXuat as "Phiếu xuất kho" <<chưa cài đặt>> {
+    lý do xuất
+  }
+  class KiemKe as "Biên bản kiểm kê" <<chưa cài đặt>> {
+    số lượng thực tế, chênh lệch
+  }
+  class DieuChuyen as "Phiếu điều chuyển" <<chưa cài đặt>> {
+    kho xuất, kho nhận
+  }
+}
+
+package "Bán hàng" {
+  class GioHang as "Giỏ hàng (Cart)" {
+    trạng thái
+  }
+  class DonHang as "Đơn hàng (Order)" {
+    mã đơn, ngày đặt
+    người nhận, địa chỉ giao
+    tạm tính, giảm giá, phí giao, tổng tiền
+    trạng thái
+  }
+  class DongDonHang as "Dòng đơn hàng" {
+    số lượng
+    đơn giá, giảm giá, đơn giá cuối
+  }
+  class ThanhToan as "Thanh toán (Payment)" {
+    phương thức (COD, trực tuyến, trả góp)
+    số tiền, trạng thái
+  }
+  class TraGop as "Hồ sơ trả góp" {
+    trả trước, còn lại
+    kỳ hạn, trạng thái duyệt
+  }
+  class DonViTraGop as "Đơn vị tài chính" {
+    tên, mã
+  }
+  class HoaDon as "Hóa đơn" <<chưa cài đặt>> {
+    số hóa đơn, ngày phát hành
+  }
+  class GiaoHang as "Giao hàng – lắp đặt" <<chưa cài đặt>> {
+    mã vận đơn
+    ngày giao
+  }
+}
+
+package "Hậu mãi" {
+  class BaoHanh as "Bảo hành (Warranty)" {
+    ngày bắt đầu, ngày kết thúc
+    trạng thái
+  }
+  class PhieuBaoHanh as "Phiếu bảo hành (WarrantyTicket)" {
+    mã phiếu, mô tả lỗi
+    kết quả xử lý, trạng thái
+  }
+  class DanhGia as "Đánh giá sản phẩm" <<chưa cài đặt>> {
+    số sao, nội dung
+    phản hồi của nhân viên
+  }
+}
+
+package "Chatbot" {
+  class PhienChat as "Phiên hội thoại" {
+    thời điểm bắt đầu / kết thúc
+  }
+  class TinNhan as "Tin nhắn" {
+    người gửi, nội dung
+  }
+  class TaiLieu as "Tài liệu tri thức" {
+    tiêu đề, nguồn
+  }
+  class DoanTaiLieu as "Đoạn tài liệu" {
+    nội dung
+  }
+  class KichBan as "Kịch bản / Q&A chatbot" <<chưa cài đặt>> {
+    câu hỏi / từ khóa
+    câu trả lời mẫu
+  }
+}
+
+TaiKhoan "1" -- "1" VaiTro : có >
+VaiTro "*" -- "*" Quyen : gồm >
+TaiKhoan "1" -- "0..1" NhanVien
+TaiKhoan "1" -- "0..1" KhachHang
+KhachHang "1" -- "0..*" DiaChi
+
+DanhMuc "0..1" -- "0..*" DanhMuc : danh mục con >
+DanhMuc "1" -- "0..*" SanPham
+ThuongHieu "1" -- "0..*" SanPham
+SanPham "1" *-- "1..*" BienThe
+SanPham "1" *-- "0..*" ThongSo
+KhuyenMai "*" -- "*" SanPham : áp dụng cho >
+
+ChiNhanh "1" -- "0..*" TonKho
+BienThe "1" -- "0..*" TonKho
+NhaCungCap "1" -- "0..*" PhieuNhap
+ChiNhanh "1" -- "0..*" PhieuNhap
+NhanVien "1" -- "0..*" PhieuNhap : lập >
+PhieuNhap "1" *-- "1..*" ThietBi : ghi nhận khi nhập >
+BienThe "1" -- "0..*" ThietBi
+NhaCungCap "1" -- "0..*" DonDatHangNCC
+DonDatHangNCC "0..1" -- "0..*" PhieuNhap : tạo ra >
+ChiNhanh "1" -- "0..*" PhieuXuat
+ChiNhanh "1" -- "0..*" KiemKe
+ChiNhanh "2" -- "0..*" DieuChuyen : xuất / nhận >
+
+KhachHang "1" -- "0..*" GioHang
+GioHang "0..*" -- "1" ChiNhanh : mua tại >
+KhachHang "1" -- "0..*" DonHang : đặt >
+DonHang "0..*" -- "1" ChiNhanh : xuất từ >
+DonHang "1" *-- "1..*" DongDonHang
+DongDonHang "0..*" -- "1" BienThe
+DongDonHang "0..1" -- "0..1" ThietBi : thiết bị được giao >
+DonHang "1" -- "0..*" ThanhToan
+ThanhToan "1" -- "0..1" TraGop
+TraGop "0..*" -- "1" DonViTraGop
+DonHang "1" -- "0..1" HoaDon
+DonHang "1" -- "0..*" GiaoHang
+NhanVien "1" -- "0..*" GiaoHang : phụ trách >
+
+ThietBi "1" -- "0..1" BaoHanh
+DongDonHang "1" -- "0..*" BaoHanh
+KhachHang "1" -- "0..*" BaoHanh
+BaoHanh "1" -- "0..*" PhieuBaoHanh
+NhanVien "0..1" -- "0..*" PhieuBaoHanh : xử lý >
+KhachHang "1" -- "0..*" DanhGia
+DongDonHang "1" -- "0..1" DanhGia
+
+KhachHang "1" -- "0..*" PhienChat
+PhienChat "1" *-- "0..*" TinNhan
+TaiLieu "1" *-- "1..*" DoanTaiLieu
+TinNhan "0..*" -- "0..*" DoanTaiLieu : căn cứ trả lời >
+@enduml

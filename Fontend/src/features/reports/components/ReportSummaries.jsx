@@ -1,4 +1,5 @@
 import { money, statusLabels } from '../../orders/components/orderFormat';
+import { paymentLabels, paymentStatuses } from '../reportLabels';
 
 export function SummaryCards({ data }) {
   const metrics = [['Doanh thu', money(data.revenue), 'Order DELIVERED · tổng thanh toán'], ['Lợi nhuận gộp', money(data.grossProfit), 'Giá bán sau giảm − giá vốn snapshot'], ['Đơn hoàn tất', data.completedOrders, `${data.totalOrders} đơn trong phạm vi lọc`], ['Tổng giảm giá', money(data.totalDiscount), 'Discount snapshot · Order DELIVERED']];
@@ -10,8 +11,6 @@ export function OrderStatusSummary({ data }) {
   return <div className="report-status-grid">{Object.entries(statusLabels).map(([status, label]) => <div key={status}><span>{label}</span><strong>{counts[status] || 0}</strong></div>)}</div>;
 }
 
-const paymentLabels = { COD: 'COD', VNPAY: 'VNPAY', INSTALLMENT: 'Trả góp' };
-const paymentStatuses = { PENDING: 'Chờ thanh toán', PAID: 'Đã thanh toán', FAILED: 'Thất bại', REFUNDED: 'Đã hoàn tiền', CANCELLED: 'Đã hủy' };
 export function PaymentSummary({ data }) {
   if (!data.length) return <p className="report-empty">Chưa có payment của đơn trong phạm vi lọc.</p>;
   return <div className="report-table-scroll"><table className="product-table"><thead><tr><th>Phương thức</th><th>Trạng thái</th><th className="report-number">Số record</th><th className="report-number">Giá trị</th></tr></thead><tbody>{data.map((row) => <tr key={`${row.paymentMethod}:${row.status}`}><th scope="row">{paymentLabels[row.paymentMethod] || row.paymentMethod}</th><td>{paymentStatuses[row.status] || row.status}</td><td className="report-number">{row.count}</td><td className="report-number">{money(row.amount)}</td></tr>)}</tbody></table></div>;

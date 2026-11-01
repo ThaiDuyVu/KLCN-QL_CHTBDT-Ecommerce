@@ -87,16 +87,17 @@ def no_min(plan, value):
 # ---------------------------------------------------------------- Group A: price (A1/A2)
 
 def test_nx01_cheaper_than_amount_is_never_a_minimum():
-    # BR at the parser: f99f713 read "rẻ hơn 15 triệu" as min_price=15M.
-    assert price_slots(folded('laptop rẻ hơn 15 triệu')) == (None, None)
+    # BR at the parser: f99f713 read "rẻ hơn 15 triệu" as min_price=15M. DR-02: strictly below the amount.
+    assert price_slots(folded('laptop rẻ hơn 15 triệu')) == (None, 15 * MILLION - 1)
     plan = normalized('Tìm laptop rẻ hơn 15 triệu')
-    assert plan.clarification and no_min(plan, 15 * MILLION)
+    assert plan.clarification is None and no_min(plan, 15 * MILLION)
+    assert plan.product_search.max_price == 15 * MILLION - 1
 
 
-def test_nx02_lower_than_amount_is_not_a_minimum_and_clarifies_pending_dr02():
+def test_nx02_lower_than_amount_is_a_strict_maximum():
     plan = normalized('Tìm laptop giá thấp hơn 20 triệu')
     assert no_min(plan, 20 * MILLION)
-    assert plan.clarification == EXISTING_CLARIFICATION and plan.product_search is None
+    assert plan.clarification is None and plan.product_search.max_price == 20 * MILLION - 1
 
 
 @pytest.mark.parametrize('phrase', ['hơn 20 triệu', 'đắt hơn 20 triệu', 'trên 20 triệu'])
@@ -132,15 +133,16 @@ def test_nx06_existing_range_and_contradiction_control():
 
 @pytest.mark.parametrize('prompt', ['Tìm laptop tầm 15 triệu', 'Tìm laptop khoảng 15 triệu', 'Tìm laptop cỡ 15 triệu',
                                     'Tìm laptop giá khoảng 15 triệu', 'Tìm laptop giá tầm 15 triệu'])
-def test_nx07_approximate_amount_clarifies_pending_dr01(prompt):
-    plan = normalized(prompt)
-    assert plan.product_search is None and plan.clarification == EXISTING_CLARIFICATION
+def test_nx07_approximate_amount_is_a_band_around_the_amount(prompt):
+    # DR-01: "khoảng/tầm/cỡ X" = X ± 15%, ranked by closeness to X.
+    search = normalized(prompt).product_search
+    assert (search.min_price, search.max_price, search.target_price) == (Decimal('12750000'), Decimal('17250000'), 15 * MILLION)
 
 
 @pytest.mark.parametrize('prompt', ['Tìm laptop ngân sách 20tr', 'Tìm laptop với ngân sách 20tr'])
-def test_nx08_budget_amount_clarifies_pending_dr01(prompt):
-    plan = normalized(prompt)
-    assert plan.product_search is None and plan.clarification == EXISTING_CLARIFICATION
+def test_nx08_budget_amount_is_a_maximum(prompt):
+    search = normalized(prompt).product_search
+    assert (search.min_price, search.max_price, search.target_price) == (None, 20 * MILLION, None)
 
 
 @pytest.mark.parametrize('prompt,check', [
@@ -180,17 +182,17 @@ def test_nx13_weekday_is_not_an_ordinal_reference():
     assert plan.product_search is None or not plan.product_search.targets
 
 
-def test_nx14_explicit_cheaper_amount_with_snapshot_failsafe():
-    # Approved R2 behaviour needs DR-02/DR-12; the fail-safe forbids a minimum and a silent snapshot search.
+def test_nx14_explicit_cheaper_amount_refines_the_snapshot_search():
+    # The stated amount is the bound (never a minimum); the product type comes from the owned snapshot.
     plan = pipeline('Có máy nào rẻ hơn 18 triệu không?', laptops(first_price=25 * MILLION))
-    assert no_min(plan, 18 * MILLION) and plan.product_search is None
-    assert plan.clarification == EXISTING_CLARIFICATION
+    assert no_min(plan, 18 * MILLION) and plan.clarification is None
+    assert (plan.product_search.category, plan.product_search.max_price) == ('Laptop', 18 * MILLION - 1)
 
 
 def test_nx15_cheaper_ceiling_and_fresh_session_controls():
     plan = pipeline('Có loại rẻ hơn không?', laptops())
     assert plan.product_search.max_price == Decimal('15989999') and plan.product_search.min_ram_gb == 16
-    assert plan.references == {'baseline': 'historical_display_price'}
+    assert plan.references['baseline'] == 'historical_display_price'
     plan = pipeline('Có chiếc nào rẻ hơn mà RAM vẫn 16GB không?', laptops())
     assert (plan.product_search.category, plan.product_search.min_ram_gb) == ('Laptop', 16)
     fresh = pipeline('Có loại rẻ hơn không?', None, history=False)
@@ -298,7 +300,7 @@ def test_nx24_pipeline_returns_verified_cards_when_index_is_down(monkeypatch):
     monkeypatch.setattr(index, '_connect', lambda: (_ for _ in ()).throw(psycopg.OperationalError('down')))
     response = product_chat(RealProductAdvisorService(FakeBackend(), WAREHOUSE, index, FakeEmbedder())).send_message(
         uuid4(), SendMessageRequest(message='Laptop lập trình'))
-    assert [card.product_id for card in response.products] == [PRODUCT] and 'LAP-16' in response.message
+    assert [card.product_id for card in response.products] == [PRODUCT] and 'RAM 16GB, bộ nhớ 1TB' in response.message
 
 
 def test_nx25_structured_search_failure_stays_unavailable():

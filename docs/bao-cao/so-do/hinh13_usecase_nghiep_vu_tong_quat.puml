@@ -1,0 +1,83 @@
+@startuml
+' Hình 13. Sơ đồ Use-Case nghiệp vụ tổng quát (vẽ lại ở Giai đoạn 3)
+' 7 tác nhân theo 1.3.1; đã bỏ UC-13 Đổi trả (D3). Mã UC đã đánh số lại ở Giai đoạn 6 (UC-14..18 cũ thành UC-13..17).
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Khách hàng" as KH
+actor "Nhân viên bán hàng" as NVBH
+actor "Thủ kho" as TK
+actor "Nhân viên kỹ thuật/bảo hành" as NVKT
+actor "Nhân viên giao hàng" as NVGH
+actor "Quản lý cửa hàng" as QL
+actor "Admin" as AD
+actor "Nhà cung cấp" as NCC <<đối tác>>
+actor "Đơn vị tài chính" as DVTC <<đối tác>>
+actor "Cổng thanh toán" as CTT <<đối tác>>
+actor "Đơn vị bảo hành hãng" as BHH <<đối tác>>
+
+rectangle "Cửa hàng mua bán thiết bị điện tử" {
+  package "Kho & hàng hóa" {
+    usecase "UC-01 Quản lý đơn đặt hàng NCC" as UC01
+    usecase "UC-02 Xuất kho" as UC02
+    usecase "UC-03 Kiểm kê kho & điều chỉnh chênh lệch" as UC03
+    usecase "UC-04 Điều chuyển hàng giữa các kho" as UC04
+    usecase "UC-05 Quản lý danh mục hàng hóa & NCC" as UC05
+  }
+  package "Bán hàng" {
+    usecase "UC-06 Xử lý bán hàng & lập hóa đơn" as UC06
+    usecase "UC-07 Xử lý bán hàng trả góp" as UC07
+    usecase "UC-08 Lập lịch giao hàng & lắp đặt" as UC08
+    usecase "UC-09 Quản lý thông tin & hạng thành viên KH" as UC09
+    usecase "UC-10 Đặt hàng online" as UC10
+    usecase "UC-11 Tra cứu lịch sử đơn & trạng thái giao" as UC11
+  }
+  package "Hậu mãi" {
+    usecase "UC-12 Tiếp nhận & tra cứu bảo hành" as UC12
+    usecase "UC-13 Sửa chữa / chuyển bảo hành hãng" as UC14
+  }
+  package "Quản trị & chatbot" {
+    usecase "UC-14 Xem báo cáo quản trị" as UC15
+    usecase "UC-15 Quản lý người dùng & phân quyền" as UC16
+    usecase "UC-16 Tương tác với chatbot tư vấn" as UC17
+    usecase "UC-17 Quản lý kịch bản/dữ liệu chatbot" as UC18
+  }
+}
+
+TK --> UC01
+QL --> UC01
+UC01 --> NCC
+TK --> UC02
+TK --> UC03
+QL --> UC03
+TK --> UC04
+QL --> UC05
+UC05 --> NCC
+
+NVBH --> UC06
+UC06 --> CTT
+UC06 ..> TK : phụ
+NVBH --> UC07
+UC07 --> DVTC
+NVBH --> UC08
+UC08 ..> NVGH : phụ
+UC08 ..> NVKT : phụ
+NVBH --> UC09
+AD --> UC09
+KH --> UC10
+UC10 --> CTT
+KH --> UC11
+
+NVKT --> UC12
+UC12 --> BHH
+NVKT --> UC14
+UC14 ..> NVGH : phụ
+UC14 --> BHH
+
+QL --> UC15
+AD --> UC16
+KH --> UC17
+UC17 ..> NVBH : phụ
+AD --> UC18
+@enduml

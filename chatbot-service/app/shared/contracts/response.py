@@ -1,6 +1,7 @@
 from decimal import Decimal
 from uuid import UUID
 
+from app.shared.contracts.comparison import ProductComparison
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -56,3 +57,6 @@ class ChatResponse(BaseModel):
     suggested_questions: list[str] = Field(
         default_factory=list
     )
+
+    # Side-by-side technical comparison for PRODUCT_COMPARE of same-category products.
+    comparison: ProductComparison | None = None

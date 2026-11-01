@@ -28,11 +28,21 @@ def test_resolved_bounds(text, low, high):
     validate_price_coverage(folded(text), e)
 
 
+@pytest.mark.parametrize('text,low,high,target', [
+    # DR-02: "rẻ/thấp/ít hơn X" is strictly below X.
+    ('rẻ hơn 15 triệu', None, 15 * M - 1, None), ('giá thấp hơn 20 triệu', None, 20 * M - 1, None),
+    ('ít hơn 20 triệu', None, 20 * M - 1, None), ('< 20 triệu', None, 20 * M - 1, None), ('rẽ hơn 15tr', None, 15 * M - 1, None),
+    # DR-01: approximate amounts are X ± 15%; a budget or "tôi có X" is a maximum.
+    ('tầm 15 triệu', Decimal('12750000'), Decimal('17250000'), 15 * M), ('khoảng 25tr', Decimal('21250000'), Decimal('28750000'), 25 * M),
+    ('giá 15 triệu', Decimal('12750000'), Decimal('17250000'), 15 * M), ('ngân sách 20tr', None, 20 * M, None),
+    ('tôi có 100tr', None, 100 * M, None),
+])
+def test_comparative_approximate_and_budget_amounts_resolve(text, low, high, target):
+    e = evidence(text)
+    assert (e.min_price, e.max_price, e.target, e.unresolved) == (low, high, target, ())
+
+
 @pytest.mark.parametrize('text,relation', [
-    ('rẻ hơn 15 triệu', PriceRelation.COMPARATIVE_MAXIMUM), ('giá thấp hơn 20 triệu', PriceRelation.COMPARATIVE_MAXIMUM),
-    ('ít hơn 20 triệu', PriceRelation.COMPARATIVE_MAXIMUM), ('< 20 triệu', PriceRelation.COMPARATIVE_MAXIMUM),
-    ('tầm 15 triệu', PriceRelation.APPROXIMATE), ('khoảng 15tr', PriceRelation.APPROXIMATE),
-    ('ngân sách 20tr', PriceRelation.BUDGET), ('giá 15 triệu', PriceRelation.UNSPECIFIED),
     ('không dưới 10 triệu', PriceRelation.UNSPECIFIED), ('từ 15 triệu', PriceRelation.UNSPECIFIED),
     ('trên 10 triệu trở xuống', PriceRelation.UNSPECIFIED),
 ])
@@ -48,6 +58,8 @@ def test_unresolved_amounts_are_reported_and_block_coverage(text, relation):
     'Xiaomi 15 giá bao nhiêu', 'iPhone 15 còn hàng không', 'Dell XPS 13', 'Inspiron 15', 'bản 12GB/256GB',
     'đúng 2 điện thoại Xiaomi', 'Intel i5', 'iPhone 15 cũ', 'màn hình 4k', 'SKU DEV-X15-BLK-256 giá bao nhiêu',
     'Samsung Galaxy A55 bảo hành bao nhiêu tháng', 'ram >=16, ssd >=512', 'RAM thấp hơn 16GB',
+    # R1 (benchmark G8-14): a model number after "giá <tên máy>" is part of the name, not an amount.
+    'chỉ hỏi giá iPhone 15', 'giá iPhone 15 bao nhiêu', 'giá Xiaomi 14T Pro',
 ])
 def test_non_money_numbers_are_not_tokens(text):
     e = evidence(text)
@@ -79,3 +91,36 @@ def test_reference_kinds(text, kind):
 ])
 def test_non_references(text):
     assert detect_reference(folded(text)) is None
+
+
+@pytest.mark.parametrize('text', ['Có sản phẩm nào mắc hơn xíu', 'Có loại đắt hơn không?', 'Giá cao hơn chút được không?'])
+def test_pricier_follow_up_is_a_reference(text):
+    assert detect_reference(folded(text)) == ReferenceKind.PRICIER
+
+
+@pytest.mark.parametrize('text', ['Laptop mắc hơn 30 triệu', 'Có chiếc nào RAM cao hơn không?', 'Cấu hình cao hơn thì sao?'])
+def test_pricier_non_references(text):
+    # A stated amount is an ordinary minimum price; capacity/spec comparisons are not prices.
+    assert detect_reference(folded(text)) is None
+
+
+def test_pricier_keeps_previous_scope_and_starts_above_shown_price():
+    from uuid import uuid4
+    from app.features.conversation.models import EvidenceSnapshot
+    from app.features.conversation.references import resolve_reference
+    from app.shared.contracts.enums import Intent
+    from app.shared.contracts.query import ProductSearchPlan, QueryPlan
+    from app.shared.contracts.response import ProductCard
+    card = ProductCard(product_id=uuid4(), product_name='Dell Inspiron 15', effective_price=16 * M)
+    snapshot = EvidenceSnapshot(cards=[card], search=ProductSearchPlan(category='Laptop', min_ram_gb=16))
+    plan = resolve_reference('Có sản phẩm nào mắc hơn xíu', QueryPlan(intent=Intent.PRODUCT_DISCOVERY, product_search=ProductSearchPlan()), snapshot)
+    search = plan.product_search
+    assert plan.intent == Intent.PRODUCT_DISCOVERY and plan.clarification is None
+    assert (search.category, search.min_ram_gb, search.min_price, search.max_price) == ('Laptop', 16, 16 * M + 1, None)
+    capped = resolve_reference('Mắc hơn nhưng dưới 10 triệu', QueryPlan(intent=Intent.PRODUCT_DISCOVERY, product_search=ProductSearchPlan()), snapshot)
+    assert capped.intent == Intent.UNKNOWN and 'đắt hơn' in capped.clarification
+
+
+def test_model_number_does_not_hide_a_real_price_bound():
+    e = evidence('giá iPhone 15 dưới 20 triệu')
+    assert (e.min_price, e.max_price, e.target) == (None, 20 * M, None)

@@ -120,6 +120,7 @@ function ChatWorkspace({ user }) {
         id: crypto.randomUUID(), role: 'ASSISTANT', text: result.message, createdAt: new Date().toISOString(),
         products: Array.isArray(result.products) ? result.products : [], sources: Array.isArray(result.sources) ? result.sources : [],
         suggestions: Array.isArray(result.suggested_questions) ? result.suggested_questions : [],
+        comparison: result.comparison && Array.isArray(result.comparison.rows) ? result.comparison : null,
       }]);
       if (!session) chatbotApi.session(sid).then((record) => { if (token === version.current) setSession(record); }).catch(() => {});
       refreshSessions();

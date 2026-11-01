@@ -157,7 +157,7 @@ def test_exact_target_card_and_message_use_only_eligible_variant(prompt):
     cards = a.build_cards(matches)
     assert p.targets[0].ram_gb == 16 and p.targets[0].storage_gb == 512
     assert len(cards) == 1 and cards[0].sku == 'DEV-X15-GRN-512'
-    assert 'DEV-X15-GRN-512' in answer(p, matches) and 'DEV-X15-BLK-256' not in answer(p, matches)
+    assert 'RAM 16GB, bộ nhớ 512GB' in answer(p, matches) and 'RAM 12GB, bộ nhớ 256GB' not in answer(p, matches)
 
 
 def test_frozen_comparison_matches_cards_and_text():
@@ -171,8 +171,8 @@ def test_frozen_comparison_matches_cards_and_text():
     assert [len(m.eligible_variants) for m in matches] == [1, 1]
     assert [c.sku for c in cards] == ['DEV-X15-BLK-256', 'DEV-IP15-BLK-128']
     text = answer(p, matches)
-    assert 'DEV-X15-BLK-256' in text and 'DEV-IP15-BLK-128' in text
-    assert 'DEV-X15-GRN-512' not in text
+    assert 'RAM 12GB, bộ nhớ 256GB' in text and 'RAM 6GB, bộ nhớ 128GB' in text
+    assert 'RAM 16GB, bộ nhớ 512GB' not in text
 
 
 def test_category_filter_removes_synthetic_non_laptop_dell():
@@ -282,14 +282,23 @@ def test_followup_grammatical_fillers_and_history_do_not_conflict():
 @pytest.mark.parametrize('prompt', [
     'Tìm laptop không phải Dell RAM 16GB.', 'Tìm laptop không phải Lenovo.',
     'Tìm laptop Dell nhưng không phải laptop.',
-    'Xiaomi 15 bản 256GB còn hàng không?',
-    'Xiaomi 15 RAM 12GB bản 256GB còn hàng không?',
     'So sánh Xiaomi 15 bản 12GB với iPhone 15 bản 128GB.',
     'Xiaomi 15 màu Graphite còn hàng không?',
 ])
 def test_unrepresentable_explicit_constraints_never_broaden(prompt):
     p = normalized(prompt)
     assert p.clarification and p.product_search is None
+
+
+@pytest.mark.parametrize('prompt,ram,storage', [
+    ('Xiaomi 15 bản 256GB còn hàng không?', None, 256),
+    ('Xiaomi 15 RAM 12GB bản 256GB còn hàng không?', 12, 256),
+])
+def test_named_product_storage_variant_is_an_exact_target(prompt, ram, storage):
+    # Benchmark R2: "bản 256GB" after a named product is that product's storage variant.
+    p = normalized(prompt)
+    assert not p.clarification
+    assert [(t.product_name, t.ram_gb, t.storage_gb) for t in p.product_search.targets] == [('Xiaomi 15', ram, storage)]
 
 
 @pytest.mark.parametrize('history', [False, True])

@@ -16,7 +16,7 @@ public class CustomerManagementController {
 
     @GetMapping
     @RequireAnyAuthority({"ADMIN", "CUSTOMER_VIEW"})
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'STAFF')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'STAFF', 'SALES_STAFF', 'WARRANTY_TECHNICIAN')")
     public CustomerPageResponse<CustomerSummaryResponse> list(@RequestParam(required = false) String keyword,
             @RequestParam(required = false) UserStatus status, @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
@@ -25,12 +25,12 @@ public class CustomerManagementController {
 
     @GetMapping("/{customerId}")
     @RequireAnyAuthority({"ADMIN", "CUSTOMER_VIEW"})
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'STAFF')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'STAFF', 'SALES_STAFF', 'WARRANTY_TECHNICIAN')")
     public CustomerSummaryResponse detail(@PathVariable UUID customerId) { return service.detail(customerId); }
 
     @GetMapping("/{customerId}/orders")
     @RequireAnyAuthority({"ADMIN", "CUSTOMER_VIEW"})
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'STAFF')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'STAFF', 'SALES_STAFF', 'WARRANTY_TECHNICIAN')")
     public CustomerPageResponse<CustomerOrderResponse> orders(@PathVariable UUID customerId,
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
         return service.orders(customerId, page, size);
@@ -38,7 +38,7 @@ public class CustomerManagementController {
 
     @GetMapping("/{customerId}/warranties")
     @RequireAnyAuthority({"ADMIN", "CUSTOMER_VIEW"})
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'STAFF')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'STAFF', 'SALES_STAFF', 'WARRANTY_TECHNICIAN')")
     public CustomerPageResponse<CustomerWarrantyResponse> warranties(@PathVariable UUID customerId,
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
         return service.warranties(customerId, page, size);

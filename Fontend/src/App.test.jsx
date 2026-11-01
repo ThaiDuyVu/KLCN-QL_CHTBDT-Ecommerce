@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi, afterEach } from 'vitest';
@@ -83,6 +83,32 @@ describe('Application routes and role layouts', () => {
     const user = userEvent.setup(); renderApp('/account', 'ADMIN');
     await user.click(screen.getByRole('button', { name: 'Đăng xuất' }));
     expect(await screen.findByRole('heading', { name: 'Chào mừng trở lại' })).toBeInTheDocument();
+  });
+
+  it.each([
+    ['SALES_STAFF', ['Đơn hàng', 'Khách hàng', 'Kho hàng', 'Serial / IMEI'], ['Nhập hàng', 'Bảo hành', 'Thống kê & Báo cáo']],
+    ['WAREHOUSE_KEEPER', ['Đơn hàng', 'Kho hàng', 'Nhập hàng', 'Serial / IMEI'], ['Khách hàng', 'Bảo hành']],
+    ['WARRANTY_TECHNICIAN', ['Khách hàng', 'Serial / IMEI', 'Bảo hành'], ['Đơn hàng', 'Kho hàng', 'Nhập hàng']],
+    ['DELIVERY_STAFF', ['Đơn hàng'], ['Khách hàng', 'Kho hàng', 'Nhập hàng', 'Bảo hành']],
+  ])('shows %s only the management pages of its job title', (role, visible, hidden) => {
+    renderApp('/', role);
+    const navigation = screen.getByRole('navigation', { name: 'Điều hướng quản trị' });
+    visible.forEach((name) => expect(within(navigation).getByRole('link', { name })).toBeInTheDocument());
+    hidden.forEach((name) => expect(within(navigation).queryByRole('link', { name })).not.toBeInTheDocument());
+  });
+
+  it.each([
+    ['DELIVERY_STAFF', '/goods-receipts'], ['WAREHOUSE_KEEPER', '/warranties'],
+    ['WARRANTY_TECHNICIAN', '/orders'], ['SALES_STAFF', '/reports'],
+  ])('denies %s direct access to %s', (role, path) => {
+    renderApp(path, role);
+    expect(screen.getByRole('heading', { name: 'Không có quyền truy cập' })).toBeInTheDocument();
+  });
+
+  it('points the warranty technician home shortcut at warranty tickets', () => {
+    renderApp('/', 'WARRANTY_TECHNICIAN');
+    expect(screen.getByRole('link', { name: 'Xem phiếu bảo hành →' })).toHaveAttribute('href', '/warranty-tickets');
+    expect(screen.queryByRole('link', { name: 'Xem đơn hàng →' })).not.toBeInTheDocument();
   });
 
   it('shows 404 for unknown routes', () => {

@@ -31,6 +31,8 @@ class ProductSearchPlan(BaseModel):
 
     min_price: Decimal | None = Field(default=None, ge=0)
     max_price: Decimal | None = Field(default=None, ge=0)
+    # "khoảng 25 triệu": rank results inside [min_price, max_price] by closeness to this price.
+    target_price: Decimal | None = Field(default=None, ge=0)
 
     min_ram_gb: int | None = Field(default=None, ge=1)
     min_storage_gb: int | None = Field(default=None, ge=1)
@@ -69,6 +71,11 @@ class QueryPlan(BaseModel):
     )
 
     product_search: ProductSearchPlan | None = None
+
+    # One search per product type for "1 điện thoại và 1 laptop với 100 triệu"; set only by the
+    # deterministic normalizer, never taken from model output.
+    bundle: list[ProductSearchPlan] = Field(default_factory=list, max_length=3)
+    budget: Decimal | None = Field(default=None, ge=0)
 
     semantic_query: str | None = None
 

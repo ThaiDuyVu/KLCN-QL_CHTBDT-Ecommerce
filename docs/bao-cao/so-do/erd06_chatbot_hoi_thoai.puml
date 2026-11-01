@@ -1,0 +1,91 @@
+@startuml
+' ERD 06 — Chatbot và hội thoại — sinh tự động từ schema PostgreSQL (Flyway V1–V8), 5 bảng
+hide circle
+skinparam linetype ortho
+skinparam entity {
+  BackgroundColor<<mới>> #E3F2FD
+  BackgroundColor<<thiết kế sẵn>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title ERD 06 — Chatbot và hội thoại
+
+entity "chat_sessions" as chat_sessions {
+  * session_id : UUID <<PK>>
+  --
+  * customer_id : UUID <<FK>>
+    employee_id : UUID <<FK>>
+  * started_at : TIMESTAMPTZ
+    ended_at : TIMESTAMPTZ
+  * status : VARCHAR
+}
+
+entity "chat_history" as chat_history {
+  * history_id : UUID <<PK>>
+  --
+  * session_id : UUID <<FK>>
+  * customer_id : UUID <<FK>>
+    employee_id : UUID <<FK>>
+  * sender_type : VARCHAR
+  * message : TEXT
+  * created_at : TIMESTAMPTZ
+}
+
+entity "chatbot_qna" as chatbot_qna <<thiết kế sẵn>> {
+  * qna_id : UUID <<PK>>
+  --
+  * question : TEXT
+  * answer : TEXT
+    category : VARCHAR
+    keywords : TEXT
+  * status : VARCHAR
+  * employee_id : UUID <<FK>>
+  * created_at : TIMESTAMPTZ
+  * updated_at : TIMESTAMPTZ
+}
+
+entity "chatbot_scripts" as chatbot_scripts <<thiết kế sẵn>> {
+  * script_id : UUID <<PK>>
+  --
+  * script_name : VARCHAR
+  * trigger_key : VARCHAR
+  * response_template : TEXT
+  * priority : INT
+  * status : VARCHAR
+  * employee_id : UUID <<FK>>
+}
+
+entity "message_feedback" as message_feedback <<thiết kế sẵn>> {
+  * feedback_id : UUID <<PK>>
+  --
+  * history_id : UUID <<FK>>
+  * customer_id : UUID <<FK>>
+  * rating : INT
+    feedback_text : TEXT
+  * created_at : TIMESTAMPTZ
+}
+
+entity "customers" as customers <<tham chiếu>> {
+  * customer_id : UUID <<PK>>
+}
+
+entity "employees" as employees <<tham chiếu>> {
+  * employee_id : UUID <<PK>>
+}
+
+customers ||--o{ chat_sessions : customer_id
+employees |o--o{ chat_sessions : employee_id
+chat_sessions ||--o{ chat_history : session_id
+customers ||--o{ chat_history : customer_id
+employees |o--o{ chat_history : employee_id
+employees ||--o{ chatbot_qna : employee_id
+employees ||--o{ chatbot_scripts : employee_id
+chat_history ||--o| message_feedback : history_id
+customers ||--o{ message_feedback : customer_id
+
+legend right
+  <<mới>>: bảng có trong CSDL, chưa có trong ERD báo cáo cũ
+  <<thiết kế sẵn>>: bảng có trong CSDL, chưa có chức năng sử dụng
+  <<tham chiếu>>: thực thể thuộc ERD khác
+  * : NOT NULL
+endlegend
+@enduml
