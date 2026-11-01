@@ -1,0 +1,450 @@
+{
+ "group": "G9",
+ "title": "Câu khó của khách hàng nâng cao",
+ "cases": [
+  {
+   "id": "G9-01",
+   "difficulty": "K",
+   "probe": false,
+   "title": "em sv cần máy học đồ họa tầm 20 củ có ko",
+   "turns": [
+    {
+     "say": "em sv cần máy học đồ họa tầm 20 củ có ko",
+     "expect": {
+      "category_if_products": "Laptop",
+      "max_price_if_products": 23000000,
+      "text_none": [
+       "đồ họa mạnh",
+       "chuyên đồ họa"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-02",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop lập trình RAM 16GB dưới 35tr",
+   "turns": [
+    {
+     "say": "laptop lập trình RAM 16GB dưới 35tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_ram": 16,
+      "max_price": 35000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-03",
+   "difficulty": "K",
+   "probe": true,
+   "title": "điện thoại pin trâu dưới 15tr",
+   "turns": [
+    {
+     "say": "điện thoại pin trâu dưới 15tr",
+     "expect": {
+      "category_if_products": "Điện thoại",
+      "max_price_if_products": 15000000,
+      "text_none": [
+       "pin trâu nhất",
+       "pin rất trâu"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-04",
+   "difficulty": "K",
+   "probe": false,
+   "title": "laptop dưới 10tr mà RAM 32GB",
+   "turns": [
+    {
+     "say": "laptop dưới 10tr mà RAM 32GB",
+     "expect": {
+      "empty": true,
+      "category": "Laptop",
+      "min_ram": 32,
+      "max_price": 10000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-05",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop Dell hoặc ASUS dưới 20tr",
+   "turns": [
+    {
+     "say": "laptop Dell hoặc ASUS dưới 20tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brands_any": [
+       "Dell",
+       "ASUS"
+      ],
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-06",
+   "difficulty": "K",
+   "probe": true,
+   "title": "điện thoại dưới 20tr nhưng không lấy Apple",
+   "turns": [
+    {
+     "say": "điện thoại dưới 20tr nhưng không lấy Apple",
+     "expect": {
+      "no_brand": "Apple"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-07",
+   "difficulty": "K",
+   "probe": false,
+   "title": "máy nào đáng mua nhất",
+   "turns": [
+    {
+     "say": "máy nào đáng mua nhất",
+     "expect": {
+      "clarify": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-08",
+   "difficulty": "K",
+   "probe": true,
+   "title": "laptop gaming",
+   "turns": [
+    {
+     "say": "laptop gaming",
+     "expect": {
+      "category_if_products": "Laptop",
+      "text_none": [
+       "chơi game mượt",
+       "cấu hình gaming mạnh"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-09",
+   "difficulty": "K",
+   "probe": false,
+   "title": "điện thoại chụp ảnh đẹp nhất",
+   "turns": [
+    {
+     "say": "điện thoại chụp ảnh đẹp nhất",
+     "expect": {
+      "text_none": [
+       "chụp ảnh đẹp nhất",
+       "camera tốt nhất"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-10",
+   "difficulty": "K",
+   "probe": false,
+   "title": "laptop nhẹ để đi học",
+   "turns": [
+    {
+     "say": "laptop nhẹ để đi học",
+     "expect": {
+      "category_if_products": "Laptop",
+      "text_none": [
+       " kg",
+       "nhẹ nhất"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-11",
+   "difficulty": "K",
+   "probe": true,
+   "title": "con iphone mới nhất giá bao nhiêu",
+   "turns": [
+    {
+     "say": "con iphone mới nhất giá bao nhiêu",
+     "expect": {
+      "product_if_products": "iPhone 16"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-12",
+   "difficulty": "V",
+   "probe": true,
+   "title": "laptop rẻ nhất shop",
+   "turns": [
+    {
+     "say": "laptop rẻ nhất shop",
+     "expect": {
+      "products": true,
+      "product": "ASUS Vivobook 15"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-13",
+   "difficulty": "V",
+   "probe": true,
+   "title": "điện thoại đắt nhất",
+   "turns": [
+    {
+     "say": "điện thoại đắt nhất",
+     "expect": {
+      "products": true,
+      "product": "iPhone 16"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-14",
+   "difficulty": "K",
+   "probe": false,
+   "title": "2 laptop tổng dưới 50tr",
+   "turns": [
+    {
+     "say": "2 laptop tổng dưới 50tr",
+     "expect": {
+      "clarify": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-15",
+   "difficulty": "K",
+   "probe": true,
+   "title": "Xiaomi 15 bản 12/256 với bản 16/512 khác gì",
+   "turns": [
+    {
+     "say": "Xiaomi 15 bản 12/256 với bản 16/512 khác gì",
+     "expect": {
+      "allow_products": [
+       "Xiaomi 15"
+      ],
+      "text_any": [
+       "18.990.000",
+       "21.990.000"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-16",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop RAM 16 SSD 1TB dưới 45tr",
+   "turns": [
+    {
+     "say": "laptop RAM 16 SSD 1TB dưới 45tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_ram": 16,
+      "min_storage": 1024,
+      "max_price": 45000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-17",
+   "difficulty": "V",
+   "probe": false,
+   "title": "dt samsung xanh",
+   "turns": [
+    {
+     "say": "dt samsung xanh",
+     "expect": {
+      "clarify_or_products": true,
+      "category_if_products": "Điện thoại",
+      "brand_if_products": "Samsung"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-18",
+   "difficulty": "K",
+   "probe": false,
+   "title": "tôi cần 1 cái laptop, ngân sách khoảng 40 củ, ưu tiên RAM nhiều",
+   "turns": [
+    {
+     "say": "tôi cần 1 cái laptop, ngân sách khoảng 40 củ, ưu tiên RAM nhiều",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_price": 34000000,
+      "max_price": 46000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-19",
+   "difficulty": "K",
+   "probe": false,
+   "title": "Chào bạn, dạo này mình hơi bận nên chưa có thời gian ra cửa hàng. Máy cũ của mình dùng được 4 năm rồi, pin chai và hay đơ, mình cũng không rành công nghệ lắm nên nhờ bạn tư vấn giúp. Mình cần một chiếc điện thoại Samsung dưới 15 triệu",
+   "turns": [
+    {
+     "say": "Chào bạn, dạo này mình hơi bận nên chưa có thời gian ra cửa hàng. Máy cũ của mình dùng được 4 năm rồi, pin chai và hay đơ, mình cũng không rành công nghệ lắm nên nhờ bạn tư vấn giúp. Mình cần một chiếc điện thoại Samsung dưới 15 triệu",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Samsung",
+      "max_price": 15000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-20",
+   "difficulty": "K",
+   "probe": false,
+   "title": "điện thoại 5G dưới 10tr",
+   "turns": [
+    {
+     "say": "điện thoại 5G dưới 10tr",
+     "expect": {
+      "category_if_products": "Điện thoại",
+      "max_price_if_products": 10000000,
+      "text_none": [
+       "hỗ trợ 5G",
+       "có 5G"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-21",
+   "difficulty": "V",
+   "probe": false,
+   "title": "iPhone 15 có rẻ hơn iPhone 16 không",
+   "turns": [
+    {
+     "say": "iPhone 15 có rẻ hơn iPhone 16 không",
+     "expect": {
+      "allow_products": [
+       "iPhone 15",
+       "iPhone 16"
+      ],
+      "text_any": [
+       "17.990.000"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-22",
+   "difficulty": "K",
+   "probe": false,
+   "title": "MacBook Air M2 chơi game được không",
+   "turns": [
+    {
+     "say": "MacBook Air M2 chơi game được không",
+     "expect": {
+      "allow_products": [
+       "MacBook Air M2"
+      ],
+      "text_none": [
+       "chơi game tốt",
+       "chơi game mượt"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-23",
+   "difficulty": "V",
+   "probe": false,
+   "title": "cheapest Samsung phone",
+   "turns": [
+    {
+     "say": "cheapest Samsung phone",
+     "expect": {
+      "products": true,
+      "product": "Samsung Galaxy A55"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-24",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop dưới 1000 đô",
+   "turns": [
+    {
+     "say": "laptop dưới 1000 đô",
+     "expect": {
+      "clarify": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-25",
+   "difficulty": "K",
+   "probe": false,
+   "title": "tìm iPhone 15 rồi thêm vào giỏ luôn",
+   "turns": [
+    {
+     "say": "tìm iPhone 15 rồi thêm vào giỏ luôn",
+     "expect": {
+      "text_none": [
+       "đã thêm",
+       "đã cho vào giỏ"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G9-26",
+   "difficulty": "K",
+   "probe": true,
+   "title": "laptop Dell XPS 13 bản 32GB còn hàng ở chi nhánh khác không",
+   "turns": [
+    {
+     "say": "laptop Dell XPS 13 bản 32GB còn hàng ở chi nhánh khác không",
+     "expect": {
+      "allow_products": [
+       "Dell XPS 13"
+      ],
+      "text_none": [
+       "chi nhánh Hà Nội",
+       "chi nhánh khác còn"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

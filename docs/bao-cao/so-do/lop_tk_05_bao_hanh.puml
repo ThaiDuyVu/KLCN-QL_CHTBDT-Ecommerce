@@ -1,0 +1,81 @@
+@startuml
+' Sơ đồ lớp thiết kế — 3.7.4.4 Bảo hành (Warranty)
+' Sinh từ mã nguồn: thuộc tính lấy từ lớp @Entity, phương thức từ interface *Service, quan hệ và bội số từ khóa ngoại schema.
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor<<chưa cài đặt>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title Sơ đồ lớp thiết kế — 3.7.4.4 Bảo hành (Warranty)
+
+package "Entity (tầng dữ liệu)" {
+class Warranty <<entity>> {
+  - warrantyId : UUID {id}
+  - serialId : UUID
+  - orderItemId : UUID
+  - customerId : UUID
+  - startDate : LocalDate
+  - endDate : LocalDate
+  - status : WarrantyStatus
+}
+class WarrantyTicket <<entity>> {
+  - ticketId : UUID {id}
+  - ticketCode : String
+  - warrantyId : UUID
+  - serialId : UUID
+  - customerId : UUID
+  - employeeId : UUID
+  - issueDescription : String
+  - resolutionNote : String
+  - createdAt : OffsetDateTime
+  - resolvedAt : OffsetDateTime
+  - status : WarrantyTicketStatus
+}
+enum WarrantyStatus {
+  ACTIVE
+  EXPIRED
+}
+enum WarrantyTicketStatus {
+  RECEIVED
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+}
+}
+class Customer <<tham chiếu>>
+class Employee <<tham chiếu>>
+class OrderItem <<tham chiếu>>
+class SerialNumber <<tham chiếu>>
+package "Service (tầng nghiệp vụ)" {
+interface WarrantyService {
+  + myWarranties(userId, page, size) : WarrantyPageResponse
+  + myWarranty(userId, warrantyId) : WarrantyResponse
+  + myLookup(userId, code) : WarrantyResponse
+  + warranties(page, size) : WarrantyPageResponse
+  + warranty(warrantyId) : WarrantyResponse
+  + lookup(code) : WarrantyResponse
+  + createTicket(userId, warrantyId, request) : WarrantyTicketResponse
+  + myTickets(userId, page, size) : WarrantyTicketPageResponse
+  + myTicket(userId, ticketId) : WarrantyTicketResponse
+  + tickets(keyword, status, page, size) : WarrantyTicketPageResponse
+  + ticket(ticketId) : WarrantyTicketResponse
+  + updateTicket(userId, ticketId, request) : WarrantyTicketResponse
+}
+interface WarrantyProvisioningService {
+  + createForDeliveredOrder(order, items) : void
+}
+}
+SerialNumber "1" -- "0..1" Warranty : serialId >
+OrderItem "1" -- "0..*" Warranty : orderItemId >
+Customer "1" -- "0..*" Warranty : customerId >
+Warranty "1" -- "0..*" WarrantyTicket : warrantyId >
+SerialNumber "1" -- "0..*" WarrantyTicket : serialId >
+Customer "1" -- "0..*" WarrantyTicket : customerId >
+Employee "0..1" -- "0..*" WarrantyTicket : employeeId >
+Warranty ..> WarrantyStatus
+WarrantyTicket ..> WarrantyTicketStatus
+WarrantyService ..> Warranty : sử dụng
+WarrantyService ..> WarrantyTicket : sử dụng
+WarrantyProvisioningService ..> Warranty : sử dụng
+@enduml

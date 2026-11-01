@@ -11,6 +11,14 @@ TRANSACTION_REFUSAL = ('Mình chỉ hỗ trợ tư vấn và tra cứu, không t
                        'Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.')
 
 
+# Topics the knowledge base can hold (mirrors knowledge.service.relevant_chunks).
+KNOWLEDGE_TOPICS = ('thanh toan', 'payment', 'doi tra', 'hoan tra', 'bao hanh', 'khuyen mai', 'giao hang', 'van chuyen')
+# Store information is a document question, never a greeting or the customer's own records (R7).
+STORE_INFO = ('gio mo cua', 'mo cua', 'dong cua', 'dia chi cua hang', 'cua hang o dau', 'chi nhanh o dau',
+              'giao hang tan noi', 'giao tan noi', 'hoa don vat', 'xuat hoa don', 'bao hanh o dau',
+              'trung tam bao hanh', 'mang may toi', 'mang may den', 'hotline')
+
+
 def transaction_request(message: str) -> bool:
     actions = analyze_actions(message)
     return any(a.scope == ActionScope.AFFIRMATIVE for a in actions)
@@ -31,9 +39,14 @@ def read_only_plan(message: str) -> QueryPlan | None:
     product = any(re.search(r'(?<!\w)' + re.escape(word) + r'(?!\w)', q)
                   for word in ('laptop', 'dien thoai', 'smartphone', 'may tinh xach tay', 'sku', 'ram'))
     if actions and not product and not any(a.scope == ActionScope.AFFIRMATIVE for a in actions):
+        # A how-to on a documented topic is answered from documents (or abstains there).
+        if any(a.scope == ActionScope.GUIDANCE for a in actions) and any(t in q for t in KNOWLEDGE_TOPICS):
+            return QueryPlan(intent=Intent.KNOWLEDGE_QA, semantic_query=message)
         # No official procedural/policy evidence is approved in this checkpoint.
         if any(a.scope in {ActionScope.GUIDANCE, ActionScope.QUOTED, ActionScope.HYPOTHETICAL} for a in actions):
             return QueryPlan(intent=Intent.UNKNOWN, clarification='Mình chưa có tài liệu chính thức đủ để hướng dẫn thao tác này. Mình không thể xác nhận quy trình hoặc chính sách của cửa hàng.')
+    if not product and 'cua toi' not in q and any(x in q for x in STORE_INFO):
+        return QueryPlan(intent=Intent.KNOWLEDGE_QA, semantic_query=message)
     if any(x in q for x in ('khach hang khac', 'tai khoan khac', 'mat khau', 'another customer')):
         return QueryPlan(intent=Intent.UNKNOWN, clarification='Mình không cung cấp thông tin riêng của khách hàng khác hoặc mật khẩu.')
     # Folded 'những' shares spelling with clause separator 'nhưng'; retain the full help phrase.
@@ -45,8 +58,10 @@ def read_only_plan(message: str) -> QueryPlan | None:
         return QueryPlan(intent=Intent.WARRANTY_TICKET_STATUS)
     if 'bao hanh' in q and 'cua toi' in q:
         return QueryPlan(intent=Intent.WARRANTY_STATUS)
-    if 'don hang' in q or 'don cua toi' in q:
-        code = re.search(r'\bORD-[A-Za-z0-9_-]+', message, re.I)
+    code = re.search(r'\bORD-[A-Za-z0-9_-]+', message, re.I)
+    # An order code alone marks an order question ("đơn ORD-... của tôi"); it must reach the
+    # owned-order lookup so an unknown code is reported, never replaced by other orders (R6).
+    if 'don hang' in q or 'don cua toi' in q or code:
         refs = {'order_code': code[0]} if code else {}
         if 'moi nhat' in q or 'latest' in q:
             refs['order_selection'] = 'latest'

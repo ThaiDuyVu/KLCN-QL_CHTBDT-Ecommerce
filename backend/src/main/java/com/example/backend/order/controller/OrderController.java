@@ -4,11 +4,13 @@ import com.example.backend.order.dto.*;
 import com.example.backend.order.entity.OrderStatus;
 import com.example.backend.order.service.OrderService;
 import com.example.backend.common.security.RequireAnyAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 import jakarta.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 import jakarta.servlet.http.HttpServletRequest;
 @RestController
@@ -27,10 +29,13 @@ public class OrderController {
     public OrderResponse mineDetail(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id) { return service.detail(user.getUserId(), true, id); }
     @PostMapping("/mine/{id}/cancel") @RequireAnyAuthority({"CUSTOMER"})
     public OrderResponse cancel(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id) { return service.status(user.getUserId(), true, id, OrderStatus.CANCELLED); }
-    @GetMapping @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @GetMapping @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
     public OrderPageResponse list(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @RequestParam(defaultValue="0") int page, @RequestParam(defaultValue="20") int size) { return service.list(user.getUserId(), false, page, size); }
-    @GetMapping("/{id}") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
-    public OrderResponse detail(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id) { return service.detail(user.getUserId(), false, id); }
-    @PatchMapping("/{id}/status") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
-    public OrderResponse status(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id, @Valid @RequestBody UpdateOrderStatusRequest request) { return service.status(user.getUserId(), false, id, request.getStatus()); }
+    @GetMapping("/{id}") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
+    public OrderResponse detail(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id) { return service.staffDetail(id, authorities(user)); }
+    @PatchMapping("/{id}/status") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
+    public OrderResponse status(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id, @Valid @RequestBody UpdateOrderStatusRequest request) { return service.staffStatus(user.getUserId(), id, request.getStatus(), authorities(user)); }
+    private static List<String> authorities(AuthenticatedUserPrincipal user) {
+        return user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+    }
 }

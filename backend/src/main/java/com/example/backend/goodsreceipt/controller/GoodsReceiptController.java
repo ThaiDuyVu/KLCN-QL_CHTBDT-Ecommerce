@@ -32,6 +32,7 @@ public class GoodsReceiptController {
     }
 
     @GetMapping
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER"})
     public ResponseEntity<GoodsReceiptPageResponse> getGoodsReceipts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
@@ -46,6 +47,7 @@ public class GoodsReceiptController {
     }
 
     @GetMapping("/{receiptId}")
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER"})
     public ResponseEntity<GoodsReceiptResponse> getGoodsReceiptById(
             @PathVariable UUID receiptId
     ) {
@@ -53,6 +55,7 @@ public class GoodsReceiptController {
     }
 
     @PostMapping
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER"})
     public ResponseEntity<GoodsReceiptResponse> createGoodsReceipt(
             @Valid @RequestBody CreateGoodsReceiptRequest request
     ) {
@@ -62,7 +65,7 @@ public class GoodsReceiptController {
     }
 
     @PutMapping("/{receiptId}")
-    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF"})
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER"})
     public ResponseEntity<GoodsReceiptResponse> updateGoodsReceipt(
             @PathVariable UUID receiptId,
             @Valid @RequestBody CreateGoodsReceiptRequest request) {

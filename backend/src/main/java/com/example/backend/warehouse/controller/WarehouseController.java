@@ -1,5 +1,6 @@
 package com.example.backend.warehouse.controller;
 
+import com.example.backend.common.security.RequireAnyAuthority;
 import com.example.backend.warehouse.dto.request.CreateWarehouseRequest;
 import com.example.backend.warehouse.dto.request.UpdateWarehouseRequest;
 import com.example.backend.warehouse.dto.response.WarehousePageResponse;
@@ -53,6 +54,7 @@ public class WarehouseController {
     }
 
     @PostMapping
+    @RequireAnyAuthority({"ADMIN", "MANAGER"})
     public ResponseEntity<WarehouseResponse> createWarehouse(
             @Valid @RequestBody CreateWarehouseRequest request
     ) {
@@ -62,6 +64,7 @@ public class WarehouseController {
     }
 
     @PutMapping("/{warehouseId}")
+    @RequireAnyAuthority({"ADMIN", "MANAGER"})
     public ResponseEntity<WarehouseResponse> updateWarehouse(
             @PathVariable UUID warehouseId,
             @Valid @RequestBody UpdateWarehouseRequest request

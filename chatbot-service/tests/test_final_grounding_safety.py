@@ -124,7 +124,7 @@ def test_final_live_product_refresh_updates_both_text_and_cards():
     assert cards[0].effective_price==matches[0].eligible_variants[0].effective_price==21000001
     assert cards[0].available_quantity==matches[0].eligible_variants[0].available_quantity==0
     text=OllamaResponseGenerationService(FakeChat()).generate(GroundedContext(query_plan=QueryPlan(intent=Intent.PRODUCT_DETAIL),user_query='Giá và stock?',products=matches))
-    assert '21,000,001' in text and 'hết hàng' in text and '21,990,000' not in text
+    assert '21.000.001 đ' in text and 'hết hàng' in text and '21.990.000' not in text
 
 
 def test_ineligible_after_refresh_is_removed_from_grounding_and_cards():

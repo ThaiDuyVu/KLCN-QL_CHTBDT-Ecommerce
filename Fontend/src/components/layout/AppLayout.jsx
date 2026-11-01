@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router';
-import { MANAGEMENT_ROLES, projectConfig, ROLES } from '../../config/projectConfig';
+import { CUSTOMER_ROLES, GOODS_RECEIPT_ROLES, INVENTORY_ROLES, ORDER_ROLES, projectConfig, ROLES, SERIAL_ROLES, WARRANTY_ROLES } from '../../config/projectConfig';
 import { useAuth } from '../../hooks/useAuth';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCart } from '../../hooks/useCart';
@@ -14,15 +14,15 @@ const managementNavigation = [
   { to: '/', label: 'Tổng quan', end: true },
   { to: '/products', label: 'Sản phẩm' },
   { to: '/categories', label: 'Danh mục' },
-  { to: '/orders', label: 'Đơn hàng', roles: MANAGEMENT_ROLES },
+  { to: '/orders', label: 'Đơn hàng', roles: ORDER_ROLES },
   { to: '/promotions', label: 'Khuyến mãi', roles: [ROLES.ADMIN, ROLES.MANAGER] },
   { to: '/installments', label: 'Trả góp', roles: [ROLES.ADMIN, ROLES.MANAGER] },
-  { to: '/customers', label: 'Khách hàng', roles: MANAGEMENT_ROLES },
-  { to: '/inventory', label: 'Kho hàng', roles: MANAGEMENT_ROLES },
-  { to: '/goods-receipts', label: 'Nhập hàng', roles: MANAGEMENT_ROLES },
-  { to: '/serials', label: 'Serial / IMEI', roles: MANAGEMENT_ROLES },
-  { to: '/warranties', label: 'Bảo hành', roles: MANAGEMENT_ROLES },
-  { to: '/warranty-tickets', label: 'Warranty Ticket', roles: MANAGEMENT_ROLES },
+  { to: '/customers', label: 'Khách hàng', roles: CUSTOMER_ROLES },
+  { to: '/inventory', label: 'Kho hàng', roles: INVENTORY_ROLES },
+  { to: '/goods-receipts', label: 'Nhập hàng', roles: GOODS_RECEIPT_ROLES },
+  { to: '/serials', label: 'Serial / IMEI', roles: SERIAL_ROLES },
+  { to: '/warranties', label: 'Bảo hành', roles: WARRANTY_ROLES },
+  { to: '/warranty-tickets', label: 'Warranty Ticket', roles: WARRANTY_ROLES },
   { to: '/reports', label: 'Thống kê & Báo cáo', roles: [ROLES.ADMIN, ROLES.MANAGER] },
   { to: '/user-management', label: 'Người dùng', roles: [ROLES.ADMIN] },
 ];

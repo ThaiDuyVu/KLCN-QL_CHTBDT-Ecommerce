@@ -1,0 +1,588 @@
+{
+ "group": "G10",
+ "title": "Độ bền câu chữ",
+ "cases": [
+  {
+   "id": "G10-01",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop dell  (gốc G1-01, không dấu)",
+   "base": "G1-01",
+   "turns": [
+    {
+     "say": "laptop dell",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-02",
+   "difficulty": "V",
+   "probe": false,
+   "title": "dien thoai samsung  (gốc G1-02, không dấu)",
+   "base": "G1-02",
+   "turns": [
+    {
+     "say": "dien thoai samsung",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Samsung"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-03",
+   "difficulty": "V",
+   "probe": false,
+   "title": "đt samsung  (gốc G1-02, viết tắt \"đt\")",
+   "base": "G1-02",
+   "turns": [
+    {
+     "say": "đt samsung",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Samsung"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-04",
+   "difficulty": "V",
+   "probe": false,
+   "title": "LAPTOP RAM 16GB  (gốc G1-05, chữ hoa)",
+   "base": "G1-05",
+   "turns": [
+    {
+     "say": "LAPTOP RAM 16GB",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_ram": 16
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-05",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop ram 16g  (gốc G1-05, đơn vị \"16g\")",
+   "base": "G1-05",
+   "turns": [
+    {
+     "say": "laptop ram 16g",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_ram": 16
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-06",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptp ram 16gb  (gốc G1-05, sai chính tả)",
+   "base": "G1-05",
+   "turns": [
+    {
+     "say": "laptp ram 16gb",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_ram": 16
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-07",
+   "difficulty": "V",
+   "probe": false,
+   "title": "dien thoai ram 12gb  (gốc G1-07, không dấu)",
+   "base": "G1-07",
+   "turns": [
+    {
+     "say": "dien thoai ram 12gb",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "min_ram": 12
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-08",
+   "difficulty": "V",
+   "probe": false,
+   "title": "dt bo nho 512gb  (gốc G1-08, viết tắt + không dấu)",
+   "base": "G1-08",
+   "turns": [
+    {
+     "say": "dt bo nho 512gb",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "min_storage": 512
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-09",
+   "difficulty": "V",
+   "probe": true,
+   "title": "lap 1tb  (gốc G1-09, viết tắt \"lap\")",
+   "base": "G1-09",
+   "turns": [
+    {
+     "say": "lap 1tb",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_storage": 1024
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-10",
+   "difficulty": "V",
+   "probe": false,
+   "title": "dien thoai xiaomi ram 16  (gốc G1-11, không dấu, thiếu GB)",
+   "base": "G1-11",
+   "turns": [
+    {
+     "say": "dien thoai xiaomi ram 16",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Xiaomi",
+      "min_ram": 16
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-11",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop duoi 20 trieu  (gốc G2-01, không dấu)",
+   "base": "G2-01",
+   "turns": [
+    {
+     "say": "laptop duoi 20 trieu",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-12",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop dưới 20tr  (gốc G2-01, viết tắt \"tr\")",
+   "base": "G2-01",
+   "turns": [
+    {
+     "say": "laptop dưới 20tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-13",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop < 20 triệu  (gốc G2-01, ký hiệu)",
+   "base": "G2-01",
+   "turns": [
+    {
+     "say": "laptop < 20 triệu",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-14",
+   "difficulty": "V",
+   "probe": false,
+   "title": "dt duoi 10tr  (gốc G2-02, viết tắt + không dấu)",
+   "base": "G2-02",
+   "turns": [
+    {
+     "say": "dt duoi 10tr",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "max_price": 10000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-15",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop khoang 25 trieu  (gốc G2-05, không dấu)",
+   "base": "G2-05",
+   "turns": [
+    {
+     "say": "laptop khoang 25 trieu",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_price": 21250000,
+      "max_price": 28750000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-16",
+   "difficulty": "V",
+   "probe": false,
+   "title": "dt tam 20tr  (gốc G2-06, không dấu)",
+   "base": "G2-06",
+   "turns": [
+    {
+     "say": "dt tam 20tr",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "min_price": 17000000,
+      "max_price": 23000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-17",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop ngan sach 30tr  (gốc G2-08, không dấu)",
+   "base": "G2-08",
+   "turns": [
+    {
+     "say": "laptop ngan sach 30tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 30000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-18",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop re hon 16tr  (gốc G2-10, không dấu)",
+   "base": "G2-10",
+   "turns": [
+    {
+     "say": "laptop re hon 16tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 15999999
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-19",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop 20.000.000đ trở xuống  (gốc G2-01, số đầy đủ)",
+   "base": "G2-01",
+   "turns": [
+    {
+     "say": "laptop 20.000.000đ trở xuống",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-20",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop dưới 20,000,000 vnd  (gốc G2-01, phẩy nghìn + vnd)",
+   "base": "G2-01",
+   "turns": [
+    {
+     "say": "laptop dưới 20,000,000 vnd",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-21",
+   "difficulty": "V",
+   "probe": false,
+   "title": "xiaomi 15 gia bao nhieu  (gốc G3-01, không dấu)",
+   "base": "G3-01",
+   "turns": [
+    {
+     "say": "xiaomi 15 gia bao nhieu",
+     "expect": {
+      "products": true,
+      "product": "Xiaomi 15"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-22",
+   "difficulty": "V",
+   "probe": true,
+   "title": "xiaomi15 giá  (gốc G3-01, dính chữ)",
+   "base": "G3-01",
+   "turns": [
+    {
+     "say": "xiaomi15 giá",
+     "expect": {
+      "products": true,
+      "product": "Xiaomi 15"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-23",
+   "difficulty": "V",
+   "probe": false,
+   "title": "iphone 16 co mau gi  (gốc G3-04, không dấu)",
+   "base": "G3-04",
+   "turns": [
+    {
+     "say": "iphone 16 co mau gi",
+     "expect": {
+      "products": true,
+      "product": "iPhone 16",
+      "text_all": [
+       "Đen",
+       "Xanh lưu ly",
+       "Hồng"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-24",
+   "difficulty": "V",
+   "probe": false,
+   "title": "macbook air m2 bao hanh bao lau  (gốc G3-06, không dấu)",
+   "base": "G3-06",
+   "turns": [
+    {
+     "say": "macbook air m2 bao hanh bao lau",
+     "expect": {
+      "products": true,
+      "product": "MacBook Air M2",
+      "text_any": [
+       "12 tháng"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-25",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Macbook Air M2 bảo hành bao lâu???  (gốc G3-06, hoa lẫn lộn + dấu câu)",
+   "base": "G3-06",
+   "turns": [
+    {
+     "say": "Macbook Air M2 bảo hành bao lâu???",
+     "expect": {
+      "products": true,
+      "product": "MacBook Air M2",
+      "text_any": [
+       "12 tháng"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-26",
+   "difficulty": "V",
+   "probe": false,
+   "title": "xiaomi 15 bản 16/512  (gốc G3-03, cấu hình gọn)",
+   "base": "G3-03",
+   "turns": [
+    {
+     "say": "xiaomi 15 bản 16/512",
+     "expect": {
+      "products": true,
+      "product": "Xiaomi 15",
+      "min_ram": 16,
+      "min_storage": 512,
+      "text_any": [
+       "21.990.000"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-27",
+   "difficulty": "V",
+   "probe": false,
+   "title": "so sanh dell xps 13 va macbook air m2  (gốc G5-01, không dấu)",
+   "base": "G5-01",
+   "turns": [
+    {
+     "say": "so sanh dell xps 13 va macbook air m2",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Dell XPS 13",
+       "MacBook Air M2"
+      ],
+      "comparison": {
+       "products": 2,
+       "best": {
+        "price": [
+         1
+        ],
+        "ram": [
+         0
+        ],
+        "storage": [
+         0
+        ],
+        "warranty": [
+         0
+        ]
+       },
+       "no_best": [
+        "cpu",
+        "screen"
+       ]
+      },
+      "text_any": [
+       "RAM cao hơn"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-28",
+   "difficulty": "V",
+   "probe": false,
+   "title": "dell xps 13 vs macbook air m2  (gốc G5-01, \"vs\")",
+   "base": "G5-01",
+   "turns": [
+    {
+     "say": "dell xps 13 vs macbook air m2",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Dell XPS 13",
+       "MacBook Air M2"
+      ],
+      "comparison": {
+       "products": 2,
+       "best": {
+        "price": [
+         1
+        ],
+        "ram": [
+         0
+        ],
+        "storage": [
+         0
+        ],
+        "warranty": [
+         0
+        ]
+       },
+       "no_best": [
+        "cpu",
+        "screen"
+       ]
+      },
+      "text_any": [
+       "RAM cao hơn"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-29",
+   "difficulty": "V",
+   "probe": false,
+   "title": "toi co 100tr mua 1 dt va 1 laptop  (gốc G2-18, không dấu + viết tắt)",
+   "base": "G2-18",
+   "turns": [
+    {
+     "say": "toi co 100tr mua 1 dt va 1 laptop",
+     "expect": {
+      "products": true,
+      "bundle_categories": [
+       "Điện thoại",
+       "Laptop"
+      ],
+      "max_total": 100000000,
+      "text_any": [
+       "Tổng cộng"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G10-30",
+   "difficulty": "V",
+   "probe": false,
+   "title": "laptop   dell    ram   16gb  (gốc G1-01, khoảng trắng thừa)",
+   "base": "G1-01",
+   "turns": [
+    {
+     "say": "laptop   dell    ram   16gb",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell",
+      "min_ram": 16
+     }
+    }
+   ]
+  }
+ ]
+}

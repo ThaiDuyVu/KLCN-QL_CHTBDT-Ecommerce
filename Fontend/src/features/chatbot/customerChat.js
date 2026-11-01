@@ -71,14 +71,15 @@ export function errorFor(failure, { timedOut = false } = {}) {
   return { kind: 'unavailable', text: 'Trợ lý AI tạm thời chưa khả dụng. Câu hỏi này chưa được trả lời; vui lòng thử lại sau.' };
 }
 
-// History is text-only. Reattach cards/sources only to the same assistant text seen live in this page.
+// History is text-only. Reattach cards/sources/comparison only to the same assistant text seen live in this page.
 export function mergeHistory(rows, current = []) {
-  const rich = current.filter((item) => item.role === 'ASSISTANT' && (item.products?.length || item.sources?.length || item.suggestions?.length));
+  const rich = current.filter((item) => item.role === 'ASSISTANT' && (item.products?.length || item.sources?.length || item.suggestions?.length || item.comparison));
   return rows.map((row) => {
     const index = row.sender_type === 'ASSISTANT' ? rich.findIndex((item) => item.text === row.message) : -1;
     const extra = index >= 0 ? rich.splice(index, 1)[0] : null;
     return { id: row.id, serverId: row.id, role: row.sender_type, text: row.message, createdAt: row.created_at,
-      products: extra?.products || [], sources: extra?.sources || [], suggestions: extra?.suggestions || [] };
+      products: extra?.products || [], sources: extra?.sources || [], suggestions: extra?.suggestions || [],
+      comparison: extra?.comparison || null };
   });
 }
 

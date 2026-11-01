@@ -1,0 +1,305 @@
+{
+ "group": "G5",
+ "title": "So sánh sản phẩm",
+ "cases": [
+  {
+   "id": "G5-01",
+   "difficulty": "D",
+   "probe": false,
+   "title": "so sánh Dell XPS 13 và MacBook Air M2",
+   "turns": [
+    {
+     "say": "so sánh Dell XPS 13 và MacBook Air M2",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Dell XPS 13",
+       "MacBook Air M2"
+      ],
+      "comparison": {
+       "products": 2,
+       "best": {
+        "price": [
+         1
+        ],
+        "ram": [
+         0
+        ],
+        "storage": [
+         0
+        ],
+        "warranty": [
+         0
+        ]
+       },
+       "no_best": [
+        "cpu",
+        "screen"
+       ]
+      },
+      "text_any": [
+       "RAM cao hơn"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-02",
+   "difficulty": "D",
+   "probe": false,
+   "title": "so sánh iPhone 15 với Dell XPS 13",
+   "turns": [
+    {
+     "say": "so sánh iPhone 15 với Dell XPS 13",
+     "expect": {
+      "no_products": true,
+      "text_any": [
+       "không so sánh"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-03",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Xiaomi 15 với iPhone 15 cái nào hơn",
+   "turns": [
+    {
+     "say": "Xiaomi 15 với iPhone 15 cái nào hơn",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Xiaomi 15",
+       "iPhone 15"
+      ],
+      "comparison": {
+       "products": 2
+      },
+      "text_any": [
+       "Tóm lại"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-04",
+   "difficulty": "V",
+   "probe": false,
+   "title": "so sánh Galaxy S24 và iPhone 16",
+   "turns": [
+    {
+     "say": "so sánh Galaxy S24 và iPhone 16",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Samsung Galaxy S24",
+       "iPhone 16"
+      ],
+      "comparison": {
+       "products": 2,
+       "best": {
+        "price": [
+         0
+        ]
+       },
+       "no_best": [
+        "ram",
+        "storage"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-05",
+   "difficulty": "K",
+   "probe": false,
+   "title": "so sánh ASUS ROG Zephyrus G14 và MacBook Pro 14 M3",
+   "turns": [
+    {
+     "say": "so sánh ASUS ROG Zephyrus G14 và MacBook Pro 14 M3",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "ASUS ROG Zephyrus G14",
+       "MacBook Pro 14 M3"
+      ],
+      "comparison": {
+       "products": 2,
+       "no_best": [
+        "price",
+        "ram"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-06",
+   "difficulty": "V",
+   "probe": false,
+   "title": "so sánh Dell Inspiron 15, Dell XPS 13 và ASUS Vivobook 15",
+   "turns": [
+    {
+     "say": "so sánh Dell Inspiron 15, Dell XPS 13 và ASUS Vivobook 15",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Dell Inspiron 15",
+       "Dell XPS 13",
+       "ASUS Vivobook 15"
+      ],
+      "comparison": {
+       "products": 3
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-07",
+   "difficulty": "V",
+   "probe": false,
+   "title": "iPhone 16 vs Galaxy Z Flip6",
+   "turns": [
+    {
+     "say": "iPhone 16 vs Galaxy Z Flip6",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "iPhone 16",
+       "Samsung Galaxy Z Flip6"
+      ],
+      "comparison": {
+       "products": 2,
+       "best": {
+        "price": [
+         0
+        ]
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-08",
+   "difficulty": "D",
+   "probe": false,
+   "title": "so sánh Galaxy A55 với MacBook Air M2",
+   "turns": [
+    {
+     "say": "so sánh Galaxy A55 với MacBook Air M2",
+     "expect": {
+      "no_products": true,
+      "text_any": [
+       "không so sánh"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-09",
+   "difficulty": "D",
+   "probe": false,
+   "title": "so sánh iPhone 15",
+   "turns": [
+    {
+     "say": "so sánh iPhone 15",
+     "expect": {
+      "clarify": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-10",
+   "difficulty": "K",
+   "probe": true,
+   "title": "so sánh Xiaomi 15 và Xiaomi 15",
+   "turns": [
+    {
+     "say": "so sánh Xiaomi 15 và Xiaomi 15",
+     "expect": {
+      "clarify": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-11",
+   "difficulty": "V",
+   "probe": false,
+   "title": "so sánh laptop Dell với laptop ASUS",
+   "turns": [
+    {
+     "say": "so sánh laptop Dell với laptop ASUS",
+     "expect": {
+      "clarify": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-12",
+   "difficulty": "K",
+   "probe": true,
+   "title": "Hỏi tiếp bảo hành sau so sánh",
+   "turns": [
+    {
+     "say": "so sánh Dell XPS 13 và MacBook Air M2",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Dell XPS 13",
+       "MacBook Air M2"
+      ]
+     }
+    },
+    {
+     "say": "cái nào bảo hành lâu hơn",
+     "expect": {
+      "text_any": [
+       "Dell XPS 13"
+      ],
+      "allow_products": [
+       "Dell XPS 13",
+       "MacBook Air M2"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G5-13",
+   "difficulty": "K",
+   "probe": false,
+   "title": "Đại từ mơ hồ khi có 2 máy",
+   "turns": [
+    {
+     "say": "so sánh Xiaomi 15 và iPhone 15",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Xiaomi 15",
+       "iPhone 15"
+      ]
+     }
+    },
+    {
+     "say": "nó còn hàng không",
+     "expect": {
+      "clarify": true
+     }
+    }
+   ]
+  }
+ ]
+}

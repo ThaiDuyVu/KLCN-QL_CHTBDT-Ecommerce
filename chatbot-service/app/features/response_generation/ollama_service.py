@@ -1,5 +1,6 @@
 from app.shared.tracing import traced, event
 import json
+from decimal import Decimal
 
 from app.shared.contracts.context import GroundedContext
 from app.shared.contracts.enums import Intent
@@ -8,8 +9,76 @@ from app.shared.ollama.protocol import ChatModel
 from app.features.chat.policy import transaction_request, TRANSACTION_REFUSAL
 from app.features.query_understanding.normalization import folded
 from app.features.query_understanding.constraints import requested_count
+from app.features.comparison.builder import build_comparison, comparison_text
+from app.shared.formatting import vnd as _vnd
 
 INSUFFICIENT = "Mình chưa đủ dữ liệu để trả lời chính xác yêu cầu này."
+
+
+def _variant_line(variant) -> str:
+    specs = [label for label in (f"RAM {variant.ram}" if variant.ram else None,
+                                 f"bộ nhớ {variant.storage}" if variant.storage else None,
+                                 f"màu {variant.color}" if variant.color else None) if label]
+    stock = ("chưa xác định tồn kho vì bạn chưa chọn chi nhánh" if variant.available_quantity is None else
+             "hiện đã hết hàng tại chi nhánh bạn đang chọn" if variant.available_quantity == 0 else
+             f"còn {variant.available_quantity} máy tại chi nhánh bạn đang chọn")
+    warranty = (f"bảo hành {variant.warranty_months} tháng" if variant.warranty_months is not None
+                else "chưa có thông tin thời hạn bảo hành")
+    # The SKU is shown on the product card, so the text stays conversational.
+    return f"• {', '.join(specs) or 'Phiên bản'}: giá {_vnd(variant.effective_price)}, {stock}, {warranty}."
+
+
+def _bundle_answer(context: GroundedContext) -> str:
+    plan = context.query_plan
+    kinds = ' + '.join(f"1 {(s.category or 'sản phẩm').lower()}" for s in plan.bundle)
+    approximate = plan.references.get('budget_kind') == 'approximate'
+    budget = plan.budget
+    if not context.products:
+        return (f"Mình chưa tìm đủ sản phẩm còn hàng cho combo {kinds}"
+                + (f" trong mức {_vnd(budget)}." if budget is not None else ".")
+                + " Bạn có thể nới ngân sách hoặc hỏi riêng từng loại sản phẩm nhé.")
+    fits = plan.references.get('bundle_within_budget') != 'false'
+    total = sum((p.eligible_variants[0].effective_price for p in context.products), Decimal('0'))
+    if budget is None:
+        opening = f"Mình gợi ý combo {kinds}:"
+    elif fits:
+        opening = f"Với {'mức khoảng' if approximate else 'ngân sách'} {_vnd(budget)}, mình gợi ý combo {kinds}:"
+    else:
+        opening = f"Mình chưa tìm được combo {kinds} trong ngân sách {_vnd(budget)}. Combo rẻ nhất hiện có là:"
+    blocks = [opening]
+    for product in context.products:
+        blocks.append(f"{product.category_name or 'Sản phẩm'}: {product.product_name}\n{_variant_line(product.eligible_variants[0])}")
+    if budget is None:
+        summary = f"Tổng cộng: {_vnd(total)}."
+    elif total <= budget:
+        summary = f"Tổng cộng: {_vnd(total)}, còn dư {_vnd(budget - total)} so với {'mức' if approximate else 'ngân sách'} của bạn."
+    else:
+        summary = f"Tổng cộng: {_vnd(total)}, cao hơn {'mức' if approximate else 'ngân sách'} của bạn {_vnd(total - budget)}."
+    blocks.append(summary)
+    blocks.append("Bạn có thể bấm “Xem chi tiết” trên từng thẻ sản phẩm, hoặc cho mình biết nếu muốn đổi lựa chọn trong combo nhé.")
+    return "\n\n".join(blocks)
+
+
+def _product_answer(context: GroundedContext) -> str:
+    products = context.products
+    distinct_products = len({p.product_id for p in products})
+    count = requested_count(folded(context.user_query))
+    if context.query_plan.intent == Intent.PRODUCT_COMPARE:
+        opening = f"Mình đã tìm được thông tin của {distinct_products} sản phẩm để bạn so sánh:"
+    elif context.query_plan.intent == Intent.PRODUCT_DETAIL and distinct_products == 1:
+        opening = f"Đây là thông tin chi tiết của {products[0].product_name}:"
+    else:
+        opening = f"Mình tìm thấy {distinct_products} sản phẩm phù hợp với yêu cầu của bạn:"
+    if count is not None and distinct_products < count:
+        opening = (f"Hiện mình chỉ tìm thấy {distinct_products}/{count} sản phẩm phù hợp với yêu cầu của bạn; "
+                   "các cấu hình bên dưới là phiên bản của từng sản phẩm:")
+    blocks = [opening]
+    for product in products:
+        blocks.append("\n".join([product.product_name or str(product.product_id),
+                                 *(_variant_line(v) for v in product.eligible_variants)]))
+    blocks.append("Bạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, "
+                  "hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.")
+    return "\n\n".join(blocks)
 
 
 class OllamaResponseGenerationService:
@@ -24,25 +93,16 @@ class OllamaResponseGenerationService:
         if context.query_plan.clarification:
             event("response.strategy", {"strategy": "deterministic_guard", "reason": "clarification"})
             return context.query_plan.clarification
+        if context.query_plan.bundle:
+            event("response.strategy", {"strategy": "deterministic_product_evidence", "reason": "verified_bundle"})
+            return _bundle_answer(context)
+        comparison = build_comparison(context.products) if context.query_plan.intent == Intent.PRODUCT_COMPARE else None
+        if comparison is not None:
+            event("response.strategy", {"strategy": "deterministic_product_evidence", "reason": "verified_comparison"})
+            return comparison_text(comparison)
         if context.query_plan.intent in {Intent.PRODUCT_DISCOVERY, Intent.PRODUCT_DETAIL, Intent.PRODUCT_COMPARE} and context.products and all(p.product_name for p in context.products):
             event("response.strategy", {"strategy": "deterministic_product_evidence", "reason": "verified_product_variants"})
-            lines = []
-            count = requested_count(folded(context.user_query))
-            distinct_products = len({p.product_id for p in context.products})
-            if count is not None and distinct_products < count:
-                lines.append(f"Chỉ tìm thấy {distinct_products}/{count} sản phẩm phù hợp; các cấu hình bên dưới là biến thể của từng sản phẩm.")
-            for product in context.products:
-                lines.append(product.product_name or str(product.product_id))
-                for variant in product.eligible_variants:
-                    stock = ("chưa xác định tồn kho vì chưa chọn kho" if variant.available_quantity is None else
-                             "hết hàng tại kho được chọn (tồn khả dụng 0)" if variant.available_quantity == 0 else
-                             f"còn {variant.available_quantity} máy tại kho được chọn")
-                    price = format(variant.effective_price, ',.2f').removesuffix('.00')
-                    warranty = (f"bảo hành {variant.warranty_months} tháng" if variant.warranty_months is not None
-                                else "chưa biết thời hạn bảo hành")
-                    lines.append(f"- {variant.sku}: RAM {variant.ram or 'chưa biết'}, bộ nhớ {variant.storage or 'chưa biết'}, "
-                                 f"màu {variant.color or 'chưa biết'}; giá {price} VND; {stock}; {warranty}.")
-            return "\n".join(lines)
+            return _product_answer(context)
         if context.query_plan.intent == Intent.GREETING:
             event("response.strategy", {"strategy": "deterministic_guard", "reason": "greeting"})
             return "Xin chào! Mình có thể hỗ trợ tìm sản phẩm và giải đáp thông tin cửa hàng."

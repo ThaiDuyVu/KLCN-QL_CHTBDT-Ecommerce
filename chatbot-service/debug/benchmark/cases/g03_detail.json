@@ -1,0 +1,309 @@
+{
+ "group": "G3",
+ "title": "Chi tiết sản phẩm / phiên bản",
+ "cases": [
+  {
+   "id": "G3-01",
+   "difficulty": "D",
+   "probe": false,
+   "title": "Xiaomi 15 giá bao nhiêu",
+   "turns": [
+    {
+     "say": "Xiaomi 15 giá bao nhiêu",
+     "expect": {
+      "products": true,
+      "product": "Xiaomi 15"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-02",
+   "difficulty": "D",
+   "probe": false,
+   "title": "Xiaomi 15 bản 512GB",
+   "turns": [
+    {
+     "say": "Xiaomi 15 bản 512GB",
+     "expect": {
+      "products": true,
+      "product": "Xiaomi 15",
+      "min_storage": 512
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-03",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Xiaomi 15 bản 16GB/512GB",
+   "turns": [
+    {
+     "say": "Xiaomi 15 bản 16GB/512GB",
+     "expect": {
+      "products": true,
+      "product": "Xiaomi 15",
+      "min_ram": 16,
+      "min_storage": 512,
+      "text_any": [
+       "21.990.000"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-04",
+   "difficulty": "D",
+   "probe": false,
+   "title": "iPhone 16 có màu gì",
+   "turns": [
+    {
+     "say": "iPhone 16 có màu gì",
+     "expect": {
+      "products": true,
+      "product": "iPhone 16",
+      "text_all": [
+       "Đen",
+       "Xanh lưu ly",
+       "Hồng"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-05",
+   "difficulty": "V",
+   "probe": false,
+   "title": "iPhone 15 bản 256GB còn hàng không",
+   "turns": [
+    {
+     "say": "iPhone 15 bản 256GB còn hàng không",
+     "expect": {
+      "products": true,
+      "product": "iPhone 15",
+      "min_storage": 256
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-06",
+   "difficulty": "D",
+   "probe": false,
+   "title": "MacBook Air M2 bảo hành bao lâu",
+   "turns": [
+    {
+     "say": "MacBook Air M2 bảo hành bao lâu",
+     "expect": {
+      "products": true,
+      "product": "MacBook Air M2",
+      "text_any": [
+       "12 tháng"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-07",
+   "difficulty": "D",
+   "probe": false,
+   "title": "Dell XPS 13 bảo hành mấy tháng",
+   "turns": [
+    {
+     "say": "Dell XPS 13 bảo hành mấy tháng",
+     "expect": {
+      "products": true,
+      "product": "Dell XPS 13",
+      "text_any": [
+       "24 tháng"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-08",
+   "difficulty": "D",
+   "probe": false,
+   "title": "SKU DEV-ROGG14-WH-1TB giá bao nhiêu",
+   "turns": [
+    {
+     "say": "SKU DEV-ROGG14-WH-1TB giá bao nhiêu",
+     "expect": {
+      "products": true,
+      "product": "ASUS ROG Zephyrus G14",
+      "text_any": [
+       "49.990.000"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-09",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Samsung Galaxy S24 màu xám",
+   "turns": [
+    {
+     "say": "Samsung Galaxy S24 màu xám",
+     "expect": {
+      "products": true,
+      "product": "Samsung Galaxy S24",
+      "text_any": [
+       "Xám"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-10",
+   "difficulty": "D",
+   "probe": false,
+   "title": "MacBook Pro 14 M3 bản 1TB",
+   "turns": [
+    {
+     "say": "MacBook Pro 14 M3 bản 1TB",
+     "expect": {
+      "products": true,
+      "product": "MacBook Pro 14 M3",
+      "min_storage": 1024
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-11",
+   "difficulty": "D",
+   "probe": false,
+   "title": "thông số Dell XPS 13",
+   "turns": [
+    {
+     "say": "thông số Dell XPS 13",
+     "expect": {
+      "products": true,
+      "product": "Dell XPS 13"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-12",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Galaxy Z Flip6 giá thấp nhất",
+   "turns": [
+    {
+     "say": "Galaxy Z Flip6 giá thấp nhất",
+     "expect": {
+      "products": true,
+      "product": "Samsung Galaxy Z Flip6",
+      "text_any": [
+       "24.990.000"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-13",
+   "difficulty": "D",
+   "probe": false,
+   "title": "ASUS Vivobook 15 còn hàng không",
+   "turns": [
+    {
+     "say": "ASUS Vivobook 15 còn hàng không",
+     "expect": {
+      "products": true,
+      "product": "ASUS Vivobook 15"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-14",
+   "difficulty": "V",
+   "probe": false,
+   "title": "iPhone 15 Pro Max giá",
+   "turns": [
+    {
+     "say": "iPhone 15 Pro Max giá",
+     "expect": {
+      "safe_no_answer": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-15",
+   "difficulty": "V",
+   "probe": false,
+   "title": "iPhone 13 giá bao nhiêu",
+   "turns": [
+    {
+     "say": "iPhone 13 giá bao nhiêu",
+     "expect": {
+      "safe_no_answer": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-16",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Xiaomi 15 màu tím",
+   "turns": [
+    {
+     "say": "Xiaomi 15 màu tím",
+     "expect": {
+      "allow_products": [
+       "Xiaomi 15"
+      ],
+      "text_none": [
+       "màu Tím"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-17",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Redmi Note 13 có bản 256GB không",
+   "turns": [
+    {
+     "say": "Redmi Note 13 có bản 256GB không",
+     "expect": {
+      "allow_products": [
+       "Xiaomi Redmi Note 13"
+      ],
+      "text_none": [
+       "bộ nhớ 256GB"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G3-18",
+   "difficulty": "D",
+   "probe": false,
+   "title": "sku DEV-XXX-000",
+   "turns": [
+    {
+     "say": "sku DEV-XXX-000",
+     "expect": {
+      "safe_no_answer": true
+     }
+    }
+   ]
+  }
+ ]
+}

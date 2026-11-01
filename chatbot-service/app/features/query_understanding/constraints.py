@@ -86,6 +86,15 @@ def read_capacity(text: str, slot: str) -> CapacityConstraint | None:
     return None
 
 
+def variant_storage_wording(text):
+    """With a named product, "ban 512gb" names that product's storage variant (R2).
+
+    Below 64GB the amount may be RAM ("ban 16gb"), so it is left for the coverage check to question.
+    """
+    return re.sub(r'\bban\s+(' + NUMBER + r')\s*(gb|tb)\b',
+                  lambda m: f'bo nho {m[1]}{m[2]}' if _gb(m[1], m[2]) >= 64 else m[0], text)
+
+
 def storage_reference(text):
     """Existing short reference syntax; identity is resolved from an owned snapshot later."""
     return re.search(r'\bban\s+(\d+)\s*(gb|tb)\b', text)
@@ -114,6 +123,12 @@ class PriceEvidence:
     max_price: Decimal | None
     spans: tuple[tuple[int, int], ...] = ()
     unresolved: tuple[tuple[PriceRelation, tuple[int, int]], ...] = ()
+    # "khoảng 25 triệu": the stated amount, used to rank results by closeness inside the tolerance band.
+    target: Decimal | None = None
+
+
+# "khoảng/tầm/cỡ X" and a bare "giá X" read as X ± APPROXIMATE_TOLERANCE.
+APPROXIMATE_TOLERANCE = Decimal('0.15')
 
 
 MONEY_UNITS = {'trieu': 1000000, 'tr': 1000000, 'cu': 1000000, 'million': 1000000,
@@ -161,6 +176,19 @@ def _price_context(text, start):
     return found[-1] if found else None
 
 
+# Words allowed between "gia"/"ngan sach" and a unitless amount. Anything else there
+# (a product name: "gia iphone 15") makes the number part of that name, not money.
+_UNITLESS_FILLER = re.compile(r'(?:\s*(?:' + '|'.join(grammar for _, grammar in PRICE_OPERATORS) + r'|la|muc|gia|vao|o)(?!\w))*\s*$')
+
+
+def _unitless_price_context(text, start):
+    tail = re.split(r'[\d,;.?!]', text[max(0, start - 24):start])[-1]
+    found = list(_PRICE_CONTEXT.finditer(tail))
+    if not found or not _UNITLESS_FILLER.fullmatch(tail[found[-1].end():]):
+        return None
+    return found[-1][1]
+
+
 def _operator(text, start):
     m = _OPERATOR_TAIL.search(text[:start])
     if not m:
@@ -173,7 +201,7 @@ def _is_money(text, m):
     if unit is None:
         if _NOT_MONEY.match(text, m.end()):
             return False
-        return _price_context(text, m.start()) is not None
+        return _unitless_price_context(text, m.start()) is not None
     if unit not in WEAK_UNITS:
         return True
     raw = _money(number, None)
@@ -184,7 +212,7 @@ def _is_money(text, m):
 
 def price_evidence(text: str) -> PriceEvidence:
     """Relational reading of folded text; anything not understood is reported, never dropped."""
-    lows, highs, spans, unresolved = [], [], [], []
+    lows, highs, spans, unresolved, targets = [], [], [], [], []
     for grammar in RANGES:
         for m in grammar.finditer(text):
             if any(start < m.end() and m.start() < end for start, end in spans):
@@ -209,9 +237,22 @@ def price_evidence(text: str) -> PriceEvidence:
             span = (m.start(), m.end() + suffix.end())
         if relation is None:
             context = _price_context(text, m.start())
-            relation = PriceRelation.BUDGET if context in {'ngan sach', 'budget'} else PriceRelation.UNSPECIFIED
-        if relation == PriceRelation.MAXIMUM:
+            relation = (PriceRelation.BUDGET if context in {'ngan sach', 'budget'} else
+                        PriceRelation.APPROXIMATE if context in {'gia', 'price'} else PriceRelation.UNSPECIFIED)
+        if relation == PriceRelation.APPROXIMATE and re.search(r'(?<!\w)(?:toi|minh|em|anh|chi|ban)\s+(?:dang\s+|chi\s+)?co\s*$', text[:m.start()]):
+            # "tôi có 100 triệu" states how much the customer can spend, not an approximate price.
+            relation = PriceRelation.BUDGET
+        if relation in {PriceRelation.MAXIMUM, PriceRelation.BUDGET}:
             highs.append(value)
+            spans.append(span)
+        elif relation == PriceRelation.COMPARATIVE_MAXIMUM:
+            # "rẻ hơn 15 triệu" excludes exactly 15 triệu.
+            highs.append(max(value - 1, Decimal('0')))
+            spans.append(span)
+        elif relation == PriceRelation.APPROXIMATE:
+            lows.append((value * (1 - APPROXIMATE_TOLERANCE)).quantize(Decimal('1')))
+            highs.append((value * (1 + APPROXIMATE_TOLERANCE)).quantize(Decimal('1')))
+            targets.append(value)
             spans.append(span)
         elif relation == PriceRelation.MINIMUM:
             lows.append(value)
@@ -220,7 +261,7 @@ def price_evidence(text: str) -> PriceEvidence:
             unresolved.append((relation, span))
     # Decimal('0') is a valid bound: emptiness, not truthiness, decides absence.
     return PriceEvidence(max(lows) if lows else None, min(highs) if highs else None,
-                         tuple(sorted(spans)), tuple(unresolved))
+                         tuple(sorted(spans)), tuple(unresolved), targets[0] if len(targets) == 1 else None)
 
 
 def validate_price_coverage(text, evidence=None):
@@ -239,28 +280,73 @@ class ReferenceKind(Enum):
     LAST = 'LAST'
     CHEAPER = 'CHEAPER'
     CHEAPER_BOUNDED = 'CHEAPER_BOUNDED'
+    PRICIER = 'PRICIER'
     STORAGE = 'STORAGE'
+    # Choose one of the products already shown ("con nào rẻ nhất", "cái nào RAM nhiều hơn").
+    CHEAPEST = 'CHEAPEST'
+    PRICIEST = 'PRICIEST'
+    MOST_RAM = 'MOST_RAM'
+    MOST_STORAGE = 'MOST_STORAGE'
+    # Same requirements, products not shown yet ("còn mẫu nào khác không").
+    ANOTHER = 'ANOTHER'
+
+
+# Unbounded price comparatives resolved against the previously displayed prices.
+PRICE_COMPARATIVES = frozenset((ReferenceKind.CHEAPER, ReferenceKind.PRICIER))
+SELECTIONS = frozenset((ReferenceKind.CHEAPEST, ReferenceKind.PRICIEST, ReferenceKind.MOST_RAM, ReferenceKind.MOST_STORAGE))
 
 
 _REFERENT = r'(?<!\w)(?:cai|may|chiec|san pham|mau|con|ban|loai|phien ban)\s+'
 _COMPARATIVE = re.compile(r'(?<!\w)(?:(?:gia\s+)?(?:re|thap)\s+hon|cheaper)(?!\w)')
+# "mắc" is the southern word for "đắt"; plain "cao hơn" needs "giá" so "cấu hình cao hơn" is not a price.
+_PRICIER = re.compile(r'(?<!\w)(?:(?:gia\s+)?(?:dat|mac)\s+hon|gia\s+cao\s+hon|pricier|more expensive)(?!\w)')
+_CAPACITY_BEFORE = r'(?:ram|ssd|storage|dung luong|bo nho)(?:\s+\w+){0,2}\s*$'
+_BOUNDED_AFTER = r'\s*(?:(?:gia|muc|la|than)\s+)*\d'
 REFERENCE_PATTERNS = (
     (ReferenceKind.ORDINAL_SECOND, re.compile(_REFERENT + r'(?:thu\s+(?:hai|2)|so\s+2)(?!\w)')),
     (ReferenceKind.ORDINAL_SECOND, re.compile(r'^\s*(?:cai\s+)?thu hai(?!\w)(?!\s+(?:tuan|toi|nay|sau|ngay|tien))')),
     (ReferenceKind.ORDINAL_FIRST, re.compile(_REFERENT + r'(?:dau tien|thu\s+(?:nhat|1)|so\s+1)(?!\w)')),
     (ReferenceKind.ORDINAL_FIRST, re.compile(r'^\s*(?:cai\s+)?dau tien(?!\w)')),
     (ReferenceKind.LAST, re.compile(r'(?<!\w)vua goi y(?!\w)|' + _REFERENT + r'vua\s+(?:nhac|roi)(?!\w)')),
+    # Demonstratives and the pronoun "nó" point at the single product just shown.
+    (ReferenceKind.LAST, re.compile(_REFERENT + r'(?:nay|do|ay|kia)(?!\w)')),
+    (ReferenceKind.LAST, re.compile(r'(?:^|(?<=[,.;]))\s*(?:vay\s+|the\s+)?no(?=\s+(?:con|gia|bao|co|ram|man|pin|la|thi|duoc|dung|chay|nang|mau|dang|ho tro)\b)|(?<!\w)cua no(?!\w)')),
 )
+_WHICH = r'(?<!\w)(?:cai|con|may|chiec|ben|san pham|mau)\s+nao\s+'
+SELECTION_PATTERNS = (
+    (ReferenceKind.CHEAPEST, re.compile(r'(?<!\w)(?:gia\s+)?(?:re|thap)\s+nhat(?!\w)|(?<!\w)cheapest(?!\w)')),
+    (ReferenceKind.PRICIEST, re.compile(r'(?<!\w)(?:gia\s+)?(?:dat|mac|cao)\s+nhat(?!\w)|(?<!\w)most expensive(?!\w)')),
+    (ReferenceKind.MOST_RAM, re.compile(r'(?<!\w)ram\s+(?:nhieu|lon|cao|manh)\s+(?:hon|nhat)(?!\w)')),
+    (ReferenceKind.MOST_STORAGE, re.compile(r'(?<!\w)(?:bo nho|dung luong|ssd|storage)\s+(?:nhieu|lon|cao)\s+(?:hon|nhat)(?!\w)')),
+)
+# "cái nào rẻ hơn" picks between products already shown; "có sản phẩm nào rẻ hơn" searches for a new one.
+WHICH_COMPARATIVE = re.compile(_WHICH + r'(?:gia\s+)?(?:re|thap|dat|mac)\s+hon(?!\w)')
+_ANOTHER = re.compile(r'(?<!\w)(?:mau|loai|san pham|cai|con|may|lua chon|dong|chiec)\s+(?:nao\s+)?khac(?!\w)(?!\s+(?:nhau|biet|gi))'
+                      r'|(?<!\w)(?:con|co)\s+gi\s+khac(?!\w)|(?<!\w)them\s+(?:lua chon|mau|goi y)(?!\w)')
 
 
 def detect_reference(text: str) -> ReferenceKind | None:
     """Shared by the normalizer and the owned-snapshot resolver (folded text)."""
+    for kind, pattern in SELECTION_PATTERNS:
+        m = pattern.search(text)
+        # "có chiếc nào RAM cao hơn không" asks for a new search, not a pick among the products shown.
+        if m and not (kind in {ReferenceKind.MOST_RAM, ReferenceKind.MOST_STORAGE} and m[0].endswith('hon')
+                      and re.search(r'(?<!\w)co\s+(?:\w+\s+){0,2}nao(?!\w)', text)):
+            return kind
+    if _ANOTHER.search(text):
+        return ReferenceKind.ANOTHER
     for comparative in _COMPARATIVE.finditer(text):
         # "RAM thấp hơn ..." compares capacity, not price.
-        if re.search(r'(?:ram|ssd|storage|dung luong|bo nho)(?:\s+\w+){0,2}\s*$', text[:comparative.start()]):
+        if re.search(_CAPACITY_BEFORE, text[:comparative.start()]):
             continue
-        bounded = re.match(r'\s*(?:(?:gia|muc|la|than)\s+)*\d', text[comparative.end():])
+        bounded = re.match(_BOUNDED_AFTER, text[comparative.end():])
         return ReferenceKind.CHEAPER_BOUNDED if bounded else ReferenceKind.CHEAPER
+    for comparative in _PRICIER.finditer(text):
+        if re.search(_CAPACITY_BEFORE, text[:comparative.start()]):
+            continue
+        # "đắt hơn 30 triệu" is an ordinary minimum price filter, not a reference.
+        if not re.match(_BOUNDED_AFTER, text[comparative.end():]):
+            return ReferenceKind.PRICIER
     kind = next((kind for kind, pattern in REFERENCE_PATTERNS if pattern.search(text)), None)
     if kind is None and storage_reference(text):
         return ReferenceKind.STORAGE
@@ -270,14 +356,15 @@ def detect_reference(text: str) -> ReferenceKind | None:
 def validate_capacity_coverage(text):
     constraints = [read_capacity(text, slot) for slot in LABELS]
     spans = [span for c in constraints if c for span in c.spans]
-    for m in re.finditer(r'\b' + NUMBER + r'\s*(?:gb|tb|mb|kb)\b', text):
+    # A capacity inside a SKU ("dev-rogg14-wh-1tb") is part of the code, not a condition.
+    for m in re.finditer(r'(?<![\w-])' + NUMBER + r'\s*(?:gb|tb|mb|kb)\b', text):
         if not any(start <= m.start() and m.end() <= end for start, end in spans):
             raise ConstraintError('Chưa xác định được dung lượng này thuộc RAM hay bộ nhớ của sản phẩm nào. Bạn vui lòng ghi rõ từng cấu hình.')
 
 
 CATEGORY_ALIASES = {
     'Laptop': ('laptop', 'notebook', 'may tinh xach tay'),
-    'Điện thoại': ('dien thoai', 'smartphone', 'phone', 'iphone'),
+    'Điện thoại': ('dien thoai', 'dt', 'smartphone', 'phone', 'iphone'),
     'Tablet': ('tablet', 'may tinh bang', 'ipad'),
 }
 
@@ -307,7 +394,12 @@ IDENTITY_BOUNDARIES = frozenset(('de cho dung phuc vu hoc tap lam viec lap trinh
     'tot re manh va hoac hay nhung mua giup xin toi muon tim canh bao it nhat toi thieu '
     'khong qua toi da ban mau chay choi game phai chi nhu cau price under for with '
     'available in stock below above at least please find recommend cua hang thuong hieu mong nhe sieu sinh vien '
-    'so sanh compare versus vs than mot hai ba bon nam chiec cai cac nhung loai one two three a an the some cheap budget lightweight powerful office work performance high' ).split())
+    'so sanh compare versus vs than mot hai ba bon nam chiec cai cac nhung loai one two three a an the some cheap budget lightweight powerful office work performance high '
+    # Conversational verbs/fillers that can sit right before a product type ("gợi ý laptop", "xem điện thoại").
+    'y goi xem gio thay biet hoi ve them nua lai nay do kia minh em anh cho oi nhe di thi sao duoc ko lay thoi roi tu van danh gia chon dang ky '
+    'vai so nhieu may mot vai mau '
+    # Price words right after a product type ("laptop khoảng 25tr", "laptop ngân sách 20tr").
+    'tam khoang chung xap xi quanh ngan sach thap cao dat mac lon nho hon gioi han' ).split())
 
 
 def validate_brands(text, plan, mentions, brands, named, fold, contains, original):
@@ -339,6 +431,9 @@ def validate_brands(text, plan, mentions, brands, named, fold, contains, origina
             for m in re.finditer(r'(?<!\w)([\w-]+)\s+' + re.escape(alias) + r'(?!\w)', text):
                 token = m[1]
                 if token in IDENTITY_BOUNDARIES or token.isdigit() or re.fullmatch(NUMBER + r'(?:gb|tb)', token):
+                    continue
+                if known:
+                    # The brand is already named ("vài điện thoại Apple"); a word before the type is not a second brand.
                     continue
                 prefix_text = text[:m.start() + len(token)]
                 grounded_names = known + [row['productName'] for row in named]

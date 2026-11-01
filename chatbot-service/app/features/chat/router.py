@@ -135,7 +135,7 @@ async def status(customer: AuthenticatedCustomer = Depends(get_authenticated_cus
         'product_index_configured': bool(settings.product_index_database_url),
         'warehouse_configured': bool(settings.chatbot_warehouse_id),
         'conversation_storage': get_settings().conversation_storage,
-        'feedback_storage': 'memory',
+        'feedback_storage': 'message_feedback' if get_settings().conversation_storage == 'postgres' else 'memory',
         'snapshot_storage': 'assistant-message-envelope' if get_settings().conversation_storage == 'postgres' else 'memory',
     }
 
