@@ -1,0 +1,152 @@
+[
+  {
+    "id": "N27",
+    "prompt": "Đơn hàng ORD-DIAG-NOPAY của tôi đã thanh toán chưa?",
+    "expected": "DELIVERED with no payment: explicitly unknown payment, not paid.",
+    "started_at": "2026-10-20T12:24:32.128947+00:00",
+    "duration_ms": 120.84,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 502,
+    "response": {
+      "detail": "Backend trả về lỗi khi lấy dữ liệu."
+    },
+    "trace_id": "02b7170d-352e-4afa-847f-98fa40833284",
+    "trace_evidence": "evidence/traces/N27.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated synthetic database clone",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-DIAG-NOPAY"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": null,
+    "reference_resolution": null,
+    "grounding": {},
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/synthetic-order-4a984458cf49"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 8.71,
+        "duration_ms": 81.66,
+        "status": "error"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 36.99,
+        "duration_ms": 52.93,
+        "status": "error"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 37.02,
+        "duration_ms": 32.28,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 69.32,
+        "duration_ms": 20.27,
+        "status": "error"
+      }
+    ],
+    "customer_evidence": {}
+  },
+  {
+    "id": "N28",
+    "prompt": "Đơn hàng ORD-DIAG-NULLWAREHOUSE của tôi đã thanh toán chưa?",
+    "expected": "Nullable-warehouse DB fixture must not cause backend NPE; record safe upstream handling if it does.",
+    "started_at": "2026-10-20T12:24:32.265496+00:00",
+    "duration_ms": 92.58,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 502,
+    "response": {
+      "detail": "Backend trả về lỗi khi lấy dữ liệu."
+    },
+    "trace_id": "b58525f8-ada7-4d2c-98ad-58cccdd73100",
+    "trace_evidence": "evidence/traces/N28.json",
+    "verdict": "EXECUTED_PENDING_DIAGNOSIS",
+    "preconditions": "isolated synthetic database clone",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-DIAG-NULLWAREHOUSE"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": null,
+    "reference_resolution": null,
+    "grounding": {},
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/synthetic-order-8cb4219feb1a"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.78,
+        "duration_ms": 63.06,
+        "status": "error"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 31.46,
+        "duration_ms": 36.19,
+        "status": "error"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 31.48,
+        "duration_ms": 14.02,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 45.53,
+        "duration_ms": 22.0,
+        "status": "error"
+      }
+    ],
+    "customer_evidence": {}
+  }
+]

@@ -37,6 +37,9 @@ class ConversationService:
     def end_session(self, session_id: UUID, customer_id: UUID) -> ChatSession:
         if session_id is None or customer_id is None:
             raise HTTPException(status_code=400, detail="session_id and customer_id are required")
+        if hasattr(self.repository, 'request_lock'):
+            with self.repository.request_lock(session_id, customer_id):
+                return self.repository.end_session(session_id, customer_id)
         return self.repository.end_session(session_id, customer_id)
 
     def add_message(
@@ -68,6 +71,10 @@ class ConversationService:
         self.repository.get_session(session_id, customer_id)
         return self.repository.get_recent_messages(session_id, window)
 
+    def get_context_messages(self, session_id, customer_id, window=10):
+        self.repository.get_session(session_id, customer_id)
+        return self.repository.get_context_messages(session_id, customer_id, window)
+
     def rate_message(
         self,
         session_id: UUID,
@@ -86,6 +93,9 @@ class ConversationService:
         if message is None:
             raise HTTPException(status_code=404, detail="Message not found")
 
-        message.rating = rating
-        self.repository.save_session(session)
-        return message
+        return self.repository.set_rating(session_id, message_id, customer_id, rating)
+
+    def list_sessions(self, customer_id, page=0, size=20):
+        if page < 0 or size < 1 or size > 100 or page*size > 2147483647:
+            raise HTTPException(400, 'Pagination không hợp lệ')
+        return self.repository.list_sessions(customer_id,page,size)

@@ -2,6 +2,7 @@ package com.example.backend.auth.controller;
 
 import com.example.backend.auth.dto.LoginRequest;
 import com.example.backend.auth.dto.LoginSessionResponse;
+import com.example.backend.auth.dto.RegisterRequest;
 import com.example.backend.auth.exception.InvalidCredentialsException;
 import com.example.backend.auth.exception.InvalidJwtTokenException;
 import com.example.backend.auth.exception.InvalidRefreshTokenException;
@@ -13,6 +14,7 @@ import com.example.backend.common.security.AuthCookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +55,26 @@ public class AuthController {
         );
 
         return ResponseEntity.ok(result.getResponse());
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<LoginSessionResponse> register(
+            @Valid @RequestBody RegisterRequest request,
+            HttpServletResponse response
+    ) {
+        // A new customer account is signed in immediately, like a successful login.
+        LoginAuthenticationResult result = authService.register(request);
+
+        authCookieService.writeAccessTokenCookie(
+                response,
+                result.getAccessToken()
+        );
+        authCookieService.writeRefreshTokenCookie(
+                response,
+                result.getRefreshToken()
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(result.getResponse());
     }
 
     @PostMapping("/refresh")

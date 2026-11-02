@@ -1,0 +1,163 @@
+{
+  "trace_id": "7b1fd7d5-77f6-41e0-b780-b13b602363c6",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "5780152b-5e2d-4e6b-a3e4-87e53a0316b1",
+      "parent_id": "030391f7-a2db-426a-89b2-f04e514fac2d",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2293.15,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": "25000000",
+          "max_price": null,
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop gia tu 25 trieu den 20 trieu",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "19e2d5e6-e4fc-4e1d-a8ea-6b8fe6369741",
+      "parent_id": "82a00d6c-9144-4827-9d88-3cae2a22c11e",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2334.61,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Khoảng giá bị mâu thuẫn. Bạn muốn giá tối thiểu và tối đa bao nhiêu?",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "396e3706-435c-4a29-98c7-963d44ee708a",
+      "parent_id": "82a00d6c-9144-4827-9d88-3cae2a22c11e",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2334.72,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "f04dd92d-8e02-457b-ae33-7bfc942115f8",
+      "parent_id": "a903b333-58f5-43d1-81d9-32fd28e375ae",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2334.91,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 15.0,
+      "duration_ms": 2332.48,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 52.14,
+      "duration_ms": 2267.41,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 53.53,
+      "duration_ms": 2239.55,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 53.93,
+      "duration_ms": 2239.1,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 54.3,
+      "duration_ms": 2238.69,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2293.3,
+      "duration_ms": 8.55,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2301.88,
+      "duration_ms": 7.06,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2308.98,
+      "duration_ms": 10.3,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2334.67,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2334.84,
+      "duration_ms": 0.09,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

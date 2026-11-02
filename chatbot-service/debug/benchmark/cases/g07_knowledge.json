@@ -1,0 +1,152 @@
+{
+ "group": "G7",
+ "title": "Chính sách / tài liệu (RAG)",
+ "cases": [
+  {
+   "id": "G7-01",
+   "difficulty": "D",
+   "probe": false,
+   "title": "chính sách đổi trả thế nào",
+   "turns": [
+    {
+     "say": "chính sách đổi trả thế nào",
+     "expect": {
+      "sources": true,
+      "text_any": [
+       "DEMO"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G7-02",
+   "difficulty": "V",
+   "probe": false,
+   "title": "đổi trả trong bao nhiêu ngày",
+   "turns": [
+    {
+     "say": "đổi trả trong bao nhiêu ngày",
+     "expect": {
+      "text_any": [
+       "DEMO"
+      ],
+      "no_invented_policy": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "G7-03",
+   "difficulty": "D",
+   "probe": false,
+   "title": "hướng dẫn kiểm tra thanh toán",
+   "turns": [
+    {
+     "say": "hướng dẫn kiểm tra thanh toán",
+     "expect": {
+      "sources": true,
+      "text_any": [
+       "DEMO"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G7-04",
+   "difficulty": "V",
+   "probe": false,
+   "title": "cửa hàng có giao hàng tận nơi không",
+   "turns": [
+    {
+     "say": "cửa hàng có giao hàng tận nơi không",
+     "expect": {
+      "no_invented_policy": true,
+      "no_products": true,
+      "text_any": [
+       "chưa",
+       "không"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G7-05",
+   "difficulty": "V",
+   "probe": false,
+   "title": "chính sách trả góp thế nào",
+   "turns": [
+    {
+     "say": "chính sách trả góp thế nào",
+     "expect": {
+      "no_invented_policy": true,
+      "no_products": true,
+      "text_any": [
+       "chưa",
+       "không"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G7-06",
+   "difficulty": "D",
+   "probe": false,
+   "title": "giờ mở cửa của cửa hàng",
+   "turns": [
+    {
+     "say": "giờ mở cửa của cửa hàng",
+     "expect": {
+      "no_invented_policy": true,
+      "no_products": true,
+      "text_any": [
+       "chưa",
+       "không"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G7-07",
+   "difficulty": "D",
+   "probe": false,
+   "title": "có xuất hóa đơn VAT không",
+   "turns": [
+    {
+     "say": "có xuất hóa đơn VAT không",
+     "expect": {
+      "no_invented_policy": true,
+      "no_products": true,
+      "text_any": [
+       "chưa",
+       "không"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G7-08",
+   "difficulty": "V",
+   "probe": false,
+   "title": "bảo hành ở đâu, mang máy tới chỗ nào",
+   "turns": [
+    {
+     "say": "bảo hành ở đâu, mang máy tới chỗ nào",
+     "expect": {
+      "no_invented_policy": true,
+      "no_products": true,
+      "text_any": [
+       "chưa",
+       "không"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

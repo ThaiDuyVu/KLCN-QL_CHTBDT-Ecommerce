@@ -1,0 +1,28 @@
+{
+  "app_env": "development",
+  "chatbot_ai_enabled": true,
+  "product_advisor_mode": "real",
+  "chatbot_trace_enabled": true,
+  "chatbot_trace_file_enabled": true,
+  "ollama_chat_model": "qwen3:4b-instruct",
+  "ollama_embedding_model": "qwen3-embedding:0.6b",
+  "product_index_rows": 16,
+  "knowledge_chunks": 2,
+  "demo_sources": [
+    {
+      "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+      "title": "DEMO — Chính sách đổi trả kiểm thử",
+      "source": "demo://chatbot-lab/return",
+      "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+      "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận."
+    },
+    {
+      "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+      "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+      "source": "demo://chatbot-lab/payment",
+      "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+      "content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP."
+    }
+  ],
+  "warehouse_configured": true
+}

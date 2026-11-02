@@ -1,0 +1,346 @@
+{
+  "trace_id": "74b99352-822b-4769-b58a-219eeb9cf148",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "3bc5298d-5e2e-4672-b2de-e68ae4aa1f31",
+      "parent_id": "80875023-cd8a-443a-a284-98dbf3ff82e0",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1810.59,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": 12,
+          "min_storage_gb": 1024,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại ram 12gb dung lượng 1tb",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "10d6fc96-1878-42e4-8fa0-c0651333196c",
+      "parent_id": "80875023-cd8a-443a-a284-98dbf3ff82e0",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1851.87,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": 12,
+            "min_storage_gb": 1024,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại ram 12gb dung lượng 1tb",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": 12,
+            "min_storage_gb": 1024,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm điện thoại ram 12gb dung lượng 1TB.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "d891fdf5-403e-4d1c-81ea-87c550373f93",
+      "parent_id": "191759b6-4269-4768-a20b-021ce954cdab",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1862.03,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": 12,
+          "min_storage_gb": 1024,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm điện thoại ram 12gb dung lượng 1TB.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "1c41b192-2ba1-4896-a2d1-f42bce18f29d",
+      "parent_id": "191759b6-4269-4768-a20b-021ce954cdab",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1862.1,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": 12,
+          "min_storage_gb": 1024,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm điện thoại ram 12gb dung lượng 1TB.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "3a7611c3-52c3-40c6-8056-4154d338e4e3",
+      "parent_id": "191759b6-4269-4768-a20b-021ce954cdab",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 1862.17,
+      "duration_ms": 9.65,
+      "output": []
+    },
+    {
+      "id": "395138fb-ee13-4461-8268-3e0bc556b9ca",
+      "parent_id": "191759b6-4269-4768-a20b-021ce954cdab",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 1871.84,
+      "duration_ms": 0.05,
+      "output": []
+    },
+    {
+      "id": "2540cb02-e539-4d83-a1ad-9cad6810c864",
+      "parent_id": "395138fb-ee13-4461-8268-3e0bc556b9ca",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 1871.86,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [],
+        "variants": 0,
+        "cards": 0
+      }
+    },
+    {
+      "id": "3696ab65-0e4c-4b1b-8774-5143a7a6db2e",
+      "parent_id": "191759b6-4269-4768-a20b-021ce954cdab",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1872.09,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "4544c95f-d318-4ed8-b2c3-a9663ea8340b",
+      "parent_id": "387881ea-3285-4ddf-9ede-6122185d2aa6",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1872.45,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "no_matching_products"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 7.75,
+      "duration_ms": 1875.48,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 42.09,
+      "duration_ms": 1809.91,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 43.94,
+      "duration_ms": 1766.58,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 44.38,
+      "duration_ms": 1766.08,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 44.78,
+      "duration_ms": 1765.62,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1810.78,
+      "duration_ms": 12.35,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1823.19,
+      "duration_ms": 10.26,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1833.53,
+      "duration_ms": 18.17,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1862.17,
+      "duration_ms": 9.65,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1862.21,
+      "duration_ms": 9.58,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 1871.84,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1871.99,
+      "duration_ms": 0.11,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1872.32,
+      "duration_ms": 0.17,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Điện thoại"
+          ],
+          [
+            "minRamGb",
+            "12"
+          ],
+          [
+            "minStorageGb",
+            "1024"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ]
+        ]
+      }
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "endpoint": "/api/chat",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}

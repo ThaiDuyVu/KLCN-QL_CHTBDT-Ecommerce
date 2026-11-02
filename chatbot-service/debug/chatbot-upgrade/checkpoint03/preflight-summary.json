@@ -1,0 +1,92 @@
+{
+  "task_id": "c2c_chatbot_upgrade_03",
+  "verdict": "BLOCKED_PRECONDITION",
+  "branch": "dev/thai-duy-vu",
+  "head": "d235df5cc4411d12accae8489930a31d281abbf8",
+  "source_checkpoint02_unchanged": true,
+  "blockers": [
+    "C01_IDENTITY",
+    "C02_RATING",
+    "C03_SNAPSHOT",
+    "C04_TASK_CONTRACT",
+    "C05_SESSION_LIFECYCLE"
+  ],
+  "python_baseline_focused": {
+    "passed": 67
+  },
+  "frontend_baseline_focused": {
+    "passed": 6,
+    "files": 2
+  },
+  "db_read_only": {
+    "flyway_versions_successful": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "customers": 2,
+    "customer_id_equals_user_id_count": 0,
+    "chat_sessions": 0,
+    "chat_history": 0,
+    "message_feedback": 0
+  },
+  "runtime_cases": [
+    {
+      "case_id": "T23",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T24",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T25",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T26",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T27",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T28",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T29",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T30",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T56",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T58",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T59",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    },
+    {
+      "case_id": "T60",
+      "verdict": "NOT_RUN_PRECONDITION_BLOCKED"
+    }
+  ],
+  "restart_test": "NOT_RUN_NO_DURABLE_REPOSITORY",
+  "source_changes_this_checkpoint": [],
+  "schema_changes": [],
+  "business_mutations": false
+}

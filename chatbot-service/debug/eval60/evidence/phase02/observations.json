@@ -1,0 +1,960 @@
+[
+  {
+    "case_id": "T15",
+    "prompt": "Xiaomi 15 còn hàng không?",
+    "session_group": "T15",
+    "session_id": "92788d2e-4af8-49ca-a508-13fc4160588c",
+    "trace_id": "3520144f-114c-45e8-8b47-3f4d07a4406c",
+    "timestamp": "2026-10-13T06:46:48.031692+00:00",
+    "http_status": 200,
+    "latency_ms": 5865.94,
+    "history_count": 0,
+    "response": {
+      "session_id": "92788d2e-4af8-49ca-a508-13fc4160588c",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T16",
+    "prompt": "Xiaomi 15 hiện có giá bao nhiêu?",
+    "session_group": "T16",
+    "session_id": "8cdfc382-18bb-4990-9c4b-d3b3e98b4337",
+    "trace_id": "bb77d3c9-3402-4a65-b6e4-f41ba4570a11",
+    "timestamp": "2026-10-13T06:47:04.941988+00:00",
+    "http_status": 200,
+    "latency_ms": 15636.64,
+    "history_count": 0,
+    "response": {
+      "session_id": "8cdfc382-18bb-4990-9c4b-d3b3e98b4337",
+      "message": "Xiaomi 15 có các phiên bản với giá như sau:  \n- 12GB RAM, 256GB bộ nhớ, màu Đen: 18.990.000 VNĐ  \n- 12GB RAM, 512GB bộ nhớ, màu Trắng: 20.990.000 VNĐ  \n- 16GB RAM, 512GB bộ nhớ, màu Xanh lá: 21.990.000 VNĐ  \n\nCác giá trên là giá hiệu lực, sản phẩm có sẵn với số lượng từ 2 đơn vị.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+          "sku": "DEV-X14TP-BLK-256",
+          "original_price": "16990000.0",
+          "effective_price": "16990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-14t-pro/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+          "sku": "DEV-IP15-BLK-128",
+          "original_price": "17990000.0",
+          "effective_price": "17990000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/iphone-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+          "product_name": "Samsung Galaxy A55",
+          "variant_id": "4dd13751-01ab-49fb-b72c-14df17715edb",
+          "sku": "DEV-A55-NVY-128",
+          "original_price": "8490000.0",
+          "effective_price": "8490000.0",
+          "ram": "8GB",
+          "storage": "128GB",
+          "color": "Xanh đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/samsung-galaxy-a55/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "3dbc1257-30f4-4870-8077-d1d6cc2b1e66",
+          "product_name": "Xiaomi Redmi Note 13",
+          "variant_id": "bd13d3a2-99c0-4ac3-8225-9584eb91d01e",
+          "sku": "DEV-RN13-BLK-128",
+          "original_price": "4490000.0",
+          "effective_price": "4490000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-redmi-note-13/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [
+      {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "product_name": "Xiaomi 15",
+        "category": "Điện thoại",
+        "brand": "Xiaomi",
+        "sku": "DEV-X15-BLK-256",
+        "effective_price": 18990000.0,
+        "ram": "12GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+        "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+        "product_name": "Xiaomi 14T Pro",
+        "category": "Điện thoại",
+        "brand": "Xiaomi",
+        "sku": "DEV-X14TP-BLK-256",
+        "effective_price": 16990000.0,
+        "ram": "12GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+        "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+        "product_name": "iPhone 15",
+        "category": "Điện thoại",
+        "brand": "Apple",
+        "sku": "DEV-IP15-BLK-128",
+        "effective_price": 17990000.0,
+        "ram": "6GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+        "variant_id": "4dd13751-01ab-49fb-b72c-14df17715edb",
+        "product_name": "Samsung Galaxy A55",
+        "category": "Điện thoại",
+        "brand": "Samsung",
+        "sku": "DEV-A55-NVY-128",
+        "effective_price": 8490000.0,
+        "ram": "8GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "3dbc1257-30f4-4870-8077-d1d6cc2b1e66",
+        "variant_id": "bd13d3a2-99c0-4ac3-8225-9584eb91d01e",
+        "product_name": "Xiaomi Redmi Note 13",
+        "category": "Điện thoại",
+        "brand": "Xiaomi",
+        "sku": "DEV-RN13-BLK-128",
+        "effective_price": 4490000.0,
+        "ram": "6GB",
+        "available_quantity": 2,
+        "matches_card": true
+      }
+    ],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T17",
+    "prompt": "Xiaomi 15 bản RAM 16GB, dung lượng 512GB còn hàng không?",
+    "session_group": "T17",
+    "session_id": "f172eca2-b3ae-4457-b00d-c8f97822001d",
+    "trace_id": "0d93b55d-d191-4ce1-83bd-1bfbadfb2367",
+    "timestamp": "2026-10-13T06:47:31.903991+00:00",
+    "http_status": 200,
+    "latency_ms": 2050.74,
+    "history_count": 0,
+    "response": {
+      "session_id": "f172eca2-b3ae-4457-b00d-c8f97822001d",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T18",
+    "prompt": "Xiaomi 15 có những màu nào?",
+    "session_group": "T18",
+    "session_id": "bb734541-8db5-4821-8a01-fbc0f38cfc2f",
+    "trace_id": "e6a80bdf-f465-49b3-88a0-c7615af6ae27",
+    "timestamp": "2026-10-13T06:47:45.079813+00:00",
+    "http_status": 200,
+    "latency_ms": 1348.71,
+    "history_count": 0,
+    "response": {
+      "session_id": "bb734541-8db5-4821-8a01-fbc0f38cfc2f",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T19",
+    "prompt": "iPhone 15 còn hàng không?",
+    "session_group": "T19",
+    "session_id": "e15438f1-9d3f-43c3-8ba8-ed9a6f3b96a1",
+    "trace_id": "6b84ba49-463f-4292-b3b0-e4e7f3b8f1fc",
+    "timestamp": "2026-10-13T06:47:57.583968+00:00",
+    "http_status": 200,
+    "latency_ms": 1420.17,
+    "history_count": 0,
+    "response": {
+      "session_id": "e15438f1-9d3f-43c3-8ba8-ed9a6f3b96a1",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T20",
+    "prompt": "Samsung Galaxy A55 được bảo hành bao nhiêu tháng?",
+    "session_group": "T20",
+    "session_id": "cadb3869-5b6a-4040-a794-c110fde50e1f",
+    "trace_id": "04716cf7-425b-4d6a-9294-cc3a87f7adbe",
+    "timestamp": "2026-10-13T06:48:09.996280+00:00",
+    "http_status": 200,
+    "latency_ms": 1064.62,
+    "history_count": 0,
+    "response": {
+      "session_id": "cadb3869-5b6a-4040-a794-c110fde50e1f",
+      "message": "Mình chưa đủ dữ liệu để trả lời chính xác yêu cầu này.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "backend_card_checks": [],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T21",
+    "prompt": "SKU DEV-X15-BLK-256 hiện giá bao nhiêu và còn bao nhiêu máy?",
+    "session_group": "T21",
+    "session_id": "a5e6a0f7-cdab-4ca6-8a94-565553c06aa0",
+    "trace_id": "192bccec-db4f-439b-8e4b-4c70358b6298",
+    "timestamp": "2026-10-13T06:48:22.167928+00:00",
+    "http_status": 200,
+    "latency_ms": 9798.54,
+    "history_count": 0,
+    "response": {
+      "session_id": "a5e6a0f7-cdab-4ca6-8a94-565553c06aa0",
+      "message": "SKU DEV-X15-BLK-256 hiện giá 18.990.000 đồng và còn 2 máy.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "726f8b64-0c97-49d2-836f-b055fd6448d7",
+          "product_name": "ASUS Vivobook 15",
+          "variant_id": "253e9304-e686-4ca0-8661-388af633246c",
+          "sku": "DEV-ASUS-V15-512",
+          "original_price": "12990000.0",
+          "effective_price": "12990000.0",
+          "ram": "8GB",
+          "storage": "512GB",
+          "color": "Xanh",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/asus-vivobook-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+          "sku": "DEV-IP15-BLK-128",
+          "original_price": "17990000.0",
+          "effective_price": "17990000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/iphone-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+          "product_name": "Samsung Galaxy A55",
+          "variant_id": "4dd13751-01ab-49fb-b72c-14df17715edb",
+          "sku": "DEV-A55-NVY-128",
+          "original_price": "8490000.0",
+          "effective_price": "8490000.0",
+          "ram": "8GB",
+          "storage": "128GB",
+          "color": "Xanh đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/samsung-galaxy-a55/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [
+      {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "product_name": "Xiaomi 15",
+        "category": "Điện thoại",
+        "brand": "Xiaomi",
+        "sku": "DEV-X15-BLK-256",
+        "effective_price": 18990000.0,
+        "ram": "12GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "726f8b64-0c97-49d2-836f-b055fd6448d7",
+        "variant_id": "253e9304-e686-4ca0-8661-388af633246c",
+        "product_name": "ASUS Vivobook 15",
+        "category": "Laptop",
+        "brand": "ASUS",
+        "sku": "DEV-ASUS-V15-512",
+        "effective_price": 12990000.0,
+        "ram": "8GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+        "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+        "product_name": "iPhone 15",
+        "category": "Điện thoại",
+        "brand": "Apple",
+        "sku": "DEV-IP15-BLK-128",
+        "effective_price": 17990000.0,
+        "ram": "6GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+        "variant_id": "4dd13751-01ab-49fb-b72c-14df17715edb",
+        "product_name": "Samsung Galaxy A55",
+        "category": "Điện thoại",
+        "brand": "Samsung",
+        "sku": "DEV-A55-NVY-128",
+        "effective_price": 8490000.0,
+        "ram": "8GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "product_name": "Dell Inspiron 15",
+        "category": "Laptop",
+        "brand": "Dell",
+        "sku": "DEV-DELL-I15-512",
+        "effective_price": 15990000.0,
+        "ram": "16GB",
+        "available_quantity": 2,
+        "matches_card": true
+      }
+    ],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T22",
+    "prompt": "So sánh Dell Inspiron 15 và Dell XPS 13 về giá và RAM.",
+    "session_group": "T22",
+    "session_id": "052d3129-5cd7-4f55-b411-d972f362e19d",
+    "trace_id": "40348b4b-5178-4626-98ec-46783c0da633",
+    "timestamp": "2026-10-13T06:48:43.357544+00:00",
+    "http_status": 200,
+    "latency_ms": 2575.98,
+    "history_count": 0,
+    "response": {
+      "session_id": "052d3129-5cd7-4f55-b411-d972f362e19d",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "backend_card_checks": [],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T23",
+    "prompt": "Tìm laptop dưới 20 triệu, RAM ít nhất 16GB.",
+    "session_group": "A",
+    "session_id": "f9c91d1e-816c-430d-97d3-a48e7258a61e",
+    "trace_id": "c4df1ad5-1845-4c67-97ca-69563b8873c3",
+    "timestamp": "2026-10-13T06:48:56.922546+00:00",
+    "http_status": 200,
+    "latency_ms": 7421.01,
+    "history_count": 0,
+    "response": {
+      "session_id": "f9c91d1e-816c-430d-97d3-a48e7258a61e",
+      "message": "Có 1 sản phẩm laptop đáp ứng yêu cầu:  \n- Thương hiệu: Không xác định  \n- Giá: 15.990.000 VNĐ (dưới 20 triệu)  \n- RAM: 16GB  \n- Bộ nhớ lưu trữ: 512GB  \n- Màu sắc: Bạc  \n- Số lượng có sẵn: 2  \n- Thời gian bảo hành: 24 tháng  \n\nSản phẩm có mã SKU: DEV-DELL-I15-512.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [
+      {
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "product_name": "Dell Inspiron 15",
+        "category": "Laptop",
+        "brand": "Dell",
+        "sku": "DEV-DELL-I15-512",
+        "effective_price": 15990000.0,
+        "ram": "16GB",
+        "available_quantity": 2,
+        "matches_card": true
+      }
+    ],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T24",
+    "prompt": "Chiếc máy vừa gợi ý có giá bao nhiêu?",
+    "session_group": "A",
+    "session_id": "f9c91d1e-816c-430d-97d3-a48e7258a61e",
+    "trace_id": "489124f2-4225-4afe-9968-a8e36c5942be",
+    "timestamp": "2026-10-13T06:49:15.445578+00:00",
+    "http_status": 200,
+    "latency_ms": 1797.86,
+    "history_count": 2,
+    "response": {
+      "session_id": "f9c91d1e-816c-430d-97d3-a48e7258a61e",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "backend_card_checks": [],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T25",
+    "prompt": "Có chiếc nào rẻ hơn mà RAM vẫn 16GB không?",
+    "session_group": "A",
+    "session_id": "f9c91d1e-816c-430d-97d3-a48e7258a61e",
+    "trace_id": "77e9aa0d-f264-4918-94ec-b876023aae53",
+    "timestamp": "2026-10-13T06:49:28.282653+00:00",
+    "http_status": 200,
+    "latency_ms": 2329.71,
+    "history_count": 4,
+    "response": {
+      "session_id": "f9c91d1e-816c-430d-97d3-a48e7258a61e",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T26",
+    "prompt": "Cái thứ hai là gì?",
+    "session_group": "A",
+    "session_id": "f9c91d1e-816c-430d-97d3-a48e7258a61e",
+    "trace_id": "ee80fd55-088d-4236-9b25-ff9e09c5666d",
+    "timestamp": "2026-10-13T06:49:41.633949+00:00",
+    "http_status": 200,
+    "latency_ms": 5404.09,
+    "history_count": 6,
+    "response": {
+      "session_id": "f9c91d1e-816c-430d-97d3-a48e7258a61e",
+      "message": "Chưa đủ dữ liệu để trả lời câu hỏi \"Cái thứ hai là gì?\" trong bối cảnh hiện tại.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [
+      {
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "product_name": "Dell Inspiron 15",
+        "category": "Laptop",
+        "brand": "Dell",
+        "sku": "DEV-DELL-I15-512",
+        "effective_price": 15990000.0,
+        "ram": "16GB",
+        "available_quantity": 2,
+        "matches_card": true
+      }
+    ],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T27",
+    "prompt": "Tìm điện thoại Xiaomi.",
+    "session_group": "B",
+    "session_id": "1e1904ef-99e9-4173-ad4a-6071cc5018a5",
+    "trace_id": "5d75a3ad-433c-4f80-9c11-897316fa15d2",
+    "timestamp": "2026-10-13T06:49:58.227232+00:00",
+    "http_status": 200,
+    "latency_ms": 1282.12,
+    "history_count": 0,
+    "response": {
+      "session_id": "1e1904ef-99e9-4173-ad4a-6071cc5018a5",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T28",
+    "prompt": "Máy đầu tiên còn hàng không?",
+    "session_group": "B",
+    "session_id": "1e1904ef-99e9-4173-ad4a-6071cc5018a5",
+    "trace_id": "9a674147-cbcd-4f33-8a38-871bd0624162",
+    "timestamp": "2026-10-13T06:50:10.643669+00:00",
+    "http_status": 200,
+    "latency_ms": 14869.4,
+    "history_count": 2,
+    "response": {
+      "session_id": "1e1904ef-99e9-4173-ad4a-6071cc5018a5",
+      "message": "Có nhiều điện thoại Xiaomi còn hàng, ví dụ:  \n- Điện thoại DEV-X15 (12GB RAM, 256GB bộ nhớ, màu Đen) – còn 2 chiếc  \n- Điện thoại DEV-X14TP (12GB RAM, 256GB bộ nhớ, màu Đen) – còn 2 chiếc  \n\nTuy nhiên, trong kết quả tìm kiếm, không có thông tin nào xác nhận rõ ràng sản phẩm nào là \"máy đầu tiên\" theo thứ tự hoặc tiêu chí cụ thể. Do đó, không thể xác định chính xác máy đầu tiên còn hàng.",
+      "products": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+          "sku": "DEV-X14TP-BLK-256",
+          "original_price": "16990000.0",
+          "effective_price": "16990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-14t-pro/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "3dbc1257-30f4-4870-8077-d1d6cc2b1e66",
+          "product_name": "Xiaomi Redmi Note 13",
+          "variant_id": "bd13d3a2-99c0-4ac3-8225-9584eb91d01e",
+          "sku": "DEV-RN13-BLK-128",
+          "original_price": "4490000.0",
+          "effective_price": "4490000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-redmi-note-13/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+          "product_name": "Samsung Galaxy S23",
+          "variant_id": "5ce7a881-8ea2-4462-9599-cb5779a1da31",
+          "sku": "DEV-S23-BLK-128",
+          "original_price": "13990000.0",
+          "effective_price": "13990000.0",
+          "ram": "8GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/samsung-galaxy-s23/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+          "product_name": "Samsung Galaxy A55",
+          "variant_id": "4dd13751-01ab-49fb-b72c-14df17715edb",
+          "sku": "DEV-A55-NVY-128",
+          "original_price": "8490000.0",
+          "effective_price": "8490000.0",
+          "ram": "8GB",
+          "storage": "128GB",
+          "color": "Xanh đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/samsung-galaxy-a55/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [
+      {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "product_name": "Xiaomi 15",
+        "category": "Điện thoại",
+        "brand": "Xiaomi",
+        "sku": "DEV-X15-BLK-256",
+        "effective_price": 18990000.0,
+        "ram": "12GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+        "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+        "product_name": "Xiaomi 14T Pro",
+        "category": "Điện thoại",
+        "brand": "Xiaomi",
+        "sku": "DEV-X14TP-BLK-256",
+        "effective_price": 16990000.0,
+        "ram": "12GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "3dbc1257-30f4-4870-8077-d1d6cc2b1e66",
+        "variant_id": "bd13d3a2-99c0-4ac3-8225-9584eb91d01e",
+        "product_name": "Xiaomi Redmi Note 13",
+        "category": "Điện thoại",
+        "brand": "Xiaomi",
+        "sku": "DEV-RN13-BLK-128",
+        "effective_price": 4490000.0,
+        "ram": "6GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+        "variant_id": "5ce7a881-8ea2-4462-9599-cb5779a1da31",
+        "product_name": "Samsung Galaxy S23",
+        "category": "Điện thoại",
+        "brand": "Samsung",
+        "sku": "DEV-S23-BLK-128",
+        "effective_price": 13990000.0,
+        "ram": "8GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "d08f9c12-2196-4fc3-8aab-78d763628ce6",
+        "variant_id": "4dd13751-01ab-49fb-b72c-14df17715edb",
+        "product_name": "Samsung Galaxy A55",
+        "category": "Điện thoại",
+        "brand": "Samsung",
+        "sku": "DEV-A55-NVY-128",
+        "effective_price": 8490000.0,
+        "ram": "8GB",
+        "available_quantity": 2,
+        "matches_card": true
+      }
+    ],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T29",
+    "prompt": "Có phiên bản 512GB không?",
+    "session_group": "B",
+    "session_id": "1e1904ef-99e9-4173-ad4a-6071cc5018a5",
+    "trace_id": "ce333260-776d-41bf-a384-704d2c3e8fdb",
+    "timestamp": "2026-10-13T06:50:36.909916+00:00",
+    "http_status": 200,
+    "latency_ms": 2891.61,
+    "history_count": 4,
+    "response": {
+      "session_id": "1e1904ef-99e9-4173-ad4a-6071cc5018a5",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [],
+    "ui_matches_api": true
+  },
+  {
+    "case_id": "T30",
+    "prompt": "Có loại rẻ hơn không?",
+    "session_group": "C",
+    "session_id": "63a487e1-d622-4578-a8c4-5f5fe1e974a4",
+    "trace_id": "bc279838-ead5-43c5-b845-082558554373",
+    "timestamp": "2026-10-13T06:50:50.847435+00:00",
+    "http_status": 200,
+    "latency_ms": 11748.58,
+    "history_count": 0,
+    "response": {
+      "session_id": "63a487e1-d622-4578-a8c4-5f5fe1e974a4",
+      "message": "Có, có loại rẻ hơn. Ví dụ: sản phẩm DEV-S23-BLK-128 với giá 13.990.000 VNĐ (8GB RAM, 128GB storage, màu đen).",
+      "products": [
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+          "sku": "DEV-X14TP-BLK-256",
+          "original_price": "16990000.0",
+          "effective_price": "16990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-14t-pro/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+          "product_name": "Dell XPS 13",
+          "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+          "sku": "DEV-XPS13-SL-512",
+          "original_price": "32990000.0",
+          "effective_price": "32990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-xps-13/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+          "product_name": "Samsung Galaxy S23",
+          "variant_id": "5ce7a881-8ea2-4462-9599-cb5779a1da31",
+          "sku": "DEV-S23-BLK-128",
+          "original_price": "13990000.0",
+          "effective_price": "13990000.0",
+          "ram": "8GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/samsung-galaxy-s23/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "3dbc1257-30f4-4870-8077-d1d6cc2b1e66",
+          "product_name": "Xiaomi Redmi Note 13",
+          "variant_id": "bd13d3a2-99c0-4ac3-8225-9584eb91d01e",
+          "sku": "DEV-RN13-BLK-128",
+          "original_price": "4490000.0",
+          "effective_price": "4490000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-redmi-note-13/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "backend_card_checks": [
+      {
+        "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+        "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+        "product_name": "Xiaomi 14T Pro",
+        "category": "Điện thoại",
+        "brand": "Xiaomi",
+        "sku": "DEV-X14TP-BLK-256",
+        "effective_price": 16990000.0,
+        "ram": "12GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+        "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+        "product_name": "Dell XPS 13",
+        "category": "Laptop",
+        "brand": "Dell",
+        "sku": "DEV-XPS13-SL-512",
+        "effective_price": 32990000.0,
+        "ram": "16GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "product_name": "Xiaomi 15",
+        "category": "Điện thoại",
+        "brand": "Xiaomi",
+        "sku": "DEV-X15-BLK-256",
+        "effective_price": 18990000.0,
+        "ram": "12GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+        "variant_id": "5ce7a881-8ea2-4462-9599-cb5779a1da31",
+        "product_name": "Samsung Galaxy S23",
+        "category": "Điện thoại",
+        "brand": "Samsung",
+        "sku": "DEV-S23-BLK-128",
+        "effective_price": 13990000.0,
+        "ram": "8GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "3dbc1257-30f4-4870-8077-d1d6cc2b1e66",
+        "variant_id": "bd13d3a2-99c0-4ac3-8225-9584eb91d01e",
+        "product_name": "Xiaomi Redmi Note 13",
+        "category": "Điện thoại",
+        "brand": "Xiaomi",
+        "sku": "DEV-RN13-BLK-128",
+        "effective_price": 4490000.0,
+        "ram": "6GB",
+        "available_quantity": 2,
+        "matches_card": true
+      }
+    ],
+    "ui_matches_api": true
+  }
+]

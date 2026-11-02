@@ -1,4 +1,5 @@
 """Typed adapter to the existing authenticated backend product APIs."""
+from app.shared.tracing import traced, event
 
 from contextvars import ContextVar
 from typing import Any
@@ -20,12 +21,16 @@ class BackendProductClient:
             headers={"Authorization": f"Bearer {bearer_token}"} if bearer_token else {},
         )
 
+    @traced("backend.product_http", ("path", "kwargs"), result=False)
     def _get(self, path: str, **kwargs) -> httpx.Response:
         cookies = backend_cookies.get()
         request = self._client.build_request("GET", path, cookies=cookies, **kwargs)
         if cookies:
             request.headers.pop("Authorization", None)
-        return self._client.send(request)
+        response = self._client.send(request)
+        event("backend.product_result", {"path": path, "status_code": response.status_code, "body": response.json() if response.is_success else None})
+        response.raise_for_status()
+        return response
 
     def search(
         self, plan: ProductSearchPlan, warehouse_id: UUID | None, limit: int, offset: int
@@ -59,3 +64,35 @@ class BackendProductClient:
         response = self._get("/api/v1/products", params={"page": page, "size": size})
         response.raise_for_status()
         return response.json()
+
+    def taxonomy(self) -> tuple[list[str], list[str]]:
+        categories = self._get("/api/v1/categories").json()
+        brands = self._get("/api/v1/brands", params={"page": 0, "size": 100}).json()
+        rows = brands.get("content", []) if isinstance(brands, dict) else brands
+        if isinstance(brands, dict) and (brands.get("totalPages", 1) > 1 or
+                                       brands.get("totalElements", len(rows)) > len(rows)):
+            raise ValueError("Brand taxonomy exceeds bounded coverage; cannot verify brand constraints")
+        return ([r["categoryName"] for r in categories if r["status"] == "ACTIVE"],
+                [r["brandName"] for r in rows if r["status"] == "ACTIVE"])
+
+    def catalog_names(self) -> list[dict[str, Any]]:
+        rows = []
+        for page in range(5):
+            result = self.catalog_page(page)
+            rows.extend(result["content"])
+            if page + 1 >= result["totalPages"]:
+                return rows
+        raise ValueError("Catalog resolution exceeds bounded coverage")
+
+    def identity_candidates(self, keyword: str) -> list[dict[str, Any]]:
+        rows = []
+        for page in range(5):
+            result = self._get("/api/v1/product-variants", params={
+                "keyword": keyword, "page": page, "size": 100}).json()
+            rows.extend(result["content"])
+            if page + 1 >= result["totalPages"]:
+                return rows
+        raise ValueError("Identity resolution exceeds bounded coverage")
+
+    def variant(self, variant_id: UUID) -> dict[str, Any]:
+        return self._get(f"/api/v1/product-variants/{variant_id}").json()

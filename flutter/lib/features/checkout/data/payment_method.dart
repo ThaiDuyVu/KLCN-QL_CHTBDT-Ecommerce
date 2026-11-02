@@ -43,3 +43,10 @@ enum PaymentMethodOption {
 }
 
 typedef PaymentMethod = PaymentMethodOption;
+
+/// Chỉ hiện VNPAY khi backend đang bật cổng thanh toán này.
+List<PaymentMethodOption> availablePaymentMethods({required bool vnpayEnabled}) {
+  return PaymentMethodOption.values
+      .where((m) => m != PaymentMethodOption.vnpay || vnpayEnabled)
+      .toList();
+}

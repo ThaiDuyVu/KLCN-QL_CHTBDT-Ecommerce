@@ -9,7 +9,7 @@ from app.shared.backend.client import BackendClient
 
 
 @pytest.mark.asyncio
-async def test_backend_client_maps_userid_to_customer_id() -> None:
+async def test_backend_client_maps_canonical_customer_id() -> None:
     async def handler(request: httpx.Request) -> httpx.Response:
         assert request.url.path == "/api/auth/me"
         assert request.headers.get("cookie") == "session=abc"
@@ -17,6 +17,7 @@ async def test_backend_client_maps_userid_to_customer_id() -> None:
             200,
             json={
                 "userId": "11111111-1111-1111-1111-111111111111",
+                "customerId": "22222222-2222-2222-2222-222222222222",
                 "username": "demo-user",
                 "displayName": "Demo User",
                 "roleName": "CUSTOMER",
@@ -32,7 +33,7 @@ async def test_backend_client_maps_userid_to_customer_id() -> None:
 
     assert isinstance(customer, AuthenticatedCustomer)
     assert customer.user_id == UUID("11111111-1111-1111-1111-111111111111")
-    assert customer.customer_id == UUID("11111111-1111-1111-1111-111111111111")
+    assert customer.customer_id == UUID("22222222-2222-2222-2222-222222222222")
     assert customer.display_name == "Demo User"
 
 
@@ -66,3 +67,14 @@ def test_product_adapter_forwards_cookie_without_shared_bearer():
     finally:
         backend_cookies.reset(token)
         client._client.close()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('payload', [
+    {'userId':'11111111-1111-1111-1111-111111111111','displayName':'Synthetic','roleName':'CUSTOMER'},
+    {'userId':'11111111-1111-1111-1111-111111111111','customerId':'22222222-2222-2222-2222-222222222222','displayName':'Synthetic','roleName':'STAFF'},
+])
+async def test_backend_identity_never_falls_back_to_user_id_or_staff(payload):
+    client=BackendClient('http://backend.test',transport=httpx.MockTransport(lambda r:httpx.Response(200,json=payload)))
+    with pytest.raises(HTTPException) as e:await client.get_current_customer({'session':'synthetic'})
+    assert e.value.status_code==403

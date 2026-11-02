@@ -1,0 +1,188 @@
+{
+  "trace_id": "d54c7225-f412-4b02-b3b5-4b23cb1c3638",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "557b4d53-03be-4848-ad0f-afe49a7af5fc",
+      "parent_id": "73038094-54af-4027-823c-d8156bbb31f4",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 32.77,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "e0d28ea4-5129-4656-82a4-1adf2dd4d5bb",
+      "parent_id": "73038094-54af-4027-823c-d8156bbb31f4",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 32.89,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "adc7d68a-a6eb-4848-8d29-e89b767896c5",
+      "parent_id": "b99d5975-579a-4bc7-a8a4-f0c5085e341c",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1240.74,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Xiaomii 15",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "946a681b-fc86-4c8c-bb4e-e326af72c556",
+      "parent_id": "73038094-54af-4027-823c-d8156bbb31f4",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1304.23,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "e8ff86db-5bdc-47f8-8a7b-d655363045e4",
+      "parent_id": "73038094-54af-4027-823c-d8156bbb31f4",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1304.41,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "9bfe7307-f644-4577-8861-9b0f1560cb4f",
+      "parent_id": "ba9a780c-6b6f-4f33-9619-bdc3de1cdbcb",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1304.68,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 5.58,
+      "duration_ms": 1316.77,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 33.05,
+      "duration_ms": 1254.88,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 34.91,
+      "duration_ms": 1205.79,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 35.32,
+      "duration_ms": 1205.35,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 35.71,
+      "duration_ms": 1204.93,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1240.85,
+      "duration_ms": 10.91,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1251.81,
+      "duration_ms": 12.36,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1264.21,
+      "duration_ms": 23.36,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1304.35,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1304.59,
+      "duration_ms": 0.13,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

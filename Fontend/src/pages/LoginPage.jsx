@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate, useLocation } from 'react-router';
 import { projectConfig } from '../config/projectConfig';
 import { useAuth } from '../hooks/useAuth';
+import { postAuthDestination } from '../auth/postAuthDestination';
 import './LoginPage.css';
 
 const REMEMBERED_USERNAME_KEY = 'dien-viet.remembered-username';
@@ -31,10 +32,7 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const location = useLocation();
-  const from = location.state?.from;
-  const safePath = typeof from?.pathname === 'string' && from.pathname.startsWith('/')
-    && !from.pathname.startsWith('//') && !from.pathname.includes('\\') && from.pathname !== '/login';
-  const destination = safePath ? `${from.pathname}${from.search || ''}${from.hash || ''}` : '/account';
+  const destination = postAuthDestination(location.state?.from);
 
   if (isAuthenticated) return <Navigate to={destination} replace />;
   async function handleSubmit(event) {
@@ -97,10 +95,7 @@ export default function LoginPage() {
         </form>
         {sessionError && !error && <p className="login-session-note" role="status">Chưa kiểm tra được phiên cũ. Bạn có thể thử đăng nhập lại.</p>}
         <p className="login-signup">Mới đến {projectConfig.appName}?{' '}
-          <button type="button" className="login-text-button"
-            onClick={() => setNotice('Đăng ký công khai chưa được hỗ trợ trong luồng auth hiện tại. Vui lòng liên hệ cửa hàng để được cấp tài khoản.')}>
-            Tạo tài khoản
-          </button>
+          <Link className="login-link" to="/register" state={location.state}>Tạo tài khoản</Link>
         </p>
         {notice && <p className="login-notice" role="status">{notice}</p>}
         <p className="login-policy">Chỉ ghi nhớ tên đăng nhập trên thiết bị này.<br />Thời hạn phiên đăng nhập do máy chủ quản lý.</p>

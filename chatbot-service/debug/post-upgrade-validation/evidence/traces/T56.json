@@ -1,0 +1,220 @@
+{
+  "trace_id": "5719b6d8-e478-4d64-86e6-506b13a9677e",
+  "status": "warning",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "f936b2a7-3759-4145-86b1-5fc9c2cabaa2",
+      "parent_id": "99ff963d-2cdc-43b1-a2b1-c943e93cfbc8",
+      "name": "query.validation_failed",
+      "status": "warning",
+      "offset_ms": 1964.92,
+      "duration_ms": null,
+      "output": {
+        "errors": [
+          {
+            "type": "value_error",
+            "loc": [
+              "product_search",
+              "targets",
+              0
+            ],
+            "msg": "Value error, Exactly one explicit identity is required"
+          }
+        ],
+        "attempt": 1
+      }
+    },
+    {
+      "id": "70be14f7-4a01-4260-b5b0-1e1d46718e05",
+      "parent_id": "99ff963d-2cdc-43b1-a2b1-c943e93cfbc8",
+      "name": "query.validation_failed",
+      "status": "warning",
+      "offset_ms": 3197.64,
+      "duration_ms": null,
+      "output": {
+        "errors": [
+          {
+            "type": "value_error",
+            "loc": [
+              "product_search",
+              "targets",
+              0
+            ],
+            "msg": "Value error, Exactly one explicit identity is required"
+          }
+        ],
+        "attempt": 2
+      }
+    },
+    {
+      "id": "22a4fc2f-aa6c-4571-a2a1-9a51089b354f",
+      "parent_id": "99ff963d-2cdc-43b1-a2b1-c943e93cfbc8",
+      "name": "query.fallback",
+      "status": "warning",
+      "offset_ms": 3197.71,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "reason": "model_or_schema_failure"
+      }
+    },
+    {
+      "id": "85fa8f4b-1f4c-40be-95da-6aa20454cb57",
+      "parent_id": "58b20ad4-3be4-4dbc-a61f-b5f6d92c6c08",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 3243.78,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình hỗ trợ tìm từng nhóm sản phẩm. Bạn muốn tìm laptop hay điện thoại trước?",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "ce0c90a1-9c70-4a84-aab7-b933dadab0f7",
+      "parent_id": "58b20ad4-3be4-4dbc-a61f-b5f6d92c6c08",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 3243.9,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "af8bcb6b-3b95-4962-b5e1-5bd4fc121a17",
+      "parent_id": "c3e48795-483e-4fae-a80c-c013ddb474d1",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 3244.05,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 9.42,
+      "duration_ms": 3244.18,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 46.63,
+      "duration_ms": 3184.54,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 48.4,
+      "duration_ms": 1915.49,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 48.83,
+      "duration_ms": 1915.01,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 49.23,
+      "duration_ms": 1914.56,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 1965.0,
+      "duration_ms": 1232.57,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 1965.88,
+      "duration_ms": 1231.66,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 1966.88,
+      "duration_ms": 1230.63,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 3197.8,
+      "duration_ms": 12.17,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 3210.02,
+      "duration_ms": 8.72,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 3218.8,
+      "duration_ms": 12.2,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 3243.86,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 3244.0,
+      "duration_ms": 0.07,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "endpoint": "/api/chat",
+      "status_code": 200
+    },
+    {
+      "endpoint": "/api/chat",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}

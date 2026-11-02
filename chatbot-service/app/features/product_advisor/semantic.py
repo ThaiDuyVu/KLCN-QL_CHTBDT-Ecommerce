@@ -1,4 +1,5 @@
 """Manual pgvector index and a small Ollama embedding adapter."""
+from app.shared.tracing import traced, event
 
 import hashlib
 from collections.abc import Sequence
@@ -6,6 +7,10 @@ from typing import Any
 from uuid import UUID
 
 import httpx
+
+
+class SemanticRankingUnavailable(RuntimeError):
+    """The optional vector index could not rank; carries no DSN or driver message."""
 
 
 def semantic_content(detail: dict[str, Any]) -> str:
@@ -32,6 +37,7 @@ class OllamaEmbeddingClient:
     def model(self) -> str:
         return self._model
 
+    @traced("product.embedding", ("text",), result=False)
     def embed(self, text: str) -> list[float]:
         response = httpx.post(
             f"{self._base_url.rstrip('/')}/api/embed",
@@ -42,6 +48,7 @@ class OllamaEmbeddingClient:
         values = response.json()["embeddings"][0]
         if not values:
             raise ValueError("Embedding model returned an empty vector")
+        event("embedding.shape", {"model": self.model, "dimensions": len(values)})
         return [float(value) for value in values]
 
 
@@ -54,7 +61,7 @@ class ProductSemanticIndex:
     def _connect(self) -> Any:
         import psycopg
 
-        return psycopg.connect(self._database_url)
+        return psycopg.connect(self._database_url, connect_timeout=5)
 
     def index_signature(self, product_id: UUID) -> tuple[str, str] | None:
         with self._connect() as connection:
@@ -88,16 +95,24 @@ class ProductSemanticIndex:
             )
         return True
 
+    @traced("product.vector_ranking", ("product_ids", "model"))
     def scores(self, product_ids: Sequence[UUID], vector: list[float], model: str) -> dict[UUID, float]:
         if not product_ids:
             return {}
+        import psycopg
+
         vector_literal = "[" + ",".join(str(number) for number in vector) + "]"
+        try:
+            return self._scores(product_ids, vector_literal, len(vector), model)
+        except psycopg.Error as exc:
+            raise SemanticRankingUnavailable(type(exc).__name__) from None
+
+    def _scores(self, product_ids: Sequence[UUID], vector_literal: str, dimensions: int, model: str) -> dict[UUID, float]:
         with self._connect() as connection:
-            rows = connection.execute(
-                """SELECT product_id, 1 - (embedding_vector <=> %s::vector) AS score
+            sql = """SELECT product_id, 1 - (embedding_vector <=> %s::vector) AS score
                    FROM product_semantic_index
                    WHERE product_id = ANY(%s) AND vector_dims(embedding_vector) = %s
-                     AND embedding_model = %s""",
-                (vector_literal, list(product_ids), len(vector), model),
-            ).fetchall()
+                     AND embedding_model = %s"""
+            event("product.sql", {"sql": sql, "parameters": {"product_ids": product_ids, "dimensions": dimensions, "model": model, "vector": "omitted"}})
+            rows = connection.execute(sql, (vector_literal, list(product_ids), dimensions, model)).fetchall()
         return {row[0]: float(row[1]) for row in rows if row[1] is not None}

@@ -1,0 +1,94 @@
+{
+  "trace_id": "eaef270b-10b0-4540-959f-cc891633e23f",
+  "status": "error",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "79376b5a-8cab-4233-a746-f162312d4756",
+      "parent_id": "9a901917-1a0f-4669-a092-8f8a6d67fd12",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 34.99,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-NULLWAREHOUSE"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "f356decc-d3f4-4a96-8c33-131ac01f1da2",
+      "parent_id": "9a901917-1a0f-4669-a092-8f8a6d67fd12",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 40.3,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-NULLWAREHOUSE"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 8.08,
+      "duration_ms": 63.82,
+      "status": "error"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 40.37,
+      "duration_ms": 31.32,
+      "status": "error"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 40.41,
+      "duration_ms": 9.61,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 50.04,
+      "duration_ms": 21.52,
+      "status": "error"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/orders/mine"
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders/mine/synthetic-order-513f62eac1bd"
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "path": "/api/orders/mine",
+      "status_code": 200
+    },
+    {
+      "path": "/api/orders/mine/synthetic-order-513f62eac1bd",
+      "status_code": 500
+    }
+  ],
+  "errors": []
+}

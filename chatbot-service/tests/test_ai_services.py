@@ -86,7 +86,11 @@ def test_context_window_preserves_current_message_omits_identity():
     assert data["recent_messages"][0]["content"] == context.recent_messages[0].content
     assert str(context.customer.user_id) not in str(messages)
     assert context.customer.display_name not in str(messages)
-    assert schema == QueryPlan.model_json_schema()
+    expected = QueryPlan.model_json_schema()
+    # Combo fields are normalizer-only and hidden from the model schema.
+    for name in ('bundle', 'budget'):
+        expected['properties'].pop(name)
+    assert schema == expected
 
 
 def test_history_changes_interpretation_with_same_current_message():
@@ -119,6 +123,12 @@ def test_response_uses_exact_grounded_data(evidence):
     else:
         ctx.customer_context = CustomerContext(recent_orders=[OrderContext(order_id=uuid4(), order_code="ORD1", order_date=datetime.now(timezone.utc), status="PENDING", total_amount=90)])
     model = FakeChat("Câu trả lời dựa trên dữ liệu.")
+    if evidence == 'knowledge':
+        result = OllamaResponseGenerationService(model).generate(ctx)
+        assert ctx.knowledge_chunks[0].content in result
+        assert 'không xác nhận' in result
+        assert not model.calls
+        return
     assert OllamaResponseGenerationService(model).generate(ctx) == "Câu trả lời dựa trên dữ liệu."
     payload = json.loads(model.calls[0][0][1]["content"])
     assert payload == ctx.model_dump(mode="json")
@@ -126,6 +136,6 @@ def test_response_uses_exact_grounded_data(evidence):
 
 
 def test_generation_failure_is_controlled():
-    ctx = GroundedContext(query_plan=QueryPlan(intent=Intent.KNOWLEDGE_QA), user_query="Đổi trả?", knowledge_chunks=[knowledge_match()])
+    ctx = GroundedContext(query_plan=QueryPlan(intent=Intent.UNKNOWN), user_query="Thông tin?", knowledge_chunks=[knowledge_match()])
     result = OllamaResponseGenerationService(FakeChat(OllamaUnavailable("offline"))).generate(ctx)
     assert "tạm thời không khả dụng" in result

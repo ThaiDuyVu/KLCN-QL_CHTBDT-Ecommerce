@@ -1,0 +1,29 @@
+{
+  "http_equivalent": 503,
+  "persisted_roles": [
+    "USER"
+  ],
+  "raw_audit_count": 1,
+  "completed_context_after_restart": [],
+  "retry_http_equivalent": 200,
+  "completed_context_after_retry": [
+    {
+      "id": "65b012ba-1d6a-4f69-9668-a5bad8f97eb0",
+      "session_id": "synthetic-session_id-8eb678eb8249",
+      "sender_type": "USER",
+      "message": "Retry after assistant failure",
+      "rating": 0,
+      "created_at": "2026-10-20T13:59:37.327937Z"
+    },
+    {
+      "id": "ade9f19a-d395-4889-a931-4f33b3421ef3",
+      "session_id": "synthetic-session_id-8eb678eb8249",
+      "sender_type": "ASSISTANT",
+      "message": "Xin chào! Mình có thể hỗ trợ tìm sản phẩm và giải đáp thông tin cửa hàng.",
+      "rating": 0,
+      "created_at": "2026-10-20T13:59:37.349201Z"
+    }
+  ],
+  "audit_orphan_preserved": true,
+  "expected_satisfied": true
+}

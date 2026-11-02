@@ -33,6 +33,16 @@ export function AuthProvider({ children }) {
     return session;
   }, []);
 
+  // A successful registration returns a signed-in session, exactly like login.
+  const signUp = useCallback(async (details) => {
+    operation.current += 1;
+    const session = await authApi.register(details);
+    setUser(session);
+    setSessionError(null);
+    setIsLoading(false);
+    return session;
+  }, []);
+
   const signOut = useCallback(async () => {
     operation.current += 1;
     setIsSigningOut(true);
@@ -59,8 +69,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   const value = useMemo(() => ({
-    user, isAuthenticated: Boolean(user), isLoading, sessionError, signIn, signOut, isSigningOut, invalidateSession, refreshSession,
-  }), [user, isLoading, sessionError, signIn, signOut, isSigningOut, invalidateSession, refreshSession]);
+    user, isAuthenticated: Boolean(user), isLoading, sessionError, signIn, signUp, signOut, isSigningOut, invalidateSession, refreshSession,
+  }), [user, isLoading, sessionError, signIn, signUp, signOut, isSigningOut, invalidateSession, refreshSession]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

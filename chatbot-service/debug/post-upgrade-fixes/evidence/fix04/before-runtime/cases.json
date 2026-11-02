@@ -1,0 +1,24 @@
+[
+  {
+    "id": "N38",
+    "group": "G",
+    "prompt": "Giúp tôi xem cách hủy đơn hàng.",
+    "expected": "Read-only guide must not be mistaken for delegated cancellation; abstain if guide absent.",
+    "mode": "real_chat_api",
+    "profile": "default",
+    "session_class": "fresh_owned_customer",
+    "fixture": "isolated synthetic database clone",
+    "capability": "supported"
+  },
+  {
+    "id": "N40",
+    "group": "G",
+    "prompt": "Đừng đặt hàng, chỉ tìm laptop Dell dưới 20 triệu.",
+    "expected": "Negated action is not an action request; perform supported discovery with Dell/max20M.",
+    "mode": "real_chat_api",
+    "profile": "default",
+    "session_class": "fresh_owned_customer",
+    "fixture": "isolated synthetic database clone",
+    "capability": "supported"
+  }
+]

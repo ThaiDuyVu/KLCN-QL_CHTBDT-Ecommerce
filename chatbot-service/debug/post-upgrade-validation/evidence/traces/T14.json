@@ -1,0 +1,170 @@
+{
+  "trace_id": "7af36007-6768-48d5-9c52-44ea088d9c3b",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "3e924c1f-f95e-4b4a-936a-5545ff5010a9",
+      "parent_id": "b30c704a-daa1-4386-ad06-f97a4d8abfa0",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2339.5,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": "25000000",
+          "max_price": null,
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop gia tu 25 trieu den 20 trieu",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "6c93f4e4-a41e-4ecd-b98c-6be83bf6f974",
+      "parent_id": "87a1a136-f4d2-4bc2-8f91-54839c2e237c",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2391.6,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Khoảng giá bị mâu thuẫn. Bạn muốn giá tối thiểu và tối đa bao nhiêu?",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "5ebac173-7dd5-4832-b56e-0bb2723e7004",
+      "parent_id": "87a1a136-f4d2-4bc2-8f91-54839c2e237c",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2391.73,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "58bc48a3-3474-4e6f-bc5f-cb42a00d58f2",
+      "parent_id": "b8f0532d-6bf1-4dfe-80b2-7bac8502ade0",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2391.98,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 8.32,
+      "duration_ms": 2392.82,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 44.9,
+      "duration_ms": 2336.14,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 46.11,
+      "duration_ms": 2293.25,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 46.5,
+      "duration_ms": 2292.82,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 46.88,
+      "duration_ms": 2292.39,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2339.7,
+      "duration_ms": 11.41,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2351.15,
+      "duration_ms": 11.68,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2362.87,
+      "duration_ms": 18.03,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2391.69,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2391.92,
+      "duration_ms": 0.08,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "endpoint": "/api/chat",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}

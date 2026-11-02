@@ -1,12 +1,16 @@
 from __future__ import annotations
 
+from app.shared.tracing import traced, event
+
 from typing import Any
+from uuid import UUID
 
 import httpx
 from fastapi import HTTPException
 
 from app.features.customer_context.models import AuthenticatedCustomer
 from app.shared.config import get_settings
+from app.shared.backend.errors import OwnedOrderPaymentIntegrityError, PAYMENT_CARDINALITY_MESSAGE
 
 
 class BackendClient:
@@ -28,6 +32,7 @@ class BackendClient:
             cookies=cookies,
         )
 
+    @traced("backend.customer_http", ("method", "path", "params"))
     async def _request_json(
         self,
         method: str,
@@ -51,6 +56,7 @@ class BackendClient:
         except httpx.RequestError as exc:
             raise HTTPException(status_code=503, detail="Không thể kết nối backend.") from exc
 
+        event("backend.http_status", {"path": path, "status_code": response.status_code})
         if response.status_code in {401, 403}:
             raise HTTPException(status_code=response.status_code)
 
@@ -59,6 +65,10 @@ class BackendClient:
 
         if response.status_code == 204:
             return None
+
+        if self._owned_payment_conflict(method, path, response):
+            event('backend.owned_payment_integrity', {'status_code': 409, 'operation': 'owned_order_detail'}, status='warning')
+            raise OwnedOrderPaymentIntegrityError()
 
         try:
             response.raise_for_status()
@@ -71,9 +81,24 @@ class BackendClient:
         try:
             data = response.json()
         except ValueError as exc:
+            event("backend.invalid_json", {"path": path, "body": response.text}, status="warning")
             raise HTTPException(status_code=502, detail="Backend trả về JSON không hợp lệ.") from exc
 
         return data
+
+    @staticmethod
+    def _owned_payment_conflict(method: str, path: str, response: httpx.Response) -> bool:
+        # Match the existing ApiErrorResponse exactly, and only a UUID-scoped owned GET.
+        # Other409s, staff reads and mutations retain their ordinary error mapping.
+        prefix = '/api/orders/mine/'
+        if method.upper() != 'GET' or response.status_code != 409 or not path.startswith(prefix):
+            return False
+        try:
+            UUID(path[len(prefix):])
+            payload = response.json()
+        except (ValueError, TypeError):
+            return False
+        return payload == {'message': PAYMENT_CARDINALITY_MESSAGE}
 
     async def get_current_user(self, cookies: dict[str, str]) -> dict[str, Any]:
         payload = await self._request_json("GET", "/api/auth/me", cookies=cookies)
@@ -87,19 +112,12 @@ class BackendClient:
     ) -> AuthenticatedCustomer:
         payload = await self.get_current_user(cookies)
 
-        user_id_raw = payload.get("userId") or payload.get("user_id")
-        display_name = payload.get("displayName") or payload.get("display_name")
-
-        if user_id_raw is None or display_name is None:
-            raise HTTPException(status_code=401, detail="Missing user identity data")
-
-        mapped = {
-            "user_id": user_id_raw,
-            "customer_id": user_id_raw,
-            "display_name": display_name,
-        }
-
-        return AuthenticatedCustomer.model_validate(mapped)
+        if payload.get("roleName") != "CUSTOMER" or not payload.get("customerId"):
+            raise HTTPException(status_code=403, detail="Tài khoản chưa có danh tính customer hợp lệ.")
+        try:
+            return AuthenticatedCustomer.from_backend_user(payload)
+        except (ValueError, TypeError) as exc:
+            raise HTTPException(status_code=502, detail="Backend trả về customer identity không hợp lệ.") from exc
 
     async def get_cart(self, cookies: dict[str, str]) -> dict[str, Any] | None:
         payload = await self._request_json("GET", "/api/cart", cookies=cookies)
@@ -109,19 +127,33 @@ class BackendClient:
             return {"items": payload} if payload else {"items": []}
         return payload
 
-    async def get_recent_orders(self, cookies: dict[str, str]) -> list[dict[str, Any]]:
+    async def get_recent_orders(self, cookies: dict[str, str]) -> list[dict[str, Any]] | None:
+        """[] only for a successful empty list; None when the owned list was not returned."""
         payload = await self._request_json("GET", "/api/orders/mine", cookies=cookies)
         if payload is None:
-            return []
+            return None
         if isinstance(payload, list):
             return payload
         if isinstance(payload, dict):
             for key in ("content", "items", "orders", "data"):
                 value = payload.get(key)
                 if isinstance(value, list):
+                    total = payload.get('totalElements')
+                    if isinstance(total, int) and total > len(value) and key == 'content':
+                        if total > 500:
+                            raise HTTPException(status_code=503, detail='Danh sách đơn vượt giới hạn tra cứu chatbot; chưa thể xác minh mã đơn.')
+                        rows = list(value)
+                        for page in range(1, (total + 19) // 20):
+                            more = await self._request_json('GET', '/api/orders/mine', cookies=cookies, params={'page': page, 'size': 20})
+                            if not isinstance(more, dict) or not isinstance(more.get('content'), list) or more.get('totalElements') != total:
+                                raise HTTPException(status_code=503, detail='Danh sách đơn thay đổi hoặc không đầy đủ; vui lòng thử lại.')
+                            rows.extend(more['content'])
+                        if len(rows) != total or len({r.get('orderId') for r in rows}) != total:
+                            raise HTTPException(status_code=503, detail='Không thể xác minh đầy đủ danh sách đơn; vui lòng thử lại.')
+                        return rows
                     return value
             return [payload]
-        return []
+        return None
 
     async def get_order_detail(
         self,

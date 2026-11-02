@@ -1,0 +1,93 @@
+.................F...................................................... [ 39%]
+........................................................................ [ 79%]
+......................................                                   [100%]
+=================================== FAILURES ===================================
+__________ test_cancel_during_model_keeps_lease_until_worker_settles ___________
+
+pg = (<app.features.conversation.postgres_repository.PostgresConversationRepository object at 0x10cc98c20>, UUID('a2f2d28c-...4-e6d2-44ee-b56c-0e833c3b8022'), '[REDACTED_DATABASE_URL]')
+
+    @pytest.mark.asyncio
+    async def test_cancel_during_model_keeps_lease_until_worker_settles(pg):
+        repo,owner,_,dsn=pg;s=repo.create_session(owner);started=Event();release=Event()
+        class SlowUnderstanding(Understanding):
+            def understand(self,ctx):
+                started.set();assert release.wait(5)
+                return super().understand(ctx)
+        task=asyncio.create_task(service(repo,SlowUnderstanding()).send_message_async(s.id,SendMessageRequest(message='cancelled model'),customer(owner)))
+        try:
+            assert await asyncio.to_thread(started.wait,3)
+            task.cancel();await asyncio.sleep(.05)
+            with pytest.raises(HTTPException) as failure:
+                with PostgresConversationRepository(dsn).request_lock(s.id,owner):pass
+            assert failure.value.status_code==409
+        finally:
+            release.set()
+            with pytest.raises(asyncio.CancelledError):await task
+        fresh=PostgresConversationRepository(dsn)
+        with fresh.request_lock(s.id,owner):pass
+        assert [m.sender_type.value for m in fresh.history_page(s.id,owner)]==['USER']
+        assert fresh.get_context_messages(s.id,owner)==[]
+>       qu=Understanding();service(fresh,qu).send_message(s.id,SendMessageRequest(message='retry after cancel'),customer=customer(owner))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_conversation_safety.py:147:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app/features/chat/service.py:302: in send_message
+    return asyncio.run(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+main = <coroutine object ChatService.send_message_async at 0x10cbee350>
+debug = None, loop_factory = None
+
+    def run(main, *, debug=None, loop_factory=None):
+        """Execute the coroutine and return the result.
+
+        This function runs the passed coroutine, taking care of
+        managing the asyncio event loop, finalizing asynchronous
+        generators and closing the default executor.
+
+        This function cannot be called when another asyncio event loop is
+        running in the same thread.
+
+        If debug is True, the event loop will be run in debug mode.
+        If loop_factory is passed, it is used for new event loop creation.
+
+        This function always creates a new event loop and closes it at the end.
+        It should be used as a main entry point for asyncio programs, and should
+        ideally only be called once.
+
+        The executor is given a timeout duration of 5 minutes to shutdown.
+        If the executor hasn't finished within that duration, a warning is
+        emitted and the executor is closed.
+
+        Example:
+
+            async def main():
+                await asyncio.sleep(1)
+                print('hello')
+
+            asyncio.run(main())
+        """
+        if events._get_running_loop() is not None:
+            # fail fast with short traceback
+>           raise RuntimeError(
+                "asyncio.run() cannot be called from a running event loop")
+E           RuntimeError: asyncio.run() cannot be called from a running event loop
+
+/Users/vu/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/lib/python3.12/asyncio/runners.py:191: RuntimeError
+=============================== warnings summary ===============================
+tests/test_conversation_safety.py::test_independent_sessions_not_serialized_and_no_network_transaction
+  workspace://chatbot-service/.venv/lib/python3.12/site-packages/_pytest/unraisableexception.py:67: PytestUnraisableExceptionWarning: Exception ignored in: <coroutine object ChatService.send_message_async at 0x10cbee350>
+
+  Traceback (most recent call last):
+    File "<string>", line 1, in <lambda>
+  KeyError: '__import__'
+
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnraisableExceptionWarning(msg))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_conversation_safety.py::test_cancel_during_model_keeps_lease_until_worker_settles
+1 failed, 181 passed, 1 warning in 1.09s

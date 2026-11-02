@@ -1,0 +1,142 @@
+{
+  "trace_id": "0d45a993-4fb6-4f34-91ff-d3a08d695b24",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "82799b7e-5cbd-410a-a874-7b4e0c16f0dd",
+      "parent_id": "ec445b53-4cc3-468e-825f-159217f1e39a",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 32.9,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-FAILED"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "9bb8a173-4275-47bd-8200-f372d163c794",
+      "parent_id": "ec445b53-4cc3-468e-825f-159217f1e39a",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 37.94,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-FAILED"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "0ec30ff6-b517-4c98-af94-0294d8ccbd86",
+      "parent_id": "e354e8e9-337f-40fe-b7f7-903b62f57834",
+      "name": "customer.order_selection",
+      "status": "ok",
+      "offset_ms": 57.92,
+      "duration_ms": null,
+      "output": {
+        "selection": "exact_code",
+        "matched": 1,
+        "order_ids": [
+          "fcd8e222-c61e-4cca-b79e-e1e3af49aed1"
+        ]
+      }
+    },
+    {
+      "id": "8db66df8-b68e-4e68-be64-e92f805a1f3b",
+      "parent_id": "ec445b53-4cc3-468e-825f-159217f1e39a",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 58.02,
+      "duration_ms": null,
+      "output": {
+        "intent": "PAYMENT_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "297e6d2c-d452-42bb-a4d4-d128e1900ead",
+      "parent_id": "0f670a55-e53c-4f88-b3af-433fa9813992",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 58.25,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_customer_evidence",
+        "reason": "owned_order_payment"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 5.7,
+      "duration_ms": 58.76,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 37.99,
+      "duration_ms": 20.02,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 38.02,
+      "duration_ms": 9.3,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 47.35,
+      "duration_ms": 10.57,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 58.17,
+      "duration_ms": 0.11,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/orders/mine"
+    },
+    {
+      "method": "GET",
+      "path": "/api/orders/mine/synthetic-order-799d5d0a92bc"
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "path": "/api/orders/mine",
+      "status_code": 200
+    },
+    {
+      "path": "/api/orders/mine/synthetic-order-799d5d0a92bc",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}

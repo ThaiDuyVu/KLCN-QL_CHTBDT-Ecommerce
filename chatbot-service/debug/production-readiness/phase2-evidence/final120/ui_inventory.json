@@ -1,0 +1,285 @@
+[
+  {
+    "id": "UI01",
+    "expected": "Anonymous /chatbot-lab redirects to login; synthetic CUSTOMER can log in with actual UI",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "anonymous_redirect": "/login",
+      "login_form_real": true,
+      "authenticated_route": "/chatbot-lab"
+    },
+    "started_at": "2026-10-21T04:46:29.579908+00:00",
+    "duration_ms": 475.63
+  },
+  {
+    "id": "UI02",
+    "expected": "Chatbot Lab accessible directly; status shows real AI and PostgreSQL",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "ai_real": true,
+      "storage": "postgres"
+    },
+    "started_at": "2026-10-21T04:46:30.056710+00:00",
+    "duration_ms": 2.26
+  },
+  {
+    "id": "UI03",
+    "expected": "Actual product POST renders valid card/price/RAM/storage/SKU/stock and answer",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "card": {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "product_name": "Xiaomi 15",
+        "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+        "sku": "DEV-X15-GRN-512",
+        "original_price": "21990000.0",
+        "effective_price": "21990000.0",
+        "ram": "16GB",
+        "storage": "512GB",
+        "color": "Xanh lá",
+        "available_quantity": 2,
+        "warranty_months": 12,
+        "image_url": "/images/products/xiaomi-15/main.jpg",
+        "reasons": []
+      },
+      "message": "Xiaomi 15\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng."
+    },
+    "started_at": "2026-10-21T04:46:30.059159+00:00",
+    "duration_ms": 2869.65
+  },
+  {
+    "id": "UI04",
+    "expected": "Product card navigates to real detail page",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "href": "/products/169710dd-d072-4e83-9fd0-e618d706ee26",
+      "real_product_detail_loaded": true
+    },
+    "started_at": "2026-10-21T04:46:32.929242+00:00",
+    "duration_ms": 351.79
+  },
+  {
+    "id": "UI05",
+    "expected": "DEMO Knowledge source shown as DEMO; absent official instructions explained",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "demo_sources": [
+        {
+          "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "title": "DEMO — Chính sách đổi trả kiểm thử",
+          "source": "demo://chatbot-lab/return"
+        }
+      ],
+      "guidance_message": "Mình chưa có tài liệu chính thức đủ để hướng dẫn thao tác này. Mình không thể xác nhận quy trình hoặc chính sách của cửa hàng."
+    },
+    "started_at": "2026-10-21T04:46:33.281660+00:00",
+    "duration_ms": 387.34
+  },
+  {
+    "id": "UI06",
+    "expected": "Fresh session, owned session switch, closed session are usable",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "closed_disables_send": true,
+      "fresh_works": true,
+      "selected_old_owned_session": true
+    },
+    "started_at": "2026-10-21T04:46:33.669443+00:00",
+    "duration_ms": 1193.62
+  },
+  {
+    "id": "UI07",
+    "expected": "History reload and cursor pagination deduplicate persisted text; no invented cards",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "cursor_rows_after_older": 106,
+      "unique_texts": 106,
+      "reload_window": 100,
+      "historical_cards": 0
+    },
+    "started_at": "2026-10-21T04:46:34.863624+00:00",
+    "duration_ms": 173.19
+  },
+  {
+    "id": "UI08",
+    "expected": "Session list pagination advances exactly one page",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "option_count_before": 21,
+      "after": 40,
+      "requested_page": 1
+    },
+    "started_at": "2026-10-21T04:46:35.037706+00:00",
+    "duration_ms": 264.0
+  },
+  {
+    "id": "UI09",
+    "expected": "503 before persistence displays error, preserves draft, safe retry has one displayed USER",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_CONTROLLED_503_THEN_REAL_RETRY",
+    "observations": {
+      "injected_response": 503,
+      "server_not_called_for_failure": true,
+      "retry_real_post": true,
+      "displayed_users": 1
+    },
+    "started_at": "2026-10-21T04:46:35.303270+00:00",
+    "duration_ms": 1030.7
+  },
+  {
+    "id": "UI10",
+    "expected": "Switching sessions while POST pending cannot overwrite selected history",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_CONTROLLED_PENDING_NETWORK",
+    "observations": {
+      "switch_disabled_during_post": true,
+      "switch_after_completion": true,
+      "selected_session_kept": true,
+      "note": "UI prevents switching during POST; component tests separately cover stale close responses."
+    },
+    "started_at": "2026-10-21T04:46:36.335560+00:00",
+    "duration_ms": 1069.98
+  },
+  {
+    "id": "UI11",
+    "expected": "Double-submit while pending sends one POST; loading state visible",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_CONTROLLED_DELAY_REAL_SERVER_RESPONSE",
+    "observations": {
+      "post_count": 1,
+      "loading_visible": true
+    },
+    "started_at": "2026-10-21T04:46:37.406280+00:00",
+    "duration_ms": 945.0
+  },
+  {
+    "id": "UI12",
+    "expected": "Feedback controls call real endpoint and show selected state",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "http_status": 200,
+      "selected": true,
+      "persistence": "RAM only"
+    },
+    "started_at": "2026-10-21T04:46:38.353082+00:00",
+    "duration_ms": 115.94
+  },
+  {
+    "id": "UI13",
+    "expected": "Developer trace panel loads real trace and filters events",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "real_trace_visible": true,
+      "filter_works": true
+    },
+    "started_at": "2026-10-21T04:46:38.469697+00:00",
+    "duration_ms": 24.23
+  },
+  {
+    "id": "UI14",
+    "expected": "JSON export downloads correct synthetic transcript",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "downloaded": true,
+      "transcript_rows": 2,
+      "storage": "postgres"
+    },
+    "started_at": "2026-10-21T04:46:38.494638+00:00",
+    "duration_ms": 46.12
+  },
+  {
+    "id": "UI15",
+    "expected": "Unknown/malformed 200 ChatResponse is handled without uncaught UI crash",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_CONTROLLED_MALFORMED_RESPONSE",
+    "observations": {
+      "malformed_200_did_not_crash": true,
+      "malformed_products_type": "object"
+    },
+    "started_at": "2026-10-21T04:46:38.541866+00:00",
+    "duration_ms": 858.03
+  },
+  {
+    "id": "UI16",
+    "expected": "Mobile390/tablet768/desktop1440 render without horizontal page overflow",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "viewports": [
+        {
+          "width": 390,
+          "page_scroll_width": 390,
+          "horizontal_overflow": false,
+          "screenshot": "evidence/ui/viewport-390.png"
+        },
+        {
+          "width": 768,
+          "page_scroll_width": 768,
+          "horizontal_overflow": false,
+          "screenshot": "evidence/ui/viewport-768.png"
+        },
+        {
+          "width": 1440,
+          "page_scroll_width": 1440,
+          "horizontal_overflow": false,
+          "screenshot": "evidence/ui/viewport-1440.png"
+        }
+      ]
+    },
+    "started_at": "2026-10-21T04:46:41.630586+00:00",
+    "duration_ms": 1137.98
+  },
+  {
+    "id": "UI17",
+    "expected": "Basic labelled input, log live region and keyboard submit usable",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "labelled_textarea": true,
+      "keyboard_submit": true,
+      "transcript_live_region": "polite",
+      "scope": "basic only; no WCAG certification"
+    },
+    "started_at": "2026-10-21T04:46:42.769246+00:00",
+    "duration_ms": 952.11
+  },
+  {
+    "id": "UI18",
+    "expected": "No unexpected browser page errors during normal UI flows",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "unexpected_normal_pageerrors": 0,
+      "controlled_malformed_errors": [],
+      "console_count": 33
+    },
+    "started_at": "2026-10-21T04:46:43.722380+00:00",
+    "duration_ms": 0.27
+  },
+  {
+    "id": "UI19",
+    "expected": "Storefront navigation/widget availability is independently inventoried, not assumed",
+    "status": "PASS",
+    "execution": "REAL_BROWSER_REAL_STACK",
+    "observations": {
+      "storefront_chatbot_lab_links": 0,
+      "storefront_chat_widget_present": false,
+      "classification": "NEW_FEATURE_REQUIRING_APPROVAL",
+      "UI_STOREFRONT_READY": false
+    },
+    "started_at": "2026-10-21T04:46:43.723390+00:00",
+    "duration_ms": 1202.95
+  }
+]

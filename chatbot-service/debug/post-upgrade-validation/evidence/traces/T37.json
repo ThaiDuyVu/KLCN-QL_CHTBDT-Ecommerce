@@ -1,0 +1,105 @@
+{
+  "trace_id": "3518d0ed-83f0-48ee-8282-afec2cd16675",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "089eb761-3b05-46b6-8b03-1b74b234934b",
+      "parent_id": "cccb4681-e69b-4e89-9299-b99a37003884",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 33.96,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "CART_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "bf7e54fb-b696-4cd3-9ced-6df575ca7d7f",
+      "parent_id": "cccb4681-e69b-4e89-9299-b99a37003884",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 38.95,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "CART_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "80ac4800-659b-442f-bb68-1a31044b4f4d",
+      "parent_id": "cccb4681-e69b-4e89-9299-b99a37003884",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 59.14,
+      "duration_ms": null,
+      "output": {
+        "intent": "CART_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "5ec797cc-9954-4575-8a97-f22794cf55a3",
+      "parent_id": "1b937d78-8f41-4ba9-b658-9026e7cec33c",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 59.42,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_customer_evidence",
+        "reason": "owned_cart"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 6.9,
+      "duration_ms": 59.56,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 39.01,
+      "duration_ms": 20.13,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 39.04,
+      "duration_ms": 19.99,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 59.3,
+      "duration_ms": 0.16,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/cart"
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "path": "/api/cart",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}

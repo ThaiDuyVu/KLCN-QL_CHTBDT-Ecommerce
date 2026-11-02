@@ -1,0 +1,435 @@
+{
+  "trace_id": "23f320f6-98c3-4b55-ba0d-3ad3e305a13e",
+  "status": "warning",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "cfba7c1b-a0f5-4821-a1ff-2b95a5cf60e4",
+      "parent_id": "5adefed4-294e-4e0c-a48e-f1ed50df4946",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 50.49,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "2ab75081-e1be-485f-9042-cf3f4371e632",
+      "parent_id": "5adefed4-294e-4e0c-a48e-f1ed50df4946",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 50.65,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "7812bf64-8a6c-4c95-9688-485c2278acc5",
+      "parent_id": "3e547142-606d-4bf3-8257-8ed64ba3f84e",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1603.07,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "dev-x15-wht-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU dev-x15-wht-512",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "34a1c4c1-aab1-45d8-97c1-fd1b4c78e9b5",
+      "parent_id": "3e547142-606d-4bf3-8257-8ed64ba3f84e",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1631.24,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "dev-x15-wht-512",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "SKU dev-x15-wht-512",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [
+            "PRICE"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "dev-x15-wht-512",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "SKU dev-x15-wht-512 giá bao nhiêu?",
+            "top_k": 1
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "cb31a74a-f118-4274-9a6d-0e1d26c2f97d",
+      "parent_id": "5adefed4-294e-4e0c-a48e-f1ed50df4946",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1646.52,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "dev-x15-wht-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU dev-x15-wht-512 giá bao nhiêu?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "044bb1ae-f6d5-4e1a-afc3-791ec049c5ed",
+      "parent_id": "5adefed4-294e-4e0c-a48e-f1ed50df4946",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1646.62,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "dev-x15-wht-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU dev-x15-wht-512 giá bao nhiêu?",
+          "top_k": 1
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "cd729a64-101b-4422-96e5-1e2e4cb41e64",
+      "parent_id": "5adefed4-294e-4e0c-a48e-f1ed50df4946",
+      "name": "product.search",
+      "status": "error",
+      "offset_ms": 1646.73,
+      "duration_ms": 9.16,
+      "output": {
+        "type": "ProductResolutionError",
+        "frames": [
+          {
+            "file": "__init__.py",
+            "function": "span",
+            "line": 226
+          },
+          {
+            "file": "__init__.py",
+            "function": "wrapper",
+            "line": 258
+          },
+          {
+            "file": "real_service.py",
+            "function": "search",
+            "line": 139
+          },
+          {
+            "file": "__init__.py",
+            "function": "wrapper",
+            "line": 258
+          },
+          {
+            "file": "real_service.py",
+            "function": "resolve",
+            "line": 108
+          }
+        ]
+      }
+    },
+    {
+      "id": "3a5283ac-8307-4cdf-af49-bc2e1186bb6b",
+      "parent_id": "cd729a64-101b-4422-96e5-1e2e4cb41e64",
+      "name": "product.identity_resolution",
+      "status": "error",
+      "offset_ms": 1646.78,
+      "duration_ms": 8.99,
+      "output": {
+        "type": "ProductResolutionError",
+        "frames": [
+          {
+            "file": "__init__.py",
+            "function": "span",
+            "line": 226
+          },
+          {
+            "file": "__init__.py",
+            "function": "wrapper",
+            "line": 258
+          },
+          {
+            "file": "real_service.py",
+            "function": "resolve",
+            "line": 108
+          }
+        ]
+      }
+    },
+    {
+      "id": "82eb644f-93ee-4a1f-ae34-2195ec3fe3b2",
+      "parent_id": "5adefed4-294e-4e0c-a48e-f1ed50df4946",
+      "name": "product.resolution_failed",
+      "status": "warning",
+      "offset_ms": 1655.99,
+      "duration_ms": null,
+      "output": {
+        "reason": "NOT_FOUND"
+      }
+    },
+    {
+      "id": "be7c3f86-820c-427d-ab6c-6e7b7e1fef46",
+      "parent_id": "5adefed4-294e-4e0c-a48e-f1ed50df4946",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1656.09,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DETAIL",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "4a03993f-e393-46f6-9113-a7fc5cbc71fb",
+      "parent_id": "1fb81b62-45cc-4bd6-87e8-96f8e24a7d36",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1656.35,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 12.18,
+      "duration_ms": 1654.9,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 50.82,
+      "duration_ms": 1580.69,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 52.86,
+      "duration_ms": 1550.14,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 53.3,
+      "duration_ms": 1549.67,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 53.69,
+      "duration_ms": 1549.23,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1603.23,
+      "duration_ms": 10.33,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1613.6,
+      "duration_ms": 6.11,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1619.75,
+      "duration_ms": 11.08,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1646.73,
+      "duration_ms": 9.16,
+      "status": "error"
+    },
+    {
+      "name": "product.identity_resolution",
+      "offset_ms": 1646.78,
+      "duration_ms": 8.99,
+      "status": "error"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1646.82,
+      "duration_ms": 7.42,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1656.04,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1656.25,
+      "duration_ms": 0.12,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/product-variants",
+      "kwargs": {
+        "params": {
+          "keyword": "dev-x15-wht-512",
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

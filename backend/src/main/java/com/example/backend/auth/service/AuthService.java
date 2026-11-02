@@ -2,6 +2,7 @@ package com.example.backend.auth.service;
 
 import com.example.backend.auth.dto.LoginRequest;
 import com.example.backend.auth.dto.LoginSessionResponse;
+import com.example.backend.auth.dto.RegisterRequest;
 import com.example.backend.auth.entity.User;
 
 public interface AuthService {
@@ -9,6 +10,8 @@ public interface AuthService {
     User authenticate(String username, String password);
 
     LoginAuthenticationResult login(LoginRequest request);
+
+    LoginAuthenticationResult register(RegisterRequest request);
 
     LoginAuthenticationResult refresh(String rawRefreshToken);
 

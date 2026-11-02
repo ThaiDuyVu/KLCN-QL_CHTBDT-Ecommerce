@@ -1,0 +1,30 @@
+[
+  {
+    "id": "followup-focused",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests/test_query_integrity.py tests/test_query_product_v2.py tests/test_query_contracts.py tests/test_real_product_advisor.py tests/test_ai_chat_flow.py -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T08:55:24.676396+00:00",
+    "duration_seconds": 0.523,
+    "exit_code": 0,
+    "counts": {
+      "passed": 185,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/followup-focused.txt"
+  },
+  {
+    "id": "followup-full",
+    "command": "workspace://chatbot-service/.venv/bin/python -m pytest tests -q",
+    "cwd": "chatbot-service",
+    "started_at": "2026-10-20T08:55:25.200211+00:00",
+    "duration_seconds": 0.865,
+    "exit_code": 0,
+    "counts": {
+      "passed": 362,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sanitized_output": "evidence/commands/followup-full.txt"
+  }
+]

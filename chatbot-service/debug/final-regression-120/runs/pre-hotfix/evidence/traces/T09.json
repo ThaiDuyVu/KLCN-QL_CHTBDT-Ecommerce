@@ -1,0 +1,395 @@
+{
+  "trace_id": "319b964e-9f72-4eb9-8e12-f19e9359306e",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "230f8019-29a4-40a0-a399-7ab80ad10c48",
+      "parent_id": "266759a2-00a7-4c0d-b4af-ece5b97331ab",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 51.53,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "230f8019-29a4-40a0-a399-7ab80ad10c48",
+      "parent_id": "266759a2-00a7-4c0d-b4af-ece5b97331ab",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 51.53,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "1f9c80b6-2f2c-49ce-a744-fb64395f5034",
+      "parent_id": "266759a2-00a7-4c0d-b4af-ece5b97331ab",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 51.67,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "1f9c80b6-2f2c-49ce-a744-fb64395f5034",
+      "parent_id": "266759a2-00a7-4c0d-b4af-ece5b97331ab",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 51.67,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "33260da9-3530-40a8-a038-289bb70e392b",
+      "parent_id": "3d90f60e-8076-487d-ac4d-bbbedced103e",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1545.81,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Smartphone",
+          "brands": [],
+          "min_price": null,
+          "max_price": "10000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "iphone gia duoi 1 trieu",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "f0c85dcc-d998-4be3-beef-3cc9238372d1",
+      "parent_id": "3d90f60e-8076-487d-ac4d-bbbedced103e",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1633.2,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Smartphone",
+            "brands": [],
+            "min_price": null,
+            "max_price": "10000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "iphone gia duoi 1 trieu",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Apple"
+            ],
+            "min_price": null,
+            "max_price": "1000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm iPhone giá dưới 1 triệu.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "d5e393e7-b03d-4319-ae93-c4ea1bd566b3",
+      "parent_id": "266759a2-00a7-4c0d-b4af-ece5b97331ab",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1659.19,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Apple"
+          ],
+          "min_price": null,
+          "max_price": "1000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm iPhone giá dưới 1 triệu.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "eb2c275e-83e6-4201-8b39-a9d4c1154038",
+      "parent_id": "266759a2-00a7-4c0d-b4af-ece5b97331ab",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1659.32,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Apple"
+          ],
+          "min_price": null,
+          "max_price": "1000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm iPhone giá dưới 1 triệu.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "46b6bd00-1670-4233-9c0d-3d7e9dbacf30",
+      "parent_id": "266759a2-00a7-4c0d-b4af-ece5b97331ab",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 1659.44,
+      "duration_ms": 9.69,
+      "output": []
+    },
+    {
+      "id": "07c667ac-64a1-42f2-a662-2856d3b3b7c8",
+      "parent_id": "266759a2-00a7-4c0d-b4af-ece5b97331ab",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 1669.18,
+      "duration_ms": 0.13,
+      "output": []
+    },
+    {
+      "id": "ed6137c2-4e16-48d0-86f7-923d1728aa87",
+      "parent_id": "07c667ac-64a1-42f2-a662-2856d3b3b7c8",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 1669.25,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [],
+        "variants": 0,
+        "cards": 0
+      }
+    },
+    {
+      "id": "8b2f7e8b-c58f-4157-98fa-01e5f32f66d8",
+      "parent_id": "266759a2-00a7-4c0d-b4af-ece5b97331ab",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1669.62,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "8b852b1e-9ca0-4ba9-a356-b2400d48d8bc",
+      "parent_id": "d92e4c9d-fcdc-4c09-8791-e03912fc8cfe",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1670.36,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "no_matching_products"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 9.94,
+      "duration_ms": 1672.26,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 51.81,
+      "duration_ms": 1581.56,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 54.67,
+      "duration_ms": 1490.93,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 55.1,
+      "duration_ms": 1490.43,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 55.47,
+      "duration_ms": 1490.0,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1546.12,
+      "duration_ms": 25.64,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1571.82,
+      "duration_ms": 12.99,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1584.84,
+      "duration_ms": 47.7,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1659.44,
+      "duration_ms": 9.69,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1659.49,
+      "duration_ms": 9.6,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 1669.18,
+      "duration_ms": 0.13,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1669.53,
+      "duration_ms": 0.09,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1670.06,
+      "duration_ms": 0.4,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Điện thoại"
+          ],
+          [
+            "maxPrice",
+            "1000000"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ],
+          [
+            "brands",
+            "Apple"
+          ]
+        ]
+      }
+    }
+  ]
+}

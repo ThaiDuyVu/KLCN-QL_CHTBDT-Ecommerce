@@ -1,0 +1,28 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_original_guidance_and_negated_transaction_are_read_only[Gi\xfap t\xf4i xem c\xe1ch h\u1ee7y \u0111\u01a1n h\xe0ng.] _
+
+prompt = 'Giúp tôi xem cách hủy đơn hàng.'
+
+    @pytest.mark.parametrize('prompt', ['Giúp tôi xem cách hủy đơn hàng.', 'Đừng đặt hàng, chỉ tìm laptop Dell dưới 20 triệu.'])
+    def test_original_guidance_and_negated_transaction_are_read_only(prompt):
+>       assert transaction_request(prompt) is False
+E       AssertionError: assert True is False
+E        +  where True = transaction_request('Giúp tôi xem cách hủy đơn hàng.')
+
+tests/test_conversation_safety.py:59: AssertionError
+_ test_original_guidance_and_negated_transaction_are_read_only[\u0110\u1eebng \u0111\u1eb7t h\xe0ng, ch\u1ec9 t\xecm laptop Dell d\u01b0\u1edbi 20 tri\u1ec7u.] _
+
+prompt = 'Đừng đặt hàng, chỉ tìm laptop Dell dưới 20 triệu.'
+
+    @pytest.mark.parametrize('prompt', ['Giúp tôi xem cách hủy đơn hàng.', 'Đừng đặt hàng, chỉ tìm laptop Dell dưới 20 triệu.'])
+    def test_original_guidance_and_negated_transaction_are_read_only(prompt):
+>       assert transaction_request(prompt) is False
+E       AssertionError: assert True is False
+E        +  where True = transaction_request('Đừng đặt hàng, chỉ tìm laptop Dell dưới 20 triệu.')
+
+tests/test_conversation_safety.py:59: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_conversation_safety.py::test_original_guidance_and_negated_transaction_are_read_only[Gi\xfap t\xf4i xem c\xe1ch h\u1ee7y \u0111\u01a1n h\xe0ng.]
+FAILED tests/test_conversation_safety.py::test_original_guidance_and_negated_transaction_are_read_only[\u0110\u1eebng \u0111\u1eb7t h\xe0ng, ch\u1ec9 t\xecm laptop Dell d\u01b0\u1edbi 20 tri\u1ec7u.]
+2 failed, 13 deselected in 0.13s

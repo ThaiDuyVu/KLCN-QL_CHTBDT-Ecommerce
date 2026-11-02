@@ -32,8 +32,9 @@ def test_existing_pipeline_routes_knowledge_and_builds_sources():
     response = FakeChat("Chính sách đổi trả trong 7 ngày.")
     service = MockChatService(query_understanding=OllamaQueryUnderstandingService(query), response_generation=OllamaResponseGenerationService(response), knowledge_retrieval=retrieval, knowledge_top_k=3)
     result = service.send_message(uuid4(), SendMessageRequest(message="Cho tôi biết chính sách đổi trả"))
-    assert result.message == "Chính sách đổi trả trong 7 ngày."
-    assert retrieval.calls == [("đổi trả", 3)]
+    assert retrieval.match.content in result.message
+    assert not response.calls
+    assert retrieval.calls == [("Cho tôi biết chính sách đổi trả", 3)]
     assert result.sources[0].chunk_id == retrieval.match.chunk_id
     assert result.products == []
 
@@ -42,7 +43,7 @@ def test_retrieval_failure_returns_safe_response():
     for error in (KnowledgeUnavailable("offline"), KnowledgeRepositoryError("offline")):
         service = MockChatService(query_understanding=OllamaQueryUnderstandingService(FakeChat('{"intent":"KNOWLEDGE_QA"}')), response_generation=OllamaResponseGenerationService(FakeChat()), knowledge_retrieval=FakeRetrieval(error))
         result = service.send_message(uuid4(), SendMessageRequest(message="Chính sách?"))
-        assert result.message == INSUFFICIENT
+        assert 'tra cứu tài liệu đang không khả dụng' in result.message
         assert result.sources == []
 
 
@@ -87,8 +88,8 @@ def test_audit_hook_runs_after_generation_with_persisted_history_id():
     session_id = uuid4()
 
     def persist_then_audit(context, response, matches):
-        assert response.message == "Grounded answer"
-        assert context.current_message == "Chính sách?"
+        assert retrieval.match.content in response.message
+        assert context.current_message == "Đổi trả?"
         assert repo.audits == []
         persisted.append((history_id, response.message))
         audit.record_retrievals(history_id, matches)
@@ -98,8 +99,8 @@ def test_audit_hook_runs_after_generation_with_persisted_history_id():
         response_generation=OllamaResponseGenerationService(FakeChat("Grounded answer")),
         knowledge_retrieval=retrieval, after_response=persist_then_audit,
     )
-    service.send_message(session_id, SendMessageRequest(message="Chính sách?"))
-    assert persisted == [(history_id, "Grounded answer")]
+    result = service.send_message(session_id, SendMessageRequest(message="Đổi trả?"))
+    assert persisted == [(history_id, result.message)]
     assert repo.audits == [(history_id, [retrieval.match])]
     assert history_id != session_id
 
@@ -124,10 +125,11 @@ def test_authenticated_rag_preserves_history_sources_and_persisted_response():
     )
     response = service.send_message(session_id, SendMessageRequest(message="Còn đổi trả?"), customer=customer)
     assert response.sources
-    assert response.message == "Đổi trả trong 7 ngày."
+    assert 'Đổi trả trong 7 ngày theo điều kiện chính sách.' in response.message
     history = conversation.get_recent_messages(session_id, customer.customer_id)
     assert history[-1].message == response.message
-    assert "Tôi muốn biết chính sách" in str(model.calls)
+    assert history[0].message == 'Tôi muốn biết chính sách'
+    assert not model.calls  # Explicit policy questions are routed without model guessing.
 
 
 def test_factory_selects_real_product_advisor_when_ai_is_disabled(monkeypatch):

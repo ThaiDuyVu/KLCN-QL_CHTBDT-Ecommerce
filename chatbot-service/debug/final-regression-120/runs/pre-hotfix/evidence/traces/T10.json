@@ -1,0 +1,391 @@
+{
+  "trace_id": "c2f6123a-b23e-46f8-93c8-4732d04e775e",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "72cd98b2-b32f-4d7c-b9d1-c487d19e1b27",
+      "parent_id": "62414619-2b6b-4bb4-84a9-538963f0dc17",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 56.45,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "72cd98b2-b32f-4d7c-b9d1-c487d19e1b27",
+      "parent_id": "62414619-2b6b-4bb4-84a9-538963f0dc17",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 56.45,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "5adbddda-837b-4ad4-ab36-1bf48c20822a",
+      "parent_id": "62414619-2b6b-4bb4-84a9-538963f0dc17",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 56.6,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "5adbddda-837b-4ad4-ab36-1bf48c20822a",
+      "parent_id": "62414619-2b6b-4bb4-84a9-538963f0dc17",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 56.6,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "a707326b-58ec-4fa0-bd2d-0440b7513990",
+      "parent_id": "7a0b60c4-6b66-45c6-9891-9ac7bfea472f",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1988.35,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": 32,
+          "min_storage_gb": 1,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop ram 32gb gia duoi 20triệu",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "da2621cc-1bab-4138-b089-b2b70cc9077c",
+      "parent_id": "7a0b60c4-6b66-45c6-9891-9ac7bfea472f",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2033.63,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": 32,
+            "min_storage_gb": 1,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop ram 32gb gia duoi 20triệu",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE",
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 32,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm laptop RAM ít nhất 32GB, giá dưới 20 triệu.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "02807e6b-98e9-478b-8b05-96b12bee8f66",
+      "parent_id": "62414619-2b6b-4bb4-84a9-538963f0dc17",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2050.62,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 32,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop RAM ít nhất 32GB, giá dưới 20 triệu.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "413b125e-0e99-495a-a7a1-570898e4069f",
+      "parent_id": "62414619-2b6b-4bb4-84a9-538963f0dc17",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2050.7,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 32,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop RAM ít nhất 32GB, giá dưới 20 triệu.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "81b1cb44-ee07-4a3a-983a-b74a1d87af0f",
+      "parent_id": "62414619-2b6b-4bb4-84a9-538963f0dc17",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 2050.8,
+      "duration_ms": 16.23,
+      "output": []
+    },
+    {
+      "id": "3e58a385-fb25-49e5-b035-23085514d134",
+      "parent_id": "62414619-2b6b-4bb4-84a9-538963f0dc17",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2067.03,
+      "duration_ms": 0.03,
+      "output": []
+    },
+    {
+      "id": "807e9bcc-a9f5-4ed2-a36f-13823f312508",
+      "parent_id": "3e58a385-fb25-49e5-b035-23085514d134",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2067.05,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [],
+        "variants": 0,
+        "cards": 0
+      }
+    },
+    {
+      "id": "de08f174-24bd-4387-938c-909bb9e5856d",
+      "parent_id": "62414619-2b6b-4bb4-84a9-538963f0dc17",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2067.23,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "19cde6a3-46bf-4b30-90d4-8fe847b0dea3",
+      "parent_id": "82561f9c-b809-4d0d-9e2a-434b39aede37",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2067.49,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "no_matching_products"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 10.26,
+      "duration_ms": 2066.85,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 56.79,
+      "duration_ms": 1977.02,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 58.29,
+      "duration_ms": 1930.02,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 58.71,
+      "duration_ms": 1929.57,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 59.09,
+      "duration_ms": 1929.15,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1988.45,
+      "duration_ms": 14.07,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2002.56,
+      "duration_ms": 10.9,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2013.49,
+      "duration_ms": 19.7,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2050.8,
+      "duration_ms": 16.23,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2050.87,
+      "duration_ms": 16.14,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2067.03,
+      "duration_ms": 0.03,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2067.17,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2067.4,
+      "duration_ms": 0.12,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Laptop"
+          ],
+          [
+            "maxPrice",
+            "20000000"
+          ],
+          [
+            "minRamGb",
+            "32"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ]
+        ]
+      }
+    }
+  ]
+}

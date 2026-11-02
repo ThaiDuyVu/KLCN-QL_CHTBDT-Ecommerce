@@ -1,0 +1,617 @@
+{
+  "trace_id": "3cb4edea-43ad-44d3-a84f-ddb28e1d4108",
+  "status": "warning",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "94ed7670-591e-4f22-88ad-a2b5dcd6d3e4",
+      "parent_id": "fac1b9cd-c0f3-4129-ab57-3b9d7fbcc121",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 42.86,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "d5767b73-1dc9-45e9-b593-1c9dbecc4868",
+      "parent_id": "fac1b9cd-c0f3-4129-ab57-3b9d7fbcc121",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 43.0,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "cf0756ac-00a2-4a36-a81f-cc94de2ddaf5",
+      "parent_id": "4f1d441f-b399-4a73-ad1b-95c1d0175565",
+      "name": "query.validation_failed",
+      "status": "warning",
+      "offset_ms": 1659.51,
+      "duration_ms": null,
+      "output": {
+        "errors": [
+          {
+            "type": "value_error",
+            "loc": [
+              "product_search",
+              "targets",
+              0
+            ],
+            "msg": "Value error, Exactly one explicit identity is required"
+          }
+        ],
+        "attempt": 1
+      }
+    },
+    {
+      "id": "4d29f695-a913-4ee0-8d52-f27de1ba1e7f",
+      "parent_id": "4f1d441f-b399-4a73-ad1b-95c1d0175565",
+      "name": "query.validation_failed",
+      "status": "warning",
+      "offset_ms": 5302.05,
+      "duration_ms": null,
+      "output": {
+        "errors": [
+          {
+            "type": "value_error",
+            "loc": [
+              "product_search",
+              "targets",
+              0
+            ],
+            "msg": "Value error, Exactly one explicit identity is required"
+          }
+        ],
+        "attempt": 2
+      }
+    },
+    {
+      "id": "ad6a7ea2-3aae-444d-8e80-9f5d89178783",
+      "parent_id": "4f1d441f-b399-4a73-ad1b-95c1d0175565",
+      "name": "query.fallback",
+      "status": "warning",
+      "offset_ms": 5302.09,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "reason": "model_or_schema_failure"
+      }
+    },
+    {
+      "id": "5e249735-c044-448c-95d7-e627307b2e51",
+      "parent_id": "4f1d441f-b399-4a73-ad1b-95c1d0175565",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 5332.16,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Xiaomi"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.",
+            "top_k": 2
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "f5090977-d241-412b-b391-ba3529097ffc",
+      "parent_id": "fac1b9cd-c0f3-4129-ab57-3b9d7fbcc121",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 5344.95,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Xiaomi"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.",
+          "top_k": 2
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "fce4bac0-0c8b-4b13-90b4-0f90efd2a010",
+      "parent_id": "fac1b9cd-c0f3-4129-ab57-3b9d7fbcc121",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 5345.04,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Xiaomi"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.",
+          "top_k": 2
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "2b4caf72-35d7-4bc2-8d80-4ba49bad9ba4",
+      "parent_id": "fac1b9cd-c0f3-4129-ab57-3b9d7fbcc121",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 5345.14,
+      "duration_ms": 104.65,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Elite",
+            "Màn hình": "AMOLED 6,36 inch",
+            "Pin": "5.240 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": 0.5196409464952518,
+          "ranking_score": 0.5196409464952518,
+          "eligible_variants": [
+            {
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "8c914844-e1ad-422e-a162-401f1a60d5ed",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-WHT-512",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Trắng",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "aabb3778-d136-453e-8165-c8d2dcdce581",
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "sku": "DEV-X15-GRN-512",
+              "original_price": "21990000.0",
+              "effective_price": "21990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xanh lá",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        },
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "brand_name": "Xiaomi",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "MediaTek Dimensity 9300+",
+            "Màn hình": "AMOLED 6,67 inch",
+            "Pin": "5.000 mAh",
+            "RAM": "12-16 GB"
+          },
+          "semantic_score": 0.4757464941756888,
+          "ranking_score": 0.4757464941756888,
+          "eligible_variants": [
+            {
+              "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+              "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+              "sku": "DEV-X14TP-BLK-256",
+              "original_price": "16990000.0",
+              "effective_price": "16990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "4dcb8a6e-0083-4c7e-aaee-6464eeee11c6",
+              "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+              "sku": "DEV-X14TP-BLU-512",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "512GB",
+              "color": "Xanh",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "0ba90d96-69c4-46a0-b477-dab320bd7863",
+              "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+              "sku": "DEV-X14TP-GRY-512",
+              "original_price": "19990000.0",
+              "effective_price": "19990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Xám",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "d8f45021-5bde-4c79-bd29-16c829d997ff",
+      "parent_id": "fac1b9cd-c0f3-4129-ab57-3b9d7fbcc121",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 5449.79,
+      "duration_ms": 18.16,
+      "output": [
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        },
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+          "sku": "DEV-X14TP-BLK-256",
+          "original_price": "16990000.0",
+          "effective_price": "16990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-14t-pro/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Xiaomi"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3082f89e-f3b9-4f62-bf95-1159d11e3b93",
+      "parent_id": "d8f45021-5bde-4c79-bd29-16c829d997ff",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 5467.84,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "3fc00d9b-72e8-43de-8d5d-a275251aa08f"
+        ],
+        "variants": 6,
+        "cards": 2
+      }
+    },
+    {
+      "id": "247af0c6-6258-413c-acc8-833842fb3eff",
+      "parent_id": "fac1b9cd-c0f3-4129-ab57-3b9d7fbcc121",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 5468.12,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 2,
+        "cards": 2,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "fc6c4389-48be-47ec-8b51-8e85af6ffdc6",
+      "parent_id": "636946ce-bd22-45c6-894b-8050567e2e10",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 5468.72,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 9.05,
+      "duration_ms": 5470.97,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 43.16,
+      "duration_ms": 5289.13,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 44.49,
+      "duration_ms": 1614.98,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 44.9,
+      "duration_ms": 1614.53,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 45.27,
+      "duration_ms": 1614.11,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 1659.57,
+      "duration_ms": 3642.43,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 1660.35,
+      "duration_ms": 3641.6,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 1661.0,
+      "duration_ms": 3640.9,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5302.17,
+      "duration_ms": 10.71,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5312.92,
+      "duration_ms": 6.81,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5319.76,
+      "duration_ms": 12.01,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 5345.14,
+      "duration_ms": 104.65,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5345.18,
+      "duration_ms": 8.46,
+      "status": "ok"
+    },
+    {
+      "name": "product.embedding",
+      "offset_ms": 5353.68,
+      "duration_ms": 59.33,
+      "status": "ok"
+    },
+    {
+      "name": "product.vector_ranking",
+      "offset_ms": 5413.07,
+      "duration_ms": 12.68,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5425.78,
+      "duration_ms": 15.01,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5440.89,
+      "duration_ms": 8.62,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 5449.79,
+      "duration_ms": 18.16,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5450.0,
+      "duration_ms": 8.79,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 5458.88,
+      "duration_ms": 8.85,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 5468.06,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 5468.46,
+      "duration_ms": 0.31,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Điện thoại"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ],
+          [
+            "brands",
+            "Xiaomi"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/3fc00d9b-72e8-43de-8d5d-a275251aa08f/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/169710dd-d072-4e83-9fd0-e618d706ee26/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/3fc00d9b-72e8-43de-8d5d-a275251aa08f/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

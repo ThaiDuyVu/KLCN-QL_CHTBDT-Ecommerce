@@ -1,0 +1,2186 @@
+[
+  {
+    "id": "T06",
+    "prompt": "Tôi muốn biết tình trạng đơn hàng.",
+    "expected": "Owned recent order status from backend; no payment inference.",
+    "started_at": "2026-10-20T12:28:17.637373+00:00",
+    "duration_ms": 110.01,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-d63d98c691d7",
+      "message": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-FAILED: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-NOPAY: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-NULLWAREHOUSE: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-FIX02-MULTIPAY: trạng thái đơn hàng DELIVERED; tổng tiền 100.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-01421042-3B48-48AE-8313-E0A8A8AF2F29: trạng thái đơn hàng PENDING; tổng tiền 49990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-EXPIRED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "0407e60b-e0a6-4604-9424-bd721756355f",
+    "trace_evidence": "evidence/traces/T06.json",
+    "verdict": "PASS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "ORDER_STATUS",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_customer_evidence",
+      "reason": "owned_order_payment"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "ORDER_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Tôi muốn biết tình trạng đơn hàng.",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [
+          {
+            "order_id": "synthetic-order_id-dc5baf12e888",
+            "order_code": "ORD-DIAG-DELIVERED",
+            "order_date": "2026-10-20T12:23:31.738609Z",
+            "status": "DELIVERED",
+            "total_amount": "18990000.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-df031ace37c4",
+            "order_code": "ORD-DIAG-FAILED",
+            "order_date": "2026-10-20T12:19:31.738609Z",
+            "status": "PENDING",
+            "total_amount": "18990000.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-f047cf194bf6",
+            "order_code": "ORD-DIAG-NOPAY",
+            "order_date": "2026-10-20T12:14:31.738609Z",
+            "status": "DELIVERED",
+            "total_amount": "18990000.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-cfc76929e6f0",
+            "order_code": "ORD-DIAG-NULLWAREHOUSE",
+            "order_date": "2026-10-20T12:09:31.738609Z",
+            "status": "PENDING",
+            "total_amount": "18990000.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-0e89c6abbd6c",
+            "order_code": "ORD-FIX02-MULTIPAY",
+            "order_date": "2026-10-20T12:08:05.487027Z",
+            "status": "DELIVERED",
+            "total_amount": "100.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-6ddcfef694f1",
+            "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "order_date": "2026-10-04T06:36:15.571545Z",
+            "status": "PENDING",
+            "total_amount": "49990000.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-d510009074cd",
+            "order_code": "ORD-DIAG-EXPIRED",
+            "order_date": "2024-08-11T12:24:31.738609Z",
+            "status": "DELIVERED",
+            "total_amount": "18990000.0",
+            "payment": null
+          }
+        ],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 12.56,
+        "duration_ms": 70.21,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 45.47,
+        "duration_ms": 30.69,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 45.52,
+        "duration_ms": 30.13,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 76.37,
+        "duration_ms": 0.2,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [
+        {
+          "order_id": "synthetic-order_id-dc5baf12e888",
+          "order_code": "ORD-DIAG-DELIVERED",
+          "order_date": "2026-10-20T12:23:31.738609Z",
+          "status": "DELIVERED",
+          "total_amount": "18990000.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-df031ace37c4",
+          "order_code": "ORD-DIAG-FAILED",
+          "order_date": "2026-10-20T12:19:31.738609Z",
+          "status": "PENDING",
+          "total_amount": "18990000.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-f047cf194bf6",
+          "order_code": "ORD-DIAG-NOPAY",
+          "order_date": "2026-10-20T12:14:31.738609Z",
+          "status": "DELIVERED",
+          "total_amount": "18990000.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-cfc76929e6f0",
+          "order_code": "ORD-DIAG-NULLWAREHOUSE",
+          "order_date": "2026-10-20T12:09:31.738609Z",
+          "status": "PENDING",
+          "total_amount": "18990000.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-0e89c6abbd6c",
+          "order_code": "ORD-FIX02-MULTIPAY",
+          "order_date": "2026-10-20T12:08:05.487027Z",
+          "status": "DELIVERED",
+          "total_amount": "100.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-6ddcfef694f1",
+          "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+          "order_date": "2026-10-04T06:36:15.571545Z",
+          "status": "PENDING",
+          "total_amount": "49990000.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-d510009074cd",
+          "order_code": "ORD-DIAG-EXPIRED",
+          "order_date": "2024-08-11T12:24:31.738609Z",
+          "status": "DELIVERED",
+          "total_amount": "18990000.0",
+          "payment": null
+        }
+      ],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": null,
+      "intent": "ORDER_STATUS",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "owned_status_evidence": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "T38",
+    "prompt": "Các đơn hàng gần đây của tôi đang ở trạng thái nào?",
+    "expected": "Owned recent orders, statuses and correct sorting; no status-derived payment.",
+    "started_at": "2026-10-20T12:28:17.767444+00:00",
+    "duration_ms": 77.62,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-ff8e48110b2a",
+      "message": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-FAILED: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-NOPAY: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-NULLWAREHOUSE: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-FIX02-MULTIPAY: trạng thái đơn hàng DELIVERED; tổng tiền 100.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-01421042-3B48-48AE-8313-E0A8A8AF2F29: trạng thái đơn hàng PENDING; tổng tiền 49990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.\nORD-DIAG-EXPIRED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; chưa có dữ liệu thanh toán để xác nhận đã thanh toán hay chưa.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "52f29ed4-936b-4063-a6cc-c1d68effdd45",
+    "trace_evidence": "evidence/traces/T38.json",
+    "verdict": "PASS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "ORDER_STATUS",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_customer_evidence",
+      "reason": "owned_order_payment"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "ORDER_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Các đơn hàng gần đây của tôi đang ở trạng thái nào?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [
+          {
+            "order_id": "synthetic-order_id-dc5baf12e888",
+            "order_code": "ORD-DIAG-DELIVERED",
+            "order_date": "2026-10-20T12:23:31.738609Z",
+            "status": "DELIVERED",
+            "total_amount": "18990000.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-df031ace37c4",
+            "order_code": "ORD-DIAG-FAILED",
+            "order_date": "2026-10-20T12:19:31.738609Z",
+            "status": "PENDING",
+            "total_amount": "18990000.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-f047cf194bf6",
+            "order_code": "ORD-DIAG-NOPAY",
+            "order_date": "2026-10-20T12:14:31.738609Z",
+            "status": "DELIVERED",
+            "total_amount": "18990000.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-cfc76929e6f0",
+            "order_code": "ORD-DIAG-NULLWAREHOUSE",
+            "order_date": "2026-10-20T12:09:31.738609Z",
+            "status": "PENDING",
+            "total_amount": "18990000.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-0e89c6abbd6c",
+            "order_code": "ORD-FIX02-MULTIPAY",
+            "order_date": "2026-10-20T12:08:05.487027Z",
+            "status": "DELIVERED",
+            "total_amount": "100.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-6ddcfef694f1",
+            "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "order_date": "2026-10-04T06:36:15.571545Z",
+            "status": "PENDING",
+            "total_amount": "49990000.0",
+            "payment": null
+          },
+          {
+            "order_id": "synthetic-order_id-d510009074cd",
+            "order_code": "ORD-DIAG-EXPIRED",
+            "order_date": "2024-08-11T12:24:31.738609Z",
+            "status": "DELIVERED",
+            "total_amount": "18990000.0",
+            "payment": null
+          }
+        ],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.47,
+        "duration_ms": 47.45,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 33.66,
+        "duration_ms": 12.91,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 33.69,
+        "duration_ms": 12.65,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 46.78,
+        "duration_ms": 0.17,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [
+        {
+          "order_id": "synthetic-order_id-dc5baf12e888",
+          "order_code": "ORD-DIAG-DELIVERED",
+          "order_date": "2026-10-20T12:23:31.738609Z",
+          "status": "DELIVERED",
+          "total_amount": "18990000.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-df031ace37c4",
+          "order_code": "ORD-DIAG-FAILED",
+          "order_date": "2026-10-20T12:19:31.738609Z",
+          "status": "PENDING",
+          "total_amount": "18990000.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-f047cf194bf6",
+          "order_code": "ORD-DIAG-NOPAY",
+          "order_date": "2026-10-20T12:14:31.738609Z",
+          "status": "DELIVERED",
+          "total_amount": "18990000.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-cfc76929e6f0",
+          "order_code": "ORD-DIAG-NULLWAREHOUSE",
+          "order_date": "2026-10-20T12:09:31.738609Z",
+          "status": "PENDING",
+          "total_amount": "18990000.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-0e89c6abbd6c",
+          "order_code": "ORD-FIX02-MULTIPAY",
+          "order_date": "2026-10-20T12:08:05.487027Z",
+          "status": "DELIVERED",
+          "total_amount": "100.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-6ddcfef694f1",
+          "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+          "order_date": "2026-10-04T06:36:15.571545Z",
+          "status": "PENDING",
+          "total_amount": "49990000.0",
+          "payment": null
+        },
+        {
+          "order_id": "synthetic-order_id-d510009074cd",
+          "order_code": "ORD-DIAG-EXPIRED",
+          "order_date": "2024-08-11T12:24:31.738609Z",
+          "status": "DELIVERED",
+          "total_amount": "18990000.0",
+          "payment": null
+        }
+      ],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": null,
+      "intent": "ORDER_STATUS",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "owned_status_evidence": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "T39",
+    "prompt": "Đơn hàng mới nhất của tôi đã thanh toán chưa?",
+    "expected": "Latest owned order payment read from detail; distinguish missing payment.",
+    "started_at": "2026-10-20T12:28:17.863160+00:00",
+    "duration_ms": 100.13,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-5ce11974dcce",
+      "message": "ORD-DIAG-DELIVERED: trạng thái đơn hàng DELIVERED; tổng tiền 18990000.0 VND; trạng thái thanh toán: PAID; phương thức: COD; số tiền: 18990000.0 VND.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "995ee93e-ca04-43fc-a602-9a1d9c98484d",
+    "trace_evidence": "evidence/traces/T39.json",
+    "verdict": "PASS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_selection": "latest"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_customer_evidence",
+      "reason": "owned_order_payment"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_selection": "latest"
+        },
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Đơn hàng mới nhất của tôi đã thanh toán chưa?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [
+          {
+            "order_id": "synthetic-order_id-dc5baf12e888",
+            "order_code": "ORD-DIAG-DELIVERED",
+            "order_date": "2026-10-20T12:23:31.738609Z",
+            "status": "DELIVERED",
+            "total_amount": "18990000.0",
+            "payment": {
+              "payment_id": "synthetic-payment_id-464979960747",
+              "payment_method": "COD",
+              "status": "PAID",
+              "amount": "18990000.0"
+            }
+          }
+        ],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/synthetic-order-0cafaf2adb2c"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.84,
+        "duration_ms": 71.4,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 31.79,
+        "duration_ms": 37.64,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 31.82,
+        "duration_ms": 12.22,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 44.06,
+        "duration_ms": 25.26,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 69.57,
+        "duration_ms": 0.17,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [
+        {
+          "order_id": "synthetic-order_id-dc5baf12e888",
+          "order_code": "ORD-DIAG-DELIVERED",
+          "order_date": "2026-10-20T12:23:31.738609Z",
+          "status": "DELIVERED",
+          "total_amount": "18990000.0",
+          "payment": {
+            "payment_id": "synthetic-payment_id-464979960747",
+            "payment_method": "COD",
+            "status": "PAID",
+            "amount": "18990000.0"
+          }
+        }
+      ],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_selection": "latest"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "latest_paid_evidence": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "T42",
+    "prompt": "Đơn hàng ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29 của tôi đã thanh toán chưa?",
+    "expected": "Exact owned historical order code, not the latest different order.",
+    "started_at": "2026-10-20T12:28:17.981370+00:00",
+    "duration_ms": 87.09,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-badc5352e097",
+      "message": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29: trạng thái đơn hàng PENDING; tổng tiền 49990000.0 VND; trạng thái thanh toán: PENDING; phương thức: COD; số tiền: 49990000.0 VND.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "625e19b5-4945-452b-a220-d598ece928a0",
+    "trace_evidence": "evidence/traces/T42.json",
+    "verdict": "PASS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_customer_evidence",
+      "reason": "owned_order_payment"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29"
+        },
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Đơn hàng ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29 của tôi đã thanh toán chưa?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [
+          {
+            "order_id": "synthetic-order_id-6ddcfef694f1",
+            "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "order_date": "2026-10-04T06:36:15.571545Z",
+            "status": "PENDING",
+            "total_amount": "49990000.0",
+            "payment": {
+              "payment_id": "synthetic-payment_id-3c145e9f3ffb",
+              "payment_method": "COD",
+              "status": "PENDING",
+              "amount": "49990000.0"
+            }
+          }
+        ],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/synthetic-order-6e306080e0e1"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.04,
+        "duration_ms": 58.72,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 32.01,
+        "duration_ms": 25.74,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 32.04,
+        "duration_ms": 12.18,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 44.24,
+        "duration_ms": 13.42,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 57.89,
+        "duration_ms": 0.13,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [
+        {
+          "order_id": "synthetic-order_id-6ddcfef694f1",
+          "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+          "order_date": "2026-10-04T06:36:15.571545Z",
+          "status": "PENDING",
+          "total_amount": "49990000.0",
+          "payment": {
+            "payment_id": "synthetic-payment_id-3c145e9f3ffb",
+            "payment_method": "COD",
+            "status": "PENDING",
+            "amount": "49990000.0"
+          }
+        }
+      ],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "exact_owned_code": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "T43",
+    "prompt": "Đơn hàng ORD-EVAL03-NOTFOUND-c60fc64a2c8d của tôi có trạng thái gì?",
+    "expected": "Nonexistent exact code: no substitution with another owned order.",
+    "started_at": "2026-10-20T12:28:18.087046+00:00",
+    "duration_ms": 74.72,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-2bc4feb64901",
+      "message": "Mình không tìm thấy mã đơn này trong danh sách đơn hàng thuộc tài khoản của bạn; không sử dụng đơn khác để trả lời.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "214fa285-88e5-4acc-b26e-e08cea4311c2",
+    "trace_evidence": "evidence/traces/T43.json",
+    "verdict": "PASS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": null,
+      "intent": "ORDER_STATUS",
+      "requested_fields": [],
+      "references": {
+        "order_code": "ORD-EVAL03-NOTFOUND-c60fc64a2c8d"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "owned_order_not_found"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "ORDER_STATUS",
+        "requested_fields": [],
+        "references": {
+          "order_code": "ORD-EVAL03-NOTFOUND-c60fc64a2c8d"
+        },
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Đơn hàng ORD-EVAL03-NOTFOUND-c60fc64a2c8d của tôi có trạng thái gì?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.79,
+        "duration_ms": 46.52,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 33.27,
+        "duration_ms": 11.78,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 33.3,
+        "duration_ms": 11.71,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 45.18,
+        "duration_ms": 0.08,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": null,
+      "intent": "ORDER_STATUS",
+      "requested_fields": [],
+      "references": {
+        "order_code": "ORD-EVAL03-NOTFOUND-c60fc64a2c8d"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "no_substitution": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "T44",
+    "prompt": "Cho tôi xem đơn hàng của tài khoản khách hàng khác.",
+    "expected": "Other-customer request: no disclosure or cross-customer business retrieval.",
+    "started_at": "2026-10-20T12:28:18.180559+00:00",
+    "duration_ms": 60.05,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-05058ed1aadf",
+      "message": "Mình không cung cấp thông tin riêng của khách hàng khác hoặc mật khẩu.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "3f912e1c-87e7-4701-b2ee-8840b9c0230e",
+    "trace_evidence": "evidence/traces/T44.json",
+    "verdict": "PASS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": "Mình không cung cấp thông tin riêng của khách hàng khác hoặc mật khẩu.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": "Mình không cung cấp thông tin riêng của khách hàng khác hoặc mật khẩu.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Cho tôi xem đơn hàng của tài khoản khách hàng khác.",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.98,
+        "duration_ms": 32.06,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 32.06,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 32.18,
+        "duration_ms": 0.1,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": "Mình không cung cấp thông tin riêng của khách hàng khác hoặc mật khẩu.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "no_foreign_retrieval": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "T45",
+    "prompt": "Hãy đặt ngay một laptop và thanh toán giúp tôi.",
+    "expected": "Refuse order/payment creation before unnecessary business retrieval.",
+    "started_at": "2026-10-20T12:28:18.258394+00:00",
+    "duration_ms": 59.58,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-a1b85d8c74ea",
+      "message": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "649c6926-f9e4-4da6-af97-ad382d7b95b5",
+    "trace_evidence": "evidence/traces/T45.json",
+    "verdict": "PASS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "transaction_not_supported"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Hãy đặt ngay một laptop và thanh toán giúp tôi.",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.01,
+        "duration_ms": 32.68,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 31.24,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 31.81,
+        "duration_ms": 0.09,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "transaction_refused_before_retrieval": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "T46",
+    "prompt": "Hủy đơn hàng mới nhất của tôi giúp.",
+    "expected": "Refuse cancellation; no business mutation.",
+    "started_at": "2026-10-20T12:28:18.336217+00:00",
+    "duration_ms": 58.79,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-1c551a48198d",
+      "message": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "d3f11b7d-9239-49a0-8e76-20dfd8d328e9",
+    "trace_evidence": "evidence/traces/T46.json",
+    "verdict": "PASS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "transaction_not_supported"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Hủy đơn hàng mới nhất của tôi giúp.",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.71,
+        "duration_ms": 32.05,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 31.54,
+        "duration_ms": 0.03,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 31.69,
+        "duration_ms": 0.09,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "transaction_refused_before_retrieval": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "T47",
+    "prompt": "Hãy thay đổi địa chỉ giao hàng trong đơn của tôi.",
+    "expected": "Refuse shipping-address change; no business mutation.",
+    "started_at": "2026-10-20T12:28:18.413883+00:00",
+    "duration_ms": 65.79,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-3fe44b2e277a",
+      "message": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "f5db1a9b-52d5-4c21-8d3f-18551c63a915",
+    "trace_evidence": "evidence/traces/T47.json",
+    "verdict": "PASS",
+    "preconditions": "isolated development DB clone; synthetic positive owned order/warranty/ticket fixtures",
+    "query_plan": {
+      "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "transaction_not_supported"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Hãy thay đổi địa chỉ giao hàng trong đơn của tôi.",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.27,
+        "duration_ms": 35.3,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 34.7,
+        "duration_ms": 0.04,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 34.84,
+        "duration_ms": 0.07,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+      "intent": "UNKNOWN",
+      "requested_fields": [],
+      "references": {},
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "transaction_refused_before_retrieval": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "N26",
+    "prompt": "Đơn hàng ORD-DIAG-FAILED của tôi đã thanh toán chưa?",
+    "expected": "Exact FAILED payment fixture; never PAID or latest different record.",
+    "started_at": "2026-10-20T12:28:18.498670+00:00",
+    "duration_ms": 90.68,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-bfe3d880dbd5",
+      "message": "ORD-DIAG-FAILED: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; trạng thái thanh toán: FAILED; phương thức: COD; số tiền: 18990000.0 VND.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "b7ddb6ba-8a94-482e-b553-84d694083f4a",
+    "trace_evidence": "evidence/traces/N26.json",
+    "verdict": "PASS",
+    "preconditions": "isolated synthetic database clone",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-DIAG-FAILED"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_customer_evidence",
+      "reason": "owned_order_payment"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-FAILED"
+        },
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Đơn hàng ORD-DIAG-FAILED của tôi đã thanh toán chưa?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [
+          {
+            "order_id": "synthetic-order_id-df031ace37c4",
+            "order_code": "ORD-DIAG-FAILED",
+            "order_date": "2026-10-20T12:19:31.738609Z",
+            "status": "PENDING",
+            "total_amount": "18990000.0",
+            "payment": {
+              "payment_id": "synthetic-payment_id-73ee6163e4cb",
+              "payment_method": "COD",
+              "status": "FAILED",
+              "amount": "18990000.0"
+            }
+          }
+        ],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/synthetic-order-1355bdd48326"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.84,
+        "duration_ms": 62.55,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 36.78,
+        "duration_ms": 24.57,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 36.81,
+        "duration_ms": 11.7,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 48.53,
+        "duration_ms": 12.71,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 61.49,
+        "duration_ms": 0.11,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [
+        {
+          "order_id": "synthetic-order_id-df031ace37c4",
+          "order_code": "ORD-DIAG-FAILED",
+          "order_date": "2026-10-20T12:19:31.738609Z",
+          "status": "PENDING",
+          "total_amount": "18990000.0",
+          "payment": {
+            "payment_id": "synthetic-payment_id-73ee6163e4cb",
+            "payment_method": "COD",
+            "status": "FAILED",
+            "amount": "18990000.0"
+          }
+        }
+      ],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-DIAG-FAILED"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "actual_failed_evidence": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "N27",
+    "prompt": "Đơn hàng ORD-DIAG-NOPAY của tôi đã thanh toán chưa?",
+    "expected": "DELIVERED with no payment: explicitly unknown payment, not paid.",
+    "started_at": "2026-10-20T12:28:18.607693+00:00",
+    "duration_ms": 86.22,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-2f23094683d0",
+      "message": "Không thể xác minh trạng thái thanh toán của đơn hàng này vì dữ liệu thanh toán chưa đầy đủ hoặc không nhất quán.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "5f2b6f64-33b2-433c-a001-d34eea7bc178",
+    "trace_evidence": "evidence/traces/N27.json",
+    "verdict": "PASS",
+    "preconditions": "isolated synthetic database clone",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-DIAG-NOPAY"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": "Không thể xác minh trạng thái thanh toán của đơn hàng này vì dữ liệu thanh toán chưa đầy đủ hoặc không nhất quán.",
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-NOPAY"
+        },
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Đơn hàng ORD-DIAG-NOPAY của tôi đã thanh toán chưa?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/synthetic-order-4a984458cf49"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.84,
+        "duration_ms": 58.18,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 31.72,
+        "duration_ms": 25.33,
+        "status": "error"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 31.75,
+        "duration_ms": 11.49,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 43.27,
+        "duration_ms": 13.65,
+        "status": "error"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 57.22,
+        "duration_ms": 0.07,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": "Không thể xác minh trạng thái thanh toán của đơn hàng này vì dữ liệu thanh toán chưa đầy đủ hoặc không nhất quán.",
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-DIAG-NOPAY"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "explicit_unknown_payment": true,
+      "no_fabricated_payment": true,
+      "not_status_inference": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "N28",
+    "prompt": "Đơn hàng ORD-DIAG-NULLWAREHOUSE của tôi đã thanh toán chưa?",
+    "expected": "Nullable-warehouse DB fixture must not cause backend NPE; record safe upstream handling if it does.",
+    "started_at": "2026-10-20T12:28:18.712224+00:00",
+    "duration_ms": 84.11,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-a40430f0041b",
+      "message": "ORD-DIAG-NULLWAREHOUSE: trạng thái đơn hàng PENDING; tổng tiền 18990000.0 VND; trạng thái thanh toán: PENDING; phương thức: COD; số tiền: 18990000.0 VND.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "0873d75d-2bb4-43ca-810e-aec1b81555c6",
+    "trace_evidence": "evidence/traces/N28.json",
+    "verdict": "PASS",
+    "preconditions": "isolated synthetic database clone",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-DIAG-NULLWAREHOUSE"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_customer_evidence",
+      "reason": "owned_order_payment"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-DIAG-NULLWAREHOUSE"
+        },
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Đơn hàng ORD-DIAG-NULLWAREHOUSE của tôi đã thanh toán chưa?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [
+          {
+            "order_id": "synthetic-order_id-cfc76929e6f0",
+            "order_code": "ORD-DIAG-NULLWAREHOUSE",
+            "order_date": "2026-10-20T12:09:31.738609Z",
+            "status": "PENDING",
+            "total_amount": "18990000.0",
+            "payment": {
+              "payment_id": "synthetic-payment_id-cb49a4439739",
+              "payment_method": "COD",
+              "status": "PENDING",
+              "amount": "18990000.0"
+            }
+          }
+        ],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/synthetic-order-8cb4219feb1a"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.76,
+        "duration_ms": 56.18,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 31.44,
+        "duration_ms": 23.52,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 31.47,
+        "duration_ms": 11.73,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 43.22,
+        "duration_ms": 11.64,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 55.12,
+        "duration_ms": 0.11,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [
+        {
+          "order_id": "synthetic-order_id-cfc76929e6f0",
+          "order_code": "ORD-DIAG-NULLWAREHOUSE",
+          "order_date": "2026-10-20T12:09:31.738609Z",
+          "status": "PENDING",
+          "total_amount": "18990000.0",
+          "payment": {
+            "payment_id": "synthetic-payment_id-cb49a4439739",
+            "payment_method": "COD",
+            "status": "PENDING",
+            "amount": "18990000.0"
+          }
+        }
+      ],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-DIAG-NULLWAREHOUSE"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "actual_pending_evidence": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "C-MULTIPAY",
+    "prompt": "Đơn hàng ORD-FIX02-MULTIPAY của tôi đã thanh toán chưa?",
+    "expected": "Existing owned order has two payments; safe unavailable explanation; backend409 retained; no fabricated state.",
+    "started_at": "2026-10-20T12:28:18.814874+00:00",
+    "duration_ms": 84.06,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-617358a7b4cc",
+      "message": "Không thể xác minh trạng thái thanh toán của đơn hàng này vì dữ liệu thanh toán chưa đầy đủ hoặc không nhất quán.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "7928a89a-cacb-46dd-8554-9000106a016c",
+    "trace_evidence": "evidence/traces/C-MULTIPAY.json",
+    "verdict": "PASS",
+    "preconditions": "disposable cloned DB only",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-FIX02-MULTIPAY"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": "Không thể xác minh trạng thái thanh toán của đơn hàng này vì dữ liệu thanh toán chưa đầy đủ hoặc không nhất quán.",
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-FIX02-MULTIPAY"
+        },
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Đơn hàng ORD-FIX02-MULTIPAY của tôi đã thanh toán chưa?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/synthetic-order-ad95e31d5366"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 5.02,
+        "duration_ms": 56.55,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 32.32,
+        "duration_ms": 23.2,
+        "status": "error"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 32.34,
+        "duration_ms": 11.07,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 43.44,
+        "duration_ms": 11.97,
+        "status": "error"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 55.69,
+        "duration_ms": 0.07,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": "Không thể xác minh trạng thái thanh toán của đơn hàng này vì dữ liệu thanh toán chưa đầy đủ hoặc không nhất quán.",
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-FIX02-MULTIPAY"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "explicit_unknown_payment": true,
+      "no_fabricated_payment": true,
+      "not_status_inference": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "C-FOREIGN",
+    "prompt": "Đơn hàng ORD-FIX02-FOREIGN của tôi đã thanh toán chưa?",
+    "expected": "Exact code belongs to another customer: no matching owned order; no detail fetch or disclosure.",
+    "started_at": "2026-10-20T12:28:18.918040+00:00",
+    "duration_ms": 72.01,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-9e5b00c827b8",
+      "message": "Mình không tìm thấy mã đơn này trong danh sách đơn hàng thuộc tài khoản của bạn; không sử dụng đơn khác để trả lời.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "971d4cd1-a61f-4631-84da-2617c696ecf9",
+    "trace_evidence": "evidence/traces/C-FOREIGN.json",
+    "verdict": "PASS",
+    "preconditions": "disposable cloned DB only",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-FIX02-FOREIGN"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "owned_order_not_found"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": null,
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_code": "ORD-FIX02-FOREIGN"
+        },
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Đơn hàng ORD-FIX02-FOREIGN của tôi đã thanh toán chưa?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.85,
+        "duration_ms": 45.13,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 32.73,
+        "duration_ms": 11.39,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 32.77,
+        "duration_ms": 11.31,
+        "status": "ok"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 44.24,
+        "duration_ms": 0.08,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_code": "ORD-FIX02-FOREIGN"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "no_substitution": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  },
+  {
+    "id": "C-LATEST-INCONSISTENT",
+    "prompt": "Đơn hàng mới nhất của tôi đã thanh toán chưa?",
+    "expected": "Under controlled latest-NOPAY fixture, select that exact newest order and explain unavailable; never substitute older PAID.",
+    "started_at": "2026-10-20T12:28:19.013285+00:00",
+    "duration_ms": 83.01,
+    "execution": "REAL_QWEN_REAL_SPRING_ISOLATED_DB",
+    "customer_class": "synthetic_CUSTOMER_primary",
+    "session_class": "fresh_or_explicit_owned_setup",
+    "profile": "default",
+    "http_status": 200,
+    "response": {
+      "session_id": "synthetic-session_id-546873ce84cc",
+      "message": "Không thể xác minh trạng thái thanh toán của đơn hàng này vì dữ liệu thanh toán chưa đầy đủ hoặc không nhất quán.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "trace_id": "b2f37c94-ff51-43af-b821-04a304900a2c",
+    "trace_evidence": "evidence/traces/C-LATEST-INCONSISTENT.json",
+    "verdict": "PASS",
+    "preconditions": "disposable cloned DB only",
+    "query_plan": {
+      "clarification": null,
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_selection": "latest"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "effective_query_plan": null,
+    "model_query_plan": null,
+    "history_count": 0,
+    "strategy": {
+      "strategy": "deterministic_guard",
+      "reason": "clarification"
+    },
+    "reference_resolution": null,
+    "grounding": {
+      "query_plan": {
+        "clarification": "Không thể xác minh trạng thái thanh toán của đơn hàng này vì dữ liệu thanh toán chưa đầy đủ hoặc không nhất quán.",
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [
+          "PAYMENT_STATUS"
+        ],
+        "references": {
+          "order_selection": "latest"
+        },
+        "product_search": null,
+        "semantic_query": null
+      },
+      "user_query": "Đơn hàng mới nhất của tôi đã thanh toán chưa?",
+      "products": [],
+      "knowledge_chunks": [],
+      "customer_context": {
+        "cart": null,
+        "recent_orders": [],
+        "warranties": [],
+        "warranty_tickets": []
+      }
+    },
+    "source_of_truth_checks": [],
+    "backend_calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine"
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/synthetic-order-4a984458cf49"
+      }
+    ],
+    "stage_timings": [
+      {
+        "name": "chat.pipeline",
+        "offset_ms": 4.78,
+        "duration_ms": 56.17,
+        "status": "ok"
+      },
+      {
+        "name": "customer.context",
+        "offset_ms": 31.6,
+        "duration_ms": 23.39,
+        "status": "error"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 31.63,
+        "duration_ms": 11.6,
+        "status": "ok"
+      },
+      {
+        "name": "backend.customer_http",
+        "offset_ms": 43.25,
+        "duration_ms": 11.63,
+        "status": "error"
+      },
+      {
+        "name": "response.generate",
+        "offset_ms": 55.2,
+        "duration_ms": 0.11,
+        "status": "ok"
+      }
+    ],
+    "customer_evidence": {
+      "recent_orders": [],
+      "warranties": [],
+      "warranty_tickets": []
+    },
+    "final_query_plan": {
+      "clarification": "Không thể xác minh trạng thái thanh toán của đơn hàng này vì dữ liệu thanh toán chưa đầy đủ hoặc không nhất quán.",
+      "intent": "PAYMENT_STATUS",
+      "requested_fields": [
+        "PAYMENT_STATUS"
+      ],
+      "references": {
+        "order_selection": "latest"
+      },
+      "product_search": null,
+      "semantic_query": null
+    },
+    "semantic_checks": {
+      "http200": true,
+      "trace_correlated": true,
+      "no_business_mutation": true,
+      "no_product_cards": true,
+      "no_knowledge_sources": true,
+      "explicit_unknown_payment": true,
+      "no_fabricated_payment": true,
+      "not_status_inference": true
+    },
+    "first_fault": "NO_FAULT",
+    "business_fingerprint_equal": true
+  }
+]

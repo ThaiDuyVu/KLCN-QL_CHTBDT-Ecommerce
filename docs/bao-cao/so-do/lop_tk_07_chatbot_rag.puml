@@ -1,0 +1,224 @@
+@startuml
+' Sơ đồ lớp thiết kế — 3.7.4.6–7 Chatbot, hội thoại và kho tri thức RAG (chatbot-service, Python/FastAPI)
+' Lớp và phương thức lấy theo mã nguồn chatbot-service/app; bảng dữ liệu dùng chung PostgreSQL với backend.
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor<<chưa cài đặt>> #FFF3E0
+  BackgroundColor<<hệ thống ngoài>> #E8F5E9
+}
+title Sơ đồ lớp thiết kế — Chatbot, hội thoại và kho tri thức RAG
+
+package "Dữ liệu hội thoại (bảng chat_sessions, chat_history)" {
+  class ChatSession <<entity>> {
+    - sessionId : UUID {id}
+    - customerId : UUID
+    - employeeId : UUID
+    - startedAt : datetime
+    - endedAt : datetime
+    - status : SessionStatus
+  }
+  class ChatMessage <<entity>> {
+    - historyId : UUID {id}
+    - sessionId : UUID
+    - senderType : SenderType
+    - message : str
+    - createdAt : datetime
+  }
+  class EvidenceSnapshot <<value object>> {
+    - cards : ProductCard[]
+    - listCards : ProductCard[]
+    - search : ProductSearchPlan
+    - capturedAt : datetime
+  }
+  class MessageFeedback <<chưa cài đặt>> {
+    - feedbackId : UUID {id}
+    - rating : int
+    - feedbackText : str
+  }
+  class ChatbotQnA <<chưa cài đặt>> {
+    - qnaId : UUID {id}
+    - question : str
+    - answer : str
+    - keywords : str
+  }
+  class ChatbotScript <<chưa cài đặt>> {
+    - scriptId : UUID {id}
+    - triggerKey : str
+    - responseTemplate : str
+    - priority : int
+  }
+}
+
+package "Kho tri thức và chỉ mục ngữ nghĩa (bảng knowledge_*, product_semantic_index)" {
+  class KnowledgeDocument <<entity>> {
+    - documentId : UUID {id}
+    - title : str
+    - source : str
+    - documentType : str
+    - status : str
+  }
+  class KnowledgeChunk <<entity>> {
+    - chunkId : UUID {id}
+    - chunkIndex : int
+    - content : str
+    - embeddingVector : vector
+  }
+  class ChatMessageRetrieval <<entity>> {
+    - retrievalId : UUID {id}
+    - similarityScore : float
+    - retrievedAt : datetime
+  }
+  class ProductSemanticIndex <<entity>> {
+    - productId : UUID {id}
+    - semanticContent : str
+    - contentHash : str
+    - embeddingModel : str
+    - embeddingVector : vector
+  }
+}
+
+package "Hợp đồng dữ liệu (Pydantic)" {
+  class QueryPlan {
+    - intent : Intent
+    - requestedFields : RequestedField[]
+    - productSearch : ProductSearchPlan
+    - bundle : ProductSearchPlan[]
+    - budget : Decimal
+    - references : dict
+    - clarification : str
+  }
+  class ProductSearchPlan {
+    - targets : ProductSelector[]
+    - category : str
+    - brands : str[]
+    - minPrice : Decimal
+    - maxPrice : Decimal
+    - targetPrice : Decimal
+    - minRamGb : int
+    - minStorageGb : int
+    - topK : int
+  }
+  class GroundedContext {
+    - queryPlan : QueryPlan
+    - userQuery : str
+    - products : ProductMatch[]
+    - knowledgeChunks : KnowledgeChunkMatch[]
+    - customerContext : CustomerContext
+  }
+  class ChatResponse {
+    - sessionId : UUID
+    - message : str
+    - products : ProductCard[]
+    - sources : SourceReference[]
+    - suggestedQuestions : str[]
+    - comparison : ProductComparison
+  }
+  class ProductComparison {
+    - products : ComparedProduct[]
+    - rows : ComparisonRow[]
+    - summary : str[]
+  }
+  enum Intent {
+    PRODUCT_DISCOVERY
+    PRODUCT_DETAIL
+    PRODUCT_COMPARE
+    KNOWLEDGE_QA
+    CART_STATUS
+    ORDER_STATUS
+    PAYMENT_STATUS
+    WARRANTY_STATUS
+    WARRANTY_TICKET_STATUS
+    GREETING
+    HELP
+    UNKNOWN
+  }
+}
+
+package "Dịch vụ xử lý (pipeline)" {
+  class ChatService {
+    + send_message_async(session_id, request, customer, cookies) : ChatResponse
+    + rate_message(session_id, message_id, customer, rating)
+  }
+  class ConversationService {
+    + create_session(customer_id) : ChatSession
+    + get_recent_messages(session_id, customer_id, window) : ChatMessage[]
+    + end_session(session_id, customer_id)
+  }
+  interface QueryUnderstandingService {
+    + understand(context) : QueryPlan
+  }
+  class DomainNormalizer {
+    + normalize(plan, context) : QueryPlan
+  }
+  class ReferenceResolver <<module references.py>> {
+    + resolve_reference(message, plan, snapshot) : QueryPlan
+    + refine(message, plan, snapshot) : QueryPlan
+  }
+  interface ProductAdvisorService {
+    + search(plan) : ProductMatch[]
+    + build_cards(matches, plan) : ProductCard[]
+  }
+  class BundleChooser <<module bundle.py>> {
+    + choose_bundle(candidates, goal, cap) : ProductMatch[]
+  }
+  class ComparisonBuilder <<module comparison>> {
+    + build_comparison(matches, cards) : ProductComparison
+    + cross_category_message(matches) : str
+  }
+  class CustomerContextService {
+    + load_context(intent, cookies, order_code) : CustomerContext
+  }
+  interface KnowledgeRetrievalService {
+    + retrieve(query, top_k) : KnowledgeChunkMatch[]
+    + ingest(force)
+  }
+  interface ResponseGenerationService {
+    + generate(context) : str
+  }
+  class PostgresConversationRepository {
+    + get_snapshot(session_id, customer_id) : EvidenceSnapshot
+    + save_assistant(session_id, customer_id, text, snapshot)
+  }
+}
+
+class OllamaClient <<hệ thống ngoài>> {
+  + chat(messages, schema) : str
+  + embed(texts) : float[][]
+}
+class BackendClient <<hệ thống ngoài>> {
+  + current_customer(cookies)
+  + cart / orders / warranties (API /mine)
+  + product search / detail (API /api/v1/products)
+}
+
+ChatSession "1" *-- "0..*" ChatMessage : gồm >
+ChatMessage "1" o-- "0..1" EvidenceSnapshot : lưu kèm (tin trợ lý) >
+ChatMessage "1" -- "0..*" MessageFeedback : được đánh giá >
+KnowledgeDocument "1" *-- "1..*" KnowledgeChunk : chia thành >
+ChatMessage "1" -- "0..*" ChatMessageRetrieval : truy xuất >
+KnowledgeChunk "1" -- "0..*" ChatMessageRetrieval : được dùng >
+QueryPlan "1" o-- "0..1" ProductSearchPlan
+GroundedContext "1" o-- "1" QueryPlan
+
+ChatService --> ConversationService
+ChatService --> QueryUnderstandingService
+QueryUnderstandingService --> DomainNormalizer : kiểm chứng tất định
+ChatService --> ReferenceResolver
+ChatService --> ProductAdvisorService
+ChatService --> BundleChooser
+ChatService --> ComparisonBuilder
+ChatService --> CustomerContextService
+ChatService --> KnowledgeRetrievalService
+ChatService --> ResponseGenerationService
+ChatService ..> GroundedContext : tạo
+ChatService ..> ChatResponse : trả về
+ConversationService --> PostgresConversationRepository
+QueryUnderstandingService --> OllamaClient
+ResponseGenerationService --> OllamaClient
+KnowledgeRetrievalService --> OllamaClient : embedding
+ProductAdvisorService --> BackendClient
+ProductAdvisorService ..> ProductSemanticIndex : xếp hạng pgvector
+CustomerContextService --> BackendClient
+KnowledgeRetrievalService ..> KnowledgeChunk
+@enduml

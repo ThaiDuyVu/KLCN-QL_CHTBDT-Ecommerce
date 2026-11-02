@@ -1,0 +1,28 @@
+{
+  "source_commit": "595ccd3e3f85d956369f679357856fd978eeb99d",
+  "runtime": {
+    "distinct_order_security_prompts": 15,
+    "passed": 15,
+    "failed": 0,
+    "blocked": 0,
+    "extra_distinct_real_qwen_fix01_controls": 2,
+    "extra_N27_N28_fingerprinted_repeats": 2,
+    "before_failure_reproductions": 2
+  },
+  "python": {
+    "focused_passed": 191,
+    "full_passed": 396,
+    "failed": 0,
+    "skipped": 0,
+    "new_test_instances": 34
+  },
+  "java": {
+    "passed": 31,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "contract_decision": "Preserve exactly-one-payment409; exact owned GET ApiErrorResponse -> internal unavailable outcome -> existing clarification + ChatResponse200; no fabricated PaymentContext",
+  "contract_approval_blocked": false,
+  "business_schema_mutation_changes": false
+}

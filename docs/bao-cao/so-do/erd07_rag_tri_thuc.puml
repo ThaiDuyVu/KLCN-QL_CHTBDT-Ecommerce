@@ -1,0 +1,77 @@
+@startuml
+' ERD 07 — Kho tri thức RAG và chỉ mục ngữ nghĩa — sinh tự động từ schema PostgreSQL (Flyway V1–V8), 4 bảng
+hide circle
+skinparam linetype ortho
+skinparam entity {
+  BackgroundColor<<mới>> #E3F2FD
+  BackgroundColor<<thiết kế sẵn>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title ERD 07 — Kho tri thức RAG và chỉ mục ngữ nghĩa
+
+entity "knowledge_documents" as knowledge_documents {
+  * document_id : UUID <<PK>>
+  --
+  * title : VARCHAR
+    source : VARCHAR
+    document_type : VARCHAR
+  * content : TEXT
+  * status : VARCHAR
+  * employee_id : UUID <<FK>>
+  * created_at : TIMESTAMPTZ
+  * updated_at : TIMESTAMPTZ
+}
+
+entity "knowledge_chunks" as knowledge_chunks {
+  * chunk_id : UUID <<PK>>
+  --
+  * document_id : UUID <<FK>>
+  * chunk_index : INT
+  * content : TEXT
+    embedding_vector : VECTOR
+}
+
+entity "chat_message_retrievals" as chat_message_retrievals {
+  * retrieval_id : UUID <<PK>>
+  --
+  * history_id : UUID <<FK>>
+  * chunk_id : UUID <<FK>>
+  * similarity_score : DECIMAL
+  * retrieved_at : TIMESTAMPTZ
+}
+
+entity "product_semantic_index" as product_semantic_index <<mới>> {
+  * product_id : UUID <<PK,FK>>
+  --
+  * semantic_content : TEXT
+  * content_hash : BPCHAR
+  * embedding_model : VARCHAR
+  * embedding_vector : VECTOR
+  * indexed_at : TIMESTAMPTZ
+}
+
+entity "chat_history" as chat_history <<tham chiếu>> {
+  * history_id : UUID <<PK>>
+}
+
+entity "employees" as employees <<tham chiếu>> {
+  * employee_id : UUID <<PK>>
+}
+
+entity "products" as products <<tham chiếu>> {
+  * product_id : UUID <<PK>>
+}
+
+employees ||--o{ knowledge_documents : employee_id
+knowledge_documents ||--o{ knowledge_chunks : document_id
+chat_history ||--o{ chat_message_retrievals : history_id
+knowledge_chunks ||--o{ chat_message_retrievals : chunk_id
+products ||--o| product_semantic_index : product_id
+
+legend right
+  <<mới>>: bảng có trong CSDL, chưa có trong ERD báo cáo cũ
+  <<thiết kế sẵn>>: bảng có trong CSDL, chưa có chức năng sử dụng
+  <<tham chiếu>>: thực thể thuộc ERD khác
+  * : NOT NULL
+endlegend
+@enduml

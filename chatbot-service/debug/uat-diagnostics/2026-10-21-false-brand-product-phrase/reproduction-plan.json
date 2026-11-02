@@ -1,0 +1,17 @@
+[
+  {
+    "id": "original-repeat",
+    "prompt": "gợi ý giúp tôi 2 sản phẩm Laptop có mức giá khoản 20-25 tr",
+    "expected": "Laptop discovery, price 20–25 million, request 2 distinct products; report shortage if fewer eligible; no brand clarification."
+  },
+  {
+    "id": "spelling-only",
+    "prompt": "gợi ý giúp tôi 2 sản phẩm Laptop có mức giá khoảng 20-25 tr",
+    "expected": "Same constraints; spelling correction alone must not change identity requirements."
+  },
+  {
+    "id": "remove-generic-noun",
+    "prompt": "gợi ý giúp tôi 2 Laptop có mức giá khoản 20-25 tr",
+    "expected": "Same constraints and request 2; eligible cards only."
+  }
+]

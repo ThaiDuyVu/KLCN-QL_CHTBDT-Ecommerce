@@ -1,0 +1,447 @@
+{
+  "trace_id": "fff548ba-e853-4ed2-b993-fe6dba4e2263",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "6f23f06e-8238-44bc-b3ed-765d3d26c55e",
+      "parent_id": "ca1f78d1-03ae-483b-a544-1f58afd134a2",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2021.93,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop dell ram 16gb gia khong qua 20 trieu",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "f3b92059-3af8-45d8-8f0b-ca70725748a1",
+      "parent_id": "ca1f78d1-03ae-483b-a544-1f58afd134a2",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2056.88,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dell ram 16gb gia khong qua 20 trieu",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE",
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Dell"
+            ],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm laptop Dell có RAM 16GB, giá không quá 20 triệu.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "eb370a4f-6078-48c5-8acf-b4ba8b8b62c7",
+      "parent_id": "5dc54fa8-23ef-4c4d-be7c-cfe5620e5428",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2072.84,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE",
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop Dell có RAM 16GB, giá không quá 20 triệu.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "46922d7f-86de-431a-acfc-e41a8dd32952",
+      "parent_id": "5dc54fa8-23ef-4c4d-be7c-cfe5620e5428",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2072.91,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [
+            "Dell"
+          ],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 16,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm laptop Dell có RAM 16GB, giá không quá 20 triệu.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "7d2f1409-a9f9-4e25-9e0f-ae48b6566190",
+      "parent_id": "5dc54fa8-23ef-4c4d-be7c-cfe5620e5428",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 2072.99,
+      "duration_ms": 68.95,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "brand_name": "Dell",
+          "category_name": "Laptop",
+          "specifications": {
+            "CPU": "Intel Core i5",
+            "Màn hình": "Full HD 15,6 inch",
+            "Pin": "Pin tích hợp",
+            "RAM": "16 GB"
+          },
+          "semantic_score": 0.6062874920710954,
+          "ranking_score": 0.6062874920710954,
+          "eligible_variants": [
+            {
+              "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+              "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+              "sku": "DEV-DELL-I15-512",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "16GB",
+              "storage": "512GB",
+              "color": "Bạc",
+              "available_quantity": 2,
+              "warranty_months": 24
+            }
+          ],
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell",
+            "RAM từ 16GB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1eed7edf-3572-4c6a-8590-85e4510b7a6e",
+      "parent_id": "5dc54fa8-23ef-4c4d-be7c-cfe5620e5428",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2141.95,
+      "duration_ms": 16.66,
+      "output": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "Thương hiệu: Dell",
+            "RAM từ 16GB"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "845cc231-6c0b-429d-8a5b-beadb38486e6",
+      "parent_id": "1eed7edf-3572-4c6a-8590-85e4510b7a6e",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2158.53,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "a96df51c-538c-4fa9-8018-6b49ca025b34"
+        ],
+        "variants": 1,
+        "cards": 1
+      }
+    },
+    {
+      "id": "37b7ef7d-2679-4438-bf48-b7db56d2208c",
+      "parent_id": "5dc54fa8-23ef-4c4d-be7c-cfe5620e5428",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2158.76,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "b846e3aa-ff91-47ca-b1aa-4e485407aa34",
+      "parent_id": "a50f9a05-b34b-421b-8275-984f9b4ff9ea",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2159.19,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 10.32,
+      "duration_ms": 2163.09,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 47.32,
+      "duration_ms": 2009.79,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 48.73,
+      "duration_ms": 1973.14,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 49.16,
+      "duration_ms": 1972.67,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 49.61,
+      "duration_ms": 1972.18,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2022.08,
+      "duration_ms": 14.42,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2036.56,
+      "duration_ms": 7.91,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2044.52,
+      "duration_ms": 11.89,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 2072.99,
+      "duration_ms": 68.95,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2073.05,
+      "duration_ms": 9.73,
+      "status": "ok"
+    },
+    {
+      "name": "product.embedding",
+      "offset_ms": 2082.8,
+      "duration_ms": 34.3,
+      "status": "ok"
+    },
+    {
+      "name": "product.vector_ranking",
+      "offset_ms": 2117.12,
+      "duration_ms": 14.16,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2131.38,
+      "duration_ms": 10.41,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2141.95,
+      "duration_ms": 16.66,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2142.03,
+      "duration_ms": 16.4,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2158.72,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2159.04,
+      "duration_ms": 0.2,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Laptop"
+          ],
+          [
+            "maxPrice",
+            "20000000"
+          ],
+          [
+            "minRamGb",
+            "16"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ],
+          [
+            "brands",
+            "Dell"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a96df51c-538c-4fa9-8018-6b49ca025b34/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

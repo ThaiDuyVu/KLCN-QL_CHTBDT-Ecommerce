@@ -1,0 +1,241 @@
+{
+  "T37": {
+    "trace_id": "994b8869-9c0e-4361-b0f9-f22f5fdcda5e",
+    "calls": [
+      {
+        "method": "GET",
+        "path": "/api/cart",
+        "status": "ok",
+        "evidence": [
+          {
+            "availableQuantity": 2,
+            "effectivePrice": 18990000.0,
+            "productName": "Xiaomi 14T Pro",
+            "quantity": 1,
+            "sku": "DEV-X14TP-BLU-512",
+            "variantId": "4dcb8a6e-0083-4c7e-aaee-6464eeee11c6"
+          }
+        ]
+      }
+    ]
+  },
+  "T38": {
+    "trace_id": "e8071367-0c93-4b31-90a6-853581424ccd",
+    "calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine",
+        "status": "ok",
+        "evidence": [
+          {
+            "orderCode": "ORD-EVAL04-a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "orderDate": "2026-10-13T12:37:58.640537Z",
+            "orderId": "a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "status": "DELIVERED",
+            "totalAmount": 18990000.0
+          },
+          {
+            "orderCode": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "orderDate": "2026-10-04T06:36:15.571545Z",
+            "orderId": "d917c500-6597-4f79-bde7-a1c5232de8e1",
+            "status": "PENDING",
+            "totalAmount": 49990000.0
+          }
+        ],
+        "payments": [
+          {},
+          {}
+        ]
+      }
+    ]
+  },
+  "T39": {
+    "trace_id": "3f064f49-a1c9-433a-bebc-fc4a4c9f49f7",
+    "calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine",
+        "status": "ok",
+        "evidence": [
+          {
+            "orderCode": "ORD-EVAL04-a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "orderDate": "2026-10-13T12:37:58.640537Z",
+            "orderId": "a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "status": "DELIVERED",
+            "totalAmount": 18990000.0
+          },
+          {
+            "orderCode": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "orderDate": "2026-10-04T06:36:15.571545Z",
+            "orderId": "d917c500-6597-4f79-bde7-a1c5232de8e1",
+            "status": "PENDING",
+            "totalAmount": 49990000.0
+          }
+        ],
+        "payments": [
+          {},
+          {}
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+        "status": "ok",
+        "evidence": [
+          {
+            "orderCode": "ORD-EVAL04-a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "orderDate": "2026-10-13T12:37:58.640537Z",
+            "orderId": "a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "status": "DELIVERED",
+            "totalAmount": 18990000.0
+          }
+        ],
+        "payments": [
+          {
+            "amount": 18990000.0,
+            "paymentId": "422e70e3-3ae7-4f92-93ce-cc9e47cf4a6e",
+            "paymentMethod": "COD",
+            "status": "PAID"
+          }
+        ]
+      }
+    ]
+  },
+  "T40": {
+    "trace_id": "3dc1a2f9-92c7-4ae0-b679-47a087030e0b",
+    "calls": [
+      {
+        "method": "GET",
+        "path": "/api/warranties/mine",
+        "status": "ok",
+        "evidence": [
+          {
+            "warrantyId": "ced6ed23-4f91-4e61-9582-eb5d2e907f37",
+            "orderId": "a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "productName": "Xiaomi 15",
+            "sku": "DEV-X15-BLK-256",
+            "startDate": "2026-10-13",
+            "endDate": "2027-10-13",
+            "status": "ACTIVE",
+            "eligible": true
+          }
+        ]
+      }
+    ]
+  },
+  "T41": {
+    "trace_id": "a49d3caa-40fc-4d58-903b-79f1d132b764",
+    "calls": [
+      {
+        "method": "GET",
+        "path": "/api/warranties/mine/tickets",
+        "status": "ok",
+        "evidence": [
+          {
+            "ticketId": "84e60d87-532d-4cd3-98a7-279eb71e120a",
+            "ticketCode": "BH-EVAL04-84e60d87",
+            "warrantyId": "ced6ed23-4f91-4e61-9582-eb5d2e907f37",
+            "resolutionNote": null,
+            "status": "RECEIVED",
+            "productName": "Xiaomi 15",
+            "sku": "DEV-X15-BLK-256"
+          }
+        ]
+      }
+    ]
+  },
+  "T42": {
+    "trace_id": "2c0c89d1-7de9-464a-b6f9-01194e482fd2",
+    "calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine",
+        "status": "ok",
+        "evidence": [
+          {
+            "orderCode": "ORD-EVAL04-a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "orderDate": "2026-10-13T12:37:58.640537Z",
+            "orderId": "a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "status": "DELIVERED",
+            "totalAmount": 18990000.0
+          },
+          {
+            "orderCode": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "orderDate": "2026-10-04T06:36:15.571545Z",
+            "orderId": "d917c500-6597-4f79-bde7-a1c5232de8e1",
+            "status": "PENDING",
+            "totalAmount": 49990000.0
+          }
+        ],
+        "payments": [
+          {},
+          {}
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/api/orders/mine/d917c500-6597-4f79-bde7-a1c5232de8e1",
+        "status": "ok",
+        "evidence": [
+          {
+            "orderCode": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "orderDate": "2026-10-04T06:36:15.571545Z",
+            "orderId": "d917c500-6597-4f79-bde7-a1c5232de8e1",
+            "status": "PENDING",
+            "totalAmount": 49990000.0
+          }
+        ],
+        "payments": [
+          {
+            "amount": 49990000.0,
+            "paymentId": "0311d00b-d352-4b7d-bbe2-e5459399f4e2",
+            "paymentMethod": "COD",
+            "status": "PENDING"
+          }
+        ]
+      }
+    ]
+  },
+  "T43": {
+    "trace_id": "5fdd905c-7652-4c9f-8d78-f2cc29845100",
+    "calls": [
+      {
+        "method": "GET",
+        "path": "/api/orders/mine",
+        "status": "ok",
+        "evidence": [
+          {
+            "orderCode": "ORD-EVAL04-a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "orderDate": "2026-10-13T12:37:58.640537Z",
+            "orderId": "a9c2aac4-3da9-449d-85d9-c9edea009f6e",
+            "status": "DELIVERED",
+            "totalAmount": 18990000.0
+          },
+          {
+            "orderCode": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "orderDate": "2026-10-04T06:36:15.571545Z",
+            "orderId": "d917c500-6597-4f79-bde7-a1c5232de8e1",
+            "status": "PENDING",
+            "totalAmount": 49990000.0
+          }
+        ],
+        "payments": [
+          {},
+          {}
+        ]
+      }
+    ]
+  },
+  "T45": {
+    "trace_id": "f243f67b-f32b-48be-9a69-8a3ece79ac52",
+    "calls": []
+  },
+  "T46": {
+    "trace_id": "e95920d1-add5-4fc4-bb5f-f5234752fbf3",
+    "calls": []
+  },
+  "T47": {
+    "trace_id": "fa3a7a91-8169-4bb8-9ca5-18efec3d831f",
+    "calls": []
+  }
+}

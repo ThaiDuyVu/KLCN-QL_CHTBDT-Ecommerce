@@ -1,0 +1,648 @@
+{
+  "trace_id": "b75bfb4b-73f7-41be-a1ac-d82ae3b043d9",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "54016c16-96d6-498c-8efb-dee5e8540f18",
+      "parent_id": "f047584e-bd71-4585-93c1-26abf9d3d270",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1731.6,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": "25000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại Apple dưới 25 triệu",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "40d5d188-c26f-4dcf-87da-a3aa8a8197d9",
+      "parent_id": "f047584e-bd71-4585-93c1-26abf9d3d270",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1766.43,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "25000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Apple dưới 25 triệu",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Apple"
+            ],
+            "min_price": null,
+            "max_price": "25000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tìm điện thoại Apple dưới 25 triệu.",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "aa3bfac5-f9d4-4466-a4f2-7eccf27b343e",
+      "parent_id": "70b00d76-d9c1-4eff-9708-af746d1e2bd8",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1778.01,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Apple"
+          ],
+          "min_price": null,
+          "max_price": "25000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm điện thoại Apple dưới 25 triệu.",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "20f5f898-df86-4500-8546-43b9495d3bff",
+      "parent_id": "70b00d76-d9c1-4eff-9708-af746d1e2bd8",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1778.11,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Apple"
+          ],
+          "min_price": null,
+          "max_price": "25000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tìm điện thoại Apple dưới 25 triệu.",
+          "top_k": 5
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "23f7a80c-5d10-4efd-9d35-299b6f06b884",
+      "parent_id": "70b00d76-d9c1-4eff-9708-af746d1e2bd8",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 1778.21,
+      "duration_ms": 75.34,
+      "output": [
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "brand_name": "Apple",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Apple A16 Bionic",
+            "Màn hình": "OLED 6,1 inch",
+            "Pin": "Pin tích hợp, sạc qua USB-C",
+            "RAM": "6 GB"
+          },
+          "semantic_score": 0.46140494712622715,
+          "ranking_score": 0.46140494712622715,
+          "eligible_variants": [
+            {
+              "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+              "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+              "sku": "DEV-IP15-BLK-128",
+              "original_price": "17990000.0",
+              "effective_price": "17990000.0",
+              "ram": "6GB",
+              "storage": "128GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "734dcbde-d8e5-483d-bbc2-0d26ec2b332f",
+              "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+              "sku": "DEV-IP15-BLU-256",
+              "original_price": "20990000.0",
+              "effective_price": "20990000.0",
+              "ram": "6GB",
+              "storage": "256GB",
+              "color": "Xanh dương",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Apple"
+          ]
+        },
+        {
+          "product_id": "f4d2c8ad-f0fd-4f4d-b3c3-bfa601014af5",
+          "product_name": "iPhone 16",
+          "brand_name": "Apple",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Apple A18",
+            "Màn hình": "OLED 6,1 inch",
+            "Pin": "Pin tích hợp, sạc USB-C",
+            "RAM": "8 GB"
+          },
+          "semantic_score": 0.4555542005437023,
+          "ranking_score": 0.4555542005437023,
+          "eligible_variants": [
+            {
+              "variant_id": "26526f0a-d1ee-4ecd-83c1-e1d8708c07f3",
+              "product_id": "f4d2c8ad-f0fd-4f4d-b3c3-bfa601014af5",
+              "sku": "DEV-IP16-BLK-128",
+              "original_price": "21990000.0",
+              "effective_price": "21990000.0",
+              "ram": "8GB",
+              "storage": "128GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "cd49ded2-8b1d-4ed8-8a81-bd7c7b157ae4",
+              "product_id": "f4d2c8ad-f0fd-4f4d-b3c3-bfa601014af5",
+              "sku": "DEV-IP16-BLU-256",
+              "original_price": "24990000.0",
+              "effective_price": "24990000.0",
+              "ram": "8GB",
+              "storage": "256GB",
+              "color": "Xanh lưu ly",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Apple"
+          ]
+        },
+        {
+          "product_id": "4a49d639-0a36-454b-8fd1-9dd38e0d77c5",
+          "product_name": "iPhone 14",
+          "brand_name": "Apple",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Apple A15 Bionic",
+            "Màn hình": "OLED 6,1 inch",
+            "Pin": "Pin tích hợp, sạc Lightning",
+            "RAM": "6 GB"
+          },
+          "semantic_score": 0.42261154382091537,
+          "ranking_score": 0.42261154382091537,
+          "eligible_variants": [
+            {
+              "variant_id": "c4225eb2-6bf0-46be-8779-8f90ef28a923",
+              "product_id": "4a49d639-0a36-454b-8fd1-9dd38e0d77c5",
+              "sku": "DEV-IP14-BLK-128",
+              "original_price": "15990000.0",
+              "effective_price": "15990000.0",
+              "ram": "6GB",
+              "storage": "128GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "79179d1b-af6c-4886-a144-80c9acdace75",
+              "product_id": "4a49d639-0a36-454b-8fd1-9dd38e0d77c5",
+              "sku": "DEV-IP14-BLU-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "6GB",
+              "storage": "256GB",
+              "color": "Xanh dương",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "8d2837d9-7f0f-488b-8c7c-9096cecb1c75",
+              "product_id": "4a49d639-0a36-454b-8fd1-9dd38e0d77c5",
+              "sku": "DEV-IP14-RED-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "6GB",
+              "storage": "256GB",
+              "color": "Đỏ",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Apple"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "642c0e4b-3297-44ef-8391-88f593788629",
+      "parent_id": "70b00d76-d9c1-4eff-9708-af746d1e2bd8",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 1853.56,
+      "duration_ms": 21.68,
+      "output": [
+        {
+          "product_id": "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "product_name": "iPhone 15",
+          "variant_id": "e3c3ae50-63b7-4fe9-93cb-41b4c9bd7264",
+          "sku": "DEV-IP15-BLK-128",
+          "original_price": "17990000.0",
+          "effective_price": "17990000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/iphone-15/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Apple"
+          ]
+        },
+        {
+          "product_id": "f4d2c8ad-f0fd-4f4d-b3c3-bfa601014af5",
+          "product_name": "iPhone 16",
+          "variant_id": "26526f0a-d1ee-4ecd-83c1-e1d8708c07f3",
+          "sku": "DEV-IP16-BLK-128",
+          "original_price": "21990000.0",
+          "effective_price": "21990000.0",
+          "ram": "8GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/iphone-16/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Apple"
+          ]
+        },
+        {
+          "product_id": "4a49d639-0a36-454b-8fd1-9dd38e0d77c5",
+          "product_name": "iPhone 14",
+          "variant_id": "c4225eb2-6bf0-46be-8779-8f90ef28a923",
+          "sku": "DEV-IP14-BLK-128",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/iphone-14/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại",
+            "Thương hiệu: Apple"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "d762f7fd-0198-4b90-86a0-c1a85865fcd7",
+      "parent_id": "642c0e4b-3297-44ef-8391-88f593788629",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 1875.08,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "a40b71a6-dcf9-4d65-acb1-00b10ffbb840",
+          "f4d2c8ad-f0fd-4f4d-b3c3-bfa601014af5",
+          "4a49d639-0a36-454b-8fd1-9dd38e0d77c5"
+        ],
+        "variants": 7,
+        "cards": 3
+      }
+    },
+    {
+      "id": "91437537-3781-43ac-b10e-08ce3da93acb",
+      "parent_id": "70b00d76-d9c1-4eff-9708-af746d1e2bd8",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1875.37,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 3,
+        "cards": 3,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "7c355183-5b3a-4471-bdd2-4a2143a8af37",
+      "parent_id": "6274947a-f395-49e9-a7d7-a4c78ec3c283",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1876.18,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 8.32,
+      "duration_ms": 1878.33,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 49.54,
+      "duration_ms": 1717.04,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 51.4,
+      "duration_ms": 1680.13,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 51.82,
+      "duration_ms": 1679.66,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 52.19,
+      "duration_ms": 1679.23,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1731.83,
+      "duration_ms": 11.64,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1743.53,
+      "duration_ms": 11.18,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1754.75,
+      "duration_ms": 11.49,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1778.21,
+      "duration_ms": 75.34,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1778.27,
+      "duration_ms": 7.17,
+      "status": "ok"
+    },
+    {
+      "name": "product.embedding",
+      "offset_ms": 1785.47,
+      "duration_ms": 29.19,
+      "status": "ok"
+    },
+    {
+      "name": "product.vector_ranking",
+      "offset_ms": 1814.67,
+      "duration_ms": 10.98,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1825.66,
+      "duration_ms": 9.08,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1834.83,
+      "duration_ms": 7.74,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1842.66,
+      "duration_ms": 10.49,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 1853.56,
+      "duration_ms": 21.68,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1853.86,
+      "duration_ms": 7.12,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1861.06,
+      "duration_ms": 7.48,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1868.62,
+      "duration_ms": 6.37,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1875.32,
+      "duration_ms": 0.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1875.82,
+      "duration_ms": 0.42,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Điện thoại"
+          ],
+          [
+            "maxPrice",
+            "25000000"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ],
+          [
+            "brands",
+            "Apple"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/api/v1/products/a40b71a6-dcf9-4d65-acb1-00b10ffbb840/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/f4d2c8ad-f0fd-4f4d-b3c3-bfa601014af5/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/4a49d639-0a36-454b-8fd1-9dd38e0d77c5/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a40b71a6-dcf9-4d65-acb1-00b10ffbb840/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/f4d2c8ad-f0fd-4f4d-b3c3-bfa601014af5/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/4a49d639-0a36-454b-8fd1-9dd38e0d77c5/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "endpoint": "/api/chat",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}

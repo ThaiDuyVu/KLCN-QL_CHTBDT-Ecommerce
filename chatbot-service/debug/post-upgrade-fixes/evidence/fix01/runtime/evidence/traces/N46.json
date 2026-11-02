@@ -1,0 +1,202 @@
+{
+  "trace_id": "4c865395-3e26-4f3a-afab-13a81d07a66c",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "47dd838d-5225-4ede-a9f9-98378d242ab3",
+      "parent_id": "83a771dc-4673-400e-9629-15929a394385",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2511.87,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": "20000000",
+          "min_ram_gb": 1,
+          "min_storage_gb": 1,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop duoi 20 trieu nhung ram phai duoi 16GB",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "1e9b1952-4076-4584-839a-99968b29ca19",
+      "parent_id": "83a771dc-4673-400e-9629-15929a394385",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2536.42,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "min_ram_gb": 1,
+            "min_storage_gb": 1,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop duoi 20 trieu nhung ram phai duoi 16GB",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": "Bộ lọc dung lượng tối đa/khoảng/giới hạn nghiêm ngặt chưa được hỗ trợ. Bạn vui lòng dùng mức tối thiểu GB/TB hoặc một biến thể cụ thể.",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        },
+        "constraint_rejected": true
+      }
+    },
+    {
+      "id": "013f9457-e245-490d-bd1d-14e6f933efc4",
+      "parent_id": "83a3e585-fb54-4139-aa3e-8a65a1b1adf8",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2552.88,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Bộ lọc dung lượng tối đa/khoảng/giới hạn nghiêm ngặt chưa được hỗ trợ. Bạn vui lòng dùng mức tối thiểu GB/TB hoặc một biến thể cụ thể.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "6ed4375d-f76e-49a0-9922-f8fe71d2b1bd",
+      "parent_id": "83a3e585-fb54-4139-aa3e-8a65a1b1adf8",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2553.05,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "3460bc19-7a03-4413-b027-a24d70251299",
+      "parent_id": "6e6684c5-1d2f-491a-a294-1bcb03e18af2",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2553.26,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 9.86,
+      "duration_ms": 2557.19,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 53.04,
+      "duration_ms": 2483.53,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 54.42,
+      "duration_ms": 2457.36,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 54.84,
+      "duration_ms": 2456.91,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 55.32,
+      "duration_ms": 2456.39,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2512.03,
+      "duration_ms": 11.03,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2523.1,
+      "duration_ms": 5.14,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2528.28,
+      "duration_ms": 7.74,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2552.99,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2553.18,
+      "duration_ms": 0.11,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

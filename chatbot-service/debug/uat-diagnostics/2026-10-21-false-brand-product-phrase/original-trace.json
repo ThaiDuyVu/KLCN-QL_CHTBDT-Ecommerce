@@ -1,0 +1,222 @@
+{
+  "trace_id": "ebb3233d-704f-4c6f-a6bd-f9c41d84c3c9",
+  "timestamp_utc": "2026-10-21T06:43:58.455106+00:00",
+  "duration_ms": 6660.47,
+  "status": "ok",
+  "prompt": "gợi ý giúp tôi 2 sản phẩm Laptop có mức giá khoản 20-25 tr",
+  "history_count": 0,
+  "validated_model_plan": {
+    "clarification": null,
+    "intent": "PRODUCT_DISCOVERY",
+    "requested_fields": [],
+    "references": {},
+    "product_search": {
+      "targets": [],
+      "category": "Laptop",
+      "brands": [],
+      "min_price": "20000000",
+      "max_price": "25000000",
+      "min_ram_gb": null,
+      "min_storage_gb": null,
+      "cpu_keywords": [],
+      "in_stock_only": false,
+      "semantic_query": "laptop có mức giá khoản 20-25 tr",
+      "top_k": 5
+    },
+    "semantic_query": null
+  },
+  "normalized_plan": {
+    "clarification": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+    "intent": "UNKNOWN",
+    "requested_fields": [],
+    "references": {},
+    "product_search": null,
+    "semantic_query": null
+  },
+  "effective_search": null,
+  "response": {
+    "message": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+    "products": [],
+    "sources": [],
+    "suggested_questions": []
+  },
+  "backend_reads": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ],
+  "product_search_called": false,
+  "semantic_ranking_called": false,
+  "events": [
+    {
+      "id": "4f252cbf-906e-4af8-8f8d-f32bdae29c16",
+      "parent_id": "e241f4c3-0955-467f-835e-480a8c2b0dc2",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 6606.21,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": "20000000",
+          "max_price": "25000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop có mức giá khoản 20-25 tr",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "456e4edd-ca1d-408d-a07f-14b4fb1e6ea3",
+      "parent_id": "e241f4c3-0955-467f-835e-480a8c2b0dc2",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 6638.33,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "20000000",
+            "max_price": "25000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop có mức giá khoản 20-25 tr",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+          "intent": "UNKNOWN",
+          "requested_fields": [],
+          "references": {},
+          "product_search": null,
+          "semantic_query": null
+        },
+        "constraint_rejected": true
+      }
+    },
+    {
+      "id": "e54441ab-f0a5-4caf-af5d-6b80a3ab12d7",
+      "parent_id": "f26d6c67-19af-4de9-968c-408b4eb6d11c",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 6650.62,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "8c24c819-ee44-49ea-b3f7-1bf134bec12f",
+      "parent_id": "f26d6c67-19af-4de9-968c-408b4eb6d11c",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 6650.73,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "b2d0b73d-bbeb-4309-ba23-0d21b3083521",
+      "parent_id": "0d8f2646-5285-469f-8b44-4c73771fd7a1",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 6650.95,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "duration_ms": 6650.33
+    },
+    {
+      "name": "query.understand",
+      "duration_ms": 6592.88
+    },
+    {
+      "name": "query.model_attempt",
+      "duration_ms": 6555.42
+    },
+    {
+      "name": "ollama.chat",
+      "duration_ms": 6554.77
+    },
+    {
+      "name": "ollama.http",
+      "duration_ms": 6554.18
+    },
+    {
+      "name": "backend.product_http",
+      "duration_ms": 9.92
+    },
+    {
+      "name": "backend.product_http",
+      "duration_ms": 8.36
+    },
+    {
+      "name": "backend.product_http",
+      "duration_ms": 13.04
+    },
+    {
+      "name": "customer.context",
+      "duration_ms": 0.05
+    },
+    {
+      "name": "response.generate",
+      "duration_ms": 0.11
+    }
+  ]
+}

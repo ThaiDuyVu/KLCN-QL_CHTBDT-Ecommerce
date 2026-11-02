@@ -1,0 +1,111 @@
+{
+  "executed_at": "2026-10-21T07:34:15.486173+00:00",
+  "execution": "REAL_CHROME_REAL_QWEN_REAL_SPRING_DEV_DB",
+  "url": "http://localhost:5173/chatbot",
+  "account": "seed.customer1 (synthetic seed)",
+  "rows": [
+    {
+      "step": "01-04 open via tab after login",
+      "verdict": "PASS",
+      "note": "guest tab -> login -> back to /chatbot in the same tab; storefront header/footer visible",
+      "screenshot": "01-chatbot-page.png"
+    },
+    {
+      "step": "05-06 laptop advice + cards",
+      "verdict": "PASS",
+      "note": "HTTP 200; 2 cards; all prices <= 20M: True",
+      "screenshot": "05-laptop-cards.png"
+    },
+    {
+      "step": "07-08 detail and back",
+      "verdict": "PASS",
+      "note": "detail h1 contains \"ASUS Vivobook 15\"; back on /chatbot the history was reloaded from the API",
+      "screenshot": "07-product-detail.png"
+    },
+    {
+      "step": "09-10 second conversation",
+      "verdict": "PASS",
+      "note": "cart answer: 'Trợ lý Điện Việt\\n14:34\\n\\nXiaomi 14T Pro (DEV-X14TP-BLU-512): 1 sản phẩm; giá mỗi sản phẩm 1'; first conversation text absent",
+      "screenshot": "09-second-conversation.png"
+    },
+    {
+      "step": "11 reopen first conversation",
+      "verdict": "PASS",
+      "note": "21 sessions listed; first transcript shown without second-session messages",
+      "screenshot": "11-first-again.png"
+    },
+    {
+      "step": "12 refresh restores history",
+      "verdict": "PASS",
+      "note": "same session restored; history text only (cards are not persisted by the history API)",
+      "screenshot": "12-after-refresh.png"
+    },
+    {
+      "step": "14 network failure + sync (CONTROLLED_BROWSER_FAULT)",
+      "verdict": "PASS",
+      "note": "send locked until sync; draft kept; one successful POST after sync",
+      "screenshot": "14-network-failure.png"
+    },
+    {
+      "step": "13 close session",
+      "verdict": "PASS",
+      "note": "closed via API; composer disabled; history still visible",
+      "screenshot": "13-closed.png"
+    },
+    {
+      "step": "15 responsive mobile 390px",
+      "verdict": "PASS",
+      "note": "horizontal overflow 0px; input/send visible True; list toggle shown True",
+      "screenshot": "15-mobile.png, 15-mobile-cards.png"
+    },
+    {
+      "step": "15 responsive tablet 768px",
+      "verdict": "PASS",
+      "note": "horizontal overflow 0px; input/send visible True; list toggle shown True",
+      "screenshot": "15-tablet.png, 15-tablet-cards.png"
+    },
+    {
+      "step": "15 responsive desktop 1440px",
+      "verdict": "PASS",
+      "note": "horizontal overflow 0px; input/send visible True; list toggle shown False",
+      "screenshot": "15-desktop.png, 15-desktop-cards.png"
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "http_failures": [
+    {
+      "status": 401,
+      "method": "GET",
+      "path": "/api/auth/me"
+    },
+    {
+      "status": 401,
+      "method": "POST",
+      "path": "/api/auth/refresh"
+    },
+    {
+      "status": 404,
+      "method": "GET",
+      "path": "/api/v1/chat/sessions/<uuid>/messages"
+    },
+    {
+      "status": 404,
+      "method": "GET",
+      "path": "/api/v1/chat/sessions/<uuid>/messages"
+    },
+    {
+      "status": 404,
+      "method": "GET",
+      "path": "/api/v1/chat/sessions/<uuid>"
+    }
+  ]
+}

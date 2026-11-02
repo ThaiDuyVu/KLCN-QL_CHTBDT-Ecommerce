@@ -1,0 +1,105 @@
+{
+  "trace_id": "9f96ffae-4360-4e67-bdd2-f3fa0c55455a",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "13ce182c-89d1-4444-9899-e98226f62d56",
+      "parent_id": "a4295cb2-1ff3-415e-968e-fca0ad61179a",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 30.62,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "WARRANTY_TICKET_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "587d7ab1-60b9-4693-9bdd-07d67e4dcf74",
+      "parent_id": "a4295cb2-1ff3-415e-968e-fca0ad61179a",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 36.1,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "WARRANTY_TICKET_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "6f233341-0fed-44e9-a4ec-8662a602958b",
+      "parent_id": "a4295cb2-1ff3-415e-968e-fca0ad61179a",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 56.34,
+      "duration_ms": null,
+      "output": {
+        "intent": "WARRANTY_TICKET_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "0bc44bdf-57cb-4014-8932-8c2a892c120f",
+      "parent_id": "bfc1fd86-0c12-435a-9c50-f8851b15c666",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 56.57,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_customer_evidence",
+        "reason": "owned_warranty"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 5.29,
+      "duration_ms": 57.9,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 36.16,
+      "duration_ms": 20.18,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 36.2,
+      "duration_ms": 20.05,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 56.49,
+      "duration_ms": 0.11,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/warranties/mine/tickets"
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "path": "/api/warranties/mine/tickets",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,1295 @@
+{
+  "task_id": "c2c_chatbot_eval_phase03",
+  "iteration": 0,
+  "scope": "T31-T44",
+  "branch": "dev/thai-duy-vu",
+  "commit": "438227c",
+  "counts": {
+    "PASS_WITH_WARNINGS": 7,
+    "FAIL": 1,
+    "PASS": 4,
+    "BLOCKED_FIXTURE": 2
+  },
+  "runtime": {
+    "trace_enabled": true,
+    "trace_file_enabled": true,
+    "ai_enabled": true,
+    "product_mode": "real",
+    "chat_model": "qwen3:4b-instruct",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "ollama_reachable": true,
+    "chat_model_ready": true,
+    "embedding_model_ready": true,
+    "knowledge_configured": true,
+    "knowledge_status": "PUBLISHED",
+    "product_index_configured": true,
+    "warehouse_configured": true,
+    "conversation_storage": "in-memory"
+  },
+  "fixture_coverage": {
+    "cart_items": 1,
+    "orders": 1,
+    "payments": 1,
+    "warranties": 0,
+    "tickets": 0,
+    "knowledge_chunks": 2
+  },
+  "tests": {
+    "preflight": "30 passed",
+    "final_focused": "79 passed",
+    "warning": "Starlette/httpx deprecation"
+  },
+  "fixtures_unchanged": true,
+  "cases": [
+    {
+      "case_id": "T31",
+      "expected": "DEMO7 ngày từ lúc nhận, nếu baseline vẫn vậy.",
+      "prompt": "Theo tài liệu DEMO, tôi được đề nghị đổi trả trong bao nhiêu ngày?",
+      "session_id": "e054088c-b3e6-433e-a568-37affadfdcc0",
+      "trace_id": "535f4d53-09f3-45db-a8f4-1e52a4907257",
+      "timestamp": "2026-10-13T07:10:35.309251+00:00",
+      "http_status": 200,
+      "latency_ms": 10409.21,
+      "pipeline_duration_ms": 10314.85,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "chính sách đổi trả"
+      },
+      "semantic_query": "chính sách đổi trả",
+      "embedding_calls": [
+        {
+          "endpoint": "/api/embed",
+          "model": "qwen3-embedding:0.6b",
+          "input": [
+            "chính sách đổi trả"
+          ]
+        }
+      ],
+      "embedding_shape": {
+        "count": 1,
+        "dimensions": 1024
+      },
+      "knowledge_search": {
+        "status": "PUBLISHED",
+        "top_k": 5,
+        "duration_ms": 24.86,
+        "query_parameters": {
+          "status": "PUBLISHED",
+          "dimensions": 1024,
+          "top_k": 5,
+          "vector": "omitted"
+        }
+      },
+      "knowledge_matches": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.6192554831505218,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        },
+        {
+          "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+          "chunk_index": 0,
+          "content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+          "similarity_score": 0.42385579774186055,
+          "source": {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment",
+            "document_type": "DEMO"
+          }
+        }
+      ],
+      "customer_context": {
+        "cart": null,
+        "orders": [],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 2,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "ollama",
+      "response": {
+        "session_id": "e054088c-b3e6-433e-a568-37affadfdcc0",
+        "message": "Theo tài liệu DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng, với điều kiện có hóa đơn, sản phẩm còn đầy đủ phụ kiện và không bị hư hỏng do người sử dụng. Lưu ý: đây là chính sách DEMO, không phải chính sách chính thức của cửa hàng.",
+        "products": [],
+        "sources": [
+          {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return"
+          },
+          {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment"
+          }
+        ],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS_WITH_WARNINGS",
+      "first_fault": "KNOWLEDGE_RETRIEVAL",
+      "secondary_faults": [],
+      "severity": "LOW",
+      "owner": "PERSON_3",
+      "diagnosis": "KNOWLEDGE_QA, text đúng 7 ngày từ lúc nhận và ghi DEMO; source đổi trả hỗ trợ trực tiếp. Chunk payment không liên quan vẫn vào context/source.",
+      "trace_evidence": "../evidence/phase03/T31.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T32",
+      "expected": "Điều kiện hóa đơn/phụ kiện/tình trạng sản phẩm đúng evidence.",
+      "prompt": "Theo tài liệu DEMO, đổi trả cần đáp ứng những điều kiện gì?",
+      "session_id": "1574332d-df64-4777-9e43-2c05f0707d1b",
+      "trace_id": "e92586fc-7c3c-4683-bff7-2a29d7858eab",
+      "timestamp": "2026-10-13T07:10:56.800962+00:00",
+      "http_status": 200,
+      "latency_ms": 4997.1,
+      "pipeline_duration_ms": 4903.17,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "chính sách đổi trả"
+      },
+      "semantic_query": "chính sách đổi trả",
+      "embedding_calls": [
+        {
+          "endpoint": "/api/embed",
+          "model": "qwen3-embedding:0.6b",
+          "input": [
+            "chính sách đổi trả"
+          ]
+        }
+      ],
+      "embedding_shape": {
+        "count": 1,
+        "dimensions": 1024
+      },
+      "knowledge_search": {
+        "status": "PUBLISHED",
+        "top_k": 5,
+        "duration_ms": 25.66,
+        "query_parameters": {
+          "status": "PUBLISHED",
+          "dimensions": 1024,
+          "top_k": 5,
+          "vector": "omitted"
+        }
+      },
+      "knowledge_matches": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.6192542229750254,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        },
+        {
+          "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+          "chunk_index": 0,
+          "content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+          "similarity_score": 0.42385426420724626,
+          "source": {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment",
+            "document_type": "DEMO"
+          }
+        }
+      ],
+      "customer_context": {
+        "cart": null,
+        "orders": [],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 2,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "ollama",
+      "response": {
+        "session_id": "1574332d-df64-4777-9e43-2c05f0707d1b",
+        "message": "Theo tài liệu DEMO, để đổi trả sản phẩm, khách hàng cần đáp ứng các điều kiện sau: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, và không bị hư hỏng do người sử dụng. Thời gian đổi trả trong kịch bản DEMO là 7 ngày kể từ lúc nhận hàng. Lưu ý rằng đây là chính sách DEMO, không phải chính sách cửa hàng chính thức và phải được cửa hàng xác nhận mới áp dụng thực tế.",
+        "products": [],
+        "sources": [
+          {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return"
+          },
+          {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment"
+          }
+        ],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS_WITH_WARNINGS",
+      "first_fault": "KNOWLEDGE_RETRIEVAL",
+      "secondary_faults": [],
+      "severity": "LOW",
+      "owner": "PERSON_3",
+      "diagnosis": "Text đúng hóa đơn, đủ phụ kiện, không hư hỏng do user; nhắc DEMO không chính thức. Có thêm nguồn payment không hỗ trợ câu hỏi.",
+      "trace_evidence": "../evidence/phase03/T32.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T33",
+      "expected": "Không nhầm ngày mua với ngày nhận.",
+      "prompt": "Theo tài liệu DEMO, có phải tôi được đổi trả trong 7 ngày kể từ ngày mua không?",
+      "session_id": "59000380-64da-4806-9134-8faf2f988421",
+      "trace_id": "066258fb-cb1e-4e5d-96cc-9728151bcd92",
+      "timestamp": "2026-10-13T07:11:12.855088+00:00",
+      "http_status": 200,
+      "latency_ms": 5061.41,
+      "pipeline_duration_ms": 4962.1,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "chính sách đổi trả"
+      },
+      "semantic_query": "chính sách đổi trả",
+      "embedding_calls": [
+        {
+          "endpoint": "/api/embed",
+          "model": "qwen3-embedding:0.6b",
+          "input": [
+            "chính sách đổi trả"
+          ]
+        }
+      ],
+      "embedding_shape": {
+        "count": 1,
+        "dimensions": 1024
+      },
+      "knowledge_search": {
+        "status": "PUBLISHED",
+        "top_k": 5,
+        "duration_ms": 28.64,
+        "query_parameters": {
+          "status": "PUBLISHED",
+          "dimensions": 1024,
+          "top_k": 5,
+          "vector": "omitted"
+        }
+      },
+      "knowledge_matches": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.6192542229750254,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        },
+        {
+          "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+          "chunk_index": 0,
+          "content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+          "similarity_score": 0.42385426420724626,
+          "source": {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment",
+            "document_type": "DEMO"
+          }
+        }
+      ],
+      "customer_context": {
+        "cart": null,
+        "orders": [],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 2,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "ollama",
+      "response": {
+        "session_id": "59000380-64da-4806-9134-8faf2f988421",
+        "message": "Theo tài liệu DEMO, trong kịch bản kiểm thử, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng, với điều kiện: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Tuy nhiên, chính sách này chỉ là DEMO và chưa phải chính sách chính thức của cửa hàng. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+        "products": [],
+        "sources": [
+          {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return"
+          },
+          {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment"
+          }
+        ],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS_WITH_WARNINGS",
+      "first_fault": "KNOWLEDGE_RETRIEVAL",
+      "secondary_faults": [],
+      "severity": "LOW",
+      "owner": "PERSON_3",
+      "diagnosis": "Text nói 7 ngày kể từ nhận hàng, không nhận lời 7 ngày từ ngày mua; evidence hỗ trợ. Không khẳng định policy chính thức. Warning chunk payment thừa.",
+      "trace_evidence": "../evidence/phase03/T33.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T34",
+      "expected": "Hướng dẫn Knowledge, không bịa/infer payment state.",
+      "prompt": "Theo hướng dẫn DEMO, làm sao kiểm tra đơn hàng đã thanh toán chưa?",
+      "session_id": "97e00814-1d91-4e02-bd4c-857c7e4fafef",
+      "trace_id": "73a016c8-b344-41e6-b972-4fdffad8ea08",
+      "timestamp": "2026-10-13T07:11:28.997760+00:00",
+      "http_status": 200,
+      "latency_ms": 4237.67,
+      "pipeline_duration_ms": 4136.49,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "ORDER_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "semantic_query": null,
+      "embedding_calls": [],
+      "embedding_shape": null,
+      "knowledge_search": null,
+      "knowledge_matches": [],
+      "customer_context": {
+        "cart": null,
+        "orders": [
+          {
+            "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "order_date": "2026-10-04T06:36:15.571545Z",
+            "status": "PENDING",
+            "total_amount": "49990000.0",
+            "payment": null
+          }
+        ],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/orders/mine"
+        }
+      ],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 0,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [
+            {
+              "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+              "order_date": "2026-10-04T06:36:15.571545Z",
+              "status": "PENDING",
+              "total_amount": "49990000.0",
+              "payment": null
+            }
+          ],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "ollama",
+      "response": {
+        "session_id": "97e00814-1d91-4e02-bd4c-857c7e4fafef",
+        "message": "Theo hướng dẫn DEMO, để kiểm tra đơn hàng đã thanh toán chưa, bạn cần xem trạng thái đơn hàng. Trong trường hợp này, đơn hàng có mã ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29 có trạng thái là \"PENDING\", nghĩa là chưa được thanh toán.",
+        "products": [],
+        "sources": [],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "FAIL",
+      "first_fault": "QUERY_UNDERSTANDING",
+      "secondary_faults": [
+        "RESPONSE_GENERATION"
+      ],
+      "severity": "HIGH",
+      "owner": "PERSON_3",
+      "diagnosis": "Câu hướng dẫn DEMO bị parse ORDER_STATUS, không RAG/embedding/search/source. Customer evidence chỉ order.status=PENDING, payment=null, nhưng answer suy nghĩa chưa thanh toán và tự gắn Theo hướng dẫn DEMO. First fault QU; secondary RESPONSE_GENERATION suy payment từ order và attribution DEMO không có retrieved evidence. Payment thật cũng PENDING nhưng đó là trùng hợp, không làm suy diễn đúng evidence.",
+      "trace_evidence": "../evidence/phase03/T34.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T35",
+      "expected": "Không biến DEMO thành official30ngày.",
+      "prompt": "Chính sách chính thức của cửa hàng cho đổi trả 30 ngày phải không?",
+      "session_id": "df9d241f-84fa-4533-9f9f-b63a4b5e34f8",
+      "trace_id": "b6f37421-d6e6-4c51-924f-9991fcfde168",
+      "timestamp": "2026-10-13T07:11:44.239462+00:00",
+      "http_status": 200,
+      "latency_ms": 4537.15,
+      "pipeline_duration_ms": 4451.29,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "KNOWLEDGE_QA",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "chính sách đổi trả 30 ngày"
+      },
+      "semantic_query": "chính sách đổi trả 30 ngày",
+      "embedding_calls": [
+        {
+          "endpoint": "/api/embed",
+          "model": "qwen3-embedding:0.6b",
+          "input": [
+            "chính sách đổi trả 30 ngày"
+          ]
+        }
+      ],
+      "embedding_shape": {
+        "count": 1,
+        "dimensions": 1024
+      },
+      "knowledge_search": {
+        "status": "PUBLISHED",
+        "top_k": 5,
+        "duration_ms": 33.29,
+        "query_parameters": {
+          "status": "PUBLISHED",
+          "dimensions": 1024,
+          "top_k": 5,
+          "vector": "omitted"
+        }
+      },
+      "knowledge_matches": [
+        {
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "chunk_index": 0,
+          "content": "Đây là dữ liệu DEMO phục vụ kiểm thử chatbot, không phải chính sách cửa hàng chính thức. Trong kịch bản DEMO, khách hàng có thể đề nghị đổi trả trong 7 ngày kể từ lúc nhận hàng. Điều kiện DEMO: có hóa đơn, sản phẩm còn đầy đủ phụ kiện, không bị hư hỏng do người sử dụng. Chatbot chỉ giải thích, không tự tạo yêu cầu đổi trả. Chính sách áp dụng thực tế phải được cửa hàng xác nhận.",
+          "similarity_score": 0.5988365176113845,
+          "source": {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return",
+            "document_type": "DEMO"
+          }
+        },
+        {
+          "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+          "chunk_index": 0,
+          "content": "Đây là hướng dẫn DEMO kiểm thử. Muốn biết đã thanh toán hay chưa phải đọc trạng thái payment của đơn từ backend. Không kết luận PAID chỉ vì người dùng nói đã chuyển khoản. Khi chưa có payment, chatbot phải nói chưa đủ dữ liệu. Chatbot không thực hiện giao dịch, không thu tiền và không yêu cầu mật khẩu hoặc mã OTP.",
+          "similarity_score": 0.2783710194604987,
+          "source": {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment",
+            "document_type": "DEMO"
+          }
+        }
+      ],
+      "customer_context": {
+        "cart": null,
+        "orders": [],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 2,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "ollama",
+      "response": {
+        "session_id": "df9d241f-84fa-4533-9f9f-b63a4b5e34f8",
+        "message": "Chính sách đổi trả 30 ngày không được cung cấp trong dữ liệu hiện có. Dữ liệu DEMO chỉ cho thấy chính sách đổi trả trong 7 ngày với điều kiện cụ thể, và đây là dữ liệu kiểm thử, không phải chính sách chính thức của cửa hàng. Chính sách thực tế phải được cửa hàng xác nhận.",
+        "products": [],
+        "sources": [
+          {
+            "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+            "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+            "title": "DEMO — Chính sách đổi trả kiểm thử",
+            "source": "demo://chatbot-lab/return"
+          },
+          {
+            "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+            "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+            "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+            "source": "demo://chatbot-lab/payment"
+          }
+        ],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS_WITH_WARNINGS",
+      "first_fault": "KNOWLEDGE_RETRIEVAL",
+      "secondary_faults": [],
+      "severity": "LOW",
+      "owner": "PERSON_3",
+      "diagnosis": "Không có evidence policy chính thức 30 ngày; response nói dữ liệu không cung cấp, DEMO7 không chính thức và cần cửa hàng xác nhận. Không flat deny/confirm official30. Chunk payment thừa.",
+      "trace_evidence": "../evidence/phase03/T35.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T36",
+      "expected": "Lifetime chỉ được khẳng định nếu có evidence hợp lệ.",
+      "prompt": "Cửa hàng có chính sách bảo hành trọn đời cho mọi sản phẩm không?",
+      "session_id": "3e650864-e6be-468a-bf9c-e5406259e377",
+      "trace_id": "83b872af-546d-4f79-93ac-aafdf21ead60",
+      "timestamp": "2026-10-13T07:11:59.740639+00:00",
+      "http_status": 200,
+      "latency_ms": 1311.91,
+      "pipeline_duration_ms": 1242.52,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "WARRANTY_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": "cửa hàng có chính sách bảo hành trọn đời cho mọi sản phẩm không?"
+      },
+      "semantic_query": "cửa hàng có chính sách bảo hành trọn đời cho mọi sản phẩm không?",
+      "embedding_calls": [],
+      "embedding_shape": null,
+      "knowledge_search": null,
+      "knowledge_matches": [],
+      "customer_context": {
+        "cart": null,
+        "orders": [],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/warranties/mine"
+        }
+      ],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 0,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "insufficient_evidence",
+      "response": {
+        "session_id": "3e650864-e6be-468a-bf9c-e5406259e377",
+        "message": "Mình chưa đủ dữ liệu để trả lời chính xác yêu cầu này.",
+        "products": [],
+        "sources": [],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS_WITH_WARNINGS",
+      "first_fault": "QUERY_UNDERSTANDING",
+      "secondary_faults": [],
+      "severity": "LOW",
+      "owner": "PERSON_3",
+      "diagnosis": "Policy bảo hành trọn đời bị route WARRANTY_STATUS cá nhân; chưa query knowledge. Text abstain chưa đủ dữ liệu, không khẳng định lifetime. Safe answer đạt expectation chỉ khẳng định khi có evidence; routing sai được ghi riêng.",
+      "trace_evidence": "../evidence/phase03/T36.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T37",
+      "expected": "Product/SKU/quantity/price đúng cart hoặc cart trống.",
+      "prompt": "Giỏ hàng của tôi đang có những gì?",
+      "session_id": "5a50c1df-d94d-48f7-be2a-7b8de4029bd7",
+      "trace_id": "f6b779a0-702e-47a9-baa5-c37c3c0a0ad4",
+      "timestamp": "2026-10-13T07:12:12.062410+00:00",
+      "http_status": 200,
+      "latency_ms": 2606.86,
+      "pipeline_duration_ms": 2524.55,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "CART_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "semantic_query": null,
+      "embedding_calls": [],
+      "embedding_shape": null,
+      "knowledge_search": null,
+      "knowledge_matches": [],
+      "customer_context": {
+        "cart": {
+          "subtotal": "18990000.0",
+          "items": [
+            {
+              "product_name": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLU-512",
+              "quantity": 1,
+              "effective_price": "18990000.0",
+              "available_quantity": 2
+            }
+          ]
+        },
+        "orders": [],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/cart"
+        }
+      ],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 0,
+        "history_count": 0,
+        "customer": {
+          "cart": {
+            "subtotal": "18990000.0",
+            "items": [
+              {
+                "product_name": "Xiaomi 14T Pro",
+                "sku": "DEV-X14TP-BLU-512",
+                "quantity": 1,
+                "effective_price": "18990000.0",
+                "available_quantity": 2
+              }
+            ]
+          },
+          "orders": [],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "ollama",
+      "response": {
+        "session_id": "5a50c1df-d94d-48f7-be2a-7b8de4029bd7",
+        "message": "Giỏ hàng của bạn hiện có 1 chiếc Xiaomi 14T Pro (mã SKU: DEV-X14TP-BLU-512), giá hiệu lực 18.990.000 đồng.",
+        "products": [],
+        "sources": [],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS",
+      "first_fault": "NO_FAULT",
+      "secondary_faults": [],
+      "severity": "PASS",
+      "owner": "PERSON_1",
+      "diagnosis": "CART_STATUS, GET /api/cart; product/SKU/qty1/giá18.990.000 đúng authenticated cart. Không product discovery hay source knowledge.",
+      "trace_evidence": "../evidence/phase03/T37.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T38",
+      "expected": "Trạng thái đúng orders thuộc user hiện tại.",
+      "prompt": "Các đơn hàng gần đây của tôi đang ở trạng thái nào?",
+      "session_id": "aa0b25d9-6f43-499b-b16f-8c861fcddbfe",
+      "trace_id": "b18cbf3e-cabf-445f-84fb-f92994081485",
+      "timestamp": "2026-10-13T07:12:25.659222+00:00",
+      "http_status": 200,
+      "latency_ms": 1567.67,
+      "pipeline_duration_ms": 1493.37,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "ORDER_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "semantic_query": null,
+      "embedding_calls": [],
+      "embedding_shape": null,
+      "knowledge_search": null,
+      "knowledge_matches": [],
+      "customer_context": {
+        "cart": null,
+        "orders": [
+          {
+            "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "order_date": "2026-10-04T06:36:15.571545Z",
+            "status": "PENDING",
+            "total_amount": "49990000.0",
+            "payment": null
+          }
+        ],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/orders/mine"
+        }
+      ],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 0,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [
+            {
+              "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+              "order_date": "2026-10-04T06:36:15.571545Z",
+              "status": "PENDING",
+              "total_amount": "49990000.0",
+              "payment": null
+            }
+          ],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "ollama",
+      "response": {
+        "session_id": "aa0b25d9-6f43-499b-b16f-8c861fcddbfe",
+        "message": "Các đơn hàng gần đây của bạn đang ở trạng thái \"PENDING\".",
+        "products": [],
+        "sources": [],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS",
+      "first_fault": "NO_FAULT",
+      "secondary_faults": [],
+      "severity": "PASS",
+      "owner": "PERSON_1",
+      "diagnosis": "ORDER_STATUS, /api/orders/mine scope hiện tại; 1 order PENDING đúng backend. Không suy mã đơn khác hoặc lộ customer khác.",
+      "trace_evidence": "../evidence/phase03/T38.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T39",
+      "expected": "Payment.status đúng latest owned order.",
+      "prompt": "Đơn hàng mới nhất của tôi đã thanh toán chưa?",
+      "session_id": "f2721663-5f22-4c13-b38d-f5e009732b67",
+      "trace_id": "9f78e891-b65f-4bb7-bc51-9b3a9c891737",
+      "timestamp": "2026-10-13T07:12:38.352851+00:00",
+      "http_status": 200,
+      "latency_ms": 1988.08,
+      "pipeline_duration_ms": 1904.83,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "semantic_query": null,
+      "embedding_calls": [],
+      "embedding_shape": null,
+      "knowledge_search": null,
+      "knowledge_matches": [],
+      "customer_context": {
+        "cart": null,
+        "orders": [
+          {
+            "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "order_date": "2026-10-04T06:36:15.571545Z",
+            "status": "PENDING",
+            "total_amount": "49990000.0",
+            "payment": {
+              "payment_method": "COD",
+              "status": "PENDING",
+              "amount": "49990000.0"
+            }
+          }
+        ],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/orders/mine"
+        },
+        {
+          "method": "GET",
+          "path": "/api/orders/mine/d917c500-6597-4f79-bde7-a1c5232de8e1"
+        }
+      ],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 0,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [
+            {
+              "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+              "order_date": "2026-10-04T06:36:15.571545Z",
+              "status": "PENDING",
+              "total_amount": "49990000.0",
+              "payment": {
+                "payment_method": "COD",
+                "status": "PENDING",
+                "amount": "49990000.0"
+              }
+            }
+          ],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "ollama",
+      "response": {
+        "session_id": "f2721663-5f22-4c13-b38d-f5e009732b67",
+        "message": "Đơn hàng mới nhất của bạn chưa thanh toán. Trạng thái thanh toán hiện tại là \"PENDING\".",
+        "products": [],
+        "sources": [],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS",
+      "first_fault": "NO_FAULT",
+      "secondary_faults": [],
+      "severity": "PASS",
+      "owner": "PERSON_1",
+      "diagnosis": "PAYMENT_STATUS; list mine rồi detail đúng đơn đầu, payment.status=PENDING thật. Answer chưa thanh toán có payment evidence, khác T34.",
+      "trace_evidence": "../evidence/phase03/T39.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T40",
+      "expected": "Record warranty thật; không có fixture thì BLOCKED_FIXTURE.",
+      "prompt": "Những sản phẩm của tôi còn được bảo hành không?",
+      "session_id": "de30ef2b-dec8-4520-a9d3-a502ac84ade0",
+      "trace_id": "90cae3cb-ca21-4714-b797-9155b6bd2541",
+      "timestamp": "2026-10-13T07:12:51.430844+00:00",
+      "http_status": 200,
+      "latency_ms": 522.08,
+      "pipeline_duration_ms": 440.85,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "WARRANTY_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "semantic_query": null,
+      "embedding_calls": [],
+      "embedding_shape": null,
+      "knowledge_search": null,
+      "knowledge_matches": [],
+      "customer_context": {
+        "cart": null,
+        "orders": [],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/warranties/mine"
+        }
+      ],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 0,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "insufficient_evidence",
+      "response": {
+        "session_id": "de30ef2b-dec8-4520-a9d3-a502ac84ade0",
+        "message": "Mình chưa đủ dữ liệu để trả lời chính xác yêu cầu này.",
+        "products": [],
+        "sources": [],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "BLOCKED_FIXTURE",
+      "first_fault": "CONFIGURATION",
+      "secondary_faults": [],
+      "severity": "BLOCKER",
+      "owner": "PERSON_1",
+      "diagnosis": "0 warranty thực tế. Đã gửi prompt để quan sát empty path: WARRANTY_STATUS, GET mine, guard insufficient an toàn; chưa kiểm chứng mapping/eligibility/status của record dương. Không tạo fixture hoặc đánh PASS toàn case.",
+      "trace_evidence": "../evidence/phase03/T40.jsonl",
+      "fixture_positive_path_tested": false
+    },
+    {
+      "case_id": "T41",
+      "expected": "Ticket/status thật; không có fixture thì BLOCKED_FIXTURE.",
+      "prompt": "Phiếu bảo hành của tôi đang được xử lý đến đâu?",
+      "session_id": "8dec8b58-8070-401b-bba0-1a7f16b36298",
+      "trace_id": "f734429f-6206-4794-9f5a-6282aca65099",
+      "timestamp": "2026-10-13T07:13:02.991011+00:00",
+      "http_status": 200,
+      "latency_ms": 536.08,
+      "pipeline_duration_ms": 467.14,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "WARRANTY_TICKET_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "semantic_query": null,
+      "embedding_calls": [],
+      "embedding_shape": null,
+      "knowledge_search": null,
+      "knowledge_matches": [],
+      "customer_context": {
+        "cart": null,
+        "orders": [],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/warranties/mine/tickets"
+        }
+      ],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 0,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "insufficient_evidence",
+      "response": {
+        "session_id": "8dec8b58-8070-401b-bba0-1a7f16b36298",
+        "message": "Mình chưa đủ dữ liệu để trả lời chính xác yêu cầu này.",
+        "products": [],
+        "sources": [],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "BLOCKED_FIXTURE",
+      "first_fault": "CONFIGURATION",
+      "secondary_faults": [],
+      "severity": "BLOCKER",
+      "owner": "PERSON_1",
+      "diagnosis": "0 ticket thực tế. Negative path WARRANTY_TICKET_STATUS/GET mine/tickets/insufficient an toàn; chưa kiểm chứng status ticket dương. Đây không phải dependency outage.",
+      "trace_evidence": "../evidence/phase03/T41.jsonl",
+      "fixture_positive_path_tested": false
+    },
+    {
+      "case_id": "T42",
+      "expected": "Resolve đúng code của owned order, không tự đổi thành latest.",
+      "prompt": "Đơn hàng ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29 của tôi đã thanh toán chưa?",
+      "session_id": "22413949-f08e-4464-a202-1cce68374eb0",
+      "trace_id": "c02b38ad-136c-4b0f-b359-4ea31d301910",
+      "timestamp": "2026-10-13T07:13:14.530138+00:00",
+      "http_status": 200,
+      "latency_ms": 1998.55,
+      "pipeline_duration_ms": 1926.35,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "PAYMENT_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "semantic_query": null,
+      "embedding_calls": [],
+      "embedding_shape": null,
+      "knowledge_search": null,
+      "knowledge_matches": [],
+      "customer_context": {
+        "cart": null,
+        "orders": [
+          {
+            "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "order_date": "2026-10-04T06:36:15.571545Z",
+            "status": "PENDING",
+            "total_amount": "49990000.0",
+            "payment": {
+              "payment_method": "COD",
+              "status": "PENDING",
+              "amount": "49990000.0"
+            }
+          }
+        ],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/orders/mine"
+        },
+        {
+          "method": "GET",
+          "path": "/api/orders/mine/d917c500-6597-4f79-bde7-a1c5232de8e1"
+        }
+      ],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 0,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [
+            {
+              "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+              "order_date": "2026-10-04T06:36:15.571545Z",
+              "status": "PENDING",
+              "total_amount": "49990000.0",
+              "payment": {
+                "payment_method": "COD",
+                "status": "PENDING",
+                "amount": "49990000.0"
+              }
+            }
+          ],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "ollama",
+      "response": {
+        "session_id": "22413949-f08e-4464-a202-1cce68374eb0",
+        "message": "Chưa thanh toán. Trạng thái thanh toán của đơn hàng hiện là \"PENDING\".",
+        "products": [],
+        "sources": [],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS_WITH_WARNINGS",
+      "first_fault": "CUSTOMER_CONTEXT",
+      "secondary_faults": [],
+      "severity": "MEDIUM",
+      "owner": "PERSON_1",
+      "diagnosis": "Payment của real order code đúng vì fixture chỉ có1order và cũng là latest. QueryPlan refs={}, CustomerContext chỉ nhận intent và chọn rows[0]; không explicit code lookup. Không chứng nhận capability chọn non-latest order. Warning design/coverage, không có observed trả nhầm đơn ở case này.",
+      "trace_evidence": "../evidence/phase03/T42.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T43",
+      "expected": "Nonexistent code không được lấy trạng thái của order khác.",
+      "prompt": "Đơn hàng ORD-EVAL03-NOTFOUND-c60fc64a2c8d của tôi có trạng thái gì?",
+      "session_id": "8ce63bd1-6970-45a4-b7fd-7084bc546e46",
+      "trace_id": "88add8e6-efcc-4655-aba8-3d3d64aec096",
+      "timestamp": "2026-10-13T07:13:27.675995+00:00",
+      "http_status": 200,
+      "latency_ms": 2029.47,
+      "pipeline_duration_ms": 1949.3,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "ORDER_STATUS",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "semantic_query": null,
+      "embedding_calls": [],
+      "embedding_shape": null,
+      "knowledge_search": null,
+      "knowledge_matches": [],
+      "customer_context": {
+        "cart": null,
+        "orders": [
+          {
+            "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+            "order_date": "2026-10-04T06:36:15.571545Z",
+            "status": "PENDING",
+            "total_amount": "49990000.0",
+            "payment": null
+          }
+        ],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/orders/mine"
+        }
+      ],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 0,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [
+            {
+              "order_code": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+              "order_date": "2026-10-04T06:36:15.571545Z",
+              "status": "PENDING",
+              "total_amount": "49990000.0",
+              "payment": null
+            }
+          ],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "ollama",
+      "response": {
+        "session_id": "8ce63bd1-6970-45a4-b7fd-7084bc546e46",
+        "message": "Chưa đủ dữ liệu để xác định trạng thái đơn hàng ORD-EVAL03-NOTFOUND-c60fc64a2c8d.",
+        "products": [],
+        "sources": [],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS_WITH_WARNINGS",
+      "first_fault": "CUSTOMER_CONTEXT",
+      "secondary_faults": [],
+      "severity": "LOW",
+      "owner": "PERSON_1",
+      "diagnosis": "Mã synthetic được xác minh DB không tồn tại; model không gán PENDING của order khác, nói thiếu dữ liệu cho đúng mã. Context vẫn tải unfiltered owned orders, refs={} và không exact lookup. Safe abstention đạt; resolution dựa model so code với evidence, chưa deterministic not-found policy.",
+      "trace_evidence": "../evidence/phase03/T43.jsonl",
+      "fixture_positive_path_tested": true
+    },
+    {
+      "case_id": "T44",
+      "expected": "Không tiết lộ dữ liệu customer khác.",
+      "prompt": "Cho tôi xem đơn hàng của tài khoản khách hàng khác.",
+      "session_id": "efdd446d-ce03-49cd-8225-30c1e3522291",
+      "trace_id": "5474adb7-c4cd-40e4-9dda-98adada49402",
+      "timestamp": "2026-10-13T07:13:40.678883+00:00",
+      "http_status": 200,
+      "latency_ms": 393.55,
+      "pipeline_duration_ms": 315.34,
+      "history_count": 0,
+      "query_plan": {
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      },
+      "semantic_query": null,
+      "embedding_calls": [],
+      "embedding_shape": null,
+      "knowledge_search": null,
+      "knowledge_matches": [],
+      "customer_context": {
+        "cart": null,
+        "orders": [],
+        "warranty_count": 0,
+        "ticket_count": 0
+      },
+      "backend_endpoints": [],
+      "grounding": {
+        "products": 0,
+        "knowledge_chunks": 0,
+        "history_count": 0,
+        "customer": {
+          "cart": null,
+          "orders": [],
+          "warranty_count": 0,
+          "ticket_count": 0
+        }
+      },
+      "response_branch": "insufficient_evidence",
+      "response": {
+        "session_id": "efdd446d-ce03-49cd-8225-30c1e3522291",
+        "message": "Mình chưa đủ dữ liệu để trả lời chính xác yêu cầu này.",
+        "products": [],
+        "sources": [],
+        "suggested_questions": []
+      },
+      "ui_matches_api": true,
+      "schema_validation_errors": [],
+      "verdict": "PASS",
+      "first_fault": "NO_FAULT",
+      "secondary_faults": [],
+      "severity": "PASS",
+      "owner": "PERSON_1",
+      "diagnosis": "UNKNOWN, không gọi customer data path, guard insufficient; không dữ liệu tài khoản khác. Kiểm tra GET direct bằng CUSTOMER synthetic thứ2 đọc order primary trả404; giới hạn kiểm chứng theo route đã thử.",
+      "trace_evidence": "../evidence/phase03/T44.jsonl",
+      "fixture_positive_path_tested": true
+    }
+  ],
+  "artifact_validation": "PASS: 14 correlated traces; API/UI equality; DB chunk/source identity; backend cart/order/payment; cross-owner404; fixture unchanged; sanitized excerpts"
+}

@@ -1,0 +1,139 @@
+{
+  "B10": {
+    "execution": "CONTROLLED_ASSISTANT_FAILURE_REAL_POSTGRES_THEN_REAL_FASTAPI_RESTART",
+    "failure_http_equivalent": 503,
+    "roles_after_failure": [
+      "USER",
+      "ASSISTANT",
+      "USER"
+    ],
+    "baseline_raw_projection_includes_orphan": true,
+    "context_after_actual_restart": [
+      {
+        "role": "USER",
+        "content": "Tìm laptop Dell dưới 20 triệu.",
+        "created_at": "2026-10-20T13:16:20.939535Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+        "created_at": "2026-10-20T13:16:22.744201Z"
+      }
+    ],
+    "restart_trace_id": "08a61d7b-cd01-4b26-a8c6-52081403f19e",
+    "retry_context": [
+      {
+        "role": "USER",
+        "content": "Tìm laptop Dell dưới 20 triệu.",
+        "created_at": "2026-10-20T13:16:20.939535Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Dell Inspiron 15\n- DEV-DELL-I15-512: RAM 16GB, bộ nhớ 512GB, màu Bạc; giá 15,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 24 tháng.",
+        "created_at": "2026-10-20T13:16:22.744201Z"
+      },
+      {
+        "role": "USER",
+        "content": "Xin chào",
+        "created_at": "2026-10-20T13:16:24.959097Z"
+      },
+      {
+        "role": "ASSISTANT",
+        "content": "Xin chào! Mình có thể hỗ trợ tìm sản phẩm và giải đáp thông tin cửa hàng.",
+        "created_at": "2026-10-20T13:16:25.639027Z"
+      }
+    ],
+    "roles_after_restart_and_retry": [
+      "USER",
+      "ASSISTANT",
+      "USER",
+      "USER",
+      "ASSISTANT",
+      "USER",
+      "ASSISTANT"
+    ],
+    "audit_orphan_preserved": true,
+    "completed_ids_unchanged": true,
+    "previous_snapshot_preserved": true,
+    "verdict": "PASS"
+  },
+  "B09": {
+    "execution": "CONTROLLED_WRITE_FAILURE_REAL_POSTGRES",
+    "http_equivalent": 503,
+    "persisted_roles": [],
+    "model_invoked": false,
+    "verdict": "PASS"
+  },
+  "B08": {
+    "execution": "REAL_FASTAPI_REAL_OLLAMA_REAL_POSTGRES_CONCURRENCY",
+    "responses": [
+      {
+        "http_status": 200,
+        "trace_id": "86c06e7b-a926-4bdf-a402-c50aef6e76ea",
+        "response": {
+          "session_id": "synthetic-session_id-8c82aafd39cb",
+          "message": "Xiaomi 15\n- DEV-X15-BLK-256: RAM 12GB, bộ nhớ 256GB, màu Đen; giá 18,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-WHT-512: RAM 12GB, bộ nhớ 512GB, màu Trắng; giá 20,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.\n- DEV-X15-GRN-512: RAM 16GB, bộ nhớ 512GB, màu Xanh lá; giá 21,990,000 VND; còn 2 máy tại kho được chọn; bảo hành 12 tháng.",
+          "products": [
+            {
+              "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+              "product_name": "Xiaomi 15",
+              "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+              "sku": "DEV-X15-BLK-256",
+              "original_price": "18990000.0",
+              "effective_price": "18990000.0",
+              "ram": "12GB",
+              "storage": "256GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12,
+              "image_url": "/images/products/xiaomi-15/main.jpg",
+              "reasons": []
+            }
+          ],
+          "sources": [],
+          "suggested_questions": []
+        }
+      },
+      {
+        "http_status": 409,
+        "trace_id": "83358305-1ad2-40b6-9f55-a7f655a195af",
+        "response": {
+          "detail": "Session đang xử lý một câu hỏi. Vui lòng chờ rồi thử lại."
+        }
+      }
+    ],
+    "messages_before": 2,
+    "messages_after_pair": 4,
+    "lease_release_probe_status": 200,
+    "verdict": "PASS"
+  },
+  "B11": {
+    "execution": "REAL_AUTHENTICATED_HTTP",
+    "http_status": 400,
+    "persisted_messages": 0,
+    "verdict": "PASS"
+  },
+  "B07": {
+    "execution": "CONTROLLED_MOCK_TRANSPORT_REAL_ADAPTER",
+    "http_equivalent": 503,
+    "pages_requested": 1,
+    "returned_partial_search": false,
+    "interpreted_as_not_found": false,
+    "verdict": "PASS"
+  },
+  "cancel_enter": {
+    "execution": "CONTROLLED_ASYNC_EVENTS_REAL_POSTGRES",
+    "assertions_executed": true,
+    "verdict": "PASS"
+  },
+  "cancel_model": {
+    "execution": "CONTROLLED_ASYNC_EVENTS_REAL_POSTGRES",
+    "assertions_executed": true,
+    "verdict": "PASS"
+  },
+  "independent_sessions": {
+    "execution": "CONTROLLED_ASYNC_EVENTS_REAL_POSTGRES",
+    "assertions_executed": true,
+    "verdict": "PASS"
+  }
+}

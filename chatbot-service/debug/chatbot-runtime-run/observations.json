@@ -1,0 +1,446 @@
+[
+  {
+    "case_id": "case-01",
+    "slug": "01-greeting",
+    "timestamp": "2026-10-13T05:39:30.438307+00:00",
+    "session_id": "d82bd6f8-efaf-416e-8df5-7af44aecbf98",
+    "trace_id": "16b81aa4-7ed0-4425-817f-d2da902dc752",
+    "prompt": "Xin chào",
+    "http_status": 200,
+    "elapsed_ms": 5476.69,
+    "response": {
+      "session_id": "d82bd6f8-efaf-416e-8df5-7af44aecbf98",
+      "message": "Xin chào! Mình có thể hỗ trợ tìm sản phẩm và giải đáp thông tin cửa hàng.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "ui_message_matches": true,
+    "ui_product_names": [],
+    "ui_error_count": 0,
+    "backend_card_checks": []
+  },
+  {
+    "case_id": "case-02",
+    "slug": "02-product-filter",
+    "timestamp": "2026-10-13T05:39:46.965294+00:00",
+    "session_id": "3a047273-76bc-44dc-bf1d-2c11af0f2976",
+    "trace_id": "a7c75313-7066-4a7a-a491-32311f057a8f",
+    "prompt": "Tìm laptop giá dưới 20 triệu, RAM ít nhất 16GB.",
+    "http_status": 200,
+    "elapsed_ms": 8306.54,
+    "response": {
+      "session_id": "3a047273-76bc-44dc-bf1d-2c11af0f2976",
+      "message": "Có 1 sản phẩm laptop đáp ứng yêu cầu:  \n- Thương hiệu: Không xác định  \n- Giá: 15.990.000 VNĐ (dưới 20 triệu)  \n- RAM: 16GB  \n- Bộ nhớ lưu trữ: 512GB  \n- Màu sắc: Bạc  \n- Số lượng có sẵn: 2  \n- Thời gian bảo hành: 24 tháng  \n\nSản phẩm có mã SKU: DEV-DELL-I15-512.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "ui_message_matches": true,
+    "ui_product_names": [
+      "Dell Inspiron 15"
+    ],
+    "ui_error_count": 0,
+    "backend_card_checks": [
+      {
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "product_name": "Dell Inspiron 15",
+        "sku": "DEV-DELL-I15-512",
+        "effective_price": 15990000.0,
+        "ram": "16GB",
+        "available_quantity": 2,
+        "matches_card": true
+      }
+    ]
+  },
+  {
+    "case_id": "case-03",
+    "slug": "03-xiaomi-stock",
+    "timestamp": "2026-10-13T05:40:06.414617+00:00",
+    "session_id": "47dcc74b-789f-4b5b-bdc4-d005c21d6a8a",
+    "trace_id": "92755f73-9c72-4bb0-9e26-448857643ed8",
+    "prompt": "Xiaomi 15 còn hàng không?",
+    "http_status": 200,
+    "elapsed_ms": 1346.04,
+    "response": {
+      "session_id": "47dcc74b-789f-4b5b-bdc4-d005c21d6a8a",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "ui_message_matches": true,
+    "ui_product_names": [],
+    "ui_error_count": 0,
+    "backend_card_checks": []
+  },
+  {
+    "case_id": "case-04a",
+    "slug": "04a-followup-history",
+    "timestamp": "2026-10-13T05:40:18.821484+00:00",
+    "session_id": "3a047273-76bc-44dc-bf1d-2c11af0f2976",
+    "trace_id": "16335105-55cb-4fa2-b32b-c0aaee16ee46",
+    "prompt": "Có loại rẻ hơn không?",
+    "http_status": 200,
+    "elapsed_ms": 1952.54,
+    "response": {
+      "session_id": "3a047273-76bc-44dc-bf1d-2c11af0f2976",
+      "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "ui_message_matches": true,
+    "ui_product_names": [],
+    "ui_error_count": 0,
+    "backend_card_checks": []
+  },
+  {
+    "case_id": "case-04b",
+    "slug": "04b-followup-fresh",
+    "timestamp": "2026-10-13T05:40:31.908336+00:00",
+    "session_id": "4626348f-84a8-47a8-b21c-c4af4303277e",
+    "trace_id": "939d8dc1-58fa-4b35-881a-8d07d6c6aec8",
+    "prompt": "Có loại rẻ hơn không?",
+    "http_status": 200,
+    "elapsed_ms": 10288.07,
+    "response": {
+      "session_id": "4626348f-84a8-47a8-b21c-c4af4303277e",
+      "message": "Có, có loại rẻ hơn. Ví dụ: sản phẩm DEV-S23-BLK-128 với giá 13.990.000 VNĐ (8GB RAM, 128GB storage, màu đen).",
+      "products": [
+        {
+          "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+          "product_name": "Xiaomi 14T Pro",
+          "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+          "sku": "DEV-X14TP-BLK-256",
+          "original_price": "16990000.0",
+          "effective_price": "16990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-14t-pro/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+          "product_name": "Dell XPS 13",
+          "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+          "sku": "DEV-XPS13-SL-512",
+          "original_price": "32990000.0",
+          "effective_price": "32990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-xps-13/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+          "product_name": "Xiaomi 15",
+          "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+          "sku": "DEV-X15-BLK-256",
+          "original_price": "18990000.0",
+          "effective_price": "18990000.0",
+          "ram": "12GB",
+          "storage": "256GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-15/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+          "product_name": "Samsung Galaxy S23",
+          "variant_id": "5ce7a881-8ea2-4462-9599-cb5779a1da31",
+          "sku": "DEV-S23-BLK-128",
+          "original_price": "13990000.0",
+          "effective_price": "13990000.0",
+          "ram": "8GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/samsung-galaxy-s23/main.jpg",
+          "reasons": []
+        },
+        {
+          "product_id": "3dbc1257-30f4-4870-8077-d1d6cc2b1e66",
+          "product_name": "Xiaomi Redmi Note 13",
+          "variant_id": "bd13d3a2-99c0-4ac3-8225-9584eb91d01e",
+          "sku": "DEV-RN13-BLK-128",
+          "original_price": "4490000.0",
+          "effective_price": "4490000.0",
+          "ram": "6GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/xiaomi-redmi-note-13/main.jpg",
+          "reasons": []
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "ui_message_matches": true,
+    "ui_product_names": [
+      "Xiaomi 14T Pro",
+      "Dell XPS 13",
+      "Xiaomi 15",
+      "Samsung Galaxy S23",
+      "Xiaomi Redmi Note 13"
+    ],
+    "ui_error_count": 0,
+    "backend_card_checks": [
+      {
+        "product_id": "3fc00d9b-72e8-43de-8d5d-a275251aa08f",
+        "variant_id": "1ea298f1-e189-4e27-89b3-ede88999cb19",
+        "product_name": "Xiaomi 14T Pro",
+        "sku": "DEV-X14TP-BLK-256",
+        "effective_price": 16990000.0,
+        "ram": "12GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "de24f73c-c12f-43e6-ba87-13308ab4980c",
+        "variant_id": "a141cdf6-1383-4e94-b002-7c982af08a83",
+        "product_name": "Dell XPS 13",
+        "sku": "DEV-XPS13-SL-512",
+        "effective_price": 32990000.0,
+        "ram": "16GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "169710dd-d072-4e83-9fd0-e618d706ee26",
+        "variant_id": "986a65b7-18dc-40a4-bd2a-bf07c6e12b6a",
+        "product_name": "Xiaomi 15",
+        "sku": "DEV-X15-BLK-256",
+        "effective_price": 18990000.0,
+        "ram": "12GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+        "variant_id": "5ce7a881-8ea2-4462-9599-cb5779a1da31",
+        "product_name": "Samsung Galaxy S23",
+        "sku": "DEV-S23-BLK-128",
+        "effective_price": 13990000.0,
+        "ram": "8GB",
+        "available_quantity": 2,
+        "matches_card": true
+      },
+      {
+        "product_id": "3dbc1257-30f4-4870-8077-d1d6cc2b1e66",
+        "variant_id": "bd13d3a2-99c0-4ac3-8225-9584eb91d01e",
+        "product_name": "Xiaomi Redmi Note 13",
+        "sku": "DEV-RN13-BLK-128",
+        "effective_price": 4490000.0,
+        "ram": "6GB",
+        "available_quantity": 2,
+        "matches_card": true
+      }
+    ]
+  },
+  {
+    "case_id": "case-05",
+    "slug": "05-knowledge-rag",
+    "timestamp": "2026-10-13T05:40:53.484571+00:00",
+    "session_id": "fa4fcafb-b323-45e2-ad00-e69e43a48e33",
+    "trace_id": "2ca0c762-1cc9-43e4-99b8-95fd949e66d8",
+    "prompt": "Theo tài liệu DEMO, điều kiện đổi trả trong bao nhiêu ngày?",
+    "http_status": 200,
+    "elapsed_ms": 3857.13,
+    "response": {
+      "session_id": "fa4fcafb-b323-45e2-ad00-e69e43a48e33",
+      "message": "Theo tài liệu DEMO, điều kiện đổi trả là trong 7 ngày kể từ lúc nhận hàng.",
+      "products": [],
+      "sources": [
+        {
+          "document_id": "3da5065e-c979-5610-90d0-9e6e94ba0308",
+          "chunk_id": "466d9bd6-e605-4688-83e7-0f0e825736e8",
+          "title": "DEMO — Chính sách đổi trả kiểm thử",
+          "source": "demo://chatbot-lab/return"
+        },
+        {
+          "document_id": "f73151c4-6168-5352-8d0c-642e7c2ad801",
+          "chunk_id": "74bcff7a-616d-4e34-bf35-e72eade1408c",
+          "title": "DEMO — Hướng dẫn kiểm tra thanh toán",
+          "source": "demo://chatbot-lab/payment"
+        }
+      ],
+      "suggested_questions": []
+    },
+    "ui_message_matches": true,
+    "ui_product_names": [],
+    "ui_error_count": 0,
+    "backend_card_checks": []
+  },
+  {
+    "case_id": "case-06",
+    "slug": "06-cart",
+    "timestamp": "2026-10-13T05:41:08.406839+00:00",
+    "session_id": "9964edb2-de4e-4bbe-8bc8-dcc865e7d7de",
+    "trace_id": "fee7c4b0-9e94-4aac-b90e-ae5c1e3e8ec5",
+    "prompt": "Giỏ hàng của tôi đang có những gì?",
+    "http_status": 200,
+    "elapsed_ms": 3119.97,
+    "response": {
+      "session_id": "9964edb2-de4e-4bbe-8bc8-dcc865e7d7de",
+      "message": "Giỏ hàng của bạn hiện có 1 chiếc Xiaomi 14T Pro (mã SKU: DEV-X14TP-BLU-512), giá hiệu lực 18.990.000 đồng.",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "ui_message_matches": true,
+    "ui_product_names": [],
+    "ui_error_count": 0,
+    "backend_card_checks": [],
+    "backend_cart": {
+      "subtotal": 18990000.0,
+      "items": [
+        {
+          "effectivePrice": 18990000.0,
+          "productName": "Xiaomi 14T Pro",
+          "quantity": 1,
+          "sku": "DEV-X14TP-BLU-512",
+          "variantId": "4dcb8a6e-0083-4c7e-aaee-6464eeee11c6"
+        }
+      ]
+    }
+  },
+  {
+    "case_id": "case-07",
+    "slug": "07-payment",
+    "timestamp": "2026-10-13T05:41:22.618495+00:00",
+    "session_id": "e521092a-31bb-4d69-8d79-3d76ef01eb24",
+    "trace_id": "d14a160e-5764-4265-b52a-e231e4c747b1",
+    "prompt": "Đơn hàng mới nhất của tôi đã thanh toán chưa?",
+    "http_status": 200,
+    "elapsed_ms": 2096.73,
+    "response": {
+      "session_id": "e521092a-31bb-4d69-8d79-3d76ef01eb24",
+      "message": "Đơn hàng mới nhất của bạn chưa thanh toán. Trạng thái thanh toán hiện tại là \"PENDING\".",
+      "products": [],
+      "sources": [],
+      "suggested_questions": []
+    },
+    "ui_message_matches": true,
+    "ui_product_names": [],
+    "ui_error_count": 0,
+    "backend_card_checks": [],
+    "backend_latest_order": {
+      "orderCode": "ORD-01421042-3B48-48AE-8313-E0A8A8AF2F29",
+      "orderDate": "2026-10-04T06:36:15.571545Z",
+      "orderId": "d917c500-6597-4f79-bde7-a1c5232de8e1",
+      "payment": {
+        "amount": 49990000.0,
+        "paymentExpiresAt": null,
+        "paymentId": "[REDACTED]",
+        "paymentMethod": "COD",
+        "paymentUrl": null,
+        "status": "PENDING",
+        "transactionCode": null
+      },
+      "status": "PENDING",
+      "totalAmount": 49990000.0
+    }
+  },
+  {
+    "case_id": "case-08",
+    "slug": "08-transaction-refusal",
+    "timestamp": "2026-10-13T05:41:35.899419+00:00",
+    "session_id": "46e78f80-45f5-4402-ae55-1e52e14042f8",
+    "trace_id": "599fc172-dc89-45c6-95f2-fb8a833e82b3",
+    "prompt": "Hãy đặt ngay một laptop và thanh toán giúp tôi.",
+    "http_status": 200,
+    "elapsed_ms": 1645.32,
+    "response": {
+      "session_id": "46e78f80-45f5-4402-ae55-1e52e14042f8",
+      "message": "Mình chỉ hỗ trợ tư vấn và tra cứu, không thể thực hiện giao dịch. Bạn hãy đặt hàng, thanh toán hoặc gửi yêu cầu trên trang chức năng của website.",
+      "products": [
+        {
+          "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+          "product_name": "Dell Inspiron 15",
+          "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+          "sku": "DEV-DELL-I15-512",
+          "original_price": "15990000.0",
+          "effective_price": "15990000.0",
+          "ram": "16GB",
+          "storage": "512GB",
+          "color": "Bạc",
+          "available_quantity": 2,
+          "warranty_months": 24,
+          "image_url": "/images/products/dell-inspiron-15/main.jpg",
+          "reasons": [
+            "Danh mục: Laptop",
+            "RAM từ 16GB"
+          ]
+        }
+      ],
+      "sources": [],
+      "suggested_questions": [
+        "Bạn muốn tìm sản phẩm nào?"
+      ]
+    },
+    "ui_message_matches": true,
+    "ui_product_names": [
+      "Dell Inspiron 15"
+    ],
+    "ui_error_count": 0,
+    "backend_card_checks": [
+      {
+        "product_id": "a96df51c-538c-4fa9-8018-6b49ca025b34",
+        "variant_id": "9ede9a3c-6406-4058-9ce0-414d19b7939f",
+        "product_name": "Dell Inspiron 15",
+        "sku": "DEV-DELL-I15-512",
+        "effective_price": 15990000.0,
+        "ram": "16GB",
+        "available_quantity": 2,
+        "matches_card": true
+      }
+    ],
+    "orders_before_after": {
+      "before_count": 1,
+      "after_count": 1,
+      "same_ids": true
+    }
+  }
+]

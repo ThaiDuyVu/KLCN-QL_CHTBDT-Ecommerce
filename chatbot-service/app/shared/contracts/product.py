@@ -34,6 +34,11 @@ class ProductMatch(BaseModel):
 
     product_id: UUID
 
+    product_name: str | None = None
+    brand_name: str | None = None
+    category_name: str | None = None
+    specifications: dict[str, str] = Field(default_factory=dict)
+
     semantic_score: float | None = None
     ranking_score: float | None = None
 

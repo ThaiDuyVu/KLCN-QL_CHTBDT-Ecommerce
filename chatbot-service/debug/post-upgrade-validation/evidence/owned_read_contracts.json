@@ -1,0 +1,49 @@
+[
+  {
+    "synthetic_order_code": "ORD-DIAG-DELIVERED",
+    "http_status": 200,
+    "payment": {
+      "amount": 18990000.0,
+      "paymentMethod": "COD",
+      "status": "PAID"
+    },
+    "error_class": null,
+    "message": null
+  },
+  {
+    "synthetic_order_code": "ORD-DIAG-FAILED",
+    "http_status": 200,
+    "payment": {
+      "amount": 18990000.0,
+      "paymentMethod": "COD",
+      "status": "FAILED"
+    },
+    "error_class": null,
+    "message": null
+  },
+  {
+    "synthetic_order_code": "ORD-DIAG-NOPAY",
+    "http_status": 409,
+    "payment": {},
+    "error_class": null,
+    "message": "Đơn không có đúng một payment; cần rà dữ liệu trước khi xử lý"
+  },
+  {
+    "synthetic_order_code": "ORD-DIAG-NULLWAREHOUSE",
+    "http_status": 500,
+    "payment": {},
+    "error_class": "Internal Server Error",
+    "message": null
+  },
+  {
+    "synthetic_order_code": "ORD-DIAG-EXPIRED",
+    "http_status": 200,
+    "payment": {
+      "amount": 18990000.0,
+      "paymentMethod": "COD",
+      "status": "PAID"
+    },
+    "error_class": null,
+    "message": null
+  }
+]

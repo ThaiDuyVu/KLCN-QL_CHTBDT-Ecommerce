@@ -104,8 +104,9 @@ class ProductPersistenceIntegrationTest {
     @Test
     void migrationsAndProductCreation_matchLockedSchema() {
         flyway.validate();
-        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("8");
-        assertThat(flyway.info().applied()).hasSize(8);
+        // V9 only seeds staff job roles (approved for S2, 27/10/2026); the table structure is unchanged.
+        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("9");
+        assertThat(flyway.info().applied()).hasSize(9);
 
         var response = service.createProduct(request(null));
         Product persisted = productRepository.findById(response.productId()).orElseThrow();

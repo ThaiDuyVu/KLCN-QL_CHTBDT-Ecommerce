@@ -1,0 +1,184 @@
+{
+  "trace_id": "22c0d267-4953-45c4-8b21-1503a57b34aa",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "b97b7ed9-032c-45b4-bcc9-a3e45f669083",
+      "parent_id": "975cae21-2eb4-4af1-b251-68dd39d32308",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 3076.51,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại Xiaomi",
+          "top_k": 3
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "c182ad95-aa27-4d87-9dcc-27d5e755d2dd",
+      "parent_id": "bde76012-f045-4216-b08d-ea10b54e04dc",
+      "name": "conversation.reference_resolution",
+      "status": "ok",
+      "offset_ms": 3125.82,
+      "duration_ms": null,
+      "output": {
+        "kind": "LAST",
+        "status": "AMBIGUOUS"
+      }
+    },
+    {
+      "id": "6da46d71-b6b2-43b6-bfbf-0f7bd1c3fdf3",
+      "parent_id": "bde76012-f045-4216-b08d-ea10b54e04dc",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 3125.9,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Có nhiều sản phẩm vừa được gợi ý. Bạn muốn hỏi máy nào? Hãy nêu tên hoặc SKU.",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "535af131-1db0-4a80-be19-8e02bef134e1",
+      "parent_id": "bde76012-f045-4216-b08d-ea10b54e04dc",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 3126.05,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "a277d000-33ae-4452-af16-b84284af6895",
+      "parent_id": "d5b54e1a-b6da-4968-8d46-1016bf060f70",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 3126.46,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 8.09,
+      "duration_ms": 3130.51,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 39.19,
+      "duration_ms": 3074.51,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 40.95,
+      "duration_ms": 3035.49,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 41.43,
+      "duration_ms": 3034.95,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 41.86,
+      "duration_ms": 3034.45,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 3076.7,
+      "duration_ms": 12.5,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 3089.28,
+      "duration_ms": 8.14,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 3097.47,
+      "duration_ms": 16.03,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 3125.99,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 3126.31,
+      "duration_ms": 0.2,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "endpoint": "/api/chat",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}

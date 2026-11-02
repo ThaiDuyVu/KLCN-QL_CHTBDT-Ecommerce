@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+from app.shared.tracing import traced, event
+
 import asyncio
-from collections.abc import Callable
 from decimal import Decimal
+from collections.abc import Callable
 from uuid import UUID
 
 import httpx
@@ -10,17 +12,25 @@ import httpx
 from fastapi import HTTPException
 from app.shared.config import get_settings
 from app.features.product_advisor.backend import backend_cookies
+from app.features.product_advisor.bundle import choose_bundle
+from app.features.comparison.builder import build_comparison, cross_category_message, mixed_categories
+from app.features.product_advisor.real_service import ProductResolutionError
 
 from app.features.knowledge.protocol import KnowledgeRetrievalService
 from app.features.knowledge.repository import KnowledgeRepositoryError
-from app.features.knowledge.service import KnowledgeUnavailable, build_source_references
+from app.features.knowledge.service import KnowledgeUnavailable, build_source_references, relevant_chunks
 from app.shared.contracts.knowledge import KnowledgeChunkMatch
 
 from app.features.chat.models import SendMessageRequest
-from app.features.conversation.models import SenderType
+from app.features.conversation.models import SenderType, EvidenceSnapshot
+from app.features.conversation.references import resolve_reference
+from app.features.conversation.async_lease import blocking, request_lease
+from app.features.chat.policy import read_only_plan
 from app.features.conversation.service import ConversationService
 from app.features.customer_context.models import AuthenticatedCustomer
-from app.features.customer_context.service import CustomerContextService
+from app.features.customer_context.service import (
+    CustomerContextService, EMPTY_CART_MESSAGE, NO_OWNED_ORDERS_MESSAGE, NoOwnedOrders, VerifiedEmptyCart,
+)
 from app.features.product_advisor.protocol import ProductAdvisorService
 from app.features.product_advisor.service import MockProductAdvisorService
 from app.features.query_understanding.protocol import QueryUnderstandingService
@@ -28,9 +38,11 @@ from app.features.query_understanding.service import MockQueryUnderstandingServi
 from app.features.response_generation.protocol import ResponseGenerationService
 from app.features.response_generation.service import MockResponseGenerationService
 from app.shared.backend.client import BackendClient
+from app.shared.backend.errors import OwnedOrderPaymentIntegrityError, PAYMENT_UNAVAILABLE_MESSAGE
 from app.shared.contracts.context import (
     ChatMessage as SharedChatMessage,
     GroundedContext,
+    CustomerContext,
     QueryContext,
 )
 from app.shared.contracts.enums import Intent, MessageRole
@@ -81,7 +93,16 @@ class ChatService:
             else MockResponseGenerationService()
         )
 
-    async def send_message_async(
+    async def send_message_async(self, session_id, request, customer=None, cookies=None):
+        repository = self.conversation_service.repository
+        if hasattr(repository, 'request_lock') and customer is not None:
+            async with request_lease(repository, session_id, customer.customer_id):
+                return await self._send_message_async(session_id, request, customer, cookies)
+
+        return await self._send_message_async(session_id, request, customer, cookies)
+
+    @traced("chat.pipeline", ("request", "session_id"))
+    async def _send_message_async(
         self,
         session_id: UUID,
         request: SendMessageRequest,
@@ -95,32 +116,35 @@ class ChatService:
         )
 
         if customer is not None:
+            # Repository I/O runs off the event loop; blocking() settles a started write before
+            # propagating cancellation, so the request lease is released only afterwards (Fix04).
             try:
-                self.conversation_service.get_session(session_id, customer.customer_id)
+                await blocking(self.conversation_service.get_session, session_id, customer.customer_id)
             except HTTPException as exc:
                 if exc.status_code == 404:
-                    self.conversation_service.create_session(
+                    await blocking(
+                        self.conversation_service.create_session,
                         customer_id=customer.customer_id,
                         session_id=session_id,
                     )
                 else:
                     raise
 
-            self.conversation_service.add_message(
+            await blocking(
+                self.conversation_service.add_message,
                 session_id=session_id,
                 sender_type=SenderType.USER,
                 message=request.message,
                 customer_id=customer.customer_id,
             )
-            recent_messages = self.conversation_service.get_recent_messages(
+            recent_messages = await blocking(
+                self.conversation_service.get_context_messages,
                 session_id=session_id,
                 customer_id=customer.customer_id,
-                window=get_settings().chat_history_window + 1,
+                window=get_settings().chat_history_window,
             )
         else:
             recent_messages = []
-
-        recent_messages = recent_messages[:-1] if recent_messages else []
 
         recent_history = [
             SharedChatMessage(
@@ -142,7 +166,26 @@ class ChatService:
             recent_messages=recent_history,
         )
 
-        query_plan = await asyncio.to_thread(self.query_understanding.understand, query_context)
+        event("conversation.context", query_context)
+        def understand():
+            token = backend_cookies.set(cookies or None)
+            try:
+                return self.query_understanding.understand(query_context)
+            finally:
+                backend_cookies.reset(token)
+        try:
+            query_plan = read_only_plan(request.message)
+            if query_plan is not None:
+                event('query.read_only_guard', query_plan)
+            else:
+                query_plan = await blocking(understand)
+        except (httpx.HTTPError, ValueError) as exc:
+            raise HTTPException(status_code=503, detail="Chưa thể xác minh catalog sản phẩm; vui lòng thử lại.") from exc
+
+        if customer is not None:
+            snapshot = await blocking(self.conversation_service.repository.get_snapshot, session_id, customer.customer_id)
+            query_plan = resolve_reference(request.message, query_plan, snapshot)
+        event("query.plan.initial", query_plan)
 
         product_matches: list[ProductMatch] = []
         product_cards: list[ProductCard] = []
@@ -153,55 +196,96 @@ class ChatService:
                 product_search = product_search.model_copy(update={"top_k": 1})
             elif query_plan.intent == Intent.PRODUCT_COMPARE:
                 product_search = product_search.model_copy(update={"top_k": min(product_search.top_k, 3)})
-            cheaper = any(term in request.message.casefold() for term in ("rẻ hơn", "thấp hơn", "cheaper"))
-            below_minimum = False
-            if cheaper and customer is not None:
-                previous = self.conversation_service.repository.last_product_cards(session_id, customer.customer_id)
-                prices = [card.effective_price for card in previous if card.effective_price is not None]
-                if prices:
-                    ceiling = min(prices) - Decimal("1")
-                    below_minimum = ceiling < 0 or (product_search.min_price is not None and ceiling < product_search.min_price)
-                    if not below_minimum:
-                        data = product_search.model_dump()
-                        data["max_price"] = min(ceiling, product_search.max_price) if product_search.max_price is not None else ceiling
-                        product_search = type(product_search).model_validate(data)
-                        query_plan = query_plan.model_copy(update={"product_search": product_search})
+            # Cheaper/ordinal follow-ups are resolved once, from the owned snapshot, by resolve_reference.
+            event("query.plan.effective", {"product_search": product_search})
 
             def search_and_build():
                 token = backend_cookies.set(cookies or None)
                 try:
+                    if query_plan.bundle:
+                        return search_bundle()
                     matches = self.product_advisor.search(product_search)
+                    excluded = set(filter(None, query_plan.references.get('exclude_products', '').split(',')))
+                    if excluded:
+                        # "Còn mẫu nào khác": same requirements, only products not shown yet.
+                        limit = int(query_plan.references.get('result_limit') or product_search.top_k)
+                        matches = [m for m in matches if str(m.product_id) not in excluded][:limit]
                     return matches, self.product_advisor.build_cards(matches)
                 finally:
                     backend_cookies.reset(token)
 
+            def search_bundle():
+                # One verified search per product type; the combo is chosen from live prices and stock.
+                candidates = [self.product_advisor.search(segment) for segment in query_plan.bundle]
+                chosen, fits = choose_bundle(candidates, query_plan.budget, query_plan.bundle[0].max_price)
+                bundle_fit['fits'] = fits
+                cards = [card for match, segment in zip(chosen, query_plan.bundle)
+                         for card in self.product_advisor.build_cards([match], plan=segment)]
+                event('product.bundle', {'types': [s.category for s in query_plan.bundle], 'chosen': len(chosen),
+                                         'within_budget': fits, 'budget': query_plan.budget})
+                return (chosen if len(cards) == len(query_plan.bundle) else []), cards
+
+            bundle_fit = {}
             try:
-                if not below_minimum:
-                    product_matches, product_cards = await asyncio.to_thread(search_and_build)
-                if customer is not None:
-                    self.conversation_service.repository.remember_product_cards(session_id, customer.customer_id, product_cards)
+                product_matches, product_cards = await blocking(search_and_build)
+                if query_plan.bundle:
+                    query_plan = query_plan.model_copy(update={'references': {
+                        **query_plan.references, 'bundle_within_budget': 'true' if bundle_fit.get('fits') else 'false'}})
+                    if not product_matches:
+                        product_cards = []
+            except ProductResolutionError as exc:
+                event('product.resolution_failed', {'reason': exc.reason}, status='warning')
+                query_plan = query_plan.model_copy(update={'clarification': str(exc)})
             except (httpx.HTTPError, ValueError) as exc:
                 raise HTTPException(status_code=503, detail="Chưa thể lấy dữ liệu sản phẩm. Kiểm tra backend, kho hàng và dịch vụ embedding.") from exc
+            if query_plan.intent == Intent.PRODUCT_COMPARE and mixed_categories(product_matches):
+                # Specifications of different product types are not comparable: explain and decline.
+                event('product.compare_declined', {'reason': 'mixed_categories',
+                                                   'categories': [m.category_name for m in product_matches]})
+                query_plan = query_plan.model_copy(update={'clarification': cross_category_message(product_matches)})
+                product_matches, product_cards = [], []
 
         """chuyển tiếp 'cookies' nhận từ Client sang hệ thống Spring Boot qua BackendClient
         Spring Security sẽ chịu trách nhiệm giải mã cookies, xác thực danh tính 
         và trả về đúng dữ liệu thuộc sở hữu của Customer đó"""
-        context_payload = await self.customer_context_service.load_context(
-            query_plan.intent,
-            cookies or {},
-        )
+        context_options = {}
+        if query_plan.references.get('order_code'):
+            context_options['order_code'] = query_plan.references['order_code']
+        if query_plan.references.get('order_selection') == 'latest':
+            context_options['latest'] = True
+        try:
+            context_payload = await self.customer_context_service.load_context(query_plan.intent, cookies or {}, **context_options)
+        except OwnedOrderPaymentIntegrityError:
+            # The owned candidate was selected before detail retrieval. Do not replace it,
+            # invent payment evidence, or infer payment from the order summary/status.
+            query_plan = query_plan.model_copy(update={'clarification': PAYMENT_UNAVAILABLE_MESSAGE})
+            context_payload = CustomerContext()
+            event('customer.payment_unavailable', {'intent': query_plan.intent,
+                  'reason': 'owned_payment_integrity', 'payment_evidence_loaded': False}, status='warning')
+        except NoOwnedOrders:
+            # Only a successful empty owned list reaches here; backend errors keep their own path.
+            query_plan = query_plan.model_copy(update={'clarification': NO_OWNED_ORDERS_MESSAGE})
+            context_payload = CustomerContext()
+        except VerifiedEmptyCart:
+            # Same existing sentence as an initialized cart with no items; no cart ID is invented.
+            query_plan = query_plan.model_copy(update={'clarification': EMPTY_CART_MESSAGE})
+            context_payload = CustomerContext()
 
         knowledge_chunks = []
         if query_plan.intent == Intent.KNOWLEDGE_QA and self.knowledge_retrieval is not None:
             try:
-                knowledge_chunks = await asyncio.to_thread(
+                knowledge_chunks = await blocking(
                     self.knowledge_retrieval.retrieve,
                     query_plan.semantic_query or query_context.current_message,
                     top_k=self.knowledge_top_k,
                 )
-            except (KnowledgeUnavailable, KnowledgeRepositoryError):
+                knowledge_chunks = relevant_chunks(query_context.current_message, knowledge_chunks)
+            except (KnowledgeUnavailable, KnowledgeRepositoryError) as exc:
+                event("knowledge.fallback", {"reason": type(exc).__name__, "action": "continue_without_knowledge"}, status="warning")
                 knowledge_chunks = []
+                query_plan = query_plan.model_copy(update={'clarification': 'Dịch vụ tra cứu tài liệu đang không khả dụng. Mình chưa thể xác minh câu trả lời; bạn vui lòng thử lại sau.'})
 
+        event("retrieval.summary", {"intent": query_plan.intent, "products": len(product_matches), "cards": len(product_cards), "knowledge_chunks": len(knowledge_chunks), "knowledge_configured": self.knowledge_retrieval is not None})
         grounded_context = GroundedContext(
             query_plan=query_plan,
             user_query=query_context.current_message,
@@ -211,21 +295,15 @@ class ChatService:
             customer_context=context_payload,
         )
 
-        assistant_message = await asyncio.to_thread(self.response_generation.generate, grounded_context)
-
-        if customer is not None:
-            self.conversation_service.add_message(
-                session_id=session_id,
-                sender_type=SenderType.ASSISTANT,
-                message=assistant_message,
-                customer_id=customer.customer_id,
-            )
+        event("response.grounded_context", grounded_context)
+        assistant_message = await blocking(self.response_generation.generate, grounded_context)
 
         response = ChatResponse(
             session_id=session_id,
             message=assistant_message,
             products=product_cards,
             sources=build_source_references(knowledge_chunks),
+            comparison=build_comparison(product_matches, product_cards) if query_plan.intent == Intent.PRODUCT_COMPARE and not query_plan.clarification else None,
             suggested_questions=[
                 "Bạn muốn tìm sản phẩm nào?",
             ]
@@ -233,8 +311,33 @@ class ChatService:
             else [],
         )
 
+        if customer is not None:
+            # A combo spans product types, so no single search can be refined by the next turn.
+            snapshot_search = product_search if product_cards and not query_plan.bundle else None
+            if product_cards and query_plan.references.get('source') == 'owned_session_snapshot' and snapshot and snapshot.search:
+                # A detail question changes the selected object, not the original discovery requirements.
+                snapshot_search = snapshot.search
+            references = query_plan.references
+            if snapshot_search is not None and references.get('baseline') == 'historical_display_price':
+                # A bound derived from displayed prices is not a user requirement; it must not leak into the next turn.
+                snapshot_search = snapshot_search.model_copy(update={
+                    'min_price': Decimal(references['carry_min_price']) if references.get('carry_min_price') else None,
+                    'max_price': Decimal(references['carry_max_price']) if references.get('carry_max_price') else None})
+            if snapshot_search is not None and references.get('result_limit'):
+                snapshot_search = snapshot_search.model_copy(update={'top_k': int(references['result_limit'])})
+            categories = {match.category_name for match in product_matches if match.category_name}
+            if snapshot_search is not None and not snapshot_search.category and len(categories) == 1:
+                snapshot_search = snapshot_search.model_copy(update={'category': next(iter(categories))})
+            list_cards = []
+            if len({card.product_id for card in product_cards}) > 1:
+                list_cards = product_cards
+            elif references.get('source') == 'owned_session_snapshot' and snapshot:
+                list_cards = snapshot.list_cards or (snapshot.cards if len({c.product_id for c in snapshot.cards}) > 1 else [])
+            snapshot = EvidenceSnapshot(cards=product_cards, list_cards=list_cards, search=snapshot_search) if product_cards else None
+            await blocking(self.conversation_service.repository.save_assistant,
+                                    session_id, customer.customer_id, assistant_message, snapshot)
         if self.after_response is not None:
-            await asyncio.to_thread(self.after_response, query_context, response, knowledge_chunks)
+            await blocking(self.after_response, query_context, response, knowledge_chunks)
         return response
 
     def send_message(
@@ -269,4 +372,3 @@ class ChatService:
 
 
 MockChatService = ChatService
-

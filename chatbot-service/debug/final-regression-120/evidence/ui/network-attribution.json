@@ -1,0 +1,37 @@
+{
+  "execution": "SUPPLEMENTAL_REAL_BROWSER_NOT_COUNTED_IN_120",
+  "http_error_responses": [
+    {
+      "http_status": 401,
+      "path": "/api/auth/me",
+      "method": "GET"
+    },
+    {
+      "http_status": 401,
+      "path": "/api/auth/refresh",
+      "method": "POST"
+    },
+    {
+      "http_status": 404,
+      "path": "/api/v1/chat/sessions/synthetic-session/messages",
+      "method": "GET"
+    },
+    {
+      "http_status": 404,
+      "path": "/api/v1/chat/sessions/synthetic-session",
+      "method": "GET"
+    },
+    {
+      "http_status": 404,
+      "path": "/api/v1/chat/sessions/synthetic-session/messages",
+      "method": "GET"
+    },
+    {
+      "http_status": 404,
+      "path": "/api/v1/chat/sessions/synthetic-session",
+      "method": "GET"
+    }
+  ],
+  "uncaught_page_errors": [],
+  "notes": "Network observations are from this supplemental login/product navigation run; earlier generic console messages without URL remain unattributed unless reproduced here."
+}

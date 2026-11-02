@@ -1,0 +1,27 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_b10_orphan_user_not_in_next_context_after_restart ____________
+
+pg = (<app.features.conversation.postgres_repository.PostgresConversationRepository object at 0x10a79b470>, UUID('2f2f0992-...7-ea8a-41e8-a075-35b8c5c582fd'), '[REDACTED_DATABASE_URL]')
+
+    def test_b10_orphan_user_not_in_next_context_after_restart(pg):
+        repo,owner,_,dsn=pg;s=repo.create_session(owner)
+        repo.add_message(s.id,'USER','completed question',owner)
+        repo.save_assistant(s.id,owner,'completed answer',snapshot())
+        class FailAssistant(PostgresConversationRepository):
+            def save_assistant(self,*a,**k):raise HTTPException(503,'controlled assistant write unavailable')
+        with pytest.raises(HTTPException) as failure:
+            service(FailAssistant(dsn)).send_message(s.id,SendMessageRequest(message='abandoned question'),customer=customer(owner))
+        assert failure.value.status_code==503
+        fresh=PostgresConversationRepository(dsn);qu=Understanding()
+        service(fresh,qu).send_message(s.id,SendMessageRequest(message='next question'),customer=customer(owner))
+>       assert [m.content for m in qu.contexts[0].recent_messages]==['completed question','completed answer']
+E       AssertionError: assert ['completed q...ned question'] == ['completed q...leted answer']
+E
+E         Left contains one more item: 'abandoned question'
+E         Use -v to get more diff
+
+tests/test_conversation_safety.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_conversation_safety.py::test_b10_orphan_user_not_in_next_context_after_restart
+1 failed in 0.25s

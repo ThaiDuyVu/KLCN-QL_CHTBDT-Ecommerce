@@ -1,0 +1,96 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_frozen_diagnostic_queryplan[N03] _____________________
+
+case = 'N03'
+
+    @pytest.mark.parametrize('case', PROMPTS)
+    def test_frozen_diagnostic_queryplan(case):
+        plan = DomainNormalizer(Backend()).normalize(recorded_plan(case), context(PROMPTS[case]))
+        if case in {'N03', 'N46'}:
+>           assert plan.clarification and plan.product_search is None
+E           AssertionError: assert (None)
+E            +  where None = QueryPlan(clarification=None, intent=<Intent.PRODUCT_DISCOVERY: 'PRODUCT_DISCOVERY'>, requested_fields=[<RequestedFiel...one, cpu_keywords=[], in_stock_only=False, semantic_query='Tìm laptop Lenovo RAM 16GB.', top_k=5), semantic_query=None).clarification
+
+tests/test_query_integrity.py:32: AssertionError
+____________________ test_frozen_diagnostic_queryplan[N04] _____________________
+
+case = 'N04'
+
+    @pytest.mark.parametrize('case', PROMPTS)
+    def test_frozen_diagnostic_queryplan(case):
+        plan = DomainNormalizer(Backend()).normalize(recorded_plan(case), context(PROMPTS[case]))
+        if case in {'N03', 'N46'}:
+            assert plan.clarification and plan.product_search is None
+        elif case == 'N04':
+            search = plan.product_search
+>           assert (search.category, search.brands, search.max_price) == ('Laptop', ['Dell'], 20000000)
+E           AssertionError: assert (None, ['Dell...l('20000000')) == ('Laptop', ['Dell'], 20000000)
+E
+E             At index 0 diff: None != 'Laptop'
+E             Use -v to get more diff
+
+tests/test_query_integrity.py:35: AssertionError
+____________________ test_frozen_diagnostic_queryplan[N12] _____________________
+
+case = 'N12'
+
+    @pytest.mark.parametrize('case', PROMPTS)
+    def test_frozen_diagnostic_queryplan(case):
+        plan = DomainNormalizer(Backend()).normalize(recorded_plan(case), context(PROMPTS[case]))
+        if case in {'N03', 'N46'}:
+            assert plan.clarification and plan.product_search is None
+        elif case == 'N04':
+            search = plan.product_search
+            assert (search.category, search.brands, search.max_price) == ('Laptop', ['Dell'], 20000000)
+        elif case == 'N12':
+>           assert [(t.product_name, t.ram_gb, t.storage_gb) for t in plan.product_search.targets] == [
+                ('Xiaomi 15', 12, 256), ('iPhone 15', 6, 128)]
+E           AssertionError: assert [('Xiaomi 15'..., None, None)] == [('Xiaomi 15'... 15', 6, 128)]
+E
+E             At index 0 diff: ('Xiaomi 15', None, None) != ('Xiaomi 15', 12, 256)
+E             Use -v to get more diff
+
+tests/test_query_integrity.py:37: AssertionError
+____________________ test_frozen_diagnostic_queryplan[N46] _____________________
+
+case = 'N46'
+
+    @pytest.mark.parametrize('case', PROMPTS)
+    def test_frozen_diagnostic_queryplan(case):
+        plan = DomainNormalizer(Backend()).normalize(recorded_plan(case), context(PROMPTS[case]))
+        if case in {'N03', 'N46'}:
+>           assert plan.clarification and plan.product_search is None
+E           AssertionError: assert (None)
+E            +  where None = QueryPlan(clarification=None, intent=<Intent.PRODUCT_DISCOVERY: 'PRODUCT_DISCOVERY'>, requested_fields=[<RequestedFiel...n_stock_only=False, semantic_query='Tìm laptop dưới 20 triệu nhưng RAM phải dưới 16GB.', top_k=5), semantic_query=None).clarification
+
+tests/test_query_integrity.py:32: AssertionError
+____________________ test_frozen_diagnostic_queryplan[N47] _____________________
+
+case = 'N47'
+
+    @pytest.mark.parametrize('case', PROMPTS)
+    def test_frozen_diagnostic_queryplan(case):
+        plan = DomainNormalizer(Backend()).normalize(recorded_plan(case), context(PROMPTS[case]))
+        if case in {'N03', 'N46'}:
+            assert plan.clarification and plan.product_search is None
+        elif case == 'N04':
+            search = plan.product_search
+            assert (search.category, search.brands, search.max_price) == ('Laptop', ['Dell'], 20000000)
+        elif case == 'N12':
+            assert [(t.product_name, t.ram_gb, t.storage_gb) for t in plan.product_search.targets] == [
+                ('Xiaomi 15', 12, 256), ('iPhone 15', 6, 128)]
+        else:
+>           assert plan.product_search.top_k == 2
+E           AssertionError: assert 5 == 2
+E            +  where 5 = ProductSearchPlan(targets=[], category='Điện thoại', brands=['Xiaomi'], min_price=None, max_price=None, min_ram_gb=Non...ywords=[], in_stock_only=False, semantic_query='Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.', top_k=5).top_k
+E            +    where ProductSearchPlan(targets=[], category='Điện thoại', brands=['Xiaomi'], min_price=None, max_price=None, min_ram_gb=Non...ywords=[], in_stock_only=False, semantic_query='Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.', top_k=5) = QueryPlan(clarification=None, intent=<Intent.PRODUCT_DISCOVERY: 'PRODUCT_DISCOVERY'>, requested_fields=[], references=...ly=False, semantic_query='Chỉ gợi ý đúng 2 điện thoại Xiaomi, nếu không đủ thì nói rõ.', top_k=5), semantic_query=None).product_search
+
+tests/test_query_integrity.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_query_integrity.py::test_frozen_diagnostic_queryplan[N03]
+FAILED tests/test_query_integrity.py::test_frozen_diagnostic_queryplan[N04]
+FAILED tests/test_query_integrity.py::test_frozen_diagnostic_queryplan[N12]
+FAILED tests/test_query_integrity.py::test_frozen_diagnostic_queryplan[N46]
+FAILED tests/test_query_integrity.py::test_frozen_diagnostic_queryplan[N47]
+5 failed in 0.14s

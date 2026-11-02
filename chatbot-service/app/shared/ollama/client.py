@@ -1,4 +1,5 @@
 """Synchronous adapter matching the existing synchronous service contracts."""
+from app.shared.tracing import traced, event
 import math
 from typing import Any
 
@@ -50,6 +51,7 @@ class OllamaClient:
         if self._owned:
             self.client.close()
 
+    @traced("ollama.http", ("endpoint", "payload"), result=False)
     def _post(self, endpoint: str, payload: dict[str, Any]) -> dict[str, Any]:
         try:
             response = self.client.post(
@@ -60,18 +62,25 @@ class OllamaClient:
             raise OllamaUnavailable("Ollama timed out") from exc
         except httpx.RequestError as exc:
             raise OllamaUnavailable("Ollama connection failed") from exc
+        event("ollama.http_status", {"endpoint": endpoint, "status_code": response.status_code})
         if not response.is_success:
+            event("ollama.error_body", response.text, status="warning")
             raise OllamaModelError(f"Ollama HTTP {response.status_code}")
         try:
             data = response.json()
         except ValueError as exc:
+            event("ollama.invalid_json", response.text, status="warning")
             raise OllamaInvalidResponse("Ollama returned invalid JSON") from exc
         if not isinstance(data, dict):
             raise OllamaInvalidResponse("Expected Ollama JSON object")
         if data.get("error"):
             raise OllamaModelError("Ollama reported a model error")
+        if data.get("done_reason") == "length":
+            event("ollama.output_limit", {"reason": "length", "eval_count": data.get("eval_count")}, status="warning")
+        event("ollama.result", {k: v for k, v in data.items() if k != "embeddings"})
         return data
 
+    @traced("ollama.chat", ("messages", "schema"))
     def chat(self, messages: list[dict[str, str]], *, schema: dict[str, Any] | None = None) -> str:
         payload = dict(model=self.settings.ollama_chat_model, messages=messages, stream=False, think=False,
                        options={"temperature": 0, "num_predict": 512})
@@ -88,4 +97,6 @@ class OllamaClient:
         if not texts:
             return []
         data = self._post("/api/embed", dict(model=self.settings.ollama_embedding_model, input=texts))
-        return validate_embeddings(data.get("embeddings"), len(texts))
+        vectors = validate_embeddings(data.get("embeddings"), len(texts))
+        event("embedding.shape", {"count": len(vectors), "dimensions": len(vectors[0]) if vectors else 0})
+        return vectors

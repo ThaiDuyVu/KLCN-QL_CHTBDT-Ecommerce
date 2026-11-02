@@ -1,0 +1,417 @@
+{
+  "trace_id": "d8dcb6e0-53b8-407d-8e5c-9a1e46e36da3",
+  "status": "warning",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "7c777b3d-3e73-4a00-b489-b424af5cccad",
+      "parent_id": "f2438eda-6e1f-450b-96ab-f032a4d1399e",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1686.04,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "dev-x15-wht-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU dev-x15-wht-512",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "e89e76ab-8369-41d9-bd6f-f39f7d98f6fa",
+      "parent_id": "f2438eda-6e1f-450b-96ab-f032a4d1399e",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1721.72,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "dev-x15-wht-512",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "SKU dev-x15-wht-512",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DETAIL",
+          "requested_fields": [
+            "PRICE"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [
+              {
+                "product_id": null,
+                "variant_id": null,
+                "product_name": null,
+                "sku": "dev-x15-wht-512",
+                "ram_gb": null,
+                "storage_gb": null,
+                "color": null
+              }
+            ],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "SKU dev-x15-wht-512 giá bao nhiêu?",
+            "top_k": 1
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "15832711-0bea-4ac8-9553-7ce271e1b2a7",
+      "parent_id": "3f461f5f-246a-4ed8-9a78-9555ca9b0421",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1735.42,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DETAIL",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "dev-x15-wht-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU dev-x15-wht-512 giá bao nhiêu?",
+          "top_k": 1
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "0bec6c51-7431-4537-84e5-a2d4a7a90bc7",
+      "parent_id": "3f461f5f-246a-4ed8-9a78-9555ca9b0421",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1735.52,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [
+            {
+              "product_id": null,
+              "variant_id": null,
+              "product_name": null,
+              "sku": "dev-x15-wht-512",
+              "ram_gb": null,
+              "storage_gb": null,
+              "color": null
+            }
+          ],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "SKU dev-x15-wht-512 giá bao nhiêu?",
+          "top_k": 1
+        },
+        "below_minimum": false,
+        "cheaper_followup": false
+      }
+    },
+    {
+      "id": "97e5985d-bf5a-412c-912b-17f4718f89c7",
+      "parent_id": "3f461f5f-246a-4ed8-9a78-9555ca9b0421",
+      "name": "product.search",
+      "status": "error",
+      "offset_ms": 1735.61,
+      "duration_ms": 8.63,
+      "output": {
+        "type": "ProductResolutionError",
+        "frames": [
+          {
+            "file": "__init__.py",
+            "function": "span",
+            "line": 226
+          },
+          {
+            "file": "__init__.py",
+            "function": "wrapper",
+            "line": 258
+          },
+          {
+            "file": "real_service.py",
+            "function": "search",
+            "line": 139
+          },
+          {
+            "file": "__init__.py",
+            "function": "wrapper",
+            "line": 258
+          },
+          {
+            "file": "real_service.py",
+            "function": "resolve",
+            "line": 108
+          }
+        ]
+      }
+    },
+    {
+      "id": "42c74900-f629-492d-a119-0be39fd94c48",
+      "parent_id": "97e5985d-bf5a-412c-912b-17f4718f89c7",
+      "name": "product.identity_resolution",
+      "status": "error",
+      "offset_ms": 1735.65,
+      "duration_ms": 8.45,
+      "output": {
+        "type": "ProductResolutionError",
+        "frames": [
+          {
+            "file": "__init__.py",
+            "function": "span",
+            "line": 226
+          },
+          {
+            "file": "__init__.py",
+            "function": "wrapper",
+            "line": 258
+          },
+          {
+            "file": "real_service.py",
+            "function": "resolve",
+            "line": 108
+          }
+        ]
+      }
+    },
+    {
+      "id": "f825dd4d-638e-4654-82cd-c3b96e80d6b8",
+      "parent_id": "3f461f5f-246a-4ed8-9a78-9555ca9b0421",
+      "name": "product.resolution_failed",
+      "status": "warning",
+      "offset_ms": 1744.29,
+      "duration_ms": null,
+      "output": {
+        "reason": "NOT_FOUND"
+      }
+    },
+    {
+      "id": "96857fde-c32f-4ef4-8ccd-cf4d77fe2849",
+      "parent_id": "3f461f5f-246a-4ed8-9a78-9555ca9b0421",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1744.38,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DETAIL",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "2cf9c898-a510-4f95-89f6-9de8af64f998",
+      "parent_id": "5d11cabb-a37f-4d58-b081-0fff0797510c",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1744.59,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 10.62,
+      "duration_ms": 1744.43,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 50.16,
+      "duration_ms": 1671.7,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 52.42,
+      "duration_ms": 1633.5,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 52.94,
+      "duration_ms": 1632.92,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 53.48,
+      "duration_ms": 1632.33,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1686.26,
+      "duration_ms": 11.81,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1698.18,
+      "duration_ms": 9.53,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1707.74,
+      "duration_ms": 13.79,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 1735.61,
+      "duration_ms": 8.63,
+      "status": "error"
+    },
+    {
+      "name": "product.identity_resolution",
+      "offset_ms": 1735.65,
+      "duration_ms": 8.45,
+      "status": "error"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1735.68,
+      "duration_ms": 6.49,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1744.34,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1744.52,
+      "duration_ms": 0.1,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/product-variants",
+      "kwargs": {
+        "params": {
+          "keyword": "dev-x15-wht-512",
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ],
+  "upstream_statuses": [
+    {
+      "endpoint": "/api/chat",
+      "status_code": 200
+    }
+  ],
+  "errors": []
+}

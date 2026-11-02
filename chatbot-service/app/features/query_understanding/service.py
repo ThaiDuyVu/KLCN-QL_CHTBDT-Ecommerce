@@ -1,3 +1,4 @@
+from app.shared.tracing import traced
 from app.shared.contracts.context import QueryContext
 from app.shared.contracts.enums import Intent
 from app.shared.contracts.query import (
@@ -7,6 +8,7 @@ from app.shared.contracts.query import (
 
 
 class MockQueryUnderstandingService:
+    @traced('query.mock_understand', ('context',))
     def understand(
         self,
         context: QueryContext,

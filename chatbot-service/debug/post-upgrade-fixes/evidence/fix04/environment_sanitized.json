@@ -1,0 +1,120 @@
+{
+  "flyway": [
+    [
+      "1",
+      true
+    ],
+    [
+      "2",
+      true
+    ],
+    [
+      "3",
+      true
+    ],
+    [
+      "4",
+      true
+    ],
+    [
+      "5",
+      true
+    ],
+    [
+      "6",
+      true
+    ],
+    [
+      "7",
+      true
+    ],
+    [
+      "8",
+      true
+    ]
+  ],
+  "catalog_products": 16,
+  "variants": 38,
+  "warehouse_count": 2,
+  "knowledge_documents": [
+    [
+      "DEMO",
+      "PUBLISHED",
+      2
+    ]
+  ],
+  "knowledge_chunks": 2,
+  "models": [
+    {
+      "name": "qwen3-embedding:0.6b",
+      "size": 639150858,
+      "digest": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "details": {
+        "format": "gguf",
+        "family": "qwen3",
+        "families": [
+          "qwen3"
+        ],
+        "parameter_size": "595.78M",
+        "quantization_level": "Q8_0",
+        "context_length": 32768,
+        "embedding_length": 1024
+      }
+    },
+    {
+      "name": "qwen3:4b-instruct",
+      "size": 2497293803,
+      "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+      "details": {
+        "format": "gguf",
+        "family": "qwen3",
+        "families": [
+          "qwen3"
+        ],
+        "parameter_size": "4.0B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 262144,
+        "embedding_length": 2560
+      }
+    }
+  ],
+  "source_commit": "77597932f051e701e6c36e46f330525ef400ac86",
+  "branch": "dev/thai-duy-vu",
+  "workspace_info": {
+    "workspaceName": "QL_CHTBDT_Ecommerce",
+    "commit": "7759793",
+    "verified_with_connector": true,
+    "note": "Corrected stale literal from reused environment helper; baseline.json records connector verification."
+  },
+  "runtime": "REAL_QWEN_REAL_SPRING_ISOLATED_POSTGRES",
+  "ai_enabled": true,
+  "product_advisor": "real",
+  "conversation_storage": "postgres",
+  "warehouse_profiles": [
+    "default",
+    "empty_warehouse",
+    "no_warehouse"
+  ],
+  "knowledge_status": "PUBLISHED",
+  "tracing": {
+    "enabled": true,
+    "file_enabled": true
+  },
+  "production_defaults": {
+    "ai": false,
+    "product_advisor": "mock",
+    "conversation": "memory"
+  },
+  "temporary_ports": {
+    "frontend": 5174,
+    "backend": 8081,
+    "chatbot": [
+      8091,
+      8092,
+      8093
+    ]
+  },
+  "source_db_modified": false,
+  "seed_customers_only_verified": true,
+  "worktree_hashes": "runtime/source_worktree_sha256.json"
+}

@@ -1,0 +1,506 @@
+{
+ "group": "G4b",
+ "title": "Ngữ cảnh nâng cao",
+ "cases": [
+  {
+   "id": "G4b-01",
+   "difficulty": "K",
+   "probe": false,
+   "title": "Hội thoại dài 10 lượt",
+   "turns": [
+    {
+     "say": "laptop RAM 16GB dưới 40tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_ram": 16,
+      "max_price": 40000000
+     }
+    },
+    {
+     "say": "máy thứ hai bảo hành bao lâu",
+     "expect": {
+      "products": true,
+      "referent": "card:turn1:2"
+     }
+    },
+    {
+     "say": "còn của Dell thôi",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell",
+      "min_ram": 16,
+      "max_price": 40000000
+     }
+    },
+    {
+     "say": "Dell XPS 13 có những bản nào",
+     "expect": {
+      "products": true,
+      "product": "Dell XPS 13"
+     }
+    },
+    {
+     "say": "so sánh Dell XPS 13 và Dell Inspiron 15",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Dell XPS 13",
+       "Dell Inspiron 15"
+      ]
+     }
+    },
+    {
+     "say": "cái nào rẻ hơn",
+     "expect": {
+      "products": true,
+      "product": "Dell Inspiron 15"
+     }
+    },
+    {
+     "say": "xin chào",
+     "expect": {}
+    },
+    {
+     "say": "có máy nào rẻ hơn không",
+     "expect": {
+      "category": "Laptop",
+      "brand": "Dell",
+      "min_ram": 16,
+      "price_vs_prev": "lt",
+      "no_brand": "ASUS",
+      "products": true
+     }
+    },
+    {
+     "say": "thế còn ASUS",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "ASUS",
+      "min_ram": 16,
+      "max_price": 40000000
+     }
+    },
+    {
+     "say": "máy đó bảo hành bao lâu",
+     "expect": {
+      "products": true,
+      "product": "ASUS ROG Zephyrus G14",
+      "text_any": [
+       "24 tháng"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-02",
+   "difficulty": "K",
+   "probe": true,
+   "title": "Trả lời câu hỏi lại",
+   "turns": [
+    {
+     "say": "laptop Dell",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell"
+     }
+    },
+    {
+     "say": "nó bảo hành bao lâu",
+     "expect": {
+      "clarify": true
+     }
+    },
+    {
+     "say": "cái XPS",
+     "expect": {
+      "products": true,
+      "product": "Dell XPS 13"
+     }
+    },
+    {
+     "say": "còn cái rẻ hơn thì sao",
+     "expect": {
+      "products": true,
+      "product": "Dell Inspiron 15"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-03",
+   "difficulty": "V",
+   "probe": true,
+   "title": "Thứ ba và cuối cùng",
+   "turns": [
+    {
+     "say": "gợi ý 4 điện thoại Samsung",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Samsung",
+      "count": 4
+     }
+    },
+    {
+     "say": "máy thứ ba giá bao nhiêu",
+     "expect": {
+      "products": true,
+      "referent": "card:turn1:3"
+     }
+    },
+    {
+     "say": "cái cuối cùng còn hàng không",
+     "expect": {
+      "products": true,
+      "referent": "card:turn1:4"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-04",
+   "difficulty": "K",
+   "probe": true,
+   "title": "Thứ tự trong câu so sánh",
+   "turns": [
+    {
+     "say": "gợi ý 3 laptop",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "count": 3
+     }
+    },
+    {
+     "say": "so sánh cái đầu và cái cuối",
+     "expect": {
+      "products": true,
+      "referent_set": [
+       "card:turn1:1",
+       "card:turn1:3"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-05",
+   "difficulty": "K",
+   "probe": true,
+   "title": "Quay về danh sách cũ sau 2 lần đổi chủ đề",
+   "turns": [
+    {
+     "say": "laptop Dell",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell"
+     }
+    },
+    {
+     "say": "điện thoại Samsung",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "brand": "Samsung"
+     }
+    },
+    {
+     "say": "Galaxy S24 giá bao nhiêu",
+     "expect": {
+      "products": true,
+      "product": "Samsung Galaxy S24"
+     }
+    },
+    {
+     "say": "quay lại laptop Dell lúc nãy, máy thứ hai giá bao nhiêu",
+     "expect": {
+      "products": true,
+      "referent": "card:turn1:2"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-06",
+   "difficulty": "V",
+   "probe": true,
+   "title": "Gỡ từng điều kiện",
+   "turns": [
+    {
+     "say": "laptop ASUS RAM 32GB dưới 55tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "ASUS",
+      "min_ram": 32
+     }
+    },
+    {
+     "say": "bỏ hãng đi",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_ram": 32,
+      "max_price": 55000000,
+      "filters_absent": [
+       "brands"
+      ]
+     }
+    },
+    {
+     "say": "RAM nào cũng được",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "max_price": 55000000,
+      "filters_absent": [
+       "brands",
+       "min_ram_gb"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-07",
+   "difficulty": "K",
+   "probe": true,
+   "title": "Sửa điều kiện cũ",
+   "turns": [
+    {
+     "say": "laptop RAM 16GB",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "min_ram": 16
+     }
+    },
+    {
+     "say": "của Dell",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell",
+      "min_ram": 16
+     }
+    },
+    {
+     "say": "dưới 45tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell",
+      "min_ram": 16,
+      "max_price": 45000000
+     }
+    },
+    {
+     "say": "à lúc nãy mình nói 16GB, đổi thành 32GB",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell",
+      "min_ram": 32,
+      "max_price": 45000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-08",
+   "difficulty": "K",
+   "probe": true,
+   "title": "Ngân sách nêu sớm",
+   "turns": [
+    {
+     "say": "mình là sinh viên, ngân sách 20 triệu",
+     "expect": {
+      "no_products": true
+     }
+    },
+    {
+     "say": "xin chào",
+     "expect": {}
+    },
+    {
+     "say": "gợi ý điện thoại",
+     "expect": {
+      "products": true,
+      "category": "Điện thoại",
+      "max_price": 20000000
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-09",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Ngữ cảnh sau lượt bị từ chối",
+   "turns": [
+    {
+     "say": "Xiaomi 15 giá bao nhiêu",
+     "expect": {
+      "products": true,
+      "product": "Xiaomi 15"
+     }
+    },
+    {
+     "say": "đặt luôn cho mình",
+     "expect": {
+      "refuse": true
+     }
+    },
+    {
+     "say": "thế bản 512GB còn hàng không",
+     "expect": {
+      "products": true,
+      "product": "Xiaomi 15",
+      "min_storage": 512
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-10",
+   "difficulty": "K",
+   "probe": true,
+   "title": "Tiếp nối combo",
+   "turns": [
+    {
+     "say": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+     "expect": {
+      "products": true,
+      "bundle_categories": [
+       "Điện thoại",
+       "Laptop"
+      ],
+      "max_total": 100000000
+     }
+    },
+    {
+     "say": "đổi laptop sang Dell",
+     "expect": {
+      "products": true,
+      "bundle_categories": [
+       "Điện thoại",
+       "Laptop"
+      ],
+      "bundle_brand": {
+       "Laptop": "Dell"
+      },
+      "max_total": 100000000
+     }
+    },
+    {
+     "say": "điện thoại rẻ hơn được không",
+     "expect": {
+      "products": true,
+      "bundle_categories": [
+       "Điện thoại",
+       "Laptop"
+      ],
+      "bundle_cheaper": "Điện thoại"
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-11",
+   "difficulty": "K",
+   "probe": true,
+   "title": "Tiếp nối so sánh",
+   "turns": [
+    {
+     "say": "so sánh Dell XPS 13 và MacBook Air M2",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Dell XPS 13",
+       "MacBook Air M2"
+      ]
+     }
+    },
+    {
+     "say": "thêm Inspiron 15 vào so sánh",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Dell XPS 13",
+       "MacBook Air M2",
+       "Dell Inspiron 15"
+      ]
+     }
+    },
+    {
+     "say": "bỏ MacBook ra",
+     "expect": {
+      "products": true,
+      "product_set": [
+       "Dell XPS 13",
+       "Dell Inspiron 15"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G4b-12",
+   "difficulty": "D",
+   "probe": false,
+   "title": "Phiên mới không biết phiên cũ",
+   "turns": [
+    {
+     "say": "laptop Dell",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell"
+     }
+    },
+    {
+     "say": "máy đầu tiên giá bao nhiêu",
+     "expect": {
+      "clarify": true
+     },
+     "new_session": true
+    }
+   ]
+  },
+  {
+   "id": "G4b-13",
+   "difficulty": "V",
+   "probe": false,
+   "title": "Yêu cầu mới không giữ giá cũ",
+   "turns": [
+    {
+     "say": "laptop Dell dưới 20tr",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "Dell",
+      "max_price": 20000000
+     }
+    },
+    {
+     "say": "laptop ASUS RAM 32GB",
+     "expect": {
+      "products": true,
+      "category": "Laptop",
+      "brand": "ASUS",
+      "min_ram": 32,
+      "filters_absent": [
+       "max_price"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

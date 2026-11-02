@@ -1,0 +1,3007 @@
+[
+  {
+    "file": "chatbot-service/app/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/main.py",
+    "sha256": "b862708f64d9a6f7220792db1619dd5b64dbee4be42cbda48545433e5f7b508a",
+    "lines": 38,
+    "definitions": [
+      {
+        "name": "lifespan",
+        "line": 13
+      },
+      {
+        "name": "health",
+        "line": 34
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/shared/config.py",
+    "sha256": "92a7b0870a99e6c6de9e8ec436aaa8e149073cf17e084f58cad22d7afb30385a",
+    "lines": 48,
+    "definitions": [
+      {
+        "name": "Settings",
+        "line": 8
+      },
+      {
+        "name": "get_settings",
+        "line": 47
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/shared/exceptions.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/chat/service.py",
+    "sha256": "c59fd7cce833e4a375c7187de417a206709ad45afa89027698cca70aeeb392ef",
+    "lines": 322,
+    "definitions": [
+      {
+        "name": "ChatService",
+        "line": 46
+      },
+      {
+        "name": "__init__",
+        "line": 47
+      },
+      {
+        "name": "send_message_async",
+        "line": 89
+      },
+      {
+        "name": "_send_message_async",
+        "line": 101
+      },
+      {
+        "name": "send_message",
+        "line": 291
+      },
+      {
+        "name": "rate_message",
+        "line": 307
+      },
+      {
+        "name": "understand",
+        "line": 163
+      },
+      {
+        "name": "search_and_build",
+        "line": 208
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/chat/models.py",
+    "sha256": "2f60c4010779e7075044081c7194d735d97b7b9b0b693b454abce231cfda4bfd",
+    "lines": 13,
+    "definitions": [
+      {
+        "name": "SendMessageRequest",
+        "line": 4
+      },
+      {
+        "name": "FeedbackRequest",
+        "line": 10
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/chat/policy.py",
+    "sha256": "3818e613a7699aec3992184370f28ee912cadc52ea0c9e198a154ffabd0fb68d",
+    "lines": 53,
+    "definitions": [
+      {
+        "name": "transaction_request",
+        "line": 12
+      },
+      {
+        "name": "read_only_plan",
+        "line": 28
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/chat/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/chat/router.py",
+    "sha256": "991ecdeeb74eb59f63907959ab6ab89582afe9d6f02d29c4d709756e1046d815",
+    "lines": 171,
+    "definitions": [
+      {
+        "name": "get_backend_client",
+        "line": 20
+      },
+      {
+        "name": "get_chat_service",
+        "line": 24
+      },
+      {
+        "name": "get_authenticated_customer",
+        "line": 28
+      },
+      {
+        "name": "send_message",
+        "line": 40
+      },
+      {
+        "name": "feedback_message",
+        "line": 75
+      },
+      {
+        "name": "get_messages",
+        "line": 91
+      },
+      {
+        "name": "status",
+        "line": 102
+      },
+      {
+        "name": "list_traces",
+        "line": 138
+      },
+      {
+        "name": "get_trace",
+        "line": 147
+      },
+      {
+        "name": "list_sessions",
+        "line": 156
+      },
+      {
+        "name": "session_detail",
+        "line": 163
+      },
+      {
+        "name": "close_session",
+        "line": 169
+      },
+      {
+        "name": "run",
+        "line": 48
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/chat/dependencies.py",
+    "sha256": "b31b537b80e537d302cce2b7f49c64fd42b4a93f6e637ecac3d220abb7af4b09",
+    "lines": 55,
+    "definitions": [
+      {
+        "name": "UnavailableProductAdvisor",
+        "line": 22
+      },
+      {
+        "name": "build_chat_service",
+        "line": 31
+      },
+      {
+        "name": "search",
+        "line": 24
+      },
+      {
+        "name": "build_cards",
+        "line": 27
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/after_sales/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/feedback/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/knowledge/service.py",
+    "sha256": "a247e606e45e44c60d15cf834ba0e11c301ff85c4938869d50e961b63839fbe6",
+    "lines": 119,
+    "definitions": [
+      {
+        "name": "KnowledgeUnavailable",
+        "line": 14
+      },
+      {
+        "name": "relevant_chunks",
+        "line": 18
+      },
+      {
+        "name": "chunk_text",
+        "line": 46
+      },
+      {
+        "name": "KnowledgeIndexingService",
+        "line": 63
+      },
+      {
+        "name": "PgvectorKnowledgeRetrievalService",
+        "line": 94
+      },
+      {
+        "name": "build_source_references",
+        "line": 116
+      },
+      {
+        "name": "__init__",
+        "line": 64
+      },
+      {
+        "name": "ingest",
+        "line": 72
+      },
+      {
+        "name": "__init__",
+        "line": 95
+      },
+      {
+        "name": "retrieve",
+        "line": 101
+      },
+      {
+        "name": "record_retrievals",
+        "line": 112
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/knowledge/ingest.py",
+    "sha256": "25b843ba29d6758dcae364676437d98dcd98dd5f33e8bc0acf99977e718aea73",
+    "lines": 27,
+    "definitions": [
+      {
+        "name": "main",
+        "line": 10
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/knowledge/protocol.py",
+    "sha256": "858d4d30298b8ad17c7a4f355dc039b873e92a858d2bf860c662f7a43f3dbadc",
+    "lines": 7,
+    "definitions": [
+      {
+        "name": "KnowledgeRetrievalService",
+        "line": 6
+      },
+      {
+        "name": "retrieve",
+        "line": 7
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/knowledge/database.py",
+    "sha256": "60d8457872f6e4c2b089af8fe667eb38417d4e384f35a41d06b88be5405c2bbc",
+    "lines": 18,
+    "definitions": [
+      {
+        "name": "postgres_repository",
+        "line": 6
+      },
+      {
+        "name": "connect",
+        "line": 11
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/knowledge/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/knowledge/repository.py",
+    "sha256": "e951f2e489299255595f479d5bf9f531d61646e0ecdb654e9da5a03b2c2fd757",
+    "lines": 114,
+    "definitions": [
+      {
+        "name": "KnowledgeRepositoryError",
+        "line": 13
+      },
+      {
+        "name": "KnowledgeDocument",
+        "line": 18
+      },
+      {
+        "name": "IndexedChunk",
+        "line": 28
+      },
+      {
+        "name": "KnowledgeRepository",
+        "line": 34
+      },
+      {
+        "name": "vector_literal",
+        "line": 42
+      },
+      {
+        "name": "PostgresKnowledgeRepository",
+        "line": 47
+      },
+      {
+        "name": "documents",
+        "line": 35
+      },
+      {
+        "name": "chunks",
+        "line": 36
+      },
+      {
+        "name": "synchronize",
+        "line": 37
+      },
+      {
+        "name": "search",
+        "line": 38
+      },
+      {
+        "name": "record_retrievals",
+        "line": 39
+      },
+      {
+        "name": "__init__",
+        "line": 48
+      },
+      {
+        "name": "documents",
+        "line": 51
+      },
+      {
+        "name": "chunks",
+        "line": 56
+      },
+      {
+        "name": "synchronize",
+        "line": 61
+      },
+      {
+        "name": "search",
+        "line": 85
+      },
+      {
+        "name": "record_retrievals",
+        "line": 104
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/order_support/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/product_advisor/service.py",
+    "sha256": "42f805cc83b097928fe6c35e12f77065698000221cb8c637a260a12211833885",
+    "lines": 124,
+    "definitions": [
+      {
+        "name": "MockProductAdvisorService",
+        "line": 21
+      },
+      {
+        "name": "search",
+        "line": 23
+      },
+      {
+        "name": "build_cards",
+        "line": 54
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/product_advisor/backend.py",
+    "sha256": "e92391e2b246fd19979dadf4d578c6c553c18a09de22d223007e2463e889efff",
+    "lines": 95,
+    "definitions": [
+      {
+        "name": "BackendProductClient",
+        "line": 16
+      },
+      {
+        "name": "__init__",
+        "line": 17
+      },
+      {
+        "name": "_get",
+        "line": 25
+      },
+      {
+        "name": "search",
+        "line": 35
+      },
+      {
+        "name": "detail",
+        "line": 55
+      },
+      {
+        "name": "catalog_page",
+        "line": 63
+      },
+      {
+        "name": "taxonomy",
+        "line": 68
+      },
+      {
+        "name": "catalog_names",
+        "line": 75
+      },
+      {
+        "name": "identity_candidates",
+        "line": 84
+      },
+      {
+        "name": "variant",
+        "line": 94
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/product_advisor/semantic.py",
+    "sha256": "34a4da1dbed667532b52373b16dcfe0529f540e810e0a3b6ddaafa9238a7fcfb",
+    "lines": 106,
+    "definitions": [
+      {
+        "name": "semantic_content",
+        "line": 12
+      },
+      {
+        "name": "OllamaEmbeddingClient",
+        "line": 27
+      },
+      {
+        "name": "ProductSemanticIndex",
+        "line": 51
+      },
+      {
+        "name": "__init__",
+        "line": 28
+      },
+      {
+        "name": "model",
+        "line": 33
+      },
+      {
+        "name": "embed",
+        "line": 37
+      },
+      {
+        "name": "__init__",
+        "line": 52
+      },
+      {
+        "name": "_connect",
+        "line": 57
+      },
+      {
+        "name": "index_signature",
+        "line": 62
+      },
+      {
+        "name": "upsert_if_changed",
+        "line": 69
+      },
+      {
+        "name": "scores",
+        "line": 95
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/product_advisor/protocol.py",
+    "sha256": "12e88f738aa665aeaaaccedf52a17b9faffb4a829aefc63b99ae2ccbf56b93e8",
+    "lines": 19,
+    "definitions": [
+      {
+        "name": "ProductAdvisorService",
+        "line": 8
+      },
+      {
+        "name": "search",
+        "line": 9
+      },
+      {
+        "name": "build_cards",
+        "line": 15
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/product_advisor/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/product_advisor/real_service.py",
+    "sha256": "ffdc425417834c87b6c22f18e8a8fc58593c015a6e0665e09dd522f50959409d",
+    "lines": 247,
+    "definitions": [
+      {
+        "name": "ProductResolutionError",
+        "line": 22
+      },
+      {
+        "name": "RealProductAdvisorService",
+        "line": 28
+      },
+      {
+        "name": "__init__",
+        "line": 23
+      },
+      {
+        "name": "__init__",
+        "line": 29
+      },
+      {
+        "name": "_eligible",
+        "line": 41
+      },
+      {
+        "name": "_variant",
+        "line": 69
+      },
+      {
+        "name": "_target_variants",
+        "line": 81
+      },
+      {
+        "name": "resolve",
+        "line": 92
+      },
+      {
+        "name": "search",
+        "line": 131
+      },
+      {
+        "name": "build_cards",
+        "line": 198
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/product_advisor/index_products.py",
+    "sha256": "c38143ab803818082efa2724de5d87a116b2e8d6113c65e866d6a55d5d1739a6",
+    "lines": 35,
+    "definitions": [
+      {
+        "name": "main",
+        "line": 13
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/product_advisor/normalization.py",
+    "sha256": "090a7d3ff1b2a96ae3e331be2d8fd84b6d4812a2dc9391a5857420af9733a437",
+    "lines": 16,
+    "definitions": [
+      {
+        "name": "capacity_gb",
+        "line": 9
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/response_generation/service.py",
+    "sha256": "00299e1ce30393558ba548a112042f3a8c9475e78872f3795df80c2f4d273cdf",
+    "lines": 28,
+    "definitions": [
+      {
+        "name": "MockResponseGenerationService",
+        "line": 6
+      },
+      {
+        "name": "generate",
+        "line": 8
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/response_generation/protocol.py",
+    "sha256": "6d76ecfc1f65c8f6d4ab6aec819d78101935b83967e87729e20096c9375b90ab",
+    "lines": 8,
+    "definitions": [
+      {
+        "name": "ResponseGenerationService",
+        "line": 6
+      },
+      {
+        "name": "generate",
+        "line": 7
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/response_generation/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/response_generation/ollama_service.py",
+    "sha256": "87c520fab5c7ef4b6e57912e2190a154fea7d33b910ae8647dbe67e21f6794a5",
+    "lines": 113,
+    "definitions": [
+      {
+        "name": "OllamaResponseGenerationService",
+        "line": 14
+      },
+      {
+        "name": "__init__",
+        "line": 15
+      },
+      {
+        "name": "generate",
+        "line": 19
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/query_understanding/service.py",
+    "sha256": "536fd913774c913c3908bebfc7ec6d10b63e9d40a374bf40d4203d2f2fbfefa1",
+    "lines": 42,
+    "definitions": [
+      {
+        "name": "MockQueryUnderstandingService",
+        "line": 10
+      },
+      {
+        "name": "understand",
+        "line": 12
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/query_understanding/protocol.py",
+    "sha256": "624c4a223de778ab4bfbec68634499d44e4d91afa60832ef79a1a013d4983e83",
+    "lines": 12,
+    "definitions": [
+      {
+        "name": "QueryUnderstandingService",
+        "line": 7
+      },
+      {
+        "name": "understand",
+        "line": 8
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/query_understanding/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/query_understanding/ollama_service.py",
+    "sha256": "3a122770e19043937e8d459a11047eb37ef96a7a59d8a816e3fefd48f3223be5",
+    "lines": 71,
+    "definitions": [
+      {
+        "name": "OllamaQueryUnderstandingService",
+        "line": 13
+      },
+      {
+        "name": "__init__",
+        "line": 14
+      },
+      {
+        "name": "understand",
+        "line": 23
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/query_understanding/normalization.py",
+    "sha256": "86d04dca63f048db0a2afaaef6ae5f7fba4a455c5df90c4d83ac2b2b21ab7700",
+    "lines": 157,
+    "definitions": [
+      {
+        "name": "folded",
+        "line": 11
+      },
+      {
+        "name": "contains",
+        "line": 16
+      },
+      {
+        "name": "capacity",
+        "line": 20
+      },
+      {
+        "name": "price_slots",
+        "line": 31
+      },
+      {
+        "name": "DomainNormalizer",
+        "line": 50
+      },
+      {
+        "name": "money",
+        "line": 33
+      },
+      {
+        "name": "__init__",
+        "line": 51
+      },
+      {
+        "name": "normalize",
+        "line": 54
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/customer_context/service.py",
+    "sha256": "467504090f1a22a6f5f5526dc4bee25f0062a41d3aba2f472b3e28059012ab85",
+    "lines": 84,
+    "definitions": [
+      {
+        "name": "payment_context",
+        "line": 14
+      },
+      {
+        "name": "order_context",
+        "line": 19
+      },
+      {
+        "name": "warranty_context",
+        "line": 25
+      },
+      {
+        "name": "ticket_context",
+        "line": 32
+      },
+      {
+        "name": "CustomerContextService",
+        "line": 39
+      },
+      {
+        "name": "__init__",
+        "line": 40
+      },
+      {
+        "name": "load_context",
+        "line": 44
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/customer_context/models.py",
+    "sha256": "af909c9debbcf67e5fb61d1a3ca4bf2934221efc166124cc2ec5b6db9a9c3850",
+    "lines": 26,
+    "definitions": [
+      {
+        "name": "AuthenticatedCustomer",
+        "line": 6
+      },
+      {
+        "name": "from_backend_user",
+        "line": 14
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/customer_context/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/conversation/service.py",
+    "sha256": "1f82e12a373e42a0c9e7b16c0b507b868b817759cfa11935c7b7f0c537167b10",
+    "lines": 97,
+    "definitions": [
+      {
+        "name": "ConversationService",
+        "line": 14
+      },
+      {
+        "name": "__init__",
+        "line": 15
+      },
+      {
+        "name": "create_session",
+        "line": 18
+      },
+      {
+        "name": "get_session",
+        "line": 27
+      },
+      {
+        "name": "get_active_sessions",
+        "line": 32
+      },
+      {
+        "name": "end_session",
+        "line": 37
+      },
+      {
+        "name": "add_message",
+        "line": 45
+      },
+      {
+        "name": "get_recent_messages",
+        "line": 68
+      },
+      {
+        "name": "rate_message",
+        "line": 74
+      },
+      {
+        "name": "list_sessions",
+        "line": 94
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/conversation/models.py",
+    "sha256": "44957f0c40fcd3e2f89dba31ca46b81882e7104f8ecea8ddd065add85b80f851",
+    "lines": 49,
+    "definitions": [
+      {
+        "name": "SenderType",
+        "line": 12
+      },
+      {
+        "name": "ChatSession",
+        "line": 17
+      },
+      {
+        "name": "ChatMessage",
+        "line": 27
+      },
+      {
+        "name": "EvidenceSnapshot",
+        "line": 38
+      },
+      {
+        "name": "StoredAssistantMessage",
+        "line": 45
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/conversation/references.py",
+    "sha256": "93a1457f46e73bccf08e97e1a3ef174a2fdeeb8495c169d6af17a384d6db4213",
+    "lines": 62,
+    "definitions": [
+      {
+        "name": "resolve_reference",
+        "line": 10
+      },
+      {
+        "name": "clarify",
+        "line": 24
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/conversation/postgres_repository.py",
+    "sha256": "8bc4535c800909d46b76a2b120f3f697a46256c690cd414f72329fa44960e2f8",
+    "lines": 174,
+    "definitions": [
+      {
+        "name": "PostgresConversationRepository",
+        "line": 14
+      },
+      {
+        "name": "__init__",
+        "line": 17
+      },
+      {
+        "name": "connect",
+        "line": 25
+      },
+      {
+        "name": "session",
+        "line": 34
+      },
+      {
+        "name": "owned",
+        "line": 39
+      },
+      {
+        "name": "request_lock",
+        "line": 47
+      },
+      {
+        "name": "create_session",
+        "line": 64
+      },
+      {
+        "name": "get_session",
+        "line": 72
+      },
+      {
+        "name": "list_sessions",
+        "line": 75
+      },
+      {
+        "name": "get_active_sessions",
+        "line": 81
+      },
+      {
+        "name": "end_session",
+        "line": 87
+      },
+      {
+        "name": "decode",
+        "line": 94
+      },
+      {
+        "name": "message",
+        "line": 103
+      },
+      {
+        "name": "add_message",
+        "line": 108
+      },
+      {
+        "name": "save_assistant",
+        "line": 118
+      },
+      {
+        "name": "get_recent_messages",
+        "line": 124
+      },
+      {
+        "name": "get_message",
+        "line": 131
+      },
+      {
+        "name": "get_snapshot",
+        "line": 136
+      },
+      {
+        "name": "last_product_cards",
+        "line": 145
+      },
+      {
+        "name": "remember_product_cards",
+        "line": 149
+      },
+      {
+        "name": "set_rating",
+        "line": 152
+      },
+      {
+        "name": "history_page",
+        "line": 161
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/features/conversation/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/features/conversation/repository.py",
+    "sha256": "4697c1864c73d1c47d8e3abd19d3184721e0c660d4c4421b4494452a8ebcc42d",
+    "lines": 153,
+    "definitions": [
+      {
+        "name": "InMemoryConversationRepository",
+        "line": 18
+      },
+      {
+        "name": "__init__",
+        "line": 19
+      },
+      {
+        "name": "create_session",
+        "line": 26
+      },
+      {
+        "name": "get_session",
+        "line": 40
+      },
+      {
+        "name": "get_active_sessions",
+        "line": 49
+      },
+      {
+        "name": "end_session",
+        "line": 57
+      },
+      {
+        "name": "add_message",
+        "line": 63
+      },
+      {
+        "name": "get_message",
+        "line": 90
+      },
+      {
+        "name": "save_session",
+        "line": 97
+      },
+      {
+        "name": "get_recent_messages",
+        "line": 102
+      },
+      {
+        "name": "last_product_cards",
+        "line": 108
+      },
+      {
+        "name": "remember_product_cards",
+        "line": 113
+      },
+      {
+        "name": "get_snapshot",
+        "line": 120
+      },
+      {
+        "name": "save_assistant",
+        "line": 124
+      },
+      {
+        "name": "set_rating",
+        "line": 131
+      },
+      {
+        "name": "list_sessions",
+        "line": 139
+      },
+      {
+        "name": "history_page",
+        "line": 145
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/tracing/__init__.py",
+    "sha256": "71ffca39bddc34b3fbc6e6b351ceaaeb2416fcae663d01402e60e71c47bb1add",
+    "lines": 262,
+    "definitions": [
+      {
+        "name": "sanitize",
+        "line": 29
+      },
+      {
+        "name": "bounded",
+        "line": 55
+      },
+      {
+        "name": "error_data",
+        "line": 63
+      },
+      {
+        "name": "Trace",
+        "line": 76
+      },
+      {
+        "name": "TraceStore",
+        "line": 118
+      },
+      {
+        "name": "enabled",
+        "line": 162
+      },
+      {
+        "name": "persist",
+        "line": 166
+      },
+      {
+        "name": "capture",
+        "line": 185
+      },
+      {
+        "name": "event",
+        "line": 206
+      },
+      {
+        "name": "span",
+        "line": 213
+      },
+      {
+        "name": "traced",
+        "line": 236
+      },
+      {
+        "name": "__init__",
+        "line": 77
+      },
+      {
+        "name": "add",
+        "line": 86
+      },
+      {
+        "name": "finish_event",
+        "line": 99
+      },
+      {
+        "name": "snapshot",
+        "line": 111
+      },
+      {
+        "name": "__init__",
+        "line": 119
+      },
+      {
+        "name": "_expire",
+        "line": 124
+      },
+      {
+        "name": "create",
+        "line": 129
+      },
+      {
+        "name": "get",
+        "line": 141
+      },
+      {
+        "name": "list",
+        "line": 149
+      },
+      {
+        "name": "save",
+        "line": 222
+      },
+      {
+        "name": "decorate",
+        "line": 238
+      },
+      {
+        "name": "inputs",
+        "line": 240
+      },
+      {
+        "name": "wrapper",
+        "line": 245
+      },
+      {
+        "name": "wrapper",
+        "line": 254
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/contracts/enums.py",
+    "sha256": "865f62050fc5b25fec2abb45a7d65dd4225b8f64dcc9ca16b236c66ddb23279e",
+    "lines": 34,
+    "definitions": [
+      {
+        "name": "Intent",
+        "line": 4
+      },
+      {
+        "name": "RequestedField",
+        "line": 23
+      },
+      {
+        "name": "MessageRole",
+        "line": 32
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/contracts/query.py",
+    "sha256": "9baab9dc5553766df337d49fdc4a5727d2fa2e3f3660a5c25674fd68c99742ff",
+    "lines": 85,
+    "definitions": [
+      {
+        "name": "ProductSelector",
+        "line": 7
+      },
+      {
+        "name": "ProductSearchPlan",
+        "line": 25
+      },
+      {
+        "name": "QueryPlan",
+        "line": 57
+      },
+      {
+        "name": "identity_required",
+        "line": 19
+      },
+      {
+        "name": "validate_price_range",
+        "line": 47
+      },
+      {
+        "name": "validate_product_discovery",
+        "line": 76
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/contracts/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/shared/contracts/response.py",
+    "sha256": "8951b91bd068096c13b39a721eeb05454f9a3d267065293859511c33da575b60",
+    "lines": 58,
+    "definitions": [
+      {
+        "name": "ProductCard",
+        "line": 7
+      },
+      {
+        "name": "SourceReference",
+        "line": 31
+      },
+      {
+        "name": "ChatResponse",
+        "line": 41
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/contracts/context.py",
+    "sha256": "8236b3a84032203b499cc8e24f9618eaa6cdf410adda4f1aadf68d33d0de3a4c",
+    "lines": 168,
+    "definitions": [
+      {
+        "name": "ChatMessage",
+        "line": 12
+      },
+      {
+        "name": "AuthenticatedCustomer",
+        "line": 20
+      },
+      {
+        "name": "QueryContext",
+        "line": 28
+      },
+      {
+        "name": "CartItemContext",
+        "line": 40
+      },
+      {
+        "name": "CartContext",
+        "line": 56
+      },
+      {
+        "name": "PaymentContext",
+        "line": 70
+      },
+      {
+        "name": "OrderContext",
+        "line": 79
+      },
+      {
+        "name": "WarrantyContext",
+        "line": 93
+      },
+      {
+        "name": "WarrantyTicketContext",
+        "line": 112
+      },
+      {
+        "name": "CustomerContext",
+        "line": 132
+      },
+      {
+        "name": "GroundedContext",
+        "line": 149
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/contracts/product.py",
+    "sha256": "9bc5e9a7f30d54d2e37b628e40a102ea9d3f615d924fa89cf8a1568a87d99b4e",
+    "lines": 66,
+    "definitions": [
+      {
+        "name": "ProductCandidate",
+        "line": 6
+      },
+      {
+        "name": "EligibleVariant",
+        "line": 13
+      },
+      {
+        "name": "ProductMatch",
+        "line": 32
+      },
+      {
+        "name": "validate_variant_product_ids",
+        "line": 54
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/contracts/knowledge.py",
+    "sha256": "1728301332a65c2671f75e360ab66a04b2bcadc4f165c9bef8ba2f99b1b39d12",
+    "lines": 26,
+    "definitions": [
+      {
+        "name": "KnowledgeSource",
+        "line": 6
+      },
+      {
+        "name": "KnowledgeChunkMatch",
+        "line": 16
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/backend/client.py",
+    "sha256": "9268b37547fb126300a238fb42ef70aabed26a7bb5a7397458ff54c97eb9baa4",
+    "lines": 172,
+    "definitions": [
+      {
+        "name": "BackendClient",
+        "line": 14
+      },
+      {
+        "name": "__init__",
+        "line": 15
+      },
+      {
+        "name": "_build_client",
+        "line": 25
+      },
+      {
+        "name": "_request_json",
+        "line": 34
+      },
+      {
+        "name": "get_current_user",
+        "line": 83
+      },
+      {
+        "name": "get_current_customer",
+        "line": 89
+      },
+      {
+        "name": "get_cart",
+        "line": 102
+      },
+      {
+        "name": "get_recent_orders",
+        "line": 110
+      },
+      {
+        "name": "get_order_detail",
+        "line": 137
+      },
+      {
+        "name": "get_warranties",
+        "line": 150
+      },
+      {
+        "name": "get_warranty_tickets",
+        "line": 164
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/backend/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/app/shared/ollama/protocol.py",
+    "sha256": "0edb73e8d62f7bd994d81bf36ddc0e237b2325c76d759872cbc93d1a338b8590",
+    "lines": 9,
+    "definitions": [
+      {
+        "name": "ChatModel",
+        "line": 4
+      },
+      {
+        "name": "EmbeddingModel",
+        "line": 8
+      },
+      {
+        "name": "chat",
+        "line": 5
+      },
+      {
+        "name": "embed",
+        "line": 9
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/ollama/client.py",
+    "sha256": "e269b3409fb4f23f9598407a512805f109de9ba86a8d175c4ba27f5141b0abbf",
+    "lines": 102,
+    "definitions": [
+      {
+        "name": "OllamaError",
+        "line": 11
+      },
+      {
+        "name": "OllamaUnavailable",
+        "line": 15
+      },
+      {
+        "name": "OllamaModelError",
+        "line": 19
+      },
+      {
+        "name": "OllamaInvalidResponse",
+        "line": 23
+      },
+      {
+        "name": "validate_embeddings",
+        "line": 27
+      },
+      {
+        "name": "OllamaClient",
+        "line": 44
+      },
+      {
+        "name": "__init__",
+        "line": 45
+      },
+      {
+        "name": "close",
+        "line": 50
+      },
+      {
+        "name": "_post",
+        "line": 55
+      },
+      {
+        "name": "chat",
+        "line": 84
+      },
+      {
+        "name": "embed",
+        "line": 96
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/app/shared/ollama/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/tests/test_ai_chat_flow.py",
+    "sha256": "59aa49d535fcbff7ebb1be6cc64e71eecb7ad38d774da608fc4fd0bc6098f188",
+    "lines": 209,
+    "definitions": [
+      {
+        "name": "FakeRetrieval",
+        "line": 16
+      },
+      {
+        "name": "test_existing_pipeline_routes_knowledge_and_builds_sources",
+        "line": 29
+      },
+      {
+        "name": "test_retrieval_failure_returns_safe_response",
+        "line": 42
+      },
+      {
+        "name": "test_ai_factory_does_not_present_mock_products_as_evidence",
+        "line": 50
+      },
+      {
+        "name": "test_mock_factory_and_app_lifespan_still_work",
+        "line": 61
+      },
+      {
+        "name": "test_audit_hook_runs_after_generation_with_persisted_history_id",
+        "line": 80
+      },
+      {
+        "name": "test_authenticated_rag_preserves_history_sources_and_persisted_response",
+        "line": 108
+      },
+      {
+        "name": "test_factory_selects_real_product_advisor_when_ai_is_disabled",
+        "line": 135
+      },
+      {
+        "name": "test_merged_endpoint_keeps_authentication_requirement",
+        "line": 148
+      },
+      {
+        "name": "test_product_search_and_cards_share_request_context_and_customer_cookies",
+        "line": 164
+      },
+      {
+        "name": "test_cheaper_followup_uses_previous_card_price_not_repeated_budget",
+        "line": 185
+      },
+      {
+        "name": "__init__",
+        "line": 17
+      },
+      {
+        "name": "retrieve",
+        "line": 22
+      },
+      {
+        "name": "persist_then_audit",
+        "line": 90
+      },
+      {
+        "name": "FakeAdvisor",
+        "line": 137
+      },
+      {
+        "name": "UnauthorizedBackend",
+        "line": 152
+      },
+      {
+        "name": "Advisor",
+        "line": 168
+      },
+      {
+        "name": "Advisor",
+        "line": 197
+      },
+      {
+        "name": "__init__",
+        "line": 138
+      },
+      {
+        "name": "get_current_customer",
+        "line": 153
+      },
+      {
+        "name": "search",
+        "line": 169
+      },
+      {
+        "name": "build_cards",
+        "line": 173
+      },
+      {
+        "name": "search",
+        "line": 199
+      },
+      {
+        "name": "build_cards",
+        "line": 202
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_grounded_context_contracts.py",
+    "sha256": "18b17720ad50b666569675445b39df13eb4cdfdadb016cb40ea8b169b1433980",
+    "lines": 121,
+    "definitions": [
+      {
+        "name": "test_grounded_context_accepts_minimal_context",
+        "line": 25
+      },
+      {
+        "name": "test_grounded_context_accepts_product_matches",
+        "line": 39
+      },
+      {
+        "name": "test_grounded_context_accepts_knowledge_matches",
+        "line": 73
+      },
+      {
+        "name": "test_grounded_context_accepts_customer_context",
+        "line": 100
+      },
+      {
+        "name": "test_grounded_context_rejects_empty_user_query",
+        "line": 114
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_query_product_v2.py",
+    "sha256": "68dcfa080992a17bef86dea00bb49ea80c821c3bf44b7aa20460893adeb5f97b",
+    "lines": 290,
+    "definitions": [
+      {
+        "name": "product",
+        "line": 20
+      },
+      {
+        "name": "variant",
+        "line": 26
+      },
+      {
+        "name": "Backend",
+        "line": 31
+      },
+      {
+        "name": "context",
+        "line": 53
+      },
+      {
+        "name": "normalize",
+        "line": 58
+      },
+      {
+        "name": "test_live_canonical_taxonomy_brand",
+        "line": 66
+      },
+      {
+        "name": "test_hard_price_ram_brand_storage",
+        "line": 76
+      },
+      {
+        "name": "test_capacity_tb_and_minimum_not_exact",
+        "line": 83
+      },
+      {
+        "name": "test_named_identity_not_discovery",
+        "line": 90
+      },
+      {
+        "name": "test_price_conflict_clarifies_without_query",
+        "line": 97
+      },
+      {
+        "name": "test_unresolved_or_unsupported_clarifies",
+        "line": 103
+      },
+      {
+        "name": "test_comparison_separate_targets_not_cpu",
+        "line": 108
+      },
+      {
+        "name": "test_exact_variant_and_color",
+        "line": 115
+      },
+      {
+        "name": "NoLLM",
+        "line": 123
+      },
+      {
+        "name": "answer",
+        "line": 127
+      },
+      {
+        "name": "test_exact_non_cheapest_sku_id_variant_cards_and_message",
+        "line": 134
+      },
+      {
+        "name": "test_mixed_stock_preserved_and_no_semantic_identity",
+        "line": 143
+      },
+      {
+        "name": "test_sold_out_vs_not_found",
+        "line": 152
+      },
+      {
+        "name": "test_unknown_warehouse_does_not_claim_zero",
+        "line": 162
+      },
+      {
+        "name": "test_compare_resolves_both_products_without_unrelated_cards",
+        "line": 169
+      },
+      {
+        "name": "test_backend_failure_is_not_out_of_stock",
+        "line": 176
+      },
+      {
+        "name": "test_ambiguous_duplicate_name_and_missing_configuration",
+        "line": 183
+      },
+      {
+        "name": "test_ram_minimum_is_not_a_price_and_ambiguous_advice_clarifies",
+        "line": 192
+      },
+      {
+        "name": "test_discovery_text_uses_only_eligible_variants_not_general_ram_spec",
+        "line": 199
+      },
+      {
+        "name": "test_vnd_price_formats",
+        "line": 210
+      },
+      {
+        "name": "test_product_exists_without_variants_not_reported_missing",
+        "line": 216
+      },
+      {
+        "name": "test_unknown_explicit_brand_clarifies",
+        "line": 223
+      },
+      {
+        "name": "test_unsupported_or_invalid_capacity_never_becomes_price_or_broad_query",
+        "line": 228
+      },
+      {
+        "name": "test_color_english_and_vietnamese_not_ignored",
+        "line": 233
+      },
+      {
+        "name": "test_model_failure_can_use_verified_domain_fallback",
+        "line": 240
+      },
+      {
+        "name": "test_fractional_promotion_price_is_not_rounded_away",
+        "line": 249
+      },
+      {
+        "name": "test_pipeline_missing_sku_clarifies_without_cards",
+        "line": 256
+      },
+      {
+        "name": "test_pipeline_backend_outage_returns_503_instead_of_stock_answer",
+        "line": 269
+      },
+      {
+        "name": "test_model_cannot_bypass_grounding_via_clarification_field",
+        "line": 286
+      },
+      {
+        "name": "__init__",
+        "line": 32
+      },
+      {
+        "name": "taxonomy",
+        "line": 37
+      },
+      {
+        "name": "catalog_names",
+        "line": 38
+      },
+      {
+        "name": "identity_candidates",
+        "line": 41
+      },
+      {
+        "name": "detail",
+        "line": 44
+      },
+      {
+        "name": "variant",
+        "line": 50
+      },
+      {
+        "name": "chat",
+        "line": 124
+      },
+      {
+        "name": "unavailable",
+        "line": 178
+      },
+      {
+        "name": "Offline",
+        "line": 243
+      },
+      {
+        "name": "Understanding",
+        "line": 259
+      },
+      {
+        "name": "Understanding",
+        "line": 273
+      },
+      {
+        "name": "unavailable",
+        "line": 278
+      },
+      {
+        "name": "Untrusted",
+        "line": 288
+      },
+      {
+        "name": "chat",
+        "line": 244
+      },
+      {
+        "name": "understand",
+        "line": 260
+      },
+      {
+        "name": "understand",
+        "line": 274
+      },
+      {
+        "name": "chat",
+        "line": 289
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_final_grounding_safety.py",
+    "sha256": "10e460d84757b114d5b09b75ac7ac1f58a984ca34affbf7bf5f6be2e2366515e",
+    "lines": 173,
+    "definitions": [
+      {
+        "name": "test_mutation_refused_before_any_retrieval",
+        "line": 30
+      },
+      {
+        "name": "test_read_only_advice_not_refused",
+        "line": 46
+      },
+      {
+        "name": "test_demo_payment_guide_does_not_load_personal_order",
+        "line": 50
+      },
+      {
+        "name": "row",
+        "line": 54
+      },
+      {
+        "name": "OwnedBackend",
+        "line": 58
+      },
+      {
+        "name": "test_exact_owned_order_does_not_substitute_latest",
+        "line": 69
+      },
+      {
+        "name": "test_latest_selected_by_date_not_list_position",
+        "line": 76
+      },
+      {
+        "name": "test_payment_status_is_payment_evidence_not_order_status",
+        "line": 83
+      },
+      {
+        "name": "test_missing_payment_never_inferred_from_paid_or_completed_order",
+        "line": 90
+      },
+      {
+        "name": "test_unrelated_high_score_chunk_not_cited",
+        "line": 97
+      },
+      {
+        "name": "test_invalid_or_nonpositive_similarity_abstains",
+        "line": 106
+      },
+      {
+        "name": "test_demo_excerpts_are_source_bound_not_official_claims",
+        "line": 111
+      },
+      {
+        "name": "test_final_live_product_refresh_updates_both_text_and_cards",
+        "line": 119
+      },
+      {
+        "name": "test_ineligible_after_refresh_is_removed_from_grounding_and_cards",
+        "line": 130
+      },
+      {
+        "name": "test_backend_unavailable_is_not_empty_cart_or_missing_order",
+        "line": 137
+      },
+      {
+        "name": "test_exact_order_beyond_first_page_is_retrievable",
+        "line": 145
+      },
+      {
+        "name": "test_order_pagination_cap_does_not_mean_not_found",
+        "line": 158
+      },
+      {
+        "name": "test_other_comparison_target_cannot_relax_exact_configuration_during_refresh",
+        "line": 167
+      },
+      {
+        "name": "Forbidden",
+        "line": 31
+      },
+      {
+        "name": "Customer",
+        "line": 35
+      },
+      {
+        "name": "__init__",
+        "line": 59
+      },
+      {
+        "name": "get_recent_orders",
+        "line": 62
+      },
+      {
+        "name": "get_order_detail",
+        "line": 63
+      },
+      {
+        "name": "Offline",
+        "line": 138
+      },
+      {
+        "name": "handle",
+        "line": 149
+      },
+      {
+        "name": "understand",
+        "line": 32
+      },
+      {
+        "name": "search",
+        "line": 33
+      },
+      {
+        "name": "retrieve",
+        "line": 34
+      },
+      {
+        "name": "load_context",
+        "line": 36
+      },
+      {
+        "name": "get_recent_orders",
+        "line": 139
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/conftest.py",
+    "sha256": "c8d5e6320ab057514ab3a03e510ec22640632a2e3f126933826c94a27ed15aac",
+    "lines": 18,
+    "definitions": [
+      {
+        "name": "isolated_settings",
+        "line": 7
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_ollama_client.py",
+    "sha256": "4b82e75f47ddf021cf418e20493a1eb66874b6d2c8df08a2326959278a125277",
+    "lines": 67,
+    "definitions": [
+      {
+        "name": "client_for",
+        "line": 10
+      },
+      {
+        "name": "test_chat_sends_configured_model_schema_and_non_streaming",
+        "line": 15
+      },
+      {
+        "name": "test_embed_batch_uses_config_and_accepts_runtime_dimension",
+        "line": 26
+      },
+      {
+        "name": "test_transport_errors",
+        "line": 36
+      },
+      {
+        "name": "test_bad_chat_responses",
+        "line": 52
+      },
+      {
+        "name": "test_invalid_embeddings",
+        "line": 58
+      },
+      {
+        "name": "test_empty_embed_does_not_call_http",
+        "line": 64
+      },
+      {
+        "name": "handler",
+        "line": 16
+      },
+      {
+        "name": "handler",
+        "line": 27
+      },
+      {
+        "name": "handler",
+        "line": 37
+      },
+      {
+        "name": "handler",
+        "line": 65
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_tracing.py",
+    "sha256": "1b76ce80cac2d04b6d2a603a429151042f1604fefdcb1f213e1e87aae8d81197",
+    "lines": 143,
+    "definitions": [
+      {
+        "name": "test_nested_threads_concurrent_traces_and_redaction",
+        "line": 19
+      },
+      {
+        "name": "test_access_expiry_bounds_and_duplicate_ids",
+        "line": 42
+      },
+      {
+        "name": "test_json_prompt_redaction_does_not_mutate_request",
+        "line": 65
+      },
+      {
+        "name": "test_repair_attempts_raw_output_and_fallback_visible",
+        "line": 74
+      },
+      {
+        "name": "test_failure_trace_is_retrievable_only_by_owner",
+        "line": 93
+      },
+      {
+        "name": "test_ollama_transport_error_and_raw_http_payload",
+        "line": 129
+      },
+      {
+        "name": "work",
+        "line": 22
+      },
+      {
+        "name": "run",
+        "line": 25
+      },
+      {
+        "name": "both",
+        "line": 30
+      },
+      {
+        "name": "Model",
+        "line": 75
+      },
+      {
+        "name": "Failing",
+        "line": 99
+      },
+      {
+        "name": "respond",
+        "line": 131
+      },
+      {
+        "name": "chat",
+        "line": 76
+      },
+      {
+        "name": "send_message_async",
+        "line": 101
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_customer_context_contracts.py",
+    "sha256": "69d59c3c9e93e064f9a98dc2b97f3342a3832792814284b2cbcf5ba6d646c638",
+    "lines": 102,
+    "definitions": [
+      {
+        "name": "test_customer_context_is_empty_by_default",
+        "line": 18
+      },
+      {
+        "name": "test_cart_context_accepts_items",
+        "line": 27
+      },
+      {
+        "name": "test_cart_item_rejects_invalid_quantity",
+        "line": 49
+      },
+      {
+        "name": "test_order_context_accepts_payment",
+        "line": 60
+      },
+      {
+        "name": "test_warranty_context_accepts_backend_summary",
+        "line": 81
+      },
+      {
+        "name": "test_customer_context_rejects_unknown_fields",
+        "line": 98
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_real_product_advisor.py",
+    "sha256": "69c90e0e0724eb112c610808481452969fdaa50f611691dd98ada8070f5dfef2",
+    "lines": 189,
+    "definitions": [
+      {
+        "name": "detail",
+        "line": 24
+      },
+      {
+        "name": "FakeBackend",
+        "line": 40
+      },
+      {
+        "name": "FakeIndex",
+        "line": 53
+      },
+      {
+        "name": "FakeEmbedder",
+        "line": 58
+      },
+      {
+        "name": "test_capacity_normalization_rejects_unknown_values",
+        "line": 65
+      },
+      {
+        "name": "test_typed_backend_parameters_and_no_raw_sql",
+        "line": 74
+      },
+      {
+        "name": "test_hard_filters_override_high_semantic_score_and_no_result_is_empty",
+        "line": 94
+      },
+      {
+        "name": "test_live_refresh_controls_price_stock_and_card",
+        "line": 102
+      },
+      {
+        "name": "test_in_stock_search_requires_warehouse",
+        "line": 120
+      },
+      {
+        "name": "test_semantic_content_excludes_dynamic_price_and_stock",
+        "line": 126
+      },
+      {
+        "name": "test_unchanged_index_content_skips_embedding",
+        "line": 133
+      },
+      {
+        "name": "test_changed_index_content_or_model_is_upserted",
+        "line": 148
+      },
+      {
+        "name": "test_detail_and_compare_reuse_injected_advisor",
+        "line": 172
+      },
+      {
+        "name": "__init__",
+        "line": 41
+      },
+      {
+        "name": "search",
+        "line": 45
+      },
+      {
+        "name": "detail",
+        "line": 49
+      },
+      {
+        "name": "scores",
+        "line": 54
+      },
+      {
+        "name": "embed",
+        "line": 61
+      },
+      {
+        "name": "handler",
+        "line": 78
+      },
+      {
+        "name": "FailingEmbedder",
+        "line": 140
+      },
+      {
+        "name": "Connection",
+        "line": 151
+      },
+      {
+        "name": "Understanding",
+        "line": 173
+      },
+      {
+        "name": "Advisor",
+        "line": 177
+      },
+      {
+        "name": "embed",
+        "line": 142
+      },
+      {
+        "name": "__enter__",
+        "line": 152
+      },
+      {
+        "name": "__exit__",
+        "line": 155
+      },
+      {
+        "name": "execute",
+        "line": 158
+      },
+      {
+        "name": "understand",
+        "line": 174
+      },
+      {
+        "name": "search",
+        "line": 178
+      },
+      {
+        "name": "build_cards",
+        "line": 182
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_mock_response_generation.py",
+    "sha256": "f9d331fc8a279aff51bab81dbbdf5bb41e57a2ef342a35d103c40633ac313c7b",
+    "lines": 39,
+    "definitions": [
+      {
+        "name": "test_mock_response_generation_handles_greeting",
+        "line": 9
+      },
+      {
+        "name": "test_mock_response_generation_handles_unknown",
+        "line": 27
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_chat_flow.py",
+    "sha256": "28385e21eed62438c609a289a8df9f5143f4c194240789353837ddd9695ef343",
+    "lines": 127,
+    "definitions": [
+      {
+        "name": "override_get_authenticated_customer",
+        "line": 11
+      },
+      {
+        "name": "override_auth_dependency",
+        "line": 20
+      },
+      {
+        "name": "test_send_message_returns_mock_chat_response",
+        "line": 31
+      },
+      {
+        "name": "test_send_message_rejects_empty_message",
+        "line": 57
+      },
+      {
+        "name": "test_feedback_message_requires_session_ownership",
+        "line": 68
+      },
+      {
+        "name": "test_send_message_returns_mock_product_discovery",
+        "line": 101
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_knowledge_postgres_integration.py",
+    "sha256": "bfc65d02692cb2ce84b14317f955f1f5e7187ee13b38eb28436b8810f17fb4a3",
+    "lines": 70,
+    "definitions": [
+      {
+        "name": "pg_repository",
+        "line": 16
+      },
+      {
+        "name": "test_pgvector_status_dimensions_ranking_audit_and_version_guard",
+        "line": 43
+      },
+      {
+        "name": "connect",
+        "line": 32
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_customer_context_mapping.py",
+    "sha256": "354e62ea0c481955c81d76f5ddff52d9b710ae826f994f184a08f529a28de610",
+    "lines": 111,
+    "definitions": [
+      {
+        "name": "test_real_camelcase_cart_is_mapped_and_validated",
+        "line": 13
+      },
+      {
+        "name": "test_orders_content_and_payment_use_locked_contract",
+        "line": 26
+      },
+      {
+        "name": "test_warranty_and_ticket_pages_map_content",
+        "line": 44
+      },
+      {
+        "name": "test_missing_payment_does_not_invent_payment",
+        "line": 59
+      },
+      {
+        "name": "test_expected_backend_failures_have_explicit_status",
+        "line": 69
+      },
+      {
+        "name": "test_payment_without_evidence_and_empty_cart_skip_model",
+        "line": 86
+      },
+      {
+        "name": "test_mutation_request_has_deterministic_no_action_response",
+        "line": 101
+      },
+      {
+        "name": "handler",
+        "line": 14
+      },
+      {
+        "name": "handler",
+        "line": 30
+      },
+      {
+        "name": "handler",
+        "line": 50
+      },
+      {
+        "name": "handler",
+        "line": 61
+      },
+      {
+        "name": "handler",
+        "line": 70
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_context_contracts.py",
+    "sha256": "daf167584473b89a74da7c4ce4bde5112ab93a23b5aa3bc8f790b49a738174a9",
+    "lines": 70,
+    "definitions": [
+      {
+        "name": "test_query_context_accepts_valid_conversation",
+        "line": 15
+      },
+      {
+        "name": "test_chat_message_parses_role_string",
+        "line": 40
+      },
+      {
+        "name": "test_query_context_rejects_empty_current_message",
+        "line": 50
+      },
+      {
+        "name": "test_query_context_rejects_unknown_fields",
+        "line": 63
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_knowledge_contracts.py",
+    "sha256": "aa8bc809c8fafdd16c62da1a4958ff39a2ecac9aa3a3c2afefd0f413fe1c87b4",
+    "lines": 65,
+    "definitions": [
+      {
+        "name": "test_knowledge_chunk_match_accepts_retrieval_result",
+        "line": 12
+      },
+      {
+        "name": "test_knowledge_source_allows_optional_metadata",
+        "line": 35
+      },
+      {
+        "name": "test_knowledge_chunk_rejects_negative_index",
+        "line": 45
+      },
+      {
+        "name": "test_knowledge_contract_rejects_unknown_fields",
+        "line": 59
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "definitions": []
+  },
+  {
+    "file": "chatbot-service/tests/test_backend_client.py",
+    "sha256": "70f07f7c42c8a16f32d55e6d395c7cb682f50052545af83d9a7fdb65d2b8926e",
+    "lines": 80,
+    "definitions": [
+      {
+        "name": "test_backend_client_maps_canonical_customer_id",
+        "line": 12
+      },
+      {
+        "name": "test_backend_client_raises_401_for_unauthorized_response",
+        "line": 41
+      },
+      {
+        "name": "test_product_adapter_forwards_cookie_without_shared_bearer",
+        "line": 54
+      },
+      {
+        "name": "test_backend_identity_never_falls_back_to_user_id_or_staff",
+        "line": 77
+      },
+      {
+        "name": "handler",
+        "line": 13
+      },
+      {
+        "name": "handler",
+        "line": 42
+      },
+      {
+        "name": "handler",
+        "line": 59
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_ai_services.py",
+    "sha256": "af3b606d390750895c074ef95b601e975227ab2cb28c3e825eabc5b334de340f",
+    "lines": 137,
+    "definitions": [
+      {
+        "name": "FakeChat",
+        "line": 17
+      },
+      {
+        "name": "query_context",
+        "line": 30
+      },
+      {
+        "name": "knowledge_match",
+        "line": 35
+      },
+      {
+        "name": "test_valid_typed_plans",
+        "line": 46
+      },
+      {
+        "name": "test_invalid_plans_bounded_fallback",
+        "line": 62
+      },
+      {
+        "name": "test_repair_can_succeed",
+        "line": 68
+      },
+      {
+        "name": "test_failure_returns_unknown_without_retry",
+        "line": 73
+      },
+      {
+        "name": "test_context_window_preserves_current_message_omits_identity",
+        "line": 79
+      },
+      {
+        "name": "test_history_changes_interpretation_with_same_current_message",
+        "line": 92
+      },
+      {
+        "name": "test_no_evidence_skips_llm_even_with_history_or_empty_customer",
+        "line": 104
+      },
+      {
+        "name": "test_response_uses_exact_grounded_data",
+        "line": 112
+      },
+      {
+        "name": "test_generation_failure_is_controlled",
+        "line": 134
+      },
+      {
+        "name": "__init__",
+        "line": 18
+      },
+      {
+        "name": "chat",
+        "line": 22
+      },
+      {
+        "name": "HistoryAwareChat",
+        "line": 93
+      },
+      {
+        "name": "chat",
+        "line": 94
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_mock_query_understanding.py",
+    "sha256": "0dc2b0e2371ca272c4c1e0b34b11bac20da853c54434610e2f9e8767e064a9b4",
+    "lines": 54,
+    "definitions": [
+      {
+        "name": "make_context",
+        "line": 13
+      },
+      {
+        "name": "test_mock_query_understanding_detects_greeting",
+        "line": 25
+      },
+      {
+        "name": "test_mock_query_understanding_detects_product_discovery",
+        "line": 35
+      },
+      {
+        "name": "test_mock_query_understanding_returns_unknown",
+        "line": 47
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_contract_enums.py",
+    "sha256": "fb973026112328cca9637fc94d22175768cd427c7df1978bb1f778e57252a31c",
+    "lines": 14,
+    "definitions": [
+      {
+        "name": "test_intent_is_string_enum",
+        "line": 3
+      },
+      {
+        "name": "test_requested_field_is_string_enum",
+        "line": 8
+      },
+      {
+        "name": "test_message_role_is_string_enum",
+        "line": 12
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_persistent_conversation.py",
+    "sha256": "ff497ddc2b7e39cd65d0f3ada622d68fe95173e8944cc82179cd05debc85cbef",
+    "lines": 153,
+    "definitions": [
+      {
+        "name": "snapshot",
+        "line": 16
+      },
+      {
+        "name": "test_ordinal_references_use_display_order",
+        "line": 22
+      },
+      {
+        "name": "test_missing_antecedent_never_searches",
+        "line": 29
+      },
+      {
+        "name": "test_ambiguous_last_and_nonexistent_second",
+        "line": 34
+      },
+      {
+        "name": "test_cheaper_preserves_explicit_original_filters_and_historical_baseline",
+        "line": 39
+      },
+      {
+        "name": "test_storage_followup_uses_product_identity_and_not_invented_ram",
+        "line": 46
+      },
+      {
+        "name": "test_only_assistant_envelope_can_supply_snapshot",
+        "line": 53
+      },
+      {
+        "name": "pg",
+        "line": 62
+      },
+      {
+        "name": "test_postgres_survives_new_instance_and_preserves_snapshot_window",
+        "line": 74
+      },
+      {
+        "name": "test_postgres_multiple_sessions_and_owner_isolation",
+        "line": 88
+      },
+      {
+        "name": "test_postgres_closed_session_and_concurrent_lease",
+        "line": 98
+      },
+      {
+        "name": "test_postgres_cursor_history_and_user_json_cannot_forge_snapshot",
+        "line": 112
+      },
+      {
+        "name": "test_reference_refreshes_live_price_stock_not_history_text",
+        "line": 126
+      },
+      {
+        "name": "test_reference_resolution_does_not_discard_domain_validation_error",
+        "line": 143
+      },
+      {
+        "name": "test_product_references_never_override_personal_business_intents",
+        "line": 149
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_knowledge_repository.py",
+    "sha256": "6cd1aa6c86bbbc62ca2b533c6b65fd0771f0a757f258caf84493c4e610d198a4",
+    "lines": 110,
+    "definitions": [
+      {
+        "name": "FakeCursor",
+        "line": 9
+      },
+      {
+        "name": "FakeConnection",
+        "line": 31
+      },
+      {
+        "name": "repository",
+        "line": 46
+      },
+      {
+        "name": "test_search_parameterizes_vector_status_limit_and_maps_joined_metadata",
+        "line": 51
+      },
+      {
+        "name": "test_synchronize_is_transactional_and_handles_trailing_audited_chunks",
+        "line": 67
+      },
+      {
+        "name": "test_changed_document_aborts_before_upsert",
+        "line": 78
+      },
+      {
+        "name": "test_rewriting_audited_chunk_requires_new_document_version",
+        "line": 88
+      },
+      {
+        "name": "test_audit_requires_persisted_history_and_deduplicates_matches",
+        "line": 97
+      },
+      {
+        "name": "__init__",
+        "line": 10
+      },
+      {
+        "name": "__enter__",
+        "line": 15
+      },
+      {
+        "name": "__exit__",
+        "line": 18
+      },
+      {
+        "name": "execute",
+        "line": 21
+      },
+      {
+        "name": "fetchone",
+        "line": 24
+      },
+      {
+        "name": "fetchall",
+        "line": 27
+      },
+      {
+        "name": "__init__",
+        "line": 32
+      },
+      {
+        "name": "__enter__",
+        "line": 36
+      },
+      {
+        "name": "__exit__",
+        "line": 39
+      },
+      {
+        "name": "cursor",
+        "line": 42
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_response_contracts.py",
+    "sha256": "ed01db3f423170fe87d2557eeae642b636d528c464ae9fa203a1e3a3e6b5de72",
+    "lines": 103,
+    "definitions": [
+      {
+        "name": "test_product_card_accepts_customer_facing_product",
+        "line": 14
+      },
+      {
+        "name": "test_product_card_allows_product_without_selected_variant",
+        "line": 35
+      },
+      {
+        "name": "test_source_reference_accepts_knowledge_source",
+        "line": 45
+      },
+      {
+        "name": "test_chat_response_accepts_structured_output",
+        "line": 60
+      },
+      {
+        "name": "test_chat_response_allows_text_only_response",
+        "line": 86
+      },
+      {
+        "name": "test_response_contract_rejects_unknown_fields",
+        "line": 97
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_health.py",
+    "sha256": "ad2bac6399970c6185cde3e2d40f40fc0d65dd595436660307ca4287088b508b",
+    "lines": 16,
+    "definitions": [
+      {
+        "name": "test_health",
+        "line": 9
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_chat_service_dependencies.py",
+    "sha256": "7c3ba6ced008ac99ec6f96b8ca217094ff7ac43fe4f033b100fe435cdf1d9922",
+    "lines": 98,
+    "definitions": [
+      {
+        "name": "StubQueryUnderstandingService",
+        "line": 14
+      },
+      {
+        "name": "test_chat_service_accepts_query_understanding_dependency",
+        "line": 24
+      },
+      {
+        "name": "StubProductAdvisorService",
+        "line": 39
+      },
+      {
+        "name": "test_chat_service_accepts_product_advisor_dependency",
+        "line": 56
+      },
+      {
+        "name": "StubResponseGenerationService",
+        "line": 72
+      },
+      {
+        "name": "test_chat_service_accepts_response_generation_dependency",
+        "line": 84
+      },
+      {
+        "name": "understand",
+        "line": 15
+      },
+      {
+        "name": "__init__",
+        "line": 40
+      },
+      {
+        "name": "__bool__",
+        "line": 44
+      },
+      {
+        "name": "search",
+        "line": 47
+      },
+      {
+        "name": "build_cards",
+        "line": 51
+      },
+      {
+        "name": "__init__",
+        "line": 73
+      },
+      {
+        "name": "__bool__",
+        "line": 76
+      },
+      {
+        "name": "generate",
+        "line": 79
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_query_contracts.py",
+    "sha256": "6da81f117465845913361bdc60dc83251e3e721e58d32c5b0f782055432a15f2",
+    "lines": 110,
+    "definitions": [
+      {
+        "name": "test_product_search_plan_accepts_valid_filters",
+        "line": 10
+      },
+      {
+        "name": "test_product_search_plan_rejects_invalid_top_k",
+        "line": 26
+      },
+      {
+        "name": "test_product_search_plan_rejects_unknown_fields",
+        "line": 31
+      },
+      {
+        "name": "test_product_search_plan_rejects_reversed_price_range",
+        "line": 35
+      },
+      {
+        "name": "test_query_plan_accepts_product_discovery",
+        "line": 42
+      },
+      {
+        "name": "test_query_plan_accepts_knowledge_query",
+        "line": 63
+      },
+      {
+        "name": "test_query_plan_parses_enum_strings",
+        "line": 74
+      },
+      {
+        "name": "test_query_plan_rejects_unknown_fields",
+        "line": 87
+      },
+      {
+        "name": "test_query_plan_requires_product_search_for_discovery",
+        "line": 94
+      },
+      {
+        "name": "test_query_plan_allows_product_detail_without_product_search",
+        "line": 101
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_mock_product_advisor.py",
+    "sha256": "dff722b97a1c0b1adf5d5ad51f23963cd1e029b8b7a0256df8817db938d5f58d",
+    "lines": 35,
+    "definitions": [
+      {
+        "name": "test_mock_product_advisor_returns_product_match",
+        "line": 7
+      },
+      {
+        "name": "test_mock_product_advisor_builds_product_card",
+        "line": 22
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_product_contracts.py",
+    "sha256": "916f6712d593f199b8416b8bba3dd1ddf274b1b25b253de85cfce4447efed799",
+    "lines": 111,
+    "definitions": [
+      {
+        "name": "test_product_candidate_accepts_semantic_result",
+        "line": 14
+      },
+      {
+        "name": "test_eligible_variant_accepts_business_data",
+        "line": 26
+      },
+      {
+        "name": "test_eligible_variant_rejects_negative_stock",
+        "line": 48
+      },
+      {
+        "name": "test_product_match_accepts_ranked_product",
+        "line": 60
+      },
+      {
+        "name": "test_product_contracts_reject_unknown_fields",
+        "line": 87
+      },
+      {
+        "name": "test_product_match_rejects_variant_from_other_product",
+        "line": 95
+      }
+    ]
+  },
+  {
+    "file": "chatbot-service/tests/test_knowledge_services.py",
+    "sha256": "d8916912f3a4f8218ca0ae8b26b9bf5f0d66c958c60b30b1db2900d6727088ef",
+    "lines": 134,
+    "definitions": [
+      {
+        "name": "FakeEmbeddings",
+        "line": 11
+      },
+      {
+        "name": "MemoryRepository",
+        "line": 20
+      },
+      {
+        "name": "document",
+        "line": 46
+      },
+      {
+        "name": "test_chunking_order_overlap_and_normalization",
+        "line": 50
+      },
+      {
+        "name": "test_invalid_chunk_configuration",
+        "line": 57
+      },
+      {
+        "name": "test_index_idempotent_status_filter_and_empty_document",
+        "line": 62
+      },
+      {
+        "name": "test_changed_chunks_only_reembedded_and_trailing_chunks_removed",
+        "line": 77
+      },
+      {
+        "name": "test_embedding_failure_does_not_persist_partial_document",
+        "line": 88
+      },
+      {
+        "name": "test_retrieval_topk_ranking_metadata_and_audit_handoff",
+        "line": 98
+      },
+      {
+        "name": "test_retrieval_blank_no_results_and_limits",
+        "line": 118
+      },
+      {
+        "name": "test_retrieval_model_failure_maps_error",
+        "line": 129
+      },
+      {
+        "name": "__init__",
+        "line": 12
+      },
+      {
+        "name": "embed",
+        "line": 15
+      },
+      {
+        "name": "__init__",
+        "line": 21
+      },
+      {
+        "name": "documents",
+        "line": 28
+      },
+      {
+        "name": "chunks",
+        "line": 32
+      },
+      {
+        "name": "synchronize",
+        "line": 35
+      },
+      {
+        "name": "search",
+        "line": 38
+      },
+      {
+        "name": "record_retrievals",
+        "line": 42
+      },
+      {
+        "name": "FailedEmbedding",
+        "line": 90
+      },
+      {
+        "name": "FailedEmbedding",
+        "line": 130
+      },
+      {
+        "name": "embed",
+        "line": 91
+      },
+      {
+        "name": "embed",
+        "line": 131
+      }
+    ]
+  }
+]

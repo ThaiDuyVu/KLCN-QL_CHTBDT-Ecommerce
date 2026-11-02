@@ -147,6 +147,25 @@ class OrderCheckoutIntegrationTest {
         assertThatThrownBy(() -> orders.status(firstUser,true,order.getOrderId(),OrderStatus.CANCELLED)).hasMessageContaining("Không thể");
         orders.status(firstUser,false,order.getOrderId(),OrderStatus.CANCELLED);assertThat(stock("reserved_quantity")).isZero();assertThat(stock("quantity")).isEqualTo(5);
     }
+    @Test void migrationSeedsStaffJobRolesWithTheirPermissions() {
+        assertThat(jdbc.queryForList("SELECT role_name FROM roles WHERE role_name IN ('SALES_STAFF','WAREHOUSE_KEEPER','WARRANTY_TECHNICIAN','DELIVERY_STAFF')", String.class))
+                .containsExactlyInAnyOrder("SALES_STAFF","WAREHOUSE_KEEPER","WARRANTY_TECHNICIAN","DELIVERY_STAFF");
+        assertThat(jdbc.queryForList("SELECT r.role_name FROM role_permissions rp JOIN roles r ON r.role_id=rp.role_id JOIN permissions p ON p.permission_id=rp.permission_id WHERE p.permission_name='CUSTOMER_VIEW' AND r.role_name IN ('SALES_STAFF','WAREHOUSE_KEEPER','WARRANTY_TECHNICIAN','DELIVERY_STAFF')", String.class))
+                .containsExactlyInAnyOrder("SALES_STAFF","WARRANTY_TECHNICIAN");
+    }
+    @Test void eachStaffJobTitleOnlyMovesTheOrderThroughItsOwnSteps() throws Exception {
+        add(firstUser,1);UUID id=orders.checkout(firstUser,request()).getOrderId();
+        mvc.perform(get("/api/orders/{id}",id).with(user(principal("DELIVERY_STAFF")))).andExpect(status().isOk()).andExpect(jsonPath("$.allowedStatuses").isEmpty());
+        mvc.perform(get("/api/orders/{id}",id).with(user(principal("SALES_STAFF")))).andExpect(jsonPath("$.allowedStatuses[0]").value("CONFIRMED"));
+        mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("DELIVERY_STAFF"))).with(csrf()).contentType("application/json").content("{\"status\":\"CONFIRMED\"}")).andExpect(status().isForbidden());
+        mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("SALES_STAFF"))).with(csrf()).contentType("application/json").content("{\"status\":\"CONFIRMED\"}")).andExpect(status().isOk());
+        mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("WAREHOUSE_KEEPER"))).with(csrf()).contentType("application/json").content("{\"status\":\"PROCESSING\"}")).andExpect(status().isOk());
+        mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("SALES_STAFF"))).with(csrf()).contentType("application/json").content("{\"status\":\"SHIPPED\"}")).andExpect(status().isForbidden());
+        mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("DELIVERY_STAFF"))).with(csrf()).contentType("application/json").content("{\"status\":\"SHIPPED\"}")).andExpect(status().isOk());
+        mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("DELIVERY_STAFF"))).with(csrf()).contentType("application/json").content("{\"status\":\"DELIVERED\"}")).andExpect(status().isOk());
+        mvc.perform(get("/api/orders").with(user(principal("WARRANTY_TECHNICIAN")))).andExpect(status().isForbidden());
+        assertThat(stock("quantity")).isEqualTo(4);assertThat(stock("reserved_quantity")).isZero();
+    }
     AuthenticatedUserPrincipal principal(String role) {var u=new User();u.setUserId(firstUser);u.setUsername("test");u.setStatus("ACTIVE");return new AuthenticatedUserPrincipal(u,role);}
     @Test void httpCustomerCannotAdministrateAndServerIgnoresClientPrices() throws Exception {
         add(firstUser,1);
@@ -173,4 +192,31 @@ class OrderCheckoutIntegrationTest {
         assertThat(jdbc.queryForObject("SELECT count(*) FROM orders", Integer.class)).isZero();
         var r=request();r.setPaymentMethod(PaymentMethod.VNPAY);assertThatThrownBy(() -> orders.checkout(firstUser,r)).hasMessageContaining("VNPAY Sandbox chưa được cấu hình hoặc đang tắt");assertThat(stock("reserved_quantity")).isZero();
     }
+    @Test void checkoutStillRequiresSelectedWarehouseBeforeAnyFinancialMutation() {
+        add(firstUser,1);
+        jdbc.update("UPDATE carts SET warehouse_id=NULL WHERE customer_id=(SELECT customer_id FROM customers WHERE user_id=?)", firstUser);
+        assertThatThrownBy(() -> orders.checkout(firstUser,request())).hasMessageContaining("chọn chi nhánh");
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM orders",Integer.class)).isZero();
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM payments",Integer.class)).isZero();
+        assertThat(stock("reserved_quantity")).isZero();
+        assertThat(cart.get(firstUser).getItems()).hasSize(1);
+    }
+    @Test void installmentCheckoutPreservesExactlyOnePaymentAndApprovalGate() {
+        add(firstUser,1);
+        UUID provider=UUID.randomUUID();
+        jdbc.update("INSERT INTO installment_providers(provider_id,provider_code,provider_name,status) VALUES (?,?,?,'ACTIVE')", provider,"TEST-"+provider,"Đơn vị trả góp kiểm thử");
+        var r=request();r.setPaymentMethod(PaymentMethod.INSTALLMENT);r.setProviderId(provider);r.setTermMonths(6);r.setDownPayment(new BigDecimal("100000"));
+        var order=orders.checkout(firstUser,r);
+        assertThat(order.getWarehouseId()).isEqualTo(warehouse);
+        assertThat(order.getPayment().getPaymentMethod()).isEqualTo(PaymentMethod.INSTALLMENT);
+        assertThat(order.getPayment().getStatus()).isEqualTo(PaymentStatus.PENDING);
+        assertThat(order.getInstallment().status()).isEqualTo(InstallmentStatus.PENDING);
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM payments WHERE order_id=?",Integer.class,order.getOrderId())).isEqualTo(1);
+        assertThat(stock("reserved_quantity")).isEqualTo(1);
+        assertThatThrownBy(() -> orders.status(firstUser,false,order.getOrderId(),OrderStatus.CONFIRMED)).hasMessageContaining("chưa được duyệt");
+        jdbc.update("UPDATE installment_payments SET status='APPROVED' WHERE payment_id=?",order.getPayment().getPaymentId());
+        assertThat(orders.status(firstUser,false,order.getOrderId(),OrderStatus.CONFIRMED).getStatus()).isEqualTo(OrderStatus.CONFIRMED);
+        assertThat(stock("reserved_quantity")).isEqualTo(1);
+    }
+
 }

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "N03",
+    "group": "A",
+    "prompt": "Tìm laptop Lenovo RAM 16GB.",
+    "expected": "Unknown brand must not be silently dropped; clarify or no match, never other brands as Lenovo.",
+    "mode": "real_chat_api",
+    "profile": "default",
+    "session_class": "fresh_owned_customer",
+    "fixture": "isolated synthetic database clone",
+    "capability": "supported"
+  },
+  {
+    "id": "N12",
+    "group": "B",
+    "prompt": "So sánh Xiaomi 15 bản 12GB/256GB với iPhone 15 bản 6GB/128GB.",
+    "expected": "Keep separate target configurations or clarify unsupported shorthand; do not silently compare all variants.",
+    "mode": "real_chat_api",
+    "profile": "default",
+    "session_class": "fresh_owned_customer",
+    "fixture": "isolated synthetic database clone",
+    "capability": "supported"
+  },
+  {
+    "id": "N27",
+    "group": "E",
+    "prompt": "Đơn hàng ORD-DIAG-NOPAY của tôi đã thanh toán chưa?",
+    "expected": "DELIVERED with no payment: explicitly unknown payment, not paid.",
+    "mode": "real_chat_api",
+    "profile": "default",
+    "session_class": "fresh_owned_customer",
+    "fixture": "isolated synthetic database clone",
+    "capability": "supported"
+  },
+  {
+    "id": "N28",
+    "group": "E",
+    "prompt": "Đơn hàng ORD-DIAG-NULLWAREHOUSE của tôi đã thanh toán chưa?",
+    "expected": "Nullable-warehouse DB fixture must not cause backend NPE; record safe upstream handling if it does.",
+    "mode": "real_chat_api",
+    "profile": "default",
+    "session_class": "fresh_owned_customer",
+    "fixture": "isolated synthetic database clone",
+    "capability": "supported"
+  }
+]

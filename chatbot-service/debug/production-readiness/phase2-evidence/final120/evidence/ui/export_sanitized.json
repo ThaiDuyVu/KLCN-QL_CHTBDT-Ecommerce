@@ -1,0 +1,53 @@
+{
+  "exported_at": "2026-10-21T04:46:38.521Z",
+  "session_id": "synthetic-session_id-0ce50c1dec02",
+  "runtime": {
+    "trace_enabled": true,
+    "trace_file_enabled": true,
+    "ai_enabled": true,
+    "product_mode": "real",
+    "chat_model": "qwen3:4b-instruct",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "ollama_reachable": true,
+    "chat_model_ready": true,
+    "embedding_model_ready": true,
+    "knowledge_configured": true,
+    "knowledge_status": "PUBLISHED",
+    "product_index_configured": true,
+    "warehouse_configured": true,
+    "conversation_storage": "postgres",
+    "feedback_storage": "memory",
+    "snapshot_storage": "assistant-message-envelope"
+  },
+  "scenario": {
+    "id": "greeting",
+    "group": "Cơ bản",
+    "title": "Chào hỏi",
+    "prompt": "Xin chào",
+    "expected": "Chào bằng tiếng Việt; không tự đưa giá hoặc trạng thái đơn hàng."
+  },
+  "messages": [
+    {
+      "id": "b00f275f-9526-433f-a5f9-3d83dbd51be3",
+      "role": "USER",
+      "text": "Xin chào"
+    },
+    {
+      "id": "1fd0ed6e-f087-4beb-bc4e-0f12bd9ecbc9",
+      "role": "ASSISTANT",
+      "text": "Xin chào! Mình có thể hỗ trợ tìm sản phẩm và giải đáp thông tin cửa hàng.",
+      "response": {
+        "session_id": "synthetic-session_id-0ce50c1dec02",
+        "message": "Xin chào! Mình có thể hỗ trợ tìm sản phẩm và giải đáp thông tin cửa hàng.",
+        "products": [],
+        "sources": [],
+        "suggested_questions": [
+          "Bạn muốn tìm sản phẩm nào?"
+        ]
+      },
+      "feedbackId": "1fd0ed6e-f087-4beb-bc4e-0f12bd9ecbc9",
+      "rating": 1,
+      "duration": 376
+    }
+  ]
+}

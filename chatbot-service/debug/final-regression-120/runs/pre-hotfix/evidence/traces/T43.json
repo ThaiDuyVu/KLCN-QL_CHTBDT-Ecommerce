@@ -1,0 +1,140 @@
+{
+  "trace_id": "bfded6bf-01dd-4cac-adef-cab4328a9c55",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "6bc03b55-3669-4188-8f60-304bc3718214",
+      "parent_id": "28b443e4-9055-4634-9ed9-0da3516cecfa",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 31.07,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "b56eeae3-a12a-49f9-a69d-73bdc7a34aeb",
+      "parent_id": "28b443e4-9055-4634-9ed9-0da3516cecfa",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 31.2,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "140922e4-81bb-4e4a-906c-489f46746378",
+      "parent_id": "28b443e4-9055-4634-9ed9-0da3516cecfa",
+      "name": "query.read_only_guard",
+      "status": "ok",
+      "offset_ms": 31.28,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "ORDER_STATUS",
+        "requested_fields": [],
+        "references": {
+          "order_code": "ORD-EVAL03-NOTFOUND-c60fc64a2c8d"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "78536858-fff1-4eef-b4fb-8b7eced16af3",
+      "parent_id": "28b443e4-9055-4634-9ed9-0da3516cecfa",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 36.44,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "ORDER_STATUS",
+        "requested_fields": [],
+        "references": {
+          "order_code": "ORD-EVAL03-NOTFOUND-c60fc64a2c8d"
+        },
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "ccbfe245-a471-420e-b633-d0c6af7fafae",
+      "parent_id": "3f799e29-e99d-448d-a935-67531da819fe",
+      "name": "customer.order_selection",
+      "status": "ok",
+      "offset_ms": 46.76,
+      "duration_ms": null,
+      "output": {
+        "selection": "exact_code",
+        "matched": 0,
+        "order_ids": []
+      }
+    },
+    {
+      "id": "8b2ca066-0b65-4544-ac30-db0512220f34",
+      "parent_id": "28b443e4-9055-4634-9ed9-0da3516cecfa",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 46.8,
+      "duration_ms": null,
+      "output": {
+        "intent": "ORDER_STATUS",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "bf0a9df7-1134-4a13-8717-a9994b7c2eeb",
+      "parent_id": "5bdb261d-09ec-4a48-9fe0-459183863c5b",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 47.02,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "owned_order_not_found"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 7.17,
+      "duration_ms": 46.24,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 36.51,
+      "duration_ms": 10.29,
+      "status": "ok"
+    },
+    {
+      "name": "backend.customer_http",
+      "offset_ms": 36.54,
+      "duration_ms": 10.21,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 46.94,
+      "duration_ms": 0.11,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "method": "GET",
+      "path": "/api/orders/mine"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+@startuml
+' Sơ đồ lớp thiết kế — 3.7.4.1 Người dùng và phân quyền (User & Access Control)
+' Sinh từ mã nguồn: thuộc tính lấy từ lớp @Entity, phương thức từ interface *Service, quan hệ và bội số từ khóa ngoại schema.
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor<<chưa cài đặt>> #FFF3E0
+  BackgroundColor<<tham chiếu>> #EEEEEE
+}
+title Sơ đồ lớp thiết kế — 3.7.4.1 Người dùng và phân quyền (User & Access Control)
+
+package "Entity (tầng dữ liệu)" {
+class User <<entity>> {
+  - userId : UUID {id}
+  - username : String
+  - password : String
+  - email : String
+  - displayName : String
+  - phone : String
+  - status : String
+  - createdAt : OffsetDateTime
+  - updatedAt : OffsetDateTime
+}
+class Role <<entity>> {
+  - roleId : UUID {id}
+  - roleName : String
+  - description : String
+}
+class Permission <<entity>> {
+  - permissionId : UUID {id}
+  - permissionName : String
+  - description : String
+}
+class UserRole <<entity>> {
+  - id : UserRoleId {id}
+}
+class RolePermission <<entity>> {
+  - id : RolePermissionId {id}
+}
+class Employee <<entity>> {
+  - employeeId : UUID {id}
+  - employeeCode : String
+  - fullName : String
+  - position : String
+}
+class Customer <<entity>> {
+  - customerId : UUID {id}
+  - fullName : String
+  - address : String
+  - loyaltyPoint : Integer
+}
+class RefreshToken <<entity>> {
+  - refreshTokenId : UUID {id}
+  - tokenHash : String
+  - createdAt : OffsetDateTime
+  - expiresAt : OffsetDateTime
+  - revokedAt : OffsetDateTime
+}
+class CustomerAddress <<entity>> {
+  - addressId : UUID {id}
+  - customerId : UUID
+  - label : String
+  - recipientName : String
+  - recipientPhone : String
+  - addressLine : String
+  - ward : String
+  - district : String
+  - province : String
+  - defaultAddress : boolean
+  - createdAt : OffsetDateTime
+  - updatedAt : OffsetDateTime
+}
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  LOCKED
+}
+}
+package "Service (tầng nghiệp vụ)" {
+interface AuthService {
+  + authenticate(username, password) : User
+  + login(request) : LoginAuthenticationResult
+  + register(request) : LoginAuthenticationResult
+  + refresh(rawRefreshToken) : LoginAuthenticationResult
+  + logout(rawRefreshToken) : void
+  + getCurrentSession(principal) : LoginSessionResponse
+}
+interface UserService {
+  + getUserById(userId) : UserResponse
+  + getUsers(page, size) : UserPageResponse
+  + getUsers(page, size, keyword, status, roleId) : UserPageResponse
+  + updateUserStatus(userId, request) : UserResponse
+  + updateUser(userId, request) : UserResponse
+}
+interface RoleService {
+  + getRoles() : List<RoleResponse>
+  + getPermissions() : List<PermissionResponse>
+  + getPermissionsByRole(roleId) : List<PermissionResponse>
+  + updateRolePermissions(roleId, request) : void
+}
+interface UserRoleService {
+  + getUserRole(userId) : UserRoleResponse
+  + updateUserRole(userId, request) : void
+}
+interface RefreshTokenService {
+  + createRefreshToken(user, rawRefreshToken) : RefreshToken
+  + validateRefreshToken(rawRefreshToken) : RefreshToken
+  + rotateRefreshToken(currentRawRefreshToken, newRawRefreshToken, user) : RefreshToken
+  + revokeRefreshToken(rawRefreshToken) : void
+}
+interface JwtService {
+  + generateAccessToken(userId, roleName) : String
+  + generateRefreshToken(userId) : String
+  + parseAndValidate(token, expectedTokenType) : Claims
+  + extractUserId(token, expectedTokenType) : UUID
+  + extractTokenType(token) : String
+  + extractRole(token) : Optional<String>
+  + getAccessTokenExpiration() : Duration
+  + getRefreshTokenExpiration() : Duration
+}
+}
+User "1" -- "0..1" UserRole : userId >
+Role "1" -- "0..*" UserRole : roleId >
+Role "1" -- "0..*" RolePermission : roleId >
+Permission "1" -- "0..*" RolePermission : permissionId >
+User "1" -- "0..1" Employee : userId >
+User "1" -- "0..1" Customer : userId >
+User "1" -- "0..*" RefreshToken : userId >
+RefreshToken "0..1" -- "0..*" RefreshToken : replacedByTokenId >
+Customer "1" -- "0..*" CustomerAddress : customerId >
+AuthService ..> User : sử dụng
+AuthService ..> RefreshToken : sử dụng
+UserService ..> User : sử dụng
+RoleService ..> Role : sử dụng
+RoleService ..> Permission : sử dụng
+UserRoleService ..> UserRole : sử dụng
+RefreshTokenService ..> RefreshToken : sử dụng
+JwtService ..> User : sử dụng
+@enduml

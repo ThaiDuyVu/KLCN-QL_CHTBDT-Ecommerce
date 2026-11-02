@@ -1,0 +1,466 @@
+{
+  "trace_id": "d02e2a8b-f741-4b79-82ae-ed0f431869c5",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "57a719ac-c4c7-4019-b612-c7802ddc1105",
+      "parent_id": "29fc3eef-7e52-4a93-bd45-0be08fb1df71",
+      "name": "conversation.context_selection",
+      "status": "ok",
+      "offset_ms": 32.91,
+      "duration_ms": null,
+      "output": {
+        "audit_rows_scanned": 1,
+        "context_messages": 0,
+        "policy": "completed_adjacent_turns",
+        "audit_preserved": true
+      }
+    },
+    {
+      "id": "3f9cfecb-4dc6-4560-9664-db3eb737b47a",
+      "parent_id": "29fc3eef-7e52-4a93-bd45-0be08fb1df71",
+      "name": "safety.action_analysis",
+      "status": "ok",
+      "offset_ms": 33.13,
+      "duration_ms": null,
+      "output": {
+        "actions": []
+      }
+    },
+    {
+      "id": "07a1fd77-2184-48ea-86c9-8c4f519e3783",
+      "parent_id": "04ddd0fe-f235-4328-b451-518f10cafb58",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 865.01,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "8e3bbffb-7af7-4c53-be20-d70476bfb66e",
+      "parent_id": "04ddd0fe-f235-4328-b451-518f10cafb58",
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 974.92,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại",
+            "top_k": 5
+          },
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "Tôi muốn mua một chiếc điện thoại.",
+            "top_k": 1
+          },
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "id": "f3886b46-2a25-4366-b581-0f22744dc66a",
+      "parent_id": "29fc3eef-7e52-4a93-bd45-0be08fb1df71",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 989.27,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tôi muốn mua một chiếc điện thoại.",
+          "top_k": 1
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "5dcc1ee4-2bdd-4253-b1f9-6e6052ebfe34",
+      "parent_id": "29fc3eef-7e52-4a93-bd45-0be08fb1df71",
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 989.4,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Tôi muốn mua một chiếc điện thoại.",
+          "top_k": 1
+        }
+      }
+    },
+    {
+      "id": "af84d7b6-a8b0-449c-b49b-477a1b4cd2fb",
+      "parent_id": "29fc3eef-7e52-4a93-bd45-0be08fb1df71",
+      "name": "product.search",
+      "status": "ok",
+      "offset_ms": 989.54,
+      "duration_ms": 1135.07,
+      "output": [
+        {
+          "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+          "product_name": "Samsung Galaxy S23",
+          "brand_name": "Samsung",
+          "category_name": "Điện thoại",
+          "specifications": {
+            "CPU": "Snapdragon 8 Gen 2",
+            "Màn hình": "Dynamic AMOLED 2X 6,1 inch",
+            "Pin": "3.900 mAh",
+            "RAM": "8 GB"
+          },
+          "semantic_score": 0.3330072363607002,
+          "ranking_score": 0.3330072363607002,
+          "eligible_variants": [
+            {
+              "variant_id": "5ce7a881-8ea2-4462-9599-cb5779a1da31",
+              "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+              "sku": "DEV-S23-BLK-128",
+              "original_price": "13990000.0",
+              "effective_price": "13990000.0",
+              "ram": "8GB",
+              "storage": "128GB",
+              "color": "Đen",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "ca7754a5-8e64-4985-8d99-18feac734252",
+              "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+              "sku": "DEV-S23-CRM-256",
+              "original_price": "15490000.0",
+              "effective_price": "15490000.0",
+              "ram": "8GB",
+              "storage": "256GB",
+              "color": "Kem",
+              "available_quantity": 2,
+              "warranty_months": 12
+            },
+            {
+              "variant_id": "dfa890dd-39c6-49c6-9ac6-5b084a2771aa",
+              "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+              "sku": "DEV-S23-GRN-256",
+              "original_price": "15490000.0",
+              "effective_price": "15490000.0",
+              "ram": "8GB",
+              "storage": "256GB",
+              "color": "Xanh lá",
+              "available_quantity": 2,
+              "warranty_months": 12
+            }
+          ],
+          "reasons": [
+            "Danh mục: Điện thoại"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e0013a43-f9a8-4788-8cbb-48c8ce5b6793",
+      "parent_id": "29fc3eef-7e52-4a93-bd45-0be08fb1df71",
+      "name": "product.cards",
+      "status": "ok",
+      "offset_ms": 2124.62,
+      "duration_ms": 14.38,
+      "output": [
+        {
+          "product_id": "a1c093f8-d70d-466d-9d4b-eb0541aa0681",
+          "product_name": "Samsung Galaxy S23",
+          "variant_id": "5ce7a881-8ea2-4462-9599-cb5779a1da31",
+          "sku": "DEV-S23-BLK-128",
+          "original_price": "13990000.0",
+          "effective_price": "13990000.0",
+          "ram": "8GB",
+          "storage": "128GB",
+          "color": "Đen",
+          "available_quantity": 2,
+          "warranty_months": 12,
+          "image_url": "/images/products/samsung-galaxy-s23/main.jpg",
+          "reasons": [
+            "Danh mục: Điện thoại"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "8a405068-23fe-4def-9ee2-61ca39f20f41",
+      "parent_id": "e0013a43-f9a8-4788-8cbb-48c8ce5b6793",
+      "name": "product.evidence_refreshed",
+      "status": "ok",
+      "offset_ms": 2138.91,
+      "duration_ms": null,
+      "output": {
+        "product_ids": [
+          "a1c093f8-d70d-466d-9d4b-eb0541aa0681"
+        ],
+        "variants": 3,
+        "cards": 1
+      }
+    },
+    {
+      "id": "fc92a634-574f-4bc2-b666-090816f9fb9f",
+      "parent_id": "29fc3eef-7e52-4a93-bd45-0be08fb1df71",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 2139.15,
+      "duration_ms": null,
+      "output": {
+        "intent": "PRODUCT_DISCOVERY",
+        "products": 1,
+        "cards": 1,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "d6b5ce69-d918-4eb5-a0a0-a3bfac80577a",
+      "parent_id": "9324ea3e-2886-46b4-9082-9fe82acb5ef8",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2139.57,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 6.87,
+      "duration_ms": 2147.08,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 33.26,
+      "duration_ms": 941.84,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 34.76,
+      "duration_ms": 830.16,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 35.19,
+      "duration_ms": 829.69,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 35.58,
+      "duration_ms": 829.26,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 865.17,
+      "duration_ms": 38.43,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 903.63,
+      "duration_ms": 23.41,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 927.07,
+      "duration_ms": 43.74,
+      "status": "ok"
+    },
+    {
+      "name": "product.search",
+      "offset_ms": 989.54,
+      "duration_ms": 1135.07,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 989.61,
+      "duration_ms": 16.07,
+      "status": "ok"
+    },
+    {
+      "name": "product.embedding",
+      "offset_ms": 1005.76,
+      "duration_ms": 1058.16,
+      "status": "ok"
+    },
+    {
+      "name": "product.vector_ranking",
+      "offset_ms": 2063.93,
+      "duration_ms": 23.74,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2087.71,
+      "duration_ms": 36.58,
+      "status": "ok"
+    },
+    {
+      "name": "product.cards",
+      "offset_ms": 2124.62,
+      "duration_ms": 14.38,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 2124.73,
+      "duration_ms": 14.05,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 2139.11,
+      "duration_ms": 0.04,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 2139.38,
+      "duration_ms": 0.24,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/search/advanced",
+      "kwargs": {
+        "params": [
+          [
+            "limit",
+            "100"
+          ],
+          [
+            "offset",
+            "0"
+          ],
+          [
+            "category",
+            "Điện thoại"
+          ],
+          [
+            "warehouseId",
+            "d13ea247-ab70-473b-80d6-c8adea60334c"
+          ],
+          [
+            "inStockOnly",
+            "false"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/api/v1/products/a1c093f8-d70d-466d-9d4b-eb0541aa0681/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products/a1c093f8-d70d-466d-9d4b-eb0541aa0681/detail",
+      "kwargs": {
+        "params": {
+          "warehouseId": "d13ea247-ab70-473b-80d6-c8adea60334c"
+        }
+      }
+    }
+  ]
+}

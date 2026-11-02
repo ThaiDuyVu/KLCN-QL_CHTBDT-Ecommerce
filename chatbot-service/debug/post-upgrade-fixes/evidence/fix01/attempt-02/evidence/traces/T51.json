@@ -1,0 +1,163 @@
+{
+  "trace_id": "03b57571-08e0-4d0d-970c-0d3dc0f434e7",
+  "status": "ok",
+  "dropped_events": 0,
+  "events": [
+    {
+      "id": "8fface4b-6294-4ef6-bffe-b0b392a58a4b",
+      "parent_id": "04c65173-938f-4690-8aec-6c3c9fec589e",
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1191.51,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "Xiaomii 15",
+          "top_k": 5
+        },
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "bd9a26dd-257a-4fdd-8d7d-1cba14a5f91a",
+      "parent_id": "17ee68a5-2e29-4b2c-87b3-29c7606f44f3",
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1232.67,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Mình chưa xác định chính xác model trong catalog. Bạn vui lòng xác nhận tên sản phẩm hoặc SKU (ví dụ Xiaomi 15).",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "id": "d2ecc2e1-b0ff-4c75-928e-618b61db8d37",
+      "parent_id": "17ee68a5-2e29-4b2c-87b3-29c7606f44f3",
+      "name": "retrieval.summary",
+      "status": "ok",
+      "offset_ms": 1232.82,
+      "duration_ms": null,
+      "output": {
+        "intent": "UNKNOWN",
+        "products": 0,
+        "cards": 0,
+        "knowledge_chunks": 0,
+        "knowledge_configured": true
+      }
+    },
+    {
+      "id": "d7d0e124-24a0-4dfb-8e32-e93bf0c64935",
+      "parent_id": "f44b36b8-bff0-46cc-91f6-1c28a36b8353",
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1233.03,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "stage_timings": [
+    {
+      "name": "chat.pipeline",
+      "offset_ms": 11.36,
+      "duration_ms": 1251.81,
+      "status": "ok"
+    },
+    {
+      "name": "query.understand",
+      "offset_ms": 43.94,
+      "duration_ms": 1173.76,
+      "status": "ok"
+    },
+    {
+      "name": "query.model_attempt",
+      "offset_ms": 45.36,
+      "duration_ms": 1146.09,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.chat",
+      "offset_ms": 45.76,
+      "duration_ms": 1145.66,
+      "status": "ok"
+    },
+    {
+      "name": "ollama.http",
+      "offset_ms": 46.12,
+      "duration_ms": 1145.26,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1191.64,
+      "duration_ms": 9.18,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1200.86,
+      "duration_ms": 7.06,
+      "status": "ok"
+    },
+    {
+      "name": "backend.product_http",
+      "offset_ms": 1207.96,
+      "duration_ms": 9.44,
+      "status": "ok"
+    },
+    {
+      "name": "customer.context",
+      "offset_ms": 1232.76,
+      "duration_ms": 0.06,
+      "status": "ok"
+    },
+    {
+      "name": "response.generate",
+      "offset_ms": 1232.96,
+      "duration_ms": 0.1,
+      "status": "ok"
+    }
+  ],
+  "backend_calls": [
+    {
+      "path": "/api/v1/categories"
+    },
+    {
+      "path": "/api/v1/brands",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    },
+    {
+      "path": "/api/v1/products",
+      "kwargs": {
+        "params": {
+          "page": 0,
+          "size": 100
+        }
+      }
+    }
+  ]
+}

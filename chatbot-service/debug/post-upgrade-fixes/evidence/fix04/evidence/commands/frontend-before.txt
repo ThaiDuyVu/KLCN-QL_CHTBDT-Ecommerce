@@ -1,0 +1,70 @@
+
+> ql-chtdbt-ecommerce-frontend@0.1.0 test
+> vitest run src/features/chatbot/ChatbotLab.test.jsx
+
+
+ RUN  v4.1.11 workspace://Fontend
+
+ ❯ src/features/chatbot/ChatbotLab.test.jsx (9 tests | 3 failed) 465ms
+   × ignores a close response after selecting a different session 41ms
+   × removes an unpersisted optimistic user message before retry 66ms
+   × labels postgres history using reported runtime storage 9ms
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 6 passed (9)
+   Start at  20:07:55
+   Duration  1.24s (transform 74ms, setup 87ms, import 112ms, tests 465ms, environment 496ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/chatbot/ChatbotLab.test.jsx > ignores a close response after selecting a different session
+Error: expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <p>
+  Phiên đã đóng. Bạn có thể đọc lịch sử hoặc tạo phiên mới.
+</p> instead
+ ❯ src/features/chatbot/ChatbotLab.test.jsx:119:95
+    117|   pending.resolve({ id: a, is_active: false });
+    118|   await waitFor(() => expect(screen.getByLabelText('Lịch sử phiên')).t…
+    119|   expect(screen.queryByText('Phiên đã đóng. Bạn có thể đọc lịch sử hoặ…
+       |                                                                                               ^
+    120|   expect(screen.getByLabelText('Câu hỏi của bạn')).not.toBeDisabled();
+    121| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/features/chatbot/ChatbotLab.test.jsx > removes an unpersisted optimistic user message before retry
+AssertionError: expected [ <p></p>, <textarea …(4)></textarea> ] to have a length of +0 but got 2
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ src/features/chatbot/ChatbotLab.test.jsx:129:50
+    127|   await user.click(screen.getByRole('button', { name: 'Gửi câu hỏi' })…
+    128|   await screen.findByRole('alert');
+    129|   expect(screen.queryAllByText('Câu hỏi retry')).toHaveLength(0);
+       |                                                  ^
+    130|   chatbotApi.send.mockResolvedValueOnce({ message: 'Đã trả lời', produ…
+    131|   await user.click(screen.getByRole('button', { name: 'Gửi câu hỏi' })…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/features/chatbot/ChatbotLab.test.jsx > labels postgres history using reported runtime storage
+Error: expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <small>
+  Lịch sử lưu trong RAM của server
+</small> instead
+ ❯ src/features/chatbot/ChatbotLab.test.jsx:139:70
+    137|   chatbotApi.status.mockResolvedValue({ ai_enabled: true, conversation…
+    138|   show(); await screen.findByText('AI thật');
+    139|   expect(screen.queryByText('Lịch sử lưu trong RAM của server')).not.t…
+       |                                                                      ^
+    140| });
+    141|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
