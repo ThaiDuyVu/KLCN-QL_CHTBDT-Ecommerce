@@ -15,7 +15,15 @@ class WarrantyDetailScreen extends ConsumerWidget {
     final warrantyAsync = ref.watch(warrantyDetailProvider(warrantyId));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Chi tiết bảo hành')),
+      appBar: AppBar(
+        title: const Text('Chi tiết bảo hành', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
+        backgroundColor: Colors.deepOrange,
+        foregroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.white),
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: true,
+      ),
       body: warrantyAsync.when(
         data: (warranty) {
           final statusText = WarrantyStatusValue.label(warranty.status);

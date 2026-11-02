@@ -24,7 +24,7 @@ if [ -x "$PROJECT_ROOT/.local/tools/ollama/ollama" ]; then
   export OLLAMA_MODELS="$PROJECT_ROOT/.local/ollama-models"
   start_service ollama "$PROJECT_ROOT" "$PROJECT_ROOT/.local/tools/ollama/ollama" serve
 fi
-start_service backend "$PROJECT_ROOT/backend" java -jar "$PROJECT_ROOT/backend/target/backend-0.0.1-SNAPSHOT.jar" --spring.profiles.active=dev --server.address=127.0.0.1
+start_service backend "$PROJECT_ROOT/backend" java -jar "$PROJECT_ROOT/backend/target/backend-0.0.1-SNAPSHOT.jar" --spring.profiles.active=dev --server.address=0.0.0.0
 start_service frontend "$PROJECT_ROOT/Fontend" "$PROJECT_ROOT/.local/tools/node-v22.23.3-darwin-arm64/bin/node" node_modules/vite/bin/vite.js --host 127.0.0.1
 start_service chatbot "$PROJECT_ROOT/chatbot-service" "$PROJECT_ROOT/chatbot-service/.venv/bin/python" -m uvicorn app.main:app --host 127.0.0.1 --port 8090 --reload --reload-dir app
 echo 'Frontend: http://localhost:5173 | Backend: http://localhost:8080 | Chatbot: http://localhost:8090/docs'

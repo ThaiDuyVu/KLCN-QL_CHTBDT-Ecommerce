@@ -60,14 +60,30 @@ class WarrantyTicketModel {
   });
 
   factory WarrantyTicketModel.fromJson(Map<String, dynamic> json) {
-    final rawImeis = json['imeiNumbers'] ?? json['imei_numbers'] ?? json['imeis'] ?? const <dynamic>[];
-    final imeiNumbers = (rawImeis is List)
-        ? rawImeis.map((e) => e?.toString() ?? '').where((e) => e.isNotEmpty).toList()
-        : <String>[];
+    // Ép kiểu an toàn 100% cho List<String>, tránh lỗi runtime "type 'List<dynamic>' is not a subtype of type 'List<String>'"
+    final List<String> imeiNumbers = (json['imeiNumbers'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        (json['imei_numbers'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        (json['imeis'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        <String>[];
 
-    final allowedStatuses = (json['allowedStatuses'] ?? const <dynamic>[])
-        .map((e) => e.toString())
-        .toList();
+    final List<String> allowedStatuses = (json['allowedStatuses'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        (json['allowed_statuses'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        <String>[];
 
     return WarrantyTicketModel(
       id: (json['ticketId'] ?? json['id'] ?? '').toString(),
@@ -116,18 +132,25 @@ class WarrantyModel {
   });
 
   factory WarrantyModel.fromJson(Map<String, dynamic> json) {
-    final rawImeis = json['imeiNumbers'] ?? json['imei_numbers'] ?? const <dynamic>[];
-    final rawTickets = json['tickets'] ?? const <dynamic>[];
+    final List<String> imeiNumbers = (json['imeiNumbers'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        (json['imei_numbers'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        (json['imeis'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .where((e) => e.isNotEmpty)
+            .toList() ??
+        <String>[];
 
-    final imeiNumbers = (rawImeis is List)
-        ? rawImeis.map((e) => e?.toString() ?? '').where((e) => e.isNotEmpty).toList()
-        : <String>[];
-
-    final tickets = (rawTickets is List)
-        ? rawTickets
-            .map((e) => WarrantyTicketModel.fromJson(Map<String, dynamic>.from(e as Map)))
-            .toList()
-        : <WarrantyTicketModel>[];
+    final List<WarrantyTicketModel> tickets = (json['tickets'] as List<dynamic>?)
+            ?.whereType<Map>()
+            .map((e) => WarrantyTicketModel.fromJson(Map<String, dynamic>.from(e)))
+            .toList() ??
+        <WarrantyTicketModel>[];
 
     return WarrantyModel(
       id: (json['warrantyId'] ?? json['id'] ?? '').toString(),

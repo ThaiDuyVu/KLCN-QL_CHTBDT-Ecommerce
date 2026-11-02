@@ -4,7 +4,8 @@ import '../../../core/network/api_client.dart';
 
 /// Repository xử lý các API liên quan authentication
 class AuthRepository {
-  final Dio client = ApiClient.dio;
+  final Dio client;
+  AuthRepository({Dio? client}) : client = client ?? ApiClient.dio;
 
   /// Đảm bảo có CSRF token trước khi login/logout
   Future<Response> login(String username, String password) async {
@@ -105,6 +106,13 @@ class AuthRepository {
   Future<Response> logout() async {
     await ApiClient.ensureCsrfToken();
     return await client.post('/api/auth/logout');
+  }
+
+  Future<Response> refresh() async {
+    try {
+      await ApiClient.ensureCsrfToken();
+    } catch (_) {}
+    return await client.post('/api/auth/refresh');
   }
 
   Future<Response> getMe() async {

@@ -64,7 +64,24 @@ public class CartServiceImpl implements CartService {
         return response(cart);
     }
     public CartResponse add(UUID userId, CartItemRequest request) {
-        var cart = current(userId, false);
+        var cart = current(userId, true);
+        if (request.getWarehouseId() != null) {
+            var targetWarehouse = warehouses.findById(request.getWarehouseId())
+                    .orElseThrow(() -> new CommerceException(404, "Không tìm thấy chi nhánh"));
+            if (targetWarehouse.getStatus() != WarehouseStatus.ACTIVE) {
+                throw new CommerceException(409, "Chi nhánh đã ngừng hoạt động");
+            }
+            if (cart.getWarehouseId() == null) {
+                cart.setWarehouseId(targetWarehouse.getWarehouseId());
+                touch(cart);
+            } else if (!Objects.equals(cart.getWarehouseId(), targetWarehouse.getWarehouseId())) {
+                boolean hasItems = items.countByCartId(cart.getCartId()) > 0;
+                if (!hasItems) {
+                    cart.setWarehouseId(targetWarehouse.getWarehouseId());
+                    touch(cart);
+                }
+            }
+        }
         requireWarehouse(cart);
         var variant = variants.findById(request.getVariantId()).orElseThrow(() -> new CommerceException(404, "Không tìm thấy variant"));
         ensurePurchasable(variant);

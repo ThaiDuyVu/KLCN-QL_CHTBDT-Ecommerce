@@ -40,15 +40,34 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (resp.statusCode == 200) {
         state = AuthState.authenticated(resp.data);
         authListenable.trigger();
-      } else {
-        state = AuthState.unauthenticated();
-        authListenable.trigger();
+        return;
       }
-    } catch (e) {
-      state = AuthState.unauthenticated();
-      authListenable.trigger();
-    }
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        try {
+          final refreshResp = await _repo.refresh();
+          if (refreshResp.statusCode == 200) {
+            final meResp = await _repo.getMe();
+            if (meResp.statusCode == 200) {
+              state = AuthState.authenticated(meResp.data);
+              authListenable.trigger();
+              return;
+            }
+          }
+        } catch (_) {
+          try {
+            await CookieStorage.clearCookies();
+          } catch (_) {}
+          ApiClient.resetCsrf();
+        }
+      }
+    } catch (_) {}
+
+    state = AuthState.unauthenticated();
+    authListenable.trigger();
   }
+
+  Future<void> checkAuth() => _init();
 
   Future<bool> login(String username, String password) async {
     print('👉 1. [Provider] Bắt đầu gọi login');

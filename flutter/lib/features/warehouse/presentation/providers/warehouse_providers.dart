@@ -18,13 +18,16 @@ class SelectedWarehouseNotifier extends StateNotifier<Warehouse?> {
 
   SelectedWarehouseNotifier(this._ref) : super(null);
 
+  @override
+  set state(Warehouse? value) => select(value);
+
   void select(Warehouse? w) {
-    state = w;
+    super.state = w;
     _ref.read(selectedWarehouseIdProvider.notifier).state = w?.id;
   }
 
   void clear() {
-    state = null;
+    super.state = null;
     _ref.read(selectedWarehouseIdProvider.notifier).state = null;
   }
 }

@@ -1,18 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:${POSTGRES_PORT}/${POSTGRES_DB}
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
-
-  jpa:
-    open-in-view: false
-
-    hibernate:
-      ddl-auto: validate
-
-    properties:
-      hibernate:
-        format_sql: true
+    url: jdbc:postgresql://ep-odd-poetry-b36qdrad-pooler.c-4.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+    username: neondb_owner
+    password: npg_iwzn48cpLkAG
+    driver-class-name: org.postgresql.Driver
 
 app:
   seed:

@@ -11,10 +11,17 @@ class CartRepository {
   Future<Response> addItem({
     required String variantId,
     required int quantity,
+    String? warehouseId,
   }) async {
+    final payload = <String, dynamic>{
+      'variantId': variantId,
+      'quantity': quantity,
+      if (warehouseId != null && warehouseId.isNotEmpty)
+        'warehouseId': warehouseId,
+    };
     return await client.post(
       '/api/cart/items',
-      data: {'variantId': variantId, 'quantity': quantity},
+      data: payload,
     );
   }
 
