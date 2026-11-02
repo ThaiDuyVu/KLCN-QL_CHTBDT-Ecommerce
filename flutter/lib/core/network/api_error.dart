@@ -6,6 +6,8 @@ String apiErrorMessage(Object error) {
   if (status == 401) return 'Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.';
   if (status == 403)
     return 'Yêu cầu bị từ chối. Kiểm tra quyền tài khoản hoặc phiên bảo mật.';
+  if (status == 409)
+    return 'Giỏ hàng hoặc tồn kho đã thay đổi. Vui lòng tải lại.';
   final data = error.response?.data;
   if (data is String && data.isNotEmpty && !data.trimLeft().startsWith('<'))
     return data;
@@ -14,8 +16,6 @@ String apiErrorMessage(Object error) {
   if (status == 400)
     return 'Thông tin gửi chưa hợp lệ. Kiểm tra các trường bắt buộc.';
   if (status == 405) return 'Thao tác không được API hỗ trợ.';
-  if (status == 409)
-    return 'Giỏ hàng hoặc tồn kho đã thay đổi. Vui lòng tải lại.';
   if (error.message == 'Không lấy được CSRF. Thao tác chưa được gửi.')
     return error.message!;
   if (status == null)

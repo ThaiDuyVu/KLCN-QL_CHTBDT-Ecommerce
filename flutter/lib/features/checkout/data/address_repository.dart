@@ -10,13 +10,16 @@ class AddressRepository {
 
   Future<List<AddressModel>> fetchAddresses() async {
     final res = await client.get(endpoint);
-    final data = res.data;
+    final dynamic data = res.data;
+    List<dynamic> dataList = [];
     if (data is List) {
-      return data
-          .map((e) => AddressModel.fromJson(Map<String, dynamic>.from(e as Map)))
-          .toList();
+      dataList = data;
+    } else if (data is Map) {
+      dataList = (data['data'] ?? data['content'] ?? data['items'] ?? []) as List? ?? [];
     }
-    return const [];
+    return dataList
+        .map((json) => AddressModel.fromJson(Map<String, dynamic>.from(json as Map)))
+        .toList();
   }
 
   Future<AddressModel> createAddress(Map<String, dynamic> payload) async {
@@ -38,4 +41,3 @@ class AddressRepository {
     await client.delete('$endpoint/$addressId');
   }
 }
-

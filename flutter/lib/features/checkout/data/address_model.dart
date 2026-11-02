@@ -40,14 +40,14 @@ class AddressModel {
     return AddressModel(
       id: (json['addressId'] ?? json['id'] ?? '').toString(),
       label: json['label']?.toString(),
-      recipientName: (json['recipientName'] ?? '').toString(),
-      phoneNumber: (json['phoneNumber'] ?? json['recipientPhone'] ?? '').toString(),
-      detailAddress: (json['detailAddress'] ?? json['addressLine'] ?? '').toString(),
+      recipientName: (json['recipientName'] ?? json['fullName'] ?? json['name'] ?? '').toString(),
+      phoneNumber: (json['phoneNumber'] ?? json['recipientPhone'] ?? json['phone'] ?? '').toString(),
+      detailAddress: (json['detailAddress'] ?? json['addressLine'] ?? json['address'] ?? json['fullAddress'] ?? '').toString(),
       ward: (json['ward'] ?? '').toString(),
       district: (json['district'] ?? '').toString(),
       province: (json['province'] ?? '').toString(),
-      isDefault: json['isDefault'] == true,
-      fullAddress: json['fullAddress']?.toString(),
+      isDefault: json['isDefault'] == true || json['defaultAddress'] == true,
+      fullAddress: (json['formattedAddress'] ?? json['fullAddress'] ?? json['address'])?.toString(),
     );
   }
 
