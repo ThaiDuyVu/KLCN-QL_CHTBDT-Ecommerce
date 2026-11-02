@@ -96,6 +96,7 @@ class WarrantyTicketsScreen extends ConsumerWidget {
             ],
           ),
         ),
+
       ),
     );
   }

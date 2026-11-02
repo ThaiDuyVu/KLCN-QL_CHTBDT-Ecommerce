@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/features/cart/presentation/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
@@ -86,51 +87,69 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    ref
-                        .watch(warehouseListProvider)
-                        .when(
-                          loading: () => const LinearProgressIndicator(),
-                          error: (_, _) => TextButton(
-                            onPressed: () =>
-                                ref.invalidate(warehouseListProvider),
-                            child: const Text(
-                              'Không tải được chi nhánh · Thử lại',
-                            ),
-                          ),
-                          data: (list) => DropdownButtonFormField<String>(
-                            key: ValueKey(warehouse?.id),
-                            initialValue: warehouse?.id ?? '',
-                            decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.location_on_outlined),
-                              labelText: 'Chi nhánh xem hàng',
-                            ),
-                            items: [
-                              const DropdownMenuItem(
-                                value: '',
-                                child: Text('Tất cả chi nhánh'),
-                              ),
-                              ...list.map(
-                                (w) => DropdownMenuItem(
-                                  value: w.id,
-                                  child: Text(
-                                    w.name,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                            ],
-                            onChanged: (id) {
-                              // Catalog selection only; never clears or writes the cart.
-                              ref
-                                  .read(selectedWarehouseProvider.notifier)
-                                  .select(
-                                    id == null || id.isEmpty
-                                        ? null
-                                        : list.firstWhere((w) => w.id == id),
-                                  );
-                            },
-                          ),
-                        ),
+                    ref.watch(warehouseListProvider).when(
+  loading: () => const LinearProgressIndicator(),
+  error: (_, _) => TextButton(
+    onPressed: () => ref.invalidate(warehouseListProvider),
+    child: const Text('Không tải được chi nhánh · Thử lại'),
+  ),
+  data: (list) {
+    // 1. FIX LẶP CHI NHÁNH: Lọc trùng theo TÊN thay vì ID. 
+    // Nó sẽ giữ lại kho gốc đầu tiên (kho có chứa dữ liệu tồn kho thật).
+    final seenNames = <String>{};
+    final uniqueWarehouses = list.where((w) => seenNames.add(w.name)).toList();
+
+    // 2. FIX HẾT HÀNG: Tự động chọn kho đầu tiên nếu chưa có kho nào được chọn.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (warehouse == null && uniqueWarehouses.isNotEmpty) {
+        ref.read(selectedWarehouseProvider.notifier).select(uniqueWarehouses.first);
+      }
+    });
+
+    return DropdownButtonFormField<String?>(
+      value: warehouse?.id, // Liên kết trực tiếp với state hiện tại
+      decoration: const InputDecoration(
+        prefixIcon: Icon(Icons.location_on_outlined),
+        labelText: 'Chi nhánh xem hàng',
+      ),
+      items: uniqueWarehouses.map((w) => DropdownMenuItem<String?>(
+        value: w.id,
+        child: Text(w.name, overflow: TextOverflow.ellipsis),
+      )).toList(),
+      onChanged: (newId) async {
+        if (newId == null || newId == warehouse?.id) return;
+
+        final newWarehouse = uniqueWarehouses.firstWhere((w) => w.id == newId);
+
+        // 3. CHẶN CHUYỂN KHO KHI CÓ GIỎ HÀNG (Phase 4)
+        final cartList = ref.read(cartListProvider).valueOrNull;
+        if (cartList != null && cartList.isNotEmpty && warehouse != null) {
+          final should = await showDialog<bool>(
+            context: context,
+            builder: (dctx) => AlertDialog(
+              title: const Text('Thay đổi chi nhánh'),
+              content: const Text('Đổi chi nhánh sẽ xóa giỏ hàng hiện tại. Bạn có muốn tiếp tục?'),
+              actions: [
+                TextButton(onPressed: () => Navigator.pop(dctx, false), child: const Text('Hủy')),
+                TextButton(onPressed: () => Navigator.pop(dctx, true), child: const Text('Tiếp tục')),
+              ],
+            ),
+          );
+
+          if (should != true) return;
+
+          // Thực thi API xóa giỏ hàng
+          await ref.read(cartRepositoryProvider).selectWarehouse(newWarehouse.id, clearItems: true);
+          ref.invalidate(cartListProvider);
+          ref.invalidate(cartProvider);
+        }
+
+        // Cập nhật state
+        ref.read(selectedWarehouseProvider.notifier).select(newWarehouse);
+      },
+    );
+  },
+),
                     const SizedBox(height: 18),
                     Container(
                       width: double.infinity,

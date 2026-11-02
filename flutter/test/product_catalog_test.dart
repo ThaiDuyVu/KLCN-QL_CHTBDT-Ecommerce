@@ -49,6 +49,81 @@ void main() {
     expect(money(product.price), '12.000.000 ₫');
     expect(money(null), 'Xem giá phiên bản');
   });
+
+  test('Fixes localhost and emulator IP to 127.0.0.1 in image URLs', () {
+    final productWithLocalhost = Product.fromJson({
+      'productId': '2',
+      'productName': 'Laptop',
+      'primaryImageUrl': 'http://localhost:8080/uploads/products/macbook.png',
+    });
+    expect(productWithLocalhost.imageUrl, 'http://127.0.0.1:8080/uploads/products/macbook.png');
+
+    final productWithEmulator = Product.fromJson({
+      'productId': '3',
+      'productName': 'Tablet',
+      'primaryImageUrl': 'http://10.0.2.2:8080/api/product-media/tab.jpg',
+    });
+    expect(productWithEmulator.imageUrl, 'http://127.0.0.1:8080/api/product-media/tab.jpg');
+
+    final productWithLoopback = Product.fromJson({
+      'productId': '4',
+      'productName': 'Watch',
+      'primaryImageUrl': 'http://127.0.0.1:8080/api/product-media/watch.jpg',
+    });
+    expect(productWithLoopback.imageUrl, 'http://127.0.0.1:8080/api/product-media/watch.jpg');
+
+    final productWithLanIp = Product.fromJson({
+      'productId': '5',
+      'productName': 'Camera',
+      'primaryImageUrl': 'http://192.168.1.10:8080/api/product-media/cam.jpg',
+    });
+    expect(productWithLanIp.imageUrl, 'http://127.0.0.1:8080/api/product-media/cam.jpg');
+
+    expect(
+      ApiClient.fixUrl('http://localhost:8080/api/product-media/pic.jpg'),
+      'http://127.0.0.1:8080/api/product-media/pic.jpg',
+    );
+    expect(
+      ApiClient.fixUrl('http://192.168.1.10:8080/api/product-media/pic.jpg'),
+      'http://127.0.0.1:8080/api/product-media/pic.jpg',
+    );
+    expect(
+      ApiClient.fixUrl('http://192.168.1.15:8080/api/product-media/pic.jpg'),
+      'http://127.0.0.1:8080/api/product-media/pic.jpg',
+    );
+    expect(
+      ApiClient.fixUrl('http://127.0.0.1:8080/api/product-media/pic.jpg'),
+      'http://127.0.0.1:8080/api/product-media/pic.jpg',
+    );
+    expect(
+      ApiClient.fixUrl('/api/product-media/pic.jpg'),
+      'http://127.0.0.1:8080/api/product-media/pic.jpg',
+    );
+    expect(
+      ApiClient.fixUrl('/uploads/img.png'),
+      'http://127.0.0.1:8080/uploads/img.png',
+    );
+  });
+
+  test('Product handles null primaryImageUrl and maps local asset fallback', () {
+    final productWithNullImage = Product.fromJson({
+      'productId': '2447dd46-2e5a-47d0-8e4a-2f47ee4e5a2b',
+      'productName': 'IP 16 ProMax',
+      'primaryImageUrl': null,
+    });
+    expect(productWithNullImage.imageUrl, isNull);
+    expect(productWithNullImage.primaryImageUrl, isNull);
+    expect(productWithNullImage.productName, 'IP 16 ProMax');
+
+    expect(
+      ProductImage.findLocalAsset('IP 16 ProMax'),
+      'assets/products/iphone-16/main.jpg',
+    );
+    expect(
+      ProductImage.findLocalAsset('Samsung Galaxy S24 Ultra'),
+      'assets/products/samsung-galaxy-s24/main.jpg',
+    );
+  });
   testWidgets(
     'Catalog searches real data and allows viewing out of stock products',
     (tester) async {
@@ -118,7 +193,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(
         find.byType(NavigationDestination),
-        findsNWidgets(role == 'CUSTOMER' ? 4 : 2),
+        findsNWidgets(role == 'CUSTOMER' ? 6 : 2),
       );
       expect(
         find.text('Giỏ hàng'),

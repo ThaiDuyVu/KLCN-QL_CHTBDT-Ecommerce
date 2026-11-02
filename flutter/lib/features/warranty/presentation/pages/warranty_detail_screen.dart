@@ -24,6 +24,7 @@ class WarrantyDetailScreen extends ConsumerWidget {
         scrolledUnderElevation: 0,
         centerTitle: true,
       ),
+
       body: warrantyAsync.when(
         data: (warranty) {
           final statusText = WarrantyStatusValue.label(warranty.status);

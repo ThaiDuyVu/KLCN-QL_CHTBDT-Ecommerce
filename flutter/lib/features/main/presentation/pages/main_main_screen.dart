@@ -5,6 +5,8 @@ import 'package:ecommerce_app/features/cart/presentation/pages/cart_screen.dart'
 import 'package:ecommerce_app/features/orders/presentation/pages/order_list_screen.dart';
 import 'package:ecommerce_app/features/products/presentation/pages/home_screen.dart';
 import 'package:ecommerce_app/features/profile/presentation/pages/profile_screen.dart';
+import 'package:ecommerce_app/features/warranty/presentation/pages/warranty_list_screen.dart';
+import 'package:ecommerce_app/features/warranty/presentation/pages/warranty_tickets_screen.dart';
 
 class MainMainScreen extends ConsumerStatefulWidget {
   const MainMainScreen({super.key});
@@ -21,6 +23,8 @@ class _MainMainScreenState extends ConsumerState<MainMainScreen> {
     HomeScreen(),
     CartScreen(),
     OrderListScreen(),
+    WarrantyListScreen(),
+    WarrantyTicketsScreen(),
     ProfileScreen(),
   ];
 
@@ -59,6 +63,14 @@ class _MainMainScreenState extends ConsumerState<MainMainScreen> {
             const NavigationDestination(
               icon: Icon(Icons.receipt_long_outlined),
               label: 'Đơn hàng',
+            ),
+            const NavigationDestination(
+              icon: Icon(Icons.shield_outlined),
+              label: 'Bảo hành',
+            ),
+            const NavigationDestination(
+              icon: Icon(Icons.support_agent_outlined),
+              label: 'Tickets',
             ),
           ],
           const NavigationDestination(

@@ -1,15 +1,18 @@
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/network/api_error.dart';
 import '../../data/models/warranty_model.dart';
+
 import '../providers/warranty_providers.dart';
 
 class WarrantyLookupScreen extends ConsumerStatefulWidget {
   const WarrantyLookupScreen({super.key});
 
   @override
+
   ConsumerState<WarrantyLookupScreen> createState() =>
       _WarrantyLookupScreenState();
 }
@@ -66,11 +69,13 @@ class _WarrantyLookupScreenState extends ConsumerState<WarrantyLookupScreen> {
         scrolledUnderElevation: 0,
         centerTitle: true,
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
+
               controller: _controller,
               decoration: InputDecoration(
                 labelText: 'Serial hoặc IMEI',
@@ -82,11 +87,13 @@ class _WarrantyLookupScreenState extends ConsumerState<WarrantyLookupScreen> {
                 ),
               ),
               onSubmitted: (_) => _onSearch(),
+
             ),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
+
                 onPressed: _controller.text.trim().isEmpty ? null : _onSearch,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepOrange,
@@ -100,10 +107,12 @@ class _WarrantyLookupScreenState extends ConsumerState<WarrantyLookupScreen> {
                   'Tra cứu',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
+
               ),
             ),
             const SizedBox(height: 16),
             if (lookupFuture == null)
+
               const Expanded(
                 child: Center(
                   child: Text(
@@ -112,6 +121,7 @@ class _WarrantyLookupScreenState extends ConsumerState<WarrantyLookupScreen> {
                   ),
                 ),
               )
+
             else
               Expanded(
                 child: lookupFuture.when(
@@ -119,6 +129,7 @@ class _WarrantyLookupScreenState extends ConsumerState<WarrantyLookupScreen> {
                     return ListView(
                       children: [
                         Card(
+
                           elevation: 2,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -249,4 +260,5 @@ class _WarrantyLookupScreenState extends ConsumerState<WarrantyLookupScreen> {
       ],
     );
   }
+
 }
