@@ -3,7 +3,10 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CookieStorage {
-  static late PersistCookieJar cookieJar;
+  static CookieJar? _cookieJar;
+
+  static CookieJar get cookieJar => _cookieJar ??= CookieJar();
+  static set cookieJar(CookieJar jar) => _cookieJar = jar;
 
   static Future<void> init() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();

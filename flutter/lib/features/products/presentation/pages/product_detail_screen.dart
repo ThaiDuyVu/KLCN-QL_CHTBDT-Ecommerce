@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../../../core/network/api_error.dart';
+import '../../../../core/utils/custom_snackbar.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,54 +40,87 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   Product get product => widget.product;
 
   Future<void> _addToCart() async {
+    // 1. Lấy chi nhánh đang chọn từ selectedWarehouseProvider một cách tường minh
     final warehouse = ref.read(selectedWarehouseProvider);
-    if (warehouse == null || _variantId == null || _adding) return;
+    final warehouseId = warehouse?.id;
+    if (warehouse == null || warehouseId == null || warehouseId.isEmpty) {
+      if (mounted) {
+        CustomSnackbar.showError(
+          context,
+          'Vui lòng chọn chi nhánh xem hàng trước khi thêm vào giỏ',
+        );
+      }
+      return;
+    }
+    if (_variantId == null || _adding) return;
     setState(() => _adding = true);
     try {
       final repo = ref.read(cartRepositoryProvider);
       try {
-        await repo.selectWarehouse(warehouse.id);
+        await repo.selectWarehouse(warehouseId);
       } on DioException catch (error) {
         // Only this specific server rule permits clearing a different branch.
         if (error.response?.statusCode != 409 ||
             !(error.response?.data.toString().contains(
                   'cần xác nhận xóa giỏ',
                 ) ??
-                false))
+                false)) {
           rethrow;
+        }
         if (!mounted) return;
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Đổi chi nhánh giỏ hàng?'),
-            content: const Text(
-              'Giỏ đang có sản phẩm tại chi nhánh khác. Đổi chi nhánh sẽ xóa các sản phẩm đó.',
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            title: const Text(
+              'Đổi chi nhánh giỏ hàng?',
+              style: TextStyle(
+                color: Colors.deepOrange,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: Text(
+              'Giỏ đang có sản phẩm tại chi nhánh khác. Chuyển sang "${warehouse.name}" sẽ xóa các sản phẩm đó.',
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
                 child: const Text('Hủy'),
               ),
-              FilledButton(
+              ElevatedButton(
                 onPressed: () => Navigator.pop(context, true),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
                 child: const Text('Đổi chi nhánh'),
               ),
             ],
           ),
         );
         if (confirmed != true) return;
-        await repo.selectWarehouse(warehouse.id, clearItems: true);
+        await repo.selectWarehouse(warehouseId, clearItems: true);
       }
-      await repo.addItem(variantId: _variantId!, quantity: 1);
-      if (mounted)
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Đã thêm phiên bản vào giỏ hàng')),
-        );
+
+      // 2. Gửi addItem kèm warehouseId tường minh khớp với selectedWarehouseProvider
+      await repo.addItem(
+        variantId: _variantId!,
+        quantity: 1,
+        warehouseId: warehouseId,
+      );
+
+      if (mounted) {
+        CustomSnackbar.showSuccess(context, 'Đã thêm phiên bản vào giỏ hàng');
+      }
     } catch (error) {
-      if (mounted)
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(apiErrorMessage(error))));
+      if (mounted) {
+        CustomSnackbar.showError(context, apiErrorMessage(error));
+      }
     } finally {
       if (mounted) {
         ref.invalidate(cartProvider);
@@ -292,14 +326,14 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
                       warehouse == null
                           ? 'Chọn chi nhánh ở trang sản phẩm trước.'
                           : _variantId == null
                           ? 'Chạm vào phiên bản để chọn.'
                           : 'Số lượng: 1 · Có thể chỉnh trong giỏ hàng.',
-                      style: TextStyle(fontSize: 11, color: Colors.blueGrey),
+                      style: const TextStyle(fontSize: 11, color: Colors.blueGrey),
                     ),
                   ],
                 ),

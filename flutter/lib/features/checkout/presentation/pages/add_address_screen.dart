@@ -84,8 +84,13 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Thêm địa chỉ mới'),
+        title: const Text('Thêm địa chỉ mới', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
+        backgroundColor: Colors.deepOrange,
+        foregroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.white),
         elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: true,
       ),
       body: Form(
         key: _formKey,

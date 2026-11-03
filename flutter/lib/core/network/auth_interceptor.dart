@@ -5,7 +5,17 @@ import 'package:dio/dio.dart';
 class AuthInterceptor extends Interceptor {
   final CookieJar cookies;
   final Future<String> Function() ensureCsrfToken;
-  AuthInterceptor(this.cookies, this.ensureCsrfToken);
+  final Future<bool> Function()? onRefreshToken;
+  final Dio? dio;
+
+  static Future<bool>? _refreshFuture;
+
+  AuthInterceptor(
+    this.cookies,
+    this.ensureCsrfToken, {
+    this.onRefreshToken,
+    this.dio,
+  });
 
   @override
   Future<void> onRequest(
@@ -36,5 +46,48 @@ class AuthInterceptor extends Interceptor {
         ),
       );
     }
+  }
+
+  @override
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
+    final path = err.requestOptions.path;
+    final statusCode = err.response?.statusCode;
+
+    // Không chặn lặp lại khi chính request refresh hoặc login bị lỗi
+    if (statusCode == 401 &&
+        !path.contains('/api/auth/refresh') &&
+        !path.contains('/api/auth/login')) {
+      if (onRefreshToken != null) {
+        try {
+          // Single-flight refresh: chỉ 1 request refresh được bay đi tại một thời điểm
+          _refreshFuture ??= onRefreshToken!().whenComplete(() {
+            _refreshFuture = null;
+          });
+
+          final success = await _refreshFuture!;
+          if (success) {
+            // Thử lại request ban đầu sau khi đã refresh token thành công
+            final opts = err.requestOptions;
+            final client = dio ?? Dio(BaseOptions(baseUrl: opts.baseUrl));
+            final response = await client.fetch(opts);
+            return handler.resolve(response);
+          }
+        } catch (refreshErr) {
+          return handler.reject(
+            DioException(
+              requestOptions: err.requestOptions,
+              error: refreshErr,
+              message: 'Phiên làm việc hết hạn. Vui lòng đăng nhập lại.',
+              type: DioExceptionType.badResponse,
+              response: err.response,
+            ),
+          );
+        }
+      }
+    }
+    handler.next(err);
   }
 }
