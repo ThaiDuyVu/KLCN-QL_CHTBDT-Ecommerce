@@ -597,21 +597,20 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               vnpayEnabled: ref.watch(vnpayEnabledProvider).valueOrNull ?? false,
             ).map((method) {
               final isSelected = selectedPayment == method;
-              return Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: isSelected ? Colors.deepOrange : Colors.grey.shade300,
-                    width: isSelected ? 1.5 : 1.0,
-                  ),
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Material(
                   color: isSelected
                       ? Colors.deepOrange.withValues(alpha: 0.04)
                       : Colors.white,
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(
+                      color: isSelected ? Colors.deepOrange : Colors.grey.shade300,
+                      width: isSelected ? 1.5 : 1.0,
+                    ),
+                  ),
+                  clipBehavior: Clip.antiAlias,
                   child: RadioListTile<PaymentMethodOption>(
                   value: method,
                   groupValue: selectedPayment,
@@ -655,10 +654,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           val;
                     }
                   },
-                  ),
                 ),
-              );
-            }),
+              ),
+            );
+          }),
           ],
         ),
       ),

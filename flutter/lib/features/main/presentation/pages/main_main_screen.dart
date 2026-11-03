@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
-import 'package:ecommerce_app/features/cart/presentation/pages/cart_screen.dart';
 import 'package:ecommerce_app/features/orders/presentation/pages/order_list_screen.dart';
 import 'package:ecommerce_app/features/products/presentation/pages/home_screen.dart';
 import 'package:ecommerce_app/features/profile/presentation/pages/profile_screen.dart';
@@ -21,7 +20,6 @@ class _MainMainScreenState extends ConsumerState<MainMainScreen> {
 
   static const List<Widget> _pages = [
     HomeScreen(),
-    CartScreen(),
     OrderListScreen(),
     WarrantyListScreen(),
     WarrantyTicketsScreen(),
@@ -35,6 +33,7 @@ class _MainMainScreenState extends ConsumerState<MainMainScreen> {
         ? _pages
         : const <Widget>[HomeScreen(), ProfileScreen()];
     final index = _currentIndex < pages.length ? _currentIndex : 0;
+
     return Scaffold(
       body: IndexedStack(
         index: index,
@@ -43,39 +42,47 @@ class _MainMainScreenState extends ConsumerState<MainMainScreen> {
             if (_visited.contains(i)) pages[i] else const SizedBox.shrink(),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: index,
-        onDestinationSelected: (value) => setState(() {
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        elevation: 8,
+        iconSize: 22,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        selectedItemColor: Colors.deepOrange,
+        unselectedItemColor: Colors.grey.shade600,
+        onTap: (value) => setState(() {
           _currentIndex = value;
           _visited.add(value);
         }),
-        destinations: [
-          const NavigationDestination(
-            icon: Icon(Icons.storefront_outlined),
-            selectedIcon: Icon(Icons.storefront),
-            label: 'Sản phẩm',
+        items: [
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home_filled),
+            label: 'Home',
           ),
           if (customer) ...[
-            const NavigationDestination(
-              icon: Icon(Icons.shopping_bag_outlined),
-              label: 'Giỏ hàng',
-            ),
-            const NavigationDestination(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.receipt_long_outlined),
+              activeIcon: Icon(Icons.receipt_long),
               label: 'Đơn hàng',
             ),
-            const NavigationDestination(
-              icon: Icon(Icons.shield_outlined),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.security_outlined),
+              activeIcon: Icon(Icons.security),
               label: 'Bảo hành',
             ),
-            const NavigationDestination(
-              icon: Icon(Icons.support_agent_outlined),
-              label: 'Tickets',
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.confirmation_number_outlined),
+              activeIcon: Icon(Icons.confirmation_number),
+              label: 'Ticket',
             ),
           ],
-          const NavigationDestination(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
-            label: 'Tài khoản',
+            activeIcon: Icon(Icons.person),
+            label: 'Tôi',
           ),
         ],
       ),

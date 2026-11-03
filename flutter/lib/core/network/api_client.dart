@@ -31,7 +31,15 @@ class ApiClient {
   }
 
   Dio get client => dio;
-  static late final Dio dio;
+  static Dio? _dio;
+  static Dio get dio => _dio ??= Dio(
+        BaseOptions(
+          baseUrl: baseUrl,
+          connectTimeout: const Duration(seconds: 10),
+          receiveTimeout: const Duration(seconds: 10),
+        ),
+      );
+  static set dio(Dio value) => _dio = value;
   static final CsrfManager csrfManager = CsrfManager();
 
   static void init() {

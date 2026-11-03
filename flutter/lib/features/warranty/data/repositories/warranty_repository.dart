@@ -12,12 +12,20 @@ class WarrantyRepository {
     final data = resp.data;
     if (data is Map && data['content'] is List) {
       return (data['content'] as List)
-          .map((e) => WarrantyModel.fromJson(Map<String, dynamic>.from(e as Map)))
+          .whereType<Map>()
+          .map((e) => WarrantyModel.fromJson(Map<String, dynamic>.from(e)))
+          .toList();
+    }
+    if (data is Map && data['data'] is List) {
+      return (data['data'] as List)
+          .whereType<Map>()
+          .map((e) => WarrantyModel.fromJson(Map<String, dynamic>.from(e)))
           .toList();
     }
     if (data is List) {
       return data
-          .map((e) => WarrantyModel.fromJson(Map<String, dynamic>.from(e as Map)))
+          .whereType<Map>()
+          .map((e) => WarrantyModel.fromJson(Map<String, dynamic>.from(e)))
           .toList();
     }
     return [];
@@ -26,7 +34,13 @@ class WarrantyRepository {
   Future<WarrantyModel> lookupMyWarranty(String code) async {
     final resp = await client.get('/api/warranties/mine/lookup', queryParameters: {'code': code});
     if (resp.statusCode == 200) {
-      return WarrantyModel.fromJson(Map<String, dynamic>.from(resp.data as Map));
+      final data = resp.data;
+      if (data is Map) {
+        final map = (data['data'] is Map)
+            ? Map<String, dynamic>.from(data['data'] as Map)
+            : Map<String, dynamic>.from(data);
+        return WarrantyModel.fromJson(map);
+      }
     }
     throw Exception('Không tìm thấy thiết bị bảo hành');
   }
@@ -34,7 +48,13 @@ class WarrantyRepository {
   Future<WarrantyModel> fetchWarrantyDetail(String warrantyId) async {
     final resp = await client.get('/api/warranties/mine/$warrantyId');
     if (resp.statusCode == 200) {
-      return WarrantyModel.fromJson(Map<String, dynamic>.from(resp.data as Map));
+      final data = resp.data;
+      if (data is Map) {
+        final map = (data['data'] is Map)
+            ? Map<String, dynamic>.from(data['data'] as Map)
+            : Map<String, dynamic>.from(data);
+        return WarrantyModel.fromJson(map);
+      }
     }
     throw Exception('Không thể lấy chi tiết bảo hành');
   }
@@ -49,10 +69,34 @@ class WarrantyRepository {
     );
 
     if (resp.statusCode == 200 || resp.statusCode == 201) {
-      return WarrantyTicketModel.fromJson(Map<String, dynamic>.from(resp.data as Map));
+      final data = resp.data;
+      if (data is Map) {
+        final map = (data['data'] is Map)
+            ? Map<String, dynamic>.from(data['data'] as Map)
+            : Map<String, dynamic>.from(data);
+        return WarrantyTicketModel.fromJson(map);
+      }
     }
     throw Exception('Không thể tạo yêu cầu bảo hành');
   }
+
+  // Alias tương thích cho createTicket
+  Future<WarrantyTicketModel> createTicket({
+    required String warrantyId,
+    required String issueDescription,
+  }) => createWarrantyTicket(
+    warrantyId: warrantyId,
+    issueDescription: issueDescription,
+  );
+
+  // Alias tương thích cho submitTicket
+  Future<WarrantyTicketModel> submitTicket({
+    required String warrantyId,
+    required String issueDescription,
+  }) => createWarrantyTicket(
+    warrantyId: warrantyId,
+    issueDescription: issueDescription,
+  );
 
   Future<List<WarrantyTicketModel>> fetchMyTickets() async {
     final resp = await client.get('/api/warranties/mine/tickets');
@@ -61,12 +105,20 @@ class WarrantyRepository {
     final data = resp.data;
     if (data is Map && data['content'] is List) {
       return (data['content'] as List)
-          .map((e) => WarrantyTicketModel.fromJson(Map<String, dynamic>.from(e as Map)))
+          .whereType<Map>()
+          .map((e) => WarrantyTicketModel.fromJson(Map<String, dynamic>.from(e)))
+          .toList();
+    }
+    if (data is Map && data['data'] is List) {
+      return (data['data'] as List)
+          .whereType<Map>()
+          .map((e) => WarrantyTicketModel.fromJson(Map<String, dynamic>.from(e)))
           .toList();
     }
     if (data is List) {
       return data
-          .map((e) => WarrantyTicketModel.fromJson(Map<String, dynamic>.from(e as Map)))
+          .whereType<Map>()
+          .map((e) => WarrantyTicketModel.fromJson(Map<String, dynamic>.from(e)))
           .toList();
     }
     return [];

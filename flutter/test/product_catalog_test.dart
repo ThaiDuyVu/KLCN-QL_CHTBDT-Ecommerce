@@ -191,17 +191,25 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      expect(
-        find.byType(NavigationDestination),
-        findsNWidgets(role == 'CUSTOMER' ? 6 : 2),
+      final bottomNav = tester.widget<BottomNavigationBar>(
+        find.byType(BottomNavigationBar),
       );
-      expect(
-        find.text('Giỏ hàng'),
-        role == 'CUSTOMER' ? findsOneWidget : findsNothing,
-      );
+      expect(bottomNav.items.length, role == 'CUSTOMER' ? 5 : 2);
       expect(
         find.text('Đơn hàng'),
         role == 'CUSTOMER' ? findsOneWidget : findsNothing,
+      );
+      expect(
+        find.text('Bảo hành'),
+        role == 'CUSTOMER' ? findsOneWidget : findsNothing,
+      );
+      expect(
+        find.text('Ticket'),
+        role == 'CUSTOMER' ? findsOneWidget : findsNothing,
+      );
+      expect(
+        find.text('Thông báo'),
+        findsNothing,
       );
       expect(tester.takeException(), isNull);
     });
