@@ -26,10 +26,8 @@ class OrderSuccessScreen extends StatelessWidget {
 
   String get _paymentMethodDisplay {
     final method = (paymentMethod ?? '').toUpperCase();
-    if (method.contains('VNPAY')) return 'VNPay (Cổng thanh toán)';
-    if (method.contains('BANK') || method.contains('MOMO')) {
-      return 'Chuyển khoản ngân hàng (QR / MoMo)';
-    }
+    if (method.contains('VNPAY')) return 'VNPAY Sandbox';
+    if (method.contains('INSTALLMENT')) return 'Trả góp nội bộ (chờ duyệt hồ sơ)';
     return 'Thanh toán khi nhận hàng (COD)';
   }
 

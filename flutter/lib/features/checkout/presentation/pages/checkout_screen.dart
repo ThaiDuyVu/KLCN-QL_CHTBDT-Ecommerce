@@ -4,7 +4,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/network/api_error.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import '../../../orders/presentation/providers/order_providers.dart';
+import '../../../products/presentation/widgets/shop_widgets.dart' show money;
 import '../../data/address_model.dart';
+import '../../data/payment_config_repository.dart';
 import '../../data/payment_method.dart';
 import '../providers/address_providers.dart';
 import 'address_selection_sheet.dart';
@@ -20,29 +22,33 @@ class CheckoutScreen extends ConsumerStatefulWidget {
 
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _receiverName = TextEditingController();
-  final _phone = TextEditingController();
-  final _address = TextEditingController();
   final _note = TextEditingController();
+  final _termMonths = TextEditingController();
+  final _downPayment = TextEditingController(text: '0');
+  String? _installmentProviderId;
   bool _submitting = false;
-  bool _hasAutoSelectedAddress = false;
 
   @override
   void dispose() {
-    _receiverName.dispose();
-    _phone.dispose();
-    _address.dispose();
     _note.dispose();
+    _termMonths.dispose();
+    _downPayment.dispose();
     super.dispose();
   }
 
-  void _syncControllersWithAddress(AddressModel address) {
-    _receiverName.text = address.recipientName;
-    _phone.text = address.phoneNumber;
-    _address.text = address.formattedAddress;
+  /// Giống web: dùng địa chỉ đang chọn nếu còn trong sổ địa chỉ của tài khoản hiện tại,
+  /// nếu không thì lấy địa chỉ mặc định (hoặc địa chỉ đầu tiên).
+  AddressModel? _activeAddress(List<AddressModel> addresses, AddressModel? selected) {
+    if (addresses.isEmpty) return null;
+    for (final a in addresses) {
+      if (a.id == selected?.id) return a;
+    }
+    return addresses.firstWhere((a) => a.isDefault, orElse: () => addresses.first);
   }
 
-  void _openAddressSheet() {
+  void _openAddressSheet(AddressModel? active) {
+    // Đánh dấu địa chỉ đang dùng để sheet hiển thị đúng lựa chọn hiện tại.
+    if (active != null) ref.read(selectedAddressProvider.notifier).select(active);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -53,38 +59,30 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     );
   }
 
-  Future<void> _submitOrder(CartSummary cart) async {
-    final selectedAddress = ref.read(selectedAddressProvider);
-
-    if (selectedAddress == null) {
-      if (!_formKey.currentState!.validate()) return;
+  Future<void> _submitOrder(CartSummary cart, AddressModel? address) async {
+    if (address == null || _submitting) return;
+    final paymentOption = ref.read(selectedPaymentMethodProvider);
+    if (paymentOption == PaymentMethodOption.installment &&
+        !_formKey.currentState!.validate()) {
+      return;
     }
 
     setState(() => _submitting = true);
 
     try {
       final repo = ref.read(cartRepositoryProvider);
-      final paymentOption = ref.read(selectedPaymentMethodProvider);
-
-      final Map<String, dynamic> payload;
-      if (selectedAddress != null) {
-        payload = {
-          'addressId': selectedAddress.id,
-          'recipientName': selectedAddress.recipientName,
-          'recipientPhone': selectedAddress.phoneNumber,
-          'shippingAddress': selectedAddress.formattedAddress,
-          'note': _note.text.trim(),
-          'paymentMethod': paymentOption.backendValue,
-        };
-      } else {
-        payload = {
-          'recipientName': _receiverName.text.trim(),
-          'recipientPhone': _phone.text.trim(),
-          'shippingAddress': _address.text.trim(),
-          'note': _note.text.trim(),
-          'paymentMethod': paymentOption.backendValue,
-        };
-      }
+      final note = _note.text.trim();
+      // Cùng payload với trang checkout web: backend tự lấy người nhận/địa chỉ từ addressId.
+      final payload = <String, dynamic>{
+        'addressId': address.id,
+        'note': note.isEmpty ? null : note,
+        'paymentMethod': paymentOption.backendValue,
+        if (paymentOption == PaymentMethodOption.installment) ...{
+          'providerId': _installmentProviderId,
+          'termMonths': int.parse(_termMonths.text.trim()),
+          'downPayment': double.parse(_downPayment.text.trim()),
+        },
+      };
 
       final response = await repo.checkout(payload);
 
@@ -132,14 +130,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               orderId: orderId,
               orderCode: orderCode,
               totalAmount: totalAmt,
-              paymentMethod: paymentOption.displayName,
+              paymentMethod: paymentOption.backendValue,
               paymentUrl: paymentUrl,
-              recipientName: selectedAddress?.recipientName ??
-                  _receiverName.text.trim(),
-              recipientPhone:
-                  selectedAddress?.phoneNumber ?? _phone.text.trim(),
-              shippingAddress: selectedAddress?.formattedAddress ??
-                  _address.text.trim(),
+              recipientName: address.recipientName,
+              recipientPhone: address.phoneNumber,
+              shippingAddress: address.formattedAddress,
             ),
           ),
         );
@@ -162,8 +157,12 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     final cartAsync = ref.watch(cartProvider);
-    final selectedAddress = ref.watch(selectedAddressProvider);
+    final addressesAsync = ref.watch(addressListProvider);
     final selectedPayment = ref.watch(selectedPaymentMethodProvider);
+    final address = _activeAddress(
+      addressesAsync.valueOrNull ?? const [],
+      ref.watch(selectedAddressProvider),
+    );
 
     // VNPAY đang tắt ở backend thì không cho giữ lựa chọn này
     ref.listen<AsyncValue<bool>>(vnpayEnabledProvider, (_, next) {
@@ -172,23 +171,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         ref.read(selectedPaymentMethodProvider.notifier).state =
             PaymentMethodOption.cod;
       }
-    });
-
-    // Tự động gán địa chỉ mặc định khi danh sách địa chỉ tải xong
-    ref.listen<AsyncValue<List<AddressModel>>>(addressListProvider, (_, next) {
-      next.whenData((addresses) {
-        if (!_hasAutoSelectedAddress &&
-            ref.read(selectedAddressProvider) == null &&
-            addresses.isNotEmpty) {
-          _hasAutoSelectedAddress = true;
-          final defaultAddr = addresses.firstWhere(
-            (a) => a.isDefault,
-            orElse: () => addresses.first,
-          );
-          ref.read(selectedAddressProvider.notifier).select(defaultAddr);
-          _syncControllersWithAddress(defaultAddr);
-        }
-      });
     });
 
     return Scaffold(
@@ -215,14 +197,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         // 1. KHỐI ĐỊA CHỈ GIAO HÀNG (SHOPEE STYLE)
-                        _buildAddressSection(selectedAddress),
+                        _buildAddressSection(addressesAsync, address),
                         const SizedBox(height: 16),
-
-                        // Form nhập nhanh người nhận khi chưa có địa chỉ lưu
-                        if (selectedAddress == null) ...[
-                          _buildManualAddressInputs(),
-                          const SizedBox(height: 16),
-                        ],
 
                         // 2. DANH SÁCH SẢN PHẨM TRONG ĐƠN
                         _buildCartItemsSummary(cart),
@@ -232,8 +208,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                         TextFormField(
                           controller: _note,
                           decoration: InputDecoration(
-                            labelText: 'Ghi chú cho người bán',
-                            hintText: 'Ví dụ: Giao giờ hành chính, gọi trước khi đến...',
+                            labelText: 'Ghi chú (không bắt buộc)',
+                            hintText: 'Ghi chú cho người giao hàng',
                             prefixIcon: const Icon(Icons.note_alt_outlined),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -243,8 +219,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                         ),
                         const SizedBox(height: 16),
 
-                        // 4. PHƯƠNG THỨC THANH TOÁN (3 PHƯƠNG THỨC)
-                        _buildPaymentMethodSection(selectedPayment),
+                        // 4. PHƯƠNG THỨC THANH TOÁN (COD / VNPAY / TRẢ GÓP)
+                        _buildPaymentMethodSection(selectedPayment, cart),
                         const SizedBox(height: 16),
 
                         // 5. TỔNG KẾT TIỀN ĐƠN HÀNG
@@ -257,7 +233,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               ),
 
               // 6. BOTTOM BAR CỐ ĐỊNH (STICKY BOTTOM BAR SHOPEE STYLE)
-              _buildStickyBottomBar(cart),
+              _buildStickyBottomBar(cart, address, selectedPayment),
             ],
           );
         },
@@ -265,8 +241,21 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     );
   }
 
+  Future<void> _openAddAddress() async {
+    final created = await Navigator.push<AddressModel>(
+      context,
+      MaterialPageRoute(builder: (_) => const AddAddressScreen()),
+    );
+    if (created != null) {
+      ref.read(selectedAddressProvider.notifier).select(created);
+    }
+  }
+
   // Khối địa chỉ giao hàng phong cách Shopee
-  Widget _buildAddressSection(AddressModel? selectedAddress) {
+  Widget _buildAddressSection(
+    AsyncValue<List<AddressModel>> addressesAsync,
+    AddressModel? selectedAddress,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -318,15 +307,17 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       ),
                     ),
                     const Spacer(),
-                    TextButton(
+                    if (addressesAsync.hasValue) TextButton(
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,
                         minimumSize: const Size(50, 30),
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                      onPressed: _openAddressSheet,
+                      onPressed: selectedAddress != null
+                          ? () => _openAddressSheet(selectedAddress)
+                          : _openAddAddress,
                       child: Text(
-                        selectedAddress != null ? 'Thay đổi' : 'Chọn địa chỉ',
+                        selectedAddress != null ? 'Thay đổi' : 'Thêm địa chỉ',
                         style: const TextStyle(
                           color: Colors.deepOrange,
                           fontWeight: FontWeight.w600,
@@ -386,16 +377,23 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       height: 1.3,
                     ),
                   ),
+                ] else if (addressesAsync.isLoading) ...[
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Text('Đang tải địa chỉ…'),
+                  ),
+                ] else if (addressesAsync.hasError) ...[
+                  Text(
+                    apiErrorMessage(addressesAsync.error!),
+                    style: const TextStyle(color: Colors.red, fontSize: 13),
+                  ),
+                  TextButton(
+                    onPressed: () => ref.invalidate(addressListProvider),
+                    child: const Text('Thử lại'),
+                  ),
                 ] else ...[
                   InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const AddAddressScreen(),
-                        ),
-                      );
-                    },
+                    onTap: _openAddAddress,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Row(
@@ -405,7 +403,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              'Chưa có địa chỉ lưu sẵn. Bấm để thêm hoặc nhập nhanh bên dưới.',
+                              'Bạn chưa có địa chỉ. Hãy thêm địa chỉ trước khi đặt hàng.',
                               style: TextStyle(
                                 color: Colors.grey.shade600,
                                 fontSize: 13,
@@ -422,63 +420,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  // Trường nhập tay dự phòng (tương thích cả với test tự động)
-  Widget _buildManualAddressInputs() {
-    return Card(
-      elevation: 0.5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Nhập thông tin nhận hàng nhanh:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _receiverName,
-              decoration: const InputDecoration(
-                labelText: 'Người nhận',
-                prefixIcon: Icon(Icons.person_outline),
-                border: OutlineInputBorder(),
-              ),
-              validator: (v) => (v == null || v.trim().isEmpty)
-                  ? 'Nhập tên người nhận'
-                  : null,
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _phone,
-              decoration: const InputDecoration(
-                labelText: 'Số điện thoại',
-                prefixIcon: Icon(Icons.phone_outlined),
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.phone,
-              validator: (v) => (v == null || v.trim().isEmpty)
-                  ? 'Nhập số điện thoại'
-                  : null,
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _address,
-              decoration: const InputDecoration(
-                labelText: 'Địa chỉ giao hàng',
-                prefixIcon: Icon(Icons.home_outlined),
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 2,
-              validator: (v) =>
-                  (v == null || v.trim().isEmpty) ? 'Nhập địa chỉ' : null,
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -552,7 +493,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${item.unitPrice.toStringAsFixed(0)} đ  x${item.quantity}',
+                            '${item.sku.isNotEmpty ? '${item.sku} · ' : ''}${money(item.unitPrice)} x${item.quantity}',
                             style: TextStyle(
                               color: Colors.grey.shade600,
                               fontSize: 13,
@@ -562,7 +503,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       ),
                     ),
                     Text(
-                      '${(item.unitPrice * item.quantity).toStringAsFixed(0)} đ',
+                      money(item.lineTotal > 0 ? item.lineTotal : item.unitPrice * item.quantity),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -578,8 +519,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     );
   }
 
-  // 3 Phương thức thanh toán Shopee-style Radio Cards
-  Widget _buildPaymentMethodSection(PaymentMethodOption selectedPayment) {
+  // Phương thức thanh toán: COD / VNPAY (khi backend bật) / Trả góp nội bộ
+  Widget _buildPaymentMethodSection(
+    PaymentMethodOption selectedPayment,
+    CartSummary cart,
+  ) {
     return Card(
       elevation: 0.5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -658,9 +602,104 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               ),
             );
           }),
+            if (selectedPayment == PaymentMethodOption.installment)
+              _buildInstallmentFields(cart.subtotal),
           ],
         ),
       ),
+    );
+  }
+
+  // Thông tin hồ sơ trả góp, cùng các trường với trang checkout web
+  Widget _buildInstallmentFields(double totalAmount) {
+    final providersAsync = ref.watch(installmentProvidersProvider);
+    final downPayment = double.tryParse(_downPayment.text.trim()) ?? 0;
+    final remaining = (totalAmount - downPayment).clamp(0, totalAmount).toDouble();
+
+    return providersAsync.when(
+      loading: () => const Padding(
+        padding: EdgeInsets.symmetric(vertical: 8),
+        child: Text('Đang tải đơn vị trả góp…'),
+      ),
+      error: (error, _) => Row(
+        children: [
+          Expanded(
+            child: Text(
+              apiErrorMessage(error),
+              style: const TextStyle(color: Colors.red, fontSize: 13),
+            ),
+          ),
+          TextButton(
+            onPressed: () => ref.invalidate(installmentProvidersProvider),
+            child: const Text('Thử lại'),
+          ),
+        ],
+      ),
+      data: (List<InstallmentProvider> providers) {
+        if (providers.isEmpty) {
+          return const Text(
+            'Chưa có đơn vị trả góp đang hoạt động. Vui lòng liên hệ cửa hàng.',
+            style: TextStyle(color: Colors.red, fontSize: 13),
+          );
+        }
+        if (!providers.any((p) => p.id == _installmentProviderId)) {
+          _installmentProviderId = null;
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Hồ sơ sẽ được quản lý cửa hàng tiếp nhận và xét duyệt trong hệ thống.',
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField<String>(
+              initialValue: _installmentProviderId,
+              decoration: const InputDecoration(
+                labelText: 'Đơn vị trả góp',
+                border: OutlineInputBorder(),
+              ),
+              items: providers
+                  .map((p) => DropdownMenuItem(value: p.id, child: Text(p.name)))
+                  .toList(),
+              onChanged: (value) => setState(() => _installmentProviderId = value),
+              validator: (value) => value == null ? 'Chọn đơn vị trả góp' : null,
+            ),
+            const SizedBox(height: 12),
+            TextFormField(
+              controller: _termMonths,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Kỳ hạn (tháng)',
+                hintText: 'Ví dụ: 12',
+                border: OutlineInputBorder(),
+              ),
+              validator: (value) {
+                final months = int.tryParse((value ?? '').trim());
+                return months == null || months < 1 ? 'Kỳ hạn phải lớn hơn 0' : null;
+              },
+            ),
+            const SizedBox(height: 12),
+            TextFormField(
+              controller: _downPayment,
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              decoration: const InputDecoration(
+                labelText: 'Tiền trả trước',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (_) => setState(() {}),
+              validator: (value) {
+                final amount = double.tryParse((value ?? '').trim());
+                if (amount == null || amount < 0) return 'Tiền trả trước không được âm';
+                if (amount > totalAmount) return 'Không vượt quá tổng thanh toán';
+                return null;
+              },
+            ),
+            const SizedBox(height: 8),
+            _buildPriceRow('Số tiền còn lại', money(remaining), isBold: true),
+          ],
+        );
+      },
     );
   }
 
@@ -675,13 +714,15 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       ),
       child: Column(
         children: [
-          _buildPriceRow('Tổng tiền hàng', '${cart.subtotal.toStringAsFixed(0)} đ'),
+          _buildPriceRow('Tạm tính', money(cart.originalSubtotal ?? cart.subtotal)),
           const SizedBox(height: 8),
-          _buildPriceRow('Phí vận chuyển', '0 đ', valueColor: Colors.green),
+          _buildPriceRow('Giảm giá', money(cart.discountAmount)),
+          const SizedBox(height: 8),
+          _buildPriceRow('Phí giao hàng', money(0), valueColor: Colors.green),
           const Divider(height: 16),
           _buildPriceRow(
             'Tổng thanh toán',
-            '${cart.subtotal.toStringAsFixed(0)} đ',
+            money(cart.subtotal),
             isBold: true,
             valueColor: Colors.deepOrange,
             fontSize: 16,
@@ -722,7 +763,26 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   }
 
   // Sticky Bottom Bar
-  Widget _buildStickyBottomBar(CartSummary cart) {
+  Widget _buildStickyBottomBar(
+    CartSummary cart,
+    AddressModel? address,
+    PaymentMethodOption payment,
+  ) {
+    final vnpayReady = ref.watch(vnpayEnabledProvider).valueOrNull ?? false;
+    final installmentReady =
+        ref.watch(installmentProvidersProvider).valueOrNull?.isNotEmpty ?? false;
+    // Cùng điều kiện khoá nút với web: phải có địa chỉ, chi nhánh và phương thức khả dụng.
+    final canSubmit = !_submitting &&
+        address != null &&
+        (cart.warehouseId ?? '').isNotEmpty &&
+        (payment != PaymentMethodOption.vnpay || vnpayReady) &&
+        (payment != PaymentMethodOption.installment || installmentReady);
+    final submitLabel = switch (payment) {
+      PaymentMethodOption.cod => 'Đặt hàng',
+      PaymentMethodOption.vnpay => 'Đặt hàng & thanh toán',
+      PaymentMethodOption.installment => 'Gửi hồ sơ trả góp',
+    };
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
@@ -748,7 +808,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   Text(
-                    '${cart.subtotal.toStringAsFixed(0)} đ',
+                    money(cart.subtotal),
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -769,7 +829,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                 ),
-                onPressed: _submitting ? null : () => _submitOrder(cart),
+                onPressed: canSubmit ? () => _submitOrder(cart, address) : null,
                 child: _submitting
                     ? const SizedBox(
                         width: 20,
@@ -779,9 +839,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           color: Colors.white,
                         ),
                       )
-                    : const Text(
-                        'Đặt hàng',
-                        style: TextStyle(
+                    : Text(
+                        submitLabel,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),

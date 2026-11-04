@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ecommerce_app/features/checkout/presentation/pages/checkout_screen.dart';
 import 'package:ecommerce_app/features/cart/presentation/providers/cart_provider.dart';
+import 'package:ecommerce_app/features/checkout/data/address_model.dart';
+import 'package:ecommerce_app/features/checkout/presentation/providers/address_providers.dart';
 import 'package:ecommerce_app/features/orders/presentation/providers/order_providers.dart';
 import 'dart:io';
 import 'dart:typed_data';
@@ -122,52 +124,75 @@ void main() {
     expect(adapter.requests, isEmpty);
     dio.close();
   });
+  Widget checkoutApp(CartRepository repo, List<AddressModel> addresses) {
+    return ProviderScope(
+      overrides: [
+        cartRepositoryProvider.overrideWithValue(repo),
+        cartProvider.overrideWith(
+          (ref) async => CartSummary(
+            warehouseId: 'wh-1',
+            warehouseName: 'Kho phát triển',
+            subtotal: 90000,
+            originalSubtotal: 100000,
+            discountAmount: 10000,
+            items: [
+              CartLine(
+                id: 'item',
+                productId: '',
+                productName: 'Điện thoại',
+                quantity: 1,
+                unitPrice: 90000,
+                lineTotal: 90000,
+              ),
+            ],
+          ),
+        ),
+        addressListProvider.overrideWith((ref) async => addresses),
+        vnpayEnabledProvider.overrideWith((ref) async => false),
+        installmentProvidersProvider.overrideWith((ref) async => []),
+        cartListProvider.overrideWith((ref) async => []),
+        myOrdersProvider.overrideWith((ref) async => []),
+      ],
+      child: const MaterialApp(home: CheckoutScreen()),
+    );
+  }
+
   testWidgets(
-    'Checkout form sends recipient fields and COD once, without deleting cart',
+    'Checkout sends the default saved address id and COD once, like the web',
     (tester) async {
       final dio = Dio(BaseOptions(baseUrl: 'http://example.test'));
       final adapter = RecordingAdapter();
       dio.httpClientAdapter = adapter;
       final repo = CartRepository(client: dio);
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            cartRepositoryProvider.overrideWithValue(repo),
-            cartProvider.overrideWith(
-              (ref) async => CartSummary(
-                subtotal: 100000,
-                items: [
-                  CartLine(
-                    id: 'item',
-                    productId: '',
-                    productName: 'Điện thoại',
-                    quantity: 1,
-                    unitPrice: 100000,
-                  ),
-                ],
-              ),
-            ),
-            cartListProvider.overrideWith((ref) async => []),
-            myOrdersProvider.overrideWith((ref) async => []),
-          ],
-          child: const MaterialApp(home: CheckoutScreen()),
+      await tester.pumpWidget(checkoutApp(repo, const [
+        AddressModel(
+          id: 'addr-other',
+          recipientName: 'Người khác',
+          phoneNumber: '0911111111',
+          detailAddress: '1 Lê Lợi',
         ),
-      );
+        AddressModel(
+          id: 'addr-default',
+          recipientName: 'Khách kiểm thử',
+          phoneNumber: '0900000000',
+          detailAddress: '14 LTT',
+          province: 'TP. Hồ Chí Minh',
+          isDefault: true,
+        ),
+      ]));
       await tester.pumpAndSettle();
-      final fields = find.byType(TextFormField);
-      await tester.enterText(fields.at(0), 'Khách kiểm thử');
-      await tester.enterText(fields.at(1), '0900000000');
-      await tester.enterText(fields.at(2), 'TP. Hồ Chí Minh');
+      expect(find.text('Khách kiểm thử'), findsOneWidget);
+      expect(find.text('Giảm giá'), findsOneWidget);
+      expect(find.text('Chuyển khoản ngân hàng (Banking)'), findsNothing);
+      expect(find.text('Trả góp nội bộ'), findsOneWidget);
       await tester.ensureVisible(find.text('Đặt hàng'));
       await tester.tap(find.text('Đặt hàng'));
       await tester.pumpAndSettle();
       expect(adapter.requests, hasLength(1));
       expect(adapter.requests.single.path, '/api/orders/checkout');
       expect(adapter.requests.single.data, {
-        'recipientName': 'Khách kiểm thử',
-        'recipientPhone': '0900000000',
-        'shippingAddress': 'TP. Hồ Chí Minh',
-        'note': '',
+        'addressId': 'addr-default',
+        'note': null,
         'paymentMethod': 'COD',
       });
       expect(find.text('Đơn hàng của tôi'), findsOneWidget);
@@ -175,4 +200,22 @@ void main() {
       dio.close();
     },
   );
+
+  testWidgets('Checkout cannot submit without a saved address', (tester) async {
+    final dio = Dio(BaseOptions(baseUrl: 'http://example.test'));
+    final adapter = RecordingAdapter();
+    dio.httpClientAdapter = adapter;
+    await tester.pumpWidget(checkoutApp(CartRepository(client: dio), const []));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Bạn chưa có địa chỉ. Hãy thêm địa chỉ trước khi đặt hàng.'),
+      findsOneWidget,
+    );
+    final button = tester.widget<ElevatedButton>(
+      find.widgetWithText(ElevatedButton, 'Đặt hàng'),
+    );
+    expect(button.onPressed, isNull);
+    expect(adapter.requests, isEmpty);
+    dio.close();
+  });
 }

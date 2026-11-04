@@ -185,7 +185,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                       );
                                       ref.invalidate(cartProvider);
                                     },
-                              child: const Text('Tiếp tục đặt hàng · COD'),
+                              child: const Text('Tiếp tục đặt hàng'),
                             ),
                           ],
                         ),
