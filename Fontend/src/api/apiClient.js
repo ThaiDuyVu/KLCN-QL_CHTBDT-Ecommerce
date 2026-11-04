@@ -80,6 +80,9 @@ export function createApiClient(config = projectConfig) {
       return data;
     } catch (error) {
       if (error instanceof ApiError || error.name === 'AbortError') throw error;
+      if (error.name === 'TimeoutError') {
+        throw new ApiError('Máy chủ phản hồi quá lâu (hết thời gian chờ). Kết nối mạng có thể đang chậm, vui lòng thử lại.', { cause: error });
+      }
       throw new ApiError('Không thể kết nối máy chủ. Vui lòng thử lại.', { cause: error });
     }
   }

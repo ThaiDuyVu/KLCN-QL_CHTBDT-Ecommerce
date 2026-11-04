@@ -1,7 +1,9 @@
 import { apiClient } from '../../../api/apiClient';
 import { authApi } from '../../../auth/api/authApi';
-export async function commerceRequest(path, options = {}) {
-  const config = { ...options, signal: options.signal ? AbortSignal.any([options.signal, AbortSignal.timeout(15000)]) : undefined };
+// timeoutMs: requests carrying large bodies (image uploads) need longer than the 15s default.
+export async function commerceRequest(path, { timeoutMs = 15000, ...options } = {}) {
+  const timeout = AbortSignal.timeout(timeoutMs);
+  const config = { ...options, signal: options.signal ? AbortSignal.any([options.signal, timeout]) : timeout };
   try { return await apiClient(path, config); }
   catch (error) {
     if (error.status !== 401 || options.signal?.aborted) throw error;
