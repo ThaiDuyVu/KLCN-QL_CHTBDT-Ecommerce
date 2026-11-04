@@ -9,6 +9,7 @@ from app.features.chat.service import ChatService
 from app.features.customer_context.models import AuthenticatedCustomer
 from app.shared.backend.client import BackendClient
 from app.shared.contracts.response import ChatResponse
+from app.shared.gemini.client import GeminiError
 
 
 router = APIRouter(
@@ -45,11 +46,25 @@ async def send_message(
     customer: AuthenticatedCustomer = Depends(get_authenticated_customer),
     service: ChatService = Depends(get_chat_service),
 ) -> ChatResponse:
+    model_client = getattr(http_request.app.state, 'llm_client', None)
+    if request.provider is not None:
+        if not is_dev_like(get_settings().app_env):
+            raise HTTPException(403, 'Chọn provider theo lượt chỉ được bật trong môi trường Lab.')
+        if model_client is None or not model_client.available(request.provider):
+            raise HTTPException(503, 'Provider được chọn đang tắt hoặc chưa được cấu hình.')
     async def run():
-        return await service.send_message_async(
-            session_id=session_id, request=request, customer=customer,
-            cookies=dict(http_request.cookies),
-        )
+        async def invoke():
+            return await service.send_message_async(
+                session_id=session_id, request=request, customer=customer,
+                cookies=dict(http_request.cookies),
+            )
+        try:
+            if model_client is None:
+                return await invoke()
+            with model_client.select(request.provider):
+                return await invoke()
+        except GeminiError as exc:
+            raise HTTPException(503, f'{exc} Có thể chọn lại Ollama trong Lab.') from None
     if not enabled(get_settings()):
         return await run()
     try:
@@ -129,6 +144,13 @@ async def status(customer: AuthenticatedCustomer = Depends(get_authenticated_cus
         'embedding_model': settings.ollama_embedding_model,
         'ollama_reachable': ollama_reachable,
         'chat_model_ready': settings.ollama_chat_model in available_models,
+        'default_provider': settings.llm_provider,
+        'providers': {
+            'ollama': {'enabled': settings.chatbot_ai_enabled and settings.ollama_chat_enabled,
+                       'model': settings.ollama_chat_model, 'configured': True},
+            'gemini': {'enabled': settings.chatbot_ai_enabled and settings.gemini_enabled and bool(settings.gemini_api_key.get_secret_value()),
+                       'model': settings.gemini_model, 'configured': bool(settings.gemini_api_key.get_secret_value())},
+        },
         'embedding_model_ready': settings.ollama_embedding_model in available_models,
         'knowledge_configured': bool(settings.knowledge_database_url),
         'knowledge_status': settings.knowledge_document_status,

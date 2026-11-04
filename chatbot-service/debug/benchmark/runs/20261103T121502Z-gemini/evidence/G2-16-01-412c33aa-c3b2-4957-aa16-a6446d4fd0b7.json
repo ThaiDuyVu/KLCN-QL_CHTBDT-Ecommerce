@@ -1,0 +1,193 @@
+{
+  "trace_id": "412c33aa-c3b2-4957-aa16-a6446d4fd0b7",
+  "http_status": 200,
+  "trace_status": "ok",
+  "events": [
+    {
+      "name": "llm.provider_selected",
+      "status": "ok",
+      "offset_ms": 0.19,
+      "duration_ms": null,
+      "output": {
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "name": "gemini.chat",
+      "status": "ok",
+      "offset_ms": 68.45,
+      "duration_ms": 1718.66,
+      "output": "{\n  \"intent\": \"PRODUCT_DISCOVERY\",\n  \"product_search\": {\n    \"category\": \"Laptop\",\n    \"min_price\": 15000000,\n    \"max_price\": 20000000,\n    \"semantic_query\": \"laptop tầm 15-20tr\"\n  }\n}"
+    },
+    {
+      "name": "gemini.http_status",
+      "status": "ok",
+      "offset_ms": 1786.64,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "status_code": 200
+      }
+    },
+    {
+      "name": "gemini.usage",
+      "status": "ok",
+      "offset_ms": 1786.92,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "promptTokenCount": 1593,
+        "candidatesTokenCount": 85,
+        "totalTokenCount": 1678
+      }
+    },
+    {
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1787.46,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": "15000000",
+          "max_price": "20000000",
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop tầm 15-20tr",
+          "top_k": 5
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1836.59,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "15000000",
+            "max_price": "20000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop tầm 15-20tr",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "15000000",
+            "max_price": "20000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop tầm 15-20tr",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1853.28,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": "15000000",
+          "max_price": "20000000",
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop tầm 15-20tr",
+          "top_k": 5
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1853.45,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": "15000000",
+          "max_price": "20000000",
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop tầm 15-20tr",
+          "top_k": 5
+        }
+      }
+    },
+    {
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1955.92,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "local_chat_detected": false,
+  "stop_reason": null
+}

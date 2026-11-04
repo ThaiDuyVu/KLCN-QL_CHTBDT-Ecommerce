@@ -37,6 +37,7 @@ export default function ChatbotLabPage() {
   const [sessionId, setSessionId] = useState(() => sessionFor(user.userId));
   const [traceId, setTraceId] = useState(null);
   const [runtime, setRuntime] = useState(null);
+  const [provider, setProvider] = useState('');
   const [statusError, setStatusError] = useState('');
   const [currentSession, setCurrentSession] = useState(null);
   const [sessions, setSessions] = useState([]);
@@ -95,7 +96,7 @@ export default function ChatbotLabPage() {
     const abort = new AbortController(); controller.current = abort;
     const timer = setTimeout(() => abort.abort(), 180000);
     try {
-      const result = await chatbotApi.send(sessionId, question, abort.signal, requestTraceId);
+      const result = await chatbotApi.send(sessionId, question, abort.signal, requestTraceId, provider || undefined);
       clearTimeout(timer);
       if (abort.signal.aborted || token !== version.current) return;
       const duration = Math.round(performance.now() - started);
@@ -258,6 +259,13 @@ export default function ChatbotLabPage() {
         </form>
       </section>
       <aside className="lab-panel lab-inspector"><h2>Trạng thái & kết quả</h2><button type="button" onClick={refreshStatus}>Kiểm tra dịch vụ</button>
+        <label htmlFor="lab-provider">Model dùng cho lượt gửi tiếp theo</label>
+        <select id="lab-provider" value={provider} disabled={busy || restoring || !runtime?.ai_enabled} onChange={(event) => setProvider(event.target.value)}>
+          <option value="">Mặc định ({runtime?.default_provider || 'ollama'})</option>
+          <option value="ollama" disabled={runtime?.providers?.ollama?.enabled === false}>Ollama · local</option>
+          <option value="gemini" disabled={!runtime?.providers?.gemini?.enabled}>Gemini · {runtime?.providers?.gemini?.model || 'API'}{runtime?.providers?.gemini?.enabled ? '' : ' · đang tắt/chưa cấu hình'}</option>
+        </select>
+        <small>Chỉ gọi một provider đã chọn. Bật/tắt bằng cấu hình chatbot-service; embedding vẫn dùng Ollama.</small>
         {statusError && <p role="alert" className="lab-error">{statusError}</p>}
         {runtime && <dl>
           <dt>Chế độ trả lời</dt><dd className={runtime.ai_enabled ? 'lab-good' : 'lab-warn'}>{runtime.ai_enabled ? 'AI thật' : 'Mock · câu trả lời mẫu'}</dd>

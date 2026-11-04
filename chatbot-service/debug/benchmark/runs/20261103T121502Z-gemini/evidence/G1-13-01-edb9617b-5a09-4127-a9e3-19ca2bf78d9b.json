@@ -1,0 +1,193 @@
+{
+  "trace_id": "edb9617b-5a09-4127-a9e3-19ca2bf78d9b",
+  "http_status": 200,
+  "trace_status": "ok",
+  "events": [
+    {
+      "name": "llm.provider_selected",
+      "status": "ok",
+      "offset_ms": 0.2,
+      "duration_ms": null,
+      "output": {
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "name": "gemini.chat",
+      "status": "ok",
+      "offset_ms": 79.37,
+      "duration_ms": 1028.55,
+      "output": "{\n  \"intent\": \"PRODUCT_DISCOVERY\",\n  \"product_search\": {\n    \"category\": \"Laptop\",\n    \"top_k\": 2\n  }\n}"
+    },
+    {
+      "name": "gemini.http_status",
+      "status": "ok",
+      "offset_ms": 1107.8,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "status_code": 200
+      }
+    },
+    {
+      "name": "gemini.usage",
+      "status": "ok",
+      "offset_ms": 1107.87,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "promptTokenCount": 1590,
+        "candidatesTokenCount": 42,
+        "totalTokenCount": 1632
+      }
+    },
+    {
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1108.57,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 2
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1146.43,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": null,
+            "top_k": 2
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "gợi ý 2 laptop",
+            "top_k": 2
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1159.19,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "gợi ý 2 laptop",
+          "top_k": 2
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1159.25,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Laptop",
+          "brands": [],
+          "min_price": null,
+          "max_price": null,
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "gợi ý 2 laptop",
+          "top_k": 2
+        }
+      }
+    },
+    {
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1269.63,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "local_chat_detected": false,
+  "stop_reason": null
+}

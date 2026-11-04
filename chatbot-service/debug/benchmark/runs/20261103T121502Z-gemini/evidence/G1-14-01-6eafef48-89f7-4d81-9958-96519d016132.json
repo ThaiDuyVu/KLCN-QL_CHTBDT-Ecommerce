@@ -1,0 +1,203 @@
+{
+  "trace_id": "6eafef48-89f7-4d81-9958-96519d016132",
+  "http_status": 200,
+  "trace_status": "ok",
+  "events": [
+    {
+      "name": "llm.provider_selected",
+      "status": "ok",
+      "offset_ms": 1.27,
+      "duration_ms": null,
+      "output": {
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "name": "gemini.chat",
+      "status": "ok",
+      "offset_ms": 62.28,
+      "duration_ms": 1430.3,
+      "output": "{\n  \"intent\": \"PRODUCT_DISCOVERY\",\n  \"product_search\": {\n    \"brands\": [\"Samsung\"],\n    \"top_k\": 3\n  }\n}"
+    },
+    {
+      "name": "gemini.http_status",
+      "status": "ok",
+      "offset_ms": 1492.33,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "status_code": 200
+      }
+    },
+    {
+      "name": "gemini.usage",
+      "status": "ok",
+      "offset_ms": 1492.48,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "promptTokenCount": 1592,
+        "candidatesTokenCount": 42,
+        "totalTokenCount": 1634
+      }
+    },
+    {
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1492.97,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [
+            "Samsung"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": null,
+          "top_k": 3
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1547.59,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": null,
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": null,
+            "top_k": 3
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "gợi ý 3 điện thoại Samsung",
+            "top_k": 3
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1555.93,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Samsung"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "gợi ý 3 điện thoại Samsung",
+          "top_k": 3
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1556.01,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Samsung"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "gợi ý 3 điện thoại Samsung",
+          "top_k": 3
+        }
+      }
+    },
+    {
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1680.98,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "local_chat_detected": false,
+  "stop_reason": null
+}

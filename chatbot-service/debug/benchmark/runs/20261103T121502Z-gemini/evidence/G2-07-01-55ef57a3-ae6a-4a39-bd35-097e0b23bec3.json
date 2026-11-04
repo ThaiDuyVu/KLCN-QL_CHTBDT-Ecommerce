@@ -1,0 +1,197 @@
+{
+  "trace_id": "55ef57a3-ae6a-4a39-bd35-097e0b23bec3",
+  "http_status": 200,
+  "trace_status": "ok",
+  "events": [
+    {
+      "name": "llm.provider_selected",
+      "status": "ok",
+      "offset_ms": 0.21,
+      "duration_ms": null,
+      "output": {
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "name": "gemini.chat",
+      "status": "ok",
+      "offset_ms": 66.37,
+      "duration_ms": 2400.25,
+      "output": "{\"intent\": \"PRODUCT_DISCOVERY\", \"product_search\": {\"max_price\": 10000000, \"semantic_query\": \"điện thoại\"}}"
+    },
+    {
+      "name": "gemini.http_status",
+      "status": "ok",
+      "offset_ms": 2466.13,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "status_code": 200
+      }
+    },
+    {
+      "name": "gemini.usage",
+      "status": "ok",
+      "offset_ms": 2466.43,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "promptTokenCount": 1592,
+        "candidatesTokenCount": 39,
+        "totalTokenCount": 1631
+      }
+    },
+    {
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 2467.02,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [],
+          "min_price": null,
+          "max_price": "10000000",
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại",
+          "top_k": 5
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 2536.72,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": null,
+            "brands": [],
+            "min_price": null,
+            "max_price": "10000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "PRICE"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": "8500000",
+            "max_price": "11500000",
+            "target_price": "10000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại giá 10 triệu",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 2552.19,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "PRICE"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": "8500000",
+          "max_price": "11500000",
+          "target_price": "10000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại giá 10 triệu",
+          "top_k": 5
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 2552.33,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [],
+          "min_price": "8500000",
+          "max_price": "11500000",
+          "target_price": "10000000",
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại giá 10 triệu",
+          "top_k": 5
+        }
+      }
+    },
+    {
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 2683.15,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "local_chat_detected": false,
+  "stop_reason": null
+}

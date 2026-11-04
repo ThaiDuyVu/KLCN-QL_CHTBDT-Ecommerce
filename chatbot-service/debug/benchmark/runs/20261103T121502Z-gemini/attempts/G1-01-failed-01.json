@@ -1,0 +1,43 @@
+{
+  "id": "G1-01",
+  "title": "laptop Dell",
+  "difficulty": "D",
+  "probe": false,
+  "group": "G1",
+  "group_title": "Tìm sản phẩm theo điều kiện",
+  "session_id": "c6663fa7-b61e-46ff-b1bb-fc2de6c4fd6d",
+  "turns": [
+    {
+      "turn": 1,
+      "say": "laptop Dell",
+      "verdict": "BLOCKED_ENVIRONMENT",
+      "failures": [],
+      "notes": [
+        "HTTP_503: dừng, không retry/fallback."
+      ],
+      "reply": "{\"detail\":\"Gemini HTTP 503. Dịch vụ Gemini tạm thời không khả dụng (có thể quá tải). Vui lòng thử lại sau; mã này chưa chứng minh key sai hoặc hết quota. Có thể chọn lại Ollama trong Lab.\"}",
+      "cards": [],
+      "filters": {},
+      "strategy": null,
+      "seconds": 3.48,
+      "comparison": false,
+      "sources": 0,
+      "trace_id": "a84653b1-952f-4412-b67b-20fcec394164",
+      "http_status": 503
+    }
+  ],
+  "history": [
+    {
+      "say": "laptop Dell",
+      "status": 503,
+      "message": "{\"detail\":\"Gemini HTTP 503. Dịch vụ Gemini tạm thời không khả dụng (có thể quá tải). Vui lòng thử lại sau; mã này chưa chứng minh key sai hoặc hết quota. Có thể chọn lại Ollama trong Lab.\"}",
+      "cards": [],
+      "sources": [],
+      "comparison": null,
+      "filters": {},
+      "strategy": null,
+      "seconds": 3.48
+    }
+  ],
+  "task_success": false
+}

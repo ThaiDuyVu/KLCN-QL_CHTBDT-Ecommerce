@@ -17,6 +17,8 @@ from app.shared.contracts.product import ProductMatch
 from app.shared.contracts.query import ProductSearchPlan
 from app.shared.contracts.response import ProductCard
 from app.shared.ollama.client import OllamaClient
+from app.shared.gemini.client import GeminiClient
+from app.shared.llm import SelectableChatModel
 
 
 class UnavailableProductAdvisor:
@@ -28,7 +30,7 @@ class UnavailableProductAdvisor:
         return []
 
 
-def build_chat_service(settings: Settings, *, product_advisor: ProductAdvisorService | None = None) -> tuple[MockChatService, OllamaClient | None]:
+def build_chat_service(settings: Settings, *, product_advisor: ProductAdvisorService | None = None) -> tuple[MockChatService, SelectableChatModel | None]:
     conversation = ConversationService(PostgresConversationRepository(settings.conversation_database_url)) if settings.conversation_storage == 'postgres' else ConversationService()
     if product_advisor is None and settings.product_advisor_mode == "real":
         product_advisor = RealProductAdvisorService(
@@ -39,7 +41,8 @@ def build_chat_service(settings: Settings, *, product_advisor: ProductAdvisorSer
         )
     if not settings.chatbot_ai_enabled:
         return MockChatService(product_advisor=product_advisor, conversation_service=conversation), None
-    client = OllamaClient(settings)
+    client = SelectableChatModel(settings, OllamaClient(settings),
+        GeminiClient(settings) if settings.gemini_enabled and settings.gemini_api_key.get_secret_value() else None)
     knowledge = None
     if settings.knowledge_database_url:
         repository = postgres_repository(settings.knowledge_database_url)

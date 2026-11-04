@@ -1,0 +1,103 @@
+{
+  "trace_id": "8ee6a1f3-def8-4f27-8a3a-8e1a5ca73f20",
+  "http_status": 200,
+  "trace_status": "ok",
+  "events": [
+    {
+      "name": "llm.provider_selected",
+      "status": "ok",
+      "offset_ms": 0.61,
+      "duration_ms": null,
+      "output": {
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "name": "gemini.chat",
+      "status": "ok",
+      "offset_ms": 51.77,
+      "duration_ms": 1631.55,
+      "output": "{\"intent\": \"PRODUCT_DISCOVERY\", \"product_search\": {\"min_price\": 20000000, \"max_price\": 30000000, \"semantic_query\": \"laptop\"}}"
+    },
+    {
+      "name": "gemini.http_status",
+      "status": "ok",
+      "offset_ms": 1683.03,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "status_code": 200
+      }
+    },
+    {
+      "name": "gemini.usage",
+      "status": "ok",
+      "offset_ms": 1683.21,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "promptTokenCount": 1595,
+        "candidatesTokenCount": 52,
+        "totalTokenCount": 1647
+      }
+    },
+    {
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1683.6,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [],
+          "min_price": "20000000",
+          "max_price": "30000000",
+          "target_price": null,
+          "min_ram_gb": null,
+          "min_storage_gb": null,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "laptop",
+          "top_k": 5
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1774.12,
+      "duration_ms": null,
+      "output": {
+        "clarification": "Khoảng giá bị mâu thuẫn. Bạn muốn giá tối thiểu và tối đa bao nhiêu?",
+        "intent": "UNKNOWN",
+        "requested_fields": [],
+        "references": {},
+        "product_search": null,
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1774.56,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_guard",
+        "reason": "clarification"
+      }
+    }
+  ],
+  "local_chat_detected": false,
+  "stop_reason": null
+}

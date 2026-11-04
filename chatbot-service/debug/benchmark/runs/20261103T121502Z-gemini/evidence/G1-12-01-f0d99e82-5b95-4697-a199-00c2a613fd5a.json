@@ -1,0 +1,207 @@
+{
+  "trace_id": "f0d99e82-5b95-4697-a199-00c2a613fd5a",
+  "http_status": 200,
+  "trace_status": "ok",
+  "events": [
+    {
+      "name": "llm.provider_selected",
+      "status": "ok",
+      "offset_ms": 0.16,
+      "duration_ms": null,
+      "output": {
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "name": "gemini.chat",
+      "status": "ok",
+      "offset_ms": 57.26,
+      "duration_ms": 1523.42,
+      "output": "{\n  \"intent\": \"PRODUCT_DISCOVERY\",\n  \"product_search\": {\n    \"brands\": [\"Samsung\"],\n    \"min_ram_gb\": 12,\n    \"min_storage_gb\": 512,\n    \"semantic_query\": \"điện thoại Samsung RAM 12GB bộ nhớ 512GB\"\n  }\n}"
+    },
+    {
+      "name": "gemini.http_status",
+      "status": "ok",
+      "offset_ms": 1580.28,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "status_code": 200
+      }
+    },
+    {
+      "name": "gemini.usage",
+      "status": "ok",
+      "offset_ms": 1580.56,
+      "duration_ms": null,
+      "output": {
+        "model": "gemini-3.1-flash-lite",
+        "promptTokenCount": 1600,
+        "candidatesTokenCount": 85,
+        "totalTokenCount": 1685
+      }
+    },
+    {
+      "name": "query.validation",
+      "status": "ok",
+      "offset_ms": 1581.01,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": null,
+          "brands": [
+            "Samsung"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "target_price": null,
+          "min_ram_gb": 12,
+          "min_storage_gb": 512,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+          "top_k": 5
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.domain_validation",
+      "status": "ok",
+      "offset_ms": 1642.49,
+      "duration_ms": null,
+      "output": {
+        "original": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": null,
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 12,
+            "min_storage_gb": 512,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        },
+        "normalized": {
+          "clarification": null,
+          "intent": "PRODUCT_DISCOVERY",
+          "requested_fields": [
+            "SPECIFICATIONS"
+          ],
+          "references": {},
+          "product_search": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 12,
+            "min_storage_gb": 512,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+            "top_k": 5
+          },
+          "bundle": [],
+          "budget": null,
+          "semantic_query": null
+        },
+        "taxonomy_verified": true
+      }
+    },
+    {
+      "name": "query.plan.initial",
+      "status": "ok",
+      "offset_ms": 1656.52,
+      "duration_ms": null,
+      "output": {
+        "clarification": null,
+        "intent": "PRODUCT_DISCOVERY",
+        "requested_fields": [
+          "SPECIFICATIONS"
+        ],
+        "references": {},
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Samsung"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "target_price": null,
+          "min_ram_gb": 12,
+          "min_storage_gb": 512,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+          "top_k": 5
+        },
+        "bundle": [],
+        "budget": null,
+        "semantic_query": null
+      }
+    },
+    {
+      "name": "query.plan.effective",
+      "status": "ok",
+      "offset_ms": 1656.64,
+      "duration_ms": null,
+      "output": {
+        "product_search": {
+          "targets": [],
+          "category": "Điện thoại",
+          "brands": [
+            "Samsung"
+          ],
+          "min_price": null,
+          "max_price": null,
+          "target_price": null,
+          "min_ram_gb": 12,
+          "min_storage_gb": 512,
+          "cpu_keywords": [],
+          "in_stock_only": false,
+          "semantic_query": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+          "top_k": 5
+        }
+      }
+    },
+    {
+      "name": "response.strategy",
+      "status": "ok",
+      "offset_ms": 1758.85,
+      "duration_ms": null,
+      "output": {
+        "strategy": "deterministic_product_evidence",
+        "reason": "verified_product_variants"
+      }
+    }
+  ],
+  "local_chat_detected": false,
+  "stop_reason": null
+}
