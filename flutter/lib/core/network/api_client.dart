@@ -11,6 +11,22 @@ class ApiClient {
     defaultValue: 'http://127.0.0.1:8080',
   );
 
+  // Service Token của Cloudflare Access (chỉ dùng khi gọi server qua shop.devthaiduyvu.bid).
+  // Truyền lúc build bằng --dart-define, không ghi cứng vào mã nguồn.
+  static const _cfAccessClientId = String.fromEnvironment(
+    'CF_ACCESS_CLIENT_ID',
+  );
+  static const _cfAccessClientSecret = String.fromEnvironment(
+    'CF_ACCESS_CLIENT_SECRET',
+  );
+  static const Map<String, String> accessHeaders =
+      _cfAccessClientId == '' || _cfAccessClientSecret == ''
+      ? {}
+      : {
+          'CF-Access-Client-Id': _cfAccessClientId,
+          'CF-Access-Client-Secret': _cfAccessClientSecret,
+        };
+
   static String fixUrl(String? rawUrl) {
     if (rawUrl == null || rawUrl.isEmpty) return '';
     final trimmed = rawUrl.trim();
@@ -33,12 +49,13 @@ class ApiClient {
   Dio get client => dio;
   static Dio? _dio;
   static Dio get dio => _dio ??= Dio(
-        BaseOptions(
-          baseUrl: baseUrl,
-          connectTimeout: const Duration(seconds: 10),
-          receiveTimeout: const Duration(seconds: 10),
-        ),
-      );
+    BaseOptions(
+      baseUrl: baseUrl,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+      headers: accessHeaders,
+    ),
+  );
   static set dio(Dio value) => _dio = value;
   static final CsrfManager csrfManager = CsrfManager();
 
@@ -48,6 +65,7 @@ class ApiClient {
         baseUrl: baseUrl,
         connectTimeout: const Duration(seconds: 10),
         receiveTimeout: const Duration(seconds: 10),
+        headers: accessHeaders,
       ),
     );
 
@@ -70,8 +88,9 @@ class ApiClient {
     final jar = CookieStorage.cookieJar;
     String? readToken(List<Cookie> cookies) {
       for (final cookie in cookies) {
-        if (cookie.name == 'XSRF-TOKEN' && cookie.value.isNotEmpty)
+        if (cookie.name == 'XSRF-TOKEN' && cookie.value.isNotEmpty) {
           return cookie.value;
+        }
       }
       return null;
     }
@@ -83,6 +102,7 @@ class ApiClient {
           baseUrl: baseUrl,
           connectTimeout: const Duration(seconds: 10),
           receiveTimeout: const Duration(seconds: 10),
+          headers: accessHeaders,
         ),
       );
       csrfClient.interceptors.add(CookieManager(jar));

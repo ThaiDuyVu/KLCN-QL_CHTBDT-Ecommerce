@@ -1,0 +1,41 @@
+# Máy chủ web cục bộ phía sau Cloudflare Tunnel (shop.devthaiduyvu.bid).
+# HTTPS do Cloudflare đảm nhận; Caddy chỉ nghe HTTP trên 127.0.0.1, không mở ra mạng LAN.
+{
+	auto_https off
+	admin 127.0.0.1:2019
+}
+
+# Nhận mọi Host (tunnel gửi Host: shop.devthaiduyvu.bid); cổng chỉ mở trên 127.0.0.1.
+http://:8088 {
+	bind 127.0.0.1
+	encode gzip zstd
+
+	# Chatbot phải đứng trước /api (cùng tiền tố), giống proxy của Vite dev.
+	handle /api/v1/chat* {
+		reverse_proxy 127.0.0.1:8090
+	}
+	handle /api/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+
+	# Bản build React (npm run build); route phía client trả về index.html.
+	handle {
+		root * {$PROJECT_ROOT}/Fontend/dist
+		try_files {path} /index.html
+		file_server
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Frame-Options SAMEORIGIN
+		-Server
+	}
+
+	log {
+		output file {$PROJECT_ROOT}/.local/logs/caddy-access.log {
+			roll_size 10MiB
+			roll_keep 3
+		}
+	}
+}
