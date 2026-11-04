@@ -3,6 +3,8 @@
 # Quyền truy cập được giới hạn bằng Cloudflare Access (chỉ các email được phép).
 tunnel: 6b927b04-7441-4c27-a801-dfc5d56f0af5
 credentials-file: /Users/vu/.cloudflared/6b927b04-7441-4c27-a801-dfc5d56f0af5.json
+# QUIC (UDP) bị rớt luồng trên mạng này làm upload ảnh lớn đứt giữa chừng; HTTP/2 (TCP) ổn định hơn.
+protocol: http2
 
 ingress:
   - hostname: shop.devthaiduyvu.bid
