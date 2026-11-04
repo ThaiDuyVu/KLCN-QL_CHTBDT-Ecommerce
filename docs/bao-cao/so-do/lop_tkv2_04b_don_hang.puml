@@ -1,0 +1,81 @@
+@startuml
+title So do lop thiet ke - Don hang, hoa don va giao hang
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+class OrderService <<service>> {
+  +checkout(UUID, CheckoutRequest) : OrderResponse
+  +list(UUID, boolean, int, int) : OrderPage
+  +status(UUID, boolean, UUID, OrderStatus)
+  +staffStatus(UUID, UUID, OrderStatus, Collection)
+}
+class OrderStockService <<service>> {
+  +apply(UUID, Map<UUID, Integer>, Action)
+}
+class OrderStaffPolicy {
+  +{static} permitted(Collection) : Predicate
+}
+class Order <<entity>> {
+  -orderId : UUID {id}
+  -orderCode : String
+  -orderDate : OffsetDateTime
+  -recipientName : String
+  -recipientPhone : String
+  -shippingAddress : String
+  -subtotal : BigDecimal
+  -discountAmount : BigDecimal
+  -shippingFee : BigDecimal
+  -totalAmount : BigDecimal
+  -status : OrderStatus
+}
+class OrderItem <<entity>> {
+  -orderItemId : UUID {id}
+  -serialId : UUID
+  -quantity : Integer
+  -costPrice : BigDecimal
+  -unitPrice : BigDecimal
+  -finalUnitPrice : BigDecimal
+}
+class Invoice <<entity>> {
+  -invoiceId : UUID {id}
+  -invoiceNumber : String
+  -issuedDate : OffsetDateTime
+  -totalAmount : BigDecimal
+}
+class Shipment <<entity>> {
+  -shipmentId : UUID {id}
+  -trackingNumber : String
+  -shippingProvider : String
+  -shippedDate : OffsetDateTime
+  -deliveredDate : OffsetDateTime
+}
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+class ProductVariant <<tham chieu>>
+OrderService ..> Order
+OrderService ..> OrderStockService : giu cho / tru kho
+OrderService ..> OrderStaffPolicy
+Order "1" *-- "1..*" OrderItem
+OrderItem "*" -- "1" ProductVariant
+Order "1" -- "0..1" Invoice
+Order "1" -- "0..1" Shipment
+Order ..> OrderStatus
+Invoice -[hidden]down- Shipment
+@enduml

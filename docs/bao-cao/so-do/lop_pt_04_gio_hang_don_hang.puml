@@ -1,0 +1,189 @@
+@startuml
+title So do lop muc phan tich - Phan he Gio hang va Don hang
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam class {
+  BackgroundColor<<phan he khac>> #F2F2F2
+  BorderColor<<phan he khac>> #999999
+  FontColor<<phan he khac>> #666666
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<phan he khac>> members
+
+class GioHang {
+  -ngayTao : Date
+  -ngayCapNhat : Date
+  -trangThai : String
+  +themSanPham(phienBan : PhienBanSanPham, soLuong : int)
+  +capNhatSoLuong(chiTiet : ChiTietGioHang, soLuong : int)
+  +xoaSanPham(chiTiet : ChiTietGioHang)
+  +tinhTamTinh() : double
+  +lamTrong()
+}
+
+class ChiTietGioHang {
+  -soLuong : int
+  -donGia : double
+  +thanhTien() : double
+}
+
+class DonHang {
+  -maDonHang : String
+  -ngayDat : Date
+  -nguoiNhan : String
+  -soDienThoaiNhan : String
+  -diaChiGiao : String
+  -tamTinh : double
+  -giamGia : double
+  -phiGiaoHang : double
+  -tongTien : double
+  -trangThai : TrangThaiDonHang
+  -ghiChu : String
+  +datHang(gioHang : GioHang)
+  +tinhTongTien() : double
+  +xacNhan()
+  +capNhatTrangThai(trangThai : TrangThaiDonHang)
+  +huyDon()
+}
+
+class ChiTietDonHang {
+  -soLuong : int
+  -donGia : double
+  -giamGia : double
+  -donGiaSauGiam : double
+  +thanhTien() : double
+}
+
+class ThanhToan {
+  -phuongThuc : PhuongThucThanhToan
+  -maGiaoDich : String
+  -soTien : double
+  -ngayThanhToan : Date
+  -trangThai : TrangThaiThanhToan
+  +xacNhanDaThanhToan(maGiaoDich : String)
+  +danhDauThatBai()
+}
+
+class ThanhToanTraGop {
+  -tongTienTraGop : double
+  -soTienTraTruoc : double
+  -soTienConLai : double
+  -kyHan : int
+  -trangThaiHoSo : TrangThaiHoSoTraGop
+  +tinhTienMoiKy() : double
+  +duyetHoSo()
+  +tuChoiHoSo()
+}
+
+class DonViTraGop {
+  -maDonVi : String
+  -tenDonVi : String
+  -soDienThoai : String
+  -email : String
+  -trangThai : String
+}
+
+class HoaDon {
+  -soHoaDon : String
+  -ngayLap : Date
+  -tongTien : double
+  -trangThai : String
+  +lapHoaDon(donHang : DonHang)
+  +inHoaDon()
+}
+
+class GiaoHang {
+  -maVanDon : String
+  -donViVanChuyen : String
+  -ngayGui : Date
+  -ngayGiao : Date
+  -trangThai : String
+  +capNhatTrangThai(trangThai : String)
+  +xacNhanDaGiao()
+}
+
+class CongThanhToanVNPay <<he thong ngoai>> {
+  +taoLienKetThanhToan(donHang : DonHang) : String
+  +traKetQua(maGiaoDich : String)
+}
+
+enum TrangThaiDonHang {
+  ChoXacNhan
+  DaXacNhan
+  DangXuLy
+  DangGiao
+  DaGiao
+  DaHuy
+}
+
+enum PhuongThucThanhToan {
+  COD
+  VNPay
+  TraGop
+}
+
+enum TrangThaiThanhToan {
+  ChoThanhToan
+  DaThanhToan
+  ThatBai
+}
+
+enum TrangThaiHoSoTraGop {
+  ChoDuyet
+  DangXuLy
+  DaDuyet
+  TuChoi
+}
+
+' Lop thuoc phan he khac, chi the hien lien ket
+class KhachHang <<phan he khac>>
+class NhanVien <<phan he khac>>
+class PhienBanSanPham <<phan he khac>>
+class Kho <<phan he khac>>
+class ThietBi <<phan he khac>>
+class BaoHanh <<phan he khac>>
+
+KhachHang "1" -- "0..1" GioHang : so huu
+GioHang "1" *-- "*" ChiTietGioHang
+ChiTietGioHang "*" -- "1" PhienBanSanPham
+
+KhachHang "1" -- "*" DonHang : dat
+NhanVien "0..1" -- "*" DonHang : xu ly
+DonHang "*" -- "1" Kho : xuat tu
+DonHang "1" *-- "1..*" ChiTietDonHang
+ChiTietDonHang "*" -- "1" PhienBanSanPham
+ChiTietDonHang "0..1" -- "0..1" ThietBi : giao thiet bi
+ChiTietDonHang "1" -- "0..1" BaoHanh
+
+DonHang "1" -- "1..*" ThanhToan
+ThanhToanTraGop --|> ThanhToan
+ThanhToanTraGop "*" -- "1" DonViTraGop
+ThanhToan ..> CongThanhToanVNPay : thanh toan truc tuyen
+DonHang "1" -- "0..1" HoaDon
+DonHang "1" -- "0..1" GiaoHang
+NhanVien "1" -- "*" GiaoHang : giao hang
+
+DonHang ..> TrangThaiDonHang
+ThanhToan ..> PhuongThucThanhToan
+ThanhToan ..> TrangThaiThanhToan
+ThanhToanTraGop ..> TrangThaiHoSoTraGop
+
+note right of DonHang
+  ChoXacNhan -> DaXacNhan -> DangXuLy
+  -> DangGiao -> DaGiao.
+  Khach chi huy duoc don chua xac nhan
+  va chua thanh toan.
+  Gia trong don duoc chot tai thoi diem
+  dat hang.
+end note
+
+note bottom of ChiTietGioHang
+  Dat hang thi giu cho so luong
+  trong kho; huy don thi tra lai.
+end note
+
+note left of ThanhToanTraGop
+  Ho so tra gop phai duoc duyet
+  truoc khi xac nhan don hang.
+end note
+@enduml

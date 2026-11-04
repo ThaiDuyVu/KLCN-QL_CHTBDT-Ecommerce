@@ -1,0 +1,79 @@
+@startuml
+title So do lop muc phan tich - Phan he Bao hanh
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam class {
+  BackgroundColor<<phan he khac>> #F2F2F2
+  BorderColor<<phan he khac>> #999999
+  FontColor<<phan he khac>> #666666
+}
+hide <<phan he khac>> members
+
+class BaoHanh {
+  -ngayBatDau : Date
+  -ngayKetThuc : Date
+  -trangThai : TrangThaiBaoHanh
+  +kiemTraHieuLuc(ngay : Date) : boolean
+  +soNgayConLai() : int
+  +taoPhieuBaoHanh(moTaLoi : String) : PhieuBaoHanh
+  +traCuuTheoSerial(soSerial : String) : BaoHanh
+}
+
+class PhieuBaoHanh {
+  -maPhieu : String
+  -moTaLoi : String
+  -ketQuaXuLy : String
+  -ngayTiepNhan : Date
+  -ngayHoanThanh : Date
+  -trangThai : TrangThaiPhieuBaoHanh
+  +tiepNhan(nhanVien : NhanVien)
+  +capNhatTienDo(trangThai : TrangThaiPhieuBaoHanh)
+  +hoanThanh(ketQua : String)
+  +tuChoi(lyDo : String)
+}
+
+enum TrangThaiBaoHanh {
+  ConHieuLuc
+  HetHan
+}
+
+enum TrangThaiPhieuBaoHanh {
+  DaTiepNhan
+  DangXuLy
+  HoanThanh
+  TuChoi
+}
+
+' Lop thuoc phan he khac, chi the hien lien ket
+class KhachHang <<phan he khac>>
+class NhanVien <<phan he khac>>
+class ThietBi <<phan he khac>>
+class ChiTietDonHang <<phan he khac>>
+class SanPham <<phan he khac>>
+
+ThietBi "1" -- "0..1" BaoHanh : duoc bao hanh
+ChiTietDonHang "1" -- "*" BaoHanh : phat sinh
+KhachHang "1" -- "*" BaoHanh : so huu
+BaoHanh "1" *-- "*" PhieuBaoHanh
+KhachHang "1" -- "*" PhieuBaoHanh : gui yeu cau
+NhanVien "0..1" -- "*" PhieuBaoHanh : xu ly
+ThietBi "1" -- "*" PhieuBaoHanh
+BaoHanh ..> SanPham : lay thoi gian bao hanh
+
+BaoHanh ..> TrangThaiBaoHanh
+PhieuBaoHanh ..> TrangThaiPhieuBaoHanh
+
+note right of BaoHanh
+  Bao hanh duoc tao tu dong khi don hang
+  giao thanh cong, cho tung thiet bi.
+  ngayKetThuc = ngayBatDau + thoi gian
+  bao hanh cua san pham.
+  Khach tra cuu bang so Serial/IMEI.
+end note
+
+note bottom of PhieuBaoHanh
+  Chi tao phieu khi bao hanh con hieu luc.
+  DaTiepNhan -> DangXuLy -> HoanThanh
+  (hoac TuChoi).
+end note
+@enduml

@@ -7,6 +7,7 @@ from app.shared.contracts.context import QueryContext
 from app.shared.contracts.enums import Intent
 from app.shared.contracts.query import QueryPlan
 from app.shared.ollama.client import OllamaError
+from app.shared.gemini.client import GeminiError
 from app.shared.ollama.protocol import ChatModel
 
 
@@ -62,6 +63,8 @@ class OllamaQueryUnderstandingService:
                 plan = plan.model_copy(update={"clarification": None, "references": {}, "bundle": [], "budget": None})
                 event("query.validation", plan)
                 return self.normalizer.normalize(plan, context) if self.normalizer else plan
+            except GeminiError:
+                raise
             except OllamaError as exc:
                 event("query.model_failure", {"reason": type(exc).__name__}, status="warning")
                 break

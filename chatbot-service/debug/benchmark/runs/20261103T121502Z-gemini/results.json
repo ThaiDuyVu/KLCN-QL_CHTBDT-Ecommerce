@@ -1,0 +1,4555 @@
+{
+  "started_at": "2026-11-03T12:15:02.884262+00:00",
+  "model": "gemini-3.1-flash-lite",
+  "commit": "371934c1ba7e0b7806c40731687decf547d5893f",
+  "source_hash": "f325be88d945d812eda7e606f877f35ceba0fbb54773d35c5a6c69e24ac2b514",
+  "plan_hash": "7f069612d7d3ccac3d367cc30466faacb0ccebda91c76a41b8eefee47fb951d5",
+  "business_before": "ac93f72428858292ee3751956c2b910159635f5201aadf6359d999257d499bac",
+  "planned_cases": 205,
+  "planned_turns": 290,
+  "charged_calls": 41,
+  "observed_calls": 38,
+  "tokens": 60773,
+  "results": [
+    {
+      "id": "G1-01",
+      "title": "laptop Dell",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "0cc7a9bd-353b-4204-b9d2-cc88a5232797",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop Dell",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 32.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám: giá 36.990.000 đ, hiện đã hết hàng tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 32990000,
+              "stock": 2
+            },
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Dell"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop Dell",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 42.38,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "724c972e-a7c7-49fd-8be8-8f3f28f39488",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop Dell",
+          "status": 200,
+          "message": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 32.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám: giá 36.990.000 đ, hiện đã hết hàng tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 32990000,
+              "stock": 2
+            },
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Dell"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop Dell",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 42.38
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-02",
+      "title": "điện thoại Samsung",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "dd9e617a-01b5-4359-be99-0061818850d5",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại Samsung",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 4 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Kem: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lá: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy Z Flip6\n• RAM 12GB, bộ nhớ 256GB, màu Xám: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Vàng: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 28.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S24\n• RAM 8GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xám: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 13990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy Z Flip6",
+              "sku": "DEV-ZF6-GRY-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 24990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S24",
+              "sku": "DEV-S24-BLK-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Samsung",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 28.29,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "5b7d85e4-8430-49ac-8f65-98952675317d",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại Samsung",
+          "status": 200,
+          "message": "Mình tìm thấy 4 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Kem: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lá: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy Z Flip6\n• RAM 12GB, bộ nhớ 256GB, màu Xám: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Vàng: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 28.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S24\n• RAM 8GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xám: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 13990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy Z Flip6",
+              "sku": "DEV-ZF6-GRY-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 24990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S24",
+              "sku": "DEV-S24-BLK-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Samsung",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 28.29
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-03",
+      "title": "điện thoại Apple",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "2c8bf355-8bf8-4e6d-9ead-920afac3d243",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại Apple",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\niPhone 16\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lưu ly: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 512GB, màu Hồng: giá 30.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 14\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 15.990.000 đ, còn 4 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Đỏ: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 15\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 17.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "iPhone 16",
+              "sku": "DEV-IP16-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 21990000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 14",
+              "sku": "DEV-IP14-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 15990000,
+              "stock": 4
+            },
+            {
+              "product": "iPhone 15",
+              "sku": "DEV-IP15-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 17990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Apple"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Apple",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 26.3,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "2d9c880a-9aa6-42b9-a592-6b8d771b025e",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại Apple",
+          "status": 200,
+          "message": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\niPhone 16\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lưu ly: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 512GB, màu Hồng: giá 30.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 14\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 15.990.000 đ, còn 4 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Đỏ: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 15\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 17.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "iPhone 16",
+              "sku": "DEV-IP16-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 21990000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 14",
+              "sku": "DEV-IP14-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 15990000,
+              "stock": 4
+            },
+            {
+              "product": "iPhone 15",
+              "sku": "DEV-IP15-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 17990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Apple"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Apple",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 26.3
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-04",
+      "title": "laptop ASUS",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "0cf536ea-ccb9-4533-ad0d-566f915fe253",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop ASUS",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            },
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-GR-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "ASUS"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop ASUS",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 26.14,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "9f92b1d8-57b4-4d53-8689-95816e7b621d",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop ASUS",
+          "status": 200,
+          "message": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            },
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-GR-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "ASUS"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop ASUS",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 26.14
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-05",
+      "title": "laptop RAM 16GB",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "be34dc17-52c1-4eed-8e67-8d95db443c4b",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop RAM 16GB",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 4 sản phẩm phù hợp với yêu cầu của bạn:\n\nASUS ROG Zephyrus G14\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 32.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám: giá 36.990.000 đ, hiện đã hết hàng tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-GR-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            },
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 32990000,
+              "stock": 2
+            },
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 44990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop RAM 16GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.56,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "811aeb75-6a3b-436a-be9a-82c747fb09c2",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop RAM 16GB",
+          "status": 200,
+          "message": "Mình tìm thấy 4 sản phẩm phù hợp với yêu cầu của bạn:\n\nASUS ROG Zephyrus G14\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 32.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám: giá 36.990.000 đ, hiện đã hết hàng tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-GR-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            },
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 32990000,
+              "stock": 2
+            },
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 44990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop RAM 16GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.56
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-06",
+      "title": "laptop RAM 32GB",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "93d6933f-f1f5-4d06-bf5b-a00f958e737d",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop RAM 32GB",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nASUS ROG Zephyrus G14\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell XPS 13\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-WH-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            },
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 41990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 32,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop RAM 32GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 27.01,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "31a1c9a7-6180-40eb-bdd7-f8f2d390fb8d",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop RAM 32GB",
+          "status": 200,
+          "message": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nASUS ROG Zephyrus G14\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell XPS 13\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-WH-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            },
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 41990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 32,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop RAM 32GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 27.01
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-07",
+      "title": "điện thoại RAM 12GB",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "b28e6a7d-6110-49b4-bfbd-18ac9465c9f4",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại RAM 12GB",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 4 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Trắng: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 16.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy Z Flip6\n• RAM 12GB, bộ nhớ 256GB, màu Xám: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Vàng: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 28.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 16990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-ICE-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 10490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy Z Flip6",
+              "sku": "DEV-ZF6-GRY-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 24990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 12,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại RAM 12GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.16,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "ab03679f-7040-4f3c-9d1a-e3fbc6b1ba8f",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại RAM 12GB",
+          "status": 200,
+          "message": "Mình tìm thấy 4 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Trắng: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 16.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy Z Flip6\n• RAM 12GB, bộ nhớ 256GB, màu Xám: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Vàng: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 28.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 16990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-ICE-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 10490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy Z Flip6",
+              "sku": "DEV-ZF6-GRY-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 24990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 12,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại RAM 12GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.16
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-08",
+      "title": "điện thoại bộ nhớ 512GB",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "60b3feac-cc6a-42ef-a47e-cd0443241b39",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại bộ nhớ 512GB",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 4 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 512GB, màu Trắng: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy Z Flip6\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 28.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 16\n• RAM 8GB, bộ nhớ 512GB, màu Hồng: giá 30.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-WHT-512",
+              "ram": 12,
+              "storage": 512,
+              "price": 20990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLU-512",
+              "ram": 12,
+              "storage": 512,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy Z Flip6",
+              "sku": "DEV-ZF6-BLU-512",
+              "ram": 12,
+              "storage": 512,
+              "price": 28990000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 16",
+              "sku": "DEV-IP16-PNK-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 30990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": 512,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại bộ nhớ 512GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.79,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "689bc13a-9222-4a18-b0e7-36f1d45668ea",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại bộ nhớ 512GB",
+          "status": 200,
+          "message": "Mình tìm thấy 4 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 512GB, màu Trắng: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy Z Flip6\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 28.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 16\n• RAM 8GB, bộ nhớ 512GB, màu Hồng: giá 30.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-WHT-512",
+              "ram": 12,
+              "storage": 512,
+              "price": 20990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLU-512",
+              "ram": 12,
+              "storage": 512,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy Z Flip6",
+              "sku": "DEV-ZF6-BLU-512",
+              "ram": 12,
+              "storage": 512,
+              "price": 28990000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 16",
+              "sku": "DEV-IP16-PNK-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 30990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": 512,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại bộ nhớ 512GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.79
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-09",
+      "title": "laptop SSD 1TB",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "16ea42f0-dc97-46d3-85b3-ee2a38a16462",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop SSD 1TB",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 1TB, màu Xám: giá 36.990.000 đ, hiện đã hết hàng tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-GR-1TB",
+              "ram": 16,
+              "storage": 1024,
+              "price": 36990000,
+              "stock": 0
+            },
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-WH-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SG-1TB",
+              "ram": 16,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": 1024,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop SSD 1TB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.38,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "2eeaf793-fdd6-448b-96a9-c1185bf2d67f",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop SSD 1TB",
+          "status": 200,
+          "message": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 1TB, màu Xám: giá 36.990.000 đ, hiện đã hết hàng tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-GR-1TB",
+              "ram": 16,
+              "storage": 1024,
+              "price": 36990000,
+              "stock": 0
+            },
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-WH-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SG-1TB",
+              "ram": 16,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": 1024,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop SSD 1TB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.38
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-10",
+      "title": "laptop Apple RAM 16GB",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "347e03fc-e079-4004-947a-03d0d3b98ef1",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop Apple RAM 16GB",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Pro 14 M3\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 44990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Apple"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop Apple RAM 16GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.59,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "0cbbdeee-022e-45f3-aaad-b1d119523b46",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop Apple RAM 16GB",
+          "status": 200,
+          "message": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Pro 14 M3\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 44990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [
+              "Apple"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop Apple RAM 16GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.59
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-11",
+      "title": "điện thoại Xiaomi RAM 16GB",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "4a05f819-fabd-4a73-b573-9525b19c1c21",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại Xiaomi RAM 16GB",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 15\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-GRN-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 21990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-GRY-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 19990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Xiaomi"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Xiaomi RAM 16GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.95,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "c7f789bc-4605-417f-9334-d341fe6751d2",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại Xiaomi RAM 16GB",
+          "status": 200,
+          "message": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 15\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-GRN-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 21990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-GRY-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 19990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Xiaomi"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 16,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Xiaomi RAM 16GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.95
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-12",
+      "title": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "cd9fcf0f-559a-462c-a91d-855c33281f90",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy Z Flip6\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 28.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy Z Flip6",
+              "sku": "DEV-ZF6-BLU-512",
+              "ram": 12,
+              "storage": 512,
+              "price": 28990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 12,
+            "min_storage_gb": 512,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.89,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "f0d99e82-5b95-4697-a199-00c2a613fd5a",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+          "status": 200,
+          "message": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy Z Flip6\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 28.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy Z Flip6",
+              "sku": "DEV-ZF6-BLU-512",
+              "ram": 12,
+              "storage": 512,
+              "price": 28990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 12,
+            "min_storage_gb": 512,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại Samsung RAM 12GB bộ nhớ 512GB",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.89
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-13",
+      "title": "gợi ý 2 laptop",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "b40a4c4a-c11d-4543-b410-c90cd864a552",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "gợi ý 2 laptop",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "MacBook Air M2",
+              "sku": "DEV-MBA-M2-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 22990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-GR-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "gợi ý 2 laptop",
+            "top_k": 2
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.41,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "edb9617b-5a09-4127-a9e3-19ca2bf78d9b",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "gợi ý 2 laptop",
+          "status": 200,
+          "message": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "MacBook Air M2",
+              "sku": "DEV-MBA-M2-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 22990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-GR-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "gợi ý 2 laptop",
+            "top_k": 2
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.41
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-14",
+      "title": "gợi ý 3 điện thoại Samsung",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "0c023615-3366-4ea9-937a-ad184bd32122",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "gợi ý 3 điện thoại Samsung",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Kem: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lá: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy Z Flip6\n• RAM 12GB, bộ nhớ 256GB, màu Xám: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Vàng: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 28.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 13990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy Z Flip6",
+              "sku": "DEV-ZF6-GRY-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 24990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "gợi ý 3 điện thoại Samsung",
+            "top_k": 3
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.77,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "6eafef48-89f7-4d81-9958-96519d016132",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "gợi ý 3 điện thoại Samsung",
+          "status": 200,
+          "message": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Kem: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lá: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy Z Flip6\n• RAM 12GB, bộ nhớ 256GB, màu Xám: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Vàng: giá 24.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 28.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 13990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy Z Flip6",
+              "sku": "DEV-ZF6-GRY-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 24990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Samsung"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "gợi ý 3 điện thoại Samsung",
+            "top_k": 3
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.77
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-15",
+      "title": "laptop còn hàng",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "7f62fd04-8034-4308-af2f-f0b390f0c7c6",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop còn hàng",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 32.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 8GB, bộ nhớ 512GB, màu Xám không gian: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 32990000,
+              "stock": 2
+            },
+            {
+              "product": "MacBook Air M2",
+              "sku": "DEV-MBA-M2-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 22990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-GR-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SG-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": true,
+            "semantic_query": "laptop còn hàng",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.66,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "91c748ea-cea5-4c5c-bfe5-f882051ac2c0",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop còn hàng",
+          "status": 200,
+          "message": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 32.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 8GB, bộ nhớ 512GB, màu Xám không gian: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 32990000,
+              "stock": 2
+            },
+            {
+              "product": "MacBook Air M2",
+              "sku": "DEV-MBA-M2-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 22990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-GR-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SG-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": true,
+            "semantic_query": "laptop còn hàng",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.66
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-16",
+      "title": "laptop RAM 64GB",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "3bab43f1-ebb8-4235-aac7-3674619fbba3",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop RAM 64GB",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+          "cards": [],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 64,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop RAM 64GB",
+            "top_k": 5
+          },
+          "strategy": "no_matching_products",
+          "seconds": 21.51,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "c8056fa3-e947-4563-8da7-aaffd06bc907",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop RAM 64GB",
+          "status": 200,
+          "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+          "cards": [],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": 64,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop RAM 64GB",
+            "top_k": 5
+          },
+          "strategy": "no_matching_products",
+          "seconds": 21.51
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-17",
+      "title": "laptop Lenovo",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "b810dba3-f1f1-4926-bd2a-0cda53fd0943",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop Lenovo",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+          "cards": [],
+          "filters": {},
+          "strategy": "clarification",
+          "seconds": 21.26,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "6183ce32-2d59-47f1-a471-ce36b01a8323",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop Lenovo",
+          "status": 200,
+          "message": "Thương hiệu hoặc tên sản phẩm được yêu cầu chưa xác minh được trong catalog. Bạn vui lòng xác nhận hãng/tên hoặc SKU; mình sẽ không thay bằng hãng khác.",
+          "cards": [],
+          "sources": [],
+          "comparison": null,
+          "filters": {},
+          "strategy": "clarification",
+          "seconds": 21.26
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-18",
+      "title": "máy tính bảng",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "f1fb22ef-e4c7-4ae7-acca-bdbd202f5367",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "máy tính bảng",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+          "cards": [],
+          "filters": {
+            "targets": [],
+            "category": "Máy tính bảng",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "máy tính bảng",
+            "top_k": 5
+          },
+          "strategy": "no_matching_products",
+          "seconds": 37.35,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "445c9ef8-5924-4c11-aed3-82403a6f9216",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "máy tính bảng",
+          "status": 200,
+          "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+          "cards": [],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Máy tính bảng",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "máy tính bảng",
+            "top_k": 5
+          },
+          "strategy": "no_matching_products",
+          "seconds": 37.35
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-19",
+      "title": "cho mình xem điện thoại Xiaomi",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "423a735c-9421-4ce5-94a1-ba3819cae94d",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "cho mình xem điện thoại Xiaomi",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Trắng: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 16.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 16990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi Redmi Note 13",
+              "sku": "DEV-RN13-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 4490000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Xiaomi"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "cho mình xem điện thoại Xiaomi",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.9,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "8c0280fb-9f13-4ad7-8574-7b4d7828021e",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "cho mình xem điện thoại Xiaomi",
+          "status": 200,
+          "message": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Trắng: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 16.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 16990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi Redmi Note 13",
+              "sku": "DEV-RN13-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 4490000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [
+              "Xiaomi"
+            ],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "cho mình xem điện thoại Xiaomi",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.9
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G1-20",
+      "title": "tìm giúp mình laptop để làm việc",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G1",
+      "group_title": "Tìm sản phẩm theo điều kiện",
+      "session_id": "20d9b341-6b07-4d49-acd6-f4f800c0f991",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "tìm giúp mình laptop để làm việc",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 32.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám: giá 36.990.000 đ, hiện đã hết hàng tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 8GB, bộ nhớ 512GB, màu Xám không gian: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "MacBook Air M2",
+              "sku": "DEV-MBA-M2-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 22990000,
+              "stock": 2
+            },
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 32990000,
+              "stock": 2
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SG-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            },
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "tìm giúp mình laptop để làm việc",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.82,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "663430b2-8686-45e6-9158-f12e5d97340b",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "tìm giúp mình laptop để làm việc",
+          "status": 200,
+          "message": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nDell XPS 13\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 32.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám: giá 36.990.000 đ, hiện đã hết hàng tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 8GB, bộ nhớ 512GB, màu Xám không gian: giá 39.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "MacBook Air M2",
+              "sku": "DEV-MBA-M2-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 22990000,
+              "stock": 2
+            },
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 32990000,
+              "stock": 2
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SG-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 39990000,
+              "stock": 2
+            },
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "tìm giúp mình laptop để làm việc",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.82
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-01",
+      "title": "laptop dưới 20 triệu",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "657d75d5-d09d-4615-8fcd-a924daf934cc",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop dưới 20 triệu",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            },
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dưới 20 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.69,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "75215912-805b-4642-8077-38c07a5aff25",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop dưới 20 triệu",
+          "status": 200,
+          "message": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            },
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dưới 20 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.69
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-02",
+      "title": "điện thoại dưới 10 triệu",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "3585a284-dd7b-43f6-8e05-027cf19ea998",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại dưới 10 triệu",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi Redmi Note 13",
+              "sku": "DEV-RN13-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 4490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "10000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại dưới 10 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.72,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "a7b17f5d-bdbf-4d64-b42f-0fe3254535dd",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại dưới 10 triệu",
+          "status": 200,
+          "message": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi Redmi Note 13",
+              "sku": "DEV-RN13-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 4490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "10000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại dưới 10 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.72
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-03",
+      "title": "laptop trên 40 triệu",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "00864eeb-3b06-4109-a06c-cfa2d13a5644",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop trên 40 triệu",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell XPS 13\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 41990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-WH-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 44990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "40000000",
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop trên 40 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.32,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "0206cafc-e1c2-41e2-8bfc-a69122083874",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop trên 40 triệu",
+          "status": 200,
+          "message": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell XPS 13\n• RAM 32GB, bộ nhớ 1TB, màu Bạc: giá 41.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS ROG Zephyrus G14\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 44.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell XPS 13",
+              "sku": "DEV-XPS13-SL-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 41990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-WH-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SL-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 44990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "40000000",
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop trên 40 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.32
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-04",
+      "title": "điện thoại từ 15 đến 20 triệu",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "401fdea8-f094-4f94-81bc-93a1190301d7",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại từ 15 đến 20 triệu",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 15\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 17.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 16.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 256GB, màu Kem: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lá: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 14\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 15.990.000 đ, còn 4 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Đỏ: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 15",
+              "sku": "DEV-IP15-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 17990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 16990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-CRM-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 15490000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 14",
+              "sku": "DEV-IP14-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 15990000,
+              "stock": 4
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": "15000000",
+            "max_price": "20000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại từ 15 đến 20 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.2,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "66b74e0d-89a2-4dca-84f6-03bdb4514ccc",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại từ 15 đến 20 triệu",
+          "status": 200,
+          "message": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 15\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 17.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 16.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 256GB, màu Kem: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lá: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 14\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 15.990.000 đ, còn 4 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Đỏ: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 15",
+              "sku": "DEV-IP15-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 17990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 16990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-CRM-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 15490000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 14",
+              "sku": "DEV-IP14-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 15990000,
+              "stock": 4
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": "15000000",
+            "max_price": "20000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại từ 15 đến 20 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.2
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-05",
+      "title": "laptop khoảng 25tr",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "b91e3d95-fb3d-4f1b-bc19-eec0f71c2409",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop khoảng 25tr",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "MacBook Air M2",
+              "sku": "DEV-MBA-M2-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 22990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "21250000",
+            "max_price": "28750000",
+            "target_price": "25000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop khoảng 25tr",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.79,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "e03be45d-0e4e-4b66-b33d-9019a5236b64",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop khoảng 25tr",
+          "status": 200,
+          "message": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "MacBook Air M2",
+              "sku": "DEV-MBA-M2-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 22990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "21250000",
+            "max_price": "28750000",
+            "target_price": "25000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop khoảng 25tr",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.79
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-06",
+      "title": "dt tầm 20 triệu",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "cd9452be-383d-4fe7-8fb3-dd40da5be292",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "dt tầm 20 triệu",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Trắng: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 15\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 17.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S24\n• RAM 8GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xám: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 14\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Đỏ: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLU-512",
+              "ram": 12,
+              "storage": 512,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 15",
+              "sku": "DEV-IP15-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 17990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S24",
+              "sku": "DEV-S24-BLK-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 14",
+              "sku": "DEV-IP14-BLU-256",
+              "ram": 6,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": "17000000",
+            "max_price": "23000000",
+            "target_price": "20000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "dt tầm 20 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 23.9,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "1cd34cd2-99be-4cfc-9fcf-eeedf15e7448",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "dt tầm 20 triệu",
+          "status": 200,
+          "message": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Trắng: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xanh lá: giá 21.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 15\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 17.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 20.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S24\n• RAM 8GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xám: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\niPhone 14\n• RAM 6GB, bộ nhớ 256GB, màu Xanh dương: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 6GB, bộ nhớ 256GB, màu Đỏ: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLU-512",
+              "ram": 12,
+              "storage": 512,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 15",
+              "sku": "DEV-IP15-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 17990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S24",
+              "sku": "DEV-S24-BLK-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "iPhone 14",
+              "sku": "DEV-IP14-BLU-256",
+              "ram": 6,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": "17000000",
+            "max_price": "23000000",
+            "target_price": "20000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "dt tầm 20 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 23.9
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-07",
+      "title": "điện thoại giá 10 triệu",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "62c27978-656c-4909-b5d9-9701ff2b0290",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại giá 10 triệu",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-LIL-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 9490000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": "8500000",
+            "max_price": "11500000",
+            "target_price": "10000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại giá 10 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.79,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "55ef57a3-ae6a-4a39-bd35-097e0b23bec3",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại giá 10 triệu",
+          "status": 200,
+          "message": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-LIL-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 9490000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": "8500000",
+            "max_price": "11500000",
+            "target_price": "10000000",
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại giá 10 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.79
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-08",
+      "title": "laptop ngân sách 30tr",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "1275318c-3641-4d0d-a1ff-dfa6a544ef4d",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop ngân sách 30tr",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "MacBook Air M2",
+              "sku": "DEV-MBA-M2-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 22990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            },
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "30000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop ngân sách 30tr",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 25.37,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "9f91ce5d-7117-44db-8ea1-65e6651d3bda",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop ngân sách 30tr",
+          "status": 200,
+          "message": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nMacBook Air M2\n• RAM 8GB, bộ nhớ 256GB, màu Bạc: giá 22.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "MacBook Air M2",
+              "sku": "DEV-MBA-M2-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 22990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            },
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "30000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop ngân sách 30tr",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 25.37
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-09",
+      "title": "tôi có 15 triệu mua điện thoại",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "1e1002dc-943e-47a3-b3b8-425c21996621",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "tôi có 15 triệu mua điện thoại",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 13990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi Redmi Note 13",
+              "sku": "DEV-RN13-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 4490000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "15000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "tôi có 15 triệu mua điện thoại",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.18,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "e88af543-8366-461e-bd34-edc41ad3165f",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "tôi có 15 triệu mua điện thoại",
+          "status": 200,
+          "message": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 13990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi Redmi Note 13",
+              "sku": "DEV-RN13-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 4490000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "15000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "tôi có 15 triệu mua điện thoại",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.18
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-10",
+      "title": "laptop rẻ hơn 16 triệu",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "5d88c096-4af4-4fe6-a16f-25f720363a24",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop rẻ hơn 16 triệu",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "15999999",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop rẻ hơn 16 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.79,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "2c0490f3-4ee1-4c9d-b587-aa4b3dbab6de",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop rẻ hơn 16 triệu",
+          "status": 200,
+          "message": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nASUS Vivobook 15\n• RAM 8GB, bộ nhớ 512GB, màu Xanh: giá 12.990.000 đ, còn 3 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            },
+            {
+              "product": "ASUS Vivobook 15",
+              "sku": "DEV-ASUS-V15-512",
+              "ram": 8,
+              "storage": 512,
+              "price": 12990000,
+              "stock": 3
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "15999999",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop rẻ hơn 16 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.79
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-11",
+      "title": "dt rẽ hơn 15tr",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "e7d700cd-115d-4ebe-a873-132bd2ce760b",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "dt rẽ hơn 15tr",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 13990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi Redmi Note 13",
+              "sku": "DEV-RN13-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 4490000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "14999999",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "dt rẽ hơn 15tr",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 25.17,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "34b06f4f-001c-4918-92a3-b690fcba8354",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "dt rẽ hơn 15tr",
+          "status": 200,
+          "message": "Mình tìm thấy 3 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 13990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi Redmi Note 13",
+              "sku": "DEV-RN13-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 4490000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "14999999",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "dt rẽ hơn 15tr",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 25.17
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-12",
+      "title": "laptop giá lớn hơn 45tr",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "c9c04a33-87a0-414f-8c20-6d94bc8fea03",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop giá lớn hơn 45tr",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nASUS ROG Zephyrus G14\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-WH-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SG-1TB",
+              "ram": 16,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "45000000",
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop giá lớn hơn 45tr",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.79,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "2d694414-2338-4171-8896-608b51494bdf",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop giá lớn hơn 45tr",
+          "status": 200,
+          "message": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nASUS ROG Zephyrus G14\n• RAM 32GB, bộ nhớ 1TB, màu Trắng: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n• RAM 32GB, bộ nhớ 1TB, màu Xám: giá 52.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nMacBook Pro 14 M3\n• RAM 16GB, bộ nhớ 1TB, màu Xám không gian: giá 49.990.000 đ, còn 1 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "ASUS ROG Zephyrus G14",
+              "sku": "DEV-ROGG14-WH-1TB",
+              "ram": 32,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            },
+            {
+              "product": "MacBook Pro 14 M3",
+              "sku": "DEV-MBP14-M3-SG-1TB",
+              "ram": 16,
+              "storage": 1024,
+              "price": 49990000,
+              "stock": 1
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "45000000",
+            "max_price": null,
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop giá lớn hơn 45tr",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 21.79
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-13",
+      "title": "điện thoại không quá 9 triệu",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "f34c5f4e-c675-4582-8530-4d0fe97dacc4",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại không quá 9 triệu",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi Redmi Note 13",
+              "sku": "DEV-RN13-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 4490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "9000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại không quá 9 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 28.12,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "90f0462e-b4c0-4e65-993f-d3541fbc55e8",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại không quá 9 triệu",
+          "status": 200,
+          "message": "Mình tìm thấy 2 sản phẩm phù hợp với yêu cầu của bạn:\n\nXiaomi Redmi Note 13\n• RAM 6GB, bộ nhớ 128GB, màu Đen: giá 4.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Xiaomi Redmi Note 13",
+              "sku": "DEV-RN13-BLK-128",
+              "ram": 6,
+              "storage": 128,
+              "price": 4490000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "9000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại không quá 9 triệu",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 28.12
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-14",
+      "title": "laptop dưới 10 triệu",
+      "difficulty": "D",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "462b3819-9720-4054-94dc-0c887553e8b0",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop dưới 10 triệu",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+          "cards": [],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "10000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dưới 10 triệu",
+            "top_k": 5
+          },
+          "strategy": "no_matching_products",
+          "seconds": 21.84,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "300d6fb1-4675-4336-9e2f-36eac8a51eaa",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop dưới 10 triệu",
+          "status": 200,
+          "message": "Mình chưa tìm thấy sản phẩm phù hợp với các điều kiện hiện tại.",
+          "cards": [],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": null,
+            "max_price": "10000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop dưới 10 triệu",
+            "top_k": 5
+          },
+          "strategy": "no_matching_products",
+          "seconds": 21.84
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-15",
+      "title": "laptop từ 30tr đến 20tr",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "b7005ea1-7904-4062-a7ee-a515f2936a10",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop từ 30tr đến 20tr",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Khoảng giá bị mâu thuẫn. Bạn muốn giá tối thiểu và tối đa bao nhiêu?",
+          "cards": [],
+          "filters": {},
+          "strategy": "clarification",
+          "seconds": 21.87,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "8ee6a1f3-def8-4f27-8a3a-8e1a5ca73f20",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop từ 30tr đến 20tr",
+          "status": 200,
+          "message": "Khoảng giá bị mâu thuẫn. Bạn muốn giá tối thiểu và tối đa bao nhiêu?",
+          "cards": [],
+          "sources": [],
+          "comparison": null,
+          "filters": {},
+          "strategy": "clarification",
+          "seconds": 21.87
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-16",
+      "title": "laptop tầm 15-20tr",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "5d9164d0-8f88-4175-8648-75b0ecb1bb49",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "laptop tầm 15-20tr",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "15000000",
+            "max_price": "20000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop tầm 15-20tr",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.0,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "412c33aa-c3b2-4957-aa16-a6446d4fd0b7",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "laptop tầm 15-20tr",
+          "status": 200,
+          "message": "Mình tìm thấy 1 sản phẩm phù hợp với yêu cầu của bạn:\n\nDell Inspiron 15\n• RAM 16GB, bộ nhớ 512GB, màu Bạc: giá 15.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 24 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Dell Inspiron 15",
+              "sku": "DEV-DELL-I15-512",
+              "ram": 16,
+              "storage": 512,
+              "price": 15990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Laptop",
+            "brands": [],
+            "min_price": "15000000",
+            "max_price": "20000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "laptop tầm 15-20tr",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.0
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-17",
+      "title": "điện thoại dưới 20 củ",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "ccbe930a-80dd-4faf-953c-6e3ff05138a8",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "điện thoại dưới 20 củ",
+          "verdict": "PASS",
+          "failures": [],
+          "notes": [],
+          "reply": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Kem: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lá: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S24\n• RAM 8GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xám: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 16.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 13990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S24",
+              "sku": "DEV-S24-BLK-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 16990000,
+              "stock": 2
+            }
+          ],
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại dưới 20 củ",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.37,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "b9d22d07-a671-476d-ba87-4519d1f23c7c",
+          "http_status": 200
+        }
+      ],
+      "history": [
+        {
+          "say": "điện thoại dưới 20 củ",
+          "status": 200,
+          "message": "Mình tìm thấy 5 sản phẩm phù hợp với yêu cầu của bạn:\n\nSamsung Galaxy S23\n• RAM 8GB, bộ nhớ 128GB, màu Đen: giá 13.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Kem: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xanh lá: giá 15.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy S24\n• RAM 8GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Xám: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nSamsung Galaxy A55\n• RAM 8GB, bộ nhớ 128GB, màu Xanh đen: giá 8.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 8GB, bộ nhớ 256GB, màu Tím: giá 9.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 256GB, màu Xanh băng: giá 10.490.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 15\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nXiaomi 14T Pro\n• RAM 12GB, bộ nhớ 256GB, màu Đen: giá 16.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 12GB, bộ nhớ 512GB, màu Xanh: giá 18.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n• RAM 16GB, bộ nhớ 512GB, màu Xám: giá 19.990.000 đ, còn 2 máy tại chi nhánh bạn đang chọn, bảo hành 12 tháng.\n\nBạn có thể bấm “Xem chi tiết” trên thẻ sản phẩm để xem thêm, hoặc cho mình biết thêm nhu cầu để gợi ý lựa chọn phù hợp hơn nhé.",
+          "cards": [
+            {
+              "product": "Samsung Galaxy S23",
+              "sku": "DEV-S23-BLK-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 13990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy S24",
+              "sku": "DEV-S24-BLK-256",
+              "ram": 8,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Samsung Galaxy A55",
+              "sku": "DEV-A55-NVY-128",
+              "ram": 8,
+              "storage": 128,
+              "price": 8490000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 15",
+              "sku": "DEV-X15-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 18990000,
+              "stock": 2
+            },
+            {
+              "product": "Xiaomi 14T Pro",
+              "sku": "DEV-X14TP-BLK-256",
+              "ram": 12,
+              "storage": 256,
+              "price": 16990000,
+              "stock": 2
+            }
+          ],
+          "sources": [],
+          "comparison": null,
+          "filters": {
+            "targets": [],
+            "category": "Điện thoại",
+            "brands": [],
+            "min_price": null,
+            "max_price": "20000000",
+            "target_price": null,
+            "min_ram_gb": null,
+            "min_storage_gb": null,
+            "cpu_keywords": [],
+            "in_stock_only": false,
+            "semantic_query": "điện thoại dưới 20 củ",
+            "top_k": 5
+          },
+          "strategy": "verified_product_variants",
+          "seconds": 22.37
+        }
+      ],
+      "task_success": true
+    },
+    {
+      "id": "G2-18",
+      "title": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+      "difficulty": "V",
+      "probe": false,
+      "group": "G2",
+      "group_title": "Giá, ngân sách, combo",
+      "session_id": "5440a7af-78cf-440c-bdf9-2a2d5d11f5d3",
+      "turns": [
+        {
+          "turn": 1,
+          "say": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+          "verdict": "BLOCKED_ENVIRONMENT",
+          "failures": [],
+          "notes": [
+            "HTTP_401: cần kiểm tra mã upstream trước khi quyết định retry."
+          ],
+          "reply": "{\"detail\":\"Unauthorized\"}",
+          "cards": [],
+          "filters": {},
+          "strategy": null,
+          "seconds": 20.07,
+          "comparison": false,
+          "sources": 0,
+          "trace_id": "3a17b606-716b-4a61-9284-96b52c8a1ead",
+          "http_status": 401
+        }
+      ],
+      "history": [
+        {
+          "say": "Giờ tôi có 100tr tôi cần mua 1 điện thoại và 1 laptop",
+          "status": 401,
+          "message": "{\"detail\":\"Unauthorized\"}",
+          "cards": [],
+          "sources": [],
+          "comparison": null,
+          "filters": {},
+          "strategy": null,
+          "seconds": 20.07
+        }
+      ],
+      "task_success": false
+    }
+  ],
+  "inflight": null,
+  "stop_reason": "G2-18: retry exhausted or non-retryable cloud failure; review evidence.",
+  "policy": {
+    "interval": 20.0,
+    "max_model_calls": 1000,
+    "max_tokens": 2000000,
+    "max_503_retries": 5
+  },
+  "last_finished_at": 1793710174.85058,
+  "writes_detected": "UNKNOWN: snapshot failed",
+  "updated_at": "2026-11-03T12:49:34.861811+00:00",
+  "case_statuses": {
+    "G1-01": "COMPLETED",
+    "G1-02": "COMPLETED",
+    "G1-03": "COMPLETED",
+    "G1-04": "COMPLETED",
+    "G1-05": "COMPLETED",
+    "G1-06": "COMPLETED",
+    "G1-07": "COMPLETED",
+    "G1-08": "COMPLETED",
+    "G1-09": "COMPLETED",
+    "G1-10": "COMPLETED",
+    "G1-11": "COMPLETED",
+    "G1-12": "COMPLETED",
+    "G1-13": "COMPLETED",
+    "G1-14": "COMPLETED",
+    "G1-15": "COMPLETED",
+    "G1-16": "COMPLETED",
+    "G1-17": "COMPLETED",
+    "G1-18": "COMPLETED",
+    "G1-19": "COMPLETED",
+    "G1-20": "COMPLETED",
+    "G2-01": "COMPLETED",
+    "G2-02": "COMPLETED",
+    "G2-03": "COMPLETED",
+    "G2-04": "COMPLETED",
+    "G2-05": "COMPLETED",
+    "G2-06": "COMPLETED",
+    "G2-07": "COMPLETED",
+    "G2-08": "COMPLETED",
+    "G2-09": "COMPLETED",
+    "G2-10": "COMPLETED",
+    "G2-11": "COMPLETED",
+    "G2-12": "COMPLETED",
+    "G2-13": "COMPLETED",
+    "G2-14": "COMPLETED",
+    "G2-15": "COMPLETED",
+    "G2-16": "COMPLETED",
+    "G2-17": "COMPLETED",
+    "G2-18": "BLOCKED_ENVIRONMENT",
+    "G2-19": "NOT_RUN",
+    "G2-20": "NOT_RUN",
+    "G2-21": "NOT_RUN",
+    "G2-22": "NOT_RUN",
+    "G2-23": "NOT_RUN",
+    "G3-01": "NOT_RUN",
+    "G3-02": "NOT_RUN",
+    "G3-03": "NOT_RUN",
+    "G3-04": "NOT_RUN",
+    "G3-05": "NOT_RUN",
+    "G3-06": "NOT_RUN",
+    "G3-07": "NOT_RUN",
+    "G3-08": "NOT_RUN",
+    "G3-09": "NOT_RUN",
+    "G3-10": "NOT_RUN",
+    "G3-11": "NOT_RUN",
+    "G3-12": "NOT_RUN",
+    "G3-13": "NOT_RUN",
+    "G3-14": "NOT_RUN",
+    "G3-15": "NOT_RUN",
+    "G3-16": "NOT_RUN",
+    "G3-17": "NOT_RUN",
+    "G3-18": "NOT_RUN",
+    "G4-01": "NOT_RUN",
+    "G4-02": "NOT_RUN",
+    "G4-03": "NOT_RUN",
+    "G4-04": "NOT_RUN",
+    "G4-05": "NOT_RUN",
+    "G4-06": "NOT_RUN",
+    "G4-07": "NOT_RUN",
+    "G4-08": "NOT_RUN",
+    "G4-09": "NOT_RUN",
+    "G4-10": "NOT_RUN",
+    "G4-11": "NOT_RUN",
+    "G4-12": "NOT_RUN",
+    "G4-13": "NOT_RUN",
+    "G4-14": "NOT_RUN",
+    "G4-15": "NOT_RUN",
+    "G4-16": "NOT_RUN",
+    "G4-17": "NOT_RUN",
+    "G4-18": "NOT_RUN",
+    "G4-19": "NOT_RUN",
+    "G4-20": "NOT_RUN",
+    "G4-21": "NOT_RUN",
+    "G4-22": "NOT_RUN",
+    "G4-23": "NOT_RUN",
+    "G4-24": "NOT_RUN",
+    "G4-25": "NOT_RUN",
+    "G4b-01": "NOT_RUN",
+    "G4b-02": "NOT_RUN",
+    "G4b-03": "NOT_RUN",
+    "G4b-04": "NOT_RUN",
+    "G4b-05": "NOT_RUN",
+    "G4b-06": "NOT_RUN",
+    "G4b-07": "NOT_RUN",
+    "G4b-08": "NOT_RUN",
+    "G4b-09": "NOT_RUN",
+    "G4b-10": "NOT_RUN",
+    "G4b-11": "NOT_RUN",
+    "G4b-12": "NOT_RUN",
+    "G4b-13": "NOT_RUN",
+    "G5-01": "NOT_RUN",
+    "G5-02": "NOT_RUN",
+    "G5-03": "NOT_RUN",
+    "G5-04": "NOT_RUN",
+    "G5-05": "NOT_RUN",
+    "G5-06": "NOT_RUN",
+    "G5-07": "NOT_RUN",
+    "G5-08": "NOT_RUN",
+    "G5-09": "NOT_RUN",
+    "G5-10": "NOT_RUN",
+    "G5-11": "NOT_RUN",
+    "G5-12": "NOT_RUN",
+    "G5-13": "NOT_RUN",
+    "G6-01": "NOT_RUN",
+    "G6-02": "NOT_RUN",
+    "G6-03": "NOT_RUN",
+    "G6-04": "NOT_RUN",
+    "G6-05": "NOT_RUN",
+    "G6-06": "NOT_RUN",
+    "G6-07": "NOT_RUN",
+    "G6-08": "NOT_RUN",
+    "G6-09": "NOT_RUN",
+    "G6-10": "NOT_RUN",
+    "G6-11": "NOT_RUN",
+    "G6-12": "NOT_RUN",
+    "G7-01": "NOT_RUN",
+    "G7-02": "NOT_RUN",
+    "G7-03": "NOT_RUN",
+    "G7-04": "NOT_RUN",
+    "G7-05": "NOT_RUN",
+    "G7-06": "NOT_RUN",
+    "G7-07": "NOT_RUN",
+    "G7-08": "NOT_RUN",
+    "G8-01": "NOT_RUN",
+    "G8-02": "NOT_RUN",
+    "G8-03": "NOT_RUN",
+    "G8-04": "NOT_RUN",
+    "G8-05": "NOT_RUN",
+    "G8-06": "NOT_RUN",
+    "G8-07": "NOT_RUN",
+    "G8-08": "NOT_RUN",
+    "G8-09": "NOT_RUN",
+    "G8-10": "NOT_RUN",
+    "G8-11": "NOT_RUN",
+    "G8-12": "NOT_RUN",
+    "G8-13": "NOT_RUN",
+    "G8-14": "NOT_RUN",
+    "G8-15": "NOT_RUN",
+    "G8-16": "NOT_RUN",
+    "G8-17": "NOT_RUN",
+    "G9-01": "NOT_RUN",
+    "G9-02": "NOT_RUN",
+    "G9-03": "NOT_RUN",
+    "G9-04": "NOT_RUN",
+    "G9-05": "NOT_RUN",
+    "G9-06": "NOT_RUN",
+    "G9-07": "NOT_RUN",
+    "G9-08": "NOT_RUN",
+    "G9-09": "NOT_RUN",
+    "G9-10": "NOT_RUN",
+    "G9-11": "NOT_RUN",
+    "G9-12": "NOT_RUN",
+    "G9-13": "NOT_RUN",
+    "G9-14": "NOT_RUN",
+    "G9-15": "NOT_RUN",
+    "G9-16": "NOT_RUN",
+    "G9-17": "NOT_RUN",
+    "G9-18": "NOT_RUN",
+    "G9-19": "NOT_RUN",
+    "G9-20": "NOT_RUN",
+    "G9-21": "NOT_RUN",
+    "G9-22": "NOT_RUN",
+    "G9-23": "NOT_RUN",
+    "G9-24": "NOT_RUN",
+    "G9-25": "NOT_RUN",
+    "G9-26": "NOT_RUN",
+    "G10-01": "NOT_RUN",
+    "G10-02": "NOT_RUN",
+    "G10-03": "NOT_RUN",
+    "G10-04": "NOT_RUN",
+    "G10-05": "NOT_RUN",
+    "G10-06": "NOT_RUN",
+    "G10-07": "NOT_RUN",
+    "G10-08": "NOT_RUN",
+    "G10-09": "NOT_RUN",
+    "G10-10": "NOT_RUN",
+    "G10-11": "NOT_RUN",
+    "G10-12": "NOT_RUN",
+    "G10-13": "NOT_RUN",
+    "G10-14": "NOT_RUN",
+    "G10-15": "NOT_RUN",
+    "G10-16": "NOT_RUN",
+    "G10-17": "NOT_RUN",
+    "G10-18": "NOT_RUN",
+    "G10-19": "NOT_RUN",
+    "G10-20": "NOT_RUN",
+    "G10-21": "NOT_RUN",
+    "G10-22": "NOT_RUN",
+    "G10-23": "NOT_RUN",
+    "G10-24": "NOT_RUN",
+    "G10-25": "NOT_RUN",
+    "G10-26": "NOT_RUN",
+    "G10-27": "NOT_RUN",
+    "G10-28": "NOT_RUN",
+    "G10-29": "NOT_RUN",
+    "G10-30": "NOT_RUN"
+  },
+  "reported_limits": {
+    "requests_per_minute": 15,
+    "tokens_per_minute": 250000,
+    "requests_per_day": "UNKNOWN",
+    "source": "user supplied after initial run"
+  },
+  "turn_statuses": {
+    "G1-01.1": "PASS",
+    "G1-02.1": "PASS",
+    "G1-03.1": "PASS",
+    "G1-04.1": "PASS",
+    "G1-05.1": "PASS",
+    "G1-06.1": "PASS",
+    "G1-07.1": "PASS",
+    "G1-08.1": "PASS",
+    "G1-09.1": "PASS",
+    "G1-10.1": "PASS",
+    "G1-11.1": "PASS",
+    "G1-12.1": "PASS",
+    "G1-13.1": "PASS",
+    "G1-14.1": "PASS",
+    "G1-15.1": "PASS",
+    "G1-16.1": "PASS",
+    "G1-17.1": "PASS",
+    "G1-18.1": "PASS",
+    "G1-19.1": "PASS",
+    "G1-20.1": "PASS",
+    "G2-01.1": "PASS",
+    "G2-02.1": "PASS",
+    "G2-03.1": "PASS",
+    "G2-04.1": "PASS",
+    "G2-05.1": "PASS",
+    "G2-06.1": "PASS",
+    "G2-07.1": "PASS",
+    "G2-08.1": "PASS",
+    "G2-09.1": "PASS",
+    "G2-10.1": "PASS",
+    "G2-11.1": "PASS",
+    "G2-12.1": "PASS",
+    "G2-13.1": "PASS",
+    "G2-14.1": "PASS",
+    "G2-15.1": "PASS",
+    "G2-16.1": "PASS",
+    "G2-17.1": "PASS",
+    "G2-18.1": "BLOCKED_ENVIRONMENT",
+    "G2-19.1": "NOT_RUN",
+    "G2-20.1": "NOT_RUN",
+    "G2-21.1": "NOT_RUN",
+    "G2-22.1": "NOT_RUN",
+    "G2-23.1": "NOT_RUN",
+    "G3-01.1": "NOT_RUN",
+    "G3-02.1": "NOT_RUN",
+    "G3-03.1": "NOT_RUN",
+    "G3-04.1": "NOT_RUN",
+    "G3-05.1": "NOT_RUN",
+    "G3-06.1": "NOT_RUN",
+    "G3-07.1": "NOT_RUN",
+    "G3-08.1": "NOT_RUN",
+    "G3-09.1": "NOT_RUN",
+    "G3-10.1": "NOT_RUN",
+    "G3-11.1": "NOT_RUN",
+    "G3-12.1": "NOT_RUN",
+    "G3-13.1": "NOT_RUN",
+    "G3-14.1": "NOT_RUN",
+    "G3-15.1": "NOT_RUN",
+    "G3-16.1": "NOT_RUN",
+    "G3-17.1": "NOT_RUN",
+    "G3-18.1": "NOT_RUN",
+    "G4-01.1": "NOT_RUN",
+    "G4-01.2": "NOT_RUN",
+    "G4-01.3": "NOT_RUN",
+    "G4-01.4": "NOT_RUN",
+    "G4-02.1": "NOT_RUN",
+    "G4-02.2": "NOT_RUN",
+    "G4-02.3": "NOT_RUN",
+    "G4-02.4": "NOT_RUN",
+    "G4-03.1": "NOT_RUN",
+    "G4-03.2": "NOT_RUN",
+    "G4-03.3": "NOT_RUN",
+    "G4-04.1": "NOT_RUN",
+    "G4-04.2": "NOT_RUN",
+    "G4-05.1": "NOT_RUN",
+    "G4-05.2": "NOT_RUN",
+    "G4-05.3": "NOT_RUN",
+    "G4-06.1": "NOT_RUN",
+    "G4-06.2": "NOT_RUN",
+    "G4-06.3": "NOT_RUN",
+    "G4-07.1": "NOT_RUN",
+    "G4-07.2": "NOT_RUN",
+    "G4-07.3": "NOT_RUN",
+    "G4-08.1": "NOT_RUN",
+    "G4-08.2": "NOT_RUN",
+    "G4-08.3": "NOT_RUN",
+    "G4-09.1": "NOT_RUN",
+    "G4-09.2": "NOT_RUN",
+    "G4-09.3": "NOT_RUN",
+    "G4-10.1": "NOT_RUN",
+    "G4-10.2": "NOT_RUN",
+    "G4-10.3": "NOT_RUN",
+    "G4-10.4": "NOT_RUN",
+    "G4-11.1": "NOT_RUN",
+    "G4-11.2": "NOT_RUN",
+    "G4-12.1": "NOT_RUN",
+    "G4-12.2": "NOT_RUN",
+    "G4-12.3": "NOT_RUN",
+    "G4-13.1": "NOT_RUN",
+    "G4-13.2": "NOT_RUN",
+    "G4-13.3": "NOT_RUN",
+    "G4-14.1": "NOT_RUN",
+    "G4-14.2": "NOT_RUN",
+    "G4-14.3": "NOT_RUN",
+    "G4-15.1": "NOT_RUN",
+    "G4-15.2": "NOT_RUN",
+    "G4-16.1": "NOT_RUN",
+    "G4-16.2": "NOT_RUN",
+    "G4-16.3": "NOT_RUN",
+    "G4-17.1": "NOT_RUN",
+    "G4-17.2": "NOT_RUN",
+    "G4-17.3": "NOT_RUN",
+    "G4-18.1": "NOT_RUN",
+    "G4-18.2": "NOT_RUN",
+    "G4-18.3": "NOT_RUN",
+    "G4-19.1": "NOT_RUN",
+    "G4-19.2": "NOT_RUN",
+    "G4-20.1": "NOT_RUN",
+    "G4-20.2": "NOT_RUN",
+    "G4-20.3": "NOT_RUN",
+    "G4-21.1": "NOT_RUN",
+    "G4-21.2": "NOT_RUN",
+    "G4-21.3": "NOT_RUN",
+    "G4-22.1": "NOT_RUN",
+    "G4-22.2": "NOT_RUN",
+    "G4-23.1": "NOT_RUN",
+    "G4-23.2": "NOT_RUN",
+    "G4-23.3": "NOT_RUN",
+    "G4-24.1": "NOT_RUN",
+    "G4-24.2": "NOT_RUN",
+    "G4-24.3": "NOT_RUN",
+    "G4-25.1": "NOT_RUN",
+    "G4-25.2": "NOT_RUN",
+    "G4b-01.1": "NOT_RUN",
+    "G4b-01.2": "NOT_RUN",
+    "G4b-01.3": "NOT_RUN",
+    "G4b-01.4": "NOT_RUN",
+    "G4b-01.5": "NOT_RUN",
+    "G4b-01.6": "NOT_RUN",
+    "G4b-01.7": "NOT_RUN",
+    "G4b-01.8": "NOT_RUN",
+    "G4b-01.9": "NOT_RUN",
+    "G4b-01.10": "NOT_RUN",
+    "G4b-02.1": "NOT_RUN",
+    "G4b-02.2": "NOT_RUN",
+    "G4b-02.3": "NOT_RUN",
+    "G4b-02.4": "NOT_RUN",
+    "G4b-03.1": "NOT_RUN",
+    "G4b-03.2": "NOT_RUN",
+    "G4b-03.3": "NOT_RUN",
+    "G4b-04.1": "NOT_RUN",
+    "G4b-04.2": "NOT_RUN",
+    "G4b-05.1": "NOT_RUN",
+    "G4b-05.2": "NOT_RUN",
+    "G4b-05.3": "NOT_RUN",
+    "G4b-05.4": "NOT_RUN",
+    "G4b-06.1": "NOT_RUN",
+    "G4b-06.2": "NOT_RUN",
+    "G4b-06.3": "NOT_RUN",
+    "G4b-07.1": "NOT_RUN",
+    "G4b-07.2": "NOT_RUN",
+    "G4b-07.3": "NOT_RUN",
+    "G4b-07.4": "NOT_RUN",
+    "G4b-08.1": "NOT_RUN",
+    "G4b-08.2": "NOT_RUN",
+    "G4b-08.3": "NOT_RUN",
+    "G4b-09.1": "NOT_RUN",
+    "G4b-09.2": "NOT_RUN",
+    "G4b-09.3": "NOT_RUN",
+    "G4b-10.1": "NOT_RUN",
+    "G4b-10.2": "NOT_RUN",
+    "G4b-10.3": "NOT_RUN",
+    "G4b-11.1": "NOT_RUN",
+    "G4b-11.2": "NOT_RUN",
+    "G4b-11.3": "NOT_RUN",
+    "G4b-12.1": "NOT_RUN",
+    "G4b-12.2": "NOT_RUN",
+    "G4b-13.1": "NOT_RUN",
+    "G4b-13.2": "NOT_RUN",
+    "G5-01.1": "NOT_RUN",
+    "G5-02.1": "NOT_RUN",
+    "G5-03.1": "NOT_RUN",
+    "G5-04.1": "NOT_RUN",
+    "G5-05.1": "NOT_RUN",
+    "G5-06.1": "NOT_RUN",
+    "G5-07.1": "NOT_RUN",
+    "G5-08.1": "NOT_RUN",
+    "G5-09.1": "NOT_RUN",
+    "G5-10.1": "NOT_RUN",
+    "G5-11.1": "NOT_RUN",
+    "G5-12.1": "NOT_RUN",
+    "G5-12.2": "NOT_RUN",
+    "G5-13.1": "NOT_RUN",
+    "G5-13.2": "NOT_RUN",
+    "G6-01.1": "NOT_RUN",
+    "G6-02.1": "NOT_RUN",
+    "G6-03.1": "NOT_RUN",
+    "G6-04.1": "NOT_RUN",
+    "G6-05.1": "NOT_RUN",
+    "G6-06.1": "NOT_RUN",
+    "G6-07.1": "NOT_RUN",
+    "G6-08.1": "NOT_RUN",
+    "G6-09.1": "NOT_RUN",
+    "G6-10.1": "NOT_RUN",
+    "G6-11.1": "NOT_RUN",
+    "G6-11.2": "NOT_RUN",
+    "G6-11.3": "NOT_RUN",
+    "G6-12.1": "NOT_RUN",
+    "G6-12.2": "NOT_RUN",
+    "G7-01.1": "NOT_RUN",
+    "G7-02.1": "NOT_RUN",
+    "G7-03.1": "NOT_RUN",
+    "G7-04.1": "NOT_RUN",
+    "G7-05.1": "NOT_RUN",
+    "G7-06.1": "NOT_RUN",
+    "G7-07.1": "NOT_RUN",
+    "G7-08.1": "NOT_RUN",
+    "G8-01.1": "NOT_RUN",
+    "G8-02.1": "NOT_RUN",
+    "G8-03.1": "NOT_RUN",
+    "G8-04.1": "NOT_RUN",
+    "G8-05.1": "NOT_RUN",
+    "G8-06.1": "NOT_RUN",
+    "G8-07.1": "NOT_RUN",
+    "G8-08.1": "NOT_RUN",
+    "G8-09.1": "NOT_RUN",
+    "G8-10.1": "NOT_RUN",
+    "G8-11.1": "NOT_RUN",
+    "G8-12.1": "NOT_RUN",
+    "G8-13.1": "NOT_RUN",
+    "G8-14.1": "NOT_RUN",
+    "G8-15.1": "NOT_RUN",
+    "G8-16.1": "NOT_RUN",
+    "G8-17.1": "NOT_RUN",
+    "G9-01.1": "NOT_RUN",
+    "G9-02.1": "NOT_RUN",
+    "G9-03.1": "NOT_RUN",
+    "G9-04.1": "NOT_RUN",
+    "G9-05.1": "NOT_RUN",
+    "G9-06.1": "NOT_RUN",
+    "G9-07.1": "NOT_RUN",
+    "G9-08.1": "NOT_RUN",
+    "G9-09.1": "NOT_RUN",
+    "G9-10.1": "NOT_RUN",
+    "G9-11.1": "NOT_RUN",
+    "G9-12.1": "NOT_RUN",
+    "G9-13.1": "NOT_RUN",
+    "G9-14.1": "NOT_RUN",
+    "G9-15.1": "NOT_RUN",
+    "G9-16.1": "NOT_RUN",
+    "G9-17.1": "NOT_RUN",
+    "G9-18.1": "NOT_RUN",
+    "G9-19.1": "NOT_RUN",
+    "G9-20.1": "NOT_RUN",
+    "G9-21.1": "NOT_RUN",
+    "G9-22.1": "NOT_RUN",
+    "G9-23.1": "NOT_RUN",
+    "G9-24.1": "NOT_RUN",
+    "G9-25.1": "NOT_RUN",
+    "G9-26.1": "NOT_RUN",
+    "G10-01.1": "NOT_RUN",
+    "G10-02.1": "NOT_RUN",
+    "G10-03.1": "NOT_RUN",
+    "G10-04.1": "NOT_RUN",
+    "G10-05.1": "NOT_RUN",
+    "G10-06.1": "NOT_RUN",
+    "G10-07.1": "NOT_RUN",
+    "G10-08.1": "NOT_RUN",
+    "G10-09.1": "NOT_RUN",
+    "G10-10.1": "NOT_RUN",
+    "G10-11.1": "NOT_RUN",
+    "G10-12.1": "NOT_RUN",
+    "G10-13.1": "NOT_RUN",
+    "G10-14.1": "NOT_RUN",
+    "G10-15.1": "NOT_RUN",
+    "G10-16.1": "NOT_RUN",
+    "G10-17.1": "NOT_RUN",
+    "G10-18.1": "NOT_RUN",
+    "G10-19.1": "NOT_RUN",
+    "G10-20.1": "NOT_RUN",
+    "G10-21.1": "NOT_RUN",
+    "G10-22.1": "NOT_RUN",
+    "G10-23.1": "NOT_RUN",
+    "G10-24.1": "NOT_RUN",
+    "G10-25.1": "NOT_RUN",
+    "G10-26.1": "NOT_RUN",
+    "G10-27.1": "NOT_RUN",
+    "G10-28.1": "NOT_RUN",
+    "G10-29.1": "NOT_RUN",
+    "G10-30.1": "NOT_RUN"
+  },
+  "retry_counts": {
+    "G1-01": 1
+  },
+  "retry_events": [
+    {
+      "case_id": "G1-01",
+      "retry": 1,
+      "failed_trace_id": "a84653b1-952f-4412-b67b-20fcec394164",
+      "delay_seconds": 33.75,
+      "archive": "attempts/G1-01-failed-01.json",
+      "reason": "GEMINI_HTTP_503"
+    }
+  ],
+  "pending_retry": null
+}

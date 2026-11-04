@@ -1,0 +1,52 @@
+@startuml
+title So do lop thiet ke - Luong xu ly chatbot
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+class ChatService <<service>> {
+  +send_message(UUID, SendMessageRequest) : ChatResponse
+}
+interface QueryUnderstandingService {
+  +understand(QueryContext) : QueryPlan
+}
+class DomainNormalizer {
+  +normalize(QueryPlan) : QueryPlan
+}
+interface ProductAdvisorService {
+  +search(ProductSearchPlan) : list
+}
+interface KnowledgeRetrievalService {
+  +retrieve(str, int) : list
+}
+interface ResponseGenerationService {
+  +generate(GroundedContext) : str
+}
+class OllamaClient <<he thong ngoai>> {
+  +chat(list, schema) : str
+  +embed(list) : list
+}
+class BackendClient <<he thong ngoai>> {
+  +search_products(dict) : list
+  +current_customer(dict)
+}
+ChatService ..> QueryUnderstandingService
+ChatService ..> ProductAdvisorService
+ChatService ..> KnowledgeRetrievalService
+ChatService ..> ResponseGenerationService
+QueryUnderstandingService ..> DomainNormalizer : kiem chung
+QueryUnderstandingService ..> OllamaClient
+ResponseGenerationService ..> OllamaClient
+ProductAdvisorService ..> BackendClient
+QueryUnderstandingService -[hidden]down- KnowledgeRetrievalService
+@enduml

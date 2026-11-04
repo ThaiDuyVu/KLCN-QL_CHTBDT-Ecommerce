@@ -6,8 +6,8 @@ export const chatbotApi = {
   session: (sessionId) => apiClient(`${base}/sessions/${sessionId}`),
   close: (sessionId) => apiClient(`${base}/sessions/${sessionId}/close`, { method: 'POST' }),
   status: () => apiClient(`${base}/status`),
-  send: (sessionId, message, signal, traceId) => apiClient(`${base}/sessions/${sessionId}/messages`, {
-    method: 'POST', body: { message }, signal, headers: traceId ? { 'X-Chat-Trace-Id': traceId } : undefined,
+  send: (sessionId, message, signal, traceId, provider) => apiClient(`${base}/sessions/${sessionId}/messages`, {
+    method: 'POST', body: { message, ...(provider ? { provider } : {}) }, signal, headers: traceId ? { 'X-Chat-Trace-Id': traceId } : undefined,
   }),
   traces: (sessionId) => apiClient(`${base}/sessions/${sessionId}/traces`),
   trace: (sessionId, traceId) => apiClient(`${base}/sessions/${sessionId}/traces/${traceId}`),

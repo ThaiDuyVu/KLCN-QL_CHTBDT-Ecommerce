@@ -1,0 +1,105 @@
+@startuml
+title So do lop thiet ke - Nha cung cap va kho hang
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+class GoodsReceiptService <<service>> {
+  +createGoodsReceipt(CreateGoodsReceiptRequest)
+  +updateGoodsReceipt(UUID, CreateGoodsReceiptRequest)
+  +updateGoodsReceiptStatus(UUID, GoodsReceiptStatus)
+}
+class SerialAllocationService <<service>> {
+  +reserveAvailable(UUID, UUID, int) : List<UUID>
+  +releaseReserved(List<UUID>)
+  +markSold(List<UUID>)
+}
+class Supplier <<entity>> {
+  -supplierId : UUID {id}
+  -supplierCode : String
+  -supplierName : String
+  -phone : String
+  -status : SupplierStatus
+}
+class Warehouse <<entity>> {
+  -warehouseId : UUID {id}
+  -warehouseName : String
+  -address : String
+  -status : WarehouseStatus
+}
+class GoodsReceipt <<entity>> {
+  -receiptId : UUID {id}
+  -receiptCode : String
+  -receiptDate : OffsetDateTime
+  -totalAmount : BigDecimal
+  -status : GoodsReceiptStatus
+}
+class GoodsReceiptItem <<entity>> {
+  -receiptItemId : UUID {id}
+  -quantity : Integer
+  -unitCost : BigDecimal
+}
+class GoodsReceiptItemDevice <<entity>> {
+  -receiptDeviceId : UUID {id}
+  -serialNumber : String
+  -imeiNumbers : List<String>
+}
+class Inventory <<entity>> {
+  -inventoryId : UUID {id}
+  -quantity : Integer
+  -reservedQuantity : Integer
+  -updatedAt : OffsetDateTime
+}
+class SerialNumber <<entity>> {
+  -serialId : UUID {id}
+  -serialNumber : String
+  -status : SerialStatus
+}
+class Imei <<entity>> {
+  -imeiId : UUID {id}
+  -imeiNumber : String
+}
+enum GoodsReceiptStatus {
+  DRAFT
+  CONFIRMED
+  CANCELLED
+}
+enum SerialStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+  RETURNED
+  DEFECTIVE
+}
+class ProductVariant <<tham chieu>>
+class Employee <<tham chieu>>
+GoodsReceiptService ..> GoodsReceipt
+GoodsReceiptService ..> Inventory : cong ton
+GoodsReceiptService ..> SerialNumber : tao khi duyet
+SerialAllocationService ..> SerialNumber
+Supplier "1" -- "*" GoodsReceipt
+Warehouse "1" -- "*" GoodsReceipt
+Employee "1" -- "*" GoodsReceipt
+GoodsReceipt "1" *-- "1..*" GoodsReceiptItem
+GoodsReceiptItem "1" *-- "*" GoodsReceiptItemDevice
+GoodsReceiptItem "*" -- "1" ProductVariant
+Warehouse "1" *-- "*" Inventory
+Inventory "*" -- "1" ProductVariant
+SerialNumber "*" -- "1" ProductVariant
+SerialNumber "*" -- "1" Warehouse
+SerialNumber "1" *-- "1..*" Imei
+GoodsReceipt ..> GoodsReceiptStatus
+Supplier -[hidden]down- Warehouse
+GoodsReceiptService -[hidden]right- SerialAllocationService
+SerialNumber ..> SerialStatus
+@enduml

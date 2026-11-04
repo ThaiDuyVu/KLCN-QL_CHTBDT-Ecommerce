@@ -1,0 +1,124 @@
+@startuml
+title So do lop muc phan tich - Phan he Kho hang
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam class {
+  BackgroundColor<<phan he khac>> #F2F2F2
+  BorderColor<<phan he khac>> #999999
+  FontColor<<phan he khac>> #666666
+}
+hide <<phan he khac>> members
+
+class NhaCungCap {
+  -maNCC : String
+  -tenNCC : String
+  -soDienThoai : String
+  -email : String
+  -diaChi : String
+  -trangThai : String
+  +capNhatThongTin()
+}
+
+class Kho {
+  -tenKho : String
+  -diaChi : String
+  -trangThai : String
+  +layTonKho(phienBan : PhienBanSanPham) : int
+}
+
+class TonKho {
+  -soLuong : int
+  -soLuongDaGiu : int
+  -ngayCapNhat : Date
+  +soLuongKhaDung() : int
+  +nhapKho(soLuong : int)
+  +giuCho(soLuong : int)
+  +giaiPhong(soLuong : int)
+  +xuatKho(soLuong : int)
+}
+
+class PhieuNhapKho {
+  -maPhieu : String
+  -ngayNhap : Date
+  -tongTien : double
+  -trangThai : TrangThaiPhieuNhap
+  +themDong(phienBan : PhienBanSanPham, soLuong : int, donGia : double)
+  +tinhTongTien() : double
+  +duyetPhieu()
+  +huyPhieu()
+}
+
+class ChiTietPhieuNhap {
+  -soLuong : int
+  -donGiaNhap : double
+  +thanhTien() : double
+  +ghiNhanThietBi(soSerial : String, imei : String)
+}
+
+class ThietBi {
+  -soSerial : String
+  -imei : String
+  -trangThai : TrangThaiThietBi
+  +capNhatTrangThai(trangThai : TrangThaiThietBi)
+}
+
+enum TrangThaiPhieuNhap {
+  Nhap
+  DaDuyet
+  DaHuy
+}
+
+enum TrangThaiThietBi {
+  SanSang
+  DangGiu
+  DaBan
+  DaTra
+  BiLoi
+}
+
+' Lop thuoc phan he khac, chi the hien lien ket
+class NhanVien <<phan he khac>>
+class PhienBanSanPham <<phan he khac>>
+class DonHang <<phan he khac>>
+class ChiTietDonHang <<phan he khac>>
+class BaoHanh <<phan he khac>>
+
+NhaCungCap "1" -- "*" PhieuNhapKho : cung cap
+Kho "1" -- "*" PhieuNhapKho : nhap vao
+NhanVien "1" -- "*" PhieuNhapKho : lap
+PhieuNhapKho "1" *-- "1..*" ChiTietPhieuNhap
+ChiTietPhieuNhap "*" -- "1" PhienBanSanPham
+ChiTietPhieuNhap "1" -- "*" ThietBi : ghi nhan
+
+Kho "1" *-- "*" TonKho
+PhienBanSanPham "1" -- "*" TonKho
+Kho "1" -- "*" ThietBi : luu tru
+PhienBanSanPham "1" -- "*" ThietBi
+
+PhieuNhapKho ..> TrangThaiPhieuNhap
+ThietBi ..> TrangThaiThietBi
+
+DonHang "*" -- "1" Kho : xuat tu
+ChiTietDonHang "0..1" -- "0..1" ThietBi : giao
+ThietBi "1" -- "0..1" BaoHanh
+
+note right of PhieuNhapKho
+  Phieu moi lap o trang thai Nhap.
+  Khi duoc duyet: cong so luong
+  vao TonKho va tao ThietBi theo
+  Serial/IMEI da ghi tren phieu.
+  Phieu da duyet khong sua duoc.
+end note
+
+note bottom of TonKho
+  So luong kha dung =
+  soLuong - soLuongDaGiu.
+  Dat hang thi giu cho; giao hang
+  thi tru kho; huy don thi giai phong.
+end note
+
+note left of ThietBi
+  Chi ap dung cho hang theo doi
+  theo Serial/IMEI.
+end note
+@enduml

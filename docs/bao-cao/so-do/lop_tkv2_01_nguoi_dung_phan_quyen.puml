@@ -1,0 +1,103 @@
+@startuml
+title So do lop thiet ke - Nguoi dung va phan quyen
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+
+class AuthService <<service>> {
+  +login(LoginRequest) : AuthSession
+  +register(RegisterRequest) : AuthSession
+  +refresh(String) : AuthSession
+  +logout(String)
+}
+class UserService <<service>> {
+  +getUsers(int, int) : UserPage
+  +updateUser(UUID, UpdateUserRequest)
+  +updateUserStatus(UUID, UserStatus)
+}
+class RoleService <<service>> {
+  +getRoles() : List<Role>
+  +updateRolePermissions(UUID, List<UUID>)
+}
+
+class User <<entity>> {
+  -userId : UUID {id}
+  -username : String
+  -password : String
+  -email : String
+  -displayName : String
+  -phone : String
+  -status : UserStatus
+  -createdAt : OffsetDateTime
+}
+class Role <<entity>> {
+  -roleId : UUID {id}
+  -roleName : String
+  -description : String
+}
+class Permission <<entity>> {
+  -permissionId : UUID {id}
+  -permissionName : String
+  -description : String
+}
+class Employee <<entity>> {
+  -employeeId : UUID {id}
+  -employeeCode : String
+  -fullName : String
+  -position : String
+}
+class Customer <<entity>> {
+  -customerId : UUID {id}
+  -fullName : String
+  -address : String
+  -loyaltyPoint : Integer
+}
+class CustomerAddress <<entity>> {
+  -addressId : UUID {id}
+  -recipientName : String
+  -recipientPhone : String
+  -addressLine : String
+  -province : String
+  -defaultAddress : boolean
+}
+class RefreshToken <<entity>> {
+  -refreshTokenId : UUID {id}
+  -tokenHash : String
+  -expiresAt : OffsetDateTime
+  -revokedAt : OffsetDateTime
+}
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  LOCKED
+}
+
+AuthService ..> User
+AuthService ..> RefreshToken
+UserService ..> User
+RoleService ..> Role
+
+User "*" --> "1" Role : user_roles
+Role "*" -- "*" Permission : role_permissions
+User "1" -- "0..1" Employee
+User "1" -- "0..1" Customer
+User "1" *-- "*" RefreshToken
+Customer "1" *-- "*" CustomerAddress
+User ..> UserStatus
+Customer -[hidden]down- Employee
+
+note bottom of RefreshToken
+  Chi luu ma bam cua token;
+  token cu bi thu hoi khi xoay vong.
+end note
+@enduml

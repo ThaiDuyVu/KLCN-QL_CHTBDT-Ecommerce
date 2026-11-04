@@ -1,0 +1,80 @@
+@startuml
+title So do lop thiet ke - Thanh toan va tra gop
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+class VnpayService <<service>> {
+  +paymentUrl(UUID, UUID, String) : VnpayPaymentUrlResponse
+  +notifyPayment(Map<String, String>)
+  +synchronize(UUID, UUID)
+}
+class InstallmentService <<service>> {
+  +createForPayment(Payment, InstallmentProvider, CheckoutRequest)
+  +requireApproved(Payment)
+  +updateStatus(UUID, InstallmentStatus)
+}
+class Payment <<entity>> {
+  -paymentId : UUID {id}
+  -paymentMethod : PaymentMethod
+  -transactionCode : String
+  -amount : BigDecimal
+  -paymentDate : OffsetDateTime
+  -status : PaymentStatus
+}
+class InstallmentPayment <<entity>> {
+  -installmentId : UUID {id}
+  -totalAmount : BigDecimal
+  -downPayment : BigDecimal
+  -remainingAmount : BigDecimal
+  -termMonths : Integer
+  -status : InstallmentStatus
+}
+class InstallmentProvider <<entity>> {
+  -providerId : UUID {id}
+  -providerCode : String
+  -providerName : String
+  -contactPhone : String
+  -status : InstallmentProviderStatus
+}
+class VNPayGateway <<he thong ngoai>> {
+  +pay()
+  +queryDr()
+}
+enum PaymentMethod {
+  COD
+  VNPAY
+  INSTALLMENT
+}
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+enum InstallmentStatus {
+  PENDING
+  PROCESSING
+  APPROVED
+  REJECTED
+}
+class Order <<tham chieu>>
+VnpayService ..> Payment
+VnpayService ..> VNPayGateway : HMAC-SHA512
+InstallmentService ..> InstallmentPayment
+Payment "1" -- "1" Order
+Payment "1" -- "0..1" InstallmentPayment
+InstallmentPayment "*" -- "1" InstallmentProvider
+Payment ..> PaymentMethod
+Payment ..> PaymentStatus
+InstallmentPayment ..> InstallmentStatus
+@enduml

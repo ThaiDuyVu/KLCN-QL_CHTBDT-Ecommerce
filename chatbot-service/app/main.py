@@ -27,6 +27,7 @@ async def lifespan(app: FastAPI):
         }))
     service, client = build_chat_service(settings)
     app.state.chat_service = service
+    app.state.llm_client = client
     try:
         yield
     finally:

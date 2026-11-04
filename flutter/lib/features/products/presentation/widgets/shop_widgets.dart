@@ -91,6 +91,7 @@ class ProductImage extends StatelessWidget {
         fit: BoxFit.cover,
         errorBuilder: (_, _, _) => Image.network(
           fixUrl,
+          headers: ApiClient.accessHeaders,
           fit: BoxFit.cover,
           errorBuilder: (_, _, _) => _buildLocalFallback(),
         ),
@@ -98,6 +99,7 @@ class ProductImage extends StatelessWidget {
     }
     return Image.network(
       fixUrl,
+      headers: ApiClient.accessHeaders,
       fit: BoxFit.cover,
       errorBuilder: (_, _, _) => _buildLocalFallback(),
     );

@@ -1,0 +1,95 @@
+@startuml
+title So do lop thiet ke - San pham
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+class ProductService <<service>> {
+  +createProduct(CreateProductRequest) : ProductResponse
+  +getProducts(int, int) : ProductPage
+  +updateProduct(UUID, UpdateProductRequest)
+  +deleteProduct(UUID)
+}
+class ProductVariantService <<service>> {
+  +createVariant(CreateVariantRequest)
+  +searchVariants(String) : List<VariantResponse>
+  +updateVariant(UUID, UpdateVariantRequest)
+}
+class CategoryService <<service>> {
+  +getRootCategories() : List<CategoryResponse>
+  +getCategoryChildren(UUID) : List<CategoryResponse>
+}
+class Category <<entity>> {
+  -categoryId : UUID {id}
+  -categoryName : String
+  -description : String
+  -status : CategoryStatus
+}
+class Brand <<entity>> {
+  -brandId : UUID {id}
+  -brandName : String
+  -description : String
+  -status : BrandStatus
+}
+class Product <<entity>> {
+  -productId : UUID {id}
+  -productName : String
+  -description : String
+  -status : ProductStatus
+  -createdAt : OffsetDateTime
+}
+class ProductVariant <<entity>> {
+  -variantId : UUID {id}
+  -sku : String
+  -price : BigDecimal
+  -costPrice : BigDecimal
+  -color : String
+  -storage : String
+  -ram : String
+  -trackingType : ProductTrackingType
+  -warrantyMonths : Integer
+  -status : ProductVariantStatus
+}
+class Specification <<entity>> {
+  -specificationId : UUID {id}
+  -specKey : String
+  -specValue : String
+}
+class ProductImage <<entity>> {
+  -imageId : UUID {id}
+  -imageUrl : String
+  -primary : Boolean
+}
+enum ProductTrackingType {
+  NONE
+  SERIAL
+  IMEI
+}
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+}
+ProductService ..> Product
+ProductVariantService ..> ProductVariant
+CategoryService ..> Category
+Category "0..1" -- "*" Category : parent
+Category "1" -- "*" Product
+Brand "1" -- "*" Product
+Product "1" *-- "1..*" ProductVariant
+Product "1" *-- "*" Specification
+Product "1" *-- "*" ProductImage
+ProductVariant ..> ProductTrackingType
+Product ..> ProductStatus
+ProductImage -[hidden]down- ProductStatus
+Specification -[hidden]down- ProductTrackingType
+@enduml

@@ -1,0 +1,118 @@
+@startuml
+title So do lop muc phan tich - Phan he Nguoi dung va phan quyen
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam class {
+  BackgroundColor<<phan he khac>> #F2F2F2
+  BorderColor<<phan he khac>> #999999
+  FontColor<<phan he khac>> #666666
+}
+hide <<phan he khac>> members
+
+class NguoiDung {
+  -tenDangNhap : String
+  -matKhau : String
+  -email : String
+  -tenHienThi : String
+  -soDienThoai : String
+  -trangThai : TrangThaiTaiKhoan
+  -ngayTao : Date
+  -ngayCapNhat : Date
+  +dangNhap(tenDangNhap, matKhau) : boolean
+  +dangXuat()
+  +doiMatKhau(matKhauCu, matKhauMoi)
+  +capNhatThongTin()
+  +kiemTraQuyen(tenQuyen) : boolean
+}
+
+class KhachHang {
+  -hoTen : String
+  -diaChi : String
+  -diemTichLuy : int
+  +dangKy()
+  +xemLichSuMuaHang()
+  +congDiem(soDiem : int)
+}
+
+class NhanVien {
+  -maNhanVien : String
+  -hoTen : String
+  -chucVu : String
+  +xemThongTinCaNhan()
+}
+
+class VaiTro {
+  -tenVaiTro : String
+  -moTa : String
+  +ganQuyen(quyen : Quyen)
+  +goQuyen(quyen : Quyen)
+  +layDanhSachQuyen() : List<Quyen>
+}
+
+class Quyen {
+  -tenQuyen : String
+  -moTa : String
+}
+
+enum TrangThaiTaiKhoan {
+  HoatDong
+  NgungHoatDong
+  BiKhoa
+}
+
+class QuanTriVien {
+  +taoTaiKhoan()
+  +khoaTaiKhoan(nguoiDung : NguoiDung)
+  +moKhoaTaiKhoan(nguoiDung : NguoiDung)
+  +phanVaiTro(nguoiDung : NguoiDung, vaiTro : VaiTro)
+}
+
+' Lop thuoc phan he khac, chi the hien lien ket
+class DonHang <<phan he khac>>
+class GioHang <<phan he khac>>
+class PhieuNhapKho <<phan he khac>>
+class PhieuBaoHanh <<phan he khac>>
+class PhienChat <<phan he khac>>
+
+KhachHang --|> NguoiDung
+NhanVien --|> NguoiDung
+QuanTriVien --|> NhanVien
+
+NguoiDung "*" --> "1" VaiTro : thuoc
+VaiTro "*" -- "*" Quyen : gom
+NguoiDung ..> TrangThaiTaiKhoan
+QuanTriVien ..> VaiTro : quan ly
+
+KhachHang "1" -- "0..1" GioHang : so huu
+KhachHang "1" -- "*" DonHang : dat
+KhachHang "1" -- "*" PhienChat : tro chuyen
+NhanVien "1" -- "*" PhieuNhapKho : lap
+NhanVien "0..1" -- "*" DonHang : xu ly
+NhanVien "0..1" -- "*" PhieuBaoHanh : tiep nhan
+
+note right of VaiTro
+  Cac vai tro:
+  - Admin
+  - Quan ly cua hang
+  - Nhan vien ban hang
+  - Thu kho
+  - Nhan vien ky thuat/bao hanh
+  - Nhan vien giao hang
+  - Khach hang
+end note
+
+note bottom of Quyen
+  Nhom quyen:
+  - Quan ly nguoi dung (xem, tao, sua, khoa)
+  - Gan vai tro cho nguoi dung
+  - Gan quyen cho vai tro
+  - Quan ly nhan vien
+  - Quan ly khach hang
+end note
+
+note left of NguoiDung
+  Moi nguoi dung co mot vai tro.
+  Tai khoan bi khoa thi khong
+  dang nhap duoc.
+end note
+@enduml

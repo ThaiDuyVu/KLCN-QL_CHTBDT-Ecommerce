@@ -5,6 +5,7 @@ from decimal import Decimal
 from app.shared.contracts.context import GroundedContext
 from app.shared.contracts.enums import Intent
 from app.shared.ollama.client import OllamaError
+from app.shared.gemini.client import GeminiError
 from app.shared.ollama.protocol import ChatModel
 from app.features.chat.policy import transaction_request, TRANSACTION_REFUSAL
 from app.features.query_understanding.normalization import folded
@@ -169,10 +170,12 @@ class OllamaResponseGenerationService:
                 "Chỉ sinh văn bản; không tạo ProductCard, UUID hay SourceReference.")},
             {"role": "user", "content": json.dumps(context.model_dump(mode="json"), ensure_ascii=False)},
         ]
-        event("response.strategy", {"strategy": "ollama", "messages": messages})
+        event("response.strategy", {"strategy": getattr(self.model, 'provider', 'ollama'), "messages": messages})
         try:
             text = self.model.chat(messages)
             return text.strip() if text.strip() else INSUFFICIENT
+        except GeminiError:
+            raise
         except OllamaError as exc:
             event("response.fallback", {"reason": type(exc).__name__, "strategy": "unavailable_message"}, status="warning")
             return "Dịch vụ AI đang tạm thời không khả dụng. Bạn vui lòng thử lại sau."

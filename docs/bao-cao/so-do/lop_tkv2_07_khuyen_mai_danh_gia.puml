@@ -1,0 +1,66 @@
+@startuml
+title So do lop thiet ke - Khuyen mai va danh gia
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+class PromotionService <<service>> {
+  +create(PromotionRequest) : PromotionResponse
+  +status(UUID, PromotionStatus)
+  +resolveForCheckout(List<UUID>) : Map<UUID, Promotion>
+  +calculate(BigDecimal, Promotion) : BigDecimal
+}
+class Promotion <<entity>> {
+  -promotionId : UUID {id}
+  -promotionName : String
+  -description : String
+  -discountType : DiscountType
+  -discountValue : BigDecimal
+  -startDate : OffsetDateTime
+  -endDate : OffsetDateTime
+  -status : PromotionStatus
+}
+class PromotionProduct <<entity>> {
+  -id : PromotionProductId {id}
+}
+class Review <<entity>> {
+  -reviewId : UUID {id}
+  -rating : Integer
+  -reviewText : String
+  -replyText : String
+  -createdAt : OffsetDateTime
+  -repliedAt : OffsetDateTime
+  -status : String
+}
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+enum PromotionStatus {
+  ACTIVE
+  INACTIVE
+}
+class Product <<tham chieu>>
+class Customer <<tham chieu>>
+class Employee <<tham chieu>>
+class OrderItem <<tham chieu>>
+PromotionService ..> Promotion
+Promotion "1" *-- "*" PromotionProduct
+PromotionProduct "*" -- "1" Product
+Customer "1" -- "*" Review
+Review "*" -- "1" Product
+OrderItem "1" -- "0..1" Review
+Employee "0..1" -- "*" Review : tra loi
+Promotion ..> DiscountType
+Promotion ..> PromotionStatus
+@enduml

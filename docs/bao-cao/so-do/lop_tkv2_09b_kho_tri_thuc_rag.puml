@@ -1,0 +1,57 @@
+@startuml
+title So do lop thiet ke - Kho tri thuc RAG
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+interface KnowledgeRetrievalService {
+  +retrieve(str, int) : list<KnowledgeChunkMatch>
+  +ingest(bool)
+}
+class KnowledgeDocument <<entity>> {
+  -documentId : UUID {id}
+  -title : str
+  -source : str
+  -documentType : str
+  -status : str
+}
+class KnowledgeChunk <<entity>> {
+  -chunkId : UUID {id}
+  -chunkIndex : int
+  -content : str
+  -embeddingVector : vector
+}
+class ChatMessageRetrieval <<entity>> {
+  -retrievalId : UUID {id}
+  -similarityScore : float
+  -retrievedAt : datetime
+}
+class ProductSemanticIndex <<entity>> {
+  -productId : UUID {id}
+  -semanticContent : str
+  -contentHash : str
+  -embeddingModel : str
+  -embeddingVector : vector
+}
+class ChatMessage <<tham chieu>>
+class Product <<tham chieu>>
+KnowledgeRetrievalService ..> KnowledgeChunk : tim theo cosine
+KnowledgeDocument "1" *-- "1..*" KnowledgeChunk
+ChatMessageRetrieval "*" -- "1" KnowledgeChunk
+ChatMessageRetrieval "*" -- "1" ChatMessage
+ProductSemanticIndex "0..1" -- "1" Product
+note bottom of KnowledgeChunk
+  embeddingVector luu bang pgvector;
+  do tuong dong = 1 - khoang cach cosine.
+end note
+@enduml

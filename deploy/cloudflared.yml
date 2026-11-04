@@ -1,0 +1,11 @@
+# Cloudflare Tunnel cho shop.devthaiduyvu.bid -> Caddy (127.0.0.1:8088).
+# Tệp credentials nằm ngoài repo (~/.cloudflared/<tunnel-id>.json), không commit.
+# Quyền truy cập được giới hạn bằng Cloudflare Access (chỉ các email được phép).
+tunnel: 6b927b04-7441-4c27-a801-dfc5d56f0af5
+credentials-file: /Users/vu/.cloudflared/6b927b04-7441-4c27-a801-dfc5d56f0af5.json
+
+ingress:
+  - hostname: shop.devthaiduyvu.bid
+    service: http://127.0.0.1:8088
+  # Mọi tên miền khác đi vào tunnel này đều bị từ chối.
+  - service: http_status:404

@@ -1,7 +1,7 @@
 from functools import lru_cache
 from typing import Literal
 
-from pydantic import Field
+from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -19,6 +19,13 @@ class Settings(BaseSettings):
     ollama_embedding_model: str = "qwen3-embedding:0.6b"
 
     ollama_timeout_seconds: float = Field(default=60, gt=0)
+    llm_provider: Literal['ollama', 'gemini'] = 'ollama'
+    ollama_chat_enabled: bool = True
+    gemini_enabled: bool = False
+    gemini_api_key: SecretStr = Field(default=SecretStr(''), repr=False, exclude=True)
+    gemini_model: str = Field(default='gemini-3.1-flash-lite', pattern=r'^[a-zA-Z0-9._-]+$')
+    gemini_timeout_seconds: float = Field(default=30, gt=0, le=120)
+    gemini_max_output_tokens: int = Field(default=1024, ge=128, le=4096)
     knowledge_database_url: str | None = None
     knowledge_document_status: str = Field(default="PUBLISHED", min_length=1)
     chatbot_ai_enabled: bool = False
@@ -40,7 +47,17 @@ class Settings(BaseSettings):
         env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
+        hide_input_in_errors=True,
     )
+
+    @model_validator(mode='after')
+    def validate_llm_provider(self):
+        if self.chatbot_ai_enabled:
+            if self.llm_provider == 'ollama' and not self.ollama_chat_enabled:
+                raise ValueError('LLM_PROVIDER=ollama requires OLLAMA_CHAT_ENABLED=true')
+            if self.llm_provider == 'gemini' and not (self.gemini_enabled and self.gemini_api_key.get_secret_value()):
+                raise ValueError('LLM_PROVIDER=gemini requires GEMINI_ENABLED and GEMINI_API_KEY')
+        return self
 
 
 @lru_cache
