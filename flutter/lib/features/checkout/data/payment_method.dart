@@ -1,35 +1,33 @@
 import 'package:flutter/material.dart';
 
+/// Khớp enum PaymentMethod của backend (COD, VNPAY, INSTALLMENT) và trang checkout web.
 enum PaymentMethodOption {
   cod(
     value: 'COD',
     title: 'Thanh toán khi nhận hàng (COD)',
-    subtitle: 'Thanh toán tiền mặt hoặc chuyển khoản khi nhận hàng',
+    subtitle: 'Thanh toán trực tiếp khi đơn được giao đến bạn',
     icon: Icons.local_shipping_outlined,
   ),
   vnpay(
     value: 'VNPAY',
-    title: 'Cổng thanh toán VNPAY',
-    subtitle: 'Thẻ ATM nội địa, QR Pay, Visa/Mastercard',
+    title: 'VNPAY Sandbox',
+    subtitle: 'Bạn sẽ được chuyển đến cổng thanh toán thử nghiệm',
     icon: Icons.qr_code_scanner_outlined,
   ),
-  banking(
-    value: 'COD', // Backend hiện tại dùng COD kèm ghi chú chuyển khoản
-    backendCode: 'BANKING',
-    title: 'Chuyển khoản ngân hàng (Banking)',
-    subtitle: 'Chuyển khoản trực tiếp tới số tài khoản cửa hàng',
+  installment(
+    value: 'INSTALLMENT',
+    title: 'Trả góp nội bộ',
+    subtitle: 'Đơn chỉ được xác nhận sau khi hồ sơ được duyệt',
     icon: Icons.account_balance_outlined,
   );
 
   final String value;
-  final String? backendCode;
   final String title;
   final String subtitle;
   final IconData icon;
 
   const PaymentMethodOption({
     required this.value,
-    this.backendCode,
     required this.title,
     required this.subtitle,
     required this.icon,

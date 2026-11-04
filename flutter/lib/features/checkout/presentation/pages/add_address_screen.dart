@@ -49,10 +49,10 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
         'province': _province.text.trim(),
       };
 
-      final created = await repo.createAddress(payload);
+      var created = await repo.createAddress(payload);
       if (_isDefault) {
         try {
-          await repo.makeDefault(created.id);
+          created = await repo.makeDefault(created.id);
         } catch (_) {}
       }
 
@@ -169,13 +169,10 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
             TextFormField(
               controller: _province,
               decoration: const InputDecoration(
-                labelText: 'Tỉnh / Thành phố *',
+                labelText: 'Tỉnh / Thành phố',
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.location_on_outlined),
               ),
-              validator: (v) => (v == null || v.trim().isEmpty)
-                  ? 'Vui lòng nhập Tỉnh / Thành phố'
-                  : null,
             ),
             const SizedBox(height: 16),
             Row(

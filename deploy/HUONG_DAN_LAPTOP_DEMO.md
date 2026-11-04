@@ -15,7 +15,7 @@ Phiên bản cho Windows sẽ bổ sung sau.
   - App mobile: đã được build sẵn kèm **Service Token**, tự đi qua Access, chỉ cần đăng nhập tài khoản hệ thống.
 - Bạn nhận được 1 tệp **`dien-viet-demo.apk`** (khoảng 79 MB) chuyển tay từ máy chủ (USB / Drive cá nhân).
   - APK **chứa token truy cập** → không commit vào git, không đăng lên nơi công khai, không gửi vào nhóm chat.
-  - SHA-256 (16 ký tự đầu) của bản build ngày 2026-11-04: `71e803dbc1cad025`.
+  - SHA-256 (16 ký tự đầu) của bản build mới nhất (2026-11-04, đã sửa luồng thanh toán): `c20485f692d22770`.
     Kiểm tra: `shasum -a 256 dien-viet-demo.apk | cut -c1-16`.
   - APK gồm cả bản arm64 và x86_64 → dùng được trên Mac chip M lẫn Mac Intel.
 

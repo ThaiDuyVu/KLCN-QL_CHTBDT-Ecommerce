@@ -1,6 +1,7 @@
 import { apiClient } from '../../../api/apiClient';
 import { commerceRequest } from '../../orders/api/orderApi';
 import { authApi } from '../../../auth/api/authApi';
+import { shrinkImage } from './shrinkImage';
 
 async function request(path, signal) {
   const options = { signal: AbortSignal.any([signal, AbortSignal.timeout(15000)]) };
@@ -15,13 +16,14 @@ async function request(path, signal) {
 }
 
 export const productApi = {
-  createWithImages(product, images, primaryImageIndex, specifications = []) {
+  async createWithImages(product, images, primaryImageIndex, specifications = []) {
     const body = new FormData();
     body.append('product', new Blob([JSON.stringify(product)], { type: 'application/json' }));
-    images.forEach((file) => body.append('images', file));
+    // Upload through the public tunnel is much slower than localhost; send web-sized images.
+    (await Promise.all(images.map(shrinkImage))).forEach((file) => body.append('images', file));
     body.append('primaryImageIndex', String(primaryImageIndex));
     if (specifications.length) body.append('specifications', new Blob([JSON.stringify({ specifications })], { type: 'application/json' }));
-    return commerceRequest('/v1/products/with-images', { method: 'POST', body, signal: AbortSignal.timeout(60000) });
+    return commerceRequest('/v1/products/with-images', { method: 'POST', body, timeoutMs: 180000 });
   },
   brands(page, signal) {
     return commerceRequest(`/v1/brands?page=${page}&size=20`, { signal });

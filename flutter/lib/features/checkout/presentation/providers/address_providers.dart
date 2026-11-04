@@ -8,13 +8,9 @@ final addressRepositoryProvider = Provider<AddressRepository>((ref) {
   return AddressRepository();
 });
 
-final addressListProvider = FutureProvider.autoDispose<List<AddressModel>>((ref) async {
-  try {
-    final repo = ref.watch(addressRepositoryProvider);
-    return await repo.fetchAddresses();
-  } catch (_) {
-    return <AddressModel>[];
-  }
+// Không nuốt lỗi: màn hình cần phân biệt "chưa có địa chỉ" với "tải địa chỉ thất bại".
+final addressListProvider = FutureProvider.autoDispose<List<AddressModel>>((ref) {
+  return ref.watch(addressRepositoryProvider).fetchAddresses();
 });
 
 class SelectedAddressNotifier extends StateNotifier<AddressModel?> {
@@ -40,4 +36,9 @@ final paymentConfigRepositoryProvider = Provider<PaymentConfigRepository>((ref) 
 
 final vnpayEnabledProvider = FutureProvider.autoDispose<bool>((ref) {
   return ref.watch(paymentConfigRepositoryProvider).isVnpayEnabled();
+});
+
+final installmentProvidersProvider =
+    FutureProvider.autoDispose<List<InstallmentProvider>>((ref) {
+  return ref.watch(paymentConfigRepositoryProvider).fetchActiveInstallmentProviders();
 });

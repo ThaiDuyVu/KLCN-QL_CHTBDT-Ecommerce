@@ -51,7 +51,10 @@ class CartSummary {
   final String? warehouseId;
   final String? warehouseName;
   final List<CartLine> items;
+  // subtotal = tổng sau giảm giá (số tiền phải trả); originalSubtotal = trước giảm giá.
   final double subtotal;
+  final double? originalSubtotal;
+  final double discountAmount;
 
   CartSummary({
     this.cartId,
@@ -59,6 +62,8 @@ class CartSummary {
     this.warehouseName,
     this.items = const [],
     this.subtotal = 0,
+    this.originalSubtotal,
+    this.discountAmount = 0,
   });
 
   factory CartSummary.fromJson(Map<String, dynamic> json) {
@@ -76,6 +81,8 @@ class CartSummary {
       items: items,
       subtotal: ((json['subtotal'] ?? json['totalAmount'] ?? 0) as num)
           .toDouble(),
+      originalSubtotal: (json['originalSubtotal'] as num?)?.toDouble(),
+      discountAmount: (json['discountAmount'] as num?)?.toDouble() ?? 0,
     );
   }
 }
