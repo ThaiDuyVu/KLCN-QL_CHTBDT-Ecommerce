@@ -1,0 +1,113 @@
+@startuml
+title So do lop thiet ke tong quat (chi tiet thuoc tinh xem o so do tung phan he)
+skinparam dpi 200
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 14
+skinparam ranksep 30
+skinparam packageStyle rectangle
+hide members
+hide circle
+left to right direction
+
+package "Nguoi dung & phan quyen" {
+  class User
+  class Role
+  class Permission
+  class Employee
+  class Customer
+  class CustomerAddress
+  class RefreshToken
+}
+package "San pham & khuyen mai" {
+  class Category
+  class Brand
+  class Product
+  class ProductVariant
+  class Specification
+  class ProductImage
+  class Promotion
+}
+package "Kho hang" {
+  class Supplier
+  class Warehouse
+  class Inventory
+  class GoodsReceipt
+  class GoodsReceiptItem
+  class SerialNumber
+  class Imei
+}
+package "Gio hang & don hang" {
+  class Cart
+  class CartItem
+  class Order
+  class OrderItem
+  class Payment
+  class InstallmentPayment
+  class InstallmentProvider
+  class Invoice
+  class Shipment
+}
+package "Hau mai" {
+  class Warranty
+  class WarrantyTicket
+  class Review
+}
+package "Chatbot & RAG (chatbot-service)" {
+  class ChatSession
+  class ChatMessage
+  class MessageFeedback
+  class KnowledgeDocument
+  class KnowledgeChunk
+  class ProductSemanticIndex
+}
+
+User "*" -- "1" Role
+Role "*" -- "*" Permission
+User "1" -- "0..1" Employee
+User "1" -- "0..1" Customer
+User "1" -- "*" RefreshToken
+Customer "1" -- "*" CustomerAddress
+
+Category "1" -- "*" Product
+Brand "1" -- "*" Product
+Product "1" *-- "1..*" ProductVariant
+Product "1" *-- "*" Specification
+Product "1" *-- "*" ProductImage
+Promotion "*" -- "*" Product
+
+Supplier "1" -- "*" GoodsReceipt
+Warehouse "1" -- "*" GoodsReceipt
+Employee "1" -- "*" GoodsReceipt
+GoodsReceipt "1" *-- "1..*" GoodsReceiptItem
+GoodsReceiptItem "*" -- "1" ProductVariant
+Warehouse "1" -- "*" Inventory
+ProductVariant "1" -- "*" Inventory
+ProductVariant "1" -- "*" SerialNumber
+SerialNumber "1" *-- "1..*" Imei
+
+Customer "1" -- "0..1" Cart
+Cart "1" *-- "*" CartItem
+CartItem "*" -- "1" ProductVariant
+Customer "1" -- "*" Order
+Order "*" -- "1" Warehouse
+Order "1" *-- "1..*" OrderItem
+OrderItem "*" -- "1" ProductVariant
+Order "1" -- "1" Payment
+Payment "1" -- "0..1" InstallmentPayment
+InstallmentPayment "*" -- "1" InstallmentProvider
+Order "1" -- "0..1" Invoice
+Order "1" -- "0..1" Shipment
+
+SerialNumber "1" -- "0..1" Warranty
+OrderItem "1" -- "*" Warranty
+Warranty "1" *-- "*" WarrantyTicket
+Customer "1" -- "*" Review
+Review "*" -- "1" Product
+
+Customer "1" -- "*" ChatSession
+ChatSession "1" *-- "*" ChatMessage
+ChatMessage "1" -- "0..1" MessageFeedback
+KnowledgeDocument "1" *-- "1..*" KnowledgeChunk
+ProductSemanticIndex "0..1" -- "1" Product
+@enduml

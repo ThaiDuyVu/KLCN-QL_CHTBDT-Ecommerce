@@ -1,0 +1,85 @@
+@startuml
+title So do lop thiet ke - Chatbot va hoi thoai
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+class ChatService <<service>> {
+  +send_message(UUID, SendMessageRequest, dict) : ChatResponse
+  +rate_message(UUID, UUID, int) : ChatMessage
+}
+class ConversationService <<service>> {
+  +create_session(UUID) : ChatSession
+  +get_context_messages(UUID, UUID, int) : list
+  +end_session(UUID, UUID) : ChatSession
+}
+class PostgresConversationRepository <<repository>> {
+  +save_assistant(UUID, UUID, str, EvidenceSnapshot)
+  +get_snapshot(UUID, UUID) : EvidenceSnapshot
+  +set_rating(UUID, UUID, UUID, int)
+}
+class ChatSession <<entity>> {
+  -sessionId : UUID {id}
+  -customerId : UUID
+  -employeeId : UUID
+  -startedAt : datetime
+  -endedAt : datetime
+  -status : str
+}
+class ChatMessage <<entity>> {
+  -historyId : UUID {id}
+  -senderType : SenderType
+  -message : str
+  -createdAt : datetime
+}
+class EvidenceSnapshot <<value object>> {
+  -cards : list<ProductCard>
+  -search : ProductSearchPlan
+}
+class MessageFeedback <<entity>> {
+  -feedbackId : UUID {id}
+  -rating : int
+  -feedbackText : str
+}
+class ChatbotQnA <<entity>> {
+  -qnaId : UUID {id}
+  -question : str
+  -answer : str
+  -keywords : str
+}
+class ChatbotScript <<entity>> {
+  -scriptId : UUID {id}
+  -triggerKey : str
+  -responseTemplate : str
+  -priority : int
+}
+enum SenderType {
+  USER
+  ASSISTANT
+  EMPLOYEE
+}
+class Customer <<tham chieu>>
+ChatService ..> ConversationService
+ConversationService ..> PostgresConversationRepository
+PostgresConversationRepository ..> ChatSession
+Customer "1" -- "*" ChatSession
+ChatSession "1" *-- "*" ChatMessage
+ChatMessage "1" o-- "0..1" EvidenceSnapshot
+ChatMessage "1" -- "0..1" MessageFeedback
+ChatMessage ..> SenderType
+ChatbotQnA -[hidden]right- ChatbotScript
+note bottom of ChatbotQnA
+  Bang co san trong CSDL,
+  dung cho quan tri Q&A va kich ban.
+end note
+@enduml

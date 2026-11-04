@@ -1,0 +1,124 @@
+@startuml
+title So do lop muc phan tich - Phan he Chatbot va Hoi thoai
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam class {
+  BackgroundColor<<phan he khac>> #F2F2F2
+  BorderColor<<phan he khac>> #999999
+  FontColor<<phan he khac>> #666666
+}
+hide <<phan he khac>> members
+
+class Chatbot {
+  +traLoi(phien : PhienChat, cauHoi : String) : TinNhan
+  +goiYSanPham(nhuCau : String, nganSach : double) : List<PhienBanSanPham>
+  +soSanhSanPham(sp1 : SanPham, sp2 : SanPham)
+  +traCuuDonHang(khachHang : KhachHang)
+  +traCuuBaoHanh(khachHang : KhachHang)
+  +timTaiLieu(cauHoi : String) : List<DoanTaiLieu>
+}
+
+class PhienChat {
+  -thoiGianBatDau : Date
+  -thoiGianKetThuc : Date
+  -trangThai : String
+  +moPhien()
+  +dongPhien()
+  +layLichSu() : List<TinNhan>
+}
+
+class TinNhan {
+  -nguoiGui : LoaiNguoiGui
+  -noiDung : String
+  -thoiGian : Date
+  +danhGia(diem : int)
+}
+
+class PhanHoiTinNhan {
+  -diem : int
+  -noiDung : String
+  -ngayTao : Date
+}
+
+class CauHoiThuongGap {
+  -cauHoi : String
+  -cauTraLoi : String
+  -chuDe : String
+  -tuKhoa : String
+  -trangThai : String
+}
+
+class KichBanChatbot {
+  -tenKichBan : String
+  -tuKhoaKichHoat : String
+  -mauTraLoi : String
+  -doUuTien : int
+  -trangThai : String
+}
+
+class TaiLieuTriThuc {
+  -tieuDe : String
+  -nguon : String
+  -loaiTaiLieu : String
+  -noiDung : String
+  -trangThai : String
+  +chiaDoan() : List<DoanTaiLieu>
+}
+
+class DoanTaiLieu {
+  -thuTu : int
+  -noiDung : String
+  -vectorNhung : float[]
+}
+
+enum LoaiNguoiGui {
+  KhachHang
+  Chatbot
+  NhanVien
+}
+
+' Lop thuoc phan he khac, chi the hien lien ket
+class KhachHang <<phan he khac>>
+class NhanVien <<phan he khac>>
+class SanPham <<phan he khac>>
+class PhienBanSanPham <<phan he khac>>
+class DonHang <<phan he khac>>
+class BaoHanh <<phan he khac>>
+
+KhachHang "1" -- "*" PhienChat : tro chuyen
+NhanVien "0..1" -- "*" PhienChat : ho tro
+PhienChat "1" *-- "*" TinNhan
+TinNhan "1" -- "0..1" PhanHoiTinNhan
+KhachHang "1" -- "*" PhanHoiTinNhan : danh gia
+TinNhan "*" ..> "*" DoanTaiLieu : tham khao
+TaiLieuTriThuc "1" *-- "1..*" DoanTaiLieu
+TinNhan ..> LoaiNguoiGui
+
+Chatbot ..> PhienChat
+Chatbot ..> TaiLieuTriThuc : tim kiem
+Chatbot ..> CauHoiThuongGap
+Chatbot ..> KichBanChatbot
+Chatbot ..> SanPham : doc
+Chatbot ..> PhienBanSanPham : goi y
+Chatbot ..> DonHang : doc
+Chatbot ..> BaoHanh : doc
+
+note right of Chatbot
+  Chatbot chi doc du lieu, khong dat hang
+  hay thay doi du lieu thay khach.
+  Cau tra loi dua tren du lieu san pham
+  that va tai lieu tri thuc cua cua hang.
+  Khach chi xem duoc don hang, bao hanh
+  cua chinh minh.
+end note
+
+note bottom of DoanTaiLieu
+  Tai lieu duoc chia doan va chuyen
+  thanh vector de tim theo y nghia.
+end note
+
+note left of PhanHoiTinNhan
+  Khach danh gia cau tra loi
+  huu ich hay chua huu ich.
+end note
+@enduml

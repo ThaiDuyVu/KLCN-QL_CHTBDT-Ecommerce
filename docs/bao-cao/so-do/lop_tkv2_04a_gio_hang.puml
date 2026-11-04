@@ -1,0 +1,50 @@
+@startuml
+title So do lop thiet ke - Gio hang
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+class CartService <<service>> {
+  +get(UUID) : CartResponse
+  +selectWarehouse(UUID, SelectCartWarehouseRequest)
+  +add(UUID, CartItemRequest)
+  +quantity(UUID, UUID, UpdateCartQuantityRequest)
+  +remove(UUID, UUID)
+}
+class Cart <<entity>> {
+  -cartId : UUID {id}
+  -customerId : UUID
+  -warehouseId : UUID
+  -status : String
+  -createdAt : OffsetDateTime
+  -updatedAt : OffsetDateTime
+}
+class CartItem <<entity>> {
+  -cartItemId : UUID {id}
+  -quantity : Integer
+  -unitPrice : BigDecimal
+}
+class Customer <<tham chieu>>
+class Warehouse <<tham chieu>>
+class ProductVariant <<tham chieu>>
+CartService ..> Cart
+Cart "0..1" -- "1" Customer
+Cart "*" -- "1" Warehouse : chi nhanh mua
+Cart "1" *-- "*" CartItem
+CartItem "*" -- "1" ProductVariant
+note right of Cart
+  Phai chon chi nhanh truoc khi
+  them san pham; doi chi nhanh
+  thi xoa cac dong da chon.
+end note
+@enduml

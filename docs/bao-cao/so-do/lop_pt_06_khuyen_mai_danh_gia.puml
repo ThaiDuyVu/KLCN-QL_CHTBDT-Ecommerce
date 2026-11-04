@@ -1,0 +1,87 @@
+@startuml
+title So do lop muc phan tich - Phan he Khuyen mai va Danh gia
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam class {
+  BackgroundColor<<phan he khac>> #F2F2F2
+  BorderColor<<phan he khac>> #999999
+  FontColor<<phan he khac>> #666666
+}
+hide <<phan he khac>> members
+
+class KhuyenMai {
+  -tenChuongTrinh : String
+  -moTa : String
+  -loaiGiam : LoaiGiamGia
+  -giaTriGiam : double
+  -ngayBatDau : Date
+  -ngayKetThuc : Date
+  -trangThai : TrangThaiKhuyenMai
+  +taoChuongTrinh()
+  +themSanPham(sanPham : SanPham)
+  +goSanPham(sanPham : SanPham)
+  +conHieuLuc(ngay : Date) : boolean
+  +tinhSoTienGiam(gia : double) : double
+  +tamDung()
+}
+
+class DanhGia {
+  -soSao : int
+  -noiDung : String
+  -phanHoi : String
+  -ngayDanhGia : Date
+  -ngayPhanHoi : Date
+  -trangThai : TrangThaiDanhGia
+  +vietDanhGia(soSao : int, noiDung : String)
+  +traLoi(noiDung : String)
+  +an()
+}
+
+enum LoaiGiamGia {
+  PhanTram
+  SoTien
+}
+
+enum TrangThaiKhuyenMai {
+  DangApDung
+  TamDung
+}
+
+enum TrangThaiDanhGia {
+  HienThi
+  An
+}
+
+' Lop thuoc phan he khac, chi the hien lien ket
+class SanPham <<phan he khac>>
+class PhienBanSanPham <<phan he khac>>
+class KhachHang <<phan he khac>>
+class NhanVien <<phan he khac>>
+class ChiTietDonHang <<phan he khac>>
+
+KhuyenMai "*" -- "*" SanPham : ap dung cho
+SanPham "1" *-- "1..*" PhienBanSanPham
+PhienBanSanPham ..> KhuyenMai : tinh gia sau giam
+
+KhachHang "1" -- "*" DanhGia : viet
+DanhGia "*" -- "1" SanPham : ve
+ChiTietDonHang "1" -- "0..1" DanhGia : sau khi mua
+NhanVien "0..1" -- "*" DanhGia : phan hoi
+
+KhuyenMai ..> LoaiGiamGia
+KhuyenMai ..> TrangThaiKhuyenMai
+DanhGia ..> TrangThaiDanhGia
+
+note right of KhuyenMai
+  Giam theo phan tram hoac so tien,
+  trong khoang ngayBatDau..ngayKetThuc.
+  ngayKetThuc >= ngayBatDau, giaTriGiam >= 0.
+  Gia sau giam khong nho hon 0.
+end note
+
+note bottom of DanhGia
+  Khach chi danh gia san pham da mua
+  (gan voi mot dong don hang).
+  soSao tu 1 den 5.
+end note
+@enduml

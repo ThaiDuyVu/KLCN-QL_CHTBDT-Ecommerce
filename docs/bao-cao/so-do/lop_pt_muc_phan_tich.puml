@@ -1,0 +1,260 @@
+@startuml
+title So do lop muc phan tich - He thong quan ly cua hang mua ban thiet bi dien tu
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+package "Nguoi dung" {
+  class NguoiDung {
+    tenDangNhap
+    matKhau
+    email
+    soDienThoai
+    trangThai
+    +dangNhap()
+    +dangXuat()
+    +doiMatKhau()
+  }
+  class VaiTro {
+    tenVaiTro
+    moTa
+  }
+  class Quyen {
+    tenQuyen
+  }
+  class NhanVien {
+    maNhanVien
+    hoTen
+    chucVu
+  }
+  class KhachHang {
+    hoTen
+    diaChi
+    diemTichLuy
+    +capNhatThongTin()
+  }
+}
+
+package "San pham" {
+  class DanhMuc {
+    tenDanhMuc
+    moTa
+  }
+  class ThuongHieu {
+    tenThuongHieu
+  }
+  class SanPham {
+    tenSanPham
+    moTa
+    thoiGianBaoHanh
+    trangThai
+  }
+  class PhienBan as "PhienBanSanPham" {
+    maSKU
+    mauSac
+    ram
+    boNho
+    giaBan
+    giaNhap
+  }
+  class ThongSo as "ThongSoKyThuat" {
+    tenThongSo
+    giaTri
+  }
+  class HinhAnh {
+    duongDan
+    laAnhChinh
+  }
+  class KhuyenMai {
+    tenChuongTrinh
+    loaiGiam
+    giaTriGiam
+    ngayBatDau
+    ngayKetThuc
+    +apDung()
+  }
+}
+
+package "Kho hang" {
+  class NhaCungCap {
+    maNCC
+    tenNCC
+    soDienThoai
+    email
+    diaChi
+  }
+  class Kho {
+    tenKho
+    diaChi
+  }
+  class TonKho {
+    soLuong
+    soLuongDaGiu
+  }
+  class PhieuNhap as "PhieuNhapKho" {
+    maPhieu
+    ngayNhap
+    tongTien
+    trangThai
+    +lapPhieu()
+    +duyetPhieu()
+  }
+  class ChiTietPhieuNhap {
+    soLuong
+    donGiaNhap
+  }
+  class ThietBi {
+    soSerial
+    imei
+    trangThai
+  }
+}
+
+package "Ban hang" {
+  class GioHang {
+    ngayTao
+    +themSanPham()
+    +xoaSanPham()
+  }
+  class ChiTietGioHang {
+    soLuong
+  }
+  class DonHang {
+    maDonHang
+    ngayDat
+    nguoiNhan
+    diaChiGiao
+    tongTien
+    trangThai
+    +datHang()
+    +huyDon()
+    +capNhatTrangThai()
+  }
+  class ChiTietDonHang {
+    soLuong
+    donGia
+    giamGia
+  }
+  class ThanhToan {
+    phuongThuc
+    soTien
+    ngayThanhToan
+    trangThai
+  }
+  class ThanhToanTraGop {
+    soTienTraTruoc
+    kyHan
+    trangThaiDuyet
+  }
+  class DonViTraGop {
+    tenDonVi
+  }
+  class HoaDon {
+    soHoaDon
+    ngayLap
+    tongTien
+  }
+  class GiaoHang {
+    maVanDon
+    donViVanChuyen
+    ngayGiao
+    trangThai
+  }
+}
+
+package "Hau mai" {
+  class BaoHanh {
+    ngayBatDau
+    ngayKetThuc
+    trangThai
+    +kiemTraHieuLuc()
+  }
+  class PhieuBaoHanh {
+    maPhieu
+    moTaLoi
+    ketQuaXuLy
+    trangThai
+  }
+  class DanhGia {
+    soSao
+    noiDung
+    phanHoi
+  }
+}
+
+package "Chatbot tu van" {
+  class PhienChat {
+    thoiGianBatDau
+    thoiGianKetThuc
+  }
+  class TinNhan {
+    nguoiGui
+    noiDung
+    thoiGian
+  }
+  class TaiLieu as "TaiLieuTriThuc" {
+    tieuDe
+    nguon
+  }
+  class DoanTaiLieu {
+    noiDung
+  }
+}
+
+' ---------- Nguoi dung
+NhanVien --|> NguoiDung
+KhachHang --|> NguoiDung
+NguoiDung "*" --> "1" VaiTro : thuoc
+VaiTro "*" -- "*" Quyen : gom
+
+' ---------- San pham
+DanhMuc "0..1" -- "*" DanhMuc : danh muc cha
+DanhMuc "1" -- "*" SanPham
+ThuongHieu "1" -- "*" SanPham
+SanPham "1" *-- "1..*" PhienBan
+SanPham "1" *-- "*" ThongSo
+SanPham "1" *-- "*" HinhAnh
+KhuyenMai "*" -- "*" SanPham : ap dung cho
+
+' ---------- Kho hang
+NhaCungCap "1" -- "*" PhieuNhap : cung cap
+NhanVien "1" -- "*" PhieuNhap : lap
+Kho "1" -- "*" PhieuNhap : nhap vao
+PhieuNhap "1" *-- "1..*" ChiTietPhieuNhap
+ChiTietPhieuNhap "*" -- "1" PhienBan
+ChiTietPhieuNhap "1" -- "*" ThietBi : ghi nhan
+Kho "1" -- "*" TonKho
+PhienBan "1" -- "*" TonKho
+PhienBan "1" -- "*" ThietBi
+
+' ---------- Ban hang
+KhachHang "1" -- "0..1" GioHang
+GioHang "1" *-- "*" ChiTietGioHang
+ChiTietGioHang "*" -- "1" PhienBan
+KhachHang "1" -- "*" DonHang : dat
+NhanVien "0..1" -- "*" DonHang : xu ly
+DonHang "*" -- "1" Kho : xuat tu
+DonHang "1" *-- "1..*" ChiTietDonHang
+ChiTietDonHang "*" -- "1" PhienBan
+ChiTietDonHang "0..1" -- "0..1" ThietBi : giao thiet bi
+DonHang "1" -- "1..*" ThanhToan
+ThanhToanTraGop --|> ThanhToan
+ThanhToanTraGop "*" -- "1" DonViTraGop
+DonHang "1" -- "0..1" HoaDon
+DonHang "1" -- "0..1" GiaoHang
+NhanVien "1" -- "*" GiaoHang : giao
+
+' ---------- Hau mai
+ThietBi "1" -- "0..1" BaoHanh
+KhachHang "1" -- "*" BaoHanh
+BaoHanh "1" -- "*" PhieuBaoHanh
+NhanVien "0..1" -- "*" PhieuBaoHanh : tiep nhan
+KhachHang "1" -- "*" DanhGia : viet
+DanhGia "*" -- "1" SanPham
+
+' ---------- Chatbot
+KhachHang "1" -- "*" PhienChat
+PhienChat "1" *-- "*" TinNhan
+TaiLieu "1" *-- "1..*" DoanTaiLieu
+TinNhan "*" ..> "*" DoanTaiLieu : tham khao
+@enduml

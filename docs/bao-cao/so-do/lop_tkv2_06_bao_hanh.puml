@@ -1,0 +1,74 @@
+@startuml
+title So do lop thiet ke - Bao hanh
+skinparam dpi 200
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam nodesep 18
+skinparam ranksep 40
+skinparam class {
+  BackgroundColor<<tham chieu>> #EEEEEE
+  BorderColor<<tham chieu>> #999999
+  BackgroundColor<<he thong ngoai>> #E8F5E9
+}
+hide <<tham chieu>> members
+hide empty members
+hide circle
+class WarrantyService <<service>> {
+  +myWarranties(UUID) : List<WarrantyResponse>
+  +lookup(String) : WarrantyResponse
+  +createTicket(UUID, UUID, CreateTicketRequest)
+  +updateTicket(UUID, UpdateTicketRequest)
+}
+class WarrantyProvisioningService <<service>> {
+  +createForDeliveredOrder(Order, List<OrderItem>)
+}
+class Warranty <<entity>> {
+  -warrantyId : UUID {id}
+  -serialId : UUID
+  -orderItemId : UUID
+  -customerId : UUID
+  -startDate : LocalDate
+  -endDate : LocalDate
+  -status : WarrantyStatus
+}
+class WarrantyTicket <<entity>> {
+  -ticketId : UUID {id}
+  -ticketCode : String
+  -issueDescription : String
+  -resolutionNote : String
+  -createdAt : OffsetDateTime
+  -resolvedAt : OffsetDateTime
+  -status : WarrantyTicketStatus
+}
+enum WarrantyStatus {
+  ACTIVE
+  EXPIRED
+}
+enum WarrantyTicketStatus {
+  RECEIVED
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+}
+class SerialNumber <<tham chieu>>
+class OrderItem <<tham chieu>>
+class Customer <<tham chieu>>
+class Employee <<tham chieu>>
+WarrantyService ..> Warranty
+WarrantyService ..> WarrantyTicket
+WarrantyProvisioningService ..> Warranty : tao khi DELIVERED
+Warranty "0..1" -- "1" SerialNumber
+Warranty "*" -- "1" OrderItem
+Warranty "*" -- "1" Customer
+Warranty "1" *-- "*" WarrantyTicket
+WarrantyTicket "*" -- "1" Customer
+WarrantyTicket "*" -- "0..1" Employee
+Warranty ..> WarrantyStatus
+WarrantyTicket -[hidden]down- WarrantyTicketStatus
+WarrantyTicket ..> WarrantyTicketStatus
+note bottom of Warranty
+  endDate = startDate + warrantyMonths
+  cua ProductVariant.
+end note
+@enduml
