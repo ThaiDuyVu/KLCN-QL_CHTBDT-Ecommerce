@@ -56,6 +56,50 @@ class OrderItem {
   }
 }
 
+/// Delivery leg of an order (backend `shipment`): carrier, delivery employee and timestamps.
+class OrderShipment {
+  final String status;
+  final String? employeeName;
+  final String? employeePhone;
+  final String shippingProvider;
+  final String trackingNumber;
+  final String? shippedDate;
+  final String? deliveredDate;
+
+  const OrderShipment({
+    required this.status,
+    this.employeeName,
+    this.employeePhone,
+    required this.shippingProvider,
+    required this.trackingNumber,
+    this.shippedDate,
+    this.deliveredDate,
+  });
+
+  static String statusLabel(String value) {
+    switch (value.toUpperCase()) {
+      case 'SHIPPING':
+        return 'Đang giao';
+      case 'DELIVERED':
+        return 'Đã giao';
+      case 'FAILED':
+        return 'Giao không thành công';
+      default:
+        return value;
+    }
+  }
+
+  factory OrderShipment.fromJson(Map<String, dynamic> json) => OrderShipment(
+        status: (json['status'] ?? 'SHIPPING').toString().toUpperCase(),
+        employeeName: json['employeeName']?.toString(),
+        employeePhone: json['employeePhone']?.toString(),
+        shippingProvider: (json['shippingProvider'] ?? '').toString(),
+        trackingNumber: (json['trackingNumber'] ?? '').toString(),
+        shippedDate: json['shippedDate']?.toString(),
+        deliveredDate: json['deliveredDate']?.toString(),
+      );
+}
+
 class Order {
   final String id;
   final String orderCode;
@@ -75,6 +119,10 @@ class Order {
   final List<OrderItem> items;
   final List<String> allowedStatuses;
   final bool canCancel;
+  final OrderShipment? shipment;
+  /// Sales invoice number, issued when the order is delivered.
+  final String? invoiceNumber;
+  final String? invoiceStatus;
 
   Order({
     required this.id,
@@ -95,6 +143,9 @@ class Order {
     required this.items,
     this.allowedStatuses = const [],
     this.canCancel = false,
+    this.shipment,
+    this.invoiceNumber,
+    this.invoiceStatus,
   }) : subtotal = subtotal ?? totalAmount;
 
   static String statusLabel(String value) {
@@ -158,6 +209,11 @@ class Order {
           .toList(),
       allowedStatuses: allowedStatuses,
       canCancel: allowedStatuses.contains('CANCELLED'),
+      shipment: json['shipment'] is Map
+          ? OrderShipment.fromJson(Map<String, dynamic>.from(json['shipment'] as Map))
+          : null,
+      invoiceNumber: json['invoice'] is Map ? (json['invoice'] as Map)['invoiceNumber']?.toString() : null,
+      invoiceStatus: json['invoice'] is Map ? (json['invoice'] as Map)['status']?.toString() : null,
     );
   }
 }

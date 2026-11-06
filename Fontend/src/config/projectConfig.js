@@ -18,6 +18,10 @@ export const CUSTOMER_ROLES = [...GENERAL_STAFF, ROLES.SALES_STAFF, ROLES.WARRAN
 export const INVENTORY_ROLES = [...GENERAL_STAFF, ROLES.WAREHOUSE_KEEPER, ROLES.SALES_STAFF];
 export const GOODS_RECEIPT_ROLES = [...GENERAL_STAFF, ROLES.WAREHOUSE_KEEPER];
 export const SERIAL_ROLES = [...GENERAL_STAFF, ROLES.WAREHOUSE_KEEPER, ROLES.SALES_STAFF, ROLES.WARRANTY_TECHNICIAN];
+/** Mirrors ReturnController: sales approve, warehouse receives, management refunds. */
+export const RETURN_ROLES = [...GENERAL_STAFF, ROLES.SALES_STAFF, ROLES.WAREHOUSE_KEEPER];
+/** Mirrors InvoiceController and the staff side of ReviewController. */
+export const INVOICE_ROLES = [...GENERAL_STAFF, ROLES.SALES_STAFF];
 export const WARRANTY_ROLES = [...GENERAL_STAFF, ROLES.WARRANTY_TECHNICIAN];
 
 export const ROLE_LABELS = Object.freeze({

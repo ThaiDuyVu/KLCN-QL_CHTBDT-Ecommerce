@@ -4,6 +4,8 @@ import PageHeader from '../../../components/ui/PageHeader';
 import StatusBadge from '../../../components/ui/StatusBadge';
 import { inventoryApi } from '../api/inventoryApi';
 import '../inventory.css';
+import { PrintButton } from '../../../components/print/PrintForm';
+import { GoodsReceiptForm } from '../../forms/BusinessForms';
 
 export default function GoodsReceiptDetailPage() {
   const { receiptId } = useParams();
@@ -86,6 +88,7 @@ export default function GoodsReceiptDetailPage() {
       />
       <div className="inventory-actions">
         <Link className="button button-quiet" to="/goods-receipts">Danh sách</Link>
+        <PrintButton label="In phiếu nhập"><GoodsReceiptForm receipt={data} supplierName={refs.supplier} warehouseName={refs.warehouse} /></PrintButton>
         {data.status === 'DRAFT' && (
           <>
             <Link className="button button-quiet" to={`/goods-receipts/${receiptId}/edit`}>Sửa</Link>

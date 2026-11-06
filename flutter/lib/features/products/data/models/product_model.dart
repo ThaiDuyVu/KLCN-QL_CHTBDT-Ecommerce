@@ -3,6 +3,8 @@ class Product {
   final double? price, originalPrice;
   final int availableQuantity;
   final String? imageUrl, description;
+  /// Name of the promotion currently lowering the price (backend `promotion.promotionName`).
+  final String? promotionName;
   Product({
     required this.id,
     required this.name,
@@ -14,7 +16,11 @@ class Product {
     this.category = '',
     this.status = 'ACTIVE',
     this.originalPrice,
+    this.promotionName,
   });
+
+  bool get onSale => price != null && originalPrice != null && originalPrice! > price!;
+  int get discountPercent => onSale ? (((originalPrice! - price!) / originalPrice!) * 100).round() : 0;
 
   String? get primaryImageUrl => imageUrl;
   String get productName => name;
@@ -33,5 +39,6 @@ class Product {
     brand: (json['brandName'] ?? '').toString(),
     category: (json['categoryName'] ?? '').toString(),
     status: (json['status'] ?? '').toString(),
+    promotionName: json['promotion'] is Map ? (json['promotion'] as Map)['promotionName']?.toString() : null,
   );
 }

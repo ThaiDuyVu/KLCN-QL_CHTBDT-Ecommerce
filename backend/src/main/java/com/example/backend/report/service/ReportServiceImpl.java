@@ -72,6 +72,9 @@ public class ReportServiceImpl implements ReportService {
         limit(limit, 20);
         return repository.topProducts(validate(filter), limit);
     }
+    @Override public List<CategoryReportRow> categories(ReportFilter filter) {
+        return repository.categories(validate(filter));
+    }
     @Override public List<WarehouseReportRow> warehouses(ReportFilter filter) {
         return repository.warehouses(validate(filter));
     }

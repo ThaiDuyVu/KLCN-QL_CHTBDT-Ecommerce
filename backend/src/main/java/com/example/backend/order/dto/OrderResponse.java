@@ -25,8 +25,14 @@ public class OrderResponse {
     private List<OrderItemResponse> items;
     private PaymentResponse payment;
     private InstallmentResponse installment;
+    private ShipmentResponse shipment;
+    private com.example.backend.invoice.dto.InvoiceSummary invoice;
     private List<com.example.backend.order.entity.OrderStatus> allowedStatuses;
     public OrderResponse() {}
+    public com.example.backend.invoice.dto.InvoiceSummary getInvoice() { return invoice; }
+    public void setInvoice(com.example.backend.invoice.dto.InvoiceSummary value) { this.invoice = value; }
+    public ShipmentResponse getShipment() { return shipment; }
+    public void setShipment(ShipmentResponse value) { this.shipment = value; }
     public UUID getOrderId() { return orderId; }
     public void setOrderId(UUID value) { this.orderId = value; }
     public UUID getCustomerId() { return customerId; }

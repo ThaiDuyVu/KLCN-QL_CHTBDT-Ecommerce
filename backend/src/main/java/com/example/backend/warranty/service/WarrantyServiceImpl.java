@@ -92,17 +92,31 @@ public class WarrantyServiceImpl implements WarrantyService {
         UUID customerId = customerId(userId);
         Warranty warranty = warranties.findByWarrantyIdAndCustomerId(warrantyId, customerId)
                 .orElseThrow(() -> notFound());
+        return mapTickets(List.of(openTicket(warranty, request, null)), false).get(0);
+    }
+
+    /** A technician receives the device at the counter; the ticket is assigned to that employee from the start. */
+    @Override
+    @Transactional
+    public WarrantyTicketResponse staffCreateTicket(UUID userId, UUID warrantyId, CreateWarrantyTicketRequest request) {
+        Employee employee = employees.findByUser_UserId(userId)
+                .orElseThrow(() -> new WarrantyException(403, "Tài khoản chưa có hồ sơ nhân viên"));
+        Warranty warranty = warranties.findById(warrantyId).orElseThrow(() -> notFound());
+        return mapTickets(List.of(openTicket(warranty, request, employee.getEmployeeId())), true).get(0);
+    }
+
+    private WarrantyTicket openTicket(Warranty warranty, CreateWarrantyTicketRequest request, UUID employeeId) {
         ensureEligible(warranty);
         WarrantyTicket ticket = new WarrantyTicket();
         ticket.setTicketCode("WT-" + UUID.randomUUID().toString().toUpperCase(Locale.ROOT));
         ticket.setWarrantyId(warranty.getWarrantyId());
         ticket.setSerialId(warranty.getSerialId());
         ticket.setCustomerId(warranty.getCustomerId());
+        ticket.setEmployeeId(employeeId);
         ticket.setIssueDescription(request.issueDescription().trim());
         ticket.setCreatedAt(OffsetDateTime.now());
         ticket.setStatus(WarrantyTicketStatus.RECEIVED);
-        tickets.saveAndFlush(ticket);
-        return mapTickets(List.of(ticket), false).get(0);
+        return tickets.saveAndFlush(ticket);
     }
 
     @Override

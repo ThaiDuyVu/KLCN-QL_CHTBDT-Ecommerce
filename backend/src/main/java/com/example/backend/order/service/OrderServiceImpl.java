@@ -45,12 +45,17 @@ public class OrderServiceImpl implements OrderService {
     private final VnpayService vnpay;
     private final com.example.backend.promotion.service.PromotionService promotions;
     private final CustomerAddressService customerAddresses;
+    private final ShipmentService shipments;
+    private final com.example.backend.invoice.service.InvoiceService invoices;
     public OrderServiceImpl(CustomerCartRepository customers, CartRepository carts, CartItemRepository cartItems, OrderRepository orders,
                             OrderItemRepository items, PaymentRepository payments, ProductVariantRepository variants,
                             OrderStockService stock, SerialAllocationService serialAllocation,
                             SerialNumberRepository serials, WarehouseRepository warehouses,
                             WarrantyProvisioningService warrantyProvisioning, InstallmentService installmentService, VnpayService vnpay, com.example.backend.promotion.service.PromotionService promotions,
-                            CustomerAddressService customerAddresses) {
+                            CustomerAddressService customerAddresses, ShipmentService shipments,
+                            com.example.backend.invoice.service.InvoiceService invoices) {
+        this.shipments = shipments;
+        this.invoices = invoices;
         this.promotions=promotions;
         this.customerAddresses = customerAddresses;
         this.customers = customers; this.carts = carts; this.cartItems = cartItems; this.orders = orders;
@@ -132,7 +137,7 @@ public class OrderServiceImpl implements OrderService {
         payments.saveAndFlush(payment);
         if (provider != null) installmentService.createForPayment(payment, provider, request);
         cartItems.deleteAll(links); cartItems.flush(); cart.setUpdatedAt(OffsetDateTime.now()); carts.save(cart);
-        var response = full(order, true, snapshots, List.of(payment), OrderStaffPolicy.ANY);
+        var response = full(order, true, snapshots, List.of(payment), StaffScope.ANY);
         if (payment.getPaymentMethod() == PaymentMethod.VNPAY) {
             var link = vnpay.paymentUrl(order, payment, clientIp);
             response.getPayment().setPaymentUrl(link.getPaymentUrl());
@@ -157,31 +162,91 @@ public class OrderServiceImpl implements OrderService {
         if (customer && !order.getCustomerId().equals(customerId(userId))) throw new CommerceException(404, "Không tìm thấy đơn hàng");
     }
     public OrderResponse detail(UUID userId, boolean customer, UUID id) {
-        return detail(userId, customer, id, OrderStaffPolicy.ANY);
+        return detail(userId, customer, id, StaffScope.ANY);
     }
     public OrderResponse staffDetail(UUID id, Collection<String> authorities) {
-        return detail(null, false, id, OrderStaffPolicy.permitted(authorities));
+        return detail(null, false, id, OrderStaffPolicy.scope(authorities));
     }
-    private OrderResponse detail(UUID userId, boolean customer, UUID id, Predicate<OrderStatus> permitted) {
+    private OrderResponse detail(UUID userId, boolean customer, UUID id, StaffScope scope) {
         var order = orders.findById(id).orElseThrow(() -> new CommerceException(404, "Không tìm thấy đơn hàng"));
         owned(order, userId, customer);
-        return full(order, customer, items.findByOrderIdOrderByVariantIdAscOrderItemIdAsc(id), payments.findByOrderId(id), permitted);
+        return full(order, customer, items.findByOrderIdOrderByVariantIdAscOrderItemIdAsc(id), payments.findByOrderId(id), scope);
     }
     @Transactional
     public OrderResponse status(UUID userId, boolean customer, UUID id, OrderStatus status) {
-        return status(userId, customer, id, status, OrderStaffPolicy.ANY);
+        return status(userId, customer, id, request(status, null), StaffScope.ANY);
+    }
+    @Transactional
+    public OrderResponse status(UUID userId, UUID id, UpdateOrderStatusRequest request) {
+        return status(userId, false, id, request, StaffScope.ANY);
     }
     @Transactional
     public OrderResponse staffStatus(UUID userId, UUID id, OrderStatus status, Collection<String> authorities) {
-        return status(userId, false, id, status, OrderStaffPolicy.permitted(authorities));
+        return staffStatus(userId, id, request(status, null), authorities);
     }
-    private OrderResponse status(UUID userId, boolean customer, UUID id, OrderStatus status, Predicate<OrderStatus> permitted) {
-        if (!permitted.test(status)) throw new CommerceException(403, "Chức danh của bạn không được chuyển đơn sang trạng thái " + status);
+    @Transactional
+    public OrderResponse staffStatus(UUID userId, UUID id, OrderStatus status, String reason, Collection<String> authorities) {
+        return staffStatus(userId, id, request(status, reason), authorities);
+    }
+    @Transactional
+    public OrderResponse staffStatus(UUID userId, UUID id, UpdateOrderStatusRequest request, Collection<String> authorities) {
+        return status(userId, false, id, request, OrderStaffPolicy.scope(authorities));
+    }
+    private static UpdateOrderStatusRequest request(OrderStatus status, String reason) {
+        var request = new UpdateOrderStatusRequest(); request.setStatus(status); request.setReason(reason); return request;
+    }
+    public OrderPageResponse deliveries(UUID userId, int page, int size) {
+        if (page < 0 || size < 1 || size > 100 || (long) page * size > Integer.MAX_VALUE) throw new CommerceException(400, "page >= 0, size từ 1–100, offset trong giới hạn");
+        var assigned = shipments.assignedTo(userId, PageRequest.of(page, size,
+                Sort.by(Sort.Order.desc("shippedDate"), Sort.Order.desc("shipmentId"))));
+        List<UUID> orderIds = assigned.getContent().stream().map(com.example.backend.order.entity.Shipment::getOrderId).toList();
+        Map<UUID, Order> byId = orders.findAllById(orderIds).stream().collect(Collectors.toMap(Order::getOrderId, o -> o));
+        List<Order> ordered = orderIds.stream().map(byId::get).filter(Objects::nonNull).toList();
+        Map<UUID, String> warehouseNames = warehouseNames(ordered);
+        Map<UUID, ShipmentResponse> shipmentByOrder = shipments.forOrders(orderIds);
+        var response = new OrderPageResponse(); response.setContent(ordered.stream().map(order -> {
+            var row = summary(order, warehouseNames); row.setShipment(shipmentByOrder.get(order.getOrderId())); return row;
+        }).toList());
+        response.setPage(assigned.getNumber()); response.setSize(assigned.getSize()); response.setTotalElements(assigned.getTotalElements()); response.setTotalPages(assigned.getTotalPages());
+        return response;
+    }
+    public List<DeliveryStaffResponse> deliveryStaff() { return shipments.deliveryStaff(); }
+    public List<UUID> unpaidVnpayOrdersBefore(OffsetDateTime cutoff) {
+        return payments.findUnpaidVnpayOrderIdsBefore(cutoff, PageRequest.of(0, 200));
+    }
+    @Transactional
+    public boolean expireUnpaidVnpay(UUID id, OffsetDateTime cutoff) {
+        var order = orders.lockById(id).orElse(null);
+        if (order == null || order.getStatus() != OrderStatus.PENDING) return false;
+        var paymentRows = payments.lockByOrderId(id);
+        // Re-check under lock: an IPN may have arrived after the candidate query.
+        if (paymentRows.size() != 1) return false;
+        var payment = paymentRows.get(0);
+        if (payment.getPaymentMethod() != PaymentMethod.VNPAY || payment.getStatus() != PaymentStatus.PENDING
+                || payment.getTransactionCode() != null || !payment.getPaymentDate().isBefore(cutoff)) return false;
+        stock.apply(order.getWarehouseId(), quantities(items.findByOrderIdOrderByVariantIdAscOrderItemIdAsc(id)), OrderStockService.Action.RELEASE);
+        payment.setStatus(PaymentStatus.FAILED); payments.saveAndFlush(payment);
+        appendCancelReason(order, "Hệ thống tự hủy: quá hạn thanh toán VNPAY");
+        order.setStatus(OrderStatus.CANCELLED); orders.saveAndFlush(order);
+        return true;
+    }
+    private OrderResponse status(UUID userId, boolean customer, UUID id, UpdateOrderStatusRequest request, StaffScope scope) {
+        OrderStatus status = request.getStatus();
+        String reason = request.getReason();
+        if (!scope.targets().test(status)) throw new CommerceException(403, "Chức danh của bạn không được chuyển đơn sang trạng thái " + status);
         var order = orders.lockById(id).orElseThrow(() -> new CommerceException(404, "Không tìm thấy đơn hàng"));
         owned(order, userId, customer);
+        OrderStatus from = order.getStatus();
+        if (!scope.permits(from, status)) throw new CommerceException(403, "Chức danh của bạn không được chuyển đơn từ " + from + " sang " + status);
         var paymentRows = payments.lockByOrderId(id);
         boolean paid = paymentRows.stream().anyMatch(p -> p.getStatus() == PaymentStatus.PAID);
-        OrderTransitions.require(order.getStatus(), status, customer, paid);
+        OrderTransitions.require(from, status, customer, paid, scope.canRefund());
+        boolean deliveryFailed = status == OrderStatus.CANCELLED && from == OrderStatus.SHIPPED;
+        String cancelReason = reason == null || reason.isBlank() ? null : reason.strip();
+        if (status == OrderStatus.CANCELLED && paid && cancelReason == null) {
+            throw new CommerceException(400, "Vui lòng nhập lý do hủy đơn đã thanh toán");
+        }
+        if (deliveryFailed && cancelReason == null) throw new CommerceException(400, "Vui lòng nhập lý do giao hàng không thành công");
         if (status == OrderStatus.CANCELLED && paymentRows.stream().anyMatch(p -> p.getPaymentMethod() == PaymentMethod.VNPAY
                 && p.getStatus() == PaymentStatus.PENDING && p.getTransactionCode() != null)) {
             throw new CommerceException(409, "VNPAY báo giao dịch đã trừ tiền và cần đối soát trước khi hủy đơn");
@@ -195,22 +260,57 @@ public class OrderServiceImpl implements OrderService {
             installmentService.requireApproved(paymentRows.get(0));
         }
         var snapshots = items.findByOrderIdOrderByVariantIdAscOrderItemIdAsc(id);
+        Map<UUID, Integer> quantities = quantities(snapshots);
+        if (status == OrderStatus.CANCELLED) {
+            stock.apply(order.getWarehouseId(), quantities, OrderStockService.Action.RELEASE);
+            if (deliveryFailed) {
+                shipments.failed(order, userId, scope.deliveryOnly());
+                // The goods come back to the branch: devices return to sale and leave the cancelled order lines,
+                // otherwise uq_order_items_serial_id would block selling them again.
+                List<UUID> serialIds = snapshots.stream().map(OrderItem::getSerialId).filter(Objects::nonNull).toList();
+                serialAllocation.releaseReserved(serialIds);
+                snapshots.forEach(item -> item.setSerialId(null));
+                items.saveAllAndFlush(snapshots);
+            }
+            if (paid) {
+                // Money goes back to the customer outside the system (bank/VNPAY portal); record it here.
+                for (var payment : paymentRows) if (payment.getStatus() == PaymentStatus.PAID) payment.setStatus(PaymentStatus.REFUNDED);
+                payments.saveAllAndFlush(paymentRows);
+            }
+            if (cancelReason != null) appendCancelReason(order, (deliveryFailed ? "Giao không thành công: " : "")
+                    + (paid ? "Hủy và hoàn tiền: " : deliveryFailed ? "" : "Lý do hủy: ") + cancelReason);
+        }
+        if (status == OrderStatus.PROCESSING) allocateSerials(order, snapshots);
+        if (status == OrderStatus.SHIPPED) shipments.dispatch(order, userId, request);
+        if (status == OrderStatus.DELIVERED) {
+            shipments.delivered(order, userId, scope.deliveryOnly());
+            List<UUID> serialIds = serialIdsForDelivery(snapshots);
+            stock.apply(order.getWarehouseId(), quantities, OrderStockService.Action.DELIVER);
+            serialAllocation.markSold(serialIds);
+            warrantyProvisioning.createForDeliveredOrder(order, snapshots);
+            settleOnDelivery(paymentRows);
+            order.setStatus(status);
+            invoices.issueFor(order);
+        }
+        order.setStatus(status); orders.saveAndFlush(order);
+        return full(order, customer, snapshots, paymentRows, scope);
+    }
+    private static Map<UUID, Integer> quantities(List<OrderItem> snapshots) {
         Map<UUID, Integer> quantities = new HashMap<>();
         for (var item : snapshots) quantities.merge(item.getVariantId(), item.getQuantity(), (a, b) -> {
             long sum = (long) a + b;
             if (sum > Integer.MAX_VALUE) throw new CommerceException(409, "Số lượng đơn vượt giới hạn");
             return (int) sum;
         });
-        if (status == OrderStatus.CANCELLED) stock.apply(order.getWarehouseId(), quantities, OrderStockService.Action.RELEASE);
-        if (status == OrderStatus.PROCESSING) allocateSerials(order, snapshots);
-        if (status == OrderStatus.DELIVERED) {
-            List<UUID> serialIds = serialIdsForDelivery(snapshots);
-            stock.apply(order.getWarehouseId(), quantities, OrderStockService.Action.DELIVER);
-            serialAllocation.markSold(serialIds);
-            warrantyProvisioning.createForDeliveredOrder(order, snapshots);
-        }
-        order.setStatus(status); orders.saveAndFlush(order);
-        return full(order, customer, snapshots, paymentRows, permitted);
+        return quantities;
+    }
+    /**
+     * The schema has no cancel_reason column yet (planned in V11), so the reason is appended to the order note
+     * on its own line, keeping the customer's original note intact above it.
+     */
+    private static void appendCancelReason(Order order, String reason) {
+        String line = "[" + reason + "]";
+        order.setNote(order.getNote() == null || order.getNote().isBlank() ? line : order.getNote() + "\n" + line);
     }
     private Map<UUID, ProductVariant> variantMap(List<UUID> ids) {
         return variants.findByVariantIdIn(ids).stream().collect(Collectors.toMap(ProductVariant::getVariantId, v -> v));
@@ -225,7 +325,7 @@ public class OrderServiceImpl implements OrderService {
         r.setSubtotal(o.getSubtotal()); r.setDiscountAmount(o.getDiscountAmount()); r.setShippingFee(o.getShippingFee()); r.setTotalAmount(o.getTotalAmount()); r.setStatus(o.getStatus()); return r;
     }
     private OrderResponse full(Order order, boolean customer, List<OrderItem> snapshots, List<Payment> paymentRows,
-                               Predicate<OrderStatus> permitted) {
+                               StaffScope scope) {
         var r = summary(order); var products = variantMap(snapshots.stream().map(OrderItem::getVariantId).distinct().toList());
         List<UUID> serialIds = snapshots.stream().map(OrderItem::getSerialId).filter(Objects::nonNull).toList();
         Map<UUID, SerialNumber> serialMap = serialIds.isEmpty() ? Map.of()
@@ -254,7 +354,7 @@ public class OrderServiceImpl implements OrderService {
         if (p.getPaymentMethod() == PaymentMethod.INSTALLMENT) {
             r.setInstallment(installmentService.forPayment(p, order, true));
         }
-        var allowed = OrderTransitions.allowed(order.getStatus(), customer, p.getStatus() == PaymentStatus.PAID);
+        var allowed = OrderTransitions.allowed(order.getStatus(), customer, p.getStatus() == PaymentStatus.PAID, scope.canRefund());
         if (p.getPaymentMethod() == PaymentMethod.INSTALLMENT && r.getInstallment().status() != InstallmentStatus.APPROVED) {
             allowed = allowed.stream().filter(next -> next != OrderStatus.CONFIRMED).toList();
         }
@@ -264,7 +364,9 @@ public class OrderServiceImpl implements OrderService {
         if (p.getPaymentMethod() == PaymentMethod.VNPAY && p.getStatus() == PaymentStatus.PENDING && p.getTransactionCode() != null) {
             allowed = allowed.stream().filter(next -> next != OrderStatus.CANCELLED).toList();
         }
-        r.setAllowedStatuses(allowed.stream().filter(permitted).toList()); return r;
+        r.setShipment(shipments.forOrder(order.getOrderId()).orElse(null));
+        r.setInvoice(invoices.forOrder(order.getOrderId()).orElse(null));
+        r.setAllowedStatuses(allowed.stream().filter(next -> scope.permits(order.getStatus(), next)).toList()); return r;
     }
 
     private void allocateSerials(Order order, List<OrderItem> snapshots) {
@@ -284,6 +386,24 @@ public class OrderServiceImpl implements OrderService {
             for (int index = 0; index < pending.size(); index++) pending.get(index).setSerialId(allocated.get(index));
         }
         items.saveAllAndFlush(snapshots);
+    }
+
+    /**
+     * COD is collected by the delivery staff on hand-over, and an INSTALLMENT order can only reach
+     * delivery after the provider approved it, so both are settled when the order is DELIVERED.
+     * VNPAY is settled exclusively by its IPN/return callback and is never touched here.
+     */
+    private void settleOnDelivery(List<Payment> paymentRows) {
+        OffsetDateTime now = OffsetDateTime.now();
+        for (Payment payment : paymentRows) {
+            boolean settledOnDelivery = payment.getPaymentMethod() == PaymentMethod.COD
+                    || payment.getPaymentMethod() == PaymentMethod.INSTALLMENT;
+            if (settledOnDelivery && payment.getStatus() == PaymentStatus.PENDING) {
+                payment.setStatus(PaymentStatus.PAID);
+                payment.setPaymentDate(now);
+            }
+        }
+        payments.saveAllAndFlush(paymentRows);
     }
 
     private List<UUID> serialIdsForDelivery(List<OrderItem> snapshots) {

@@ -94,3 +94,22 @@ Docker ban đầu không chạy vì lỗi cài Rosetta. Đã tắt `UseVirtualiz
 `flutter test` đạt; `flutter build apk --debug` thành công. Đã cài APK trên emulator và đăng nhập tài khoản khách mẫu thành công tới màn hình chính qua backend `http://10.0.2.2:8080`. Log ở `.local/logs/flutter-build.log`, `.local/logs/flutter-test.log`. Analyzer không có error/warning, còn 56 lint mức info trong mã hiện có; Gradle/AGP/Kotlin hiện tại build được, Flutter mới có thông báo về yêu cầu nâng phiên bản trong tương lai. iOS/macOS chưa được cấu hình CocoaPods hoặc Simulator vì yêu cầu hiện tại là Android.
 
 Sau kiểm tra đã dừng các project backend/frontend/chatbot, PostgreSQL, emulator và Gradle daemon; dữ liệu PostgreSQL vẫn giữ nguyên. Xem `RUN_PROJECTS.md` để khởi chạy lại từng phần.
+
+## Sao lưu & khôi phục dữ liệu (Admin → "Sao lưu dữ liệu", `/admin/backups`)
+
+Backend chạy `pg_dump` / `pg_restore`; tệp sao lưu nằm ở `BACKUP_DIR` (mặc định `backend/backups/`, đã được bỏ qua trong git).
+
+**Khuyến nghị khi CSDL chạy bằng Docker (docker-compose):** dùng chính công cụ trong container `ecommerce-postgres`, cùng phiên bản PostgreSQL 16 với máy chủ. `pg_dump` mới hơn (ví dụ bản 18 cài bằng Homebrew) có thể sinh lệnh mà PostgreSQL 16 không hiểu khi khôi phục.
+
+```bash
+export BACKUP_COMMAND_PREFIX="docker exec -i -e PGPASSWORD ecommerce-postgres"
+export BACKUP_DB_HOST=localhost
+export BACKUP_DB_PORT=5432
+```
+
+Nếu để trống `BACKUP_COMMAND_PREFIX`, backend gọi `pg_dump` / `pg_restore` có sẵn trên máy và kết nối theo `spring.datasource.url`.
+
+Cách hoạt động:
+- **Khôi phục** thay toàn bộ dữ liệu. Admin phải nhập lại đúng tên bản sao lưu để xác nhận.
+- Hệ thống **tự sao lưu dữ liệu hiện tại** (`…-pre-restore.dump`) trước khi khôi phục.
+- Mỗi lần chỉ chạy một thao tác sao lưu hoặc khôi phục. Giới hạn thời gian là 10 phút.

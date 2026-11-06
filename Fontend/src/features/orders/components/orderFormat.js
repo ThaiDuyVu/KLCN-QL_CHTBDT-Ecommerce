@@ -3,3 +3,4 @@ export const money = (value) => new Intl.NumberFormat('vi-VN', { style: 'currenc
 export const date = (value) => value ? new Date(value).toLocaleString('vi-VN') : '—';
 
 export const actionLabels = { CONFIRMED: 'Xác nhận đơn', PROCESSING: 'Bắt đầu xử lý', SHIPPED: 'Gửi hàng', DELIVERED: 'Xác nhận đã giao', CANCELLED: 'Hủy đơn' };
+export const shipmentLabels = { SHIPPING: 'Đang giao', DELIVERED: 'Đã giao', FAILED: 'Giao không thành công' };

@@ -42,7 +42,7 @@ class OrderCheckoutIntegrationTest {
     Map<UUID, UUID> addressIds;
     @BeforeEach void setup() {
         // Dedicated ephemeral container only: never touches application data.
-        jdbc.execute("TRUNCATE TABLE orders, carts, customers, inventory, products, brands, categories, warehouses CASCADE");
+        jdbc.execute("TRUNCATE TABLE invoices, shipments, orders, carts, customers, employees, inventory, products, brands, categories, warehouses CASCADE");
         addressIds = new HashMap<>();
         firstUser = customer(); secondUser = customer(); variant = UUID.randomUUID();
         warehouse = UUID.randomUUID();
@@ -53,6 +53,8 @@ class OrderCheckoutIntegrationTest {
         jdbc.update("INSERT INTO product_variants(variant_id,product_id,sku,price,cost_price,status) VALUES (?,?,?,2000000,1500000,'ACTIVE')",variant,product,"SKU-"+variant);
         jdbc.update("INSERT INTO warehouses(warehouse_id,warehouse_name) VALUES (?,?)",warehouse,"Kho thử");
         jdbc.update("INSERT INTO inventory(warehouse_id,variant_id,quantity,reserved_quantity) VALUES (?,?,5,0)",warehouse,variant);
+        // firstUser also acts as staff in these tests; SHIPPED assigns the delivery to the caller's employee profile.
+        jdbc.update("INSERT INTO employees(user_id,employee_code,full_name) VALUES (?,?, 'Nhân viên giao hàng thử')", firstUser, "T-" + firstUser);
         var selection = new SelectCartWarehouseRequest(); selection.setWarehouseId(warehouse);
         cart.selectWarehouse(firstUser, selection); cart.selectWarehouse(secondUser, selection);
     }
@@ -200,6 +202,210 @@ class OrderCheckoutIntegrationTest {
         assertThat(jdbc.queryForObject("SELECT count(*) FROM payments",Integer.class)).isZero();
         assertThat(stock("reserved_quantity")).isZero();
         assertThat(cart.get(firstUser).getItems()).hasSize(1);
+    }
+    String paymentStatus(UUID orderId) { return jdbc.queryForObject("SELECT status FROM payments WHERE order_id=?",String.class,orderId); }
+    void deliver(UUID orderId) {
+        for (var next : List.of(OrderStatus.CONFIRMED,OrderStatus.PROCESSING,OrderStatus.SHIPPED)) {
+            orders.status(firstUser,false,orderId,next);
+            assertThat(paymentStatus(orderId)).as("payment before delivery, after "+next).isEqualTo("PENDING");
+        }
+        orders.status(firstUser,false,orderId,OrderStatus.DELIVERED);
+    }
+    @Test void codPaymentIsSettledOnlyWhenTheOrderIsDelivered() {
+        add(firstUser,1);var order=orders.checkout(firstUser,request());
+        var created=jdbc.queryForObject("SELECT payment_date FROM payments WHERE order_id=?",java.time.OffsetDateTime.class,order.getOrderId());
+        deliver(order.getOrderId());
+        assertThat(paymentStatus(order.getOrderId())).isEqualTo("PAID");
+        assertThat(jdbc.queryForObject("SELECT payment_date FROM payments WHERE order_id=?",java.time.OffsetDateTime.class,order.getOrderId())).isAfterOrEqualTo(created);
+        assertThat(orders.detail(firstUser,true,order.getOrderId()).getPayment().getStatus()).isEqualTo(PaymentStatus.PAID);
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM payments WHERE order_id=?",Integer.class,order.getOrderId())).isEqualTo(1);
+    }
+    @Test void cancelledCodOrderKeepsItsPaymentPending() {
+        add(firstUser,1);var order=orders.checkout(firstUser,request());
+        orders.status(firstUser,false,order.getOrderId(),OrderStatus.CONFIRMED);orders.status(firstUser,false,order.getOrderId(),OrderStatus.CANCELLED);
+        assertThat(paymentStatus(order.getOrderId())).isEqualTo("PENDING");
+    }
+    @Test void approvedInstallmentPaymentIsSettledOnDelivery() {
+        add(firstUser,1);
+        UUID provider=UUID.randomUUID();
+        jdbc.update("INSERT INTO installment_providers(provider_id,provider_code,provider_name,status) VALUES (?,?,?,'ACTIVE')", provider,"TEST-"+provider,"Đơn vị trả góp kiểm thử");
+        var r=request();r.setPaymentMethod(PaymentMethod.INSTALLMENT);r.setProviderId(provider);r.setTermMonths(6);r.setDownPayment(new BigDecimal("100000"));
+        var order=orders.checkout(firstUser,r);
+        jdbc.update("UPDATE installment_payments SET status='APPROVED' WHERE payment_id=?",order.getPayment().getPaymentId());
+        deliver(order.getOrderId());
+        assertThat(paymentStatus(order.getOrderId())).isEqualTo("PAID");
+    }
+    @Autowired com.example.backend.order.scheduling.VnpayExpiryJob expiryJob;
+    /** VNPAY is disabled in tests, so a COD checkout is turned into a VNPAY payment started `minutesAgo`. */
+    UUID vnpayOrderStarted(int minutesAgo) {
+        add(firstUser,2);var order=orders.checkout(firstUser,request());
+        jdbc.update("UPDATE payments SET payment_method='VNPAY', payment_date=now() - make_interval(mins => ?) WHERE order_id=?",minutesAgo,order.getOrderId());
+        return order.getOrderId();
+    }
+    String orderStatus(UUID orderId) { return jdbc.queryForObject("SELECT status FROM orders WHERE order_id=?",String.class,orderId); }
+    @Test void expiredUnpaidVnpayOrderIsCancelledAndReleasesStock() {
+        UUID id=vnpayOrderStarted(30);
+        assertThat(stock("reserved_quantity")).isEqualTo(2);
+        assertThat(expiryJob.expireNow()).isEqualTo(1);
+        assertThat(orderStatus(id)).isEqualTo("CANCELLED");
+        assertThat(paymentStatus(id)).isEqualTo("FAILED");
+        assertThat(stock("reserved_quantity")).isZero();assertThat(stock("quantity")).isEqualTo(5);
+        assertThat(jdbc.queryForObject("SELECT note FROM orders WHERE order_id=?",String.class,id)).contains("quá hạn thanh toán VNPAY");
+        assertThat(expiryJob.expireNow()).as("second run is a no-op").isZero();
+    }
+    @Test void vnpayOrderInsideItsSessionOrUnderReviewIsNotExpired() {
+        UUID fresh=vnpayOrderStarted(10);
+        assertThat(expiryJob.expireNow()).isZero();
+        assertThat(orderStatus(fresh)).isEqualTo("PENDING");assertThat(stock("reserved_quantity")).isEqualTo(2);
+        jdbc.update("UPDATE payments SET payment_date=now() - interval '30 minutes', transaction_code='VNPAY-123' WHERE order_id=?",fresh);
+        assertThat(expiryJob.expireNow()).as("VNPAY response 07 needs manual review").isZero();
+        assertThat(orderStatus(fresh)).isEqualTo("PENDING");
+    }
+    @Test void oldCodOrderIsNeverExpired() {
+        add(firstUser,1);var order=orders.checkout(firstUser,request());
+        jdbc.update("UPDATE payments SET payment_date=now() - interval '2 days' WHERE order_id=?",order.getOrderId());
+        assertThat(expiryJob.expireNow()).isZero();
+        assertThat(orderStatus(order.getOrderId())).isEqualTo("PENDING");
+    }
+    @Test void onlyManagementCancelsAPaidOrderWithAReasonAndThePaymentBecomesRefunded() throws Exception {
+        add(firstUser,2);UUID id=orders.checkout(firstUser,request()).getOrderId();
+        jdbc.update("UPDATE payments SET status='PAID' WHERE order_id=?",id);
+        mvc.perform(get("/api/orders/{id}",id).with(user(principal("SALES_STAFF")))).andExpect(jsonPath("$.allowedStatuses").value(org.hamcrest.Matchers.not(org.hamcrest.Matchers.hasItem("CANCELLED"))));
+        mvc.perform(get("/api/orders/{id}",id).with(user(principal("MANAGER")))).andExpect(jsonPath("$.allowedStatuses").value(org.hamcrest.Matchers.hasItem("CANCELLED")));
+        mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("SALES_STAFF"))).with(csrf()).contentType("application/json")
+                .content("{\"status\":\"CANCELLED\",\"reason\":\"Khách đổi ý\"}")).andExpect(status().isConflict());
+        mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("MANAGER"))).with(csrf()).contentType("application/json")
+                .content("{\"status\":\"CANCELLED\",\"reason\":\"  \"}")).andExpect(status().isBadRequest());
+        assertThat(orderStatus(id)).isEqualTo("PENDING");assertThat(stock("reserved_quantity")).isEqualTo(2);
+        mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("MANAGER"))).with(csrf()).contentType("application/json")
+                .content("{\"status\":\"CANCELLED\",\"reason\":\"Hết hàng tại chi nhánh\"}"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.payment.status").value("REFUNDED"))
+                .andExpect(jsonPath("$.note").value(org.hamcrest.Matchers.containsString("Hủy và hoàn tiền: Hết hàng tại chi nhánh")));
+        assertThat(paymentStatus(id)).isEqualTo("REFUNDED");
+        assertThat(stock("reserved_quantity")).isZero();assertThat(stock("quantity")).isEqualTo(5);
+    }
+    @Test void paidOrderCannotBeCancelledOnceItLeftTheWarehouse() throws Exception {
+        add(firstUser,1);UUID id=orders.checkout(firstUser,request()).getOrderId();
+        jdbc.update("UPDATE payments SET status='PAID' WHERE order_id=?",id);
+        orders.status(firstUser,false,id,OrderStatus.CONFIRMED);orders.status(firstUser,false,id,OrderStatus.PROCESSING);
+        mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("ADMIN"))).with(csrf()).contentType("application/json")
+                .content("{\"status\":\"CANCELLED\",\"reason\":\"Thử\"}")).andExpect(status().isConflict());
+        assertThat(paymentStatus(id)).isEqualTo("PAID");
+    }
+    // ---- P1.1 shipments ----
+    record Staff(UUID userId, UUID employeeId) {}
+    Staff deliveryStaff(String name, String status) {
+        UUID userId = UUID.randomUUID();
+        jdbc.update("INSERT INTO users(user_id,username,password,email,status) VALUES (?,?,?,?,?)", userId, "gh-" + userId, "test-only-hash", userId + "@example.test", status);
+        jdbc.update("INSERT INTO user_roles(user_id,role_id) SELECT ?, role_id FROM roles WHERE role_name='DELIVERY_STAFF'", userId);
+        UUID employeeId = jdbc.queryForObject("INSERT INTO employees(user_id,employee_code,full_name) VALUES (?,?,?) RETURNING employee_id",
+                UUID.class, userId, "GH-" + userId, name);
+        return new Staff(userId, employeeId);
+    }
+    AuthenticatedUserPrincipal principalFor(UUID userId, String role) {var u=new User();u.setUserId(userId);u.setUsername("test");u.setStatus("ACTIVE");return new AuthenticatedUserPrincipal(u,role);}
+    org.springframework.test.web.servlet.ResultActions move(UUID id, AuthenticatedUserPrincipal actor, String body) throws Exception {
+        return mvc.perform(patch("/api/orders/{id}/status",id).with(user(actor)).with(csrf()).contentType("application/json").content(body));
+    }
+    UUID processingOrder(int quantity) {
+        add(firstUser,quantity);UUID id=orders.checkout(firstUser,request()).getOrderId();
+        orders.status(firstUser,false,id,OrderStatus.CONFIRMED);orders.status(firstUser,false,id,OrderStatus.PROCESSING);
+        return id;
+    }
+    @Test void managerHandsTheOrderToADeliveryEmployeeWhoClosesIt() throws Exception {
+        Staff an = deliveryStaff("Phan Văn An", "ACTIVE"), binh = deliveryStaff("Lý Văn Bình", "ACTIVE");
+        deliveryStaff("Nghỉ việc", "INACTIVE");
+        mvc.perform(get("/api/orders/delivery-staff").with(user(principal("WAREHOUSE_KEEPER"))))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(2)).andExpect(jsonPath("$[0].fullName").value("Lý Văn Bình"));
+        UUID id = processingOrder(2);
+        move(id, principal("MANAGER"), "{\"status\":\"SHIPPED\",\"deliveryEmployeeId\":\""+an.employeeId()+"\",\"shippingProvider\":\"Giao Hàng Nhanh\",\"trackingNumber\":\"ghn-123\"}")
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.shipment.status").value("SHIPPING"))
+                .andExpect(jsonPath("$.shipment.employeeName").value("Phan Văn An"))
+                .andExpect(jsonPath("$.shipment.shippingProvider").value("Giao Hàng Nhanh"))
+                .andExpect(jsonPath("$.shipment.trackingNumber").value("GHN-123"))
+                .andExpect(jsonPath("$.shipment.shippedDate").isNotEmpty());
+        mvc.perform(get("/api/orders/deliveries").with(user(principalFor(an.userId(),"DELIVERY_STAFF"))))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.content[0].orderId").value(id.toString()))
+                .andExpect(jsonPath("$.content[0].shipment.trackingNumber").value("GHN-123"));
+        mvc.perform(get("/api/orders/deliveries").with(user(principalFor(binh.userId(),"DELIVERY_STAFF")))).andExpect(jsonPath("$.totalElements").value(0));
+        move(id, principalFor(binh.userId(),"DELIVERY_STAFF"), "{\"status\":\"DELIVERED\"}").andExpect(status().isForbidden());
+        move(id, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"DELIVERED\"}")
+                .andExpect(status().isOk()).andExpect(jsonPath("$.shipment.status").value("DELIVERED"))
+                .andExpect(jsonPath("$.shipment.deliveredDate").isNotEmpty()).andExpect(jsonPath("$.payment.status").value("PAID"));
+        assertThat(stock("quantity")).isEqualTo(3);
+    }
+    @Test void shipmentNeedsAValidDeliveryEmployeeAndAUniqueTrackingNumber() throws Exception {
+        Staff an = deliveryStaff("Phan Văn An", "ACTIVE");
+        UUID first = processingOrder(1);
+        UUID salesEmployee = jdbc.queryForObject("SELECT employee_id FROM employees WHERE user_id=?", UUID.class, firstUser);
+        move(first, principal("MANAGER"), "{\"status\":\"SHIPPED\",\"deliveryEmployeeId\":\""+salesEmployee+"\"}").andExpect(status().isBadRequest());
+        move(first, principal("MANAGER"), "{\"status\":\"SHIPPED\",\"deliveryEmployeeId\":\""+an.employeeId()+"\",\"trackingNumber\":\"VD-1\"}").andExpect(status().isOk());
+        UUID second = processingOrder(1);
+        move(second, principal("MANAGER"), "{\"status\":\"SHIPPED\",\"deliveryEmployeeId\":\""+an.employeeId()+"\",\"trackingNumber\":\"vd-1\"}").andExpect(status().isConflict());
+        assertThat(orderStatus(second)).isEqualTo("PROCESSING");
+        move(second, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"SHIPPED\"}")
+                .andExpect(status().isOk()).andExpect(jsonPath("$.shipment.employeeName").value("Phan Văn An"))
+                .andExpect(jsonPath("$.shipment.shippingProvider").value("Giao nội bộ"))
+                .andExpect(jsonPath("$.shipment.trackingNumber").value(org.hamcrest.Matchers.startsWith("GH-")));
+    }
+    @Test void failedDeliveryCancelsTheOrderAndReturnsDevicesToSale() throws Exception {
+        jdbc.update("UPDATE product_variants SET tracking_type='SERIAL' WHERE variant_id=?", variant);
+        for (String serial : List.of("SN-A","SN-B","SN-C"))
+            jdbc.update("INSERT INTO serial_numbers(variant_id,warehouse_id,serial_number,status) VALUES (?,?,?,'AVAILABLE')", variant, warehouse, serial);
+        Staff an = deliveryStaff("Phan Văn An", "ACTIVE");
+        UUID id = processingOrder(2);
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM serial_numbers WHERE status='RESERVED'", Integer.class)).isEqualTo(2);
+        move(id, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"SHIPPED\"}").andExpect(status().isOk());
+        mvc.perform(get("/api/orders/{id}",id).with(user(principalFor(an.userId(),"DELIVERY_STAFF"))))
+                .andExpect(jsonPath("$.allowedStatuses").value(org.hamcrest.Matchers.containsInAnyOrder("DELIVERED","CANCELLED")));
+        move(id, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"CANCELLED\"}").andExpect(status().isBadRequest());
+        move(id, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"CANCELLED\",\"reason\":\"Khách không nghe máy 3 lần\"}")
+                .andExpect(status().isOk()).andExpect(jsonPath("$.status").value("CANCELLED"))
+                .andExpect(jsonPath("$.shipment.status").value("FAILED"))
+                .andExpect(jsonPath("$.note").value(org.hamcrest.Matchers.containsString("Giao không thành công: Khách không nghe máy 3 lần")));
+        assertThat(stock("reserved_quantity")).isZero();assertThat(stock("quantity")).isEqualTo(5);
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM serial_numbers WHERE status='AVAILABLE'", Integer.class)).isEqualTo(3);
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM order_items WHERE order_id=? AND serial_id IS NOT NULL", Integer.class, id)).isZero();
+        UUID next = processingOrder(3);
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM order_items WHERE order_id=? AND serial_id IS NOT NULL", Integer.class, next))
+                .as("returned devices can be sold again").isEqualTo(3);
+    }
+    @Test void deliveryStaffCannotCancelOrdersBeforeShippingNorFailAPaidDelivery() throws Exception {
+        Staff an = deliveryStaff("Phan Văn An", "ACTIVE");
+        add(firstUser,1);UUID pending=orders.checkout(firstUser,request()).getOrderId();
+        move(pending, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"CANCELLED\",\"reason\":\"Thử\"}").andExpect(status().isForbidden());
+        move(pending, principal("SALES_STAFF"), "{\"status\":\"CONFIRMED\"}").andExpect(status().isOk());
+        orders.status(firstUser,false,pending,OrderStatus.PROCESSING);
+        move(pending, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"SHIPPED\"}").andExpect(status().isOk());
+        move(pending, principal("SALES_STAFF"), "{\"status\":\"CANCELLED\",\"reason\":\"Thử\"}").andExpect(status().isForbidden());
+        jdbc.update("UPDATE payments SET status='PAID' WHERE order_id=?",pending);
+        move(pending, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"CANCELLED\",\"reason\":\"Khách từ chối nhận\"}").andExpect(status().isConflict());
+        move(pending, principal("MANAGER"), "{\"status\":\"CANCELLED\",\"reason\":\"Khách từ chối nhận\"}")
+                .andExpect(status().isOk()).andExpect(jsonPath("$.payment.status").value("REFUNDED")).andExpect(jsonPath("$.shipment.status").value("FAILED"));
+    }
+    // ---- P1.3 invoices ----
+    @Test void deliveryIssuesOneSequentialInvoicePerOrderVisibleToItsCustomerOnly() throws Exception {
+        String day = java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd").format(java.time.LocalDate.now());
+        add(firstUser,1);UUID first=orders.checkout(firstUser,request()).getOrderId();
+        assertThat(orders.detail(firstUser,true,first).getInvoice()).as("no invoice before delivery").isNull();
+        deliver(first);
+        var invoice = orders.detail(firstUser,true,first).getInvoice();
+        assertThat(invoice.invoiceNumber()).isEqualTo("HD-" + day + "-0001");
+        assertThat(invoice.totalAmount()).isEqualByComparingTo("2000000");
+        add(firstUser,2);UUID second=orders.checkout(firstUser,request()).getOrderId();deliver(second);
+        assertThat(orders.detail(firstUser,true,second).getInvoice().invoiceNumber()).isEqualTo("HD-" + day + "-0002");
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM invoices WHERE order_id=?", Integer.class, first)).isEqualTo(1);
+        mvc.perform(get("/api/invoices/mine/by-order/{id}",first).with(user(principal("CUSTOMER"))))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.status").value("ISSUED"))
+                .andExpect(jsonPath("$.lines[0].lineTotal").value(2000000)).andExpect(jsonPath("$.warehouseName").value("Kho thử"))
+                .andExpect(jsonPath("$.paymentStatus").value("PAID")).andExpect(jsonPath("$.refundedAmount").value(0));
+        mvc.perform(get("/api/invoices/mine/by-order/{id}",first).with(user(principalFor(secondUser,"CUSTOMER")))).andExpect(status().isNotFound());
+        mvc.perform(get("/api/invoices").with(user(principal("SALES_STAFF")))).andExpect(status().isOk()).andExpect(jsonPath("$.totalElements").value(2))
+                .andExpect(jsonPath("$.content[0].invoiceNumber").value("HD-" + day + "-0002"));
+        mvc.perform(get("/api/invoices").param("keyword","0001").with(user(principal("MANAGER")))).andExpect(jsonPath("$.totalElements").value(1));
+        mvc.perform(get("/api/invoices").with(user(principal("DELIVERY_STAFF")))).andExpect(status().isForbidden());
+        add(firstUser,1);UUID pending=orders.checkout(firstUser,request()).getOrderId();
+        mvc.perform(get("/api/invoices/mine/by-order/{id}",pending).with(user(principal("CUSTOMER")))).andExpect(status().isNotFound());
     }
     @Test void installmentCheckoutPreservesExactlyOnePaymentAndApprovalGate() {
         add(firstUser,1);

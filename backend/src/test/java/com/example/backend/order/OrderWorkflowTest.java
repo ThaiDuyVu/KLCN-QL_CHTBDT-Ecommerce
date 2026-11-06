@@ -21,7 +21,11 @@ class OrderWorkflowTest {
         assertThat(OrderTransitions.allowed(OrderStatus.PENDING, false, false)).containsExactly(OrderStatus.CONFIRMED, OrderStatus.CANCELLED);
         assertThat(OrderTransitions.allowed(OrderStatus.CONFIRMED, false, false)).containsExactly(OrderStatus.PROCESSING, OrderStatus.CANCELLED);
         assertThat(OrderTransitions.allowed(OrderStatus.PROCESSING, false, false)).containsExactly(OrderStatus.SHIPPED);
-        assertThat(OrderTransitions.allowed(OrderStatus.SHIPPED, false, false)).containsExactly(OrderStatus.DELIVERED);
+        assertThat(OrderTransitions.allowed(OrderStatus.SHIPPED, false, false)).as("delivered or failed delivery")
+                .containsExactly(OrderStatus.DELIVERED, OrderStatus.CANCELLED);
+        assertThat(OrderTransitions.allowed(OrderStatus.SHIPPED, false, true)).as("a paid order needs a refund to fail")
+                .containsExactly(OrderStatus.DELIVERED);
+        assertThat(OrderTransitions.allowed(OrderStatus.SHIPPED, true, false)).as("customer never closes a delivery").isEmpty();
 
         for (var current : OrderStatus.values()) {
             for (var next : OrderStatus.values()) {
@@ -40,6 +44,20 @@ class OrderWorkflowTest {
 
         assertThatThrownBy(() -> OrderTransitions.require(OrderStatus.PENDING, OrderStatus.CONFIRMED, true, false)).isInstanceOf(CommerceException.class);
         assertThatThrownBy(() -> OrderTransitions.require(OrderStatus.PENDING, OrderStatus.CANCELLED, true, true)).hasMessageContaining("PAID");
+    }
+
+    @Test
+    void onlyRefundCapableStaffCancelPaidOrdersAndOnlyBeforeProcessing() {
+        assertThat(OrderTransitions.allowed(OrderStatus.PENDING, false, true, false)).containsExactly(OrderStatus.CONFIRMED);
+        assertThat(OrderTransitions.allowed(OrderStatus.PENDING, false, true, true)).containsExactly(OrderStatus.CONFIRMED, OrderStatus.CANCELLED);
+        assertThat(OrderTransitions.allowed(OrderStatus.CONFIRMED, false, true, true)).containsExactly(OrderStatus.PROCESSING, OrderStatus.CANCELLED);
+        assertThat(OrderTransitions.allowed(OrderStatus.PROCESSING, false, true, true)).containsExactly(OrderStatus.SHIPPED);
+        assertThat(OrderTransitions.allowed(OrderStatus.PENDING, true, true, true)).as("customer never refunds").isEmpty();
+        OrderTransitions.require(OrderStatus.CONFIRMED, OrderStatus.CANCELLED, false, true, true);
+        assertThatThrownBy(() -> OrderTransitions.require(OrderStatus.CONFIRMED, OrderStatus.CANCELLED, false, true, false)).hasMessageContaining("PAID");
+        assertThat(OrderStaffPolicy.canRefund(java.util.List.of("MANAGER"))).isTrue();
+        assertThat(OrderStaffPolicy.canRefund(java.util.List.of("ADMIN"))).isTrue();
+        assertThat(OrderStaffPolicy.canRefund(java.util.List.of("SALES_STAFF", "STAFF"))).isFalse();
     }
     @Test void stockReservesInSelectedWarehouseReleasesAndDeductsOnDelivery() {
         UUID id = UUID.randomUUID(); UUID warehouseId = UUID.randomUUID();

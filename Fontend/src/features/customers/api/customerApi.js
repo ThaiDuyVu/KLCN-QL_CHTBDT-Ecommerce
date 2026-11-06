@@ -8,6 +8,8 @@ function query(values) {
 export const customerApi = {
   list(filters, signal) { return commerceRequest(`/customers?${query(filters)}`, { signal }); },
   detail(id, signal) { return commerceRequest(`/customers/${encodeURIComponent(id)}`, { signal }); },
+  create(body) { return commerceRequest('/customers', { method: 'POST', body }); },
+  update(id, body) { return commerceRequest(`/customers/${encodeURIComponent(id)}`, { method: 'PUT', body }); },
   history(id, resource, page, signal) {
     return commerceRequest(`/customers/${encodeURIComponent(id)}/${resource}?${query({ page, size: 10 })}`, { signal });
   },

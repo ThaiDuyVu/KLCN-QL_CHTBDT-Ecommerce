@@ -8,6 +8,7 @@ public interface ReportService {
     RevenueResponse revenue(ReportFilter filter);
     List<OrderStatusRow> orderStatuses(ReportFilter filter);
     List<TopProductRow> topProducts(ReportFilter filter, int limit);
+    List<CategoryReportRow> categories(ReportFilter filter);
     List<WarehouseReportRow> warehouses(ReportFilter filter);
     List<PaymentReportRow> payments(ReportFilter filter);
     GoodsReceiptReportResponse goodsReceipts(ReportFilter filter);

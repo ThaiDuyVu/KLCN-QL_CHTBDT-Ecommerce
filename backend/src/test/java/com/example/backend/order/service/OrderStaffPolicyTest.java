@@ -17,7 +17,19 @@ class OrderStaffPolicyTest {
     @Test void jobTitlesAreLimitedToTheirSteps() {
         assertThat(permitted("SALES_STAFF", "CUSTOMER_VIEW")).containsExactlyInAnyOrder(OrderStatus.CONFIRMED, OrderStatus.PROCESSING, OrderStatus.CANCELLED);
         assertThat(permitted("WAREHOUSE_KEEPER")).containsExactly(OrderStatus.PROCESSING);
-        assertThat(permitted("DELIVERY_STAFF")).containsExactlyInAnyOrder(OrderStatus.SHIPPED, OrderStatus.DELIVERED);
+        assertThat(permitted("DELIVERY_STAFF")).containsExactlyInAnyOrder(OrderStatus.SHIPPED, OrderStatus.DELIVERED, OrderStatus.CANCELLED);
+    }
+    @Test void deliveryStaffCancelOnlyMeansAFailedDeliveryAndSalesCannotFailDeliveries() {
+        var delivery = OrderStaffPolicy.scope(java.util.List.of("DELIVERY_STAFF"));
+        assertThat(delivery.deliveryOnly()).isTrue();
+        assertThat(delivery.permits(OrderStatus.SHIPPED, OrderStatus.CANCELLED)).isTrue();
+        assertThat(delivery.permits(OrderStatus.PENDING, OrderStatus.CANCELLED)).isFalse();
+        var sales = OrderStaffPolicy.scope(java.util.List.of("SALES_STAFF"));
+        assertThat(sales.permits(OrderStatus.CONFIRMED, OrderStatus.CANCELLED)).isTrue();
+        assertThat(sales.permits(OrderStatus.SHIPPED, OrderStatus.CANCELLED)).isFalse();
+        var manager = OrderStaffPolicy.scope(java.util.List.of("MANAGER"));
+        assertThat(manager.deliveryOnly()).isFalse();
+        assertThat(manager.permits(OrderStatus.SHIPPED, OrderStatus.CANCELLED)).isTrue();
     }
     @Test void rolesWithoutOrderStepsGetNothing() {
         assertThat(permitted("WARRANTY_TECHNICIAN")).isEmpty();

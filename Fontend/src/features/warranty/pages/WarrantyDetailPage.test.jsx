@@ -6,7 +6,7 @@ import WarrantyDetailPage from './WarrantyDetailPage';
 import { warrantyApi } from '../api/warrantyApi';
 
 vi.mock('../api/warrantyApi', () => ({
-  warrantyApi: { myWarranty: vi.fn(), createTicket: vi.fn() },
+  warrantyApi: { myWarranty: vi.fn(), createTicket: vi.fn(), warranty: vi.fn(), staffCreateTicket: vi.fn() },
 }));
 
 const warranty = {
@@ -61,4 +61,23 @@ it('preserves the issue and shows the API error when ticket creation fails', asy
   expect(warrantyApi.createTicket).toHaveBeenCalledTimes(1);
   expect(warrantyApi.myWarranty).toHaveBeenCalledTimes(1);
   expect(screen.getByRole('button', { name: 'Gửi yêu cầu bảo hành' })).toBeEnabled();
+});
+
+it('staff opens a counter ticket through the staff endpoint and sees the new ticket code', async () => {
+  warrantyApi.warranty.mockReset();
+  warrantyApi.warranty.mockResolvedValueOnce(warranty).mockResolvedValueOnce({ ...warranty, tickets: [{
+    ticketId: 'counter-ticket', ticketCode: 'WT-COUNTER', status: 'RECEIVED', issueDescription: 'Không lên nguồn',
+    createdAt: '2026-11-06', employeeName: 'Đỗ Văn Kỹ',
+  }] });
+  warrantyApi.staffCreateTicket.mockResolvedValue({ ticketId: 'counter-ticket', ticketCode: 'WT-COUNTER' });
+  render(<MemoryRouter initialEntries={['/warranties/test-warranty']}>
+    <Routes><Route path="/warranties/:warrantyId" element={<WarrantyDetailPage />} /></Routes>
+  </MemoryRouter>);
+  const user = userEvent.setup();
+  await user.type(await screen.findByRole('textbox', { name: 'Tình trạng lỗi khách báo' }), 'Không lên nguồn');
+  await user.click(screen.getByRole('button', { name: 'Lập phiếu tiếp nhận' }));
+  expect(await screen.findByText('Đã lập phiếu tiếp nhận WT-COUNTER.')).toBeInTheDocument();
+  expect(warrantyApi.staffCreateTicket).toHaveBeenCalledExactlyOnceWith('test-warranty', 'Không lên nguồn');
+  expect(warrantyApi.createTicket).not.toHaveBeenCalled();
+  expect(screen.getByText(/Đỗ Văn Kỹ/)).toBeInTheDocument();
 });

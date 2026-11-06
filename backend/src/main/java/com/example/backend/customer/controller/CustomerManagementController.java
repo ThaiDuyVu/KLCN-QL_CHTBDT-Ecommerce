@@ -28,6 +28,21 @@ public class CustomerManagementController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'STAFF', 'SALES_STAFF', 'WARRANTY_TECHNICIAN')")
     public CustomerSummaryResponse detail(@PathVariable UUID customerId) { return service.detail(customerId); }
 
+    /** Staff registers a walk-in customer at the counter (sales staff included, not only CUSTOMER_CREATE holders). */
+    @PostMapping
+    @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
+    @RequireAnyAuthority({"ADMIN", "CUSTOMER_CREATE", "STAFF", "SALES_STAFF"})
+    public CustomerSummaryResponse create(@jakarta.validation.Valid @RequestBody CreateCustomerRequest request) {
+        return service.create(request);
+    }
+
+    @PutMapping("/{customerId}")
+    @RequireAnyAuthority({"ADMIN", "CUSTOMER_UPDATE", "STAFF", "SALES_STAFF"})
+    public CustomerSummaryResponse update(@PathVariable UUID customerId,
+            @jakarta.validation.Valid @RequestBody UpdateCustomerRequest request) {
+        return service.update(customerId, request);
+    }
+
     @GetMapping("/{customerId}/orders")
     @RequireAnyAuthority({"ADMIN", "CUSTOMER_VIEW"})
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'STAFF', 'SALES_STAFF', 'WARRANTY_TECHNICIAN')")

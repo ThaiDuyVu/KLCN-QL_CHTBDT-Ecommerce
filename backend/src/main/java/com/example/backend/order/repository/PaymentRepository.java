@@ -11,4 +11,10 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select p from Payment p where p.orderId = :id order by p.paymentId")
     List<Payment> lockByOrderId(@Param("id") UUID id);
+    @Query("select p.orderId from Payment p, Order o where o.orderId = p.orderId"
+            + " and o.status = com.example.backend.order.entity.OrderStatus.PENDING"
+            + " and p.paymentMethod = com.example.backend.order.entity.PaymentMethod.VNPAY"
+            + " and p.status = com.example.backend.order.entity.PaymentStatus.PENDING"
+            + " and p.transactionCode is null and p.paymentDate < :cutoff order by p.paymentDate")
+    List<UUID> findUnpaidVnpayOrderIdsBefore(@Param("cutoff") java.time.OffsetDateTime cutoff, org.springframework.data.domain.Pageable page);
 }

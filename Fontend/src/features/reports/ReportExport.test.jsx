@@ -15,6 +15,7 @@ const data = {
   summary: { revenue: 25990000.5, grossProfit: 3000000, totalDiscount: 0, totalOrders: 3, completedOrders: 2, cancelledOrders: 1, averageOrderValue: 12995000.25, timezone: 'Asia/Ho_Chi_Minh' },
   revenue: { granularity: 'DAY', points: [{ bucket: '2026-10-01', completedOrders: 2, revenue: 25990000 }] },
   'top-products': [{ productId: 'p1', productName: 'Laptop Dell XPS 13', quantity: 2, revenue: 25990000 }],
+  categories: [{ categoryId: 'c1', categoryName: 'Laptop', quantity: 2, orderCount: 2, revenue: 25990000, grossProfit: 3000000.4 }],
   warehouses: [{ warehouseId: 'w1', warehouseName: 'Chi nhánh Quận 1', count: 2, amount: 25990000 }],
   'order-status': [{ status: 'DELIVERED', count: 2 }, { status: 'CANCELLED', count: 1 }],
   payments: [{ paymentMethod: 'COD', status: 'PAID', count: 2, amount: 25990000 }],
@@ -33,12 +34,13 @@ const mount = () => render(<AuthContext.Provider value={{ user: { userId: 'manag
 
 it('builds one section per report with Vietnamese labels and whole-dong amounts', () => {
   const sections = reportSections(data, { from: '2026-10-01', to: '2026-10-27', warehouseName: '', threshold: 5 });
-  expect(sections.map((s) => s.title)).toHaveLength(9);
+  expect(sections.map((s) => s.title)).toHaveLength(10);
+  expect(sections[4]).toMatchObject({ title: 'Doanh thu theo loại sản phẩm', rows: [['Laptop', 2, 2, 25990000, 3000000]] });
   expect(sections[0].rows[0]).toEqual(['2026-10-01', '2026-10-27', 'Tất cả chi nhánh', 5]);
   expect(sections[1].rows[0][0]).toBe(25990001);
-  expect(sections[5].rows).toContainEqual(['Đã hủy', 1]);
-  expect(sections[6].rows[0]).toEqual(['COD', 'Đã thanh toán', 2, 25990000]);
-  expect(sections[7].rows.at(-1)).toEqual(['Tổng cộng', 1, 50000000]);
+  expect(sections[6].rows).toContainEqual(['Đã hủy', 1]);
+  expect(sections[7].rows[0]).toEqual(['COD', 'Đã thanh toán', 2, 25990000]);
+  expect(sections[8].rows.at(-1)).toEqual(['Tổng cộng', 1, 50000000]);
   const tsv = sectionsToTsv(sections);
   expect(tsv).toContain('Tồn kho thấp (khả dụng ≤ 5)\r\nChi nhánh\tSản phẩm\tSKU');
   expect(tsv).toContain('Chi nhánh Quận 1\tiPhone 15\tIP15-128\t2\t1\t1');
@@ -58,7 +60,7 @@ it('exports every report for the current filters and remembers the low-stock thr
   fireEvent.click(screen.getByRole('button', { name: 'Xuất file Excel (CSV)' }));
   await waitFor(() => expect(saveFile).toHaveBeenCalledTimes(1));
   const resources = reportApi.get.mock.calls.map(([resource]) => resource);
-  expect(resources).toEqual(['summary', 'revenue', 'top-products', 'warehouses', 'order-status', 'payments', 'goods-receipts', 'low-stock']);
+  expect(resources).toEqual(['summary', 'revenue', 'top-products', 'categories', 'warehouses', 'order-status', 'payments', 'goods-receipts', 'low-stock']);
   expect(reportApi.get.mock.calls.find(([r]) => r === 'low-stock')[1]).toMatchObject({ threshold: 8, limit: 100 });
   expect(reportApi.get.mock.calls.find(([r]) => r === 'top-products')[1]).toMatchObject({ limit: 20 });
   expect(saveFile.mock.calls[0][1]).toMatch(/^bao-cao_\d{4}-\d{2}-\d{2}_\d{4}-\d{2}-\d{2}\.csv$/);

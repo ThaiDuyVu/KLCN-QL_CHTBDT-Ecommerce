@@ -257,3 +257,9 @@
 .order-vnpay-info p { font-size: .75rem; color: var(--muted); margin-bottom: 8px; }
 .payment-sandbox-note { margin-top: 16px; }
 @media (max-width: 620px) { .vnpay-result-panel { padding: 20px; } .vnpay-result-panel dl > div { flex-wrap: wrap; gap: 5px; } .vnpay-result-panel dd { text-align: left; } }
+
+/* Cancellation reasons are appended to the note on their own line. */
+.order-note { white-space: pre-line; }
+.order-dispatch-form { display:grid; gap:10px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border); }
+.order-dispatch-form label { display:grid; gap:4px; font-size:.82rem; font-weight:600; }
+.order-dispatch-form input, .order-dispatch-form select { font:inherit; padding:8px 10px; border:1px solid #cbd7ca; border-radius:7px; min-height:40px; }

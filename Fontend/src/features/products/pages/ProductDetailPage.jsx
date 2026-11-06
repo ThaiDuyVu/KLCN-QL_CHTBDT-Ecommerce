@@ -13,6 +13,7 @@ import AddToCart from '../../cart/components/AddToCart';
 import { useWarehouse } from '../../../hooks/useWarehouse';
 import ShopBreadcrumb from '../../../components/ui/ShopBreadcrumb';
 import ComingSoonButton from '../../../components/ui/ComingSoonButton';
+import ProductReviews from '../../reviews/components/ProductReviews';
 import '../products.css';
 import '../../orders/commerce.css';
 
@@ -143,7 +144,7 @@ function CustomerProductDetail({ data, images, image, setSelectedImageId, select
         </dl> : <p className="muted">Chưa có thông số kỹ thuật.</p>}
       </section>
     </div>
-    <section className="panel product-reviews-placeholder"><div><h2>Đánh giá sản phẩm</h2><p>Chức năng đánh giá sẽ được bổ sung sau.</p></div><ComingSoonButton>Viết đánh giá</ComingSoonButton></section>
+    <ProductReviews productId={data.product.productId} />
   </>;
 }
 

@@ -45,6 +45,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleAddress(com.example.backend.customer.address.exception.CustomerAddressException exception) {
         return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
     }
+    @ExceptionHandler(com.example.backend.backup.service.BackupException.class)
+    public ResponseEntity<ApiErrorResponse> handleBackup(com.example.backend.backup.service.BackupException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));
+    }
     @ExceptionHandler(com.example.backend.customer.exception.CustomerManagementException.class)
     public ResponseEntity<ApiErrorResponse> handleCustomerManagement(com.example.backend.customer.exception.CustomerManagementException exception) {
         return ResponseEntity.status(exception.getStatus()).body(new ApiErrorResponse(exception.getMessage()));

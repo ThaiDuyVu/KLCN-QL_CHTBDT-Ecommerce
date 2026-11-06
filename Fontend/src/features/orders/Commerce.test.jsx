@@ -16,7 +16,7 @@ import AddToCart from '../cart/components/AddToCart';
 import { CartContext } from '../cart/cartContext';
 import { WarehouseContext } from '../warehouses/warehouseContext';
 vi.mock('../cart/api/cartApi', () => ({cartApi:{get:vi.fn(),add:vi.fn(),quantity:vi.fn(),remove:vi.fn()}}));
-vi.mock('./api/orderApi', () => ({orderApi:{checkout:vi.fn(),detail:vi.fn(),cancel:vi.fn(),status:vi.fn()}}));
+vi.mock('./api/orderApi', () => ({orderApi:{checkout:vi.fn(),detail:vi.fn(),cancel:vi.fn(),status:vi.fn(),deliveries:vi.fn(),deliveryStaff:vi.fn()}}));
 vi.mock('../addresses/api/addressApi', () => ({addressApi:{list:vi.fn()}}));
 vi.mock('./api/installmentApi', () => ({installmentApi:{activeProviders:vi.fn()}}));
 vi.mock('./api/vnpayApi', () => ({vnpayApi:{config:vi.fn(),paymentUrl:vi.fn(),synchronize:vi.fn()}}));
@@ -82,8 +82,48 @@ it('hides customer cancel for paid orders',async()=>{
 it('management exposes only transitions returned by the server',async()=>{
   orderApi.detail.mockResolvedValue({...order,status:'CONFIRMED',allowedStatuses:['PROCESSING','CANCELLED']});orderApi.status.mockResolvedValue({...order,status:'PROCESSING'});
   mount(<Routes><Route path="*" element={<OrderDetailPage/>}/></Routes>);
-  fireEvent.click(await screen.findByRole('button',{name:'Bắt đầu xử lý'}));await waitFor(()=>expect(orderApi.status).toHaveBeenCalledWith(undefined,'PROCESSING'));
+  fireEvent.click(await screen.findByRole('button',{name:'Bắt đầu xử lý'}));await waitFor(()=>expect(orderApi.status).toHaveBeenCalledWith(undefined,'PROCESSING',undefined));
   expect(screen.queryByRole('button',{name:'Xác nhận đã giao'})).not.toBeInTheDocument();
+});
+it('shipping an order asks for the delivery employee and carrier, then shows the shipment',async()=>{
+  const processing={...order,status:'PROCESSING',allowedStatuses:['SHIPPED']};
+  const shipment={status:'SHIPPING',employeeName:'Phan Văn An',shippingProvider:'Giao Hàng Nhanh',trackingNumber:'GHN-1',shippedDate:'2026-11-06T03:00:00Z'};
+  orderApi.detail.mockResolvedValueOnce(processing).mockResolvedValue({...processing,status:'SHIPPED',allowedStatuses:['DELIVERED','CANCELLED'],shipment});
+  orderApi.deliveryStaff.mockResolvedValue([{employeeId:'e1',employeeCode:'NV0007',fullName:'Phan Văn An'}]);
+  orderApi.status.mockResolvedValue({});
+  mount(<Routes><Route path="*" element={<OrderDetailPage/>}/></Routes>);
+  fireEvent.click(await screen.findByRole('button',{name:'Gửi hàng'}));
+  expect(window.confirm).not.toHaveBeenCalled();
+  fireEvent.click(await screen.findByRole('button',{name:'Xác nhận gửi hàng'}));
+  expect(await screen.findByText('Vui lòng chọn nhân viên giao hàng.')).toBeInTheDocument();expect(orderApi.status).not.toHaveBeenCalled();
+  fireEvent.change(await screen.findByLabelText('Nhân viên giao hàng'),{target:{value:'e1'}});
+  fireEvent.change(screen.getByLabelText('Đơn vị vận chuyển'),{target:{value:'Giao Hàng Nhanh'}});
+  fireEvent.click(screen.getByRole('button',{name:'Xác nhận gửi hàng'}));
+  await waitFor(()=>expect(orderApi.status).toHaveBeenCalledWith(undefined,'SHIPPED',undefined,{deliveryEmployeeId:'e1',shippingProvider:'Giao Hàng Nhanh',trackingNumber:null}));
+  expect(await screen.findByText('Vận chuyển · Đang giao')).toBeInTheDocument();
+  expect(screen.getByText('GHN-1')).toBeInTheDocument();
+  expect(screen.getByRole('button',{name:'Giao không thành công'})).toBeInTheDocument();
+});
+it('a failed delivery requires a reason',async()=>{
+  orderApi.detail.mockResolvedValue({...order,status:'SHIPPED',allowedStatuses:['DELIVERED','CANCELLED']});orderApi.status.mockResolvedValue({});
+  vi.spyOn(window,'prompt').mockReturnValueOnce('').mockReturnValueOnce('Khách không nghe máy');
+  mount(<Routes><Route path="*" element={<OrderDetailPage/>}/></Routes>);
+  const failed=await screen.findByRole('button',{name:'Giao không thành công'});
+  fireEvent.click(failed);expect(await screen.findByText('Cần nhập lý do giao không thành công.')).toBeInTheDocument();
+  fireEvent.click(failed);
+  await waitFor(()=>expect(orderApi.status).toHaveBeenCalledWith(undefined,'CANCELLED','Khách không nghe máy'));
+});
+it('cancelling a paid order requires a reason and sends it to the server',async()=>{
+  const paid={...order,status:'CONFIRMED',payment:{paymentMethod:'VNPAY',status:'PAID',amount:2000000},allowedStatuses:['PROCESSING','CANCELLED']};
+  orderApi.detail.mockResolvedValue(paid);orderApi.status.mockResolvedValue({...paid,status:'CANCELLED',payment:{...paid.payment,status:'REFUNDED'}});
+  const prompt=vi.spyOn(window,'prompt').mockReturnValueOnce('   ').mockReturnValueOnce('Hết hàng tại chi nhánh');
+  mount(<Routes><Route path="*" element={<OrderDetailPage/>}/></Routes>);
+  const cancel=await screen.findByRole('button',{name:'Hủy đơn'});
+  fireEvent.click(cancel);
+  expect(await screen.findByText('Cần nhập lý do khi hủy đơn đã thanh toán.')).toBeInTheDocument();expect(orderApi.status).not.toHaveBeenCalled();
+  fireEvent.click(cancel);
+  await waitFor(()=>expect(orderApi.status).toHaveBeenCalledWith(undefined,'CANCELLED','Hết hàng tại chi nhánh'));
+  expect(prompt.mock.calls[0][0]).toContain('Đã hoàn tiền');
 });
 it('checkout VNPAY sends no amount and redirects using the server payment URL',async()=>{
   const url='https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_TxnRef=demo';

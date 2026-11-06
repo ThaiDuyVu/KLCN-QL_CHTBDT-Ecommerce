@@ -23,6 +23,12 @@ export const warrantyApi = {
       method: 'POST', body: { issueDescription },
     });
   },
+  /** Staff opens a ticket for a device brought to the counter; it is assigned to the receiving technician. */
+  staffCreateTicket(warrantyId, issueDescription) {
+    return commerceRequest(`/warranties/${encodeURIComponent(warrantyId)}/tickets`, {
+      method: 'POST', body: { issueDescription },
+    });
+  },
   myTickets(page = 0, signal) {
     return commerceRequest(`/warranties/mine/tickets?${query({ page, size: 20 })}`, { signal });
   },

@@ -13,5 +13,8 @@ export const orderApi = {
   list(customer, page, signal) { return commerceRequest(`/orders${customer ? '/mine' : ''}?page=${page}&size=20`, { signal }); },
   detail(customer, id, signal) { return commerceRequest(`/orders${customer ? '/mine' : ''}/${encodeURIComponent(id)}`, { signal }); },
   cancel(id) { return commerceRequest(`/orders/mine/${encodeURIComponent(id)}/cancel`, { method: 'POST' }); },
-  status(id, status) { return commerceRequest(`/orders/${encodeURIComponent(id)}/status`, { method: 'PATCH', body: { status } }); },
+  /** shipping (SHIPPED only): { deliveryEmployeeId, shippingProvider, trackingNumber }. */
+  status(id, status, reason, shipping) { return commerceRequest(`/orders/${encodeURIComponent(id)}/status`, { method: 'PATCH', body: { status, ...(reason ? { reason } : {}), ...(shipping || {}) } }); },
+  deliveries(page, signal) { return commerceRequest(`/orders/deliveries?page=${page}&size=20`, { signal }); },
+  deliveryStaff(signal) { return commerceRequest('/orders/delivery-staff', { signal }); },
 };

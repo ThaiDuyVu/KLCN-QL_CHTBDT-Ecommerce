@@ -55,3 +55,18 @@ export function WarehouseRevenueChart({ data }) {
     </ResponsiveContainer>
   </div><details className="report-chart-data"><summary>Xem doanh thu và số đơn từng chi nhánh</summary><div className="report-table-scroll"><table className="product-table"><thead><tr><th>Chi nhánh</th><th className="report-number">Đơn hoàn tất</th><th className="report-number">Doanh thu</th></tr></thead><tbody>{data.map((row) => <tr key={row.warehouseId}><th scope="row">{row.warehouseName}</th><td className="report-number">{row.count}</td><td className="report-number">{money(row.amount)}</td></tr>)}</tbody></table></div></details></>;
 }
+
+export function CategoryRevenueChart({ data }) {
+  if (!data.length) return <EmptyChart />;
+  return <><div className="report-chart" role="group" aria-label="Doanh thu theo loại sản phẩm, đơn vị đồng">
+    <ResponsiveContainer width="100%" height="100%" minWidth={0} initialDimension={{ width: 320, height: 290 }} debounce={80}>
+      <BarChart data={data} layout="vertical" margin={chartMargin} accessibilityLayer>
+        <CartesianGrid stroke="#e4ebe8" strokeDasharray="3 3" horizontal={false} />
+        <XAxis type="number" tickFormatter={compactMoney} tick={{ fontSize: 11 }} />
+        <YAxis type="category" dataKey="categoryName" tickFormatter={shorten} interval={0} width={125} tick={{ fontSize: 11 }} />
+        <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} formatter={(value) => [money(value), 'Doanh thu']} />
+        <Bar dataKey="revenue" fill="#7a5c99" radius={[0, 4, 4, 0]} maxBarSize={28} isAnimationActive={false} />
+      </BarChart>
+    </ResponsiveContainer>
+  </div><details className="report-chart-data"><summary>Xem số lượng, doanh thu và lợi nhuận từng loại</summary><div className="report-table-scroll"><table className="product-table"><thead><tr><th>Loại sản phẩm</th><th className="report-number">Đã bán</th><th className="report-number">Số đơn</th><th className="report-number">Doanh thu</th><th className="report-number">Lợi nhuận gộp</th></tr></thead><tbody>{data.map((row) => <tr key={row.categoryId}><th scope="row">{row.categoryName}</th><td className="report-number">{row.quantity}</td><td className="report-number">{row.orderCount}</td><td className="report-number">{money(row.revenue)}</td><td className="report-number">{money(row.grossProfit)}</td></tr>)}</tbody></table></div></details></>;
+}

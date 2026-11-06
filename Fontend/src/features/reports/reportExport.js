@@ -1,7 +1,7 @@
 import { statusLabels } from '../orders/components/orderFormat';
 import { paymentLabels, paymentStatuses } from './reportLabels';
 
-export const EXPORT_RESOURCES = ['summary', 'revenue', 'top-products', 'warehouses', 'order-status', 'payments', 'goods-receipts', 'low-stock'];
+export const EXPORT_RESOURCES = ['summary', 'revenue', 'top-products', 'categories', 'warehouses', 'order-status', 'payments', 'goods-receipts', 'low-stock'];
 
 // Excel cần số nguyên đồng; số thập phân dạng "1.5" bị Excel vùng Việt Nam đọc sai.
 const vnd = (value) => Math.round(Number(value) || 0);
@@ -16,6 +16,8 @@ export function reportSections(data, { from, to, warehouseName, threshold }) {
       rows: data.revenue.points.map((p) => [p.bucket, p.completedOrders, vnd(p.revenue)]) },
     { title: 'Sản phẩm bán chạy', header: ['Sản phẩm', 'Số lượng bán', 'Doanh thu hàng hóa (đ)'],
       rows: data['top-products'].map((r) => [r.productName, r.quantity, vnd(r.revenue)]) },
+    { title: 'Doanh thu theo loại sản phẩm', header: ['Loại sản phẩm', 'Số lượng bán', 'Số đơn', 'Doanh thu (đ)', 'Lợi nhuận gộp (đ)'],
+      rows: data.categories.map((r) => [r.categoryName, r.quantity, r.orderCount, vnd(r.revenue), vnd(r.grossProfit)]) },
     { title: 'Doanh thu theo chi nhánh', header: ['Chi nhánh', 'Đơn hoàn tất', 'Doanh thu (đ)'],
       rows: data.warehouses.map((r) => [r.warehouseName, r.count, vnd(r.amount)]) },
     { title: 'Trạng thái đơn hàng', header: ['Trạng thái', 'Số đơn'],

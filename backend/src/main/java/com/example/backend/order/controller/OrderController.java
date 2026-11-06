@@ -31,10 +31,14 @@ public class OrderController {
     public OrderResponse cancel(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id) { return service.status(user.getUserId(), true, id, OrderStatus.CANCELLED); }
     @GetMapping @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
     public OrderPageResponse list(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @RequestParam(defaultValue="0") int page, @RequestParam(defaultValue="20") int size) { return service.list(user.getUserId(), false, page, size); }
+    @GetMapping("/deliveries") @RequireAnyAuthority({"DELIVERY_STAFF"})
+    public OrderPageResponse deliveries(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @RequestParam(defaultValue="0") int page, @RequestParam(defaultValue="20") int size) { return service.deliveries(user.getUserId(), page, size); }
+    @GetMapping("/delivery-staff") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
+    public List<DeliveryStaffResponse> deliveryStaff() { return service.deliveryStaff(); }
     @GetMapping("/{id}") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
     public OrderResponse detail(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id) { return service.staffDetail(id, authorities(user)); }
     @PatchMapping("/{id}/status") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
-    public OrderResponse status(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id, @Valid @RequestBody UpdateOrderStatusRequest request) { return service.staffStatus(user.getUserId(), id, request.getStatus(), authorities(user)); }
+    public OrderResponse status(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id, @Valid @RequestBody UpdateOrderStatusRequest request) { return service.staffStatus(user.getUserId(), id, request, authorities(user)); }
     private static List<String> authorities(AuthenticatedUserPrincipal user) {
         return user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
     }

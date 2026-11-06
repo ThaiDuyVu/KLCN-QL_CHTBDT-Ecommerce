@@ -36,6 +36,12 @@ public class ReportController {
         return service.topProducts(filter, limit);
     }
 
+    @GetMapping("/categories")
+    @RequireAnyAuthority({"ADMIN", "MANAGER"})
+    public List<CategoryReportRow> categories(@ModelAttribute ReportFilter filter) {
+        return service.categories(filter);
+    }
+
     @GetMapping("/warehouses")
     @RequireAnyAuthority({"ADMIN", "MANAGER"})
     public List<WarehouseReportRow> warehouses(@ModelAttribute ReportFilter filter) {

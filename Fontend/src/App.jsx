@@ -3,12 +3,19 @@ import { Route, Routes } from 'react-router';
 import RequireAuth from './auth/RequireAuth';
 import RequireRole from './auth/RequireRole';
 import AppLayout from './components/layout/AppLayout';
-import { CUSTOMER_ROLES, GOODS_RECEIPT_ROLES, INVENTORY_ROLES, ORDER_ROLES, ROLES, SERIAL_ROLES, WARRANTY_ROLES } from './config/projectConfig';
+import { CUSTOMER_ROLES, GOODS_RECEIPT_ROLES, INVENTORY_ROLES, INVOICE_ROLES, ORDER_ROLES, RETURN_ROLES, ROLES, SERIAL_ROLES, WARRANTY_ROLES } from './config/projectConfig';
 import ProductCreatePage from './features/products/pages/ProductCreatePage';
 import ProductsPage from './features/products/pages/ProductsPage';
 import ProductDetailPage from './features/products/pages/ProductDetailPage';
 import CategoriesPage from './features/categories/pages/CategoriesPage';
 import OrdersPage from './features/orders/pages/OrdersPage';
+import DeliveriesPage from './features/orders/pages/DeliveriesPage';
+import ReturnsPage from './features/returns/pages/ReturnsPage';
+import ReturnDetailPage from './features/returns/pages/ReturnDetailPage';
+import InvoicesPage from './features/invoices/pages/InvoicesPage';
+import InvoicePage from './features/invoices/pages/InvoicePage';
+import ReviewsPage from './features/reviews/pages/ReviewsPage';
+import BackupsPage from './features/backups/BackupsPage';
 import OrderDetailPage from './features/orders/pages/OrderDetailPage';
 import InstallmentsPage from './features/orders/pages/InstallmentsPage';
 import InstallmentDetailPage from './features/orders/pages/InstallmentDetailPage';
@@ -69,6 +76,9 @@ export default function App() {
             <Route path="payments/vnpay/result" element={<VnpayResultPage />} />
             <Route path="my-orders" element={<OrdersPage customer />} />
             <Route path="my-orders/:orderId" element={<OrderDetailPage customer />} />
+            <Route path="my-orders/:orderId/invoice" element={<InvoicePage customer />} />
+            <Route path="my-returns" element={<ReturnsPage customer />} />
+            <Route path="my-returns/:returnId" element={<ReturnDetailPage customer />} />
             <Route path="my-warranties" element={<MyWarrantiesPage />} />
             <Route path="my-warranties/:warrantyId" element={<WarrantyDetailPage customer />} />
             <Route path="my-warranty-tickets" element={<WarrantyTicketsPage customer />} />
@@ -78,6 +88,18 @@ export default function App() {
           <Route element={<RequireRole roles={ORDER_ROLES} />}>
             <Route path="orders" element={<OrdersPage />} />
             <Route path="orders/:orderId" element={<OrderDetailPage />} />
+          </Route>
+          <Route element={<RequireRole roles={INVOICE_ROLES} />}>
+            <Route path="invoices" element={<InvoicesPage />} />
+            <Route path="invoices/:invoiceId" element={<InvoicePage />} />
+            <Route path="reviews" element={<ReviewsPage />} />
+          </Route>
+          <Route element={<RequireRole roles={RETURN_ROLES} />}>
+            <Route path="returns" element={<ReturnsPage />} />
+            <Route path="returns/:returnId" element={<ReturnDetailPage />} />
+          </Route>
+          <Route element={<RequireRole roles={[ROLES.DELIVERY_STAFF]} />}>
+            <Route path="deliveries" element={<DeliveriesPage />} />
           </Route>
           <Route element={<RequireRole roles={CUSTOMER_ROLES} />}>
             <Route path="customers" element={<CustomersPage />} />
@@ -115,6 +137,7 @@ export default function App() {
           </Route>
           <Route element={<RequireRole roles={[ROLES.ADMIN]} />}>
             <Route path="user-management" element={<UserManagementPage />} />
+            <Route path="admin/backups" element={<BackupsPage />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
