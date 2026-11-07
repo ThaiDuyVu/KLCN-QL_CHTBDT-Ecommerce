@@ -28,6 +28,11 @@ public class Order {
     private String shippingAddress;
     @Column(name = "note", columnDefinition = "text")
     private String note;
+    /** Why the order was cancelled (V11); null for orders that were not cancelled. */
+    @Column(name = "cancel_reason")
+    private String cancelReason;
+    @Enumerated(EnumType.STRING) @Column(name = "sales_channel")
+    private SalesChannel salesChannel = SalesChannel.ONLINE;
     @Column(name = "subtotal", precision = 15, scale = 2)
     private BigDecimal subtotal;
     @Column(name = "discount_amount", precision = 15, scale = 2)
@@ -55,6 +60,10 @@ public class Order {
     public void setRecipientPhone(String value) { this.recipientPhone = value; }
     public String getShippingAddress() { return shippingAddress; }
     public void setShippingAddress(String value) { this.shippingAddress = value; }
+    public SalesChannel getSalesChannel() { return salesChannel; }
+    public void setSalesChannel(SalesChannel value) { this.salesChannel = value; }
+    public String getCancelReason() { return cancelReason; }
+    public void setCancelReason(String value) { this.cancelReason = value; }
     public String getNote() { return note; }
     public void setNote(String value) { this.note = value; }
     public BigDecimal getSubtotal() { return subtotal; }

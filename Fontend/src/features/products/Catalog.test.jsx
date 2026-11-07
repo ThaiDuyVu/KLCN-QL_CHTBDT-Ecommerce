@@ -12,9 +12,11 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import HomePage from '../../pages/HomePage';
 import { Route, Routes } from 'react-router';
 
+import { reviewApi } from '../reviews/api/reviewApi';
 vi.mock('./api/productApi', () => ({ productApi: { list: vi.fn(), detail: vi.fn() } }));
 vi.mock('../categories/api/categoryApi', () => ({ categoryApi: { list: vi.fn() } }));
 vi.mock('../cart/api/cartApi', () => ({ cartApi: { add: vi.fn() } }));
+vi.mock('../reviews/api/reviewApi', () => ({ reviewApi: { forProduct: vi.fn() } }));
 
 const product = { productId: '11111111-1111-1111-1111-111111111111', productName: 'Điện thoại demo', brandName: 'Apple', categoryId: 'phones', categoryName: 'Điện thoại', status: 'ACTIVE', primaryImageUrl: '/images/products/demo/front.webp', availableQuantity: 5 };
 const variants = [
@@ -30,6 +32,7 @@ function mount(component, path = '/', role = 'CUSTOMER', branch = warehouse) {
 
 beforeEach(() => {
   vi.resetAllMocks();
+  reviewApi.forProduct.mockResolvedValue({ totalReviews: 0, content: [], totalPages: 0 });
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
   warehouse.selectWarehouse.mockResolvedValue(true);
   categoryApi.list.mockResolvedValue([{ categoryId: 'phones', categoryName: 'Điện thoại', status: 'ACTIVE' }]);
@@ -68,7 +71,7 @@ it('selects an actual variant and adds its id without sending a price', async ()
   fireEvent.click(screen.getByRole('button', { name: 'Thêm vào giỏ' }));
   await waitFor(() => expect(cartApi.add).toHaveBeenCalledWith('v2', 1));
   expect(warehouse.selectWarehouse).toHaveBeenCalledWith('warehouse-a');
-  expect(screen.getByRole('button', { name: 'Viết đánh giá (sắp có)' })).toBeDisabled();
+  expect(await screen.findByText(/Chưa có đánh giá/)).toBeInTheDocument();
 });
 
 it('requires a warehouse before purchasing and preserves management status controls', async () => {

@@ -12,6 +12,7 @@ public interface WarrantyService {
     WarrantyResponse warranty(UUID warrantyId);
     WarrantyResponse lookup(String code);
     WarrantyTicketResponse createTicket(UUID userId, UUID warrantyId, CreateWarrantyTicketRequest request);
+    WarrantyTicketResponse staffCreateTicket(UUID userId, UUID warrantyId, CreateWarrantyTicketRequest request);
     WarrantyTicketPageResponse myTickets(UUID userId, int page, int size);
     WarrantyTicketResponse myTicket(UUID userId, UUID ticketId);
     WarrantyTicketPageResponse tickets(String keyword, WarrantyTicketStatus status, int page, int size);

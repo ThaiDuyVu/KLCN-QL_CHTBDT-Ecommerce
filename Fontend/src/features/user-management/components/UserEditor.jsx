@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 import { userManagementApi as api } from '../api/userManagementApi';
+import EmployeeProfileForm from './EmployeeProfileForm';
 
 export default function UserEditor({ target, roles, onSaved, onClose, disabled = false, onSubmitting }) {
   const { user, refreshSession, invalidateSession } = useAuth();
@@ -52,6 +53,7 @@ export default function UserEditor({ target, roles, onSaved, onClose, disabled =
       </fieldset>
       <button className="button" disabled={isBusy}>{busy === 'profile' ? 'Đang lưu…' : 'Lưu thông tin'}</button>
     </form>
+    {target.roleName && target.roleName !== 'CUSTOMER' && <EmployeeProfileForm userId={target.userId} disabled={isBusy} />}
     {user?.roleName === 'ADMIN' && <form onSubmit={saveRole} className="management-role-form">
       <label>Role<select value={roleId} onChange={(event) => setRoleId(event.target.value)} required disabled={isBusy}>
         <option value="" disabled>Chọn role</option>{roles.map((role) => <option key={role.roleId} value={role.roleId}>{role.roleName}</option>)}

@@ -1,4 +1,4 @@
-export const warrantyStatus = { ACTIVE: 'Còn hạn', EXPIRED: 'Hết hạn' };
+export const warrantyStatus = { ACTIVE: 'Còn hạn', EXPIRED: 'Hết hạn', VOIDED: 'Đã hủy (hàng đã trả lại)' };
 export const ticketStatus = {
   RECEIVED: 'Đã tiếp nhận', IN_PROGRESS: 'Đang xử lý', COMPLETED: 'Hoàn tất', REJECTED: 'Từ chối',
 };

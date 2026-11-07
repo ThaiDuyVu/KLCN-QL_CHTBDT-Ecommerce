@@ -121,17 +121,29 @@ class ProductPrice extends StatelessWidget {
           fontWeight: FontWeight.w800,
         ),
       ),
-      if (product.price != null &&
-          product.originalPrice != null &&
-          product.originalPrice! > product.price!)
-        Text(
-          money(product.originalPrice),
-          style: const TextStyle(
-            color: Colors.grey,
-            fontSize: 12,
-            decoration: TextDecoration.lineThrough,
-          ),
+      if (product.onSale)
+        Wrap(
+          spacing: 6,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(
+              money(product.originalPrice),
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+                decoration: TextDecoration.lineThrough,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+              decoration: BoxDecoration(color: Colors.red.shade50, borderRadius: BorderRadius.circular(4)),
+              child: Text('-${product.discountPercent}%', style: const TextStyle(color: Colors.red, fontSize: 11, fontWeight: FontWeight.bold)),
+            ),
+          ],
         ),
+      if (product.onSale && (product.promotionName ?? '').isNotEmpty)
+        Text(product.promotionName!, maxLines: 1, overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: Colors.red, fontSize: 11)),
     ],
   );
 }

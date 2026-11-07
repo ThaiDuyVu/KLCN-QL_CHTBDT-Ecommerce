@@ -6,6 +6,9 @@ import '../../../../core/network/api_error.dart';
 import '../../../../core/utils/custom_snackbar.dart';
 import '../../data/models/order_model.dart';
 import '../providers/order_providers.dart';
+import '../../../returns/data/return_repository.dart';
+import '../../../returns/presentation/return_request_screen.dart';
+import '../../../reviews/presentation/review_widgets.dart';
 
 class OrderDetailScreen extends ConsumerWidget {
   final String orderId;
@@ -196,11 +199,72 @@ class OrderDetailScreen extends ConsumerWidget {
                           const SizedBox(height: 8),
                           _buildDetailRow('Ghi chú:', order.note!),
                         ],
+                        if ((order.cancelReason ?? '').isNotEmpty) ...[
+                          const SizedBox(height: 8),
+                          _buildDetailRow('Lý do hủy:', order.cancelReason!),
+                        ],
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(height: 10),
+
+                // KHỐI 1b: Vận chuyển (khi đơn đã được bàn giao cho nhân viên giao hàng)
+                if (order.shipment != null) ...[
+                  Card(
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.local_shipping_outlined,
+                                color: Colors.deepOrange,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'VẬN CHUYỂN · ${OrderShipment.statusLabel(order.shipment!.status).toUpperCase()}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: Colors.deepOrange,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Divider(height: 20),
+                          _buildDetailRow('Đơn vị:', order.shipment!.shippingProvider),
+                          const SizedBox(height: 8),
+                          _buildDetailRow('Mã vận đơn:', order.shipment!.trackingNumber),
+                          const SizedBox(height: 8),
+                          _buildDetailRow(
+                            'Người giao:',
+                            [
+                              order.shipment!.employeeName ?? 'Đang cập nhật',
+                              if ((order.shipment!.employeePhone ?? '').isNotEmpty) order.shipment!.employeePhone!,
+                            ].join(' · '),
+                          ),
+                          if (order.shipment!.shippedDate != null) ...[
+                            const SizedBox(height: 8),
+                            _buildDetailRow('Ngày gửi:', order.shipment!.shippedDate!),
+                          ],
+                          if (order.shipment!.deliveredDate != null) ...[
+                            const SizedBox(height: 8),
+                            _buildDetailRow('Ngày nhận:', order.shipment!.deliveredDate!),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
 
                 // KHỐI 2: Danh sách sản phẩm
                 Card(
@@ -411,15 +475,30 @@ class OrderDetailScreen extends ConsumerWidget {
                           'Phương thức:',
                           order.paymentMethod,
                         ),
+                        if (order.invoiceNumber != null) ...[
+                          const SizedBox(height: 8),
+                          _buildSummaryRow(
+                            'Hóa đơn:',
+                            order.invoiceStatus == 'CANCELLED'
+                                ? '${order.invoiceNumber} (đã hủy)'
+                                : order.invoiceNumber!,
+                          ),
+                        ],
                         const SizedBox(height: 8),
                         _buildSummaryRow(
                           'Trạng thái thanh toán:',
-                          order.paymentStatus == 'PAID'
-                              ? 'Đã thanh toán'
-                              : 'Chưa thanh toán',
-                          color: order.paymentStatus == 'PAID'
-                              ? Colors.green
-                              : Colors.orange,
+                          switch (order.paymentStatus) {
+                            'PAID' => 'Đã thanh toán',
+                            'REFUNDED' => 'Đã hoàn tiền',
+                            'FAILED' => 'Thanh toán thất bại',
+                            _ => 'Chưa thanh toán',
+                          },
+                          color: switch (order.paymentStatus) {
+                            'PAID' => Colors.green,
+                            'REFUNDED' => Colors.blueGrey,
+                            'FAILED' => Colors.red,
+                            _ => Colors.orange,
+                          },
                         ),
                         const Divider(height: 24),
                         Row(
@@ -447,6 +526,14 @@ class OrderDetailScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
+
+                // Đổi trả: chỉ với đơn đã giao
+                if (order.status == 'DELIVERED') ...[
+                  OrderReviewsSection(order: order),
+                  const SizedBox(height: 10),
+                  _OrderReturnsSection(order: order),
+                  const SizedBox(height: 16),
+                ],
 
                 // Nút Hủy đơn nếu được phép
                 if (canCancel)
@@ -612,6 +699,69 @@ class OrderDetailScreen extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Return requests of a delivered order and the entry point to create a new one.
+class _OrderReturnsSection extends ConsumerWidget {
+  final Order order;
+
+  const _OrderReturnsSection({required this.order});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final returns = ref.watch(orderReturnsProvider(order.id));
+    return Card(
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: returns.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, _) => Text('Không tải được yêu cầu đổi trả: $e'),
+          data: (rows) {
+            final claimed = <String, int>{};
+            for (final row in rows.where((r) => r.status != 'REJECTED')) {
+              for (final line in row.items) {
+                claimed[line.orderItemId] = (claimed[line.orderItemId] ?? 0) + line.quantity;
+              }
+            }
+            final canRequest = order.items.any((item) => item.quantity > (claimed[item.id] ?? 0));
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'ĐỔI TRẢ HÀNG',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.deepOrange),
+                ),
+                const Divider(height: 20),
+                ...rows.map((row) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        '${row.code}${row.requestType == 'EXCHANGE' ? ' (đổi hàng${row.exchangeOrderCode != null ? ' → ${row.exchangeOrderCode}' : ''})' : ''}'
+                        ' · ${ReturnRequestSummary.statusLabel(row.status)}\n'
+                        '${row.items.map((l) => '${l.productName} × ${l.quantity}').join(', ')}',
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                    )),
+                if (canRequest)
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.assignment_return_outlined),
+                      label: const Text('Yêu cầu đổi trả'),
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => ReturnRequestScreen(order: order, claimed: claimed)),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

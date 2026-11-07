@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router';
-import { CUSTOMER_ROLES, GOODS_RECEIPT_ROLES, INVENTORY_ROLES, ORDER_ROLES, projectConfig, ROLES, SERIAL_ROLES, WARRANTY_ROLES } from '../../config/projectConfig';
+import { CUSTOMER_ROLES, GOODS_RECEIPT_ROLES, INVENTORY_ROLES, INVOICE_ROLES, ORDER_ROLES, projectConfig, RETURN_ROLES, ROLES, SERIAL_ROLES, WARRANTY_ROLES } from '../../config/projectConfig';
 import { useAuth } from '../../hooks/useAuth';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCart } from '../../hooks/useCart';
@@ -15,6 +15,11 @@ const managementNavigation = [
   { to: '/products', label: 'Sản phẩm' },
   { to: '/categories', label: 'Danh mục' },
   { to: '/orders', label: 'Đơn hàng', roles: ORDER_ROLES },
+  { to: '/pos', label: 'Bán tại quầy', roles: INVOICE_ROLES },
+  { to: '/deliveries', label: 'Đơn tôi cần giao', roles: [ROLES.DELIVERY_STAFF] },
+  { to: '/returns', label: 'Đổi trả', roles: RETURN_ROLES },
+  { to: '/invoices', label: 'Hóa đơn', roles: INVOICE_ROLES },
+  { to: '/reviews', label: 'Đánh giá', roles: INVOICE_ROLES },
   { to: '/promotions', label: 'Khuyến mãi', roles: [ROLES.ADMIN, ROLES.MANAGER] },
   { to: '/installments', label: 'Trả góp', roles: [ROLES.ADMIN, ROLES.MANAGER] },
   { to: '/customers', label: 'Khách hàng', roles: CUSTOMER_ROLES },
@@ -25,6 +30,7 @@ const managementNavigation = [
   { to: '/warranty-tickets', label: 'Warranty Ticket', roles: WARRANTY_ROLES },
   { to: '/reports', label: 'Thống kê & Báo cáo', roles: [ROLES.ADMIN, ROLES.MANAGER] },
   { to: '/user-management', label: 'Người dùng', roles: [ROLES.ADMIN] },
+  { to: '/admin/backups', label: 'Sao lưu dữ liệu', roles: [ROLES.ADMIN] },
 ];
 
 // The default post-login page (/account) is gated too, so the branch step follows login directly;
@@ -35,6 +41,7 @@ const storefrontNavigation = [
   { to: '/', label: 'Trang chủ', end: true },
   { to: '/products', label: 'Cửa hàng' },
   { to: '/my-orders', label: 'Đơn hàng' },
+  { to: '/my-returns', label: 'Đổi trả' },
   { to: '/my-warranties', label: 'Bảo hành' },
   // Visible to guests too: the CUSTOMER route guard sends them through login first.
   { to: '/chatbot', label: 'Trợ lý AI' },

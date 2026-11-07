@@ -9,6 +9,7 @@ import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../warehouse/presentation/providers/warehouse_providers.dart';
 import '../../data/models/product_model.dart';
 import '../providers/product_providers.dart';
+import '../../../reviews/presentation/review_widgets.dart';
 import '../widgets/shop_widgets.dart';
 
 final productVariantsProvider = FutureProvider.autoDispose
@@ -300,6 +301,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   : 'Chưa có mô tả sản phẩm.',
               style: const TextStyle(height: 1.7, color: shopInk),
             ),
+            const SizedBox(height: 28),
+            ProductReviewsSection(productId: p.id),
             const SizedBox(height: 28),
           ],
         ),

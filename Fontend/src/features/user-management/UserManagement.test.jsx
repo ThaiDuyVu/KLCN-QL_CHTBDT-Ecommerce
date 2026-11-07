@@ -5,9 +5,12 @@ import { AuthContext } from '../../auth/AuthContext';
 import UsersPanel from './components/UsersPanel';
 import RolesPermissionsPanel from './components/RolesPermissionsPanel';
 import { userManagementApi as api } from './api/userManagementApi';
+import { warehouseApi } from '../warehouses/api/warehouseApi';
+vi.mock('../warehouses/api/warehouseApi', () => ({ warehouseApi: { listAll: vi.fn() } }));
 vi.mock('./api/userManagementApi', () => ({ userManagementApi: {
   users: vi.fn(), user: vi.fn(), update: vi.fn(), status: vi.fn(), role: vi.fn(),
   permissions: vi.fn(), rolePermissions: vi.fn(), updatePermissions: vi.fn(),
+  createEmployee: vi.fn(), employeeByUser: vi.fn(), updateEmployee: vi.fn(),
 } }));
 const roles = [{ roleId: 'staff-id', roleName: 'STAFF' }, { roleId: 'manager-id', roleName: 'MANAGER' }, { roleId: 'admin-id', roleName: 'ADMIN' }];
 const target = { userId: 'user-id', username: 'staff', email: 'staff@example.com', displayName: 'Staff', phone: '0900', status: 'ACTIVE', roleId: 'staff-id', roleName: 'STAFF' };
@@ -18,6 +21,26 @@ beforeEach(() => {
   api.users.mockResolvedValue({ content: [target], page: 0, size: 20, totalElements: 1, totalPages: 1 });
   api.permissions.mockResolvedValue([{ permissionId: 'view-id', permissionName: 'USER_VIEW' }]);
   api.rolePermissions.mockResolvedValue([]);
+  warehouseApi.listAll.mockResolvedValue([{ warehouseId: 'w1', warehouseName: 'Chi nhánh Quận 1', status: 'ACTIVE' }]);
+  api.employeeByUser.mockResolvedValue({ employeeId: 'employee-id', employeeCode: 'NV0001', fullName: 'Staff', position: 'Nhân viên cửa hàng' });
+});
+it('creates an employee with a job title and never offers the customer role', async () => {
+  const withCustomer = [...roles, { roleId: 'customer-id', roleName: 'CUSTOMER' }, { roleId: 'keeper-id', roleName: 'WAREHOUSE_KEEPER', description: 'Thủ kho' }];
+  api.createEmployee.mockResolvedValue({ employeeId: 'e2', employeeCode: 'NV0002', fullName: 'Trần Thị Bình', username: 'thukho.q1' });
+  mount(<UsersPanel roles={withCustomer} />); await screen.findByText('staff@example.com');
+  fireEvent.click(screen.getByRole('button', { name: '+ Thêm nhân viên' }));
+  const select = screen.getByLabelText('Chức danh');
+  expect([...select.options].map((o) => o.value)).not.toContain('customer-id');
+  fireEvent.change(screen.getByLabelText('Họ và tên'), { target: { value: ' Trần Thị Bình ' } });
+  fireEvent.change(select, { target: { value: 'keeper-id' } });
+  fireEvent.change(screen.getByLabelText('Tên đăng nhập'), { target: { value: 'thukho.q1' } });
+  fireEvent.change(screen.getByLabelText('Mật khẩu ban đầu'), { target: { value: 'MatKhau123' } });
+  fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'thukho@dienmay.test' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Tạo nhân viên' }));
+  await waitFor(() => expect(api.createEmployee).toHaveBeenCalledWith(expect.objectContaining({
+    fullName: 'Trần Thị Bình', roleId: 'keeper-id', username: 'thukho.q1', password: 'MatKhau123', email: 'thukho@dienmay.test', employeeCode: null, phone: null, warehouseId: null })));
+  expect(await screen.findByText('Đã tạo nhân viên Trần Thị Bình (NV0002) với tài khoản thukho.q1.')).toBeInTheDocument();
+  expect(api.users).toHaveBeenCalledTimes(2);
 });
 it('searches with keyword, status and role filters', async () => {
   mount(<UsersPanel roles={roles} />); await screen.findByText('staff@example.com');

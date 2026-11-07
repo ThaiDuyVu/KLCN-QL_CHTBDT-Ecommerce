@@ -5,6 +5,7 @@ import { userManagementApi as api } from '../api/userManagementApi';
 import useManagementRequest from '../hooks/useManagementRequest';
 import RequestState from './RequestState';
 import UserEditor from './UserEditor';
+import EmployeeCreateForm from './EmployeeCreateForm';
 import StatusBadge from '../../../components/ui/StatusBadge';
 
 const labels = { ACTIVE: 'Đang hoạt động', INACTIVE: 'Ngừng hoạt động', LOCKED: 'Đã khóa' };
@@ -21,6 +22,7 @@ export default function UsersPanel({ roles }) {
   const load = useCallback((signal) => api.users({ page, size, keyword, status, roleId }, signal), [page, keyword, status, roleId]);
   const { data, error, loading, reload } = useManagementRequest(key, load);
   const [editor, setEditor] = useState(null);
+  const [creating, setCreating] = useState(false);
   const [busyId, setBusyId] = useState(null);
   const [editingBusy, setEditingBusy] = useState(false);
   const submitting = editingBusy || Boolean(busyId);
@@ -32,6 +34,10 @@ export default function UsersPanel({ roles }) {
     setParams(next); setEditor(null); setNotice(''); setActionError('');
   }
   function changePage(value) { const next = new URLSearchParams(params); next.set('page', value + 1); setParams(next); setEditor(null); }
+  function created(employee) {
+    setCreating(false); setActionError('');
+    setNotice(`Đã tạo nhân viên ${employee.fullName} (${employee.employeeCode}) với tài khoản ${employee.username}.`); reload();
+  }
   function saved(updated) { setEditor(updated); setNotice('Đã cập nhật người dùng.'); reload(); }
   async function changeStatus(target, nextStatus) {
     if (!window.confirm(`${labels[nextStatus]} tài khoản ${target.username}?${target.userId === user?.userId && nextStatus !== 'ACTIVE' ? ' Bạn sẽ phải đăng nhập lại khi tài khoản được kích hoạt/mở khóa.' : ''}`)) return;
@@ -52,6 +58,8 @@ export default function UsersPanel({ roles }) {
       <button className="button" disabled={submitting}>Tìm kiếm</button>
       <button type="button" className="button button-quiet" disabled={submitting} onClick={() => { setParams({}); setEditor(null); }}>Xóa bộ lọc</button>
     </form>
+    {!creating && <div className="management-actions"><button type="button" className="button" disabled={submitting} onClick={() => { setCreating(true); setEditor(null); setNotice(''); }}>+ Thêm nhân viên</button></div>}
+    {creating && <EmployeeCreateForm roles={roles} onCreated={created} onClose={() => setCreating(false)} />}
     {actionError && <p className="auth-alert" role="alert">{actionError}</p>}
     {notice && <p role="status">{notice}</p>}
     {editor && <UserEditor key={`${editor.userId}:${editor.email}:${editor.roleId}:${editor.status}`} target={editor} roles={roles} onSaved={saved} disabled={submitting} onSubmitting={setEditingBusy} onClose={() => setEditor(null)} />}

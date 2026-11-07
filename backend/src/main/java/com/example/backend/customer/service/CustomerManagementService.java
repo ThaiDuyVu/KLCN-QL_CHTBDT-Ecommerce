@@ -7,6 +7,8 @@ import java.util.UUID;
 public interface CustomerManagementService {
     CustomerPageResponse<CustomerSummaryResponse> list(String keyword, UserStatus status, int page, int size);
     CustomerSummaryResponse detail(UUID customerId);
+    CustomerSummaryResponse create(CreateCustomerRequest request);
+    CustomerSummaryResponse update(UUID customerId, UpdateCustomerRequest request);
     CustomerPageResponse<CustomerOrderResponse> orders(UUID customerId, int page, int size);
     CustomerPageResponse<CustomerWarrantyResponse> warranties(UUID customerId, int page, int size);
     CustomerPageResponse<CustomerInstallmentResponse> installments(UUID customerId, int page, int size);

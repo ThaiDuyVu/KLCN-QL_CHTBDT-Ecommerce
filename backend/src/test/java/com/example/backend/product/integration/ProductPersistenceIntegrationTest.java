@@ -104,9 +104,10 @@ class ProductPersistenceIntegrationTest {
     @Test
     void migrationsAndProductCreation_matchLockedSchema() {
         flyway.validate();
-        // V9 only seeds staff job roles (approved for S2, 27/10/2026); the table structure is unchanged.
-        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("9");
-        assertThat(flyway.info().applied()).hasSize(9);
+        // V9 seeds staff job roles (approved for S2, 27/10/2026). V10–V13 (plan P3, approved 06/11/2026):
+        // status CHECKs, order status history, employee branch, in-store sales. V14: exchange in returns.
+        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("14");
+        assertThat(flyway.info().applied()).hasSize(14);
 
         var response = service.createProduct(request(null));
         Product persisted = productRepository.findById(response.productId()).orElseThrow();

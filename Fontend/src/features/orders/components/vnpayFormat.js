@@ -1,4 +1,4 @@
-export const paymentStatusLabels = { PENDING: 'Chờ thanh toán', PAID: 'Đã thanh toán', FAILED: 'Thanh toán thất bại' };
+export const paymentStatusLabels = { PENDING: 'Chờ thanh toán', PAID: 'Đã thanh toán', FAILED: 'Thanh toán thất bại', REFUNDED: 'Đã hoàn tiền' };
 
 export const vnpayResponseMessages = {
   '07': 'VNPAY báo giao dịch cần kiểm tra. Vui lòng liên hệ cửa hàng để đối soát.',

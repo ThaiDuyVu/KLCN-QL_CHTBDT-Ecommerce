@@ -6,6 +6,7 @@ import 'package:ecommerce_app/features/products/presentation/pages/home_screen.d
 import 'package:ecommerce_app/features/profile/presentation/pages/profile_screen.dart';
 import 'package:ecommerce_app/features/warranty/presentation/pages/warranty_list_screen.dart';
 import 'package:ecommerce_app/features/warranty/presentation/pages/warranty_tickets_screen.dart';
+import 'package:ecommerce_app/features/chatbot/presentation/chatbot_screen.dart';
 
 class MainMainScreen extends ConsumerStatefulWidget {
   const MainMainScreen({super.key});
@@ -35,6 +36,16 @@ class _MainMainScreenState extends ConsumerState<MainMainScreen> {
     final index = _currentIndex < pages.length ? _currentIndex : 0;
 
     return Scaffold(
+      floatingActionButton: customer && index == 0
+          ? FloatingActionButton.extended(
+              heroTag: 'chatbot',
+              backgroundColor: Colors.deepOrange,
+              foregroundColor: Colors.white,
+              icon: const Icon(Icons.smart_toy_outlined),
+              label: const Text('Tư vấn'),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ChatbotScreen())),
+            )
+          : null,
       body: IndexedStack(
         index: index,
         children: [

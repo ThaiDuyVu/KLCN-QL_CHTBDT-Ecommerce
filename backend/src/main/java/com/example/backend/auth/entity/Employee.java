@@ -50,6 +50,13 @@ public class Employee {
     )
     private String position;
 
+    /** Branch the employee works at (V12); null = all branches. */
+    @Column(name = "warehouse_id")
+    private java.util.UUID warehouseId;
+
+    public java.util.UUID getWarehouseId() { return warehouseId; }
+    public void setWarehouseId(java.util.UUID value) { this.warehouseId = value; }
+
     public Employee() {
     }
 

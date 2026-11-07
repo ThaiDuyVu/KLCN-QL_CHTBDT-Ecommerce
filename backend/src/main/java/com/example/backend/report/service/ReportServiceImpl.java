@@ -19,9 +19,16 @@ import org.springframework.transaction.annotation.Isolation;
 public class ReportServiceImpl implements ReportService {
     private final ReportRepository repository;
 
-    public ReportServiceImpl(ReportRepository repository) { this.repository = repository; }
+    private final com.example.backend.common.branch.BranchScope branch;
+
+    public ReportServiceImpl(ReportRepository repository, com.example.backend.common.branch.BranchScope branch) {
+        this.repository = repository;
+        this.branch = branch;
+    }
 
     private ReportFilter validate(ReportFilter filter) {
+        // A branch manager (V12) always reports on their own branch.
+        branch.current().ifPresent(filter::setWarehouseId);
         LocalDate to = filter.getTo() == null ? LocalDate.now() : filter.getTo();
         if (to.getYear() < 1 || to.getYear() > 9998) {
             throw new ReportException(400, "Ngày báo cáo ngoài khoảng hỗ trợ");
@@ -71,6 +78,9 @@ public class ReportServiceImpl implements ReportService {
     @Override public List<TopProductRow> topProducts(ReportFilter filter, int limit) {
         limit(limit, 20);
         return repository.topProducts(validate(filter), limit);
+    }
+    @Override public List<CategoryReportRow> categories(ReportFilter filter) {
+        return repository.categories(validate(filter));
     }
     @Override public List<WarehouseReportRow> warehouses(ReportFilter filter) {
         return repository.warehouses(validate(filter));

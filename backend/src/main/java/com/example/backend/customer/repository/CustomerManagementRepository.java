@@ -29,8 +29,8 @@ public class CustomerManagementRepository {
 
     private static final String PROFILE = """
             SELECT c.customer_id, c.user_id, c.full_name, c.address, c.loyalty_point,
-                   u.username, u.display_name, u.email, u.phone, u.status, u.created_at
-            FROM customers c JOIN users u ON u.user_id = c.user_id
+                   u.username, u.display_name, u.email, COALESCE(u.phone, c.phone) AS phone, u.status, c.created_at
+            FROM customers c LEFT JOIN users u ON u.user_id = c.user_id
             """;
 
     private String filter(String keyword, UserStatus status) {
@@ -39,7 +39,8 @@ public class CustomerManagementRepository {
                   AND (LOWER(c.full_name) LIKE :term ESCAPE '\\'
                     OR LOWER(u.username) LIKE :term ESCAPE '\\'
                     OR LOWER(u.email) LIKE :term ESCAPE '\\'
-                    OR LOWER(u.phone) LIKE :term ESCAPE '\\')
+                    OR LOWER(u.phone) LIKE :term ESCAPE '\\'
+                    OR LOWER(c.phone) LIKE :term ESCAPE '\\')
                   """);
     }
 
@@ -55,7 +56,8 @@ public class CustomerManagementRepository {
     private CustomerSummaryResponse profile(ResultSet rs) throws SQLException {
         return new CustomerSummaryResponse(id(rs, "customer_id"), id(rs, "user_id"), rs.getString("full_name"),
                 rs.getString("address"), rs.getInt("loyalty_point"), rs.getString("username"), rs.getString("display_name"),
-                rs.getString("email"), rs.getString("phone"), UserStatus.valueOf(rs.getString("status")),
+                rs.getString("email"), rs.getString("phone"),
+                rs.getString("status") == null ? null : UserStatus.valueOf(rs.getString("status")),
                 date(rs, "created_at"), emptySummary());
     }
 
@@ -64,12 +66,12 @@ public class CustomerManagementRepository {
     }
 
     public long countCustomers(String keyword, UserStatus status) {
-        return jdbc.queryForObject("SELECT COUNT(*) FROM customers c JOIN users u ON u.user_id = c.user_id"
+        return jdbc.queryForObject("SELECT COUNT(*) FROM customers c LEFT JOIN users u ON u.user_id = c.user_id"
                 + filter(keyword, status), parameters(keyword, status), Long.class);
     }
 
     public List<CustomerSummaryResponse> customers(String keyword, UserStatus status, int page, int size) {
-        return jdbc.query(PROFILE + filter(keyword, status) + " ORDER BY u.created_at DESC, c.customer_id DESC LIMIT :size OFFSET :offset",
+        return jdbc.query(PROFILE + filter(keyword, status) + " ORDER BY c.created_at DESC, c.customer_id DESC LIMIT :size OFFSET :offset",
                 parameters(keyword, status).addValue("size", size).addValue("offset", (long) page * size),
                 (rs, row) -> profile(rs));
     }

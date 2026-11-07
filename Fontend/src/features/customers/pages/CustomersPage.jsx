@@ -1,16 +1,21 @@
-import { useCallback } from 'react';
-import { Link, useSearchParams } from 'react-router';
+import { useCallback, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router';
+import { useAuth } from '../../../hooks/useAuth';
+import CustomerForm from '../components/CustomerForm';
 import PageHeader from '../../../components/ui/PageHeader';
 import useProductRequest from '../../products/hooks/useProductRequest';
 import { money, date } from '../../orders/components/orderFormat';
 import { customerApi } from '../api/customerApi';
 import CustomerPagination from '../components/CustomerPagination';
 import CustomerStatus from '../components/CustomerStatus';
-import { accountLabels, pageNumber } from '../components/customerFormat';
+import { accountLabels, CUSTOMER_EDITOR_ROLES, pageNumber } from '../components/customerFormat';
 import '../customers.css';
 
 export default function CustomersPage() {
   const [params, setParams] = useSearchParams();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [creating, setCreating] = useState(false);
   const page = pageNumber(params.get('page'));
   const keyword = (params.get('keyword') || '').trim();
   const status = Object.hasOwn(accountLabels, params.get('status')) ? params.get('status') : '';
@@ -28,6 +33,8 @@ export default function CustomersPage() {
       <label>Trạng thái tài khoản<select name="status" defaultValue={status}><option value="">Tất cả trạng thái</option>{Object.entries(accountLabels).map(([key, label]) => <option value={key} key={key}>{label}</option>)}</select></label>
       <button className="button" type="submit">Tìm kiếm</button>{(keyword || status) && <button className="button button-quiet" type="button" onClick={() => setParams({})}>Xóa bộ lọc</button>}
     </form>
+    {CUSTOMER_EDITOR_ROLES.includes(user?.roleName) && !creating && <div className="customer-toolbar"><button type="button" className="button" onClick={() => setCreating(true)}>+ Thêm khách hàng</button></div>}
+    {creating && <CustomerForm onClose={() => setCreating(false)} onSaved={(saved) => navigate(`/customers/${saved.customerId}`, { state: { created: true } })} />}
     <section className="panel customer-results" aria-busy={result.isLoading} aria-label="Danh sách khách hàng">
       <header className="data-section-heading"><div><h2>Danh sách khách hàng</h2><p>{result.data ? `${result.data.totalElements} khách hàng trong phạm vi lọc` : 'Thông tin tài khoản và hồ sơ kinh doanh'}</p></div></header>
       {result.isLoading ? <p className="customer-state" role="status">Đang tải khách hàng…</p> : result.error ? <div className="auth-alert" role="alert"><p>{result.error.message}</p><button className="button button-quiet" onClick={result.retry}>Thử lại</button></div> : !result.data.content.length ? <div className="customer-state"><h3>Không có khách hàng phù hợp</h3><p>Thử thay đổi từ khóa hoặc trạng thái tài khoản.</p></div> : <div className="customer-table-scroll"><table className="customer-table"><thead><tr><th>Khách hàng</th><th className="customer-list-secondary">Email</th><th className="customer-list-secondary">Điện thoại</th><th>Trạng thái</th><th className="customer-number customer-list-secondary">Tổng đơn</th><th className="customer-number">Tổng chi tiêu</th><th className="customer-list-secondary">Đơn gần nhất</th></tr></thead><tbody>{result.data.content.map((row) => <tr key={row.customerId}>

@@ -5,7 +5,7 @@ import { inventoryApi } from '../../inventory/api/inventoryApi';
 import { reportApi } from '../api/reportApi';
 import { EXPORT_RESOURCES, encodeForExcel, reportSections, saveFile, sectionsToTsv } from '../reportExport';
 import ReportWidget from '../components/ReportWidget';
-import { RevenueChart, TopProductsChart, WarehouseRevenueChart } from '../components/ReportCharts';
+import { CategoryRevenueChart, RevenueChart, TopProductsChart, WarehouseRevenueChart } from '../components/ReportCharts';
 import { SummaryCards, OrderStatusSummary, PaymentSummary, GoodsReceiptSummary, LowStockTable } from '../components/ReportSummaries';
 import '../reports.css';
 
@@ -89,6 +89,7 @@ export default function ReportsPage() {
       <ReportWidget resource="top-products" filters={{ ...filters, limit: 5 }} title="Top 5 sản phẩm bán chạy" description="Xếp theo số lượng bán trong đơn DELIVERED.">{(data) => <TopProductsChart data={data} />}</ReportWidget>
       <ReportWidget resource="warehouses" filters={filters} title="Doanh thu theo chi nhánh" description="Order DELIVERED · tối đa 100 chi nhánh theo doanh thu.">{(data) => <WarehouseRevenueChart data={data} />}</ReportWidget>
     </div>
+    <ReportWidget resource="categories" filters={filters} title="Doanh thu theo loại sản phẩm" description="Order DELIVERED · danh mục con được cộng dồn vào danh mục gốc · doanh thu sau giảm giá.">{(data) => <CategoryRevenueChart data={data} />}</ReportWidget>
     <div className="report-two-columns">
       <ReportWidget resource="order-status" filters={filters} title="Trạng thái đơn hàng" description="Tất cả đơn có ngày đặt trong phạm vi lọc.">{(data) => <OrderStatusSummary data={data} />}</ReportWidget>
       <ReportWidget resource="payments" filters={filters} title="Phương thức thanh toán" description="Payment của đơn trong phạm vi ngày đặt; đây không phải doanh thu đã ghi nhận.">{(data) => <PaymentSummary data={data} />}</ReportWidget>

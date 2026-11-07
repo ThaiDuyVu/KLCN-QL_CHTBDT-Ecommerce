@@ -84,6 +84,15 @@ public class WarrantyController {
         return service.updateTicket(user.getUserId(), ticketId, request);
     }
 
+    @PostMapping("/{warrantyId}/tickets")
+    @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WARRANTY_TECHNICIAN"})
+    public ResponseEntity<WarrantyTicketResponse> staffCreateTicket(
+            @AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID warrantyId,
+            @Valid @RequestBody CreateWarrantyTicketRequest request) {
+        WarrantyTicketResponse response = service.staffCreateTicket(user.getUserId(), warrantyId, request);
+        return ResponseEntity.created(URI.create("/api/warranties/tickets/" + response.ticketId())).body(response);
+    }
+
     @GetMapping("/{warrantyId}")
     @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "WARRANTY_TECHNICIAN"})
     public WarrantyResponse warranty(@PathVariable UUID warrantyId) { return service.warranty(warrantyId); }

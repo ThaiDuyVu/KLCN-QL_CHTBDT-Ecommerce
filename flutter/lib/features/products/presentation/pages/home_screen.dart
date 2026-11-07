@@ -737,7 +737,37 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ];
                 }
 
+                final onSale = filtered.where((p) => p.onSale).toList()
+                  ..sort((a, b) => b.discountPercent.compareTo(a.discountPercent));
                 return <Widget>[
+                  if (onSale.isNotEmpty)
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Đang khuyến mãi',
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Colors.red),
+                            ),
+                            const SizedBox(height: 8),
+                            SizedBox(
+                              height: 240,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: onSale.length,
+                                separatorBuilder: (_, _) => const SizedBox(width: 10),
+                                itemBuilder: (_, index) => SizedBox(
+                                  width: 160,
+                                  child: _ProductCard(product: onSale[index], hasWarehouse: warehouse != null),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),

@@ -7,6 +7,7 @@ import jakarta.persistence.LockModeType;
 import java.util.*;
 public interface OrderRepository extends JpaRepository<Order, UUID> {
     Page<Order> findByCustomerId(UUID customerId, Pageable pageable);
+    Page<Order> findByWarehouseId(UUID warehouseId, Pageable pageable);
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select o from Order o where o.orderId = :id")
     Optional<Order> lockById(@Param("id") UUID id);

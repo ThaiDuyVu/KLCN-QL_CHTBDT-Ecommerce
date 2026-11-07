@@ -55,22 +55,29 @@ public class ReportRepository {
                 new MapSqlParameterSource("id", warehouseId), Boolean.class));
     }
 
+    /** Value of goods returned from order o and settled, refunded or exchanged (P1.2, V14): revenue is net of it. */
+    private static final String REFUNDED = "(SELECT COALESCE(SUM(rr.refund_amount), 0) FROM return_requests rr"
+            + " WHERE rr.order_id = o.order_id AND rr.status IN ('REFUNDED', 'EXCHANGED'))";
+    /** Units of order line i still with the customer after refunded returns. */
+    private static final String NET_QTY = "(i.quantity - (SELECT COALESCE(SUM(ri.quantity), 0) FROM return_items ri"
+            + " JOIN return_requests rr ON rr.return_id = ri.return_id WHERE ri.order_item_id = i.order_item_id AND rr.status IN ('REFUNDED', 'EXCHANGED')))";
+
     public ReportSummaryResponse summary(ReportFilter filter) {
         String sql = """
-                SELECT COALESCE(SUM(o.total_amount) FILTER (WHERE o.status = 'DELIVERED'), 0) AS revenue,
+                SELECT COALESCE(SUM(o.total_amount - %1$s) FILTER (WHERE o.status = 'DELIVERED'), 0) AS revenue,
                        COALESCE(SUM(o.discount_amount) FILTER (WHERE o.status = 'DELIVERED'), 0) AS discount,
                        COUNT(*) AS total_orders,
                        COUNT(*) FILTER (WHERE o.status = 'DELIVERED') AS completed,
                        COUNT(*) FILTER (WHERE o.status = 'CANCELLED') AS cancelled,
-                       COALESCE(AVG(o.total_amount) FILTER (WHERE o.status = 'DELIVERED'), 0) AS average
+                       COALESCE(AVG(o.total_amount - %1$s) FILTER (WHERE o.status = 'DELIVERED'), 0) AS average
                 FROM orders o WHERE
-                """ + period("o", "order_date", filter);
+                """.formatted(REFUNDED) + period("o", "order_date", filter);
         // Separate aggregate prevents Order totals being multiplied by the item join.
         BigDecimal profit = jdbc.queryForObject("""
-                SELECT COALESCE(SUM((i.final_unit_price - i.cost_price) * i.quantity), 0)
+                SELECT COALESCE(SUM((i.final_unit_price - i.cost_price) * %1$s), 0)
                 FROM order_items i JOIN orders o ON o.order_id = i.order_id
                 WHERE o.status = 'DELIVERED' AND
-                """ + period("o", "order_date", filter), parameters(filter), BigDecimal.class);
+                """.formatted(NET_QTY) + period("o", "order_date", filter), parameters(filter), BigDecimal.class);
         return jdbc.queryForObject(sql, parameters(filter), (rs, row) -> new ReportSummaryResponse(
                 filter.getFrom(), filter.getTo(), zone.getId(), filter.getWarehouseId(),
                 rs.getBigDecimal("revenue"), profit, rs.getBigDecimal("discount"),
@@ -81,7 +88,7 @@ public class ReportRepository {
     public List<RevenuePoint> revenue(ReportFilter filter, boolean monthly) {
         String bucket = monthly ? "month" : "day";
         String sql = "SELECT date_trunc('" + bucket + "', o.order_date AT TIME ZONE :timezone)::date AS bucket, "
-                + "SUM(o.total_amount) AS revenue, COUNT(*) AS completed FROM orders o "
+                + "SUM(o.total_amount - " + REFUNDED + ") AS revenue, COUNT(*) AS completed FROM orders o "
                 + "WHERE o.status = 'DELIVERED' AND " + period("o", "order_date", filter)
                 + " GROUP BY bucket ORDER BY bucket LIMIT 91";
         return jdbc.query(sql, parameters(filter), (rs, row) -> new RevenuePoint(
@@ -96,24 +103,51 @@ public class ReportRepository {
 
     public List<TopProductRow> topProducts(ReportFilter filter, int limit) {
         return jdbc.query("""
-                SELECT p.product_id, p.product_name, SUM(i.quantity) AS quantity,
-                       SUM(i.final_unit_price * i.quantity) AS revenue
+                SELECT p.product_id, p.product_name, SUM(%1$s) AS quantity,
+                       SUM(i.final_unit_price * %1$s) AS revenue
                 FROM order_items i JOIN orders o ON o.order_id = i.order_id
                 JOIN product_variants v ON v.variant_id = i.variant_id
                 JOIN products p ON p.product_id = v.product_id
                 WHERE o.status = 'DELIVERED' AND
-                """ + period("o", "order_date", filter)
+                """.formatted(NET_QTY) + period("o", "order_date", filter)
                 + " GROUP BY p.product_id, p.product_name ORDER BY quantity DESC, p.product_id LIMIT :limit",
                 parameters(filter).addValue("limit", limit), (rs, row) -> new TopProductRow(
                         id(rs, "product_id"), rs.getString("product_name"), rs.getLong("quantity"), rs.getBigDecimal("revenue")));
     }
 
+    /**
+     * Delivered sales grouped by root category. The recursive CTE maps every category to its top-level
+     * ancestor so that e.g. "Laptop gaming" counts towards "Laptop". Revenue is item revenue after discount.
+     */
+    public List<CategoryReportRow> categories(ReportFilter filter) {
+        return jdbc.query("""
+                WITH RECURSIVE tree AS (
+                    SELECT category_id, category_id AS root_id, 1 AS depth FROM categories WHERE parent_id IS NULL
+                    UNION ALL
+                    SELECT c.category_id, t.root_id, t.depth + 1 FROM categories c JOIN tree t ON c.parent_id = t.category_id
+                    WHERE t.depth < 20
+                )
+                SELECT r.category_id, r.category_name, SUM(%1$s) AS quantity, COUNT(DISTINCT o.order_id) AS order_count,
+                       SUM(i.final_unit_price * %1$s) AS revenue,
+                       SUM((i.final_unit_price - i.cost_price) * %1$s) AS gross_profit
+                FROM order_items i JOIN orders o ON o.order_id = i.order_id
+                JOIN product_variants v ON v.variant_id = i.variant_id
+                JOIN products p ON p.product_id = v.product_id
+                JOIN tree t ON t.category_id = p.category_id
+                JOIN categories r ON r.category_id = t.root_id
+                WHERE o.status = 'DELIVERED' AND
+                """.formatted(NET_QTY) + period("o", "order_date", filter)
+                + " GROUP BY r.category_id, r.category_name ORDER BY revenue DESC, r.category_id LIMIT 100",
+                parameters(filter), (rs, row) -> new CategoryReportRow(id(rs, "category_id"), rs.getString("category_name"),
+                        rs.getLong("quantity"), rs.getLong("order_count"), rs.getBigDecimal("revenue"), rs.getBigDecimal("gross_profit")));
+    }
+
     public List<WarehouseReportRow> warehouses(ReportFilter filter) {
         return jdbc.query("""
-                SELECT w.warehouse_id, w.warehouse_name, COUNT(*) AS count, SUM(o.total_amount) AS amount
+                SELECT w.warehouse_id, w.warehouse_name, COUNT(*) AS count, SUM(o.total_amount - %1$s) AS amount
                 FROM orders o JOIN warehouses w ON w.warehouse_id = o.warehouse_id
                 WHERE o.status = 'DELIVERED' AND
-                """ + period("o", "order_date", filter)
+                """.formatted(REFUNDED) + period("o", "order_date", filter)
                 + " GROUP BY w.warehouse_id, w.warehouse_name ORDER BY amount DESC, w.warehouse_id LIMIT 100",
                 parameters(filter), (rs, row) -> warehouseRow(rs));
     }

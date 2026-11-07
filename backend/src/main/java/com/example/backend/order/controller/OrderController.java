@@ -17,7 +17,8 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/api/orders")
 public class OrderController {
     private final OrderService service;
-    public OrderController(OrderService service) { this.service = service; }
+    private final com.example.backend.order.service.InStoreSaleService inStore;
+    public OrderController(OrderService service, com.example.backend.order.service.InStoreSaleService inStore) { this.service = service; this.inStore = inStore; }
     @PostMapping("/checkout") @RequireAnyAuthority({"CUSTOMER"})
     public ResponseEntity<OrderResponse> checkout(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @Valid @RequestBody CheckoutRequest request, HttpServletRequest httpRequest) {
         var response = service.checkout(user.getUserId(), request, httpRequest.getRemoteAddr());
@@ -31,10 +32,20 @@ public class OrderController {
     public OrderResponse cancel(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id) { return service.status(user.getUserId(), true, id, OrderStatus.CANCELLED); }
     @GetMapping @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
     public OrderPageResponse list(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @RequestParam(defaultValue="0") int page, @RequestParam(defaultValue="20") int size) { return service.list(user.getUserId(), false, page, size); }
+    /** Counter sale (V13): cash, goods handed over at once. */
+    @PostMapping("/in-store") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF"})
+    public ResponseEntity<OrderResponse> inStore(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @Valid @RequestBody InStoreSaleRequest request) {
+        var response = inStore.sell(user.getUserId(), request, authorities(user));
+        return ResponseEntity.created(URI.create("/api/orders/" + response.getOrderId())).body(response);
+    }
+    @GetMapping("/deliveries") @RequireAnyAuthority({"DELIVERY_STAFF"})
+    public OrderPageResponse deliveries(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @RequestParam(defaultValue="0") int page, @RequestParam(defaultValue="20") int size) { return service.deliveries(user.getUserId(), page, size); }
+    @GetMapping("/delivery-staff") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
+    public List<DeliveryStaffResponse> deliveryStaff() { return service.deliveryStaff(); }
     @GetMapping("/{id}") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
     public OrderResponse detail(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id) { return service.staffDetail(id, authorities(user)); }
     @PatchMapping("/{id}/status") @RequireAnyAuthority({"ADMIN", "MANAGER", "STAFF", "SALES_STAFF", "WAREHOUSE_KEEPER", "DELIVERY_STAFF"})
-    public OrderResponse status(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id, @Valid @RequestBody UpdateOrderStatusRequest request) { return service.staffStatus(user.getUserId(), id, request.getStatus(), authorities(user)); }
+    public OrderResponse status(@AuthenticationPrincipal AuthenticatedUserPrincipal user, @PathVariable UUID id, @Valid @RequestBody UpdateOrderStatusRequest request) { return service.staffStatus(user.getUserId(), id, request, authorities(user)); }
     private static List<String> authorities(AuthenticatedUserPrincipal user) {
         return user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
     }
