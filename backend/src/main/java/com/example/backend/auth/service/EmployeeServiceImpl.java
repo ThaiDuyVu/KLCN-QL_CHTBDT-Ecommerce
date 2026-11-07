@@ -28,9 +28,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final RoleRepository roles;
     private final UserRoleRepository userRoles;
     private final UserAccountFactory accounts;
+    private final com.example.backend.warehouse.repository.WarehouseRepository warehouses;
+    private final com.example.backend.common.branch.BranchScope branch;
 
     public EmployeeServiceImpl(EmployeeRepository employees, RoleRepository roles, UserRoleRepository userRoles,
-                               UserAccountFactory accounts) {
+                               UserAccountFactory accounts, com.example.backend.warehouse.repository.WarehouseRepository warehouses,
+                               com.example.backend.common.branch.BranchScope branch) {
+        this.warehouses = warehouses;
+        this.branch = branch;
         this.employees = employees;
         this.roles = roles;
         this.userRoles = userRoles;
@@ -59,6 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setEmployeeCode(code);
         employee.setFullName(request.getFullName());
         employee.setPosition(request.getPosition() == null ? role.getDescription() : request.getPosition());
+        employee.setWarehouseId(branchFor(request.getWarehouseId()));
         return response(employees.saveAndFlush(employee), role);
     }
 
@@ -76,9 +82,31 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new UserNotFoundException("Không tìm thấy nhân viên: " + employeeId));
         employee.setFullName(request.getFullName());
         employee.setPosition(request.getPosition());
+        employee.setWarehouseId(branchFor(request.getWarehouseId()));
         employee.getUser().setDisplayName(request.getFullName());
         employee.getUser().setUpdatedAt(java.time.OffsetDateTime.now());
         return response(employees.saveAndFlush(employee), role(employee));
+    }
+
+    /**
+     * A branch-bound manager (V12) may only place employees in their own branch; blank defaults to it.
+     * Store-wide callers may pick any active branch or none.
+     */
+    private java.util.UUID branchFor(java.util.UUID requested) {
+        java.util.Optional<java.util.UUID> mine = branch.current();
+        if (mine.isPresent()) {
+            if (requested != null && !requested.equals(mine.get())) {
+                throw new ProtectedPermissionException("Bạn chỉ quản lý nhân viên của chi nhánh mình");
+            }
+            return mine.get();
+        }
+        if (requested == null) return null;
+        var warehouse = warehouses.findById(requested)
+                .orElseThrow(() -> new InvalidUserManagementRequestException("Chi nhánh không tồn tại"));
+        if (warehouse.getStatus() != com.example.backend.warehouse.entity.WarehouseStatus.ACTIVE) {
+            throw new InvalidUserManagementRequestException("Chi nhánh đã ngừng hoạt động");
+        }
+        return requested;
     }
 
     /** NV0001, NV0002…: one above the highest generated code; a race is caught by uq_employees_employee_code. */
@@ -99,6 +127,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         User user = employee.getUser();
         return new EmployeeResponse(employee.getEmployeeId(), user.getUserId(), employee.getEmployeeCode(),
                 employee.getFullName(), employee.getPosition(), user.getUsername(), user.getEmail(), user.getPhone(),
-                user.getStatus(), role == null ? null : role.getRoleId(), role == null ? null : role.getRoleName());
+                user.getStatus(), role == null ? null : role.getRoleId(), role == null ? null : role.getRoleName(),
+                employee.getWarehouseId(), employee.getWarehouseId() == null ? null
+                        : warehouses.findById(employee.getWarehouseId()).map(w -> w.getWarehouseName()).orElse(null));
     }
 }

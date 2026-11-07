@@ -3,7 +3,7 @@ import { date, money } from '../../orders/components/orderFormat';
 import { paymentStatusLabels } from '../../orders/components/vnpayFormat';
 import { amountInWords } from '../amountInWords';
 
-const paymentMethods = { COD: 'Tiền mặt khi nhận hàng (COD)', VNPAY: 'VNPAY', INSTALLMENT: 'Trả góp' };
+const paymentMethods = { COD: 'Tiền mặt khi nhận hàng (COD)', VNPAY: 'VNPAY', INSTALLMENT: 'Trả góp', CASH: 'Tiền mặt tại quầy' };
 
 /** Printable sales invoice (A4). Prices are the order snapshot. */
 export default function InvoiceDocument({ invoice }) {

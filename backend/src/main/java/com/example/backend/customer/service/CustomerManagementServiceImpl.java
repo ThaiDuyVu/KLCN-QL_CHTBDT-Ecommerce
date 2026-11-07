@@ -37,6 +37,16 @@ public class CustomerManagementServiceImpl implements CustomerManagementService 
         if (profiles.phoneTaken(request.getPhone(), null)) {
             throw new CustomerManagementException(409, "Số điện thoại đã thuộc về một khách hàng khác");
         }
+        if (request.getPassword() == null) {
+            if (request.getUsername() != null || request.getEmail() != null) {
+                throw new CustomerManagementException(400, "Tạo tài khoản đăng nhập cần mật khẩu ban đầu");
+            }
+            Customer walkIn = new Customer();
+            walkIn.setFullName(request.getFullName());
+            walkIn.setPhone(request.getPhone());
+            walkIn.setAddress(request.getAddress());
+            return detail(profiles.saveAndFlush(walkIn).getCustomerId());
+        }
         Role customerRole = roles.findByRoleName("CUSTOMER").orElseThrow(() -> new IllegalStateException("Missing CUSTOMER role"));
         // "+84…" is not a valid username, so the national form is used as the default login name.
         String username = request.getUsername() != null ? request.getUsername()
@@ -60,6 +70,14 @@ public class CustomerManagementServiceImpl implements CustomerManagementService 
             throw new CustomerManagementException(409, "Số điện thoại đã thuộc về một khách hàng khác");
         }
         User user = customer.getUser();
+        if (user == null) {
+            if (request.getEmail() != null) throw new CustomerManagementException(400, "Khách vãng lai chưa có tài khoản nên không lưu email");
+            customer.setFullName(request.getFullName());
+            customer.setAddress(request.getAddress());
+            customer.setPhone(request.getPhone());
+            profiles.saveAndFlush(customer);
+            return detail(customerId);
+        }
         if (request.getEmail() != null && !request.getEmail().equalsIgnoreCase(user.getEmail())) {
             if (users.existsByEmailAndUserIdNot(request.getEmail(), user.getUserId())) {
                 throw new CustomerManagementException(409, "Email đã được sử dụng bởi tài khoản khác");

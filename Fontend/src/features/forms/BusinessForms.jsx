@@ -1,6 +1,7 @@
 import PrintForm, { PrintFields } from '../../components/print/PrintForm';
 import { amountInWords } from '../invoices/amountInWords';
 import { date, money } from '../orders/components/orderFormat';
+import { conditionLabels } from '../returns/returnFormat';
 
 const today = () => new Date().toLocaleDateString('vi-VN');
 const devicesText = (devices) => devices?.map((d) => `${d.serialNumber}${d.imeiNumbers?.length ? ` (IMEI ${d.imeiNumbers.join(', ')})` : ''}`).join('; ');
@@ -56,11 +57,17 @@ export function WarrantyTicketForm({ ticket, statusLabel }) {
 
 /** Phiếu đổi trả: goods returned by the customer and the amount refunded. */
 export function ReturnForm({ request, statusLabel }) {
-  return <PrintForm title="PHIẾU ĐỔI TRẢ HÀNG" number={request.returnCode} date={date(request.requestDate)} signatures={['Khách hàng', 'Nhân viên bán hàng', 'Thủ kho']}>
+  const exchange = request.requestType === 'EXCHANGE';
+  return <PrintForm title={exchange ? 'PHIẾU ĐỔI HÀNG' : 'PHIẾU TRẢ HÀNG'} number={request.returnCode} date={date(request.requestDate)} signatures={['Khách hàng', 'Nhân viên bán hàng', 'Thủ kho']}>
     <PrintFields rows={[['Khách hàng', request.customerName], ['Đơn hàng', request.orderCode], ['Trạng thái', statusLabel], ['Nhân viên xử lý', request.employeeName]]} />
     <table><thead><tr><th>STT</th><th>Sản phẩm</th><th>SKU</th><th>Serial</th><th className="num">SL</th><th className="num">Đơn giá</th><th>Ghi chú</th></tr></thead>
       <tbody>{request.items.map((line, index) => <tr key={line.returnItemId}><td>{index + 1}</td><td>{line.productName}</td><td>{line.sku}</td><td>{line.serialNumber || '—'}</td>
-        <td className="num">{line.quantity}</td><td className="num">{money(line.unitPrice)}</td><td>{line.reason || ''}</td></tr>)}</tbody></table>
-    <PrintFields rows={[['Lý do', request.reason], ['Số tiền hoàn', money(request.refundAmount)], ['Bằng chữ', amountInWords(request.refundAmount)]]} />
+        <td className="num">{line.quantity}</td><td className="num">{money(line.unitPrice)}</td><td>{[line.reason, line.receivedCondition && conditionLabels[line.receivedCondition]].filter(Boolean).join(' · ')}</td></tr>)}</tbody></table>
+    {exchange && request.exchangeItems?.length > 0 && <table><thead><tr><th>Sản phẩm đổi sang</th><th>SKU</th><th className="num">SL</th></tr></thead>
+      <tbody>{request.exchangeItems.map((line) => <tr key={line.variantId}><td>{line.productName}</td><td>{line.sku}</td><td className="num">{line.quantity}</td></tr>)}</tbody></table>}
+    <PrintFields rows={[['Lý do', request.reason], ...(request.rejectionReason ? [['Lý do từ chối', request.rejectionReason]] : []),
+      [exchange ? 'Giá trị hàng trả' : 'Số tiền hoàn', money(request.refundAmount)], ['Bằng chữ', amountInWords(request.refundAmount)],
+      ...(exchange && request.exchangeOrderCode ? [['Đơn đổi hàng', request.exchangeOrderCode],
+        [Number(request.exchangeDifference) >= 0 ? 'Khách trả thêm' : 'Cửa hàng hoàn lại', money(Math.abs(Number(request.exchangeDifference)))]] : [])]} />
   </PrintForm>;
 }

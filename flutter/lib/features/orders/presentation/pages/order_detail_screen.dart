@@ -199,6 +199,10 @@ class OrderDetailScreen extends ConsumerWidget {
                           const SizedBox(height: 8),
                           _buildDetailRow('Ghi chú:', order.note!),
                         ],
+                        if ((order.cancelReason ?? '').isNotEmpty) ...[
+                          const SizedBox(height: 8),
+                          _buildDetailRow('Lý do hủy:', order.cancelReason!),
+                        ],
                       ],
                     ),
                   ),
@@ -735,7 +739,8 @@ class _OrderReturnsSection extends ConsumerWidget {
                 ...rows.map((row) => Padding(
                       padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
-                        '${row.code} · ${ReturnRequestSummary.statusLabel(row.status)}\n'
+                        '${row.code}${row.requestType == 'EXCHANGE' ? ' (đổi hàng${row.exchangeOrderCode != null ? ' → ${row.exchangeOrderCode}' : ''})' : ''}'
+                        ' · ${ReturnRequestSummary.statusLabel(row.status)}\n'
                         '${row.items.map((l) => '${l.productName} × ${l.quantity}').join(', ')}',
                         style: const TextStyle(fontSize: 13),
                       ),

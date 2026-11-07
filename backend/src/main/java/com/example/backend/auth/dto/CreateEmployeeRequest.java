@@ -27,6 +27,11 @@ public class CreateEmployeeRequest {
     private String employeeCode;
     @Size(max = 100, message = "Vị trí tối đa 100 ký tự")
     private String position;
+    /** Branch the employee works at; null = all branches (V12). */
+    private UUID warehouseId;
+
+    public UUID getWarehouseId() { return warehouseId; }
+    public void setWarehouseId(UUID value) { this.warehouseId = value; }
 
     public String getUsername() { return username; }
     public void setUsername(String value) { this.username = value == null ? null : value.trim(); }

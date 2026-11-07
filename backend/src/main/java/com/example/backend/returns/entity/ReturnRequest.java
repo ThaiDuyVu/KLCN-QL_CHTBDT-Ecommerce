@@ -29,6 +29,17 @@ public class ReturnRequest {
     private BigDecimal refundAmount;
     @Enumerated(EnumType.STRING) @Column(name = "status")
     private ReturnStatus status;
+    /** Why sales rejected the request (V11). */
+    @Column(name = "rejection_reason")
+    private String rejectionReason;
+    @Enumerated(EnumType.STRING) @Column(name = "request_type")
+    private ReturnType requestType = ReturnType.RETURN;
+    /** Replacement order of an EXCHANGE request (V14). */
+    @Column(name = "exchange_order_id")
+    private UUID exchangeOrderId;
+    /** Replacement total minus credit: positive = customer pays, negative = store refunds (V14). */
+    @Column(name = "exchange_difference", precision = 15, scale = 2)
+    private BigDecimal exchangeDifference;
 
     public UUID getReturnId() { return returnId; }
     public String getReturnCode() { return returnCode; }
@@ -47,6 +58,14 @@ public class ReturnRequest {
     public void setProcessedAt(OffsetDateTime value) { this.processedAt = value; }
     public BigDecimal getRefundAmount() { return refundAmount; }
     public void setRefundAmount(BigDecimal value) { this.refundAmount = value; }
+    public ReturnType getRequestType() { return requestType; }
+    public void setRequestType(ReturnType value) { this.requestType = value; }
+    public UUID getExchangeOrderId() { return exchangeOrderId; }
+    public void setExchangeOrderId(UUID value) { this.exchangeOrderId = value; }
+    public BigDecimal getExchangeDifference() { return exchangeDifference; }
+    public void setExchangeDifference(BigDecimal value) { this.exchangeDifference = value; }
+    public String getRejectionReason() { return rejectionReason; }
+    public void setRejectionReason(String value) { this.rejectionReason = value; }
     public ReturnStatus getStatus() { return status; }
     public void setStatus(ReturnStatus value) { this.status = value; }
 }

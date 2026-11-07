@@ -28,10 +28,12 @@ public class ShipmentServiceImpl implements ShipmentService {
     private static final String DELIVERY_ROLE = "DELIVERY_STAFF";
     private final ShipmentRepository shipments;
     private final EmployeeRepository employees;
+    private final com.example.backend.common.branch.BranchScope branch;
 
-    public ShipmentServiceImpl(ShipmentRepository shipments, EmployeeRepository employees) {
+    public ShipmentServiceImpl(ShipmentRepository shipments, EmployeeRepository employees, com.example.backend.common.branch.BranchScope branch) {
         this.shipments = shipments;
         this.employees = employees;
+        this.branch = branch;
     }
 
     @Override
@@ -43,6 +45,9 @@ public class ShipmentServiceImpl implements ShipmentService {
                     .orElseThrow(() -> new CommerceException(400, "Không tìm thấy nhân viên giao hàng đã chọn"));
             if (!employees.hasRole(carrier.getUser().getUserId(), DELIVERY_ROLE) || !"ACTIVE".equals(carrier.getUser().getStatus())) {
                 throw new CommerceException(400, "Người được chọn không phải nhân viên giao hàng đang hoạt động");
+            }
+            if (carrier.getWarehouseId() != null && !carrier.getWarehouseId().equals(order.getWarehouseId())) {
+                throw new CommerceException(400, "Nhân viên giao hàng thuộc chi nhánh khác");
             }
         } else {
             carrier = actorUserId == null ? null : employees.findByUser_UserId(actorUserId).orElse(null);
@@ -124,7 +129,9 @@ public class ShipmentServiceImpl implements ShipmentService {
 
     @Override
     public List<DeliveryStaffResponse> deliveryStaff() {
-        return employees.findActiveByRoleName(DELIVERY_ROLE).stream().map(employee -> new DeliveryStaffResponse(
+        Optional<UUID> mine = branch.current();
+        return employees.findActiveByRoleName(DELIVERY_ROLE).stream()
+                .filter(e -> mine.isEmpty() || e.getWarehouseId() == null || e.getWarehouseId().equals(mine.get())).map(employee -> new DeliveryStaffResponse(
                 employee.getEmployeeId(), employee.getEmployeeCode(), employee.getFullName(), employee.getUser().getPhone())).toList();
     }
 

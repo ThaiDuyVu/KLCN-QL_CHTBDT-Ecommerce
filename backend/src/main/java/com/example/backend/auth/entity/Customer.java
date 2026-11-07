@@ -21,13 +21,20 @@ public class Customer {
     @Column(name = "customer_id", nullable = false, updatable = false)
     private UUID customerId;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    /** Login account; null for a walk-in customer registered at the counter (V13). */
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_id",
-            nullable = false,
             unique = true
     )
     private User user;
+
+    /** Phone of a walk-in customer (customers with an account keep their phone on users). */
+    @Column(name = "phone", length = 30)
+    private String phone;
+
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private java.time.OffsetDateTime createdAt;
 
     @Column(
             name = "full_name",
@@ -90,5 +97,9 @@ public class Customer {
     public void setLoyaltyPoint(Integer loyaltyPoint) {
         this.loyaltyPoint = loyaltyPoint;
     }
+
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+    public java.time.OffsetDateTime getCreatedAt() { return createdAt; }
 
 }

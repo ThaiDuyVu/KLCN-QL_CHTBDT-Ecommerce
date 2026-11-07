@@ -2,7 +2,10 @@ package com.example.backend.customer.dto;
 
 import jakarta.validation.constraints.*;
 
-/** A customer registered by staff at the store counter. The phone number identifies the customer. */
+/**
+ * A customer registered by staff at the store counter. The phone number identifies the customer.
+ * Without a password the customer is a walk-in profile with no login account (V13).
+ */
 public class CreateCustomerRequest {
     @NotBlank(message = "Vui lòng nhập họ và tên")
     @Size(max = 255, message = "Họ và tên tối đa 255 ký tự")
@@ -19,7 +22,6 @@ public class CreateCustomerRequest {
     @Pattern(regexp = "^[A-Za-z0-9._-]{4,50}$",
             message = "Tên đăng nhập gồm 4–50 ký tự: chữ không dấu, số, dấu chấm, gạch dưới hoặc gạch ngang")
     private String username;
-    @NotBlank(message = "Vui lòng nhập mật khẩu ban đầu")
     @Pattern(regexp = "^(?=.*\\p{L})(?=.*\\d).{8,}$", message = "Mật khẩu phải có ít nhất 8 ký tự, gồm cả chữ và số")
     private String password;
 
@@ -34,5 +36,5 @@ public class CreateCustomerRequest {
     public String getUsername() { return username; }
     public void setUsername(String value) { this.username = value == null || value.isBlank() ? null : value.trim(); }
     public String getPassword() { return password; }
-    public void setPassword(String value) { this.password = value; }
+    public void setPassword(String value) { this.password = value == null || value.isEmpty() ? null : value; }
 }

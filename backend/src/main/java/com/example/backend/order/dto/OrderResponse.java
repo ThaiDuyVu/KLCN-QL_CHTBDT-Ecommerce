@@ -17,6 +17,12 @@ public class OrderResponse {
     private String recipientPhone;
     private String shippingAddress;
     private String note;
+    private String cancelReason;
+    /** Replacement order of an exchange (V14): the return request and the credit of the returned goods. */
+    private String exchangeFromReturnCode;
+    private java.math.BigDecimal exchangeCredit;
+    private com.example.backend.order.entity.SalesChannel salesChannel;
+    private List<OrderStatusChange> statusHistory;
     private BigDecimal subtotal;
     private BigDecimal discountAmount;
     private BigDecimal shippingFee;
@@ -51,6 +57,16 @@ public class OrderResponse {
     public void setRecipientPhone(String value) { this.recipientPhone = value; }
     public String getShippingAddress() { return shippingAddress; }
     public void setShippingAddress(String value) { this.shippingAddress = value; }
+    public com.example.backend.order.entity.SalesChannel getSalesChannel() { return salesChannel; }
+    public void setSalesChannel(com.example.backend.order.entity.SalesChannel value) { this.salesChannel = value; }
+    public String getExchangeFromReturnCode() { return exchangeFromReturnCode; }
+    public void setExchangeFromReturnCode(String value) { this.exchangeFromReturnCode = value; }
+    public java.math.BigDecimal getExchangeCredit() { return exchangeCredit; }
+    public void setExchangeCredit(java.math.BigDecimal value) { this.exchangeCredit = value; }
+    public String getCancelReason() { return cancelReason; }
+    public void setCancelReason(String value) { this.cancelReason = value; }
+    public List<OrderStatusChange> getStatusHistory() { return statusHistory; }
+    public void setStatusHistory(List<OrderStatusChange> value) { this.statusHistory = value; }
     public String getNote() { return note; }
     public void setNote(String value) { this.note = value; }
     public BigDecimal getSubtotal() { return subtotal; }

@@ -22,13 +22,19 @@ class ReturnRequestScreen extends ConsumerStatefulWidget {
 class _ReturnRequestScreenState extends ConsumerState<ReturnRequestScreen> {
   final Map<String, int> _selected = {};
   final TextEditingController _reason = TextEditingController();
+  final TextEditingController _search = TextEditingController();
   bool _busy = false;
+  bool _exchange = false;
+  List<ExchangeCandidate> _hits = const [];
+  final Map<String, ExchangeCandidate> _wanted = {};
+  final Map<String, int> _wantedQuantity = {};
 
   int _remaining(OrderItem item) => item.quantity - (widget.claimed[item.id] ?? 0);
 
   @override
   void dispose() {
     _reason.dispose();
+    _search.dispose();
     super.dispose();
   }
 
@@ -37,13 +43,18 @@ class _ReturnRequestScreenState extends ConsumerState<ReturnRequestScreen> {
       CustomSnackbar.showWarning(context, 'Chọn ít nhất một sản phẩm cần trả');
       return;
     }
+    if (_exchange && _wanted.isEmpty) {
+      CustomSnackbar.showWarning(context, 'Chọn sản phẩm muốn đổi sang');
+      return;
+    }
     if (_reason.text.trim().isEmpty) {
       CustomSnackbar.showWarning(context, 'Vui lòng nhập lý do đổi trả');
       return;
     }
     setState(() => _busy = true);
     try {
-      final created = await ref.read(returnRepositoryProvider).create(widget.order.id, _reason.text.trim(), _selected);
+      final created = await ref.read(returnRepositoryProvider).create(widget.order.id, _reason.text.trim(), _selected,
+          exchange: _exchange ? Map.of(_wantedQuantity) : const {});
       ref.invalidate(orderReturnsProvider(widget.order.id));
       if (!mounted) return;
       CustomSnackbar.showSuccess(context, 'Đã gửi yêu cầu ${created.code}');
@@ -54,6 +65,52 @@ class _ReturnRequestScreenState extends ConsumerState<ReturnRequestScreen> {
       if (mounted) setState(() => _busy = false);
     }
   }
+
+  Future<void> _find() async {
+    final keyword = _search.text.trim();
+    if (keyword.isEmpty) return;
+    try {
+      final hits = await ref.read(returnRepositoryProvider).searchVariants(keyword);
+      if (mounted) setState(() => _hits = hits);
+    } on DioException catch (e) {
+      if (mounted) CustomSnackbar.showError(context, apiErrorMessage(e));
+    }
+  }
+
+  /// Products wanted instead; priced by the store when the replacement order is created.
+  List<Widget> _exchangePicker() => [
+        const SizedBox(height: 12),
+        const Text('Sản phẩm muốn đổi sang', style: TextStyle(fontWeight: FontWeight.bold)),
+        Row(children: [
+          Expanded(child: TextField(controller: _search, decoration: const InputDecoration(hintText: 'Tên hoặc SKU'), onSubmitted: (_) => _find())),
+          IconButton(icon: const Icon(Icons.search), onPressed: _busy ? null : _find),
+        ]),
+        ..._hits.map((hit) => ListTile(
+              dense: true,
+              title: Text(hit.productName),
+              subtitle: Text('${hit.sku} · ${hit.price.round()} đ'),
+              trailing: const Icon(Icons.add),
+              onTap: () => setState(() {
+                _wanted[hit.variantId] = hit;
+                // Tapping again adds one more unit (at most 20, the backend limit).
+                _wantedQuantity[hit.variantId] = ((_wantedQuantity[hit.variantId] ?? 0) + 1).clamp(1, 20);
+              }),
+            )),
+        ..._wanted.values.map((w) => ListTile(
+              dense: true,
+              leading: const Icon(Icons.swap_horiz),
+              title: Text('${w.productName} × ${_wantedQuantity[w.variantId]}'),
+              trailing: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => setState(() {
+                  _wanted.remove(w.variantId);
+                  _wantedQuantity.remove(w.variantId);
+                }),
+              ),
+            )),
+        const Text('Hàng mới tính theo giá hiện hành; chênh lệch được thu thêm hoặc hoàn lại.',
+            style: TextStyle(color: Colors.blueGrey, fontSize: 12)),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +123,15 @@ class _ReturnRequestScreenState extends ConsumerState<ReturnRequestScreen> {
           const Text(
             'Được đổi trả trong 7 ngày kể từ ngày nhận hàng. Tiền được hoàn sau khi cửa hàng nhận và kiểm tra hàng.',
             style: TextStyle(color: Colors.blueGrey, fontSize: 13),
+          ),
+          const SizedBox(height: 12),
+          SegmentedButton<bool>(
+            segments: const [
+              ButtonSegment(value: false, label: Text('Trả hàng, hoàn tiền')),
+              ButtonSegment(value: true, label: Text('Đổi sản phẩm khác')),
+            ],
+            selected: {_exchange},
+            onSelectionChanged: _busy ? null : (value) => setState(() => _exchange = value.first),
           ),
           const SizedBox(height: 12),
           if (items.isEmpty) const Text('Tất cả sản phẩm của đơn đã có yêu cầu đổi trả.'),
@@ -108,6 +174,7 @@ class _ReturnRequestScreenState extends ConsumerState<ReturnRequestScreen> {
               ),
             );
           }),
+          if (_exchange) ..._exchangePicker(),
           const SizedBox(height: 12),
           TextField(
             controller: _reason,

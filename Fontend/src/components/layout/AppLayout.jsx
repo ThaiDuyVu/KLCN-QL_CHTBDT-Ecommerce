@@ -15,6 +15,7 @@ const managementNavigation = [
   { to: '/products', label: 'Sản phẩm' },
   { to: '/categories', label: 'Danh mục' },
   { to: '/orders', label: 'Đơn hàng', roles: ORDER_ROLES },
+  { to: '/pos', label: 'Bán tại quầy', roles: INVOICE_ROLES },
   { to: '/deliveries', label: 'Đơn tôi cần giao', roles: [ROLES.DELIVERY_STAFF] },
   { to: '/returns', label: 'Đổi trả', roles: RETURN_ROLES },
   { to: '/invoices', label: 'Hóa đơn', roles: INVOICE_ROLES },

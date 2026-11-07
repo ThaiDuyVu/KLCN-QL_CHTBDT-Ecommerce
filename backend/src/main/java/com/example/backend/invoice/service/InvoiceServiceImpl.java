@@ -52,11 +52,13 @@ public class InvoiceServiceImpl implements InvoiceService, ReturnRefundListener 
     private final CustomerCartRepository customers;
     private final ReturnRequestRepository returns;
     private final JdbcTemplate jdbc;
+    private final com.example.backend.common.branch.BranchScope branch;
 
     public InvoiceServiceImpl(InvoiceRepository invoices, OrderRepository orders, OrderItemRepository orderItems,
                               PaymentRepository payments, ProductVariantRepository variants, SerialNumberRepository serials,
                               WarehouseRepository warehouses, CustomerCartRepository customers, ReturnRequestRepository returns,
-                              JdbcTemplate jdbc) {
+                              JdbcTemplate jdbc, com.example.backend.common.branch.BranchScope branch) {
+        this.branch = branch;
         this.invoices = invoices; this.orders = orders; this.orderItems = orderItems; this.payments = payments;
         this.variants = variants; this.serials = serials; this.warehouses = warehouses; this.customers = customers;
         this.returns = returns; this.jdbc = jdbc;
@@ -102,14 +104,19 @@ public class InvoiceServiceImpl implements InvoiceService, ReturnRefundListener 
         }
         var pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("issuedDate"), Sort.Order.desc("invoiceId")));
         String term = keyword == null ? "" : keyword.trim();
-        Page<Invoice> result = term.isEmpty() ? invoices.findAll(pageable) : invoices.findByInvoiceNumberContainingIgnoreCase(term, pageable);
+        Optional<UUID> mine = branch.current();
+        Page<Invoice> result = mine.isPresent() ? invoices.findByBranch(mine.get(), term, pageable)
+                : term.isEmpty() ? invoices.findAll(pageable) : invoices.findByInvoiceNumberContainingIgnoreCase(term, pageable);
         return new InvoicePageResponse(summaries(result.getContent()), result.getNumber(), result.getSize(),
                 result.getTotalElements(), result.getTotalPages());
     }
 
     @Override
     public InvoiceResponse detail(UUID invoiceId) {
-        return detail(invoices.findById(invoiceId).orElseThrow(this::notFound));
+        Invoice invoice = invoices.findById(invoiceId).orElseThrow(this::notFound);
+        UUID warehouseId = orders.findById(invoice.getOrderId()).map(Order::getWarehouseId).orElse(null);
+        if (!branch.allows(warehouseId)) throw notFound();
+        return detail(invoice);
     }
 
     @Override

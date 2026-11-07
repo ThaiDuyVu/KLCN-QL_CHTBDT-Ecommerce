@@ -188,6 +188,15 @@ void main() {
       expect(reply.suggestions.single, 'So sánh với Laptop B');
       expect(RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$').hasMatch(ChatRepository.newSessionId()), isTrue);
     });
+
+    test('Kịch bản V14: đọc yêu cầu đổi hàng và sản phẩm đổi', () {
+      final row = ReturnRequestSummary.fromJson({'returnId': 'r', 'returnCode': 'TH-1', 'status': 'EXCHANGED', 'requestType': 'EXCHANGE',
+        'exchangeOrderCode': 'EX-1', 'refundAmount': 400000, 'items': []});
+      expect(ReturnRequestSummary.statusLabel(row.status), 'Đã đổi hàng');
+      expect(row.requestType, 'EXCHANGE');
+      expect(row.exchangeOrderCode, 'EX-1');
+      expect(ExchangeCandidate.fromJson({'variantId': 'v', 'sku': 'TN-Y', 'productName': 'Tai nghe', 'price': 1000000}).price, 1000000);
+    });
 });
 }
 

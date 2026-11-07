@@ -11,7 +11,109 @@
 
 ---
 
-## 0. Kết quả tổng hợp
+## Chấm lại lần 2: sau P0–P3 (06/11/2026)
+
+**Phạm vi:** commit `005ce81` (P0–P2) cộng phần P3 chưa commit (V10–V13). Dùng cùng thang và trọng số với lần 1.
+
+**Lưu ý về độ tin cậy:**
+- Phần lớn thay đổi do chính người chấm thực hiện, nên lần này chấm khắt khe hơn. Phần chưa kiểm chứng được (mobile) vẫn bị trừ.
+- Bằng chứng: backend 336/336 test, web 206/206 test, lint sạch, build thành công. Mọi test backend chạy trên PostgreSQL 16 thật.
+- Flutter **chưa được biên dịch hay chạy** lần nào.
+
+| # | Hạng mục | Trọng số | Lần 1 | **Lần 2** |
+|---|---|---:|---:|---:|
+| A | Tầng CSDL | 2.00 | 0.65 | **1.55** |
+| B | CN01 – Loại SP/SP, Khách hàng, Khuyến mãi | 1.50 | 1.10 | **1.32** |
+| C | CN02 – Đặt/hủy, Thanh toán/Hóa đơn, Giao hàng/Đổi trả | 2.50 | 1.00 | **2.15** |
+| D | CN03 – Lịch sử mua, Bảo hành, Chatbot | 1.50 | 1.20 | **1.30** |
+| E | CN04 – Biểu mẫu, Thống kê | 0.75 | 0.40 | **0.70** |
+| F | Cơ bản – Đăng nhập, Phân quyền, Backup & Restore | 0.75 | 0.40 | **0.71** |
+| G | Ứng dụng di động | 1.00 | 0.55 | **0.70** |
+| | **Tổng** | **10.00** | **5.30** | **8.43** |
+
+> **Cập nhật 06/11/2026: đã bổ sung đổi hàng (V14).** Lỗ hổng "chỉ có trả hàng hoàn tiền" ở mục C đã được khắc phục. Mục C tăng từ 2.15 lên khoảng **2.25**, tổng tăng từ 8.43 lên khoảng **8.53**.
+
+> Mobile (G) được chấm thấp vì **chưa chạy được lần nào**: nếu có lỗi biên dịch thì cả app không demo được. Khi `flutter analyze` và `flutter test` đạt, G lên khoảng 0.92 và **tổng lên khoảng 8.65**.
+
+### A. CSDL: 1.55 / 2.00 (trừ 0.45)
+
+| # | Lần 1 | Hiện trạng | Còn trừ |
+|---|---|---|---:|
+| A1 | 7 bảng không dùng | `shipments`, `invoices`, `return_requests`, `return_items`, `reviews` đã dùng. **`chatbot_qna`, `chatbot_scripts` vẫn chưa dùng** | 0.05 |
+| A2 | Thiếu CHECK trạng thái | Đã có ở V10 (trừ `carts.status` và bảng chatbot, có lý do ghi trong migration) | 0 |
+| A3 | Không có lịch sử trạng thái | Đã có ở V11 | 0 |
+| A4 | Không bán cho khách vãng lai | Đã có ở V13 | 0 |
+| A5 | Nhân viên không thuộc chi nhánh | Đã có ở V12. **Phiếu nhập kho và phiếu bảo hành chưa lọc theo chi nhánh**. Chi nhánh vẫn dùng chung bảng `warehouses` | 0.03 |
+| A6 | Hoàn tiền không mô hình hóa | Đã có `REFUNDED`. **Chưa có bảng giao dịch hoàn tiền** (ngày, hình thức, người hoàn); hoàn một phần chỉ nằm ở `return_requests.refund_amount` | 0.05 |
+| A7 | Khuyến mãi đơn giản | Mới chặn giảm % > 100. **Chưa có voucher, đơn tối thiểu, trần tiền giảm** (V14 chưa làm) | 0.08 |
+| A8 | `user_roles` N–N nhưng UNIQUE | Không đổi | 0.05 |
+| A9 | Bảo hành bắt buộc serial | Không đổi: hàng không quản lý serial không bảo hành được | 0.05 |
+| A10 | Hóa đơn không có VAT | Không đổi | 0.05 |
+| A11 | Tên danh mục không unique, sản phẩm không có mã, giỏ không unique, điểm tích lũy bỏ trống | Không đổi | 0.10 |
+| | | | **0.46 ≈ 0.45** |
+
+### B. Chức năng 01: 1.32 / 1.50
+
+- **Loại SP, sản phẩm: 0.45/0.5.** Không đổi.
+- **Khách hàng: 0.47/0.5.** Nhân viên tạo, sửa khách và khách vãng lai đã có. Trừ nhẹ vì điểm tích lũy vẫn không hoạt động.
+- **Khuyến mãi: 0.40/0.5.** Mobile đã hiển thị. Vẫn trừ vì mô hình khuyến mãi quá đơn giản (xem A7).
+
+### C. Chức năng 02: 2.15 / 2.50
+
+- **Đặt, hủy đơn: 0.47/0.5.**
+  - Đã có: tự hủy đơn VNPAY quá hạn, hủy đơn đã thanh toán (bắt buộc lý do), lịch sử trạng thái.
+- **Mua hàng, thanh toán, hóa đơn: 0.88/1.0.**
+  - Đã có: COD chuyển `PAID` khi giao, hóa đơn có trang in, bán tại quầy thu tiền mặt.
+  - Còn trừ:
+    - hóa đơn không có VAT;
+    - đơn đã giao trước khi có chức năng hóa đơn không có hóa đơn;
+    - hoàn tiền một phần không phản ánh trên `payments`.
+- **Trạng thái đơn, giao hàng, đổi trả: 0.80/1.0.**
+  - Đã có: giao hàng có nhân viên, mã vận đơn, ghi nhận giao thất bại; đổi trả đủ 4 bước.
+  - Còn trừ:
+    - **Chỉ có trả hàng hoàn tiền, chưa có đổi sang sản phẩm khác.** Đề cương ghi "đổi trả".
+    - **Phí giao hàng luôn bằng 0** ([OrderServiceImpl.java:113](../../backend/src/main/java/com/example/backend/order/service/OrderServiceImpl.java#L113)).
+    - Đơn online vẫn để hệ thống tự chọn serial ở bước "Đang xử lý"; thủ kho không quét serial. Riêng bán tại quầy thì đã quét được.
+
+### D. Chức năng 03: 1.30 / 1.50
+
+- **Lịch sử mua hàng: 0.36/0.375.**
+- **Bảo hành: 0.32/0.375.**
+  - Đã có: nhân viên lập phiếu tại quầy; bảo hành chuyển `VOIDED` khi thiết bị bị trả lại.
+  - Còn trừ: hàng không có serial không bảo hành được; phiếu bảo hành không có chi phí sửa chữa.
+- **Chatbot: 0.62/0.75.**
+  - Đã có: chatbot trên mobile, nhưng chưa chạy thử và cần trỏ app qua gateway.
+  - Còn trừ: chưa có màn hình quản trị nội dung tư vấn (`chatbot_qna`).
+
+### E. Chức năng 04: 0.70 / 0.75
+
+- **Biểu mẫu: 0.34/0.375.** Có 6 biểu mẫu in A4. Trừ nhẹ vì chưa đối chiếu với các biểu mẫu nhóm thu thập ở mục 1 của đề cương.
+- **Thống kê: 0.36/0.375.** Đã có thống kê theo loại sản phẩm, doanh thu đã trừ phần hoàn tiền, và xuất CSV.
+
+### F. Chức năng cơ bản: 0.71 / 0.75
+
+- **Đăng nhập, đăng xuất: 0.25.**
+- **Phân quyền: 0.23.** Đã có tạo nhân viên và phạm vi chi nhánh. Trừ vì trang quản lý người dùng chỉ Admin vào được, và phiếu nhập/bảo hành chưa lọc theo chi nhánh.
+- **Backup & Restore: 0.23.** Đã khôi phục thật thành công trong test. Trừ vì phải cấu hình chạy trong container CSDL mới tránh được lệch phiên bản `pg_dump`.
+
+### G. Mobile: 0.70 / 1.00
+
+Có đủ các yêu cầu ở mục 6 đề cương: xem và tìm sản phẩm, đặt hàng, thanh toán, trạng thái đơn, khuyến mãi, đổi trả, đánh giá, lịch sử mua, cùng chatbot. Nhưng toàn bộ phần sửa ở P0–P3 **chưa được biên dịch hay chạy** (máy không có Flutter SDK).
+
+### Việc nên làm để lấy thêm điểm (theo thứ tự lợi ích)
+
+1. **Chạy `flutter analyze` và `flutter test`, sửa lỗi nếu có:** khoảng +0.22. Đây cũng là rủi ro lớn nhất khi demo.
+2. **Đổi hàng** (đổi sang sản phẩm hoặc biến thể khác trong luồng đổi trả): khoảng +0.10.
+3. **Phí giao hàng** theo chi nhánh hoặc khu vực: khoảng +0.05.
+4. **V14 khuyến mãi:** trần tiền giảm, đơn tối thiểu: khoảng +0.08.
+5. **Lọc theo chi nhánh cho phiếu nhập kho và phiếu bảo hành:** khoảng +0.05.
+6. **P4:** đồng bộ ERD và báo cáo với hệ thống hiện tại. Không cộng điểm phần mềm, nhưng tránh bị trừ ở phần báo cáo.
+
+---
+
+## Lần 1 (06/11/2026, trước khi sửa)
+
+### 0. Kết quả tổng hợp
 
 | # | Hạng mục (theo đề cương) | Trọng số | Điểm | Tỷ lệ |
 |---|---|---:|---:|---:|

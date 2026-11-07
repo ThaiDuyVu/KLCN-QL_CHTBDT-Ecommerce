@@ -20,7 +20,7 @@ export default function MyWarrantiesPage() {
     <form className="panel warranty-toolbar" onSubmit={lookup}><label>Tra Serial hoặc IMEI<input name="code" placeholder="Nhập Serial / IMEI" /></label><button className="button" disabled={looking}>{looking ? 'Đang tìm…' : 'Tra cứu'}</button></form>
     {lookupError && <p className="auth-alert" role="alert">{lookupError}</p>}{loading && <p role="status">Đang tải bảo hành…</p>}{error && <p className="auth-alert" role="alert">{error}</p>}
     {!loading && !error && (data?.content?.length ? <section className="customer-warranty-grid" aria-label="Thiết bị bảo hành">{data.content.map(row => <article className="panel customer-warranty-card" key={row.warrantyId}>
-      <div className="customer-warranty-heading"><div><p className="eyebrow">{row.sku}</p><h2>{row.productName}</h2></div><span className={`warranty-status ${row.status === 'EXPIRED' ? 'expired' : ''}`}>{warrantyStatus[row.status]}</span></div>
+      <div className="customer-warranty-heading"><div><p className="eyebrow">{row.sku}</p><h2>{row.productName}</h2></div><span className={`warranty-status ${row.status !== 'ACTIVE' ? 'expired' : ''}`}>{warrantyStatus[row.status]}</span></div>
       <dl><div><dt>Serial</dt><dd>{row.serialNumber}</dd></div><div><dt>IMEI</dt><dd>{row.imeiNumbers?.join(', ') || 'Không có IMEI'}</dd></div><div><dt>Bắt đầu bảo hành</dt><dd>{formatDate(row.startDate)}</dd></div><div><dt>Hết hạn</dt><dd>{formatDate(row.endDate)}</dd></div></dl>
       <Link className="button button-quiet" to={`/my-warranties/${row.warrantyId}`}>Xem bảo hành và yêu cầu →</Link>
     </article>)}</section> : <section className="panel empty-state"><p>Chưa có thiết bị được cấp quyền bảo hành.</p></section>)}

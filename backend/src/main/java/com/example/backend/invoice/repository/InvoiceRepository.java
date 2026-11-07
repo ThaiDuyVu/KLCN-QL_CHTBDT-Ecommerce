@@ -18,4 +18,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, UUID> {
     @Query("select max(i.invoiceNumber) from Invoice i where i.invoiceNumber like :prefix")
     Optional<String> maxNumberLike(@Param("prefix") String prefix);
     Page<Invoice> findByInvoiceNumberContainingIgnoreCase(String keyword, Pageable pageable);
+    @Query("select i from Invoice i where i.orderId in (select o.orderId from Order o where o.warehouseId = :warehouseId)"
+            + " and lower(i.invoiceNumber) like lower(concat('%', :keyword, '%'))")
+    Page<Invoice> findByBranch(@Param("warehouseId") UUID warehouseId, @Param("keyword") String keyword, Pageable pageable);
 }

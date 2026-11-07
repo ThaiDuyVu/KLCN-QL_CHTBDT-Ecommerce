@@ -55,12 +55,12 @@ public class ReportRepository {
                 new MapSqlParameterSource("id", warehouseId), Boolean.class));
     }
 
-    /** Money refunded through completed returns of order o (P1.2): revenue is reported net of it. */
+    /** Value of goods returned from order o and settled, refunded or exchanged (P1.2, V14): revenue is net of it. */
     private static final String REFUNDED = "(SELECT COALESCE(SUM(rr.refund_amount), 0) FROM return_requests rr"
-            + " WHERE rr.order_id = o.order_id AND rr.status = 'REFUNDED')";
+            + " WHERE rr.order_id = o.order_id AND rr.status IN ('REFUNDED', 'EXCHANGED'))";
     /** Units of order line i still with the customer after refunded returns. */
     private static final String NET_QTY = "(i.quantity - (SELECT COALESCE(SUM(ri.quantity), 0) FROM return_items ri"
-            + " JOIN return_requests rr ON rr.return_id = ri.return_id WHERE ri.order_item_id = i.order_item_id AND rr.status = 'REFUNDED'))";
+            + " JOIN return_requests rr ON rr.return_id = ri.return_id WHERE ri.order_item_id = i.order_item_id AND rr.status IN ('REFUNDED', 'EXCHANGED')))";
 
     public ReportSummaryResponse summary(ReportFilter filter) {
         String sql = """

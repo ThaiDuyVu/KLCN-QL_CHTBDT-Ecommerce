@@ -47,13 +47,21 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerAddressService customerAddresses;
     private final ShipmentService shipments;
     private final com.example.backend.invoice.service.InvoiceService invoices;
+    private final OrderHistory history;
+    private final com.example.backend.common.branch.BranchScope branch;
+    private final com.example.backend.returns.repository.ReturnRequestRepository returnRequests;
     public OrderServiceImpl(CustomerCartRepository customers, CartRepository carts, CartItemRepository cartItems, OrderRepository orders,
                             OrderItemRepository items, PaymentRepository payments, ProductVariantRepository variants,
                             OrderStockService stock, SerialAllocationService serialAllocation,
                             SerialNumberRepository serials, WarehouseRepository warehouses,
                             WarrantyProvisioningService warrantyProvisioning, InstallmentService installmentService, VnpayService vnpay, com.example.backend.promotion.service.PromotionService promotions,
                             CustomerAddressService customerAddresses, ShipmentService shipments,
-                            com.example.backend.invoice.service.InvoiceService invoices) {
+                            com.example.backend.invoice.service.InvoiceService invoices, OrderHistory history,
+                            com.example.backend.common.branch.BranchScope branch,
+                            com.example.backend.returns.repository.ReturnRequestRepository returnRequests) {
+        this.branch = branch;
+        this.returnRequests = returnRequests;
+        this.history = history;
         this.shipments = shipments;
         this.invoices = invoices;
         this.promotions=promotions;
@@ -118,6 +126,7 @@ public class OrderServiceImpl implements OrderService {
         order.setShippingAddress(shippingSnapshot); order.setNote(request.getNote());
         order.setSubtotal(subtotal); order.setDiscountAmount(discountAmount); order.setShippingFee(shippingFee);
         order.setTotalAmount(totalAmount); order.setStatus(OrderStatus.PENDING); orders.saveAndFlush(order);
+        history.record(order.getOrderId(), null, OrderStatus.PENDING, userId, "Khách đặt hàng");
         List<OrderItem> snapshots = new ArrayList<>();
         for (var link : links) {
             var variant = products.get(link.getVariantId());
@@ -151,7 +160,9 @@ public class OrderServiceImpl implements OrderService {
     public OrderPageResponse list(UUID userId, boolean customer, int page, int size) {
         if (page < 0 || size < 1 || size > 100 || (long) page * size > Integer.MAX_VALUE) throw new CommerceException(400, "page >= 0, size từ 1–100, offset trong giới hạn");
         var pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("orderDate"), Sort.Order.desc("orderId")));
-        var result = customer ? orders.findByCustomerId(customerId(userId), pageable) : orders.findAll(pageable);
+        var staffBranch = customer ? java.util.Optional.<UUID>empty() : branch.current();
+        var result = customer ? orders.findByCustomerId(customerId(userId), pageable)
+                : staffBranch.isPresent() ? orders.findByWarehouseId(staffBranch.get(), pageable) : orders.findAll(pageable);
         Map<UUID, String> warehouseNames = warehouseNames(result.getContent());
         var response = new OrderPageResponse(); response.setContent(result.getContent().stream()
                 .map(order -> summary(order, warehouseNames)).toList());
@@ -160,6 +171,8 @@ public class OrderServiceImpl implements OrderService {
     }
     private void owned(Order order, UUID userId, boolean customer) {
         if (customer && !order.getCustomerId().equals(customerId(userId))) throw new CommerceException(404, "Không tìm thấy đơn hàng");
+        // Branch staff (V12) only see their own branch's orders.
+        if (!customer && !branch.allows(order.getWarehouseId())) throw new CommerceException(404, "Không tìm thấy đơn hàng");
     }
     public OrderResponse detail(UUID userId, boolean customer, UUID id) {
         return detail(userId, customer, id, StaffScope.ANY);
@@ -226,8 +239,10 @@ public class OrderServiceImpl implements OrderService {
                 || payment.getTransactionCode() != null || !payment.getPaymentDate().isBefore(cutoff)) return false;
         stock.apply(order.getWarehouseId(), quantities(items.findByOrderIdOrderByVariantIdAscOrderItemIdAsc(id)), OrderStockService.Action.RELEASE);
         payment.setStatus(PaymentStatus.FAILED); payments.saveAndFlush(payment);
-        appendCancelReason(order, "Hệ thống tự hủy: quá hạn thanh toán VNPAY");
+        String reason = "Hệ thống tự hủy: quá hạn thanh toán VNPAY";
+        order.setCancelReason(reason);
         order.setStatus(OrderStatus.CANCELLED); orders.saveAndFlush(order);
+        history.record(id, OrderStatus.PENDING, OrderStatus.CANCELLED, null, reason);
         return true;
     }
     private OrderResponse status(UUID userId, boolean customer, UUID id, UpdateOrderStatusRequest request, StaffScope scope) {
@@ -277,8 +292,8 @@ public class OrderServiceImpl implements OrderService {
                 for (var payment : paymentRows) if (payment.getStatus() == PaymentStatus.PAID) payment.setStatus(PaymentStatus.REFUNDED);
                 payments.saveAllAndFlush(paymentRows);
             }
-            if (cancelReason != null) appendCancelReason(order, (deliveryFailed ? "Giao không thành công: " : "")
-                    + (paid ? "Hủy và hoàn tiền: " : deliveryFailed ? "" : "Lý do hủy: ") + cancelReason);
+            if (cancelReason != null) order.setCancelReason((deliveryFailed ? "Giao không thành công: " : "")
+                    + (paid ? "Hủy và hoàn tiền: " : "") + cancelReason);
         }
         if (status == OrderStatus.PROCESSING) allocateSerials(order, snapshots);
         if (status == OrderStatus.SHIPPED) shipments.dispatch(order, userId, request);
@@ -293,6 +308,8 @@ public class OrderServiceImpl implements OrderService {
             invoices.issueFor(order);
         }
         order.setStatus(status); orders.saveAndFlush(order);
+        history.record(id, from, status, userId, status == OrderStatus.CANCELLED ? order.getCancelReason()
+                : status == OrderStatus.SHIPPED ? "Bàn giao vận chuyển" : null);
         return full(order, customer, snapshots, paymentRows, scope);
     }
     private static Map<UUID, Integer> quantities(List<OrderItem> snapshots) {
@@ -304,14 +321,6 @@ public class OrderServiceImpl implements OrderService {
         });
         return quantities;
     }
-    /**
-     * The schema has no cancel_reason column yet (planned in V11), so the reason is appended to the order note
-     * on its own line, keeping the customer's original note intact above it.
-     */
-    private static void appendCancelReason(Order order, String reason) {
-        String line = "[" + reason + "]";
-        order.setNote(order.getNote() == null || order.getNote().isBlank() ? line : order.getNote() + "\n" + line);
-    }
     private Map<UUID, ProductVariant> variantMap(List<UUID> ids) {
         return variants.findByVariantIdIn(ids).stream().collect(Collectors.toMap(ProductVariant::getVariantId, v -> v));
     }
@@ -321,7 +330,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderResponse summary(Order o, Map<UUID, String> warehouseNames) {
         var r = new OrderResponse(); r.setOrderId(o.getOrderId()); r.setCustomerId(o.getCustomerId()); r.setOrderCode(o.getOrderCode()); r.setOrderDate(o.getOrderDate());
         r.setWarehouseId(o.getWarehouseId()); r.setWarehouseName(o.getWarehouseId() == null ? null : warehouseNames.get(o.getWarehouseId()));
-        r.setRecipientName(o.getRecipientName()); r.setRecipientPhone(o.getRecipientPhone()); r.setShippingAddress(o.getShippingAddress()); r.setNote(o.getNote());
+        r.setRecipientName(o.getRecipientName()); r.setRecipientPhone(o.getRecipientPhone()); r.setShippingAddress(o.getShippingAddress()); r.setNote(o.getNote()); r.setCancelReason(o.getCancelReason()); r.setSalesChannel(o.getSalesChannel());
         r.setSubtotal(o.getSubtotal()); r.setDiscountAmount(o.getDiscountAmount()); r.setShippingFee(o.getShippingFee()); r.setTotalAmount(o.getTotalAmount()); r.setStatus(o.getStatus()); return r;
     }
     private OrderResponse full(Order order, boolean customer, List<OrderItem> snapshots, List<Payment> paymentRows,
@@ -366,6 +375,11 @@ public class OrderServiceImpl implements OrderService {
         }
         r.setShipment(shipments.forOrder(order.getOrderId()).orElse(null));
         r.setInvoice(invoices.forOrder(order.getOrderId()).orElse(null));
+        r.setStatusHistory(history.of(order.getOrderId()));
+        returnRequests.findByExchangeOrderId(order.getOrderId()).ifPresent(request -> {
+            r.setExchangeFromReturnCode(request.getReturnCode());
+            r.setExchangeCredit(request.getRefundAmount());
+        });
         r.setAllowedStatuses(allowed.stream().filter(next -> scope.permits(order.getStatus(), next)).toList()); return r;
     }
 

@@ -10,7 +10,9 @@ export default function CustomerForm({ customer, onSaved, onClose }) {
   const { invalidateSession } = useAuth();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [withAccount, setWithAccount] = useState(true);
   const editing = Boolean(customer);
+  const walkIn = editing && !customer.userId;
   async function submit(event) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
@@ -18,8 +20,9 @@ export default function CustomerForm({ customer, onSaved, onClose }) {
     const body = { fullName: value('fullName'), phone: value('phone'), email: value('email') || null, address: value('address') || null };
     setBusy(true); setError('');
     try {
-      const saved = editing ? await customerApi.update(customer.customerId, body)
-        : await customerApi.create({ ...body, username: value('username') || null, password: String(form.get('password') || '') });
+      const saved = editing ? await customerApi.update(customer.customerId, walkIn ? { ...body, email: null } : body)
+        : await customerApi.create(withAccount ? { ...body, username: value('username') || null, password: String(form.get('password') || '') }
+          : { fullName: body.fullName, phone: body.phone, address: body.address });
       onSaved(saved);
     } catch (e) {
       if (e.status === 401) invalidateSession();
@@ -36,9 +39,10 @@ export default function CustomerForm({ customer, onSaved, onClose }) {
       <fieldset disabled={busy}>
         <label>Họ và tên<input name="fullName" required maxLength={255} defaultValue={customer?.fullName || ''} autoFocus /></label>
         <label>Số điện thoại<input name="phone" type="tel" required pattern="(0[0-9]{9}|\+84[0-9]{9})" title="0xxxxxxxxx hoặc +84xxxxxxxxx" defaultValue={customer?.phone || ''} /></label>
-        <label>Email (không bắt buộc)<input name="email" type="email" maxLength={255} defaultValue={realEmail} /></label>
+        {!editing && <label className="customer-form-wide"><span><input type="checkbox" checked={withAccount} onChange={(e) => setWithAccount(e.target.checked)} /> Tạo tài khoản đăng nhập cho khách (bỏ chọn = khách vãng lai)</span></label>}
+        {((!editing && withAccount) || (editing && !walkIn)) && <label>Email (không bắt buộc)<input name="email" type="email" maxLength={255} defaultValue={realEmail} /></label>}
         <label className="customer-form-wide">Địa chỉ (không bắt buộc)<input name="address" maxLength={500} defaultValue={customer?.address || ''} /></label>
-        {!editing && <>
+        {!editing && withAccount && <>
           <label>Tên đăng nhập (không bắt buộc)<input name="username" pattern="[A-Za-z0-9._\-]{4,50}" placeholder="Mặc định là số điện thoại" autoComplete="off" /></label>
           <label>Mật khẩu ban đầu<input name="password" type="password" required minLength={8} autoComplete="new-password" title="Ít nhất 8 ký tự, gồm cả chữ và số" /></label>
         </>}

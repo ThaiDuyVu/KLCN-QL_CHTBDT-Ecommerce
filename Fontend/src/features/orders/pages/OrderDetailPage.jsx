@@ -14,6 +14,7 @@ import ComingSoonButton from '../../../components/ui/ComingSoonButton';
 import { vnpayApi } from '../api/vnpayApi';
 import { paymentStatusLabels, redirectToVnpay } from '../components/vnpayFormat';
 import ShipmentInfo from '../components/ShipmentInfo';
+import StatusTimeline from '../components/StatusTimeline';
 import { PrintButton } from '../../../components/print/PrintForm';
 import { DeliveryNoteForm } from '../../forms/BusinessForms';
 import DispatchForm from '../components/DispatchForm';
@@ -86,8 +87,11 @@ function Detail({ customer, orderId }) {
         <div><dt>Chi nhánh xử lý</dt><dd>{data.warehouseName || 'Chưa xác định'}</dd></div>
         <div className="order-detail-full"><dt>Địa chỉ giao hàng</dt><dd>{data.shippingAddress}</dd></div>
         {data.note && <div className="order-detail-full"><dt>Ghi chú</dt><dd className="order-note">{data.note}</dd></div>}
+        {data.cancelReason && <div className="order-detail-full"><dt>Lý do hủy</dt><dd>{data.cancelReason}</dd></div>}
+        {data.exchangeFromReturnCode && <div className="order-detail-full"><dt>Đơn đổi hàng</dt><dd>Từ yêu cầu {data.exchangeFromReturnCode}: đã trừ {money(data.exchangeCredit)} giá trị hàng trả, cần thu {money(data.payment?.amount)}</dd></div>}
       </dl></section>
       <ShipmentInfo shipment={data.shipment} />
+      <StatusTimeline history={data.statusHistory} />
       {!customer && data.shipment && <div className="order-detail-actions"><PrintButton label="In phiếu giao hàng"><DeliveryNoteForm order={data} /></PrintButton></div>}
       {customer && data.status === 'DELIVERED' && <OrderReviews order={data} />}
       {customer && data.status === 'DELIVERED' && <OrderReturns order={data} />}
@@ -110,7 +114,7 @@ function Detail({ customer, orderId }) {
           {customer && data.status === 'PENDING' && data.payment.status === 'PENDING' && !data.payment.transactionCode && (Date.parse(data.payment.paymentExpiresAt) > now ? <button className="button" disabled={busy} onClick={payVnpay}>{busy ? 'Đang mở…' : 'Mở thanh toán VNPAY'}</button> : <p>Phiên thanh toán đã hết hạn. Kiểm tra kết quả thanh toán trước khi hủy đơn và đặt lại.</p>)}
           {customer && data.payment.status === 'FAILED' && <p>Thanh toán chưa thành công. Bạn có thể hủy đơn chưa thanh toán rồi đặt lại.</p>}
         </div>}
-        {data.status === 'CANCELLED' && data.payment?.status === 'REFUNDED' && <p className="commerce-notice" role="status">Đơn đã hủy và cửa hàng đã hoàn tiền {money(data.payment.amount)}. Lý do xem ở phần ghi chú.</p>}
+        {data.status === 'CANCELLED' && data.payment?.status === 'REFUNDED' && <p className="commerce-notice" role="status">Đơn đã hủy và cửa hàng đã hoàn tiền {money(data.payment.amount)}.</p>}
         {data.status === 'CANCELLED' && data.payment?.status === 'PAID' && <p className="auth-alert" role="alert">Đơn đã hủy nhưng thanh toán đã được ghi nhận. Cần liên hệ cửa hàng để đối soát/hoàn tiền; hệ thống không tự khôi phục đơn.</p>}
         {data.installment && <section className="installment-status-card" aria-label="Hồ sơ trả góp">
           <h4>Hồ sơ trả góp</h4><StatusBadge status={data.installment.status}>{installmentLabels[data.installment.status] || data.installment.status}</StatusBadge>

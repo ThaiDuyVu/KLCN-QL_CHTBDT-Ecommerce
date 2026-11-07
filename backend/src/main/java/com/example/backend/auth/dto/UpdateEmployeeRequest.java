@@ -9,6 +9,11 @@ public class UpdateEmployeeRequest {
     private String fullName;
     @Size(max = 100, message = "Vị trí tối đa 100 ký tự")
     private String position;
+    /** Branch the employee works at; null = all branches (V12). */
+    private java.util.UUID warehouseId;
+
+    public java.util.UUID getWarehouseId() { return warehouseId; }
+    public void setWarehouseId(java.util.UUID value) { this.warehouseId = value; }
 
     public String getFullName() { return fullName; }
     public void setFullName(String value) { this.fullName = value == null ? null : value.trim(); }

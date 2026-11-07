@@ -6,7 +6,7 @@ import { returnApi } from './api/returnApi';
 import OrderReturns from './components/OrderReturns';
 import ReturnDetailPage from './pages/ReturnDetailPage';
 
-vi.mock('./api/returnApi', () => ({ returnApi: { create: vi.fn(), mine: vi.fn(), myReturn: vi.fn(), forOrder: vi.fn(), list: vi.fn(), detail: vi.fn(), status: vi.fn() } }));
+vi.mock('./api/returnApi', () => ({ returnApi: { searchVariants: vi.fn(), create: vi.fn(), mine: vi.fn(), myReturn: vi.fn(), forOrder: vi.fn(), list: vi.fn(), detail: vi.fn(), status: vi.fn() } }));
 
 const order = { orderId: 'o1', orderCode: 'ORD-1', status: 'DELIVERED', items: [
   { orderItemId: 'phone', productName: 'Điện thoại X', serialNumber: 'SN-1', quantity: 1 },
@@ -25,7 +25,7 @@ it('customer requests a return for the units not yet claimed', async () => {
   returnApi.forOrder.mockResolvedValue([{ ...request, status: 'REQUESTED', items: [{ ...request.items[0] }] }]);
   returnApi.create.mockResolvedValue({ returnCode: 'TH-2' });
   render(withAuth(<MemoryRouter><OrderReturns order={order} /></MemoryRouter>));
-  expect(await screen.findByText('TH-1')).toBeInTheDocument();
+  expect(await screen.findByText('TH-1 · Trả hàng, hoàn tiền')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Yêu cầu đổi trả' }));
   expect(screen.queryByLabelText('Trả Điện thoại X (SN-1)')).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('button', { name: 'Gửi yêu cầu' }));
@@ -56,4 +56,38 @@ it('customer detail is read-only', async () => {
   expect(await screen.findByText('Đã duyệt, chờ nhận hàng')).toBeInTheDocument();
   expect(screen.queryByRole('button', { name: 'Xác nhận đã nhận hàng' })).not.toBeInTheDocument();
   expect(screen.queryByText('Nguyễn Văn An')).not.toBeInTheDocument();
+});
+
+it('customer asks to exchange a case for a headset', async () => {
+  returnApi.forOrder.mockResolvedValue([]);
+  returnApi.searchVariants.mockResolvedValue({ content: [{ variantId: 'v-headset', sku: 'TN-Y', productName: 'Tai nghe Y', price: 1000000 }] });
+  returnApi.create.mockResolvedValue({ returnCode: 'TH-3' });
+  render(withAuth(<MemoryRouter><OrderReturns order={order} /></MemoryRouter>));
+  fireEvent.click(await screen.findByRole('button', { name: 'Yêu cầu đổi trả' }));
+  fireEvent.click(screen.getByLabelText('Đổi sang sản phẩm khác'));
+  fireEvent.click(screen.getByLabelText('Trả Ốp lưng'));
+  fireEvent.change(screen.getByLabelText('Lý do đổi trả'), { target: { value: 'Muốn đổi mẫu' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Gửi yêu cầu' }));
+  expect(await screen.findByText('Chọn sản phẩm muốn đổi sang.')).toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText('Tìm sản phẩm muốn đổi'), { target: { value: 'tai nghe' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Tìm' }));
+  fireEvent.click(await screen.findByRole('button', { name: /TN-Y/ }));
+  fireEvent.click(screen.getByRole('button', { name: 'Gửi yêu cầu' }));
+  await waitFor(() => expect(returnApi.create).toHaveBeenCalledWith({ orderId: 'o1', reason: 'Muốn đổi mẫu', type: 'EXCHANGE',
+    items: [{ orderItemId: 'case', quantity: 2 }], exchangeItems: [{ variantId: 'v-headset', quantity: 1 }] }));
+});
+
+it('staff confirm an exchange and see the replacement order and difference', async () => {
+  returnApi.detail.mockResolvedValueOnce({ ...request, status: 'RECEIVED', requestType: 'EXCHANGE', allowedStatuses: ['EXCHANGED'],
+    exchangeItems: [{ variantId: 'v-headset', productName: 'Tai nghe Y', sku: 'TN-Y', quantity: 1, currentPrice: 1000000 }] })
+    .mockResolvedValue({ ...request, status: 'EXCHANGED', requestType: 'EXCHANGE', allowedStatuses: [], exchangeOrderId: 'o2', exchangeOrderCode: 'EX-1', exchangeDifference: -9000000,
+      exchangeItems: [{ variantId: 'v-headset', productName: 'Tai nghe Y', sku: 'TN-Y', quantity: 1, currentPrice: 1000000 }] });
+  returnApi.status.mockResolvedValue({});
+  render(withAuth(<MemoryRouter initialEntries={['/returns/r1']}><Routes><Route path="/returns/:returnId" element={<ReturnDetailPage />} /></Routes></MemoryRouter>));
+  expect(await screen.findByText('Sản phẩm đổi sang')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Xác nhận đổi hàng (tạo đơn đổi)' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Xác nhận' }));
+  await waitFor(() => expect(returnApi.status).toHaveBeenCalledWith('r1', { status: 'EXCHANGED', note: null }));
+  expect(await screen.findByRole('link', { name: 'EX-1' })).toHaveAttribute('href', '/orders/o2');
+  expect(screen.getByText('Cửa hàng hoàn lại')).toBeInTheDocument();
 });

@@ -168,3 +168,12 @@ it('keeps pending payment visible when reconciliation is unavailable',async()=>{
   expect(await screen.findByRole('alert')).toHaveTextContent('VNPAY giới hạn truy vấn lặp lại.');
   expect(await screen.findByText('Thanh toán: VNPAY · Chờ thanh toán')).toBeInTheDocument();
 });
+it('shows the cancel reason and who changed each status', async () => {
+  orderApi.detail.mockResolvedValue({...order,status:'CANCELLED',allowedStatuses:[],cancelReason:'Giao không thành công: Sai địa chỉ',statusHistory:[
+    {fromStatus:null,toStatus:'PENDING',changedAt:'2026-11-06T01:00:00Z',actorType:'CUSTOMER',actorName:'Khách thử'},
+    {fromStatus:'SHIPPED',toStatus:'CANCELLED',changedAt:'2026-11-06T05:00:00Z',actorType:'STAFF',actorName:'Phan Văn An',note:'Giao không thành công: Sai địa chỉ'}]});
+  mount(<Routes><Route path="*" element={<OrderDetailPage/>}/></Routes>);
+  expect(await screen.findByText('Lý do hủy')).toBeInTheDocument();
+  expect(screen.getByText(/Nhân viên: Phan Văn An/)).toBeInTheDocument();
+  expect(screen.getByText(/Khách hàng: Khách thử/)).toBeInTheDocument();
+});

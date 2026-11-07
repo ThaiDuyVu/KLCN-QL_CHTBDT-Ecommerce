@@ -250,7 +250,8 @@ class OrderCheckoutIntegrationTest {
         assertThat(orderStatus(id)).isEqualTo("CANCELLED");
         assertThat(paymentStatus(id)).isEqualTo("FAILED");
         assertThat(stock("reserved_quantity")).isZero();assertThat(stock("quantity")).isEqualTo(5);
-        assertThat(jdbc.queryForObject("SELECT note FROM orders WHERE order_id=?",String.class,id)).contains("quá hạn thanh toán VNPAY");
+        assertThat(jdbc.queryForObject("SELECT cancel_reason FROM orders WHERE order_id=?",String.class,id)).contains("quá hạn thanh toán VNPAY");
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM order_status_history WHERE order_id=? AND to_status='CANCELLED' AND changed_by_user_id IS NULL",Integer.class,id)).isEqualTo(1);
         assertThat(expiryJob.expireNow()).as("second run is a no-op").isZero();
     }
     @Test void vnpayOrderInsideItsSessionOrUnderReviewIsNotExpired() {
@@ -280,7 +281,7 @@ class OrderCheckoutIntegrationTest {
         mvc.perform(patch("/api/orders/{id}/status",id).with(user(principal("MANAGER"))).with(csrf()).contentType("application/json")
                 .content("{\"status\":\"CANCELLED\",\"reason\":\"Hết hàng tại chi nhánh\"}"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.payment.status").value("REFUNDED"))
-                .andExpect(jsonPath("$.note").value(org.hamcrest.Matchers.containsString("Hủy và hoàn tiền: Hết hàng tại chi nhánh")));
+                .andExpect(jsonPath("$.cancelReason").value("Hủy và hoàn tiền: Hết hàng tại chi nhánh")).andExpect(jsonPath("$.note").doesNotExist());
         assertThat(paymentStatus(id)).isEqualTo("REFUNDED");
         assertThat(stock("reserved_quantity")).isZero();assertThat(stock("quantity")).isEqualTo(5);
     }
@@ -362,7 +363,7 @@ class OrderCheckoutIntegrationTest {
         move(id, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"CANCELLED\",\"reason\":\"Khách không nghe máy 3 lần\"}")
                 .andExpect(status().isOk()).andExpect(jsonPath("$.status").value("CANCELLED"))
                 .andExpect(jsonPath("$.shipment.status").value("FAILED"))
-                .andExpect(jsonPath("$.note").value(org.hamcrest.Matchers.containsString("Giao không thành công: Khách không nghe máy 3 lần")));
+                .andExpect(jsonPath("$.cancelReason").value("Giao không thành công: Khách không nghe máy 3 lần"));
         assertThat(stock("reserved_quantity")).isZero();assertThat(stock("quantity")).isEqualTo(5);
         assertThat(jdbc.queryForObject("SELECT count(*) FROM serial_numbers WHERE status='AVAILABLE'", Integer.class)).isEqualTo(3);
         assertThat(jdbc.queryForObject("SELECT count(*) FROM order_items WHERE order_id=? AND serial_id IS NOT NULL", Integer.class, id)).isZero();
@@ -406,6 +407,26 @@ class OrderCheckoutIntegrationTest {
         mvc.perform(get("/api/invoices").with(user(principal("DELIVERY_STAFF")))).andExpect(status().isForbidden());
         add(firstUser,1);UUID pending=orders.checkout(firstUser,request()).getOrderId();
         mvc.perform(get("/api/invoices/mine/by-order/{id}",pending).with(user(principal("CUSTOMER")))).andExpect(status().isNotFound());
+    }
+    // ---- P3.2 status history ----
+    @Test void everyStatusChangeIsRecordedWithItsActorAndReason() throws Exception {
+        Staff an = deliveryStaff("Phan Văn An", "ACTIVE");
+        UUID id = processingOrder(1);
+        move(id, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"SHIPPED\"}").andExpect(status().isOk());
+        move(id, principalFor(an.userId(),"DELIVERY_STAFF"), "{\"status\":\"CANCELLED\",\"reason\":\"Sai địa chỉ\"}").andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusHistory.length()").value(5))
+                .andExpect(jsonPath("$.statusHistory[0].fromStatus").doesNotExist())
+                .andExpect(jsonPath("$.statusHistory[0].toStatus").value("PENDING"))
+                .andExpect(jsonPath("$.statusHistory[0].actorType").value("STAFF"))
+                .andExpect(jsonPath("$.statusHistory[3].toStatus").value("SHIPPED"))
+                .andExpect(jsonPath("$.statusHistory[3].actorName").value("Phan Văn An"))
+                .andExpect(jsonPath("$.statusHistory[4].fromStatus").value("SHIPPED"))
+                .andExpect(jsonPath("$.statusHistory[4].note").value("Giao không thành công: Sai địa chỉ"));
+        add(firstUser,1);UUID own=orders.checkout(firstUser,request()).getOrderId();
+        jdbc.update("DELETE FROM employees WHERE user_id=?", firstUser);
+        orders.status(firstUser,true,own,OrderStatus.CANCELLED);
+        var changes = orders.detail(firstUser,true,own).getStatusHistory();
+        assertThat(changes).extracting(c -> c.actorType()).containsExactly("CUSTOMER","CUSTOMER");
     }
     @Test void installmentCheckoutPreservesExactlyOnePaymentAndApprovalGate() {
         add(firstUser,1);

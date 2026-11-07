@@ -114,6 +114,8 @@ class Order {
   final String recipientPhone;
   final String? shippingAddress;
   final String? note;
+  /// Why the order was cancelled (customer, staff, failed delivery or VNPAY expiry).
+  final String? cancelReason;
   final String paymentMethod;
   final String paymentStatus;
   final List<OrderItem> items;
@@ -138,6 +140,7 @@ class Order {
     this.recipientPhone = '',
     this.shippingAddress,
     this.note,
+    this.cancelReason,
     this.paymentMethod = 'COD',
     this.paymentStatus = 'PENDING',
     required this.items,
@@ -202,6 +205,7 @@ class Order {
       recipientPhone: (json['recipientPhone'] ?? json['recipient_phone'] ?? json['customerPhone'] ?? '').toString(),
       shippingAddress: json['shippingAddress']?.toString() ?? json['shipping_address']?.toString() ?? json['address']?.toString(),
       note: json['note']?.toString(),
+      cancelReason: json['cancelReason']?.toString(),
       paymentMethod: paymentMethod,
       paymentStatus: paymentStatus,
       items: (itemsJson as List)

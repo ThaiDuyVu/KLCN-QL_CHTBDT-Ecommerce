@@ -5,6 +5,8 @@ import { AuthContext } from '../../auth/AuthContext';
 import UsersPanel from './components/UsersPanel';
 import RolesPermissionsPanel from './components/RolesPermissionsPanel';
 import { userManagementApi as api } from './api/userManagementApi';
+import { warehouseApi } from '../warehouses/api/warehouseApi';
+vi.mock('../warehouses/api/warehouseApi', () => ({ warehouseApi: { listAll: vi.fn() } }));
 vi.mock('./api/userManagementApi', () => ({ userManagementApi: {
   users: vi.fn(), user: vi.fn(), update: vi.fn(), status: vi.fn(), role: vi.fn(),
   permissions: vi.fn(), rolePermissions: vi.fn(), updatePermissions: vi.fn(),
@@ -19,6 +21,7 @@ beforeEach(() => {
   api.users.mockResolvedValue({ content: [target], page: 0, size: 20, totalElements: 1, totalPages: 1 });
   api.permissions.mockResolvedValue([{ permissionId: 'view-id', permissionName: 'USER_VIEW' }]);
   api.rolePermissions.mockResolvedValue([]);
+  warehouseApi.listAll.mockResolvedValue([{ warehouseId: 'w1', warehouseName: 'Chi nhánh Quận 1', status: 'ACTIVE' }]);
   api.employeeByUser.mockResolvedValue({ employeeId: 'employee-id', employeeCode: 'NV0001', fullName: 'Staff', position: 'Nhân viên cửa hàng' });
 });
 it('creates an employee with a job title and never offers the customer role', async () => {
@@ -35,7 +38,7 @@ it('creates an employee with a job title and never offers the customer role', as
   fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'thukho@dienmay.test' } });
   fireEvent.click(screen.getByRole('button', { name: 'Tạo nhân viên' }));
   await waitFor(() => expect(api.createEmployee).toHaveBeenCalledWith(expect.objectContaining({
-    fullName: 'Trần Thị Bình', roleId: 'keeper-id', username: 'thukho.q1', password: 'MatKhau123', email: 'thukho@dienmay.test', employeeCode: null, phone: null })));
+    fullName: 'Trần Thị Bình', roleId: 'keeper-id', username: 'thukho.q1', password: 'MatKhau123', email: 'thukho@dienmay.test', employeeCode: null, phone: null, warehouseId: null })));
   expect(await screen.findByText('Đã tạo nhân viên Trần Thị Bình (NV0002) với tài khoản thukho.q1.')).toBeInTheDocument();
   expect(api.users).toHaveBeenCalledTimes(2);
 });

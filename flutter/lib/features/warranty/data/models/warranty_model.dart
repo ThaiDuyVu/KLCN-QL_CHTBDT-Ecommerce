@@ -24,6 +24,8 @@ class WarrantyStatusValue {
         return 'Còn hiệu lực';
       case 'EXPIRED':
         return 'Hết hạn';
+      case 'VOIDED':
+        return 'Đã hủy (hàng đã trả lại)';
       default:
         return raw ?? 'Không xác định';
     }

@@ -16,6 +16,7 @@ import InvoicesPage from './features/invoices/pages/InvoicesPage';
 import InvoicePage from './features/invoices/pages/InvoicePage';
 import ReviewsPage from './features/reviews/pages/ReviewsPage';
 import BackupsPage from './features/backups/BackupsPage';
+import PosPage from './features/pos/PosPage';
 import OrderDetailPage from './features/orders/pages/OrderDetailPage';
 import InstallmentsPage from './features/orders/pages/InstallmentsPage';
 import InstallmentDetailPage from './features/orders/pages/InstallmentDetailPage';
@@ -93,6 +94,7 @@ export default function App() {
             <Route path="invoices" element={<InvoicesPage />} />
             <Route path="invoices/:invoiceId" element={<InvoicePage />} />
             <Route path="reviews" element={<ReviewsPage />} />
+            <Route path="pos" element={<PosPage />} />
           </Route>
           <Route element={<RequireRole roles={RETURN_ROLES} />}>
             <Route path="returns" element={<ReturnsPage />} />

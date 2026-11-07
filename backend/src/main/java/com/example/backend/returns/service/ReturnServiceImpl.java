@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -56,12 +55,21 @@ public class ReturnServiceImpl implements ReturnService {
     private final WarrantyRepository warranties;
     private final EmployeeRepository employees;
     private final org.springframework.beans.factory.ObjectProvider<ReturnRefundListener> refundListeners;
+    private final com.example.backend.common.branch.BranchScope branch;
+    private final com.example.backend.returns.repository.ReturnExchangeItemRepository exchangeItems;
+    private final com.example.backend.order.service.ExchangeOrderService exchangeOrders;
 
     public ReturnServiceImpl(ReturnRequestRepository returns, ReturnItemRepository returnItems, CustomerCartRepository customers,
                              OrderRepository orders, OrderItemRepository orderItems, ShipmentRepository shipments,
                              PaymentRepository payments, ProductVariantRepository variants, SerialNumberRepository serials,
                              InventoryRepository inventory, WarrantyRepository warranties, EmployeeRepository employees,
-                             org.springframework.beans.factory.ObjectProvider<ReturnRefundListener> refundListeners) {
+                             org.springframework.beans.factory.ObjectProvider<ReturnRefundListener> refundListeners,
+                             com.example.backend.common.branch.BranchScope branch,
+                             com.example.backend.returns.repository.ReturnExchangeItemRepository exchangeItems,
+                             com.example.backend.order.service.ExchangeOrderService exchangeOrders) {
+        this.branch = branch;
+        this.exchangeItems = exchangeItems;
+        this.exchangeOrders = exchangeOrders;
         this.returns = returns; this.returnItems = returnItems; this.customers = customers; this.orders = orders;
         this.orderItems = orderItems; this.shipments = shipments; this.payments = payments; this.variants = variants;
         this.serials = serials; this.inventory = inventory; this.warranties = warranties; this.employees = employees;
@@ -97,7 +105,10 @@ public class ReturnServiceImpl implements ReturnService {
             }
             refund = refund.add(item.getFinalUnitPrice().multiply(BigDecimal.valueOf(line.quantity())));
         }
+        ReturnType type = request.type() == null ? ReturnType.RETURN : request.type();
+        Map<UUID, Integer> wanted = exchangeLines(type, request.exchangeItems(), order.getWarehouseId());
         ReturnRequest row = new ReturnRequest();
+        row.setRequestType(type);
         row.setReturnCode(nextCode());
         row.setOrderId(order.getOrderId());
         row.setCustomerId(customer.getCustomerId());
@@ -117,6 +128,12 @@ public class ReturnServiceImpl implements ReturnService {
             created.add(item);
         }
         returnItems.saveAllAndFlush(created);
+        UUID returnId = row.getReturnId();
+        exchangeItems.saveAllAndFlush(wanted.entrySet().stream().map(entry -> {
+            ReturnExchangeItem item = new ReturnExchangeItem();
+            item.setReturnId(returnId); item.setVariantId(entry.getKey()); item.setQuantity(entry.getValue());
+            return item;
+        }).toList());
         return map(List.of(row), Set.of()).get(0);
     }
 
@@ -144,12 +161,16 @@ public class ReturnServiceImpl implements ReturnService {
     @Override
     public ReturnPageResponse list(ReturnStatus status, int page, int size, Collection<String> authorities) {
         var pageable = pageable(page, size);
+        Optional<UUID> mine = branch.current();
+        if (mine.isPresent()) return page(returns.findByBranch(mine.get(), status, pageable), Set.copyOf(authorities));
         return page(status == null ? returns.findAll(pageable) : returns.findByStatus(status, pageable), Set.copyOf(authorities));
     }
 
     @Override
     public ReturnResponse detail(UUID returnId, Collection<String> authorities) {
-        return map(List.of(returns.findById(returnId).orElseThrow(this::notFound)), Set.copyOf(authorities)).get(0);
+        ReturnRequest row = returns.findById(returnId).orElseThrow(this::notFound);
+        requireBranch(row);
+        return map(List.of(row), Set.copyOf(authorities)).get(0);
     }
 
     @Override
@@ -159,9 +180,10 @@ public class ReturnServiceImpl implements ReturnService {
         ReturnRequest row = returns.findById(returnId).orElseThrow(this::notFound);
         // Same lock order as order transitions: order first, then the return request.
         Order order = orders.lockById(row.getOrderId()).orElseThrow(this::notFound);
+        if (!branch.allows(order.getWarehouseId())) throw notFound();
         row = returns.lockById(returnId).orElseThrow(this::notFound);
         ReturnStatus next = request.status();
-        if (!transitions(row.getStatus()).contains(next)) {
+        if (!transitions(row.getStatus(), row.getRequestType()).contains(next)) {
             throw new CommerceException(409, "Không thể chuyển yêu cầu đổi trả từ " + row.getStatus() + " sang " + next);
         }
         if (!allowed(next, roles)) throw new CommerceException(403, "Chức danh của bạn không được chuyển yêu cầu sang " + next);
@@ -172,13 +194,24 @@ public class ReturnServiceImpl implements ReturnService {
         switch (next) {
             case REJECTED -> {
                 if (note == null) throw new CommerceException(400, "Vui lòng nhập lý do từ chối");
-                row.setReason(row.getReason() + "\n[Từ chối: " + note + "]");
+                row.setRejectionReason(note);
                 row.setProcessedAt(OffsetDateTime.now());
             }
             case RECEIVED -> receive(order, lines, request.conditions());
             case REFUNDED -> {
                 row.setProcessedAt(OffsetDateTime.now());
                 row.setStatus(ReturnStatus.REFUNDED);
+                returns.saveAndFlush(row);
+                refundIfFullyReturned(order);
+            }
+            case EXCHANGED -> {
+                Map<UUID, Integer> wanted = new TreeMap<>();
+                exchangeItems.findByReturnIdIn(List.of(row.getReturnId())).forEach(i -> wanted.merge(i.getVariantId(), i.getQuantity(), Integer::sum));
+                var result = exchangeOrders.create(order, row.getReturnCode(), row.getRefundAmount(), wanted, userId);
+                row.setExchangeOrderId(result.order().getOrderId());
+                row.setExchangeDifference(result.difference());
+                row.setProcessedAt(OffsetDateTime.now());
+                row.setStatus(ReturnStatus.EXCHANGED);
                 returns.saveAndFlush(row);
                 refundIfFullyReturned(order);
             }
@@ -215,15 +248,13 @@ public class ReturnServiceImpl implements ReturnService {
                     throw new CommerceException(409, "Thiết bị " + (serial == null ? line.getSerialId() : serial.getSerialNumber()) + " không ở trạng thái đã bán");
                 }
                 serial.setStatus(condition == ReturnCondition.RESTOCK ? SerialStatus.AVAILABLE : SerialStatus.DEFECTIVE);
+                // The original period is kept for the record; VOIDED stops any new warranty ticket.
                 warranties.findBySerialId(line.getSerialId()).ifPresent(warranty -> {
-                    LocalDate today = LocalDate.now();
-                    warranty.setEndDate(today.isBefore(warranty.getStartDate()) ? warranty.getStartDate() : today);
-                    warranty.setStatus(WarrantyStatus.EXPIRED);
+                    warranty.setStatus(WarrantyStatus.VOIDED);
                     warranties.save(warranty);
                 });
             }
-            String result = condition == ReturnCondition.RESTOCK ? "nhập kho bán lại" : "hàng lỗi, không nhập kho bán";
-            line.setReason((line.getReason() == null ? "" : line.getReason() + " ") + "[Nhận lại: " + result + "]");
+            line.setReceivedCondition(condition);
         }
         for (var entry : restock.entrySet()) {
             var row = inventory.lockByWarehouseAndVariant(order.getWarehouseId(), entry.getKey())
@@ -238,21 +269,51 @@ public class ReturnServiceImpl implements ReturnService {
 
     /** When every unit of the order has been refunded, the whole payment is refunded. */
     private void refundIfFullyReturned(Order order) {
+        List<OrderItem> lines = orderItems.findByOrderIdOrderByVariantIdAscOrderItemIdAsc(order.getOrderId());
+        Map<UUID, Long> settled = quantities(order.getOrderId(), List.of(ReturnStatus.REFUNDED, ReturnStatus.EXCHANGED));
+        if (!lines.stream().allMatch(item -> settled.getOrDefault(item.getOrderItemId(), 0L) >= item.getQuantity())) return;
+        // Every unit came back: the sale is void (invoice cancelled). The payment is refunded only when no part
+        // of it was carried over as credit to a replacement order.
         Map<UUID, Long> refunded = quantities(order.getOrderId(), List.of(ReturnStatus.REFUNDED));
-        boolean full = orderItems.findByOrderIdOrderByVariantIdAscOrderItemIdAsc(order.getOrderId()).stream()
-                .allMatch(item -> refunded.getOrDefault(item.getOrderItemId(), 0L) >= item.getQuantity());
-        if (!full) return;
-        var paymentRows = payments.lockByOrderId(order.getOrderId());
-        for (Payment payment : paymentRows) if (payment.getStatus() == PaymentStatus.PAID) payment.setStatus(PaymentStatus.REFUNDED);
-        payments.saveAllAndFlush(paymentRows);
+        if (lines.stream().allMatch(item -> refunded.getOrDefault(item.getOrderItemId(), 0L) >= item.getQuantity())) {
+            var paymentRows = payments.lockByOrderId(order.getOrderId());
+            for (Payment payment : paymentRows) if (payment.getStatus() == PaymentStatus.PAID) payment.setStatus(PaymentStatus.REFUNDED);
+            payments.saveAllAndFlush(paymentRows);
+        }
         refundListeners.orderedStream().forEach(listener -> listener.orderFullyRefunded(order));
     }
 
-    static List<ReturnStatus> transitions(ReturnStatus current) {
+    /** Validates the products wanted in exchange: purchasable and in stock at the order's branch today. */
+    private Map<UUID, Integer> exchangeLines(ReturnType type, List<CreateReturnRequest.ExchangeLine> requested, UUID warehouseId) {
+        boolean any = requested != null && !requested.isEmpty();
+        if (type == ReturnType.RETURN) {
+            if (any) throw new CommerceException(400, "Yêu cầu trả hàng không kèm sản phẩm đổi");
+            return Map.of();
+        }
+        if (!any) throw new CommerceException(400, "Vui lòng chọn sản phẩm muốn đổi sang");
+        Map<UUID, Integer> wanted = new TreeMap<>();
+        requested.forEach(line -> wanted.merge(line.variantId(), line.quantity(), Integer::sum));
+        Map<UUID, ProductVariant> variantById = variants.findByVariantIdIn(new ArrayList<>(wanted.keySet())).stream()
+                .collect(Collectors.toMap(ProductVariant::getVariantId, Function.identity()));
+        for (var entry : wanted.entrySet()) {
+            ProductVariant variant = variantById.get(entry.getKey());
+            if (variant == null) throw new CommerceException(404, "Không tìm thấy sản phẩm muốn đổi");
+            com.example.backend.cart.service.CartServiceImpl.ensurePurchasable(variant);
+            var stockRow = inventory.findByWarehouse_WarehouseIdAndVariant_VariantId(warehouseId, variant.getVariantId());
+            long available = stockRow.map(r -> (long) r.getQuantity() - r.getReservedQuantity()).orElse(0L);
+            if (available < entry.getValue()) {
+                throw new CommerceException(409, variant.getSku() + " không đủ hàng tại chi nhánh của đơn để đổi");
+            }
+        }
+        return wanted;
+    }
+
+    static List<ReturnStatus> transitions(ReturnStatus current, ReturnType type) {
         return switch (current) {
             case REQUESTED -> List.of(ReturnStatus.APPROVED, ReturnStatus.REJECTED);
             case APPROVED -> List.of(ReturnStatus.RECEIVED, ReturnStatus.REJECTED);
-            case RECEIVED -> List.of(ReturnStatus.REFUNDED);
+            // Money back for a return; a replacement order for an exchange.
+            case RECEIVED -> List.of(type == ReturnType.EXCHANGE ? ReturnStatus.EXCHANGED : ReturnStatus.REFUNDED);
             default -> List.of();
         };
     }
@@ -262,6 +323,7 @@ public class ReturnServiceImpl implements ReturnService {
             case APPROVED, REJECTED -> SALES;
             case RECEIVED -> WAREHOUSE;
             case REFUNDED -> FINANCE;
+            case EXCHANGED -> SALES;
             default -> Set.of();
         };
         return roles.stream().anyMatch(who::contains);
@@ -287,6 +349,11 @@ public class ReturnServiceImpl implements ReturnService {
         return customers.findByUser_UserId(userId).orElseThrow(() -> new CommerceException(403, "Tài khoản chưa có hồ sơ khách hàng"));
     }
 
+    private void requireBranch(ReturnRequest row) {
+        UUID warehouseId = orders.findById(row.getOrderId()).map(Order::getWarehouseId).orElse(null);
+        if (!branch.allows(warehouseId)) throw notFound();
+    }
+
     private CommerceException notFound() { return new CommerceException(404, "Không tìm thấy yêu cầu đổi trả"); }
 
     private static PageRequest pageable(int page, int size) {
@@ -307,6 +374,12 @@ public class ReturnServiceImpl implements ReturnService {
                 .stream().collect(Collectors.groupingBy(ReturnItem::getReturnId));
         Map<UUID, Order> orderById = orders.findAllById(rows.stream().map(ReturnRequest::getOrderId).distinct().toList()).stream()
                 .collect(Collectors.toMap(Order::getOrderId, Function.identity()));
+        Map<UUID, Order> exchangeOrderById = orders.findAllById(rows.stream().map(ReturnRequest::getExchangeOrderId).filter(Objects::nonNull).toList())
+                .stream().collect(Collectors.toMap(Order::getOrderId, Function.identity()));
+        Map<UUID, List<ReturnExchangeItem>> exchangeByReturn = exchangeItems.findByReturnIdIn(rows.stream().map(ReturnRequest::getReturnId).toList())
+                .stream().collect(Collectors.groupingBy(ReturnExchangeItem::getReturnId));
+        Map<UUID, ProductVariant> exchangeVariants = variants.findByVariantIdIn(exchangeByReturn.values().stream().flatMap(List::stream)
+                .map(ReturnExchangeItem::getVariantId).distinct().toList()).stream().collect(Collectors.toMap(ProductVariant::getVariantId, Function.identity()));
         Map<UUID, OrderItem> orderLines = orderItems.findAllById(linesByReturn.values().stream().flatMap(List::stream)
                 .map(ReturnItem::getOrderItemId).distinct().toList()).stream()
                 .collect(Collectors.toMap(OrderItem::getOrderItemId, Function.identity()));
@@ -326,15 +399,22 @@ public class ReturnServiceImpl implements ReturnService {
                 return new ReturnResponse.Line(line.getReturnItemId(), line.getOrderItemId(),
                         variant == null ? null : variant.getProduct().getProductName(), variant == null ? null : variant.getSku(),
                         line.getSerialId() == null ? null : serialNumbers.get(line.getSerialId()), line.getQuantity(),
-                        item == null ? null : item.getFinalUnitPrice(), line.getReason());
+                        item == null ? null : item.getFinalUnitPrice(), line.getReason(), line.getReceivedCondition());
             }).toList();
             Order order = orderById.get(row.getOrderId());
             List<ReturnStatus> next = roles.isEmpty() ? List.of()
-                    : transitions(row.getStatus()).stream().filter(status -> allowed(status, roles)).toList();
+                    : transitions(row.getStatus(), row.getRequestType()).stream().filter(status -> allowed(status, roles)).toList();
+            List<ReturnResponse.ExchangeLine> exchange = exchangeByReturn.getOrDefault(row.getReturnId(), List.of()).stream().map(item -> {
+                ProductVariant variant = exchangeVariants.get(item.getVariantId());
+                return new ReturnResponse.ExchangeLine(item.getVariantId(), variant == null ? null : variant.getProduct().getProductName(),
+                        variant == null ? null : variant.getSku(), item.getQuantity(), variant == null ? null : variant.getPrice());
+            }).toList();
+            Order exchangeOrder = row.getExchangeOrderId() == null ? null : exchangeOrderById.get(row.getExchangeOrderId());
             return new ReturnResponse(row.getReturnId(), row.getReturnCode(), row.getOrderId(), order == null ? null : order.getOrderCode(),
                     row.getCustomerId(), customerNames.get(row.getCustomerId()), row.getReason(), row.getRequestDate(), row.getProcessedAt(),
-                    row.getRefundAmount(), row.getStatus(), row.getEmployeeId() == null ? null : employeeNames.get(row.getEmployeeId()),
-                    lines, next);
+                    row.getRefundAmount(), row.getStatus(), row.getRejectionReason(), row.getEmployeeId() == null ? null : employeeNames.get(row.getEmployeeId()),
+                    lines, next, row.getRequestType(), exchange, row.getExchangeOrderId(),
+                    exchangeOrder == null ? null : exchangeOrder.getOrderCode(), row.getExchangeDifference());
         }).toList();
     }
 }

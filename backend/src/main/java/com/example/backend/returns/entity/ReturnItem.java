@@ -16,9 +16,12 @@ public class ReturnItem {
     private UUID serialId;
     @Column(name = "quantity")
     private Integer quantity;
-    /** Customer's reason; the warehouse inspection result is appended when the goods are received. */
+    /** Customer's reason for this line. */
     @Column(name = "reason")
     private String reason;
+    /** Warehouse inspection result when the goods come back (V11). */
+    @Enumerated(EnumType.STRING) @Column(name = "received_condition")
+    private ReturnCondition receivedCondition;
 
     public UUID getReturnItemId() { return returnItemId; }
     public UUID getReturnId() { return returnId; }
@@ -29,6 +32,8 @@ public class ReturnItem {
     public void setSerialId(UUID value) { this.serialId = value; }
     public Integer getQuantity() { return quantity; }
     public void setQuantity(Integer value) { this.quantity = value; }
+    public ReturnCondition getReceivedCondition() { return receivedCondition; }
+    public void setReceivedCondition(ReturnCondition value) { this.receivedCondition = value; }
     public String getReason() { return reason; }
     public void setReason(String value) { this.reason = value; }
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 import { userManagementApi as api } from '../api/userManagementApi';
+import BranchSelect from './BranchSelect';
 
 /** Only ADMIN may create ADMIN/MANAGER accounts; customers are created on the Customers page. */
 const ADMIN_ONLY = ['ADMIN', 'MANAGER'];
@@ -19,7 +20,7 @@ export default function EmployeeCreateForm({ roles, onCreated, onClose }) {
       const created = await api.createEmployee({
         username: value('username'), password: String(form.get('password') || ''), fullName: value('fullName'),
         email: value('email'), phone: value('phone') || null, roleId: value('roleId'),
-        employeeCode: value('employeeCode') || null, position: value('position') || null,
+        employeeCode: value('employeeCode') || null, position: value('position') || null, warehouseId: value('warehouseId') || null,
       });
       onCreated(created);
     } catch (e) {
@@ -37,6 +38,7 @@ export default function EmployeeCreateForm({ roles, onCreated, onClose }) {
         <label>Chức danh<select name="roleId" required defaultValue=""><option value="" disabled>Chọn chức danh</option>
           {choices.map((role) => <option key={role.roleId} value={role.roleId}>{role.description || role.roleName}</option>)}</select></label>
         <label>Vị trí (không bắt buộc)<input name="position" maxLength={100} placeholder="Mặc định theo chức danh" /></label>
+        <BranchSelect />
         <label>Tên đăng nhập<input name="username" required pattern="[A-Za-z0-9._\-]{4,50}" title="4–50 ký tự: chữ không dấu, số, . _ -" autoComplete="off" /></label>
         <label>Mật khẩu ban đầu<input name="password" type="password" required minLength={8} autoComplete="new-password" title="Ít nhất 8 ký tự, gồm cả chữ và số" /></label>
         <label>Mã nhân viên (không bắt buộc)<input name="employeeCode" maxLength={50} pattern="[A-Za-z0-9\-]{2,50}" placeholder="Tự sinh NVxxxx" /></label>

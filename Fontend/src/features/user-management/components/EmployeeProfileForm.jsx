@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { userManagementApi as api } from '../api/userManagementApi';
 import useManagementRequest from '../hooks/useManagementRequest';
+import BranchSelect from './BranchSelect';
 
 /** Employee code and position of a staff account (customers have no employee profile). */
 export default function EmployeeProfileForm({ userId, disabled }) {
@@ -16,7 +17,7 @@ export default function EmployeeProfileForm({ userId, disabled }) {
     const form = new FormData(event.currentTarget);
     setBusy(true); setMessage(''); setSaveError('');
     try {
-      await api.updateEmployee(data.employeeId, { fullName: String(form.get('fullName')).trim(), position: String(form.get('position')).trim() || null });
+      await api.updateEmployee(data.employeeId, { fullName: String(form.get('fullName')).trim(), position: String(form.get('position')).trim() || null, warehouseId: String(form.get('warehouseId') || '') || null });
       setMessage('Đã lưu hồ sơ nhân viên.'); reload();
     } catch (e) { setSaveError(e.message); } finally { setBusy(false); }
   }
@@ -27,6 +28,7 @@ export default function EmployeeProfileForm({ userId, disabled }) {
     <fieldset disabled={disabled || busy}>
       <label>Họ và tên<input name="fullName" defaultValue={data.fullName} required maxLength={255} /></label>
       <label>Vị trí<input name="position" defaultValue={data.position || ''} maxLength={100} /></label>
+      <BranchSelect defaultValue={data.warehouseId} />
     </fieldset>
     <button className="button button-quiet" disabled={disabled || busy}>{busy ? 'Đang lưu…' : 'Lưu hồ sơ nhân viên'}</button>
   </form>;
