@@ -32,22 +32,36 @@ async function submitIssue() {
   return input;
 }
 
-it('refreshes tickets and clears the form after asynchronous submission without an error', async () => {
+it('refreshes tickets and replaces the form with the open-ticket notice after submission', async () => {
   warrantyApi.createTicket.mockResolvedValue({ ticketId: 'test-ticket' });
   warrantyApi.myWarranty.mockResolvedValueOnce({ ...warranty, tickets: [{
     ticketId: 'test-ticket', ticketCode: 'WT-TEST', status: 'RECEIVED',
     issueDescription: 'Màn hình bị lỗi', createdAt: '2026-10-27',
   }] });
 
-  const input = await submitIssue();
+  await submitIssue();
 
   expect(await screen.findByText('Đã gửi yêu cầu bảo hành.')).toBeInTheDocument();
-  expect(screen.getByText('WT-TEST')).toBeInTheDocument();
-  expect(input).toHaveValue('');
+  expect(screen.getAllByText('WT-TEST').length).toBeGreaterThan(0);
   expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   expect(warrantyApi.createTicket).toHaveBeenCalledExactlyOnceWith('test-warranty', 'Màn hình bị lỗi');
   expect(warrantyApi.myWarranty).toHaveBeenCalledTimes(2);
-  expect(screen.getByRole('button', { name: 'Gửi yêu cầu bảo hành' })).toBeEnabled();
+  expect(screen.queryByRole('button', { name: 'Gửi yêu cầu bảo hành' })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Xem phiếu đang xử lý' })).toHaveAttribute('href', '/my-warranty-tickets/test-ticket');
+});
+
+it('does not offer a new request while the device already has a ticket in progress', async () => {
+  warrantyApi.myWarranty.mockReset();
+  warrantyApi.myWarranty.mockResolvedValueOnce({ ...warranty, tickets: [
+    { ticketId: 'open', ticketCode: 'WT-OPEN', status: 'IN_PROGRESS', issueDescription: 'Lỗi pin', createdAt: '2026-10-28' },
+    { ticketId: 'done', ticketCode: 'WT-DONE', status: 'COMPLETED', issueDescription: 'Lỗi loa', createdAt: '2026-10-01' },
+  ] });
+  render(<MemoryRouter initialEntries={['/my-warranties/test-warranty']}>
+    <Routes><Route path="/my-warranties/:warrantyId" element={<WarrantyDetailPage customer />} /></Routes>
+  </MemoryRouter>);
+
+  expect(await screen.findByRole('link', { name: 'Xem phiếu đang xử lý' })).toHaveAttribute('href', '/my-warranty-tickets/open');
+  expect(screen.queryByRole('textbox', { name: 'Mô tả lỗi' })).not.toBeInTheDocument();
 });
 
 it('preserves the issue and shows the API error when ticket creation fails', async () => {

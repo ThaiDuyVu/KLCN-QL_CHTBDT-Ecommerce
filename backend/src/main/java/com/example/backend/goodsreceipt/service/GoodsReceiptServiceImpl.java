@@ -200,6 +200,7 @@ public class GoodsReceiptServiceImpl implements GoodsReceiptService {
             }
             SerialNumber serial = new SerialNumber(); serial.setSerialNumber(draft.getSerialNumber());
             serial.setVariant(item.getVariant()); serial.setWarehouse(receipt.getWarehouse()); serial.setStatus(SerialStatus.AVAILABLE);
+            serial.setReceiptDeviceId(draft.getReceiptDeviceId());
             for (GoodsReceiptItemDeviceImei draftImei : draft.getImeis()) {
                 if (imeis.existsByImeiNumber(draftImei.getImeiNumber())) {
                     throw new SerialConflictException("IMEI đã tồn tại: " + draftImei.getImeiNumber());

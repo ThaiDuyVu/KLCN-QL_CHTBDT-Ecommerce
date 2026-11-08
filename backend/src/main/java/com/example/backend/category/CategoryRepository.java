@@ -4,6 +4,7 @@ import com.example.backend.category.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,6 +14,7 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
     List<Category> findByParentIsNull(); // truy van lay danh muc goc khong parent
 
     List<Category> findByParent_CategoryId(UUID parentId); // truy van lay danh muc con theo id của parent
+    List<Category> findByParent_CategoryIdIn(Collection<UUID> parentIds); // danh muc con truc tiep cua nhieu parent (dung de mo rong cay danh muc)
 
     boolean existsByParent_CategoryId(UUID parentId); // kiem tra rang buoc xem danh muc theo id cua parent de biet no co dang lam cha cua danh muc khac hay khong
 

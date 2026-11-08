@@ -40,7 +40,9 @@ public class ReturnServiceImpl implements ReturnService {
     private static final Set<String> SALES = Set.of("ADMIN", "MANAGER", "STAFF", "SALES_STAFF");
     private static final Set<String> WAREHOUSE = Set.of("ADMIN", "MANAGER", "STAFF", "WAREHOUSE_KEEPER");
     private static final Set<String> FINANCE = Set.of("ADMIN", "MANAGER");
-    private static final List<ReturnStatus> ACTIVE = List.of(ReturnStatus.REQUESTED, ReturnStatus.APPROVED, ReturnStatus.RECEIVED, ReturnStatus.REFUNDED);
+    /** Every status that still holds the items: only a rejection frees them for a new request. */
+    private static final List<ReturnStatus> ACTIVE = List.of(ReturnStatus.REQUESTED, ReturnStatus.APPROVED, ReturnStatus.RECEIVED,
+            ReturnStatus.REFUNDED, ReturnStatus.EXCHANGED);
 
     private final ReturnRequestRepository returns;
     private final ReturnItemRepository returnItems;

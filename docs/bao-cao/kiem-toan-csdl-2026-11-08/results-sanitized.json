@@ -1,0 +1,57 @@
+{
+  "branch": "dev/vu",
+  "head": "f2982941ec241bebfe72e319465ac5c646da2733",
+  "scope": "current dirty working tree; no business/schema modifications performed by this audit",
+  "diagnostic_probes": 16,
+  "existing_tests": 15,
+  "all_final_commands_exit_code": 0,
+  "warning": "Diagnostic probe PASS means observed weakness reproduced, not business acceptance",
+  "commands": [
+    {
+      "command": "source scripts/env.sh\ncd backend\n./mvnw -B -Dapi.version=1.44 '-Dtest=DatabaseDesignAuditTest#D*' test",
+      "started_at": "2026-11-08T09:02:18.768672+00:00",
+      "finished_at": "2026-11-08T09:02:29.899045+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": "source scripts/env.sh\ncd backend\n./mvnw -B -Dapi.version=1.44 -Dtest=ReturnIntegrationTest test",
+      "started_at": "2026-11-08T09:01:57.682347+00:00",
+      "finished_at": "2026-11-08T09:02:08.716503+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": "source scripts/env.sh\ncd backend\n./mvnw -B -Dapi.version=1.44 '-Dtest=SchemaConstraintsIntegrationTest,ReportCategoryIntegrationTest' test",
+      "started_at": "2026-11-08T09:03:00.395329+00:00",
+      "finished_at": "2026-11-08T09:03:12.547380+00:00",
+      "exit_code": 0
+    },
+    {
+      "command": "source scripts/env.sh\ncd backend\n./mvnw -B -Dapi.version=1.44 '-Dtest=DatabaseDesignAuditTest#D*,SchemaConstraintsIntegrationTest,ReturnIntegrationTest,ReportCategoryIntegrationTest' test",
+      "started_at": "2026-11-08T09:01:04.307707+00:00",
+      "finished_at": "2026-11-08T09:01:54.786522+00:00",
+      "exit_code": 1,
+      "mode": "isolated PostgreSQL Testcontainers; D* asserts weaknesses; existing suites assert intended behavior"
+    }
+  ],
+  "observations": {
+    "D01": "Confirmed: returned/restocked serial resale raises uq_order_items_serial_id; new sale rolled back",
+    "D02": "Confirmed component-level: VOIDED warranty rejects a different sale/customer lifecycle",
+    "D03": "Confirmed: variant update service changes name/SKU on existing invoice; total unchanged",
+    "D04": "DB-only gap: warranty can reference wrong customer",
+    "D05": "DB-only gap: order item serial may belong to another variant",
+    "D06": "DB-only gap: message/session customers can differ",
+    "D07": "DB-only gap: header formula valid but line sum differs",
+    "D08": "DB-only gap: inventory can differ from serial counts",
+    "D09": "DB-only gap: EXCHANGED allowed without an exchange order on RETURN",
+    "D10": "DB-only gap: return line may reference inconsistent sold item and serial",
+    "D11": "DB-only gap: registered customer phones may repeat",
+    "D12": "DB-only gap: category self-cycle allowed; application has cycle guard",
+    "D13": "Positive control: negative stock and wrong header formula blocked",
+    "D14": "Confirmed: cancelled replacement leaves EXCHANGED credit locked; refund and repeat request return 409",
+    "D15": "Confirmed: UserService.updateUser permits duplicate registered-customer phone",
+    "D16": "Confirmed: SpecificationService accepts conflicting duplicate CPU keys"
+  },
+  "harness_issue": "Combined inherited Testcontainers/context lifecycle run exited 1 and was stopped; groups subsequently completed in separate successful Maven runs",
+  "live_business_writes": false,
+  "cloud_calls": 0
+}

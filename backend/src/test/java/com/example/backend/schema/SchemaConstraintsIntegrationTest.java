@@ -18,7 +18,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-/** P3: the database itself rejects values the application cannot read (V10, V11, V13). */
+/** P3: the database itself rejects values the application cannot read (V10, V11, V13, V15). */
 @SpringBootTest(properties = {"spring.jpa.hibernate.ddl-auto=validate", "app.seed.auth.enabled=false",
         "app.payment.vnpay.enabled=false", "app.order.vnpay-expiry.enabled=false"})
 @Testcontainers(disabledWithoutDocker = true)
@@ -63,6 +63,27 @@ class SchemaConstraintsIntegrationTest {
     @Test void walkInCustomersNeedAUniquePhone() {
         rejects("INSERT INTO customers(full_name) VALUES ('Không có gì để nhận diện')");
         rejects("INSERT INTO customers(full_name, phone) VALUES ('Trùng số', '0900000001')");
+    }
+
+    @Test void storedTotalsMustMatchTheirFormula() {
+        rejects("UPDATE orders SET subtotal=100, discount_amount=10, shipping_fee=0, total_amount=100 WHERE order_id=?", order);
+        jdbc.update("UPDATE orders SET subtotal=100, discount_amount=10, shipping_fee=5, total_amount=95 WHERE order_id=?", order);
+        rejects("UPDATE orders SET sales_channel='IN_STORE' WHERE order_id=?", order);
+
+        UUID payment = jdbc.queryForObject("INSERT INTO payments(order_id,payment_method,amount,status) VALUES (?,'INSTALLMENT',95,'PENDING') RETURNING payment_id", UUID.class, order);
+        UUID provider = jdbc.queryForObject("INSERT INTO installment_providers(provider_name,provider_code,status) VALUES ('Tài chính A','FIN-A','ACTIVE') RETURNING provider_id", UUID.class);
+        String installment = "INSERT INTO installment_payments(payment_id,provider_id,total_amount,down_payment,remaining_amount,term_months,status) VALUES (?,?,95,?,?,6,'PENDING')";
+        rejects(installment, payment, provider, 20, 70);
+        rejects(installment, payment, provider, 120, 0);
+        jdbc.update(installment, payment, provider, 20, 75);
+    }
+
+    @Test void chatbotStatusesAreCheckedAndCartIsOnePerCustomer() {
+        UUID customer = jdbc.queryForObject("SELECT customer_id FROM orders WHERE order_id=?", UUID.class, order);
+        rejects("INSERT INTO chat_sessions(customer_id,status) VALUES (?,'OPEN')", customer);
+        jdbc.update("INSERT INTO carts(customer_id) VALUES (?)", customer);
+        rejects("INSERT INTO carts(customer_id) VALUES (?)", customer); // one cart per customer (V17)
+        jdbc.update("INSERT INTO chat_sessions(customer_id,status) VALUES (?,'ACTIVE')", customer);
     }
 
     @Test void existingOrdersGetABaselineHistoryRowOnMigration() {

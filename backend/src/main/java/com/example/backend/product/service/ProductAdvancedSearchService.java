@@ -57,7 +57,11 @@ public class ProductAdvancedSearchService {
                 WHERE p.status = 'ACTIVE' AND v.status = 'ACTIVE'
                 """);
         if (category != null && !category.isBlank()) {
-            sql.append(" AND lower(c.category_name) = lower(:category)");
+            // Category subtree: a parent name also matches products assigned to its descendants.
+            sql.append(" AND p.category_id IN (WITH RECURSIVE tree AS (")
+                    .append("SELECT category_id FROM categories WHERE lower(category_name) = lower(:category) ")
+                    .append("UNION SELECT child.category_id FROM categories child JOIN tree ON child.parent_id = tree.category_id) ")
+                    .append("SELECT category_id FROM tree)");
             args.addValue("category", category.trim());
         }
         var names = brands == null ? List.<String>of() : brands.stream().map(String::trim)

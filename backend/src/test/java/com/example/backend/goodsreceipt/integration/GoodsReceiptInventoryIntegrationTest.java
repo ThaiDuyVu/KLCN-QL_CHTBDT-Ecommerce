@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -218,6 +219,64 @@ class GoodsReceiptInventoryIntegrationTest {
         assertThat(receiptStatus(receiptId)).isEqualTo("DRAFT");
     }
 
+    @Test
+    void confirmation_shouldLinkEachSerialToItsDeclaredReceiptDevice() {
+        jdbcTemplate.update("UPDATE product_variants SET tracking_type = 'SERIAL' WHERE variant_id = ?", VARIANT_ID);
+        UUID receiptId = UUID.randomUUID();
+        insertReceipt(receiptId, "GR-INVENTORY-7", 2);
+        UUID itemId = receiptItemId(receiptId);
+        UUID firstDevice = insertDevice(itemId, "SN-TRACE-001");
+        UUID secondDevice = insertDevice(itemId, "SN-TRACE-002");
+
+        goodsReceiptService.updateGoodsReceiptStatus(receiptId, GoodsReceiptStatus.CONFIRMED);
+
+        assertThat(jdbcTemplate.queryForList(
+                "SELECT receipt_device_id FROM serial_numbers WHERE variant_id = ? ORDER BY serial_number",
+                UUID.class, VARIANT_ID)).containsExactly(firstDevice, secondDevice);
+        // Supplier, receipt and unit cost of one physical device, by joins only.
+        assertThat(jdbcTemplate.queryForMap(
+                """
+                        SELECT sup.supplier_code, r.receipt_code, i.unit_cost
+                        FROM serial_numbers s
+                        JOIN goods_receipt_item_devices d ON d.receipt_device_id = s.receipt_device_id
+                        JOIN goods_receipt_items i ON i.receipt_item_id = d.receipt_item_id
+                        JOIN goods_receipts r ON r.receipt_id = i.receipt_id
+                        JOIN suppliers sup ON sup.supplier_id = r.supplier_id
+                        WHERE s.serial_number = 'SN-TRACE-002'
+                        """
+        ))
+                .containsEntry("supplier_code", "NCC-TEST")
+                .containsEntry("receipt_code", "GR-INVENTORY-7")
+                .hasEntrySatisfying("unit_cost", cost -> assertThat(cost.toString()).isEqualTo("800.00"));
+    }
+
+    @Test
+    void serialMustMatchTheDeviceDeclaredOnTheReceipt() {
+        UUID receiptId = UUID.randomUUID();
+        insertReceipt(receiptId, "GR-INVENTORY-8", 1);
+        UUID device = insertDevice(receiptItemId(receiptId), "SN-DECLARED-001");
+        String insertSerial = "INSERT INTO serial_numbers (variant_id, warehouse_id, serial_number, status, receipt_device_id) "
+                + "VALUES (?, ?, ?, 'AVAILABLE', ?)";
+
+        assertThatThrownBy(() -> jdbcTemplate.update(insertSerial, VARIANT_ID, WAREHOUSE_ID, "SN-OTHER-001", device))
+                .isInstanceOf(DataIntegrityViolationException.class);
+        jdbcTemplate.update(insertSerial, VARIANT_ID, WAREHOUSE_ID, "SN-DECLARED-001", device);
+        // The same declared device cannot produce a second serial.
+        assertThatThrownBy(() -> jdbcTemplate.update(insertSerial, VARIANT_ID, WAREHOUSE_ID, "SN-DECLARED-001-B", device))
+                .isInstanceOf(DataIntegrityViolationException.class);
+    }
+
+    private UUID receiptItemId(UUID receiptId) {
+        return jdbcTemplate.queryForObject(
+                "SELECT receipt_item_id FROM goods_receipt_items WHERE receipt_id = ?", UUID.class, receiptId);
+    }
+
+    private UUID insertDevice(UUID receiptItemId, String serialNumber) {
+        return jdbcTemplate.queryForObject(
+                "INSERT INTO goods_receipt_item_devices (receipt_item_id, serial_number) VALUES (?, ?) RETURNING receipt_device_id",
+                UUID.class, receiptItemId, serialNumber);
+    }
+
     private void insertReceipt(UUID receiptId, String receiptCode, int quantity) {
         jdbcTemplate.update(
                 """
@@ -303,6 +362,7 @@ class GoodsReceiptInventoryIntegrationTest {
 
     private void clearTestData() {
         jdbcTemplate.update("DELETE FROM inventory WHERE warehouse_id = ?", WAREHOUSE_ID);
+        jdbcTemplate.update("DELETE FROM serial_numbers WHERE warehouse_id = ?", WAREHOUSE_ID);
         jdbcTemplate.update(
                 "DELETE FROM goods_receipt_items WHERE receipt_id IN (SELECT receipt_id FROM goods_receipts WHERE warehouse_id = ?)",
                 WAREHOUSE_ID

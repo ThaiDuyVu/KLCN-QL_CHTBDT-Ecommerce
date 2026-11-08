@@ -6,6 +6,7 @@ import { useCart } from '../../hooks/useCart';
 import { useWarehouse } from '../../hooks/useWarehouse';
 import ShopIcon from '../ui/ShopIcon';
 import ComingSoonButton from '../ui/ComingSoonButton';
+import RouteErrorBoundary from '../ui/RouteErrorBoundary';
 import useProductRequest from '../../features/products/hooks/useProductRequest';
 import { categoryApi } from '../../features/categories/api/categoryApi';
 import BranchSelectionModal from '../../features/warehouses/components/BranchSelectionModal';
@@ -97,7 +98,8 @@ export default function AppLayout() {
 
   const outlet = <>
     {logoutError && <p className="auth-alert" role="alert">{logoutError}</p>}
-    <Outlet />
+    {/* Keyed by path so navigating away from a failed page renders the next one normally. */}
+    <RouteErrorBoundary key={location.pathname}><Outlet /></RouteErrorBoundary>
   </>;
 
   if (isStorefront) {

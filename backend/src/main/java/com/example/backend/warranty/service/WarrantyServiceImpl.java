@@ -27,6 +27,9 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class WarrantyServiceImpl implements WarrantyService {
     private static final int MAX_PAGE_SIZE = 100;
+    // A device may have only one ticket being handled at a time; a new one is allowed once it is closed.
+    private static final List<WarrantyTicketStatus> OPEN_TICKET_STATUSES =
+            List.of(WarrantyTicketStatus.RECEIVED, WarrantyTicketStatus.IN_PROGRESS);
     private final WarrantyRepository warranties;
     private final WarrantyTicketRepository tickets;
     private final CustomerCartRepository customers;
@@ -90,7 +93,8 @@ public class WarrantyServiceImpl implements WarrantyService {
     @Transactional
     public WarrantyTicketResponse createTicket(UUID userId, UUID warrantyId, CreateWarrantyTicketRequest request) {
         UUID customerId = customerId(userId);
-        Warranty warranty = warranties.findByWarrantyIdAndCustomerId(warrantyId, customerId)
+        // Row lock serializes concurrent submissions for the same device (e.g. a double click).
+        Warranty warranty = warranties.lockByWarrantyIdAndCustomerId(warrantyId, customerId)
                 .orElseThrow(() -> notFound());
         return mapTickets(List.of(openTicket(warranty, request, null)), false).get(0);
     }
@@ -101,11 +105,16 @@ public class WarrantyServiceImpl implements WarrantyService {
     public WarrantyTicketResponse staffCreateTicket(UUID userId, UUID warrantyId, CreateWarrantyTicketRequest request) {
         Employee employee = employees.findByUser_UserId(userId)
                 .orElseThrow(() -> new WarrantyException(403, "Tài khoản chưa có hồ sơ nhân viên"));
-        Warranty warranty = warranties.findById(warrantyId).orElseThrow(() -> notFound());
+        Warranty warranty = warranties.lockById(warrantyId).orElseThrow(() -> notFound());
         return mapTickets(List.of(openTicket(warranty, request, employee.getEmployeeId())), true).get(0);
     }
 
     private WarrantyTicket openTicket(Warranty warranty, CreateWarrantyTicketRequest request, UUID employeeId) {
+        tickets.findFirstByWarrantyIdAndStatusInOrderByCreatedAtDesc(warranty.getWarrantyId(), OPEN_TICKET_STATUSES)
+                .ifPresent(open -> {
+                    throw new WarrantyException(409, "Thiết bị đang có phiếu bảo hành " + open.getTicketCode()
+                            + " chưa xử lý xong. Vui lòng chờ phiếu này hoàn tất trước khi gửi yêu cầu mới.");
+                });
         ensureEligible(warranty);
         WarrantyTicket ticket = new WarrantyTicket();
         ticket.setTicketCode("WT-" + UUID.randomUUID().toString().toUpperCase(Locale.ROOT));

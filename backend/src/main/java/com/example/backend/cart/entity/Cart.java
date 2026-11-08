@@ -20,8 +20,6 @@ public class Cart {
     private OffsetDateTime createdAt;
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
-    @Column(name = "status")
-    private String status;
     public Cart() {}
     public UUID getCartId() { return cartId; }
     public void setCartId(UUID value) { this.cartId = value; }
@@ -33,6 +31,4 @@ public class Cart {
     public void setCreatedAt(OffsetDateTime value) { this.createdAt = value; }
     public OffsetDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(OffsetDateTime value) { this.updatedAt = value; }
-    public String getStatus() { return status; }
-    public void setStatus(String value) { this.status = value; }
 }

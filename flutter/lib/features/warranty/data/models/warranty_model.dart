@@ -1,4 +1,10 @@
 class WarrantyTicketStatusValue {
+  /// Phiếu còn đang xử lý; backend chỉ cho mỗi thiết bị một phiếu như vậy tại một thời điểm.
+  static bool isOpen(String? raw) {
+    final value = (raw ?? '').toUpperCase();
+    return value == 'RECEIVED' || value == 'IN_PROGRESS';
+  }
+
   static String label(String? raw) {
     final value = (raw ?? '').toUpperCase();
     switch (value) {
