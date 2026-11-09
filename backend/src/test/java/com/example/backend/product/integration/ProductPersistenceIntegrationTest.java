@@ -106,8 +106,11 @@ class ProductPersistenceIntegrationTest {
         flyway.validate();
         // V9 seeds staff job roles (approved for S2, 27/10/2026). V10–V13 (plan P3, approved 06/11/2026):
         // status CHECKs, order status history, employee branch, in-store sales. V14: exchange in returns.
-        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("14");
-        assertThat(flyway.info().applied()).hasSize(14);
+        // V15 (approved 07/11/2026): derived-value CHECKs and data dictionary comments.
+        // V16 (approved 07/11/2026): serial -> goods receipt device traceability.
+        // V17 (approved 07/11/2026): one cart per customer, carts.status dropped.
+        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("17");
+        assertThat(flyway.info().applied()).hasSize(17);
 
         var response = service.createProduct(request(null));
         Product persisted = productRepository.findById(response.productId()).orElseThrow();
@@ -160,6 +163,30 @@ class ProductPersistenceIntegrationTest {
                         .param("minRamGb", "16"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].variantId").value(goodVariant.toString()));
+    }
+
+    @Test
+    void categoryFilter_parentCategoryIncludesProductsOfItsDescendants() {
+        UUID rootId = UUID.randomUUID();
+        UUID grandchildId = UUID.randomUUID();
+        jdbc.update("INSERT INTO categories (category_id, category_name) VALUES (?, ?)", rootId, "Nhóm kiểm thử");
+        jdbc.update("UPDATE categories SET parent_id = ? WHERE category_id = ?", rootId, CATEGORY_ID);
+        jdbc.update("INSERT INTO categories (category_id, category_name, parent_id) VALUES (?, ?, ?)",
+                grandchildId, "Nhánh con kiểm thử", CATEGORY_ID);
+        List<UUID> products = insertProducts(2);
+        UUID childProduct = products.getFirst();
+        UUID grandchildProduct = products.getLast();
+        jdbc.update("UPDATE products SET category_id = ? WHERE product_id = ?", grandchildId, grandchildProduct);
+        UUID childVariant = UUID.randomUUID();
+        jdbc.update("INSERT INTO product_variants (variant_id, product_id, sku, price, cost_price, ram, storage) "
+                + "VALUES (?, ?, ?, 12000000, 9000000, '16GB', '512GB')", childVariant, childProduct, "TREE-16");
+
+        assertThat(service.getProducts(0, 20, null, rootId, null, null).getContent())
+                .extracting(item -> item.productId()).containsExactlyInAnyOrder(childProduct, grandchildProduct);
+        assertThat(service.getProducts(0, 20, null, grandchildId, null, null).getContent())
+                .extracting(item -> item.productId()).containsExactly(grandchildProduct);
+        assertThat(advancedSearch.search("Nhóm kiểm thử", List.of(), null, null, 16, null,
+                List.of(), false, null, 100, 0)).extracting(row -> row.variantId()).containsExactly(childVariant);
     }
 
     @Test

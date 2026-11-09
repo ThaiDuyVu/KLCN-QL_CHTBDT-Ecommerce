@@ -27,7 +27,10 @@ class WarrantyDetailScreen extends ConsumerWidget {
       body: warrantyAsync.when(
         data: (warranty) {
           final statusText = WarrantyStatusValue.label(warranty.status);
-          final canCreateTicket = warranty.eligible;
+          final openTicket = warranty.tickets
+              .where((t) => WarrantyTicketStatusValue.isOpen(t.status))
+              .firstOrNull;
+          final canCreateTicket = warranty.eligible && openTicket == null;
 
           return ListView(
             padding: const EdgeInsets.all(16),
@@ -51,6 +54,17 @@ class WarrantyDetailScreen extends ConsumerWidget {
                     onPressed: () => _openCreateTicketDialog(context, ref, warranty.id),
                     icon: const Icon(Icons.build_circle_outlined),
                     label: const Text('[Gửi yêu cầu bảo hành]'),
+                  ),
+                )
+              else if (openTicket != null)
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text(
+                      'Thiết bị đang có phiếu ${openTicket.ticketCode.isNotEmpty ? openTicket.ticketCode : openTicket.id} '
+                      '(${WarrantyTicketStatusValue.label(openTicket.status)}). '
+                      'Bạn có thể gửi yêu cầu mới sau khi phiếu này được xử lý xong.',
+                    ),
                   ),
                 )
               else

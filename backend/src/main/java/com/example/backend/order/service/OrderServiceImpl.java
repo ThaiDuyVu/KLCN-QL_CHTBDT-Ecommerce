@@ -84,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
             throw new CommerceException(400, "Phương thức thanh toán chưa được hỗ trợ");
         }
         var customer = customers.lockByUserId(userId).orElseThrow(() -> new CommerceException(403, "Tài khoản chưa có hồ sơ customer"));
-        var cart = carts.findFirstByCustomerIdAndStatusOrderByCreatedAtAscCartIdAsc(customer.getCustomerId(), "ACTIVE")
+        var cart = carts.findByCustomerId(customer.getCustomerId())
                 .orElseThrow(() -> new CommerceException(409, "Cart rỗng, không thể checkout"));
         if (cart.getWarehouseId() == null) throw new CommerceException(409, "Vui lòng chọn chi nhánh trước khi checkout");
         var warehouse = warehouses.findById(cart.getWarehouseId())

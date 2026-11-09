@@ -27,6 +27,17 @@ class ApiClient {
           'CF-Access-Client-Secret': _cfAccessClientSecret,
         };
 
+  static const _chatBaseUrl = String.fromEnvironment('CHAT_BASE_URL');
+
+  /// Where `/api/v1/chat` is served, mirroring the web: behind a gateway (Caddy, Cloudflare) it shares
+  /// [baseUrl]; when [baseUrl] is the backend itself (port 8080, local dev), the chatbot service listens on
+  /// port 8090 of the same host, like the Vite proxy. `--dart-define=CHAT_BASE_URL=...` overrides both.
+  static String get chatBaseUrl {
+    if (_chatBaseUrl.isNotEmpty) return _chatBaseUrl;
+    final uri = Uri.parse(baseUrl);
+    return uri.port == 8080 ? uri.replace(port: 8090).toString().replaceFirst(RegExp(r'/$'), '') : baseUrl;
+  }
+
   static String fixUrl(String? rawUrl) {
     if (rawUrl == null || rawUrl.isEmpty) return '';
     final trimmed = rawUrl.trim();

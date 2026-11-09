@@ -12,6 +12,29 @@ chatbot-service/.venv/bin/python chatbot-service/debug/context-eval/run_context_
 
 ---
 
+## GĐ 12 — Ràng buộc CSDL cho các bảng chatbot (07/11/2026)
+
+Thuộc migration backend `V15__derived_value_checks_and_data_dictionary.sql`. Không đổi code chatbot.
+
+**Nâng cấp**:
+- CHECK trạng thái:
+  - `chat_sessions.status` chỉ nhận ACTIVE | CLOSED.
+  - `chat_history.sender_type` chỉ nhận USER | ASSISTANT.
+  - `knowledge_documents.status` chỉ nhận DRAFT | PUBLISHED | ARCHIVED.
+  - `chatbot_qna.status` và `chatbot_scripts.status` chỉ nhận ACTIVE | INACTIVE.
+- Các giá trị trên khớp đúng những gì `conversation/postgres_repository.py` và `scripts/seed_official_knowledge.py` ghi vào DB.
+- Thêm `COMMENT ON` cho 8 bảng chatbot/RAG.
+
+**Cố ý giữ nguyên**: cột `embedding_vector` vẫn là `vector` không cố định số chiều và chưa có chỉ mục HNSW. Product semantic index lọc theo số chiều và model embedding; Knowledge chỉ lọc theo số chiều, chưa lưu metadata model. Khi đổi model phải chạy lại Knowledge ingest với `--force`, kể cả model mới cùng số chiều. Dữ liệu nhỏ (khoảng 20 vector) đang dùng tìm kiếm vector chính xác; điều này không bảo đảm tìm đủ mọi nội dung liên quan.
+
+**Kiểm chứng**:
+- Chạy thử V15 trên dữ liệu dev: không dòng nào vi phạm.
+- Backend: 343 test pass, gồm test ràng buộc mới.
+- Unit test chatbot: pass.
+- Không chạy context-eval vì hành vi hội thoại không đổi.
+
+---
+
 ## GĐ 11 — Sửa 6 lỗi ưu tiên của benchmark và lưu phản hồi tin nhắn (27/10/2026)
 
 Thuộc kế hoạch sửa hệ thống, mục S1.1 và S1.3 (`docs/bao-cao/KE_HOACH_SUA_HE_THONG.md`).

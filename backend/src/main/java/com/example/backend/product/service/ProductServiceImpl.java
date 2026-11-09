@@ -27,6 +27,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
+import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -104,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
                 Sort.Order.desc("productId")
         ));
         String normalizedKeyword = normalizeFilter(keyword);
-        var filters = ProductSpecifications.withFilters(normalizedKeyword, categoryId, brandId, status);
+        var filters = ProductSpecifications.withFilters(normalizedKeyword, categoryTree(categoryId), brandId, status);
         if (onSale) filters = filters.and(ProductSpecifications.onSale(OffsetDateTime.now()));
         Page<Product> productPage = productRepository.findAll(filters, pageable);
 
@@ -184,6 +187,23 @@ public class ProductServiceImpl implements ProductService {
         if (request.status() != null) {
             product.setStatus(request.status());
         }
+    }
+
+    /**
+     * The selected category plus every descendant, so filtering by a parent category
+     * ("Điện thoại & Máy tính bảng") also returns products assigned to its children.
+     */
+    private Set<UUID> categoryTree(UUID categoryId) {
+        if (categoryId == null) return null;
+        Set<UUID> tree = new LinkedHashSet<>(List.of(categoryId));
+        Set<UUID> level = Set.of(categoryId);
+        while (!level.isEmpty()) {
+            level = categoryRepository.findByParent_CategoryIdIn(level).stream()
+                    .map(Category::getCategoryId)
+                    .filter(tree::add)
+                    .collect(Collectors.toSet());
+        }
+        return tree;
     }
 
     private String normalizeFilter(String value) {

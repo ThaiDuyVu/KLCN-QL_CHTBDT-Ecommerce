@@ -1,6 +1,7 @@
 package com.example.backend.warranty.repository;
 
 import com.example.backend.warranty.entity.WarrantyTicket;
+import com.example.backend.warranty.entity.WarrantyTicketStatus;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,6 +13,8 @@ public interface WarrantyTicketRepository extends JpaRepository<WarrantyTicket, 
     Page<WarrantyTicket> findByCustomerId(UUID customerId, Pageable pageable);
     Optional<WarrantyTicket> findByTicketIdAndCustomerId(UUID ticketId, UUID customerId);
     List<WarrantyTicket> findByWarrantyIdOrderByCreatedAtDescTicketIdDesc(UUID warrantyId);
+    Optional<WarrantyTicket> findFirstByWarrantyIdAndStatusInOrderByCreatedAtDesc(UUID warrantyId,
+            Collection<WarrantyTicketStatus> statuses);
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select t from WarrantyTicket t where t.ticketId = :ticketId")
     Optional<WarrantyTicket> lockById(@Param("ticketId") UUID ticketId);

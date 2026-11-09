@@ -25,6 +25,9 @@ public class SerialNumber {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 30)
     private SerialStatus status;
+    /** Declared device on the goods receipt that created this serial (V16); null if not from a receipt. */
+    @Column(name = "receipt_device_id", updatable = false)
+    private UUID receiptDeviceId;
     @OneToMany(mappedBy = "serial", cascade = CascadeType.ALL, orphanRemoval = true)
     @BatchSize(size = 100)
     private List<Imei> imeis = new ArrayList<>();
@@ -40,6 +43,8 @@ public class SerialNumber {
     public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
     public SerialStatus getStatus() { return status; }
     public void setStatus(SerialStatus status) { this.status = status; }
+    public UUID getReceiptDeviceId() { return receiptDeviceId; }
+    public void setReceiptDeviceId(UUID receiptDeviceId) { this.receiptDeviceId = receiptDeviceId; }
     public List<Imei> getImeis() { return imeis; }
     public void setImeis(List<Imei> imeis) { this.imeis = imeis; }
 }

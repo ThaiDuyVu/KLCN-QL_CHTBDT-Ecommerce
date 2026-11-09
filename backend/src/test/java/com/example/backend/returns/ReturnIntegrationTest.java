@@ -213,6 +213,9 @@ class ReturnIntegrationTest {
         move(id, salesUser, "SALES_STAFF", "{\"status\":\"EXCHANGED\"}").andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("EXCHANGED")).andExpect(jsonPath("$.exchangeDifference").value(600000))
                 .andExpect(jsonPath("$.exchangeOrderCode").value(org.hamcrest.Matchers.startsWith("EX-")));
+        request(customerUser, body(caseLine, 1)).andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value("Sản phẩm đã có yêu cầu đổi trả"));
+        request(customerUser, exchangeBody(caseLine, 1, headsetVariant, 1)).andExpect(status().isConflict());
         UUID replacement = jdbc.queryForObject("SELECT exchange_order_id FROM return_requests WHERE return_id=?", UUID.class, id);
         var placed = orderService.detail(customerUser, true, replacement);
         assertThat(placed.getStatus().name()).isEqualTo("CONFIRMED");

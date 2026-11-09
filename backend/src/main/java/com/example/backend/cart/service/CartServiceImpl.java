@@ -34,9 +34,9 @@ public class CartServiceImpl implements CartService {
     }
     private Cart current(UUID userId, boolean create) {
         var customer = customers.lockByUserId(userId).orElseThrow(() -> new CommerceException(403, "Tài khoản chưa có hồ sơ customer"));
-        var cart = carts.findFirstByCustomerIdAndStatusOrderByCreatedAtAscCartIdAsc(customer.getCustomerId(), "ACTIVE").orElse(null);
+        var cart = carts.findByCustomerId(customer.getCustomerId()).orElse(null);
         if (cart == null && create) {
-            cart = new Cart(); cart.setCustomerId(customer.getCustomerId()); cart.setStatus("ACTIVE");
+            cart = new Cart(); cart.setCustomerId(customer.getCustomerId());
             cart.setCreatedAt(OffsetDateTime.now()); cart.setUpdatedAt(OffsetDateTime.now()); carts.saveAndFlush(cart);
         }
         return cart;

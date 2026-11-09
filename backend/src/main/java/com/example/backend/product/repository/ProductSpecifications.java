@@ -13,6 +13,7 @@ import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -48,7 +49,8 @@ public final class ProductSpecifications {
         };
     }
 
-    public static Specification<Product> withFilters(String keyword, UUID categoryId, UUID brandId, ProductStatus status) {
+    /** categoryIds: the selected category and all of its descendants; null means no category filter. */
+    public static Specification<Product> withFilters(String keyword, Collection<UUID> categoryIds, UUID brandId, ProductStatus status) {
         return (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (keyword != null) {
@@ -60,8 +62,8 @@ public final class ProductSpecifications {
                         builder.like(builder.lower(root.get("description")), pattern, '\\')
                 ));
             }
-            if (categoryId != null) {
-                predicates.add(builder.equal(root.get("category").get("categoryId"), categoryId));
+            if (categoryIds != null) {
+                predicates.add(root.get("category").get("categoryId").in(categoryIds));
             }
             if (brandId != null) {
                 predicates.add(builder.equal(root.get("brand").get("brandId"), brandId));

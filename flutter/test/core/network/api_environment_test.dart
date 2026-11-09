@@ -69,6 +69,11 @@ void main() {
       expect(ApiClient.fixUrl(''), equals(''));
       expect(ApiClient.fixUrl('   '), equals(''));
     });
-  });
+
+    test('Chatbot dùng cùng host với backend, cổng 8090 khi gọi thẳng backend (giống Vite proxy)', () {
+      // Default API_BASE_URL is the backend on port 8080, so the chatbot service is reached directly.
+      expect(ApiClient.chatBaseUrl, 'http://127.0.0.1:8090');
+    });
+});
 }
 
